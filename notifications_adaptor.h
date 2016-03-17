@@ -3,7 +3,7 @@
 #include <QObject>
 #include "notificationdbus.h"
 
-class NotificationsAdaptor {
+class NotificationsAdaptor : public QObject {
     Q_OBJECT
 
 public:

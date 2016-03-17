@@ -62,4 +62,5 @@ FORMS    += mainwindow.ui \
     infopanedropdown.ui
 
 DISTFILES += \
-    org.freedesktop.Notifications.xml
+    org.freedesktop.Notifications.xml \
+    theshell.desktop
