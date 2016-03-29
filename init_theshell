@@ -1,0 +1,3 @@
+export XDG_CURRENT_DESKTOP=KDE
+export DE=kde
+theshell

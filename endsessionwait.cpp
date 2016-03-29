@@ -128,6 +128,39 @@ void EndSessionWait::on_pushButton_clicked()
 }
 
 void EndSessionWait::performEndSession() {
+    QSettings settings;
+    QString logoutSoundPath = settings.value("sounds/logout", "").toString();
+    if (logoutSoundPath == "") {
+        logoutSoundPath = "/usr/share/sounds/contemporary/logout.ogg";
+        settings.setValue("sounds/logout", logoutSoundPath);
+    }
+
+    QMediaPlayer* sound = new QMediaPlayer();
+
+    connect(sound, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(EndSessionNow()));
+    connect(sound, &QMediaPlayer::stateChanged, [=]() {
+        if (sound->state() == QMediaPlayer::StoppedState) {
+            EndSessionNow();
+        }
+    });
+
+    sound->setMedia(QUrl::fromLocalFile(logoutSoundPath));
+    sound->play();
+
+    QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
+    ui->frame->setGraphicsEffect(fadeEffect);
+    QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
+    a->setDuration(500);
+    a->setStartValue(1);
+    a->setEndValue(0);
+    a->start();
+
+    connect(a, &QPropertyAnimation::finished, [=]() {
+        ui->frame->setVisible(false);
+    });
+}
+
+void EndSessionWait::EndSessionNow() {
     switch (type) {
     case powerOff:
         QProcess::startDetached("shutdown -P now");

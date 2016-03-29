@@ -1,13 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+extern void playSound(QUrl, bool = false);
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-
 
     windowList = new QList<WmWindow*>();
 
@@ -24,15 +24,26 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     updbus->DeviceChanged();
 
-    grabKeys();
+    UGlobalHotkeys* hotkeyManager = new UGlobalHotkeys(this);
+    hotkeyManager->registerHotkey("Alt+F5");
+    connect(hotkeyManager, SIGNAL(activated(size_t)), this, SLOT(on_pushButton_clicked()));
 
-    //XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Super_L), )
+    infoPane = new InfoPaneDropdown(ndbus);
+    infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    connect(infoPane, SIGNAL(networkLabelChanged(QString)), this, SLOT(internetLabelChanged(QString)));
+    infoPane->getNetworks();
 
-    //this->grabKeyboard();
+    QSettings settings;
 
-    /*UGlobalHotkeys* hotkeyManager = new UGlobalHotkeys(this);
-    hotkeyManager->registerHotkey("Alt+F1");
-    connect(hotkeyManager, SIGNAL(activated(size_t)), this, SLOT(on_pushButton_clicked()));*/
+    QString loginSoundPath = settings.value("sounds/login", "").toString();
+    if (loginSoundPath == "") {
+        loginSoundPath = "/usr/share/sounds/contemporary/login.ogg";
+        settings.setValue("sounds/login", loginSoundPath);
+    }
+
+    playSound(QUrl::fromLocalFile(loginSoundPath));
+
+    ui->timer->setVisible(false);
 }
 
 MainWindow::~MainWindow()
@@ -47,14 +58,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::closeEvent(QCloseEvent *event) {
+    event->accept();
+}
+
 void MainWindow::on_pushButton_clicked()
 {
+    this->setFocus();
     Menu* m = new Menu(this);
     m->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    m->setGeometry(this->x(), this->y() + this->height(), m->width(), m->height());
+    m->setGeometry(this->x(), this->y() + this->height(), m->width(), screenGeometry.height() - this->height() - m->y());
     m->show();
     m->setFocus();
+
+    lockHide = true;
+    connect(m, SIGNAL(appOpening(QString,QIcon)), this, SLOT(openingApp(QString,QIcon)));
+    connect(m, &Menu::menuClosing, [=]() {
+        lockHide = false;
+    });
 }
 
 void MainWindow::reloadWindows() {
@@ -137,59 +159,61 @@ void MainWindow::reloadWindows() {
                 row++;
             }
         }
+
+        ui->openingAppFrame->setVisible(false);
     }
 
+    if (!lockHide) {
+        if (hideTop != this->hideTop) {
+            this->hideTop = hideTop;
+            QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+            anim->setStartValue(this->geometry());
+            anim->setEndValue(QRect(this->x(), hideTop, screenGeometry.width() + 1, this->height()));
+            anim->setDuration(500);
+            anim->setEasingCurve(QEasingCurve::OutCubic);
+            anim->start();
 
-    if (hideTop != this->hideTop) {
-        this->hideTop = hideTop;
-        QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
-        anim->setStartValue(this->geometry());
-        anim->setEndValue(QRect(this->x(), hideTop, screenGeometry.width() + 1, this->height()));
-        anim->setDuration(500);
-        anim->setEasingCurve(QEasingCurve::OutCubic);
-        anim->start();
+            //this->setGeometry(QRect(this->x(), -100, screenGeometry.width(), this->height()));
 
-        //this->setGeometry(QRect(this->x(), -100, screenGeometry.width(), this->height()));
+            if (hideTop == screenGeometry.y()) {
+                hiding = false;
+            } else {
+                hiding = true;
+            }
 
-        if (hideTop == screenGeometry.y()) {
-            hiding = false;
-        } else {
-            hiding = true;
+            ui->openingAppFrame->setVisible(false);
         }
 
-    }
+        if (hideTop != screenGeometry.y()) {
+            if (hiding) {
+                if (QCursor::pos().y() <= this->y() + this->height() &&
+                        QCursor::pos().x() > screenGeometry.x() &&
+                        QCursor::pos().x() < screenGeometry.x() + screenGeometry.width()) {
+                    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+                    anim->setStartValue(this->geometry());
 
-    if (hideTop != screenGeometry.y()) {
-        int ypos = QCursor::pos().y();
-        int xpos = QCursor::pos().x();
-        if (hiding) {
-            if (QCursor::pos().y() <= this->y() + this->height() &&
-                    QCursor::pos().x() > screenGeometry.x() &&
-                    QCursor::pos().x() < screenGeometry.x() + screenGeometry.width()) {
-                QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
-                anim->setStartValue(this->geometry());
+                    anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width() + 1, this->height()));
+                    anim->setDuration(500);
+                    anim->setEasingCurve(QEasingCurve::OutCubic);
 
-                anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width() + 1, this->height()));
-                anim->setDuration(500);
-                anim->setEasingCurve(QEasingCurve::OutCubic);
+                    connect(anim, &QPropertyAnimation::finished, [=]() {
+                        hiding = false;
+                    });
+                    anim->start();
+                }
+            } else {
+                if (QCursor::pos().y() > screenGeometry.y() + this->height() ||
+                        QCursor::pos().x() < screenGeometry.x() ||
+                        QCursor::pos().x() > screenGeometry.x() + screenGeometry.width()) {
+                    hiding = true;
+                    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+                    anim->setStartValue(this->geometry());
 
-                connect(anim, &QPropertyAnimation::finished, [=]() {
-                    hiding = false;
-                });
-                anim->start();
-            }
-        } else {
-            if (QCursor::pos().y() > screenGeometry.y() + this->height() ||
-                    QCursor::pos().x() < screenGeometry.x() ||
-                    QCursor::pos().x() > screenGeometry.x() + screenGeometry.width()) {
-                hiding = true;
-                QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
-                anim->setStartValue(this->geometry());
-
-                anim->setEndValue(QRect(screenGeometry.x(), hideTop, screenGeometry.width() + 1, this->height()));
-                anim->setDuration(500);
-                anim->setEasingCurve(QEasingCurve::OutCubic);
-                anim->start();
+                    anim->setEndValue(QRect(screenGeometry.x(), hideTop, screenGeometry.width() + 1, this->height()));
+                    anim->setDuration(500);
+                    anim->setEasingCurve(QEasingCurve::OutCubic);
+                    anim->start();
+                }
             }
         }
     }
@@ -202,34 +226,61 @@ void MainWindow::activateWindow(QString windowTitle) {
     QProcess::startDetached("wmctrl -a " + windowTitle);
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event) {
-    switch (event->key()) {
-    case Qt::Key_Meta:
-        QMessageBox::warning(this, "Whoa", "Whoa");
-    case Qt::Key_PowerOff:
-        QMessageBox::warning(this, "Off", "Off");
-
-    default:
-        event->ignore();
-    }
-
-    grabKeys();
-}
-
 void MainWindow::on_time_clicked()
 {
-    //InfoPaneDropdown *dropdown = new InfoPaneDropdown(this);
-    //dropdown->show(InfoPaneDropdown::Clock);
+    infoPane->show(InfoPaneDropdown::Clock);
 }
 
-void MainWindow::grabKeys() {
-    bool success;
-    KeyCode LSuper = XKeysymToKeycode(QX11Info::display(), XK_Meta_L);
-    success = XGrabKey(QX11Info::display(), LSuper, AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
-    KeyCode RSuper = XKeysymToKeycode(QX11Info::display(), XK_Meta_R);
-    success = XGrabKey(QX11Info::display(), RSuper, AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
-    success = XGrabKey(QX11Info::display(), 124, AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
-    success = XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F2), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+void MainWindow::openingApp(QString AppName, QIcon AppIcon) {
+    ui->appOpeningLabel->setText("Opening " + AppName);
+    ui->appOpeningIcon->setPixmap(AppIcon.pixmap(16, 16));
+    ui->openingAppFrame->setVisible(true);
 
-    //XGrabKeyboard(QX11Info::display(), RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync, CurrentTime);
+    QTimer *timer = new QTimer(this);
+    timer->setInterval(10000);
+    timer->setSingleShot(true);
+    connect(timer, &QTimer::timeout, [=]() {
+        ui->openingAppFrame->setVisible(false);
+    });
+    timer->start();
+}
+
+void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
+    QProcess::execute("wmctrl -r " + this->windowTitle() + " -e 0," +
+                      QString::number(x) + "," + QString::number(y) + "," +
+                      QString::number(w) + "," + QString::number(h));
+}
+
+void MainWindow::setGeometry(QRect geometry) {
+    this->setGeometry(geometry.x(), geometry.y(), geometry.width(), geometry.height());
+}
+
+void MainWindow::on_date_clicked()
+{
+    infoPane->show(InfoPaneDropdown::Clock);
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    theWave *w = new theWave(infoPane);
+    w->show();
+}
+
+void MainWindow::internetLabelChanged(QString display) {
+    ui->networkLabel->setText(display);
+}
+
+void MainWindow::on_networkLabel_clicked()
+{
+    infoPane->show(InfoPaneDropdown::Network);
+}
+
+void MainWindow::on_notifications_clicked()
+{
+    infoPane->show(InfoPaneDropdown::Notifications);
+}
+
+void MainWindow::on_batteryLabel_clicked()
+{
+    infoPane->show(InfoPaneDropdown::Battery);
 }

@@ -3,6 +3,10 @@
 
 #include <QDialog>
 #include <QProcess>
+#include <QMediaPlayer>
+#include <QSettings>
+#include <QGraphicsOpacityEffect>
+#include <QPropertyAnimation>
 #include "window.h"
 
 namespace Ui {
@@ -30,6 +34,7 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void EndSessionNow();
 private:
     Ui::EndSessionWait *ui;
 

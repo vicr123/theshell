@@ -7,13 +7,94 @@
     <x>0</x>
     <y>0</y>
     <width>434</width>
-    <height>575</height>
+    <height>653</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QFrame" name="InstallLayout">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Install theOS</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Give theOS a permanant place on your PC. Install theOS on your hard drive, either replacing another operating system or next to another operating system.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="text">
+           <string>Open theOS Installer</string>
+          </property>
+          <property name="icon">
+           <iconset theme="install_theos">
+            <normaloff>.</normaloff>.</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
@@ -69,7 +150,7 @@
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>End Session</string>
+          <string>Exit</string>
          </property>
          <property name="icon">
           <iconset theme="system-shutdown">
@@ -110,7 +191,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Power Off</string>
+         <string>Exit</string>
         </property>
        </widget>
       </item>
@@ -178,7 +259,8 @@
          <string>Suspend</string>
         </property>
         <property name="icon">
-         <iconset theme="system-suspend"/>
+         <iconset theme="system-suspend">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="description">
          <string>Puts your computer in a low power state so that it opens up quickly</string>

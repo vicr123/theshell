@@ -6,7 +6,7 @@
       <arg name="reason" type="i" direction="out"/>
     </signal>
     <signal name="ActionInvoked">
-      <arg name="id" type="i" direction="out"/>
+      <arg name="id" type="u" direction="out"/>
       <arg name="action_key" type="s" direction="out"/>
     </signal>
     <method name="GetCapabilities">
@@ -26,6 +26,12 @@
     </method>
     <method name="CloseNotification">
       <arg name="id" type="i" direction="in"/>
+    </method>
+    <method name="GetServerInformation">
+      <arg type="s" direction="out"/>
+      <arg name="vendor" type="s" direction="out"/>
+      <arg name="version" type="s" direction="out"/>
+      <arg name="spec_version" type="s" direction="out"/>
     </method>
   </interface>
 </node>

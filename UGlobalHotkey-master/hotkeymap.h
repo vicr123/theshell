@@ -38,6 +38,8 @@ inline UKeyData QtKeyToLinux(const UKeySequence &keySeq)
         data.key -= DIFF;
     } else if (data.key >= Qt::Key_Space && data.key <= Qt::Key_QuoteLeft) {
         // conversion is not necessary, if the value in the range Qt::Key_Space - Qt::Key_QuoteLeft
+    //} else if (data.key == Qt::Key_PowerOff) {
+        //const size_t DIFF = Qt::Key_PowerDown - ;
     } else {
         throw UException("Invalid hotkey: key conversion is not defined");
     }

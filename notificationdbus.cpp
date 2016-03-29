@@ -1,5 +1,4 @@
 #include "notificationdbus.h"
-#include "notifications_adaptor.h"
 
 NotificationDBus::NotificationDBus(QObject *parent) : QObject(parent)
 {
@@ -21,11 +20,12 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         replaces_id = nextId;
         nextId++;
 
-        NotificationDialog *d = new NotificationDialog(summary, body, replaces_id, expire_timeout);
+        NotificationDialog *d = new NotificationDialog(summary, body, actions, replaces_id, expire_timeout);
+        d->dbusParent = this;
 
-        connect(d, SIGNAL(closing(int)), this, SLOT(sendCloseNotification(int)));
+        connect(d, SIGNAL(closing(int, int)), this, SLOT(sendCloseNotification(int, int)));
 
-        d->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Dialog);
+        d->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
         d->show();
 
         dialogs.append(d);
@@ -38,11 +38,23 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
     return replaces_id;
 }
 
-void NotificationDBus::CloseNotification(int id) {
-    NotificationDialog *d = dialogs.at(id - 1);
-    d->close();
+QString NotificationDBus::GetServerInformation(QString &vendor, QString &version, QString &spec_version) {
+
+    vendor = "theSuite";
+    version = "1.0";
+    spec_version = "1.2";
+    return "theShell";
 }
 
-void NotificationDBus::sendCloseNotification(int id) {
-    emit CloseNotification(id);
+void NotificationDBus::CloseNotification(int id) {
+    NotificationDialog *d = dialogs.at(id - 1);
+    d->close(3);
+}
+
+void NotificationDBus::sendCloseNotification(int id, int reason) {
+    emit NotificationClosed(id, reason);
+}
+
+void NotificationDBus::invokeAction(uint id, QString key) {
+    emit ActionInvoked(id, key);
 }

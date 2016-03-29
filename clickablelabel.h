@@ -3,6 +3,8 @@
 
 #include <QLabel>
 #include <QMouseEvent>
+#include <QStyle>
+#include <QApplication>
 
 class ClickableLabel : public QLabel
 {
@@ -12,10 +14,15 @@ class ClickableLabel : public QLabel
 public:
     ClickableLabel(QWidget* parent);
 
+    void setShowDisabled(bool showDisabled);
+    bool showDisabled();
 signals:
     void clicked();
 private:
     void mousePressEvent(QMouseEvent* event);
+    //void paintEvent(QPaintEvent *event);
+
+    bool isShowDisabled = false;
 };
 
 #endif // CLICKABLELABEL_H

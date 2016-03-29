@@ -3,11 +3,14 @@
 #include <QObject>
 #include "notificationdbus.h"
 
+class NotificationDBus;
+
 class NotificationsAdaptor : public QObject {
     Q_OBJECT
 
 public:
-    NotificationsAdaptor(QObject *parent = 0);
+    NotificationsAdaptor(NotificationDBus *parent = 0);
+    //NotificationsAdaptor(NotificationsAdaptor *parent = 0);
 };
 
 #endif // NOTIFICATIONS_ADAPTOR_H

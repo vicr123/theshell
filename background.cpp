@@ -7,7 +7,14 @@ Background::Background(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->label->setPixmap(QPixmap("/usr/share/icons/theos/backgrounds/triangle/1680x1050.png"));
+    QSettings settings;
+    QString backPath = settings.value("desktop/background", "").toString();
+    if (backPath == "") {
+        backPath = "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png";
+        settings.setValue("desktop/background", backPath);
+    }
+
+    ui->label->setPixmap(QPixmap(backPath));
 }
 
 Background::~Background()

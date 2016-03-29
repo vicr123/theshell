@@ -25,6 +25,11 @@ public:
     ~Menu();
 
     void show();
+    void close();
+
+signals:
+    void appOpening(QString name, QIcon icon);
+    void menuClosing();
 
 private slots:
     void checkForclose();
@@ -49,6 +54,8 @@ private slots:
 
     void on_lineEdit_returnPressed();
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Menu *ui;
 
@@ -56,6 +63,10 @@ private:
 
     QList<App*> *apps;
     QList<App*> *appsShown;
+
+    bool doCheckForClose = false;
+
+    //void closeEvent(QCloseEvent *event);
 };
 
 #endif // MENU_H

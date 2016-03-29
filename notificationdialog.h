@@ -5,6 +5,11 @@
 #include <QDesktopWidget>
 #include <QPropertyAnimation>
 #include <QTimer>
+#include <QProcess>
+#include <QThread>
+#include "notificationdbus.h"
+
+class NotificationDBus;
 
 namespace Ui {
 class NotificationDialog;
@@ -13,18 +18,23 @@ class NotificationDialog;
 class NotificationDialog : public QDialog
 {
     Q_OBJECT
+    Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
 public:
-    explicit NotificationDialog(QString title, QString body, int id, int timeout, QWidget *parent = 0);
+    explicit NotificationDialog(QString title, QString body, QStringList actions, int id, int timeout, QWidget *parent = 0);
     ~NotificationDialog();
 
     void show();
-    void close();
+    void close(int reason);
 
     void setParams(QString title, QString body);
+    void setGeometry(int x, int y, int w, int h);
+    void setGeometry(QRect geometry);
+
+    NotificationDBus* dbusParent;
 
 signals:
-    void closing(int id);
+    void closing(int id, int reason);
 
 private slots:
     void on_pushButton_clicked();
@@ -34,6 +44,7 @@ private:
 
     int id;
     int timeout;
+
 };
 
 #endif // NOTIFICATIONDIALOG_H

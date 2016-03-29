@@ -2,6 +2,7 @@
 #define BACKGROUND_H
 
 #include <QDialog>
+#include <QSettings>
 
 namespace Ui {
 class Background;

@@ -23,6 +23,7 @@ Menu::Menu(QWidget *parent) :
     QString name = qgetenv("USER");
     if (name.isEmpty()) {
         name = qgetenv("USERNAME");
+
     }
 
     ui->label_2->setText("Hey, " + name + "!");
@@ -34,6 +35,12 @@ Menu::Menu(QWidget *parent) :
     ui->listWidget->installEventFilter(this);
 
     this->installEventFilter(this);
+
+    if (QFile("/usr/bin/install_theos").exists()) {
+        ui->InstallLayout->setVisible(true);
+    } else {
+        ui->InstallLayout->setVisible(false);
+    }
 }
 
 Menu::~Menu()
@@ -43,6 +50,7 @@ Menu::~Menu()
 
 void Menu::show() {
     QDialog::show();
+    doCheckForClose = true;
 
     QDir appFolder("/usr/share/applications/");
     QDirIterator iterator(appFolder, QDirIterator::Subdirectories);
@@ -104,6 +112,7 @@ void Menu::show() {
             }
         }
     }
+    //hotkeyManager->registerHotkey("Power");
 
     for (App *app : *apps) {
         QListWidgetItem *i = new QListWidgetItem();
@@ -118,10 +127,17 @@ void Menu::show() {
     }
 }
 
-void Menu::checkForclose() {
+void Menu::close() {
+    doCheckForClose = false;
+    emit menuClosing();
+    QDialog::close();
+}
 
-    if (!checkFocus(this->layout())) {
-        this->close();
+void Menu::checkForclose() {
+    if (doCheckForClose) {
+        if (!checkFocus(this->layout())) {
+            this->close();
+        }
     }
 }
 
@@ -191,6 +207,7 @@ void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
     for (App* app : *appsShown) {
         if (app->name() == item->text()) {
             QProcess::startDetached(app->command().remove("%u"));
+            emit appOpening(app->name(), app->icon());
             this->close();
             break;
         }
@@ -277,4 +294,11 @@ void Menu::on_lineEdit_returnPressed()
         ui->listWidget->selectedItems().append(ui->listWidget->item(0));
         on_listWidget_itemClicked(ui->listWidget->item(0));
     }
+}
+
+void Menu::on_pushButton_3_clicked()
+{
+    QProcess::startDetached("install_theos");
+    emit appOpening("theOS Installer", QIcon::fromTheme("install_theos"));
+    this->close();
 }
