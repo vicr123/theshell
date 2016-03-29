@@ -12,9 +12,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = theshell
 TEMPLATE = app
-QDBUSXML2CPP_ADAPTOR_HEADER_FLAGS = -l NotificationDBus -i notificationdbus.h
-QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
-DBUS_ADAPTORS = org.freedesktop.Notifications.xml
+#QDBUSXML2CPP_ADAPTOR_HEADER_FLAGS = -l NotificationDBus -i notificationdbus.h
+#QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
+#DBUS_ADAPTORS = org.freedesktop.Notifications.xml
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     clickablelabel.cpp \
     thewave.cpp \
     thewaveworker.cpp \
-    loginsplash.cpp
+    loginsplash.cpp \
+    notifications_adaptor.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
