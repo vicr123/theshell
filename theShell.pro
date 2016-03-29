@@ -56,7 +56,8 @@ HEADERS  += mainwindow.h \
     clickablelabel.h \
     thewave.h \
     thewaveworker.h \
-    loginsplash.h
+    loginsplash.h \
+    notifications_adaptor.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
