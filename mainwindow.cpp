@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     playSound(QUrl::fromLocalFile(loginSoundPath));
 
     ui->timer->setVisible(false);
+    ui->openingAppFrame->setVisible(false);
 }
 
 MainWindow::~MainWindow()
@@ -246,6 +247,7 @@ void MainWindow::openingApp(QString AppName, QIcon AppIcon) {
 }
 
 void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
+    QMainWindow::setGeometry(x, y, w, h);
     QProcess::execute("wmctrl -r " + this->windowTitle() + " -e 0," +
                       QString::number(x) + "," + QString::number(y) + "," +
                       QString::number(w) + "," + QString::number(h));
