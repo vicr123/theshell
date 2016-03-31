@@ -10,6 +10,14 @@ Desktop Shell written in Qt
 qmake
 make
 
+## Install
+Copy theshell and init_theshell over to your binaries folder (usually /usr/bin)
+Copy theshell.desktop to your xsessions folder (usually /usr/share/xsessions)
+
+## Starting
+- Use init_theshell in an x session to start theShell
+- Use a window manager and use "theShell" as the session 
+
 ## Packages
 theShell is available in Arch Linux on the AUR under the name "theshell"
 
