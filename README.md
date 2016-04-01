@@ -5,6 +5,10 @@ Desktop Shell written in Qt
 - qmake
 - kwin (5.0 or later)
 - wmctrl
+- xbacklight
+- alsa-utils (optional, for volume controls)
+- pocketsphinx (optional, for voice control)
+- festival (optional, for voice control)
 
 ## Build
 qmake
