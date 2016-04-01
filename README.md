@@ -11,8 +11,10 @@ Desktop Shell written in Qt
 - festival (optional, for voice control)
 
 ## Build
+```
 qmake
 make
+```
 
 ## Install
 1. Copy theshell and init_theshell over to your binaries folder (usually /usr/bin)
