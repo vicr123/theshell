@@ -1,4 +1,4 @@
-# theshell
+# theShell
 Desktop Shell written in Qt
 
 ## Dependencies
