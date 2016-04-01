@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>434</width>
-    <height>694</height>
+    <height>737</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -313,11 +313,18 @@
       </item>
       <item>
        <widget class="QCommandLinkButton" name="commandLinkButton_7">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
-         <string>CommandLinkButton</string>
+         <string>Hibernate</string>
         </property>
         <property name="icon">
-         <iconset theme="system-suspend-hibernate"/>
+         <iconset theme="system-suspend-hibernate">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="description">
+         <string>Powers off your computer, but when powered back on, restores the session.</string>
         </property>
        </widget>
       </item>
