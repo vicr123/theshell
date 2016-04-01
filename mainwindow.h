@@ -11,6 +11,7 @@
 #include <QtDBus/QDBusConnection>
 #include <QMessageBox>
 #include <QSettings>
+#include <math.h>
 #include "window.h"
 #include "menu.h"
 #include "notificationdbus.h"
@@ -59,6 +60,22 @@ private slots:
     void on_notifications_clicked();
 
     void on_batteryLabel_clicked();
+
+    void on_volumeFrame_MouseEnter();
+
+    void on_volumeFrame_MouseExit();
+
+    void on_volumeSlider_sliderMoved(int position);
+
+    void on_volumeSlider_valueChanged(int value);
+
+    void on_brightnessFrame_MouseEnter();
+
+    void on_brightnessFrame_MouseExit();
+
+    void on_brightnessSlider_sliderMoved(int position);
+
+    void on_brightnessSlider_valueChanged(int value);
 
 private:
     Ui::MainWindow *ui;

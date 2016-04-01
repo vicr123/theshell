@@ -19,6 +19,7 @@ class UPowerDBus : public QObject
 public:
     explicit UPowerDBus(NotificationDBus* notificationDBus, QObject *parent = 0);
 
+    bool hasBattery();
 signals:
     void updateDisplay(QString display);
 public slots:
@@ -36,6 +37,7 @@ private:
     int batteryLowNotificationNumber = 0;
 
     NotificationDBus* notificationDBus;
+    bool hasBat;
 };
 
 #endif // UPOWERDBUS_H

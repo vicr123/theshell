@@ -7,6 +7,8 @@
 #include <QSettings>
 #include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
+#include <QFile>
+#include <QDir>
 #include "window.h"
 
 namespace Ui {

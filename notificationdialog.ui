@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>584</width>
+    <width>523</width>
     <height>42</height>
    </rect>
   </property>
@@ -46,6 +46,9 @@
      </property>
      <property name="text">
       <string>System</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>

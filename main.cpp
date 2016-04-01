@@ -10,6 +10,7 @@
 #include <QMediaPlayer>
 #include <QDebug>
 #include <QSettings>
+#include <QInputDialog>
 
 int main(int argc, char *argv[])
 {
@@ -35,6 +36,19 @@ int main(int argc, char *argv[])
     a.setOrganizationDomain("");
     a.setApplicationName("theShell");
 
+    QFile lockfile(QDir::home().absolutePath() + "/.theshell.lck");
+    if (lockfile.exists()) {
+        if (QMessageBox::warning(0, "theShell already running", "theShell seems to already be running. "
+                                                               "Do you wish to start theShell anyway?",
+                             QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
+            return 0;
+        }
+    }
+
+    lockfile.open(QFile::WriteOnly);
+    lockfile.write(QByteArray());
+    lockfile.close();
+
     QSettings settings;
 
     QString windowManager = settings.value("startup/WindowManagerCommand", "").toString();
@@ -43,7 +57,16 @@ int main(int argc, char *argv[])
         settings.setValue("startup/WindowManagerCommand", windowManager);
     }
 
-    QProcess::startDetached(windowManager);
+    while (!QProcess::startDetached(windowManager)) {
+        windowManager = QInputDialog::getText(0, "Window Manager couldn't start",
+                              "The window manager \"" + windowManager + "\" could not start. \n\n"
+                              "Enter the name or path of a window manager to attempt to start a different window"
+                              "manager, or hit 'Cancel' to start theShell without a window manager.");
+        if (windowManager == "") {
+            break;
+        }
+    }
+
 
     if (showSplash) {
         LoginSplash* splash = new LoginSplash();

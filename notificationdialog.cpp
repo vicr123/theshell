@@ -1,13 +1,16 @@
 #include "notificationdialog.h"
 #include "ui_notificationdialog.h"
 
-NotificationDialog::NotificationDialog(QString title, QString body, QStringList actions, int id, int timeout, QWidget *parent) :
+NotificationDialog::NotificationDialog(QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NotificationDialog)
 {
     ui->setupUi(this);
 
-    QBrush background = this->palette().background();
+    this->hints = hints;
+
+
+    /*QBrush background = this->palette().background();
     QPalette pal = this->palette();
     pal.setBrush(QPalette::Background, pal.foreground());
     pal.setColor(QPalette::Button, pal.foreground().color());
@@ -15,7 +18,7 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
     pal.setBrush(QPalette::Foreground, background);
     //pal().background().setColor(this->palette().foreground().color());
     //pal().foreground().setColor(background);
-    this->setPalette(pal);
+    this->setPalette(pal);*/
     ui->title->setText(title);
     ui->body->setText(body);
 
@@ -25,7 +28,7 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
 
         QPushButton *button = new QPushButton();
         button->setText(readable);
-        button->setPalette(pal);
+        //button->setPalette(pal);
         connect(button, &QPushButton::clicked, [=]() {
             uint id2 = id;
             QString key = action;
@@ -42,10 +45,31 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
     //w.setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width(), w.height());
     this->setGeometry(QRect(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height()));
 
-
-
-    ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(24, 24));
-
+    if (hints.keys().contains("category")) {
+        QString category = hints.value("category").toString();
+        if (category == "network.connected") {
+            ui->label->setPixmap(QIcon::fromTheme("network-connect").pixmap(24, 24));
+        } else if (category == "network.disconnected") {
+            ui->label->setPixmap(QIcon::fromTheme("network-disconnect").pixmap(24, 24));
+        } else if (category == "email.arrived") {
+            ui->label->setPixmap(QIcon::fromTheme("mail-receive").pixmap(24, 24));
+        } else {
+            ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(24, 24));
+        }
+    } else {
+        if (hints.keys().contains("urgency")) {
+            QChar urgency = hints.value("urgency").toChar();
+            if (urgency == 0) {
+                ui->label->setPixmap(QIcon::fromTheme("dialog-information").pixmap(24, 24));
+            } else if (urgency == 1) {
+                ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(24, 24));
+            } else if (urgency == 2) {
+                ui->label->setPixmap(QIcon::fromTheme("dialog-error").pixmap(24, 24));
+            }
+        } else {
+            ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(24, 24));
+        }
+    }
     if (timeout == -1) { //Timeout default
         this->timeout = 5000;
     } else if (timeout > 0) { //Timeout given by notification

@@ -128,6 +128,8 @@ void EndSessionWait::on_pushButton_clicked()
 }
 
 void EndSessionWait::performEndSession() {
+    QFile(QDir::home().absolutePath() + "/.theshell.lck").remove();
+
     QSettings settings;
     QString logoutSoundPath = settings.value("sounds/logout", "").toString();
     if (logoutSoundPath == "") {

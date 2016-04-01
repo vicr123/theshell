@@ -23,11 +23,22 @@ Menu::Menu(QWidget *parent) :
     QString name = qgetenv("USER");
     if (name.isEmpty()) {
         name = qgetenv("USERNAME");
-
     }
 
-    ui->label_2->setText("Hey, " + name + "!");
-    ui->label_4->setText(name + ", how do you want us to end the session?");
+    QProcess* fullNameProc = new QProcess(this);
+    fullNameProc->start("getent passwd " + name);
+    fullNameProc->waitForFinished();
+    QString parseName(fullNameProc->readAll());
+    delete fullNameProc;
+    QString fullname = parseName.split(",").at(0).split(":").last();
+    if (fullname == "") {
+        ui->label_2->setText("Hey, " + name + "!");
+        ui->label_4->setText(name + ", what do you want to do after we exit?");
+    } else {
+        ui->label_2->setText("Hey, " + fullname + "!");
+        ui->label_4->setText(fullname + ", what do you want to do after we exit?");
+    }
+
 
     apps = new QList<App*>();
     appsShown = new QList<App*>();
@@ -78,7 +89,9 @@ void Menu::show() {
                 bool isApplication = false;
                 bool display = true;
                 for (QString line : desktopPart.split("\n")) {
-                    if (line.startsWith("name=", Qt::CaseInsensitive)) {
+                    if (line.startsWith("genericname=", Qt::CaseInsensitive)) {
+                        app->setDescription(line.split("=")[1]);
+                    } else if (line.startsWith("name=", Qt::CaseInsensitive)) {
                         app->setName(line.split("=")[1]);
                     } else if (line.startsWith("icon=", Qt::CaseInsensitive)) {
                         QString iconname = line.split("=")[1];
@@ -91,8 +104,6 @@ void Menu::show() {
                         app->setIcon(icon);
                     } else if (line.startsWith("exec=", Qt::CaseInsensitive)) {
                         app->setCommand(line.split("=")[1].remove(QRegExp("%.")));
-                    } else if (line.startsWith("genericname="), Qt::CaseInsensitive) {
-                        app->setDescription(line.split("=")[1]);
                     } else if (line.startsWith("description=", Qt::CaseInsensitive)) {
                         app->setDescription(line.split("=")[1]);
                     } else if (line.startsWith("type=", Qt::CaseInsensitive)) {
@@ -119,7 +130,7 @@ void Menu::show() {
         if (app->description() == "") {
             i->setText(app->name());
         } else {
-            i->setText(app->description() + "(" + app->name() + ")");
+            i->setText(app->name() + " | " + app->description());
         }
         i->setIcon(app->icon());
         appsShown->append(app);
@@ -205,7 +216,15 @@ void Menu::on_commandLinkButton_3_clicked()
 void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
 {
     for (App* app : *appsShown) {
-        if (app->name() == item->text()) {
+        bool correctApp = false;
+        if (item->text().contains("|")) {
+            if (app->name() == item->text().split("|")[1].remove(0, 1)) {
+                correctApp = true;
+            }
+        } else if (app->name() == item->text()) {
+            correctApp = true;
+        }
+        if (correctApp) {
             QProcess::startDetached(app->command().remove("%u"));
             emit appOpening(app->name(), app->icon());
             this->close();
@@ -228,7 +247,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             if (app->description() == "") {
                 i->setText(app->name());
             } else {
-                i->setText(app->description() + "(" + app->name() + ")");
+                i->setText(app->description() + " | " + app->name());
             }
             i->setIcon(app->icon());
             appsShown->append(app);
@@ -236,12 +255,12 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
         }
     } else {
         for (App *app : *apps) {
-            if (app->name().contains(arg1, Qt::CaseInsensitive)) {
+            if (app->name().contains(arg1, Qt::CaseInsensitive) || app->description().contains(arg1, Qt::CaseInsensitive)) {
                 QListWidgetItem *i = new QListWidgetItem();
                 if (app->description() == "") {
                     i->setText(app->name());
                 } else {
-                    i->setText(app->description() + "(" + app->name() + ")");
+                    i->setText(app->description() + " | " + app->name());
                 }
                 i->setIcon(app->icon());
                 appsShown->append(app);
@@ -252,7 +271,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
 
         QString pathEnv = QProcessEnvironment::systemEnvironment().value("PATH");
         for (QString env : pathEnv.split(":")) {
-            if (QFile(env.append("/" + arg1.toLower().split(" ")[0])).exists()) {
+            if (QFile(env.append("/" + arg1.split(" ")[0])).exists()) {
                 App* app = new App();
                 app->setName(arg1);
                 app->setCommand(arg1);
@@ -300,5 +319,11 @@ void Menu::on_pushButton_3_clicked()
 {
     QProcess::startDetached("install_theos");
     emit appOpening("theOS Installer", QIcon::fromTheme("install_theos"));
+    this->close();
+}
+
+void Menu::on_commandLinkButton_5_clicked()
+{
+    QProcess::startDetached("systemctl suspend");
     this->close();
 }

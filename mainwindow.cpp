@@ -24,9 +24,21 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     updbus->DeviceChanged();
 
-    UGlobalHotkeys* hotkeyManager = new UGlobalHotkeys(this);
-    hotkeyManager->registerHotkey("Alt+F5");
-    connect(hotkeyManager, SIGNAL(activated(size_t)), this, SLOT(on_pushButton_clicked()));
+    if (updbus->hasBattery()) {
+        ui->batteryFrame->setVisible(true);
+    } else {
+        ui->batteryFrame->setVisible(false);
+    }
+
+    UGlobalHotkeys* menuKey = new UGlobalHotkeys(this);
+    menuKey->registerHotkey("Alt+F5");
+    connect(menuKey, SIGNAL(activated(size_t)), this, SLOT(on_pushButton_clicked()));
+
+    UGlobalHotkeys* runKey = new UGlobalHotkeys(this);
+    runKey->registerHotkey("Alt+F2");
+    connect(runKey, &UGlobalHotkeys::activated, [=]() {
+        QMessageBox::warning(this, "Hi", "Hi", QMessageBox::Ok, QMessageBox::Ok);
+    });
 
     infoPane = new InfoPaneDropdown(ndbus);
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -45,17 +57,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->timer->setVisible(false);
     ui->openingAppFrame->setVisible(false);
+
+    if (QFile("/usr/bin/amixer").exists()) {
+        ui->volumeSlider->setVisible(false);
+    } else {
+        ui->volumeFrame->setVisible(false);
+    }
+
+    ui->brightnessSlider->setVisible(false);
 }
 
 MainWindow::~MainWindow()
 {
-    KeyCode LSuper = XKeysymToKeycode(QX11Info::display(), XK_Meta_L);
-    XUngrabKey(QX11Info::display(), LSuper, AnyModifier, RootWindow(QX11Info::display(), 0));
-    KeyCode RSuper = XKeysymToKeycode(QX11Info::display(), XK_Meta_R);
-    XUngrabKey(QX11Info::display(), RSuper, AnyModifier, RootWindow(QX11Info::display(), 0));
-    XUngrabKey(QX11Info::display(), 124, AnyModifier, RootWindow(QX11Info::display(), 0));
-
-
     delete ui;
 }
 
@@ -83,11 +96,11 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::reloadWindows() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    QProcess p;
+    QProcess p; //Get all open windows
     p.start("wmctrl -lpG");
     p.waitForStarted();
     while (p.state() != 0) {
-        QApplication::processEvents();
+        QApplication::processEvents(); //Don't block UI while reloading windows
     }
 
     QList<WmWindow*> *wlist = new QList<WmWindow*>();
@@ -161,6 +174,7 @@ void MainWindow::reloadWindows() {
             }
         }
 
+        ui->centralWidget->adjustSize();
         ui->openingAppFrame->setVisible(false);
     }
 
@@ -285,4 +299,145 @@ void MainWindow::on_notifications_clicked()
 void MainWindow::on_batteryLabel_clicked()
 {
     infoPane->show(InfoPaneDropdown::Battery);
+}
+
+void MainWindow::on_volumeFrame_MouseEnter()
+{
+    ui->volumeSlider->setVisible(true);
+    //ui->volumeSlider->resize(0, 0);
+    QPropertyAnimation* anim = new QPropertyAnimation(ui->volumeSlider, "geometry");
+    anim->setStartValue(ui->volumeSlider->geometry());
+    QRect endGeometry = ui->volumeSlider->geometry();
+    endGeometry.setWidth(200);
+    anim->setEndValue(endGeometry);
+    anim->setDuration(250);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->start();
+
+    //Get Current Volume
+    QProcess* mixer = new QProcess(this);
+    mixer->start("amixer");
+    mixer->waitForFinished();
+    QString output(mixer->readAll());
+    delete mixer;
+
+    bool readLine = false;
+    for (QString line : output.split("\n")) {
+        if (line.startsWith(" ") && readLine) {
+            if (line.startsWith("  Front Left:")) {
+                if (line.contains("[off]")) {
+                    ui->volumeSlider->setValue(0);
+                } else {
+                    QString percent = line.mid(line.indexOf("\[") + 1, 3).remove("\%");
+                    ui->volumeSlider->setValue(percent.toInt());
+                    ui->volumeSlider->setMaximum(100);
+                }
+            }
+        } else {
+            if (line.contains("'Master'")) {
+                readLine = true;
+            } else {
+                readLine = false;
+            }
+        }
+    }
+}
+
+void MainWindow::on_volumeFrame_MouseExit()
+{
+    QPropertyAnimation* anim = new QPropertyAnimation(ui->volumeSlider, "geometry");
+    anim->setStartValue(ui->volumeSlider->geometry());
+    QRect endGeometry = ui->volumeSlider->geometry();
+    endGeometry.setWidth(0);
+    anim->setEndValue(endGeometry);
+    anim->setDuration(250);
+    anim->setEasingCurve(QEasingCurve::InCubic);
+    anim->start();
+    connect(anim, &QPropertyAnimation::finished, [=]() {
+        ui->volumeSlider->setVisible(false);
+    });
+}
+
+void MainWindow::on_volumeSlider_sliderMoved(int position)
+{
+    //Get Current Limits
+    QProcess* mixer = new QProcess(this);
+    mixer->start("amixer");
+    mixer->waitForFinished();
+    QString output(mixer->readAll());
+
+    bool readLine = false;
+    int limit;
+    for (QString line : output.split("\n")) {
+        if (line.startsWith(" ") && readLine) {
+            if (line.startsWith("  Limits:")) {
+                limit = line.split(" ").last().toInt();
+            }
+        } else {
+            if (line.contains("'Master'")) {
+                readLine = true;
+            } else {
+                readLine = false;
+            }
+        }
+    }
+
+    mixer->start("amixer set Master " + QString::number(limit * (position / (float) 100)) + " on");
+    connect(mixer, SIGNAL(finished(int)), mixer, SLOT(deleteLater()));
+}
+
+void MainWindow::on_volumeSlider_valueChanged(int value)
+{
+    on_volumeSlider_sliderMoved(value);
+}
+
+void MainWindow::on_brightnessFrame_MouseEnter()
+{
+    ui->brightnessSlider->setVisible(true);
+    //ui->volumeSlider->resize(0, 0);
+    QPropertyAnimation* anim = new QPropertyAnimation(ui->brightnessSlider, "geometry");
+    anim->setStartValue(ui->brightnessSlider->geometry());
+    QRect endGeometry = ui->brightnessSlider->geometry();
+    endGeometry.setWidth(200);
+    anim->setEndValue(endGeometry);
+    anim->setDuration(250);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->start();
+
+    //Get Current Brightness
+    QProcess* backlight = new QProcess(this);
+    backlight->start("xbacklight -get");
+    backlight->waitForFinished();
+    float output = ceil(QString(backlight->readAll()).toFloat());
+    delete backlight;
+
+    ui->brightnessSlider->setValue((int) output);
+}
+
+void MainWindow::on_brightnessFrame_MouseExit()
+{
+    QPropertyAnimation* anim = new QPropertyAnimation(ui->brightnessSlider, "geometry");
+    anim->setStartValue(ui->brightnessSlider->geometry());
+    QRect endGeometry = ui->brightnessSlider->geometry();
+    endGeometry.setWidth(0);
+    anim->setEndValue(endGeometry);
+    anim->setDuration(250);
+    anim->setEasingCurve(QEasingCurve::InCubic);
+    anim->start();
+    connect(anim, &QPropertyAnimation::finished, [=]() {
+        ui->brightnessSlider->setVisible(false);
+    });
+
+}
+
+void MainWindow::on_brightnessSlider_sliderMoved(int position)
+{
+    QProcess* backlight = new QProcess(this);
+    backlight->start("xbacklight -set " + QString::number(position));
+    connect(backlight, SIGNAL(finished(int)), backlight, SLOT(deleteLater()));
+}
+
+void MainWindow::on_brightnessSlider_valueChanged(int value)
+{
+    on_brightnessSlider_sliderMoved(value);
 }

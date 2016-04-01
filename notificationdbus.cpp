@@ -20,7 +20,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         replaces_id = nextId;
         nextId++;
 
-        NotificationDialog *d = new NotificationDialog(summary, body, actions, replaces_id, expire_timeout);
+        NotificationDialog *d = new NotificationDialog(summary, body, actions, replaces_id, hints, expire_timeout);
         d->dbusParent = this;
 
         connect(d, SIGNAL(closing(int, int)), this, SLOT(sendCloseNotification(int, int)));

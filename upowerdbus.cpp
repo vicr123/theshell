@@ -9,7 +9,7 @@ UPowerDBus::UPowerDBus(NotificationDBus* notificationDBus, QObject *parent) : QO
     if (reply.isValid()) {
         for (QDBusObjectPath device : reply.value()) {
             if (device.path().contains("battery")) {
-                bool connected = QDBusConnection::systemBus().connect("org.freedesktop.UPower", device.path(),
+                QDBusConnection::systemBus().connect("org.freedesktop.UPower", device.path(),
                                                      "org.freedesktop.UPower.Device", "Changed", this,
                                                                       SLOT(DeviceChanged()));
 
@@ -17,10 +17,15 @@ UPowerDBus::UPowerDBus(NotificationDBus* notificationDBus, QObject *parent) : QO
                 allDevices.append(i);
             }
         }
-        QTimer *t = new QTimer(this);
-        t->setInterval(60000);
-        connect(t, SIGNAL(timeout()), this, SLOT(DeviceChanged()));
-        t->start();
+        if (allDevices.length() == 0) {
+            hasBat = false;
+        } else {
+            hasBat = true;
+            QTimer *t = new QTimer(this);
+            t->setInterval(60000);
+            connect(t, SIGNAL(timeout()), this, SLOT(DeviceChanged()));
+            t->start();
+        }
         //DeviceChanged();
     } else {
         emit updateDisplay("Can't get battery information.");
@@ -119,4 +124,8 @@ void UPowerDBus::DeviceChanged() {
 
         emit updateDisplay(QString::number(percentage) + "%" + state);
     }
+}
+
+bool UPowerDBus::hasBattery() {
+    return hasBat;
 }

@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     thewave.cpp \
     thewaveworker.cpp \
     loginsplash.cpp \
-    notifications_adaptor.cpp
+    notifications_adaptor.cpp \
+    hoverframe.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -58,7 +59,8 @@ HEADERS  += mainwindow.h \
     thewave.h \
     thewaveworker.h \
     loginsplash.h \
-    notifications_adaptor.h
+    notifications_adaptor.h \
+    hoverframe.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

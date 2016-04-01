@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>434</width>
-    <height>653</height>
+    <height>694</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -110,7 +110,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="listWidget"/>
+      <widget class="QListWidget" name="listWidget">
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLineEdit" name="lineEdit">
@@ -130,7 +134,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>TextLabel</string>
+          <string>username</string>
          </property>
         </widget>
        </item>
@@ -251,9 +255,26 @@
        </widget>
       </item>
       <item>
-       <widget class="QCommandLinkButton" name="commandLinkButton_5">
+       <widget class="QCommandLinkButton" name="commandLinkButton_6">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Lock</string>
+        </property>
+        <property name="icon">
+         <iconset theme="system-lock-screen">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="description">
+         <string>Locks your workspace with your password</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCommandLinkButton" name="commandLinkButton_5">
+        <property name="enabled">
+         <bool>true</bool>
         </property>
         <property name="text">
          <string>Suspend</string>
@@ -287,6 +308,16 @@
         </property>
         <property name="description">
          <string>Switches to the logon screen and keeps your session in the background</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCommandLinkButton" name="commandLinkButton_7">
+        <property name="text">
+         <string>CommandLinkButton</string>
+        </property>
+        <property name="icon">
+         <iconset theme="system-suspend-hibernate"/>
         </property>
        </widget>
       </item>
