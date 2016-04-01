@@ -3,7 +3,7 @@ Desktop Shell written in Qt
 
 ## Dependencies
 - qmake
-- kwin
+- kwin (5.0 or later)
 - wmctrl
 
 ## Build
