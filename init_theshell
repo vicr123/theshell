@@ -1,3 +1,4 @@
 export XDG_CURRENT_DESKTOP=KDE
 export DE=kde
+export KDE_SESSION_VERSION=5
 theshell

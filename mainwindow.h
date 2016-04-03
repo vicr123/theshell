@@ -11,6 +11,8 @@
 #include <QtDBus/QDBusConnection>
 #include <QMessageBox>
 #include <QSettings>
+#include <QSoundEffect>
+#include <QPainter>
 #include <math.h>
 #include "window.h"
 #include "menu.h"
@@ -77,6 +79,8 @@ private slots:
 
     void on_brightnessSlider_valueChanged(int value);
 
+    void on_volumeSlider_sliderReleased();
+
 private:
     Ui::MainWindow *ui;
     QList<WmWindow*> *windowList;
@@ -88,6 +92,8 @@ private:
     void closeEvent(QCloseEvent*);
 
     InfoPaneDropdown *infoPane;
+
+    void paintEvent(QPaintEvent *event);
 };
 
 #endif // MAINWINDOW_H

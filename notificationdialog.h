@@ -7,6 +7,8 @@
 #include <QTimer>
 #include <QProcess>
 #include <QThread>
+#include <QPainter>
+#include <QPaintEvent>
 #include "notificationdbus.h"
 
 class NotificationDBus;
@@ -45,6 +47,8 @@ private:
     int id;
     int timeout;
     QVariantMap hints;
+
+    void paintEvent(QPaintEvent* event);
 };
 
 #endif // NOTIFICATIONDIALOG_H

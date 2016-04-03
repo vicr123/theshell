@@ -9,6 +9,8 @@
 #include <QList>
 #include <QListWidgetItem>
 #include <QDirIterator>
+#include <QPaintEvent>
+#include <QPainter>
 #include "endsessionwait.h"
 #include "app.h"
 
@@ -69,6 +71,7 @@ private:
     bool doCheckForClose = false;
 
     //void closeEvent(QCloseEvent *event);
+    void paintEvent(QPaintEvent* event);
 };
 
 #endif // MENU_H

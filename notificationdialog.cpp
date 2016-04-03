@@ -151,3 +151,10 @@ void NotificationDialog::setGeometry(int x, int y, int w, int h) { //Use wmctrl 
 void NotificationDialog::setGeometry(QRect geometry) {
     this->setGeometry(geometry.x(), geometry.y(), geometry.width(), geometry.height());
 }
+
+void NotificationDialog::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    painter.setPen(this->palette().color(QPalette::WindowText));
+    painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+    event->accept();
+}

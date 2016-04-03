@@ -130,7 +130,7 @@ void Menu::show() {
         if (app->description() == "") {
             i->setText(app->name());
         } else {
-            i->setText(app->name() + " | " + app->description());
+            i->setText(app->description() + " | " + app->name());
         }
         i->setIcon(app->icon());
         appsShown->append(app);
@@ -275,15 +275,11 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                 App* app = new App();
                 app->setName(arg1);
                 app->setCommand(arg1);
-                app->setIcon(QIcon::fromTheme("application-x-executable"));
+                app->setIcon(QIcon::fromTheme("system-run"));
                 appsShown->append(app);
 
                 QListWidgetItem *i = new QListWidgetItem();
-                if (app->description() == "") {
-                    i->setText(app->name());
-                } else {
-                    i->setText(app->description() + "(" + app->name() + ")");
-                }
+                i->setText(app->name());
                 i->setIcon(app->icon());
                 ui->listWidget->addItem(i);
                 break;
@@ -291,6 +287,30 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
         }
     }
 
+    QUrl uri = QUrl::fromUserInput(arg1);
+    if (uri.scheme() == "http") {
+        App* app = new App();
+        app->setName("Go to " + uri.toDisplayString());
+        app->setCommand("xdg-open \"" + uri.toString() + "\"");
+        app->setIcon(QIcon::fromTheme("text-html"));
+        appsShown->append(app);
+
+        QListWidgetItem *i = new QListWidgetItem();
+        i->setText(app->name());
+        i->setIcon(app->icon());
+        ui->listWidget->addItem(i);
+    } else if (uri.scheme() == "file") {
+        App* app = new App();
+        app->setName("Open " + uri.path());
+        app->setCommand("xdg-open \"" + uri.toString() + "\"");
+        app->setIcon(QIcon::fromTheme("system-file-manager"));
+        appsShown->append(app);
+
+        QListWidgetItem *i = new QListWidgetItem();
+        i->setText(app->name());
+        i->setIcon(app->icon());
+        ui->listWidget->addItem(i);
+    }
 }
 
 bool Menu::eventFilter(QObject *object, QEvent *event) {
@@ -326,4 +346,11 @@ void Menu::on_commandLinkButton_5_clicked()
 {
     QProcess::startDetached("systemctl suspend");
     this->close();
+}
+
+void Menu::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    painter.setPen(this->palette().color(QPalette::WindowText));
+    painter.drawLine(this->width() - 1, 0, this->width() - 1, this->height());
+    event->accept();
 }

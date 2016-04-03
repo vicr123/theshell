@@ -389,6 +389,7 @@ void MainWindow::on_volumeSlider_sliderMoved(int position)
 void MainWindow::on_volumeSlider_valueChanged(int value)
 {
     on_volumeSlider_sliderMoved(value);
+
 }
 
 void MainWindow::on_brightnessFrame_MouseEnter()
@@ -440,4 +441,19 @@ void MainWindow::on_brightnessSlider_sliderMoved(int position)
 void MainWindow::on_brightnessSlider_valueChanged(int value)
 {
     on_brightnessSlider_sliderMoved(value);
+}
+
+void MainWindow::on_volumeSlider_sliderReleased()
+{
+    QSoundEffect* volumeSound = new QSoundEffect();
+    volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
+    volumeSound->play();
+    connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
+}
+
+void MainWindow::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    painter.setPen(this->palette().color(QPalette::WindowText));
+    painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+    event->accept();
 }
