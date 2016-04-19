@@ -1,6 +1,9 @@
 # theShell
 Desktop Shell written in Qt
 
+## Screenshots
+![Screenshot 1](https://raw.githubusercontent.com/vicr123/theshell/master/images/desktop.png)
+
 ## Dependencies
 - qmake
 - kwin (5.0 or later)
