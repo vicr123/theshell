@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1040</width>
+    <width>1201</width>
     <height>81</height>
    </rect>
   </property>
@@ -163,7 +163,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset theme="video-display"/>
+            <iconset theme="video-display">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -222,7 +223,7 @@
       <item>
        <widget class="ClickableLabel" name="notifications">
         <property name="text">
-         <string>0 missed notifications</string>
+         <string>0 Notifications</string>
         </property>
        </widget>
       </item>
@@ -278,7 +279,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset theme="audio-volume-high"/>
+            <iconset theme="audio-volume-high">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -313,6 +315,79 @@
            </property>
            <property name="tickInterval">
             <number>10</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="mprisFrame">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="mprisSongName">
+           <property name="text">
+            <string>mprisSongName</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="mprisBack">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="media-skip-backward">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="mprisPause">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="media-playback-pause">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="media-skip-forward">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

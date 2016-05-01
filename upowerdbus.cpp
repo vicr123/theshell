@@ -68,11 +68,12 @@ void UPowerDBus::DeviceChanged() {
                                                           " and power off the PC and change the battery.",
                                                           QSystemTrayIcon::Critical, 0);
                         trayicon->hide();*/
-
+                        QVariantMap hints;
+                        hints.insert("urgency", 2);
                         batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Critically Low",
                                                        "You have about 10 minutes of battery remaining."
                                                        " Either plug in your PC or save your work"
-                                                       " and power off the PC and change the battery.", QStringList(), QVariantMap(), 0);
+                                                       " and power off the PC and change the battery.", QStringList(), hints, 0);
 
                         tenMinuteBatteryWarning = true;
                         halfHourBatteryWarning = true;

@@ -3,13 +3,20 @@
 
 extern void playSound(QUrl, bool = false);
 
-InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, QWidget *parent) :
+InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoPaneDropdown)
 {
     ui->setupUi(this);
 
     this->notificationEngine = notificationEngine;
+    this->powerEngine = powerEngine;
+
+    connect(notificationEngine, SIGNAL(newNotification(int,QString,QString,QIcon)), this, SLOT(newNotificationReceived(int,QString,QString,QIcon)));
+    connect(notificationEngine, SIGNAL(removeNotification(int)), this, SLOT(removeNotification(int)));
+    connect(this, SIGNAL(closeNotification(int)), notificationEngine, SLOT(CloseNotificationUserInitiated(int)));
+
+    connect(powerEngine, SIGNAL(batteryChanged(int)), this, SLOT(batteryLevelChanged(int)));
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
@@ -23,15 +30,59 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, QWidget
     ui->lineEdit->setEnabled(false);
     ui->listWidget->setEnabled(false);
 
+
     if (!QFile("/usr/bin/systemsettings5").exists()) {
         ui->pushButton_8->setVisible(false);
     }
 
+    QString redshiftStart = settings.value("display/redshiftStart", "").toString();
+    if (redshiftStart == "") {
+        redshiftStart = ui->startRedshift->time().toString();
+        settings.setValue("display/redshiftStart", redshiftStart);
+    }
+    ui->startRedshift->setTime(QTime::fromString(redshiftStart));
+
+    QString redshiftEnd = settings.value("display/redshiftEnd", "").toString();
+    if (redshiftEnd == "") {
+        redshiftEnd = ui->endRedshift->time().toString();
+        settings.setValue("display/redshiftEnd", redshiftEnd);
+    }
+    ui->endRedshift->setTime(QTime::fromString(redshiftEnd));
+
+    QString redshiftVal = settings.value("display/redshiftIntensity", "").toString();
+    if (redshiftVal == "") {
+        redshiftVal = ui->endRedshift->time().toString();
+        settings.setValue("display/redshiftIntensity", redshiftVal);
+    }
+    ui->redshiftIntensity->setValue(redshiftVal.toInt());
+
+    ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
+    ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
+
+    eventTimer = new QTimer(this);
+    eventTimer->setInterval(1000);
+    connect(eventTimer, SIGNAL(timeout()), this, SLOT(processTimer()));
+    eventTimer->start();
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
 {
     delete ui;
+}
+
+void InfoPaneDropdown::processTimer() {
+    QTime time = QTime::currentTime();
+    if (ui->redshiftPause->isChecked() && time.secsTo(ui->startRedshift->time()) <= 0 && time.secsTo(ui->endRedshift->time()) >= 0) {
+        if (!isRedshiftOn) {
+            isRedshiftOn = true;
+            QProcess::startDetached("redshift -O " + QString::number(ui->redshiftIntensity->value()));
+        }
+    } else {
+        if (isRedshiftOn) {
+            isRedshiftOn = false;
+            QProcess::startDetached("redshift -O 6500");
+        }
+    }
 }
 
 void InfoPaneDropdown::timerTick() {
@@ -53,6 +104,7 @@ void InfoPaneDropdown::show(dropdownType showWith) {
     a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), this->height()));
     a->setEasingCurve(QEasingCurve::OutCubic);
     a->setDuration(500);
+    connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
     a->start();
     //QDialog::showFullScreen();
 }
@@ -67,18 +119,22 @@ void InfoPaneDropdown::close() {
     connect(a, &QPropertyAnimation::finished, [=]() {
         QDialog::close();
     });
+    connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
     a->start();
 }
 
 void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
     //QFrame *currentDropDownFrame;
     this->currentDropDown = changeTo;
+
+    ui->networkFrame->setVisible(false);
+    ui->batteryFrame->setVisible(false);
+    ui->notificationsFrame->setVisible(false);
+    ui->clockFrame->setVisible(false);
+    ui->settingsFrame->setVisible(false);
+
     switch (changeTo) {
     case Settings:
-        ui->networkFrame->setVisible(false);
-        ui->batteryFrame->setVisible(false);
-        ui->notificationsFrame->setVisible(false);
-        ui->clockFrame->setVisible(false);
         ui->settingsFrame->setVisible(true);
 
         ui->clockLabel->setShowDisabled(true);
@@ -88,11 +144,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
 
         break;
     case Clock:
-        ui->networkFrame->setVisible(false);
-        ui->batteryFrame->setVisible(false);
-        ui->notificationsFrame->setVisible(false);
         ui->clockFrame->setVisible(true);
-        ui->settingsFrame->setVisible(false);
 
         ui->clockLabel->setShowDisabled(false);
         ui->batteryLabel->setShowDisabled(true);
@@ -100,11 +152,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
         ui->networkLabel->setShowDisabled(true);
         break;
     case Battery:
-        ui->networkFrame->setVisible(false);
         ui->batteryFrame->setVisible(true);
-        ui->notificationsFrame->setVisible(false);
-        ui->clockFrame->setVisible(false);
-        ui->settingsFrame->setVisible(false);
 
         ui->clockLabel->setShowDisabled(true);
         ui->batteryLabel->setShowDisabled(false);
@@ -112,11 +160,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
         ui->networkLabel->setShowDisabled(true);
         break;
     case Notifications:
-        ui->networkFrame->setVisible(false);
-        ui->batteryFrame->setVisible(false);
         ui->notificationsFrame->setVisible(true);
-        ui->clockFrame->setVisible(false);
-        ui->settingsFrame->setVisible(false);
 
         ui->clockLabel->setShowDisabled(true);
         ui->batteryLabel->setShowDisabled(true);
@@ -125,10 +169,6 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
         break;
     case Network:
         ui->networkFrame->setVisible(true);
-        ui->batteryFrame->setVisible(false);
-        ui->notificationsFrame->setVisible(false);
-        ui->clockFrame->setVisible(false);
-        ui->settingsFrame->setVisible(false);
 
         ui->clockLabel->setShowDisabled(true);
         ui->batteryLabel->setShowDisabled(true);
@@ -310,4 +350,113 @@ void InfoPaneDropdown::setGeometry(int x, int y, int w, int h) { //Use wmctrl co
 
 void InfoPaneDropdown::setGeometry(QRect geometry) {
     this->setGeometry(geometry.x(), geometry.y(), geometry.width(), geometry.height());
+}
+
+void InfoPaneDropdown::on_lineEdit_2_editingFinished()
+{
+    settings.setValue("startup/autostart", ui->lineEdit_2->text());
+}
+
+void InfoPaneDropdown::on_resolutionButton_clicked()
+{
+    QProcess::startDetached("kcmshell5 kcm_kscreen");
+    this->close();
+}
+
+void InfoPaneDropdown::on_startRedshift_timeChanged(const QTime &time)
+{
+    settings.setValue("display/redshiftStart", time.toString());
+    processTimer();
+}
+
+void InfoPaneDropdown::on_endRedshift_timeChanged(const QTime &time)
+{
+    settings.setValue("display/redshiftEnd", time.toString());
+    processTimer();
+}
+
+void InfoPaneDropdown::on_redshiftIntensity_sliderMoved(int position)
+{
+    QProcess::startDetached("redshift -O " + QString::number(position));
+}
+
+void InfoPaneDropdown::on_redshiftIntensity_sliderReleased()
+{
+    if (!isRedshiftOn) {
+        QProcess::startDetached("redshift -O 6500");
+    }
+}
+
+void InfoPaneDropdown::on_redshiftIntensity_valueChanged(int value)
+{
+    settings.setValue("display/redshiftIntensity", value);
+}
+
+void InfoPaneDropdown::newNotificationReceived(int id, QString summary, QString body, QIcon icon) {
+    QFrame* frame = new QFrame();
+    QHBoxLayout* layout = new QHBoxLayout();
+    layout->setMargin(0);
+    frame->setLayout(layout);
+
+    QLabel* iconLabel = new QLabel();
+    iconLabel->setPixmap(icon.pixmap(22, 22));
+    layout->addWidget(iconLabel);
+
+    QLabel* sumLabel = new QLabel();
+    sumLabel->setText(summary);
+    QFont font = sumLabel->font();
+    font.setBold(true);
+    sumLabel->setFont(font);
+    layout->addWidget(sumLabel);
+
+    QLabel* bodyLabel = new QLabel();
+    bodyLabel->setText(body);
+    bodyLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    layout->addWidget(bodyLabel);
+
+    QPushButton* button = new QPushButton();
+    button->setIcon(QIcon::fromTheme("window-close"));
+    connect(button, &QPushButton::clicked, [=]() {
+        emit closeNotification(id);
+    });
+    layout->addWidget(button);
+
+    ui->notificationsList->layout()->addWidget(frame);
+    ui->noNotifications->setVisible(false);
+    ui->clearAllNotifications->setVisible(true);
+    notificationFrames.insert(id, frame);
+
+    emit numNotificationsChanged(notificationFrames.count());
+}
+
+void InfoPaneDropdown::removeNotification(int id) {
+    if (notificationFrames.keys().contains(id)) {
+        delete notificationFrames.value(id);
+        notificationFrames.remove(id);
+    }
+
+    emit numNotificationsChanged(notificationFrames.count());
+
+    if (notificationFrames.count() == 0) {
+        ui->noNotifications->setVisible(true);
+        ui->clearAllNotifications->setVisible(false);
+    }
+}
+
+void InfoPaneDropdown::on_clearAllNotifications_clicked()
+{
+    for (int id : notificationFrames.keys()) {
+        emit closeNotification(id);
+    }
+}
+
+
+void InfoPaneDropdown::on_redshiftPause_toggled(bool checked)
+{
+    processTimer();
+    settings.setValue("display/redshiftPaused", !checked);
+}
+
+void InfoPaneDropdown::batteryLevelChanged(int battery) {
+    ui->currentBattery->setText("Current Battery Percentage: " + QString::number(battery));
 }

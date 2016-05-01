@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     timer->start();
 
     NotificationDBus* ndbus = new NotificationDBus(this);
+    connect(ndbus, SIGNAL(newNotification(int,QString,QString,QIcon)), this, SLOT(incrementNotificationCounter()));
+    connect(ndbus, SIGNAL(removeNotification(int)), this, SLOT(decrementNotificationCounter()));
 
     UPowerDBus* updbus = new UPowerDBus(ndbus, this);
     connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
@@ -40,9 +42,10 @@ MainWindow::MainWindow(QWidget *parent) :
         QMessageBox::warning(this, "Hi", "Hi", QMessageBox::Ok, QMessageBox::Ok);
     });
 
-    infoPane = new InfoPaneDropdown(ndbus);
+    infoPane = new InfoPaneDropdown(ndbus, updbus);
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(infoPane, SIGNAL(networkLabelChanged(QString)), this, SLOT(internetLabelChanged(QString)));
+    connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
     infoPane->getNetworks();
 
     QSettings settings;
@@ -65,6 +68,8 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     ui->brightnessSlider->setVisible(false);
+    ui->mprisFrame->setVisible(false);
+    // TODO: Add Mpris support
 }
 
 MainWindow::~MainWindow()
@@ -82,7 +87,7 @@ void MainWindow::on_pushButton_clicked()
     Menu* m = new Menu(this);
     m->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    m->setGeometry(this->x(), this->y() + this->height(), m->width(), screenGeometry.height() - this->height() - m->y());
+    m->setGeometry(this->x(), this->y() + this->height() - 1, m->width(), screenGeometry.height() - (this->height() + this->y()) + 1);
     m->show();
     m->setFocus();
 
@@ -186,6 +191,7 @@ void MainWindow::reloadWindows() {
             anim->setEndValue(QRect(this->x(), hideTop, screenGeometry.width() + 1, this->height()));
             anim->setDuration(500);
             anim->setEasingCurve(QEasingCurve::OutCubic);
+            connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
             anim->start();
 
             //this->setGeometry(QRect(this->x(), -100, screenGeometry.width(), this->height()));
@@ -214,6 +220,7 @@ void MainWindow::reloadWindows() {
                     connect(anim, &QPropertyAnimation::finished, [=]() {
                         hiding = false;
                     });
+                    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
                     anim->start();
                 }
             } else {
@@ -227,6 +234,7 @@ void MainWindow::reloadWindows() {
                     anim->setEndValue(QRect(screenGeometry.x(), hideTop, screenGeometry.width() + 1, this->height()));
                     anim->setDuration(500);
                     anim->setEasingCurve(QEasingCurve::OutCubic);
+                    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
                     anim->start();
                 }
             }
@@ -312,6 +320,7 @@ void MainWindow::on_volumeFrame_MouseEnter()
     anim->setEndValue(endGeometry);
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->start();
 
     //Get Current Volume
@@ -352,6 +361,7 @@ void MainWindow::on_volumeFrame_MouseExit()
     anim->setEndValue(endGeometry);
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::InCubic);
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->start();
     connect(anim, &QPropertyAnimation::finished, [=]() {
         ui->volumeSlider->setVisible(false);
@@ -403,6 +413,7 @@ void MainWindow::on_brightnessFrame_MouseEnter()
     anim->setEndValue(endGeometry);
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->start();
 
     //Get Current Brightness
@@ -424,6 +435,7 @@ void MainWindow::on_brightnessFrame_MouseExit()
     anim->setEndValue(endGeometry);
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::InCubic);
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->start();
     connect(anim, &QPropertyAnimation::finished, [=]() {
         ui->brightnessSlider->setVisible(false);
@@ -456,4 +468,24 @@ void MainWindow::paintEvent(QPaintEvent *event) {
     painter.setPen(this->palette().color(QPalette::WindowText));
     painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
     event->accept();
+}
+
+void MainWindow::numNotificationsChanged(int notifications) {
+    QFont font = ui->notifications->font();
+    if (notifications == 0) {
+        font.setBold(false);
+        ui->notifications->setText("No notifications");
+    } else {
+        font.setBold(true);
+        if (notifications == 1) {
+            ui->notifications->setText("1 notification");
+        } else {
+            ui->notifications->setText(QString::number(notifications) + " notifications");
+        }
+    }
+    ui->notifications->setFont(font);
+}
+
+InfoPaneDropdown* MainWindow::getInfoPane() {
+    return this->infoPane;
 }

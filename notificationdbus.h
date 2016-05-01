@@ -5,8 +5,10 @@
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QApplication>
+#include <QIcon>
 #include "notificationdialog.h"
 #include "notifications_adaptor.h"
+#include "infopanedropdown.h"
 
 class NotificationDialog;
 
@@ -21,6 +23,8 @@ public:
 Q_SIGNALS:
     Q_SCRIPTABLE void NotificationClosed(int id, int reason);
     Q_SCRIPTABLE void ActionInvoked(uint id, QString action_key);
+    void newNotification(int id, QString summary, QString body, QIcon icon);
+    void removeNotification(int id);
 
 public Q_SLOTS:
     QStringList GetCapabilities();
@@ -35,6 +39,7 @@ public Q_SLOTS:
 
 protected Q_SLOTS:
     void sendCloseNotification(int id, int reason);
+    void CloseNotificationUserInitiated(int id);
 
 private:
     QList<NotificationDialog*> dialogs;

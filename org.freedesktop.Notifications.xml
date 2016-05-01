@@ -9,6 +9,9 @@
       <arg name="id" type="u" direction="out"/>
       <arg name="action_key" type="s" direction="out"/>
     </signal>
+    <signal name="removeNotification">
+      <arg name="id" type="i" direction="out"/>
+    </signal>
     <method name="GetCapabilities">
       <arg type="as" direction="out"/>
     </method>

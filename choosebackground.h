@@ -2,6 +2,7 @@
 #define CHOOSEBACKGROUND_H
 
 #include <QDialog>
+#include "background.h"
 
 namespace Ui {
 class ChooseBackground;

@@ -9,7 +9,7 @@ NotificationDBus::NotificationDBus(QObject *parent) : QObject(parent)
 }
 
 QStringList NotificationDBus::GetCapabilities() {
-    return QStringList() << "body" << "body-markup" << "icon-static" << "actions";
+    return QStringList() << "body" << "body-markup" << "icon-static" << "persistence" << "actions";
 }
 
 uint NotificationDBus::Notify(QString app_name, uint replaces_id,
@@ -34,7 +34,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         dialogs.at(replaces_id - 1)->show();
     }
 
-
+    emit newNotification(replaces_id, summary, body, QIcon::fromTheme("dialog-warning"));
     return replaces_id;
 }
 
@@ -51,8 +51,17 @@ void NotificationDBus::CloseNotification(int id) {
     d->close(3);
 }
 
+void NotificationDBus::CloseNotificationUserInitiated(int id) {
+    NotificationDialog *d = dialogs.at(id - 1);
+    d->close(2);
+}
+
 void NotificationDBus::sendCloseNotification(int id, int reason) {
     emit NotificationClosed(id, reason);
+
+    if (reason == 2 || reason == 3) {
+        emit removeNotification(id);
+    }
 }
 
 void NotificationDBus::invokeAction(uint id, QString key) {

@@ -10,6 +10,9 @@
 #include <QDebug>
 #include <QMap>
 #include <QTime>
+#include <QAudioRecorder>
+#include <QAudioEncoderSettings>
+#include <QAudioProbe>
 
 class theWaveWorker : public QObject
 {
@@ -47,6 +50,8 @@ public slots:
 
     void quit();
 
+    void soundBuffer(QAudioBuffer buffer);
+
 private slots:
     void outputAvailable();
 
@@ -58,6 +63,7 @@ private:
     SpeechState state = Idle;
 
     QSoundEffect* startListeningSound, *okListeningSound, *errorListeningSound, *stopListeningSound;
+    QAudioRecorder* recorder = NULL;
 
     bool stopEverything = false;
     bool resetOnNextBegin = false;

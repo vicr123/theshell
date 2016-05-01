@@ -36,7 +36,9 @@ SOURCES += main.cpp\
     thewaveworker.cpp \
     loginsplash.cpp \
     notifications_adaptor.cpp \
-    hoverframe.cpp
+    hoverframe.cpp \
+    choosebackground.cpp \
+    switch.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -60,7 +62,9 @@ HEADERS  += mainwindow.h \
     thewaveworker.h \
     loginsplash.h \
     notifications_adaptor.h \
-    hoverframe.h
+    hoverframe.h \
+    choosebackground.h \
+    switch.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -70,7 +74,8 @@ FORMS    += mainwindow.ui \
     lockscreen.ui \
     infopanedropdown.ui \
     thewave.ui \
-    loginsplash.ui
+    loginsplash.ui \
+    choosebackground.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

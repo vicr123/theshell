@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     bool showSplash = true;
+    bool autoStart = true;
 
     QStringList args = a.arguments();
     args.removeFirst();
@@ -25,10 +26,13 @@ int main(int argc, char *argv[])
             qDebug() << "theShell";
             qDebug() << "Usage: theshell [OPTIONS]";
             qDebug() << "  -s, --no-splash-screen       Don't show the splash screen";
+            qDebug() << "  -a, --no-autostart           Don't autostart executables";
             qDebug() << "  -h, --help                   Show this help output";
             return 0;
         } else if (arg == "-s" || arg == "--no-splash-screen") {
             showSplash = false;
+        } else if (arg == "-a" || arg == "--no-autostart") {
+            autoStart = false;
         }
     }
 
@@ -57,6 +61,13 @@ int main(int argc, char *argv[])
         settings.setValue("startup/WindowManagerCommand", windowManager);
     }
 
+    if (autoStart) {
+        QStringList autostartApps = settings.value("startup/autostart", "").toString().split(",");
+        for (QString app : autostartApps) {
+            QProcess::startDetached(app);
+        }
+    }
+
     while (!QProcess::startDetached(windowManager)) {
         windowManager = QInputDialog::getText(0, "Window Manager couldn't start",
                               "The window manager \"" + windowManager + "\" could not start. \n\n"
@@ -77,13 +88,14 @@ int main(int argc, char *argv[])
     QProcess* ksuperkey = new QProcess();
     ksuperkey->start("ksuperkey -d -e \"Super_L=Alt_L|F5;Alt_R|F5\"");
 
-    Background b;
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    MainWindow w;
+    Background b(&w);
     b.setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint);
+    b.setGeometry(screenGeometry);
     b.showFullScreen();
 
-    MainWindow w;
     w.setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
     w.setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width() + 1, w.height());
     w.show();
 

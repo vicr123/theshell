@@ -22,6 +22,7 @@ public:
     bool hasBattery();
 signals:
     void updateDisplay(QString display);
+    void batteryChanged(int batteryPercent);
 public slots:
     void DeviceChanged();
 

@@ -115,6 +115,14 @@ void Menu::show() {
                             display = false;
                             break;
                         }
+                    } else if (line.startsWith("onlyshowin=", Qt::CaseInsensitive)) {
+                        if (!line.split("=")[1].contains("theshell;")) {
+                            display = false;
+                        }
+                    } else if (line.startsWith("notshowin=", Qt::CaseInsensitive)) {
+                        if (line.split("=")[1].contains("theshell;")) {
+                            display = false;
+                        }
                     }
                 }
                 if (isApplication && display) {
@@ -133,6 +141,7 @@ void Menu::show() {
             i->setText(app->description() + " | " + app->name());
         }
         i->setIcon(app->icon());
+        i->setData(Qt::UserRole, app->command());
         appsShown->append(app);
         ui->listWidget->addItem(i);
     }
@@ -215,7 +224,7 @@ void Menu::on_commandLinkButton_3_clicked()
 
 void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
 {
-    for (App* app : *appsShown) {
+    /*for (App* app : *appsShown) {
         bool correctApp = false;
         if (item->text().contains("|")) {
             if (app->name() == item->text().split("|")[1].remove(0, 1)) {
@@ -230,7 +239,12 @@ void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
             this->close();
             break;
         }
-    }
+    }*/
+
+    QProcess::startDetached(item->data(Qt::UserRole).toString().remove("%u"));
+    //emit appOpening(app->name(), app->icon());
+    this->close();
+
     //App *app = appsShown->at(ui->listWidget->selectionModel()->selectedIndexes().at(0).row());
 }
 void Menu::on_lineEdit_textChanged(const QString &arg1)
@@ -250,6 +264,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                 i->setText(app->description() + " | " + app->name());
             }
             i->setIcon(app->icon());
+            i->setData(Qt::UserRole, app->command());
             appsShown->append(app);
             ui->listWidget->addItem(i);
         }
@@ -263,10 +278,25 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                     i->setText(app->description() + " | " + app->name());
                 }
                 i->setIcon(app->icon());
+                i->setData(Qt::UserRole, app->command());
                 appsShown->append(app);
                 ui->listWidget->addItem(i);
 
             }
+        }
+
+        if (QString("shutdown").contains(arg1, Qt::CaseInsensitive) || QString("power\ off").contains(arg1, Qt::CaseInsensitive)) {
+            QListWidgetItem *i = new QListWidgetItem();
+            i->setText("Power Off");
+            i->setIcon(QIcon::fromTheme("system-shutdown"));
+            i->setData(Qt::UserRole, "POWEROFF");
+            ui->listWidget->addItem(i);
+        } else if (QString("restart").contains(arg1, Qt::CaseInsensitive) || QString("reboot").contains(arg1, Qt::CaseInsensitive)) {
+            QListWidgetItem *i = new QListWidgetItem();
+            i->setText("Reboot");
+            i->setIcon(QIcon::fromTheme("system-reboot"));
+            i->setData(Qt::UserRole, "REBOOT");
+            ui->listWidget->addItem(i);
         }
 
         QString pathEnv = QProcessEnvironment::systemEnvironment().value("PATH");
@@ -281,6 +311,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                 QListWidgetItem *i = new QListWidgetItem();
                 i->setText(app->name());
                 i->setIcon(app->icon());
+                i->setData(Qt::UserRole, app->command());
                 ui->listWidget->addItem(i);
                 break;
             }
@@ -288,7 +319,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
     }
 
     QUrl uri = QUrl::fromUserInput(arg1);
-    if (uri.scheme() == "http") {
+    if (uri.scheme() == "http" || uri.scheme() == "https") {
         App* app = new App();
         app->setName("Go to " + uri.toDisplayString());
         app->setCommand("xdg-open \"" + uri.toString() + "\"");
@@ -298,18 +329,37 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
         QListWidgetItem *i = new QListWidgetItem();
         i->setText(app->name());
         i->setIcon(app->icon());
+        i->setData(Qt::UserRole, app->command());
         ui->listWidget->addItem(i);
     } else if (uri.scheme() == "file") {
-        App* app = new App();
-        app->setName("Open " + uri.path());
-        app->setCommand("xdg-open \"" + uri.toString() + "\"");
-        app->setIcon(QIcon::fromTheme("system-file-manager"));
-        appsShown->append(app);
+        if (QDir(uri.path() + "/").exists()) {
+            App* app = new App();
+            app->setName("Open " + uri.path());
+            app->setCommand("xdg-open \"" + uri.toString() + "\"");
+            app->setIcon(QIcon::fromTheme("system-file-manager"));
+            appsShown->append(app);
 
-        QListWidgetItem *i = new QListWidgetItem();
-        i->setText(app->name());
-        i->setIcon(app->icon());
-        ui->listWidget->addItem(i);
+            QListWidgetItem *i = new QListWidgetItem();
+            i->setText(app->name());
+            i->setIcon(app->icon());
+            i->setData(Qt::UserRole, app->command());
+            ui->listWidget->addItem(i);
+        } else if (QFile(uri.path()).exists()) {
+            App* app = new App();
+            app->setName("Open " + uri.path());
+            app->setCommand("xdg-open \"" + uri.toString() + "\"");
+            QFile f(uri.toString());
+            QFileInfo info(f);
+            QMimeType mime = (new QMimeDatabase())->mimeTypeForFile(info);
+            app->setIcon(QIcon::fromTheme(mime.iconName(), QIcon::fromTheme("application-octet-stream")));
+            appsShown->append(app);
+
+            QListWidgetItem *i = new QListWidgetItem();
+            i->setText(app->name());
+            i->setIcon(app->icon());
+            i->setData(Qt::UserRole, app->command());
+            ui->listWidget->addItem(i);
+        }
     }
 }
 

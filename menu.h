@@ -11,6 +11,8 @@
 #include <QDirIterator>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include "endsessionwait.h"
 #include "app.h"
 

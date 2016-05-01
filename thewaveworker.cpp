@@ -49,12 +49,39 @@ void theWaveWorker::begin() {
         resetOnNextBegin = false;
         emit resetFrames();
     }
+
     speechProc = new QProcess(this);
     speechProc->setProcessChannelMode(QProcess::MergedChannels);
     connect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
     speechProc->start("pocketsphinx_continuous -inmic yes");
     speechProc->waitForStarted();
     speechProc->waitForFinished(-1);
+
+    /*recorder = new QAudioRecorder(this);
+    QAudioEncoderSettings settings;
+    settings.setCodec("audio/wav");
+    settings.setQuality(QMultimedia::HighQuality);
+
+    QAudioProbe* probe = new QAudioProbe(this);
+    probe->setSource(recorder);
+    connect(probe, SIGNAL(audioBufferProbed(QAudioBuffer)), this, SLOT(soundBuffer(QAudioBuffer)));
+
+    recorder->setEncodingSettings(settings);
+    recorder->setOutputLocation(QUrl::fromLocalFile("/home/victor/sound.wav"));
+    recorder->record();
+
+    emit outputSpeech("Go for it!");
+    emit startedListening();*/
+}
+
+void theWaveWorker::soundBuffer(QAudioBuffer buffer) {
+    float avg;
+    const float* data = buffer.data<float>();
+    for (int i = 0; i < buffer.byteCount(); i++) {
+        avg = avg + data[i];
+    }
+
+    avg = avg / buffer.byteCount();
 }
 
 void theWaveWorker::outputAvailable() {

@@ -41,6 +41,7 @@ public:
     ~MainWindow();
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
+    InfoPaneDropdown* getInfoPane();
 
 private slots:
     void on_pushButton_clicked();
@@ -80,6 +81,8 @@ private slots:
     void on_brightnessSlider_valueChanged(int value);
 
     void on_volumeSlider_sliderReleased();
+
+    void numNotificationsChanged(int notifications);
 
 private:
     Ui::MainWindow *ui;
