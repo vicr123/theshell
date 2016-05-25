@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/sounds">
-        <file>listening.wav</file>
-        <file>notlistening.wav</file>
-        <file>ok.wav</file>
-        <file>what.wav</file>
-        <file>volfeedback.wav</file>
-    </qresource>
-</RCC>
