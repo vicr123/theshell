@@ -1,0 +1,48 @@
+
+div.blockTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    
+    width: calc(100% - 200px);
+    background-color: black;
+    height: 500px;
+    background-attachment: fixed;
+    
+    -webkit-transition:=1s ease-out;
+    -moz-transition:=1s ease-out;
+    transition:=1s ease-out;
+}
+
+div.blockLanding#theshell {
+    background-color: green;
+    background: url("images/triangles.png") no-repeat center center;
+    background-size: 100% auto;
+}
+
+div.blockTitle#theshell:hover {
+    
+}
+
+div.blockLanding {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    
+    width: calc(100% - 200px);
+    background-color: black;
+    height: 150px;
+    background-attachment: fixed;
+    
+    -webkit-transition:=1s ease-out;
+    -moz-transition:=1s ease-out;
+    transition:=1s ease-out;
+}
+
+p {
+    padding-left: 100px;
+}
