@@ -11,20 +11,58 @@
   </head>
   <body>
     <div  class="navbar">
-      <div  class="navbarContent">
-        <div  class="navbarImage"><img  alt="Victor Tran"  src="images/icon.svg"
-             width="40"  height="40">&nbsp; <span  class="navbarHeader">theShell</span>
-        </div>
+      <div  class="navbarContent"> <a  href="index.html"  class="navbarHome">
+          <div  class="navbarImage"><img  alt="Victor Tran"  src="images/icon.svg"
+               width="40"  height="40">&nbsp; <span  class="navbarHeader">theShell</span>
+          </div>
+        </a>
         <ul  class="navbarItems">
           <li> <a  href="/index.html"> Victor Tran </a> </li>
+          <li> <a  href="build.html"> Download </a> </li>
           <li> <a  href="https://github.com/vicr123/theshell"> GitHub </a> </li>
         </ul>
       </div>
     </div>
     <div  class="blockLanding"  id="theshell">
+      <div  class="navbarPadding">&nbsp;</div>
       <h1>theShell</h1>
       <h2>The desktop environment that gets out of your way</h2>
+      <div> <a  href="build.html"  class="button"> Download &gt; </a><a  href="http://www.github.com/vicr123/theshell"
+           class="button"> GitHub &gt; </a> </div>
     </div>
-    <p>This page is being built. :)</p>
+    <div  class="blockTitle"  id="bar">
+      <h1>The Bar</h1>
+      <h2>The central part of your PC</h2>
+      The Bar allows you to get all the information you need about your PC at a
+      glance. All the necessary controls are there for you, so you don't have to
+      expand a set of icons to find the one you want. The bar also hides when
+      another window comes into its way, saving space on your screen.
+      <div><a  href="bar.html"  class="button">Learn more &gt;</a></div>
+    </div>
+    <div  class="blockTitle"  id="statcenter">
+      <h1>The Status Center</h1>
+      <h2>Take control of your PC</h2>
+      The Status Center shows you an extended view of your PC. Here, you can
+      look for extended information about your PC. Any missed notifications also
+      show up here.
+      <!--<div><a  href="#"  class="button">Learn more &gt;</a></div>--->
+      <div>More info coming soon!</div>
+    </div>
+    <!--<div  class="blockTitle"  id="touch">
+      <h1>Touch Friendly*</h1>      <h2>Stop pressing small buttons!</h2>      theShell is touch friendly. Enjoy the simplicity of using theShell with      features made just for touch. <span  class="disclaimer">*Touchegg        configuration required. Touch has not yet been tested, but we're trying        to code for it.</span>      <div><a  href="#"  class="button">Learn more &gt;</a></div>    </div>-->
+    <div  class="blockTitle"  id="opensource">
+      <h1>Open Source</h1>
+      <h2>Modify to your heart's content</h2>
+      theShell is open source, licensed under the terms of the GNU General
+      Public Licence, version 3 or later. This means that you're free to
+      download the code and mess around with it. You're even allowed to take
+      theShell, make modifications and publish your contributions. </div>
+    <div  class="blockSmall"  id="download">
+      <h1>Go on, try it out!</h1>
+      <div> <a  href="build.html"  class="button"> Download &gt; </a> </div>
+    </div>
+    <footer>Copyright © Victor Tran 2016. Text on this page is licensed under <a
+         href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
+        CC-BY-SA licence, version 4.0 or later.</a></footer>
   </body>
 </html>

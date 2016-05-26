@@ -36,7 +36,7 @@ div.blockTitle#bar {
 div.blockTitle#statcenter {
     background-color: green;
     background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-                url("images/statcenterdemo.png") no-repeat left center;
+                ;
     background-size: cover;
     color: white;
 }
@@ -50,15 +50,6 @@ div.blockTitle#touch {
     color: white;
 }
 
-
-div.blockTitle#opensource {
-    background-color: green;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url("images/opendoor.png") no-repeat left center;
-    background-size: cover;
-    color: white;
-}
-
 div.blockLanding {
     display: flex;
     flex-direction: column;
@@ -66,6 +57,7 @@ div.blockLanding {
     padding-left: 100px;
     padding-right: 100px;
     
+    width: calc(100% - 200px);
     background-color: black;
     height: 200px;
     background-attachment: fixed;
@@ -75,8 +67,10 @@ div.blockLanding {
     transition:=1s ease-out;
 }
 
-p {
+div.sectionHeader {
     padding-left: 100px;
+    background-color: rgb(100, 100, 100);
+    color: white;
 }
 
 footer {

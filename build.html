@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html  dir="ltr">
+  <head>
+    <meta  content="text/html; charset=utf-8"  http-equiv="content-type">
+    <title>theShell</title>
+    <link  rel="stylesheet"  href="css.css">
+    <link  rel="stylesheet"  href="build.css">
+    <link  rel="icon"  href="/theshell/icon.png">
+    <script  type="text/javascript"  src="build.js"></script>
+    <meta  content="Victor Tran"  name="author">
+    <meta  content="BlueGriffon wysiwyg editor"  name="generator">
+  </head>
+  <body>
+    <div  class="navbar">
+      <div  class="navbarContent"> <a  href="index.html"  class="navbarHome">
+          <div  class="navbarImage"><img  alt="Victor Tran"  src="images/icon.svg"
+               width="40"  height="40">&nbsp; <span  class="navbarHeader">theShell</span>
+          </div>
+        </a>
+        <ul  class="navbarItems">
+          <li> <a  href="/index.html"> Victor Tran </a> </li>
+          <li> <a  href="/build.html"  class="selectedItem"> Download </a> </li>
+          <li> <a  href="https://github.com/vicr123/theshell"> GitHub </a> </li>
+        </ul>
+      </div>
+    </div>
+    <div  class="blockLanding"  id="theshell">
+      <div  class="navbarPadding">&nbsp;</div>
+      <h1>Download theShell</h1>
+      <h2>The desktop environment that gets out of your way</h2>
+    </div>
+    <a  href="index.html"  class="sectionHeader">
+      <div  class="sectionHeader">&lt; Back</div>
+    </a>
+    <div  class="pageContent"> Ready to start using theShell? </div>
+    <div  class="sectionHeader">Information</div>
+    <div  class="pageContent">
+      <ul>
+        <li>Currently, the latest version of theShell is theShell 1.3</li>
+        <li>theShell has only been tested on Arch Linux. Some users have
+          reported success with Fedora.</li>
+      </ul>
+    </div>
+    <div  class="sectionHeader">Download from the AUR</div>
+    <div  class="pageContent">theShell is available on the AUR under the package
+      name <a  href="https://aur.archlinux.org/packages/theshell/">theshell</a></div>
+    <div  class="sectionHeader">Build from Source</div>
+    <div  class="pageContent">Building from source is easy.
+      <ol>
+        <li>Install required dependencies.<br>
+          Dependencies include:
+          <ul>
+            <li>qmake</li>
+            <li>wmctrl</li>
+            <li>xbacklight</li>
+            <li>alsa-utils (optional, for volume controls)</li>
+            <li>pocketsphinx (optional, for theWave)</li>
+            <li>festival (optional, for theWave)</li>
+            <li>kwin 5+ (default window manager. If you want to use something
+              else, theShell will ask you if it can't start KWin.)</li>
+          </ul>
+        </li>
+        <li>Download the sources.<br>
+          <code>$ git clone https://github.com/vicr123/theshell#branch=master<br>
+            $ cd theshell</code> </li>
+        <li>Build the package. <br>
+          <code>$ qmake<br>
+            $ make</code></li>
+        <li>Copy files to directories<br>
+          <code> # cp theshell /usr/bin <br>
+            # cp init_theshell /usr/bin <br>
+            # cp theshell.desktop /usr/share/xsessions </code> </li>
+      </ol>
+    </div>
+    <footer>Copyright © Victor Tran 2016. Text on this page is licensed under <a
+         href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
+        CC-BY-SA licence, version 4.0 or later.</a></footer>
+  </body>
+</html>

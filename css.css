@@ -1,8 +1,18 @@
 @import url("https://fonts.googleapis.com/css?family=Noto+Sans");
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    
+    to {
+        opacity: 1;
+    }
+}
+
 body {
-    padding-top: 50px;
-    font-family: Noto Sans;
+    /*padding-top: 50px;*/
+    font-family: 'Noto Sans', sans-serif;
     margin: 0px;
 }
 
@@ -13,15 +23,17 @@ div.navbar {
     left: 0px;
     width: 100%;
     
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url("images/triangles.png") no-repeat center center fixed;
+    background: rgba(0, 0, 0, 0.7);
     background-size: 100% auto;
     
     color: white;
-    border-bottom: 1px solid black;
     justify-content: center;
     display: flex;
     align-items: center;
+}
+
+div.navbarPadding {
+    height: 50px;
 }
 
 div.navbarContent {
@@ -50,12 +62,16 @@ ul.navbarItems {
 ul.navbarItems a {
     text-decoration: none;
     display: block;
-    padding: 1em;
+    padding: 14px;
     color: white;
     
     -webkit-transition:.25s ease-out;
     -moz-transition:.25s ease-out;
     transition:.25s ease-out;
+}
+
+ul.navbarItems a.selectedItem {
+    background-color: rgb(0, 100, 0);
 }
 
 ul.navbarItems a:hover {
@@ -74,6 +90,8 @@ div.headerItem {
     background: rgb(0, 200, 255);
     color: black;
     padding: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
     text-decoration: none;
     font-variant: small-caps;
     
@@ -84,16 +102,106 @@ div.headerItem {
 }
 
 .button:hover {
-    background: rgb(0, 220, 255);
-    color: white;
+    background: rgb(0, 230, 255);
+    color: black;
 }
 
 .button:active {
-    background: rgb(0, 180, 255);
-    color: white;
+    background: rgb(0, 170, 255);
+    color: black;
 }
 
 h1,h2 {
     padding: 0px;
     margin: 0px;
+}
+
+footer {
+    background-color: rgb(100, 100, 100);
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+footer a {
+    color: white;
+}
+
+.disclaimer {
+    font-size: 8px;
+}
+
+a.navbarHome {
+    color: white;
+    text-decoration: none;
+}
+
+div.pageContent {
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+div.pageContent * {
+    margin: 0px;
+}
+
+code {
+    display: inline-block;
+    background-color: rgb(240, 240, 240);
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+div.sectionHeader {
+    padding-left: 100px;
+    background-color: rgb(100, 100, 100);
+    color: white;
+    font-variant: small-caps;
+    font-size: 20px;
+}
+
+a.sectionHeader {
+    text-decoration: none;
+}
+
+a>div.sectionHeader:hover {
+    background-color: rgb(130, 130, 130);
+}
+
+a>div.sectionHeader:active {
+    background-color: rgb(70, 70, 70);
+}
+
+img.wide {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    max-width: 100%;
+    height: auto;
+}
+
+div.blockSmall {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    
+    background-color: black;
+    height: 100px;
+    background-attachment: fixed;
+    
+    -webkit-transition:=1s ease-out;
+    -moz-transition:=1s ease-out;
+    transition:=1s ease-out;
+}
+
+div.blockSmall#download {
+    background-color: green;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("images/triangles.png") no-repeat center center;
+    background-size: 100% auto;
+    color: white;
 }

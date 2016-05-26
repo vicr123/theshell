@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html  dir="ltr">
+  <head>
+    <meta  content="text/html; charset=utf-8"  http-equiv="content-type">
+    <title>theShell</title>
+    <link  rel="stylesheet"  href="css.css">
+    <link  rel="stylesheet"  href="bar.css">
+    <link  rel="icon"  href="/theshell/icon.png">
+    <script  type="text/javascript"  src="build.js"></script>
+    <meta  content="Victor Tran"  name="author">
+    <meta  content="BlueGriffon wysiwyg editor"  name="generator">
+  </head>
+  <body>
+    <div  class="navbar">
+      <div  class="navbarContent"> <a  href="index.html"  class="navbarHome">
+          <div  class="navbarImage"><img  alt="Victor Tran"  src="images/icon.svg"
+               width="40"  height="40">&nbsp; <span  class="navbarHeader">theShell</span>
+          </div>
+        </a>
+        <ul  class="navbarItems">
+          <li> <a  href="/index.html"> Victor Tran </a> </li>
+          <li> <a  href="/build.html"> Download </a> </li>
+          <li> <a  href="https://github.com/vicr123/theshell"> GitHub </a> </li>
+        </ul>
+      </div>
+    </div>
+    <div  class="blockLanding"  id="theshell">
+      <div  class="navbarPadding">&nbsp;</div>
+      <h1>The Bar</h1>
+      <h2>The central part of your PC</h2>
+    </div>
+    <a  href="index.html"  class="sectionHeader">
+      <div  class="sectionHeader">&lt; Back</div>
+    </a>
+    <div  class="pageContent"> The Bar encompasses a simple view of your PC at
+      any given moment.<img  class="wide"  src="images/bar.png"></div>
+    <div  class="sectionHeader">Status</div>
+    <div  class="pageContent">The status of your PC is shown at the top of the
+      bar. Visible items include
+      <ul>
+        <li>Time &amp; Date</li>
+        <li>Timer (if one is set)</li>
+        <li>Battery</li>
+        <li>Brightness Control (if supported by your screen)</li>
+        <li>Network</li>
+        <li>New Notifications</li>
+        <li>Volume Control</li>
+      </ul>
+      <p>Clicking on any of these options will open the Status Center with the
+        appropriate pane showing so you can change settings or see more
+        information.</p>
+      <p>Hovering over the Brightness control or the Volume control will reveal
+        a slider that allows you to control the brightness or the volume,
+        respectively.</p>
+    </div>
+    <div  class="sectionHeader">Windows</div>
+    <div  class="pageContent">Below the Status indicators are the
+      currently opened windows. Clicking on any of the windows will
+      bring it to the front so you can work with that window.</div>
+    <div  class="sectionHeader">Hiding</div>
+    <div  class="pageContent">When a window comes in its way, the bar will move
+      up and out of screen just enough to make room for the window. To bring the
+      bar back, simply move your mouse to the top of the screen.</div>
+    <div  class="blockSmall"  id="download">
+      <h1>Go on, try it out!</h1>
+      <div> <a  href="build.html"  class="button"> Download &gt; </a> </div>
+    </div>
+    <footer>Copyright © Victor Tran 2016. Text on this page is licensed under <a
+         href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
+        CC-BY-SA licence, version 4.0 or later.</a></footer>
+  </body>
+</html>
