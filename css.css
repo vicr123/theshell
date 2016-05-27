@@ -121,6 +121,7 @@ footer {
     color: white;
     padding-top: 5px;
     padding-bottom: 5px;
+    padding-left: 100px;
 }
 
 footer a {
@@ -145,6 +146,23 @@ div.pageContent {
 
 div.pageContent * {
     margin: 0px;
+}
+
+a.backToPersonal {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    left: 0px;
+    height: 40px;
+    top: 0px;
+    color: white;
+    text-decoration: none;
+}
+
+a.backToPersonal:hover {
+    background-color: black;
 }
 
 code {
@@ -185,7 +203,7 @@ img.wide {
 div.blockSmall {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+/*     justify-content: center; */
     padding-left: 100px;
     padding-right: 100px;
     
@@ -202,6 +220,13 @@ div.blockSmall#download {
     background-color: green;
     background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
                 url("images/triangles.png") no-repeat center center;
+    background-size: 100% auto;
+    color: white;
+}
+
+
+div.blockSmall#morestuff {
+    background: linear-gradient(to top right, rgb(0, 100, 255), rgb(0, 200, 255));
     background-size: 100% auto;
     color: white;
 }
