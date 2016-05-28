@@ -11,9 +11,8 @@
     <meta  content="BlueGriffon wysiwyg editor"  name="generator">
   </head>
   <body>
-    <div  class="navbar">
-      <a href="/index.html" class="backToPersonal">
-      <div>&lt; Back to Victor Tran</div>
+    <div  class="navbar"> <a  href="/index.html"  class="backToPersonal">
+        <div>&lt; More Apps</div>
       </a>
       <div  class="navbarContent"> <a  href="index.html"  class="navbarHome">
           <div  class="navbarImage"><img  alt="Victor Tran"  src="images/icon.svg"
@@ -21,7 +20,6 @@
           </div>
         </a>
         <ul  class="navbarItems">
-          <li> <a  href="/index.html"> Victor Tran </a> </li>
           <li> <a  href="build.html"  class="selectedItem"> Download </a> </li>
           <li> <a  href="https://github.com/vicr123/theshell"> GitHub </a> </li>
         </ul>

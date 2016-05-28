@@ -7,17 +7,19 @@
     <link  rel="stylesheet"  href="index.css">
     <link  rel="icon"  href="/theshell/icon.png">
     <meta  content="Victor Tran"  name="author">
+    <meta name="viewport" content="width=device-width">
     <meta  content="BlueGriffon wysiwyg editor"  name="generator">
   </head>
   <body>
-    <div  class="navbar">
+    <div  class="navbar"><a  href="/index.html"  class="backToPersonal">
+        <div>&lt; More Apps</div>
+      </a>
       <div  class="navbarContent"> <a  href="index.html"  class="navbarHome">
           <div  class="navbarImage"><img  alt="Victor Tran"  src="images/icon.svg"
                width="40"  height="40">&nbsp; <span  class="navbarHeader">theShell</span>
           </div>
         </a>
         <ul  class="navbarItems">
-          <li> <a  href="/index.html"> Victor Tran </a> </li>
           <li> <a  href="build.html"> Download </a> </li>
           <li> <a  href="https://github.com/vicr123/theshell"> GitHub </a> </li>
         </ul>
@@ -46,7 +48,7 @@
       look for extended information about your PC. Any missed notifications also
       show up here.
       <!--<div><a  href="#"  class="button">Learn more &gt;</a></div>--->
-      <div style="padding-top: 10px;">More info coming soon!</div>
+      <div  style="padding-top: 10px;">More info coming soon!</div>
     </div>
     <!--<div  class="blockTitle"  id="touch">
       <h1>Touch Friendly*</h1>      <h2>Stop pressing small buttons!</h2>      theShell is touch friendly. Enjoy the simplicity of using theShell with      features made just for touch. <span  class="disclaimer">*Touchegg        configuration required. Touch has not yet been tested, but we're trying        to code for it.</span>      <div><a  href="#"  class="button">Learn more &gt;</a></div>    </div>-->
@@ -54,7 +56,7 @@
       <h1>Open Source</h1>
       <h2>Modify to your heart's content</h2>
       theShell is open source, licensed under the terms of the GNU General
-      Public Licence, version 3 or later. This means that you're free to
+      Public License, version 3 or later. This means that you're free to
       download the code and mess around with it. You're even allowed to take
       theShell, make modifications and publish your contributions. </div>
     <div  class="blockSmall"  id="download">
@@ -63,6 +65,6 @@
     </div>
     <footer>Copyright © Victor Tran 2016. Text on this page is licensed under <a
          href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
-        CC-BY-SA licence, version 4.0 or later.</a></footer>
+        CC-BY-SA license, version 4.0 or later.</a></footer>
   </body>
 </html>

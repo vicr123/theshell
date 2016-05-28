@@ -24,7 +24,7 @@ div.navbar {
     width: 100%;
     
     background: rgba(0, 0, 0, 0.7);
-    background-size: 100% auto;
+    background-size: 100% cover;
     
     color: white;
     justify-content: center;
@@ -45,6 +45,12 @@ div.navbarContent {
 div.navbarImage {
     display: flex;
     padding-top: calc(1em + 5px);
+}
+
+@media (max-width: 600px) {
+    div.navbarImage {
+        display: none;
+    }
 }
 
 span.navbarHeader {
@@ -124,6 +130,15 @@ footer {
     padding-left: 100px;
 }
 
+
+@media (max-width: 600px) {
+    footer {
+        white-space: nowrap;
+        padding: 5px;
+        overflow-x: scroll;
+    }
+}
+
 footer a {
     color: white;
 }
@@ -149,13 +164,13 @@ div.pageContent * {
 }
 
 a.backToPersonal {
-    padding: 5px;
+    padding: 14px;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: fixed;
     left: 0px;
-    height: 40px;
     top: 0px;
     color: white;
     text-decoration: none;
@@ -165,12 +180,19 @@ a.backToPersonal:hover {
     background-color: black;
 }
 
+@media (max-width: 600px) {
+    a.backToPersonal {
+        display: none;
+    }
+}
+
 code {
     display: inline-block;
     background-color: rgb(240, 240, 240);
     width: 100%;
     padding: 5px;
     border-radius: 5px;
+    overflow: scroll;
 }
 
 div.sectionHeader {
@@ -203,7 +225,7 @@ img.wide {
 div.blockSmall {
     display: flex;
     flex-direction: column;
-/*     justify-content: center; */
+     justify-content: center; 
     padding-left: 100px;
     padding-right: 100px;
     
@@ -220,13 +242,120 @@ div.blockSmall#download {
     background-color: green;
     background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
                 url("images/triangles.png") no-repeat center center;
-    background-size: 100% auto;
+    background-size: 100% cover;
     color: white;
 }
 
 
 div.blockSmall#morestuff {
     background: linear-gradient(to top right, rgb(0, 100, 255), rgb(0, 200, 255));
-    background-size: 100% auto;
+    background-size: 100% cover;
     color: white;
+}
+
+
+div.blockTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    
+    width: calc(100% - 200px);
+    background-color: black;
+    height: 500px;
+    background-attachment: fixed;
+    
+    -webkit-transition:=1s ease-out;
+    -moz-transition:=1s ease-out;
+    transition:=1s ease-out;
+}
+
+
+
+div.blockTitle#theshell {
+    background-color: green;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("images/triangles.png") no-repeat center center;
+    background-size: 100% cover;
+    color: white;
+}
+
+div.blockLanding#theshell {
+    background-color: green;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("images/triangles.png") no-repeat center center;
+    background-size: 100% cover;
+    color: white;
+}
+
+div.blockTitle#bar {
+    background-color: green;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("images/bardemo.png") no-repeat left center;
+    background-size: cover;
+    color: white;
+    height: 250px;
+}
+
+
+div.blockTitle#statcenter {
+    background-color: green;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("images/statcenterdemo.png") no-repeat left center;
+    background-size: cover;
+    color: white;
+}
+
+
+div.blockTitle#touch {
+    background-color: green;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                green;
+    background-size: cover;
+    color: white;
+}
+
+
+div.blockTitle#opensource {
+    background-color: green;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("images/opendoor.png") no-repeat left center;
+    background-size: cover;
+    color: white;
+}
+
+
+div.blockLanding {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    
+    background-color: black;
+    height: 200px;
+    background-attachment: fixed;
+    
+    -webkit-transition:=1s ease-out;
+    -moz-transition:=1s ease-out;
+    transition:=1s ease-out;
+}
+
+@media (max-width: 600px) {
+    div.blockTitle {
+        height: 500px;
+    }
+    
+    div.blockTitle#bar {
+        height: 500px;
+    }
+    
+    div.blockLanding {
+        height: 300px;
+    }
+    
+    div.blockSmall {
+        height: 200px;
+    }
 }
