@@ -40,6 +40,7 @@ div.navbarContent {
     display: flex;
     vertical-align: middle;
     width: 800px;
+    
 }
 
 div.navbarImage {
@@ -47,7 +48,7 @@ div.navbarImage {
     padding-top: calc(1em + 5px);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1050px) {
     div.navbarImage {
         display: none;
     }
@@ -59,10 +60,13 @@ span.navbarHeader {
 
 ul.navbarItems {
     display: flex;
-    flex-flow: row wrap;
-    -webkit-flex-flow: row wrap;
+    flex-flow: row;
+    -webkit-flex-flow: row;
     justify-content: flex-end;
     list-style: none;
+    
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 ul.navbarItems a {
@@ -82,6 +86,22 @@ ul.navbarItems a.selectedItem {
 
 ul.navbarItems a:hover {
     background-color: black;
+}
+
+ul.navbarItems>li {
+    white-space: nowrap;
+}
+
+@media (max-width: 1050px) {
+    div.navbarContent {
+        overflow-x: scroll;
+    }
+}
+
+@media (min-width: 1050px) {
+    ul.navbarItems li.backToVictorTran {
+        display: none;
+    }
 }
 
 div.headerItem {
@@ -131,7 +151,7 @@ footer {
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 1050px) {
     footer {
         white-space: nowrap;
         padding: 5px;
@@ -180,7 +200,7 @@ a.backToPersonal:hover {
     background-color: black;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1050px) {
     a.backToPersonal {
         display: none;
     }
@@ -253,6 +273,16 @@ div.blockSmall#morestuff {
     color: white;
 }
 
+div.blockSmall#morestuff:hover {
+    background: linear-gradient(to top right, rgb(0, 150, 255), rgb(0, 250, 255));
+}
+
+
+div.blockSmall#morestuff:active {
+    background: linear-gradient(to bottom left, rgb(0, 100, 255), rgb(0, 200, 255));
+    background-size: 100% cover;
+    color: white;
+}
 
 div.blockTitle {
     display: flex;
@@ -289,6 +319,13 @@ div.blockLanding#theshell {
     color: white;
 }
 
+
+div.blockLanding#whoami {
+    background-color: green;
+    background: linear-gradient(to top right, rgb(0, 100, 0), rgb(0, 200, 0));
+    color: white;
+}
+
 div.blockTitle#bar {
     background-color: green;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -316,6 +353,10 @@ div.blockTitle#touch {
     color: white;
 }
 
+div.blockTitle#theos {
+    background: linear-gradient(to top right, rgb(100, 0, 0), rgb(200, 0, 0));
+    color: white;
+}
 
 div.blockTitle#opensource {
     background-color: green;
@@ -342,7 +383,7 @@ div.blockLanding {
     transition:=1s ease-out;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1050px) {
     div.blockTitle {
         height: 500px;
     }
