@@ -7,6 +7,7 @@ Background::Background(MainWindow* mainwindow, QWidget *parent) :
 {
     ui->setupUi(this);
     this->mainwindow = mainwindow;
+    this->setAttribute(Qt::WA_X11NetWmWindowTypeDesktop, true);
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 

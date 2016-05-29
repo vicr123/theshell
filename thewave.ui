@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>theWave</string>
   </property>
+  <property name="windowIcon">
+   <iconset theme="theshell" resource="resources.qrc">
+    <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -182,7 +186,8 @@
               <string>Call</string>
              </property>
              <property name="icon">
-              <iconset theme="call-start"/>
+              <iconset theme="call-start">
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>
@@ -293,6 +298,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "background.h"
 #include "loginsplash.h"
+#include "segfaultdialog.h"
+#include "globalfilter.h"
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QProcess>
@@ -11,9 +13,31 @@
 #include <QDebug>
 #include <QSettings>
 #include <QInputDialog>
+#include <signal.h>
+#include <unistd.h>
+
+MainWindow* MainWin = NULL;
+
+void catch_sigsegv(int signal) {
+    qDebug() << "SEGFAULT! Quitting now!";
+    if (MainWin != NULL) {
+        MainWin->close();
+        delete MainWin;
+    }
+    SegfaultDialog* dialog = new SegfaultDialog();
+    dialog->exec();
+    std::abort();
+    //QApplication::exit(1);
+}
 
 int main(int argc, char *argv[])
 {
+    struct sigaction segvact;
+    segvact.sa_handler = catch_sigsegv;
+    sigemptyset(&segvact.sa_mask);
+    segvact.sa_flags = 0;
+    sigaction(SIGSEGV, &segvact, 0);
+
     QApplication a(argc, argv);
 
     bool showSplash = true;
@@ -39,6 +63,8 @@ int main(int argc, char *argv[])
     a.setOrganizationName("theSuite");
     a.setOrganizationDomain("");
     a.setApplicationName("theShell");
+
+    new GlobalFilter(&a);
 
     QFile lockfile(QDir::home().absolutePath() + "/.theshell.lck");
     if (lockfile.exists()) {
@@ -89,15 +115,16 @@ int main(int argc, char *argv[])
     ksuperkey->start("ksuperkey -d -e \"Super_L=Alt_L|F5;Alt_R|F5\"");
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    MainWindow w;
-    Background b(&w);
+    MainWin = new MainWindow();
+    Background b(MainWin);
     b.setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint);
     b.setGeometry(screenGeometry);
     b.showFullScreen();
+    b.setAttribute(Qt::WA_X11NetWmWindowTypeDesktop, true);
 
-    w.setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    w.setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width() + 1, w.height());
-    w.show();
+    MainWin->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    MainWin->setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width() + 1, MainWin->height());
+    MainWin->show();
 
     QThread::sleep(1);
 
@@ -114,4 +141,20 @@ void playSound(QUrl location, bool uncompressed = false) {
         sound->setMedia(location);
         sound->play();
     }
+}
+
+QIcon getIconFromTheme(QString name, QColor textColor) {
+    int averageCol = (textColor.red() + textColor.green() + textColor.blue()) / 3;
+
+    if (averageCol <= 127) {
+        return QIcon(":/icons/dark/images/dark/" + name);
+    } else {
+        return QIcon(":/icons/light/images/light/" + name);
+    }
+}
+
+void EndSession(EndSessionWait::shutdownType type) {
+    EndSessionWait* w = new EndSessionWait(type);
+    w->showFullScreen();
+    QApplication::setOverrideCursor(Qt::BlankCursor);
 }

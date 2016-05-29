@@ -12,6 +12,8 @@
 
 class NotificationDialog;
 
+class InfoPaneDropdown;
+
 class NotificationDBus : public QObject
 {
     Q_OBJECT
@@ -19,6 +21,7 @@ class NotificationDBus : public QObject
 public:
     explicit NotificationDBus(QObject *parent = 0);
     void invokeAction(uint id, QString key);
+    void setDropdownPane(InfoPaneDropdown* pane);
 
 Q_SIGNALS:
     Q_SCRIPTABLE void NotificationClosed(int id, int reason);
@@ -44,6 +47,8 @@ protected Q_SLOTS:
 private:
     QList<NotificationDialog*> dialogs;
     int nextId = 1;
+
+    InfoPaneDropdown* dropdownPane = NULL;
 };
 
 #endif // NOTIFICATIONDBUS_H

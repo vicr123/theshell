@@ -20,6 +20,8 @@ signals:
     void clicked();
 private:
     void mousePressEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
     //void paintEvent(QPaintEvent *event);
 
     bool isShowDisabled = false;

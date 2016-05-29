@@ -21,11 +21,18 @@
 #include "UGlobalHotkey-master/uglobalhotkeys.h"
 #include "infopanedropdown.h"
 #include "thewave.h"
+#include "touchkeyboard.h"
+#include "powermanager.h"
+#include "FlowLayout/flowlayout.h"
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/keysym.h>
 #include <QX11Info>
+#include <systemd/sd-login.h>
+#include <systemd/sd-daemon.h>
+
+#undef Bool
 
 namespace Ui {
 class MainWindow;
@@ -83,6 +90,20 @@ private slots:
     void on_volumeSlider_sliderReleased();
 
     void numNotificationsChanged(int notifications);
+
+    void pullDownGesture();
+
+    void on_pushButton_4_clicked();
+
+    void setTimer(QString timer);
+
+    void setTimerVisible(bool visible);
+
+    void setTimerEnabled(bool enable);
+
+    void on_timerIcon_clicked();
+
+    void on_timer_clicked();
 
 private:
     Ui::MainWindow *ui;

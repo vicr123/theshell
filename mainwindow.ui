@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1201</width>
+    <width>1251</width>
     <height>81</height>
    </rect>
   </property>
@@ -18,6 +18,10 @@
   </property>
   <property name="windowTitle">
    <string>theShellTopPanel</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -33,7 +37,7 @@
          </font>
         </property>
         <property name="text">
-         <string>16:20:00</string>
+         <string>&amp;16:20:00</string>
         </property>
        </widget>
       </item>
@@ -45,14 +49,21 @@
          </font>
         </property>
         <property name="text">
-         <string>Sunday 1st Jan 1111</string>
+         <string>Sunday 1st &amp;Jan 1111</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="timer">
+       <widget class="ClickableLabel" name="timerIcon">
         <property name="text">
-         <string>00:00:59</string>
+         <string>timerIcon</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="ClickableLabel" name="timer">
+        <property name="text">
+         <string>&amp;00:00:59</string>
         </property>
        </widget>
       </item>
@@ -111,7 +122,7 @@
          <item>
           <widget class="ClickableLabel" name="batteryLabel">
            <property name="text">
-            <string>90% Battery remaining</string>
+            <string>&amp;90% Battery remaining</string>
            </property>
           </widget>
          </item>
@@ -343,9 +354,16 @@
           <number>0</number>
          </property>
          <item>
+          <widget class="Line" name="line_6">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QLabel" name="mprisSongName">
            <property name="text">
-            <string>mprisSongName</string>
+            <string>&amp;mprisSongName</string>
            </property>
           </widget>
          </item>
@@ -415,6 +433,19 @@
        <number>0</number>
       </property>
       <item>
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Keyboard</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="pushButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -471,25 +502,9 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <layout class="QGridLayout" name="horizontalLayout_2"/>
+         <widget class="QFrame" name="windowList"/>
         </item>
        </layout>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::MinimumExpanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </item>
@@ -517,6 +532,8 @@
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

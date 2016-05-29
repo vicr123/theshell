@@ -10,8 +10,13 @@
 #include <QTime>
 #include <QMap>
 #include <QFrame>
+#include <QLabel>
+#include <QMessageBox>
+#include <cups/cups.h>
 #include "notificationdbus.h"
 #include "upowerdbus.h"
+#include "endsessionwait.h"
+#include "UGlobalHotkey-master/uglobalhotkeys.h"
 
 class UPowerDBus;
 
@@ -35,11 +40,13 @@ public:
         Clock = 0,
         Battery = 1,
         Network = 2,
-        Notifications = 3
+        Notifications = 3,
+        Print = 4
     };
 
     void show(dropdownType showWith);
     void close();
+    bool isTimerRunning();
 
 signals:
     void networkLabelChanged(QString label);
@@ -47,6 +54,12 @@ signals:
     void closeNotification(int id);
 
     void numNotificationsChanged(int notifications);
+
+    void timerChanged(QString timer);
+
+    void timerVisibleChanged(bool timerVisible);
+
+    void timerEnabledChanged(bool timerEnabled);
 
 private slots:
     void on_pushButton_clicked();
@@ -99,10 +112,19 @@ private slots:
 
     void batteryLevelChanged(int battery);
 
+    void on_printLabel_clicked();
+
+    void on_resetButton_clicked();
+
+
+    void on_TouchFeedbackSwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 
     void startTimer(QTime time);
+
+    bool isQuietOn();
 
 private:
     Ui::InfoPaneDropdown *ui;
@@ -113,10 +135,21 @@ private:
     bool isRedshiftOn = false;
     dropdownType currentDropDown = Clock;
     void changeDropDown(dropdownType changeTo);
+    int mouseClickPoint;
+    int initialPoint;
+    bool mouseMovedUp = false;
+    QRect dragRect;
 
     QMap<int, QFrame*> notificationFrames;
+    QMap<QString, QFrame*> printersFrames;
+    QMap<QString, QLabel*> printersStats;
+    QMap<QString, QFrame*> printersStatFrames;
 
     void resizeEvent(QResizeEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    bool eventFilter(QObject *object, QEvent *event);
     QTimer* timer = NULL;
     QTimer* eventTimer;
     QTime timeUntilTimeout;

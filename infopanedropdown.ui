@@ -6,156 +6,282 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>621</width>
+    <width>922</width>
     <height>1955</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>theShellStatusCenter</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="theshell" resource="resources.qrc">
+    <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <widget class="QFrame" name="partFrame">
-     <property name="font">
-      <font>
-       <pointsize>13</pointsize>
-      </font>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout_12">
       <property name="spacing">
        <number>10</number>
       </property>
       <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset theme="window-close">
-          <normaloff>.</normaloff>.</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
-        </property>
-        <property name="autoDefault">
-         <bool>false</bool>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_5">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset theme="go-previous">
-          <normaloff>.</normaloff>.</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="ClickableLabel" name="clockLabel">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Clock</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="ClickableLabel" name="batteryLabel">
-        <property name="text">
-         <string>Battery</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="ClickableLabel" name="networkLabel">
-        <property name="text">
-         <string>Network</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="ClickableLabel" name="notificationsLabel">
-        <property name="text">
-         <string>Notifications</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_6">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset theme="go-next">
-          <normaloff>.</normaloff>.</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_7">
+       <widget class="QFrame" name="horizontalFrame">
         <property name="font">
          <font>
-          <pointsize>10</pointsize>
+          <pointsize>13</pointsize>
          </font>
         </property>
-        <property name="text">
-         <string>theShell Settings</string>
-        </property>
-        <property name="icon">
-         <iconset theme="settings-configure">
-          <normaloff>.</normaloff>.</iconset>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_14">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="window-close">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_5">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="go-previous">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="ClickableLabel" name="clockLabel">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Clock</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="ClickableLabel" name="batteryLabel">
+           <property name="text">
+            <string>Battery</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="ClickableLabel" name="networkLabel">
+           <property name="text">
+            <string>Network</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="ClickableLabel" name="notificationsLabel">
+           <property name="text">
+            <string>Notifications</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="ClickableLabel" name="printLabel">
+           <property name="text">
+            <string>Printers</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="go-next">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_7">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>theShell Settings</string>
+           </property>
+           <property name="icon">
+            <iconset theme="settings-configure">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_15">
+        <item>
+         <widget class="QLabel" name="label_22">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Flight Mode</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Switch" name="FlightSwitch">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>FlightSwitch</string>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_23">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Wi-Fi</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Switch" name="WifiSwitch">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>WifiSwitch</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_24">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Bluetooth</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Switch" name="BluetoothSwitch">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>BluetoothSwitch</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_11">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -177,7 +303,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Settings</string>
+         <string>Settings and Important Information</string>
         </property>
        </widget>
       </item>
@@ -190,14 +316,14 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Configure theShell</string>
+         <string>Configure theShell and get important information</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -575,6 +701,403 @@
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="tab_3">
+         <attribute name="icon">
+          <iconset theme="dialog-warning">
+           <normaloff>.</normaloff>.</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Notifications</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Don't keep notifications from</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="2">
+           <widget class="QListView" name="listView"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="pushButton_9">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset theme="list-add">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_3">
+            <property name="placeholderText">
+             <string>Enter app_name parameter</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="3">
+           <spacer name="verticalSpacer_10">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QFrame" name="displayHeader_2">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_13">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="displayLabel_2">
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Notifications</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="displayLine_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="2">
+           <widget class="QCheckBox" name="checkBox">
+            <property name="text">
+             <string>Keep notifications from blank app_name parameters</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_6">
+         <attribute name="icon">
+          <iconset theme="input-tablet"/>
+         </attribute>
+         <attribute name="title">
+          <string>Input</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="2" column="1">
+           <spacer name="verticalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>248</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_26">
+            <property name="text">
+             <string>Audible Touch Feedback</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="Switch" name="TouchFeedbackSwitch">
+            <property name="text">
+             <string>TouchFeedbackSwitch</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer name="horizontalSpacer_12">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QFrame" name="displayHeader_5">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_19">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="displayLabel_5">
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Input</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="displayLine_5">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_5">
+         <attribute name="icon">
+          <iconset theme="emblem-warning">
+           <normaloff>.</normaloff>.</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Danger</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="3" column="0">
+           <spacer name="verticalSpacer_12">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>224</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <widget class="QFrame" name="displayHeader_4">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_18">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="displayLabel_4">
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Danger</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="displayLine_4">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_25">
+            <property name="text">
+             <string>The items under here can so some bad things. Make sure you know what you're doing.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="resetButton">
+            <property name="text">
+             <string>Reset theShell</string>
+            </property>
+            <property name="icon">
+             <iconset theme="view-refresh">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_4">
+         <attribute name="icon">
+          <iconset theme="help-about">
+           <normaloff>.</normaloff>.</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>About theShell</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="2" column="0">
+           <spacer name="verticalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <widget class="QFrame" name="displayHeader_3">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_17">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="displayLabel_3">
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>theShell 2.0</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="displayLine_3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Desktop Environment</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>Copyright (c) Victor Tran 2016. Licensed under the terms of the GNU General Public License, version 3 or later.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
       <item>
@@ -616,6 +1139,67 @@
     </widget>
    </item>
    <item>
+    <widget class="QFrame" name="printFrame">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_10">
+      <item>
+       <widget class="QLabel" name="label_13">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Printers</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="printersList">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_11">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_9">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QFrame" name="notificationsFrame">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -633,6 +1217,54 @@
         </property>
         <property name="text">
          <string>Notifications</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_16">
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_17">
+          <property name="text">
+           <string>Silence Notifications</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Switch" name="QuietCheck">
+          <property name="text">
+           <string>QuietCheck</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_19">
+          <property name="text">
+           <string>Critical notifications will still show, regardless of this setting.</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_10">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
@@ -1019,14 +1651,14 @@
             <second>0</second>
             <year>1969</year>
             <month>12</month>
-            <day>23</day>
+            <day>14</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>12</month>
-            <day>23</day>
+            <day>14</day>
            </date>
           </property>
           <property name="displayFormat">
@@ -1118,6 +1750,8 @@
    <header>switch.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

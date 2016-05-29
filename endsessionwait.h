@@ -9,6 +9,8 @@
 #include <QPropertyAnimation>
 #include <QFile>
 #include <QDir>
+#include <QDBusMessage>
+#include <QDBusConnection>
 #include "window.h"
 
 namespace Ui {

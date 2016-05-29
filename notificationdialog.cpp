@@ -8,6 +8,7 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
     ui->setupUi(this);
 
     this->hints = hints;
+    this->setAttribute(Qt::WA_X11NetWmWindowTypeNotification, true);
 
 
     /*QBrush background = this->palette().background();

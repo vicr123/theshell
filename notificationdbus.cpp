@@ -20,21 +20,53 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         replaces_id = nextId;
         nextId++;
 
+        bool showDialog = true;
+        if (dropdownPane != NULL) {
+            if (dropdownPane->isQuietOn()) {
+                if (hints.keys().contains("urgency")) {
+                    if (hints.value("urgency").toChar() != 2) {
+                        showDialog = false;
+                    }
+                } else {
+                    showDialog = false;
+                }
+            }
+        }
+
         NotificationDialog *d = new NotificationDialog(summary, body, actions, replaces_id, hints, expire_timeout);
         d->dbusParent = this;
 
         connect(d, SIGNAL(closing(int, int)), this, SLOT(sendCloseNotification(int, int)));
 
         d->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-        d->show();
-
+        if (showDialog) {
+            d->show();
+        }
         dialogs.append(d);
     } else {
         dialogs.at(replaces_id - 1)->setParams(summary, body);
         dialogs.at(replaces_id - 1)->show();
     }
 
-    emit newNotification(replaces_id, summary, body, QIcon::fromTheme("dialog-warning"));
+    bool transient = false;
+    if (hints.keys().contains("transient")) {
+        if (hints.value("transient").toBool() == true) {
+            transient = true;
+        }
+    }
+
+    if (!transient) {
+        QIcon icon = QIcon::fromTheme("dialog-warning");
+        if (hints.keys().contains("urgency")) {
+            QChar urgency = hints.value("urgency").toChar();
+            if (urgency == 0) {
+                icon = QIcon::fromTheme("dialog-information");
+            } else if (urgency == 2) {
+                icon = QIcon::fromTheme("dialog-error");
+            }
+        }
+        emit newNotification(replaces_id, summary, body, icon);
+    }
     return replaces_id;
 }
 
@@ -66,4 +98,8 @@ void NotificationDBus::sendCloseNotification(int id, int reason) {
 
 void NotificationDBus::invokeAction(uint id, QString key) {
     emit ActionInvoked(id, key);
+}
+
+void NotificationDBus::setDropdownPane(InfoPaneDropdown *pane) {
+    this->dropdownPane = pane;
 }

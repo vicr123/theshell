@@ -163,12 +163,20 @@ void EndSessionWait::performEndSession() {
 }
 
 void EndSessionWait::EndSessionNow() {
+    QDBusMessage message;
+    QList<QVariant> arguments;
+    arguments.append(true);
     switch (type) {
     case powerOff:
-        QProcess::startDetached("shutdown -P now");
+        message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "PowerOff");
+        message.setArguments(arguments);
+        QDBusConnection::systemBus().send(message);
+
         break;
     case reboot:
-        QProcess::startDetached("shutdown -r now");
+        message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Reboot");
+        message.setArguments(arguments);
+        QDBusConnection::systemBus().send(message);
         break;
     case logout:
         QApplication::exit(0);

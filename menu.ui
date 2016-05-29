@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>515</width>
-    <height>737</height>
+    <width>560</width>
+    <height>1084</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>theShellMenu</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="theshell" resource="resources.qrc">
+    <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -114,6 +118,12 @@
        <property name="horizontalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOff</enum>
        </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
       </widget>
      </item>
      <item>
@@ -154,7 +164,7 @@
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>Exit</string>
+          <string>Exit theShell</string>
          </property>
          <property name="icon">
           <iconset theme="system-shutdown">
@@ -200,7 +210,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="shutdownText">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -213,6 +223,58 @@
        </widget>
       </item>
       <item>
+       <widget class="QFrame" name="shutdownWarnings">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="1">
+          <widget class="QLabel" name="timerLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>A timer is running.</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="timerIcon">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>timericon</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="userIcon">
+           <property name="text">
+            <string>userIcon</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="userLabel">
+           <property name="text">
+            <string>Another user is logged on to this PC.</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <widget class="QCommandLinkButton" name="commandLinkButton">
         <property name="text">
          <string>Power Off</string>
@@ -220,6 +282,12 @@
         <property name="icon">
          <iconset theme="system-shutdown">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
         <property name="description">
          <string>Turns off your computer</string>
@@ -235,6 +303,12 @@
          <iconset theme="system-reboot">
           <normaloff>.</normaloff>.</iconset>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
         <property name="description">
          <string>Turns off your computer and turns it back on again</string>
         </property>
@@ -249,8 +323,33 @@
          <iconset theme="system-log-out">
           <normaloff>.</normaloff>.</iconset>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
         <property name="description">
          <string>Ends your session and keeps the computer on for other people to use</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCommandLinkButton" name="commandLinkButton_8">
+        <property name="text">
+         <string>Turn Off Screen</string>
+        </property>
+        <property name="icon">
+         <iconset theme="video-display"/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="description">
+         <string>Turns off the screen, but keeps everything else running in the background</string>
         </property>
        </widget>
       </item>
@@ -265,6 +364,12 @@
         <property name="icon">
          <iconset theme="system-lock-screen">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
         <property name="description">
          <string>Locks your workspace with your password</string>
@@ -282,6 +387,12 @@
         <property name="icon">
          <iconset theme="system-suspend">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
         <property name="description">
          <string>Puts your computer in a low power state so that it opens up quickly</string>
@@ -306,6 +417,12 @@
          <iconset theme="system-switch-user">
           <normaloff>.</normaloff>.</iconset>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
         <property name="description">
          <string>Switches to the logon screen and keeps your session in the background</string>
         </property>
@@ -314,7 +431,7 @@
       <item>
        <widget class="QCommandLinkButton" name="commandLinkButton_7">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="text">
          <string>Hibernate</string>
@@ -322,6 +439,12 @@
         <property name="icon">
          <iconset theme="system-suspend-hibernate">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
         <property name="description">
          <string>Powers off your computer, but when powered back on, restores the session.</string>
@@ -377,6 +500,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -1,6 +1,9 @@
 #include "menu.h"
 #include "ui_menu.h"
 
+extern void EndSession(EndSessionWait::shutdownType type);
+extern MainWindow* MainWin;
+
 Menu::Menu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Menu)
@@ -12,13 +15,10 @@ Menu::Menu(QWidget *parent) :
     ui->offFrame->setGeometry(10, -this->height(), this->width() - 20, this->height() - 20);
     ui->commandLinkButton->setStyleSheet("background-color: #A00;");
     ui->commandLinkButton_2->setStyleSheet("background-color: #A00;");
+    ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16));
+    ui->userIcon->setPixmap(QIcon::fromTheme("system-users").pixmap(16));
 
     this->setMouseTracking(true);
-
-    QTimer *t = new QTimer(this);
-    t->setInterval(500);
-    connect(t, SIGNAL(timeout()), this, SLOT(checkForclose()));
-    t->start();
 
     QString name = qgetenv("USER");
     if (name.isEmpty()) {
@@ -33,10 +33,10 @@ Menu::Menu(QWidget *parent) :
     QString fullname = parseName.split(",").at(0).split(":").last();
     if (fullname == "") {
         ui->label_2->setText("Hey, " + name + "!");
-        ui->label_4->setText(name + ", what do you want to do after we exit?");
+        //ui->label_4->setText(name + ", what do you want to do now?");
     } else {
         ui->label_2->setText("Hey, " + fullname + "!");
-        ui->label_4->setText(fullname + ", what do you want to do after we exit?");
+        //ui->label_4->setText(fullname + ", what do you want to do now?");
     }
 
 
@@ -145,12 +145,44 @@ void Menu::show() {
         appsShown->append(app);
         ui->listWidget->addItem(i);
     }
+
+    QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+    animation->setStartValue(this->geometry());
+    animation->setEndValue(QRect(this->x() + this->width(), this->y(), this->width(), this->height()));
+    animation->setDuration(500);
+    animation->setEasingCurve(QEasingCurve::OutCubic);
+    animation->start();
+    connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+
+    /*QTimer *t = new QTimer(this);
+    t->setInterval(1);
+    connect(t, SIGNAL(timeout()), this, SLOT(checkForclose()));
+    t->start();*/
+}
+
+void Menu::changeEvent(QEvent *event) {
+    QDialog::changeEvent(event);
+    if (event->type() == QEvent::ActivationChange) {
+        if (!this->isActiveWindow()) {
+            this->close();
+        }
+    }
 }
 
 void Menu::close() {
+    QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+    animation->setStartValue(this->geometry());
+    animation->setEndValue(QRect(this->x() - this->width(), this->y(), this->width(), this->height()));
+    animation->setDuration(500);
+    animation->setEasingCurve(QEasingCurve::OutCubic);
+    animation->start();
+    connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+    connect(animation, &QPropertyAnimation::finished, [=]() {
+        emit menuClosing();
+        QDialog::close();
+    });
+
     doCheckForClose = false;
-    emit menuClosing();
-    QDialog::close();
 }
 
 void Menu::checkForclose() {
@@ -180,6 +212,33 @@ bool Menu::checkFocus(QLayout *layout) {
 
 void Menu::on_pushButton_clicked()
 {
+    bool showWarningPane = false;
+    if (MainWin->getInfoPane()->isTimerRunning()) {
+        showWarningPane = true;
+        ui->timerIcon->setVisible(true);
+        ui->timerLabel->setVisible(true);
+    } else {
+        ui->timerIcon->setVisible(false);
+        ui->timerLabel->setVisible(false);
+    }
+
+    if (false) {
+        showWarningPane = true;
+        ui->userIcon->setVisible(true);
+        ui->userLabel->setVisible(true);
+    } else {
+        ui->userIcon->setVisible(false);
+        ui->userLabel->setVisible(false);
+    }
+
+    if (showWarningPane) {
+        ui->shutdownText->setText("Before you power off your PC, you may want to check this.");
+        ui->shutdownWarnings->setVisible(true);
+    } else {
+        ui->shutdownText->setText("You're about to power off your PC. Are you sure?");
+        ui->shutdownWarnings->setVisible(false);
+    }
+
     QPropertyAnimation* anim = new QPropertyAnimation(ui->offFrame, "geometry");
     anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
     anim->setEndValue(QRect(10, 10, this->width() - 20, this->height() - 20));
@@ -203,23 +262,17 @@ void Menu::on_pushButton_2_clicked()
 
 void Menu::on_commandLinkButton_clicked()
 {
-    EndSessionWait* w = new EndSessionWait(EndSessionWait::powerOff);
-    w->showFullScreen();
-    QApplication::setOverrideCursor(Qt::BlankCursor);
+    EndSession(EndSessionWait::powerOff);
 }
 
 void Menu::on_commandLinkButton_2_clicked()
 {
-    EndSessionWait* w = new EndSessionWait(EndSessionWait::reboot);
-    w->showFullScreen();
-    QApplication::setOverrideCursor(Qt::BlankCursor);
+    EndSession(EndSessionWait::reboot);
 }
 
 void Menu::on_commandLinkButton_3_clicked()
 {
-    EndSessionWait* w = new EndSessionWait(EndSessionWait::logout);
-    w->showFullScreen();
-    QApplication::setOverrideCursor(Qt::BlankCursor);
+    EndSession(EndSessionWait::logout);
 }
 
 void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
@@ -285,7 +338,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             }
         }
 
-        if (QString("shutdown").contains(arg1, Qt::CaseInsensitive) || QString("power\ off").contains(arg1, Qt::CaseInsensitive)) {
+        if (QString("shutdown").contains(arg1, Qt::CaseInsensitive) || QString("power off").contains(arg1, Qt::CaseInsensitive)) {
             QListWidgetItem *i = new QListWidgetItem();
             i->setText("Power Off");
             i->setIcon(QIcon::fromTheme("system-shutdown"));
@@ -394,7 +447,12 @@ void Menu::on_pushButton_3_clicked()
 
 void Menu::on_commandLinkButton_5_clicked()
 {
-    QProcess::startDetached("systemctl suspend");
+    QList<QVariant> arguments;
+    arguments.append(true);
+
+    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Suspend");
+    message.setArguments(arguments);
+    QDBusConnection::systemBus().send(message);
     this->close();
 }
 
@@ -403,4 +461,32 @@ void Menu::paintEvent(QPaintEvent *event) {
     painter.setPen(this->palette().color(QPalette::WindowText));
     painter.drawLine(this->width() - 1, 0, this->width() - 1, this->height());
     event->accept();
+}
+
+
+void Menu::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
+    QDialog::setGeometry(x, y, w, h);
+    QProcess::execute("wmctrl -r " + this->windowTitle() + " -e 0," +
+                      QString::number(x) + "," + QString::number(y) + "," +
+                      QString::number(w) + "," + QString::number(h));
+}
+
+void Menu::setGeometry(QRect geometry) {
+    this->setGeometry(geometry.x(), geometry.y(), geometry.width(), geometry.height());
+}
+
+void Menu::on_commandLinkButton_7_clicked()
+{
+    QList<QVariant> arguments;
+    arguments.append(true);
+
+    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Hibernate");
+    message.setArguments(arguments);
+    QDBusConnection::systemBus().send(message);
+}
+
+void Menu::on_commandLinkButton_8_clicked()
+{
+    this->close();
+    QProcess::startDetached("xset dpms force off");
 }

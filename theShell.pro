@@ -5,8 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui gui-private x11extras dbus multimedia
-CONFIG   += C++11
-LIBS     += -lX11 -lxcb -lxcb-keysyms
+CONFIG   += c++11
+LIBS     += -lX11 -lxcb -lxcb-keysyms -lcups -lsystemd
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -38,7 +38,12 @@ SOURCES += main.cpp\
     notifications_adaptor.cpp \
     hoverframe.cpp \
     choosebackground.cpp \
-    switch.cpp
+    switch.cpp \
+    FlowLayout/flowlayout.cpp \
+    touchkeyboard.cpp \
+    powermanager.cpp \
+    segfaultdialog.cpp \
+    globalfilter.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -64,7 +69,12 @@ HEADERS  += mainwindow.h \
     notifications_adaptor.h \
     hoverframe.h \
     choosebackground.h \
-    switch.h
+    switch.h \
+    FlowLayout/flowlayout.h \
+    touchkeyboard.h \
+    powermanager.h \
+    segfaultdialog.h \
+    globalfilter.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -75,7 +85,9 @@ FORMS    += mainwindow.ui \
     infopanedropdown.ui \
     thewave.ui \
     loginsplash.ui \
-    choosebackground.ui
+    choosebackground.ui \
+    touchkeyboard.ui \
+    segfaultdialog.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

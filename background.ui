@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>theShell Background</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -57,7 +61,8 @@
   </layout>
   <action name="actionChange_Background">
    <property name="icon">
-    <iconset theme="image"/>
+    <iconset theme="image">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Change Background</string>
@@ -65,7 +70,8 @@
   </action>
   <action name="actionOpen_System_Settings">
    <property name="icon">
-    <iconset theme="systemsettings"/>
+    <iconset theme="systemsettings">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Open System Settings</string>
@@ -73,7 +79,8 @@
   </action>
   <action name="actionOpen_Status_Center">
    <property name="icon">
-    <iconset theme="dialog-information"/>
+    <iconset theme="dialog-information">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Open Status Center</string>
@@ -81,13 +88,16 @@
   </action>
   <action name="actionOpen_theShell_Settings">
    <property name="icon">
-    <iconset theme="configure"/>
+    <iconset theme="configure">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Open theShell Settings</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

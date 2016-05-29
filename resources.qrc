@@ -5,5 +5,15 @@
         <file>ok.wav</file>
         <file>what.wav</file>
         <file>volfeedback.wav</file>
+        <file>click.wav</file>
+    </qresource>
+    <qresource prefix="/icons/dark">
+        <file>images/dark/flight.svg</file>
+    </qresource>
+    <qresource prefix="/icons/light">
+        <file>images/light/flight.svg</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>icon.svg</file>
     </qresource>
 </RCC>

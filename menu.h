@@ -13,8 +13,12 @@
 #include <QPainter>
 #include <QMimeType>
 #include <QMimeDatabase>
+#include <systemd/sd-login.h>
 #include "endsessionwait.h"
 #include "app.h"
+#include "mainwindow.h"
+
+#undef KeyPress
 
 namespace Ui {
 class Menu;
@@ -23,10 +27,13 @@ class Menu;
 class Menu : public QDialog
 {
     Q_OBJECT
+    Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
 public:
     explicit Menu(QWidget *parent = 0);
     ~Menu();
+    void setGeometry(int x, int y, int w, int h);
+    void setGeometry(QRect geometry);
 
     void show();
     void close();
@@ -62,6 +69,10 @@ private slots:
 
     void on_commandLinkButton_5_clicked();
 
+    void on_commandLinkButton_7_clicked();
+
+    void on_commandLinkButton_8_clicked();
+
 private:
     Ui::Menu *ui;
 
@@ -74,6 +85,7 @@ private:
 
     //void closeEvent(QCloseEvent *event);
     void paintEvent(QPaintEvent* event);
+    void changeEvent(QEvent* event);
 };
 
 #endif // MENU_H

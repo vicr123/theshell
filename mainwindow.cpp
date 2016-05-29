@@ -2,12 +2,19 @@
 #include "ui_mainwindow.h"
 
 extern void playSound(QUrl, bool = false);
+extern QIcon getIconFromTheme(QString name, QColor textColor);
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    this->setAttribute(Qt::WA_X11NetWmWindowTypeDock, true);
+    ui->pushButton_4->setVisible(false);
+
+    FlowLayout* flow = new FlowLayout(ui->windowList);
+    ui->windowList->setLayout(flow);
 
     windowList = new QList<WmWindow*>();
 
@@ -32,9 +39,15 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->batteryFrame->setVisible(false);
     }
 
+    PowerManager* pmanager = new PowerManager(this);
+
     UGlobalHotkeys* menuKey = new UGlobalHotkeys(this);
     menuKey->registerHotkey("Alt+F5");
     connect(menuKey, SIGNAL(activated(size_t)), this, SLOT(on_pushButton_clicked()));
+
+    UGlobalHotkeys* infoKey = new UGlobalHotkeys(this);
+    infoKey->registerHotkey("Alt+F6");
+    connect(infoKey, SIGNAL(activated(size_t)), this, SLOT(pullDownGesture()));
 
     UGlobalHotkeys* runKey = new UGlobalHotkeys(this);
     runKey->registerHotkey("Alt+F2");
@@ -46,6 +59,9 @@ MainWindow::MainWindow(QWidget *parent) :
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(infoPane, SIGNAL(networkLabelChanged(QString)), this, SLOT(internetLabelChanged(QString)));
     connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
+    connect(infoPane, SIGNAL(timerChanged(QString)), this, SLOT(setTimer(QString)));
+    connect(infoPane, SIGNAL(timerVisibleChanged(bool)), this, SLOT(setTimerVisible(bool)));
+    connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
     infoPane->getNetworks();
 
     QSettings settings;
@@ -59,6 +75,8 @@ MainWindow::MainWindow(QWidget *parent) :
     playSound(QUrl::fromLocalFile(loginSoundPath));
 
     ui->timer->setVisible(false);
+    ui->timerIcon->setVisible(false);
+    ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16, 16));
     ui->openingAppFrame->setVisible(false);
 
     if (QFile("/usr/bin/amixer").exists()) {
@@ -70,11 +88,45 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->brightnessSlider->setVisible(false);
     ui->mprisFrame->setVisible(false);
     // TODO: Add Mpris support
+
+
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::pullDownGesture() {
+    if (lockHide) {
+        on_notifications_clicked();
+    } else {
+        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+
+        anim->setStartValue(this->geometry());
+
+        anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width() + 1, this->height()));
+        anim->setDuration(500);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+
+        connect(anim, &QPropertyAnimation::finished, [=]() {
+            hiding = false;
+        });
+        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+        anim->start();
+
+        lockHide = true;
+        QTimer* timer = new QTimer();
+        timer->setSingleShot(true);
+        timer->setInterval(3000);
+        connect(timer, &QTimer::timeout, [=]() {
+            lockHide = false;
+            timer->deleteLater();
+        });
+        timer->start();
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -85,9 +137,10 @@ void MainWindow::on_pushButton_clicked()
 {
     this->setFocus();
     Menu* m = new Menu(this);
-    m->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+    m->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    m->setGeometry(this->x(), this->y() + this->height() - 1, m->width(), screenGeometry.height() - (this->height() + this->y()) + 1);
+    //m->setGeometry(this->x(), this->y() + this->height() - 1, m->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
+    m->setGeometry(this->x() - m->width(), this->y() + this->height() - 1, m->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
     m->show();
     m->setFocus();
 
@@ -154,12 +207,16 @@ void MainWindow::reloadWindows() {
         hideTop = screenGeometry.y() - this->height();
     }
 
-    int row = 0, column = 0;
+    //int row = 0, column = 0;
     if (okCount != wlist->count() || wlist->count() < windowList->count()) {
+        //FlowLayout* layout = new FlowLayout();
+        //layout->setSpacing(6);
+
         windowList = wlist;
 
         QLayoutItem* item;
-        while ((item = ui->horizontalLayout_2->takeAt(0)) != NULL) {
+        while ((item = ui->windowList->layout()->takeAt(0)) != NULL) {
+            ui->windowList->layout()->removeItem(item);
             delete item->widget();
             delete item;
         }
@@ -170,17 +227,23 @@ void MainWindow::reloadWindows() {
             connect(button, SIGNAL(clicked()), mapper, SLOT(map()));
             mapper->setMapping(button, w->title());
             connect(mapper, SIGNAL(mapped(QString)), this, SLOT(activateWindow(QString)));
-            ui->horizontalLayout_2->addWidget(button, row, column);
+            ui->windowList->layout()->addWidget(button);
+            //layout->addWidget(button);
 
-            column++;
+            /*column++;
             if (column == 4) {
                 column = 0;
                 row++;
-            }
+            }*/
         }
 
         ui->centralWidget->adjustSize();
         ui->openingAppFrame->setVisible(false);
+        ui->windowList->layout()->setGeometry(ui->windowList->layout()->geometry());
+        this->setFixedSize(this->sizeHint());
+        //delete ui->windowList->layout();
+
+        //ui->windowList->setLayout(layout);
     }
 
     if (!lockHide) {
@@ -488,4 +551,40 @@ void MainWindow::numNotificationsChanged(int notifications) {
 
 InfoPaneDropdown* MainWindow::getInfoPane() {
     return this->infoPane;
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    TouchKeyboard* keyboard = new TouchKeyboard();
+    keyboard->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Dialog | Qt::FramelessWindowHint);
+    keyboard->setAttribute(Qt::WA_ShowWithoutActivating, true);
+    keyboard->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
+    keyboard->show();
+}
+
+void MainWindow::setTimer(QString timer) {
+    ui->timer->setText(timer);
+    ui->timer->setVisible(true);
+    ui->timerIcon->setVisible(true);
+}
+
+void MainWindow::setTimerVisible(bool visible) {
+    ui->timer->setVisible(visible);
+    ui->timerIcon->setVisible(visible);
+}
+
+void MainWindow::setTimerEnabled(bool enable) {
+    ui->timer->setShowDisabled(!enable);
+    ui->timerIcon->setShowDisabled(!enable);
+}
+
+void MainWindow::on_timerIcon_clicked()
+{
+    infoPane->show(InfoPaneDropdown::Clock);
+}
+
+void MainWindow::on_timer_clicked()
+{
+    infoPane->show(InfoPaneDropdown::Clock);
 }

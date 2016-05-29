@@ -2,6 +2,8 @@
 #include "ui_infopanedropdown.h"
 
 extern void playSound(QUrl, bool = false);
+extern QIcon getIconFromTheme(QString name, QColor textColor);
+extern void EndSession(EndSessionWait::shutdownType type);
 
 InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, QWidget *parent) :
     QDialog(parent),
@@ -11,6 +13,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     this->notificationEngine = notificationEngine;
     this->powerEngine = powerEngine;
+    notificationEngine->setDropdownPane(this);
 
     connect(notificationEngine, SIGNAL(newNotification(int,QString,QString,QIcon)), this, SLOT(newNotificationReceived(int,QString,QString,QIcon)));
     connect(notificationEngine, SIGNAL(removeNotification(int)), this, SLOT(removeNotification(int)));
@@ -29,6 +32,8 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->pushButton_4->setEnabled(false);
     ui->lineEdit->setEnabled(false);
     ui->listWidget->setEnabled(false);
+    //ui->label_22->setPixmap(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)).pixmap(16, 16));
+    ui->FlightSwitch->setOnIcon(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)));
 
 
     if (!QFile("/usr/bin/systemsettings5").exists()) {
@@ -58,11 +63,35 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
+    ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", true).toBool());
 
     eventTimer = new QTimer(this);
     eventTimer->setInterval(1000);
     connect(eventTimer, SIGNAL(timeout()), this, SLOT(processTimer()));
     eventTimer->start();
+
+    UGlobalHotkeys* exitKey = new UGlobalHotkeys(this);
+    exitKey->registerHotkey("Alt+F7");
+    connect(exitKey, SIGNAL(activated(size_t)), this, SLOT(on_pushButton_clicked()));
+
+    QObjectList allObjects;
+    allObjects.append(this);
+
+    /*do {
+       for (QObject* object : allObjects) {
+           if (object != NULL) {
+               if (object->children().count() != 0) {
+                   for (QObject* object2 : object->children()) {
+                       allObjects.append(object2);
+                   }
+               }
+               object->installEventFilter(this);
+               allObjects.removeOne(object);
+           }
+       }
+    } while (allObjects.count() != 0);*/
+
+
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -82,6 +111,88 @@ void InfoPaneDropdown::processTimer() {
             isRedshiftOn = false;
             QProcess::startDetached("redshift -O 6500");
         }
+    }
+
+    {
+        cups_dest_t *destinations;
+        int destinationCount = cupsGetDests(&destinations);
+
+        for (int i = 0; i < destinationCount; i++) {
+            cups_dest_t currentDestination = destinations[i];
+
+            if (!printersFrames.keys().contains(currentDestination.name)) {
+                QFrame* frame = new QFrame();
+                QHBoxLayout* layout = new QHBoxLayout();
+                layout->setMargin(0);
+                frame->setLayout(layout);
+
+                QFrame* statFrame = new QFrame();
+                QHBoxLayout* statLayout = new QHBoxLayout();
+                statLayout->setMargin(0);
+                statFrame->setLayout(statLayout);
+                layout->addWidget(statFrame);
+
+                QLabel* iconLabel = new QLabel();
+                QPixmap icon = QIcon::fromTheme("printer").pixmap(22, 22);
+                if (currentDestination.is_default) {
+                    QPainter *p = new QPainter();
+                    p->begin(&icon);
+                    p->drawPixmap(10, 10, 12, 12, QIcon::fromTheme("emblem-checked").pixmap(12, 12));
+                    p->end();
+                }
+                iconLabel->setPixmap(icon);
+                statLayout->addWidget(iconLabel);
+
+                QLabel* nameLabel = new QLabel();
+                nameLabel->setText(currentDestination.name);
+                QFont font = nameLabel->font();
+                font.setBold(true);
+                nameLabel->setFont(font);
+                statLayout->addWidget(nameLabel);
+
+                QLabel* statLabel = new QLabel();
+                statLabel->setText("Idle");
+                statLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+                statLayout->addWidget(statLabel);
+
+                /*QPushButton* button = new QPushButton();
+                button->setIcon(QIcon::fromTheme("window-close"));
+                connect(button, &QPushButton::clicked, [=]() {
+                    emit closeNotification(id);
+                });
+                layout->addWidget(button);*/
+
+                ui->printersList->layout()->addWidget(frame);
+                printersFrames.insert(currentDestination.name, frame);
+                printersStatFrames.insert(currentDestination.name, frame);
+                printersStats.insert(currentDestination.name, statLabel);
+            }
+
+            QString state = "";
+            QString stateReasons = "";
+            for (int i = 0; i < currentDestination.num_options; i++) {
+                cups_option_t currentOption = currentDestination.options[i];
+
+                if (strncmp(currentOption.name, "printer-state", strlen(currentOption.name)) == 0) {
+                    if (strncmp(currentOption.value, "3", 1) == 0) {
+                        state = "Idle";
+                        printersStatFrames.value(currentDestination.name)->setEnabled(true);
+                    } else if (strncmp(currentOption.value, "4", 1) == 0) {
+                        state = "Printing";
+                        printersStatFrames.value(currentDestination.name)->setEnabled(true);
+                    } else if (strncmp(currentOption.value, "5", 1) == 0) {
+                        state = "Stopped";
+                        printersStatFrames.value(currentDestination.name)->setEnabled(false);
+                    }
+                } else if (strncmp(currentOption.name, "printer-state-reasons", strlen(currentOption.name)) == 0) {
+                    stateReasons = QString::fromUtf8(currentOption.value, strlen(currentOption.value));
+                }
+            }
+            printersStats.value(currentDestination.name)->setText(state + " / " + stateReasons);
+
+        }
+
+        cupsFreeDests(destinationCount, destinations);
     }
 }
 
@@ -132,57 +243,51 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
     ui->notificationsFrame->setVisible(false);
     ui->clockFrame->setVisible(false);
     ui->settingsFrame->setVisible(false);
+    ui->printFrame->setVisible(false);
+
+    ui->clockLabel->setShowDisabled(true);
+    ui->batteryLabel->setShowDisabled(true);
+    ui->notificationsLabel->setShowDisabled(true);
+    ui->networkLabel->setShowDisabled(true);
+    ui->printLabel->setShowDisabled(true);
 
     switch (changeTo) {
     case Settings:
         ui->settingsFrame->setVisible(true);
 
-        ui->clockLabel->setShowDisabled(true);
-        ui->batteryLabel->setShowDisabled(true);
-        ui->notificationsLabel->setShowDisabled(true);
-        ui->networkLabel->setShowDisabled(true);
-
         break;
     case Clock:
         ui->clockFrame->setVisible(true);
-
         ui->clockLabel->setShowDisabled(false);
-        ui->batteryLabel->setShowDisabled(true);
-        ui->notificationsLabel->setShowDisabled(true);
-        ui->networkLabel->setShowDisabled(true);
         break;
     case Battery:
         ui->batteryFrame->setVisible(true);
-
-        ui->clockLabel->setShowDisabled(true);
         ui->batteryLabel->setShowDisabled(false);
-        ui->notificationsLabel->setShowDisabled(true);
-        ui->networkLabel->setShowDisabled(true);
         break;
     case Notifications:
         ui->notificationsFrame->setVisible(true);
-
-        ui->clockLabel->setShowDisabled(true);
-        ui->batteryLabel->setShowDisabled(true);
         ui->notificationsLabel->setShowDisabled(false);
-        ui->networkLabel->setShowDisabled(true);
         break;
     case Network:
         ui->networkFrame->setVisible(true);
-
-        ui->clockLabel->setShowDisabled(true);
-        ui->batteryLabel->setShowDisabled(true);
-        ui->notificationsLabel->setShowDisabled(true);
         ui->networkLabel->setShowDisabled(false);
 
         getNetworks();
+        break;
+    case Print:
+        ui->printFrame->setVisible(true);
+        ui->printLabel->setShowDisabled(false);
+
     }
 
-    if (changeTo == 0 || changeTo == -1) {
+    if (changeTo == 0) {
         ui->pushButton_5->setEnabled(false);
         ui->pushButton_6->setEnabled(true);
-    } else if (changeTo == 3) {
+    } else if (changeTo == 4) {
         ui->pushButton_5->setEnabled(true);
+        ui->pushButton_6->setEnabled(false);
+    } else if (changeTo == -1) {
+        ui->pushButton_5->setEnabled(false);
         ui->pushButton_6->setEnabled(false);
     } else {
         ui->pushButton_5->setEnabled(true);
@@ -263,7 +368,7 @@ void InfoPaneDropdown::on_notificationsLabel_clicked()
 }
 
 void InfoPaneDropdown::startTimer(QTime time) {
-    if (timer != NULL) {
+    if (timer != NULL) { //Check for already running timer
         timer->stop();
         delete timer;
         timer = NULL;
@@ -272,6 +377,8 @@ void InfoPaneDropdown::startTimer(QTime time) {
         ui->label_7->setEnabled(true);
         ui->pushButton_2->setText("Start");
         ui->pushButton_3->setVisible(false);
+        emit timerVisibleChanged(false);
+        emit timerEnabledChanged(true);
     }
     ui->pushButton_2->setText("Pause");
     timeUntilTimeout = time;
@@ -293,11 +400,14 @@ void InfoPaneDropdown::startTimer(QTime time) {
                    timer->stop();
                    delete timer;
                    timer = NULL;
+                   emit timerVisibleChanged(false);
         } else {
             ui->label_7->setText(timeUntilTimeout.toString("HH:mm:ss"));
+            emit timerChanged(timeUntilTimeout.toString("HH:mm:ss"));
         }
     });
     timer->start();
+    emit timerChanged(timeUntilTimeout.toString("HH:mm:ss"));
 }
 
 void InfoPaneDropdown::on_pushButton_2_clicked()
@@ -310,11 +420,13 @@ void InfoPaneDropdown::on_pushButton_2_clicked()
             ui->pushButton_3->setVisible(true);
             ui->label_7->setEnabled(false);
             ui->pushButton_2->setText("Resume");
+            emit timerEnabledChanged(false);
         } else {
             timer->start();
             ui->pushButton_3->setVisible(false);
             ui->label_7->setEnabled(true);
             ui->pushButton_2->setText("Pause");
+            emit timerEnabledChanged(true);
         }
     }
 }
@@ -328,6 +440,8 @@ void InfoPaneDropdown::on_pushButton_3_clicked()
     ui->label_7->setEnabled(true);
     ui->pushButton_2->setText("Start");
     ui->pushButton_3->setVisible(false);
+    emit timerVisibleChanged(false);
+    emit timerEnabledChanged(true);
 }
 
 void InfoPaneDropdown::on_pushButton_7_clicked()
@@ -414,6 +528,10 @@ void InfoPaneDropdown::newNotificationReceived(int id, QString summary, QString 
     bodyLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(bodyLabel);
 
+    QLabel* dateLabel = new QLabel();
+    dateLabel->setText(QDateTime::currentDateTime().toString("HH:mm:ss"));
+    layout->addWidget(dateLabel);
+
     QPushButton* button = new QPushButton();
     button->setIcon(QIcon::fromTheme("window-close"));
     connect(button, &QPushButton::clicked, [=]() {
@@ -459,4 +577,112 @@ void InfoPaneDropdown::on_redshiftPause_toggled(bool checked)
 
 void InfoPaneDropdown::batteryLevelChanged(int battery) {
     ui->currentBattery->setText("Current Battery Percentage: " + QString::number(battery));
+}
+
+void InfoPaneDropdown::on_printLabel_clicked()
+{
+    changeDropDown(Print);
+}
+
+bool InfoPaneDropdown::isQuietOn() {
+    return ui->QuietCheck->isChecked();
+}
+
+bool InfoPaneDropdown::eventFilter(QObject *object, QEvent *event) {
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent* keyEvent = (QKeyEvent*) event;
+        if (keyEvent->key() == Qt::Key_Left) {
+            if (ui->pushButton_5->isEnabled()) {
+                on_pushButton_5_clicked();
+            }
+            return true;
+        } else if (keyEvent->key() == Qt::Key_Right) {
+            if (ui->pushButton_6->isEnabled()) {
+                on_pushButton_6_clicked();
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+void InfoPaneDropdown::on_resetButton_clicked()
+{
+    if (QMessageBox::warning(this, "Reset theShell",
+                             "All settings will be reset to default, and you will be logged out. "
+                             "Are you sure you want to do this?", QMessageBox::Yes | QMessageBox::No,
+                             QMessageBox::No) == QMessageBox::Yes) {
+        settings.clear();
+        EndSession(EndSessionWait::logout);
+    }
+}
+
+bool InfoPaneDropdown::isTimerRunning() {
+    if (timer == NULL) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+void InfoPaneDropdown::mousePressEvent(QMouseEvent *event) {
+    mouseClickPoint = event->localPos().toPoint().y();
+    initialPoint = mouseClickPoint;
+    dragRect = this->geometry();
+    event->accept();
+}
+
+void InfoPaneDropdown::mouseMoveEvent(QMouseEvent *event) {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+
+    if (event->globalY() < mouseClickPoint) {
+        mouseMovedUp = true;
+    } else {
+        mouseMovedUp = false;
+    }
+
+    //dragRect.translate(0, event->localPos().toPoint().y() - mouseClickPoint + this->y());
+    dragRect = screenGeometry;
+    dragRect.translate(0, event->globalY() - (initialPoint + screenGeometry.top()));
+
+    //innerRect.translate(event->localPos().toPoint().y() - mouseClickPoint, 0);
+    if (dragRect.bottom() >= screenGeometry.bottom()) {
+        dragRect.moveTo(screenGeometry.left(), screenGeometry.top());
+    }
+    this->setGeometry(dragRect);
+
+    mouseClickPoint = event->globalY();
+    event->accept();
+}
+
+void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    if (initialPoint - 5 > mouseClickPoint && initialPoint + 5 < mouseClickPoint) {
+        QPropertyAnimation* a = new QPropertyAnimation(this, "geometry");
+        a->setStartValue(this->geometry());
+        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), this->height()));
+        a->setEasingCurve(QEasingCurve::OutCubic);
+        a->setDuration(500);
+        connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
+        a->start();
+    } else {
+        if (mouseMovedUp) {
+            this->close();
+        } else {
+            QPropertyAnimation* a = new QPropertyAnimation(this, "geometry");
+            a->setStartValue(this->geometry());
+            a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), this->height()));
+            a->setEasingCurve(QEasingCurve::OutCubic);
+            a->setDuration(500);
+            connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
+            a->start();
+        }
+    }
+    event->accept();
+    initialPoint = 0;
+}
+
+void InfoPaneDropdown::on_TouchFeedbackSwitch_toggled(bool checked)
+{
+    settings.setValue("input/touchFeedbackSound", checked);
 }
