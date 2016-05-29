@@ -323,7 +323,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -814,7 +814,8 @@
         </widget>
         <widget class="QWidget" name="tab_6">
          <attribute name="icon">
-          <iconset theme="input-tablet"/>
+          <iconset theme="input-tablet">
+           <normaloff>.</normaloff>.</iconset>
          </attribute>
          <attribute name="title">
           <string>Input</string>
@@ -1651,14 +1652,14 @@
             <second>0</second>
             <year>1969</year>
             <month>12</month>
-            <day>14</day>
+            <day>13</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>12</month>
-            <day>14</day>
+            <day>13</day>
            </date>
           </property>
           <property name="displayFormat">

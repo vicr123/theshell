@@ -63,7 +63,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
-    ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", true).toBool());
+    ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
 
     eventTimer = new QTimer(this);
     eventTimer->setInterval(1000);
