@@ -64,6 +64,8 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     QString thewaveVoiceEngine = settings.value("thewave/ttsEngine", "festival").toString();
     if (thewaveVoiceEngine == "pico2wave") {
         ui->thewaveTTSpico2wave->setChecked(true);
+    } else if (thewaveVoiceEngine == "espeak") {
+        ui->thewaveTTSespeak->setChecked(true);
     } else if (thewaveVoiceEngine == "festival") {
         ui->thewaveTTSfestival->setChecked(true);
     }
@@ -709,4 +711,10 @@ void InfoPaneDropdown::on_thewaveTTSfestival_clicked()
 void InfoPaneDropdown::on_thewaveWikipediaSwitch_toggled(bool checked)
 {
     settings.setValue("thewave/wikipediaSearch", checked);
+}
+
+void InfoPaneDropdown::on_thewaveTTSespeak_clicked()
+{
+    settings.setValue("thewave/ttsEngine", "espeak");
+
 }

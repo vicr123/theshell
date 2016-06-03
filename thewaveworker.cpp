@@ -319,6 +319,13 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
         //while (!sound.isFinished()) {
             //QApplication::processEvents();
         //}
+    } else if (settings.value("thewave/ttsEngine").toString() == "espeak" && QFile("/usr/bin/espeak").exists()) {
+        QProcess *s = new QProcess(this);
+        s->start("espeak \"" + speech + "\"");
+
+        if (restartOnceComplete && !stopEverything) {
+            connect(s, SIGNAL(finished(int)), this, SLOT(begin()));
+        }
     } else {
         QProcess *s = new QProcess(this);
         s->start("festival --tts");

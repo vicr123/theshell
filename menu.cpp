@@ -20,6 +20,7 @@ Menu::Menu(QWidget *parent) :
     ui->commandLinkButton_2->setStyleSheet("background-color: #A00;");
     ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16));
     ui->userIcon->setPixmap(QIcon::fromTheme("system-users").pixmap(16));
+    ui->thewave_connection_disconnection_label->setPixmap(QIcon::fromTheme("network-disconnect").pixmap(16));
     ui->timeIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(32));
     ui->callIcon->setPixmap(QIcon::fromTheme("call-start").pixmap(32));
     ui->messageIcon->setPixmap(QIcon::fromTheme("message-send").pixmap(32));
@@ -59,6 +60,13 @@ Menu::Menu(QWidget *parent) :
         ui->InstallLayout->setVisible(true);
     } else {
         ui->InstallLayout->setVisible(false);
+    }
+
+    QNetworkAccessManager networkManager;
+    if (networkManager.networkAccessible() == QNetworkAccessManager::Accessible) {
+        ui->thewaveInternetFrame->setVisible(false);
+    } else {
+        ui->thewaveInternetFrame->setVisible(true);
     }
 }
 
@@ -330,6 +338,23 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             ui->listWidget->addItem(i);
         }
     } else {
+        bool showtheWaveOption = true;
+        if ((arg1.startsWith("call") && arg1.count() == 4) || arg1.startsWith("call ")) {
+            QListWidgetItem *call = new QListWidgetItem();
+            QString parse = arg1;
+            if (arg1.count() == 4 || arg1.count() == 5) {
+                call->setText("Place a call");
+                call->setData(Qt::UserRole, "thewave:call");
+            } else {
+                parse.remove(0, 5);
+                call->setText("Place a call to " + (QString) parse.at(0).toUpper() + parse.right(parse.length() - 1) + "");
+                call->setData(Qt::UserRole, "thewave:call " + parse);
+            }
+            call->setIcon(QIcon::fromTheme("call-start"));
+            ui->listWidget->addItem(call);
+            showtheWaveOption = false;
+        }
+
         for (App *app : *apps) {
             if (app->name().contains(arg1, Qt::CaseInsensitive) || app->description().contains(arg1, Qt::CaseInsensitive)) {
                 QListWidgetItem *i = new QListWidgetItem();
@@ -377,27 +402,13 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                 break;
             }
         }
-    }
 
-    QUrl uri = QUrl::fromUserInput(arg1);
-    if (uri.scheme() == "http" || uri.scheme() == "https") {
-        App* app = new App();
-        app->setName("Go to " + uri.toDisplayString());
-        app->setCommand("xdg-open \"" + uri.toString() + "\"");
-        app->setIcon(QIcon::fromTheme("text-html"));
-        appsShown->append(app);
-
-        QListWidgetItem *i = new QListWidgetItem();
-        i->setText(app->name());
-        i->setIcon(app->icon());
-        i->setData(Qt::UserRole, app->command());
-        ui->listWidget->addItem(i);
-    } else if (uri.scheme() == "file") {
-        if (QDir(uri.path() + "/").exists()) {
+        QUrl uri = QUrl::fromUserInput(arg1);
+        if (uri.scheme() == "http" || uri.scheme() == "https") {
             App* app = new App();
-            app->setName("Open " + uri.path());
+            app->setName("Go to " + uri.toDisplayString());
             app->setCommand("xdg-open \"" + uri.toString() + "\"");
-            app->setIcon(QIcon::fromTheme("system-file-manager"));
+            app->setIcon(QIcon::fromTheme("text-html"));
             appsShown->append(app);
 
             QListWidgetItem *i = new QListWidgetItem();
@@ -405,29 +416,47 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             i->setIcon(app->icon());
             i->setData(Qt::UserRole, app->command());
             ui->listWidget->addItem(i);
-        } else if (QFile(uri.path()).exists()) {
-            App* app = new App();
-            app->setName("Open " + uri.path());
-            app->setCommand("xdg-open \"" + uri.toString() + "\"");
-            QFile f(uri.toString());
-            QFileInfo info(f);
-            QMimeType mime = (new QMimeDatabase())->mimeTypeForFile(info);
-            app->setIcon(QIcon::fromTheme(mime.iconName(), QIcon::fromTheme("application-octet-stream")));
-            appsShown->append(app);
+        } else if (uri.scheme() == "file") {
+            if (QDir(uri.path() + "/").exists()) {
+                App* app = new App();
+                app->setName("Open " + uri.path());
+                app->setCommand("xdg-open \"" + uri.toString() + "\"");
+                app->setIcon(QIcon::fromTheme("system-file-manager"));
+                appsShown->append(app);
 
-            QListWidgetItem *i = new QListWidgetItem();
-            i->setText(app->name());
-            i->setIcon(app->icon());
-            i->setData(Qt::UserRole, app->command());
-            ui->listWidget->addItem(i);
+                QListWidgetItem *i = new QListWidgetItem();
+                i->setText(app->name());
+                i->setIcon(app->icon());
+                i->setData(Qt::UserRole, app->command());
+                ui->listWidget->addItem(i);
+            } else if (QFile(uri.path()).exists()) {
+                App* app = new App();
+                app->setName("Open " + uri.path());
+                app->setCommand("xdg-open \"" + uri.toString() + "\"");
+                QFile f(uri.toString());
+                QFileInfo info(f);
+                QMimeType mime = (new QMimeDatabase())->mimeTypeForFile(info);
+                app->setIcon(QIcon::fromTheme(mime.iconName(), QIcon::fromTheme("application-octet-stream")));
+                appsShown->append(app);
+
+                QListWidgetItem *i = new QListWidgetItem();
+                i->setText(app->name());
+                i->setIcon(app->icon());
+                i->setData(Qt::UserRole, app->command());
+                ui->listWidget->addItem(i);
+            }
+        }
+
+        if (showtheWaveOption) {
+            QListWidgetItem *wave = new QListWidgetItem();
+            wave->setText("Ask theWave about \"" + arg1 + "\"");
+            wave->setIcon(QIcon(":/icons/thewave.svg"));
+            wave->setData(Qt::UserRole, "thewave:" + arg1);
+            ui->listWidget->addItem(wave);
         }
     }
 
-    QListWidgetItem *wave = new QListWidgetItem();
-    wave->setText("Ask theWave about \"" + arg1 + "\"");
-    wave->setIcon(QIcon(":/icons/thewave.svg"));
-    wave->setData(Qt::UserRole, "thewave:" + arg1);
-    ui->listWidget->addItem(wave);
+
 }
 
 bool Menu::eventFilter(QObject *object, QEvent *event) {

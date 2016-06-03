@@ -124,6 +124,8 @@ private slots:
 
     void on_thewaveWikipediaSwitch_toggled(bool checked);
 
+    void on_thewaveTTSespeak_clicked();
+
 public slots:
     void getNetworks();
 

@@ -956,6 +956,13 @@
               </widget>
              </item>
              <item>
+              <widget class="QRadioButton" name="thewaveTTSespeak">
+               <property name="text">
+                <string>espeak</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QRadioButton" name="thewaveTTSpico2wave">
                <property name="text">
                 <string>pico&amp;2wave</string>
@@ -1797,14 +1804,14 @@
             <second>0</second>
             <year>1969</year>
             <month>12</month>
-            <day>12</day>
+            <day>11</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>12</month>
-            <day>12</day>
+            <day>11</day>
            </date>
           </property>
           <property name="displayFormat">
