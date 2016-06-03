@@ -349,8 +349,23 @@ void MainWindow::on_date_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    theWave *w = new theWave(infoPane);
-    w->show();
+    //theWave *w = new theWave(infoPane);
+    //w->show();
+
+    this->setFocus();
+    Menu* m = new Menu(this);
+    m->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    //m->setGeometry(this->x(), this->y() + this->height() - 1, m->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
+    m->setGeometry(this->x() - m->width(), this->y() + this->height() - 1, m->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
+    m->show(true);
+    m->setFocus();
+
+    lockHide = true;
+    connect(m, SIGNAL(appOpening(QString,QIcon)), this, SLOT(openingApp(QString,QIcon)));
+    connect(m, &Menu::menuClosing, [=]() {
+        lockHide = false;
+    });
 }
 
 void MainWindow::internetLabelChanged(QString display) {

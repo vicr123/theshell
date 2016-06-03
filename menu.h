@@ -36,7 +36,7 @@ public:
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
 
-    void show();
+    void show(bool openTotheWave = false);
     void close();
 
 signals:
@@ -95,6 +95,8 @@ private slots:
     void on_thewave_line_returnPressed();
 
     void on_closetheWaveButton_2_clicked();
+
+    void on_thewave_launch_launchapp_clicked();
 
 private:
     Ui::Menu *ui;

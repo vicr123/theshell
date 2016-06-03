@@ -67,7 +67,7 @@ Menu::~Menu()
     delete ui;
 }
 
-void Menu::show() {
+void Menu::show(bool openTotheWave) {
     QDialog::show();
     doCheckForClose = true;
 
@@ -169,6 +169,10 @@ void Menu::show() {
     animation->setEasingCurve(QEasingCurve::OutCubic);
     animation->start();
     connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+
+    if (openTotheWave) {
+        ui->activateTheWave->click();
+    }
 
     /*QTimer *t = new QTimer(this);
     t->setInterval(1);
@@ -427,16 +431,25 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
 }
 
 bool Menu::eventFilter(QObject *object, QEvent *event) {
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = (QKeyEvent*) event;
-        ui->lineEdit->setText(ui->lineEdit->text().append(e->text()));
-        ui->lineEdit->setFocus();
-        on_lineEdit_textEdited(ui->lineEdit->text());
-        //ui->lineEdit->keyPressEvent(e);
-        e->ignore();
-        return true;
-    } else {
-        return QDialog::eventFilter(object, event);
+    if (object != ui->thewave_line) {
+        if (event->type() == QEvent::KeyPress) {
+            QKeyEvent *e = (QKeyEvent*) event;
+            if (e->key() != Qt::Key_Enter && e->key() != Qt::Key_Return) {
+                if (istheWaveReady) {
+                    ui->thewave_line->setText(ui->thewave_line->text().append(e->text()));
+                    ui->thewave_line->setFocus();
+                } else {
+                    ui->lineEdit->setText(ui->lineEdit->text().append(e->text()));
+                    ui->lineEdit->setFocus();
+                    on_lineEdit_textEdited(ui->lineEdit->text());
+                }
+            }
+            //ui->lineEdit->keyPressEvent(e);
+            e->ignore();
+            return true;
+        } else {
+            return QDialog::eventFilter(object, event);
+        }
     }
 }
 
@@ -621,6 +634,7 @@ void Menu::thewave_launchapp(QString appName) {
             foundApp = true;
             ui->thewave_launch_appName->setText(app->name());
             ui->thewave_launch_appIcon->setPixmap(app->icon().pixmap(64));
+            ui->thewave_launch_launchapp->setProperty("appcommand", app->command());
             break;
         }
     }
@@ -636,4 +650,10 @@ void Menu::thewave_launchapp(QString appName) {
         ui->thewave_launch_error->setVisible(true);
         ui->thewave_launch_launchapp->setVisible(false);
     }
+}
+
+void Menu::on_thewave_launch_launchapp_clicked()
+{
+    QProcess::startDetached(ui->thewave_launch_launchapp->property("appcommand").toString().remove("%u"));
+    this->close();
 }
