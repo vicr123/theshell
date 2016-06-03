@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1251</width>
-    <height>81</height>
+    <height>83</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -83,8 +83,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="mic-on">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="thewave" resource="resources.qrc">
+          <normaloff>:/icons/thewave.svg</normaloff>:/icons/thewave.svg</iconset>
         </property>
         <property name="flat">
          <bool>true</bool>

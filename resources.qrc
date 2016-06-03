@@ -15,5 +15,6 @@
     </qresource>
     <qresource prefix="/icons">
         <file>icon.svg</file>
+        <file>thewave.svg</file>
     </qresource>
 </RCC>

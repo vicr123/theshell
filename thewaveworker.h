@@ -13,6 +13,14 @@
 #include <QAudioRecorder>
 #include <QAudioEncoderSettings>
 #include <QAudioProbe>
+#include <QThread>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QSettings>
+#include <QXmlSimpleReader>
+#include <QXmlInputSource>
+#include <QEventLoop>
 
 class theWaveWorker : public QObject
 {
@@ -27,6 +35,7 @@ class theWaveWorker : public QObject
 
 public:
     explicit theWaveWorker(QObject *parent = 0);
+    ~theWaveWorker();
 
 signals:
     void outputSpeech(QString);
@@ -38,15 +47,18 @@ signals:
     void finished();
 
     void resetFrames();
-    void showCallFrame();
+    void showCallFrame(bool emergency);
     void showMessageFrame();
+    void showHelpFrame();
+    void showWikipediaFrame(QString title, QString text);
+    void launchApp(QString app);
 
     void setTimer(QTime);
 
 public slots:
     void begin();
 
-    void processSpeech(QString speech);
+    void processSpeech(QString speech, bool voiceFeedback = true);
 
     void quit();
 
@@ -67,6 +79,8 @@ private:
 
     bool stopEverything = false;
     bool resetOnNextBegin = false;
+
+    QSettings settings;
 };
 
 #endif // THEWAVEWORKER_H

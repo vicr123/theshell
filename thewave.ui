@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>585</width>
-    <height>460</height>
+    <height>465</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,8 +32,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="mic-off">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/thewave.svg</normaloff>:/icons/thewave.svg</iconset>
        </property>
        <property name="iconSize">
         <size>

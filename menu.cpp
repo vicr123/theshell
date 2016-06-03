@@ -11,12 +11,20 @@ Menu::Menu(QWidget *parent) :
     ui->setupUi(this);
 
     ui->offFrame->setParent(this);
+    ui->thewaveFrame->setParent(this);
     this->layout()->removeWidget(ui->offFrame);
+    this->layout()->removeWidget(ui->thewaveFrame);
     ui->offFrame->setGeometry(10, -this->height(), this->width() - 20, this->height() - 20);
+    ui->thewaveFrame->setGeometry(10, -this->height(), this->width() - 20, this->height() - 20);
     ui->commandLinkButton->setStyleSheet("background-color: #A00;");
     ui->commandLinkButton_2->setStyleSheet("background-color: #A00;");
     ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16));
     ui->userIcon->setPixmap(QIcon::fromTheme("system-users").pixmap(16));
+    ui->timeIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(32));
+    ui->callIcon->setPixmap(QIcon::fromTheme("call-start").pixmap(32));
+    ui->messageIcon->setPixmap(QIcon::fromTheme("message-send").pixmap(32));
+    ui->launchIcon->setPixmap(QIcon::fromTheme("system-run").pixmap(32));
+    ui->infoIcon->setPixmap(QIcon::fromTheme("text-html").pixmap(32));
 
     this->setMouseTracking(true);
 
@@ -131,6 +139,14 @@ void Menu::show() {
             }
         }
     }
+
+    App *waveApp = new App();
+    waveApp->setCommand("thewave");
+    waveApp->setIcon(QIcon(":/icons/thewave.svg"));
+    waveApp->setName("theWave");
+    waveApp->setDescription("Personal Assistant");
+    apps->append(waveApp);
+
     //hotkeyManager->registerHotkey("Power");
 
     for (App *app : *apps) {
@@ -277,28 +293,16 @@ void Menu::on_commandLinkButton_3_clicked()
 
 void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
 {
-    /*for (App* app : *appsShown) {
-        bool correctApp = false;
-        if (item->text().contains("|")) {
-            if (app->name() == item->text().split("|")[1].remove(0, 1)) {
-                correctApp = true;
-            }
-        } else if (app->name() == item->text()) {
-            correctApp = true;
+    if (item->data(Qt::UserRole).toString().startsWith("thewave")) {
+        ui->activateTheWave->click();
+        if (item->data(Qt::UserRole).toString().split(":").count() > 1) {
+            ui->thewave_line->setText(item->data(Qt::UserRole).toString().split(":").at(1));
+            on_thewave_line_returnPressed();
         }
-        if (correctApp) {
-            QProcess::startDetached(app->command().remove("%u"));
-            emit appOpening(app->name(), app->icon());
-            this->close();
-            break;
-        }
-    }*/
-
-    QProcess::startDetached(item->data(Qt::UserRole).toString().remove("%u"));
-    //emit appOpening(app->name(), app->icon());
-    this->close();
-
-    //App *app = appsShown->at(ui->listWidget->selectionModel()->selectedIndexes().at(0).row());
+    } else {
+        QProcess::startDetached(item->data(Qt::UserRole).toString().remove("%u"));
+        this->close();
+    }
 }
 void Menu::on_lineEdit_textChanged(const QString &arg1)
 {
@@ -414,6 +418,12 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             ui->listWidget->addItem(i);
         }
     }
+
+    QListWidgetItem *wave = new QListWidgetItem();
+    wave->setText("Ask theWave about \"" + arg1 + "\"");
+    wave->setIcon(QIcon(":/icons/thewave.svg"));
+    wave->setData(Qt::UserRole, "thewave:" + arg1);
+    ui->listWidget->addItem(wave);
 }
 
 bool Menu::eventFilter(QObject *object, QEvent *event) {
@@ -489,4 +499,141 @@ void Menu::on_commandLinkButton_8_clicked()
 {
     this->close();
     QProcess::startDetached("xset dpms force off");
+}
+
+void Menu::on_activateTheWave_clicked()
+{
+    this->resetFrames();
+    QPropertyAnimation* anim = new QPropertyAnimation(ui->thewaveFrame, "geometry");
+    anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
+    anim->setEndValue(QRect(10, 10, this->width() - 20, this->height() - 20));
+    anim->setDuration(500);
+
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+
+    anim->start();
+
+    QThread *t = new QThread();
+    waveWorker = new theWaveWorker();
+    waveWorker->moveToThread(t);
+    //connect(t, SIGNAL(started()), waveWorker, SLOT(begin()));
+    connect(t, &QThread::started, [=]() {
+       this->istheWaveReady = true;
+    });
+    connect(waveWorker, SIGNAL(finished()), waveWorker, SLOT(deleteLater()));
+    connect(t, SIGNAL(finished()), t, SLOT(deleteLater()));
+    connect(waveWorker, &theWaveWorker::outputResponse, [=](QString response) {
+        ui->thewave_response->setText(response);
+
+    });
+    connect(waveWorker, &theWaveWorker::outputSpeech, [=](QString speech) {
+        ui->thewave_line->setText(speech);
+    });
+    connect(waveWorker, &theWaveWorker::startedListening, [=]() {
+        //ui->pushButton->setIcon(QIcon::fromTheme("mic-on"));
+        isListening = true;
+    });
+    connect(waveWorker, &theWaveWorker::stoppedListening, [=]() {
+        //ui->pushButton->setIcon(QIcon::fromTheme("mic-off"));
+        isListening = false;
+    });
+    connect(waveWorker, SIGNAL(showCallFrame(bool)), this, SLOT(showCallFrame(bool)));
+    connect(waveWorker, SIGNAL(resetFrames()), this, SLOT(resetFrames()));
+    connect(waveWorker, SIGNAL(showMessageFrame()), this, SLOT(showMessageFrame()));
+    connect(waveWorker, SIGNAL(showHelpFrame()), this, SLOT(showHelpFrame()));
+    connect(waveWorker, SIGNAL(showWikipediaFrame(QString,QString)), this, SLOT(showWikipediaFrame(QString,QString)));
+    connect(waveWorker, SIGNAL(launchApp(QString)), this, SLOT(thewave_launchapp(QString)));
+    connect(waveWorker, SIGNAL(setTimer(QTime)), MainWin->getInfoPane(), SLOT(startTimer(QTime)));
+    connect(this, SIGNAL(thewave_processText(QString,bool)), waveWorker, SLOT(processSpeech(QString,bool)));
+    connect(ui->listentheWave, SIGNAL(clicked(bool)), waveWorker, SLOT(begin()));
+    /*connect(w, &speechWorker::outputFrame, [=](QFrame *frame) {
+        ui->frame->layout()->addWidget(frame);
+    });*/
+
+    t->start();
+}
+
+void Menu::on_closetheWaveButton_clicked()
+{
+    this->istheWaveReady = false;
+    this->resetFrames();
+    ui->thewave_response->setText("Hit \"Speak\" to start speaking.");
+    ui->thewave_line->setText("");
+
+    QPropertyAnimation* anim = new QPropertyAnimation(ui->thewaveFrame, "geometry");
+    anim->setStartValue(QRect(10, 10, this->width() - 20, this->height() - 20));
+    anim->setEndValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
+    anim->setDuration(500);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+
+    anim->start();
+
+    waveWorker->deleteLater();
+}
+
+void Menu::showCallFrame(bool emergency) {
+    ui->thewave_callFrame->setVisible(true);
+}
+
+void Menu::showMessageFrame() {
+    ui->thewave_messageframe->setVisible(true);
+}
+
+void Menu::showHelpFrame() {
+    ui->thewave_helpFrame->setVisible(true);
+}
+
+void Menu::resetFrames() {
+    ui->thewave_callFrame->setVisible(false);
+    ui->thewave_messageframe->setVisible(false);
+    ui->thewave_helpFrame->setVisible(false);
+    ui->wikipediaFrame->setVisible(false);
+    ui->thewave_spacerFrame->setVisible(true);
+    ui->thewave_launchFrame->setVisible(false);
+}
+
+void Menu::showWikipediaFrame(QString title, QString text) {
+    ui->wikipediaTitle->setText(title);
+    ui->wikipediaText->setHtml(text);
+    ui->wikipediaFrame->setVisible(true);
+    ui->thewave_spacerFrame->setVisible(false);
+}
+
+void Menu::on_thewave_line_returnPressed()
+{
+    while (!istheWaveReady) {
+        QApplication::processEvents();
+    }
+    emit thewave_processText(ui->thewave_line->text());
+}
+
+void Menu::on_closetheWaveButton_2_clicked()
+{
+    QProcess::startDetached("xdg-open https://en.wikipedia.org/wiki/" + ui->wikipediaTitle->text().replace(" ", "_"));
+    this->close();
+}
+
+void Menu::thewave_launchapp(QString appName) {
+    bool foundApp = false;
+    ui->thewave_launchFrame->setVisible(true);
+    for (App *app : *apps) {
+        if (app->name().remove(" ").contains(appName.remove(" "), Qt::CaseInsensitive)) {
+            foundApp = true;
+            ui->thewave_launch_appName->setText(app->name());
+            ui->thewave_launch_appIcon->setPixmap(app->icon().pixmap(64));
+            break;
+        }
+    }
+
+    if (foundApp) {
+        ui->thewave_launch_appIcon->setVisible(true);
+        ui->thewave_launch_appName->setVisible(true);
+        ui->thewave_launch_error->setVisible(false);
+        ui->thewave_launch_launchapp->setVisible(true);
+    } else {
+        ui->thewave_launch_appIcon->setVisible(false);
+        ui->thewave_launch_appName->setVisible(false);
+        ui->thewave_launch_error->setVisible(true);
+        ui->thewave_launch_launchapp->setVisible(false);
+    }
 }

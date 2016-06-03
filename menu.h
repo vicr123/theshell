@@ -17,6 +17,7 @@
 #include "endsessionwait.h"
 #include "app.h"
 #include "mainwindow.h"
+#include "thewaveworker.h"
 
 #undef KeyPress
 
@@ -41,6 +42,8 @@ public:
 signals:
     void appOpening(QString name, QIcon icon);
     void menuClosing();
+
+    void thewave_processText(QString text, bool isText = false);
 
 private slots:
     void checkForclose();
@@ -73,6 +76,26 @@ private slots:
 
     void on_commandLinkButton_8_clicked();
 
+    void on_activateTheWave_clicked();
+
+    void on_closetheWaveButton_clicked();
+
+    void showCallFrame(bool emergency);
+
+    void resetFrames();
+
+    void showMessageFrame();
+
+    void showHelpFrame();
+
+    void showWikipediaFrame(QString title, QString text);
+
+    void thewave_launchapp(QString app);
+
+    void on_thewave_line_returnPressed();
+
+    void on_closetheWaveButton_2_clicked();
+
 private:
     Ui::Menu *ui;
 
@@ -86,6 +109,10 @@ private:
     //void closeEvent(QCloseEvent *event);
     void paintEvent(QPaintEvent* event);
     void changeEvent(QEvent* event);
+
+    theWaveWorker* waveWorker;
+    bool isListening;
+    bool istheWaveReady = false;
 };
 
 #endif // MENU_H

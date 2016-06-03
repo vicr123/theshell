@@ -44,6 +44,10 @@ theWaveWorker::theWaveWorker(QObject *parent) : QObject(parent)
     numberDictionary["million"] = 100000;
 }
 
+theWaveWorker::~theWaveWorker() {
+    emit finished();
+}
+
 void theWaveWorker::begin() {
     if (resetOnNextBegin) {
         resetOnNextBegin = false;
@@ -118,7 +122,11 @@ void theWaveWorker::outputAvailable() {
     }
 }
 
-void theWaveWorker::processSpeech(QString speech) {
+void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
+    if (resetOnNextBegin) {
+        resetOnNextBegin = false;
+        emit resetFrames();
+    }
     QString parse = speech.toLower();
     if (speech == "") {
         emit outputResponse("That flew past me. Try again.");
@@ -135,7 +143,7 @@ void theWaveWorker::processSpeech(QString speech) {
             } else if (parse.contains("call")) {
                 emit outputResponse("Unfortunately, I can't place a call from this device.");
                 speak("Unfortunately, I can't place a call from this device.");
-                emit showCallFrame();
+                emit showCallFrame(false);
                 resetOnNextBegin = true;
             } else if (parse.contains("text") || parse.contains("message")) {
                 emit outputResponse("Unfortunately, I can't send text messages from this device. This functionality may come later for IM applications.");
@@ -162,15 +170,65 @@ void theWaveWorker::processSpeech(QString speech) {
 
                 if (hour == 0 && minute == 0 && second == 0) {
                     emit outputResponse("How long do you want this timer to be set for?");
-                    speak("How long do you want this timer to be set for?", true);
+                    speak("How long do you want this timer to be set for?", voiceFeedback);
                     state = TimerGetTime;
                 } else {
                     goto TimerGetTime;
                 }
+            } else if (parse.contains("help") || parse.contains("what can you do")) {
+                emit outputResponse("I can do some things. Try asking me something from this list.");
+                speak("I can do some things. Try asking me something from this list.");
+                emit showHelpFrame();
+                resetOnNextBegin = true;
+            } else if (parse.startsWith("start", Qt::CaseInsensitive) || parse.startsWith("launch", Qt::CaseInsensitive)) {
+                emit launchApp(parse.remove(0, 6));
+                resetOnNextBegin = true;
             } else {
-                emit outputResponse("Unfortunately, I don't understand you. Try again.");
-                speak("Unfortunately, I don't understand you. Try again.");
-                errorListeningSound->play();
+                emit outputResponse("Looking online for information...");
+                speak("Looking online for information...");
+
+                bool isInfoFound = false;
+
+                if (settings.value("thewave/wikipediaSearch", true).toBool()) {
+                    QEventLoop eventLoop;
+
+                    QNetworkRequest request;
+                    QUrl requestUrl("https://en.wikipedia.org/w/api.php?action=query&titles=" + parse.replace(" ", "%20") + "&format=xml&prop=extracts&redirects=true&exintro=true");
+                    request.setUrl(requestUrl);
+                    request.setHeader(QNetworkRequest::UserAgentHeader, "theWave/2.0 (vicr12345@gmail.com)");
+                    QNetworkAccessManager networkManager;
+                    connect(&networkManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
+                    QNetworkReply* NetworkReply = networkManager.get(request);
+
+                    eventLoop.exec();
+
+                    QString reply(NetworkReply->readAll());
+                    qDebug() << reply;
+
+                    if (reply.contains("title=") && !reply.contains("missing=\"\"")) {
+                        isInfoFound = true;
+                        QString title = reply.split("title=\"").at(1).split("\"").at(0);
+                        QString text;
+
+                        text = "<!DOCTYPE HTML><html><head></head><body>" + reply.split("<extract xml:space=\"preserve\">").at(1).split("</extract>").at(0) + "</body></html>";
+                        text.replace("&lt;", "<");
+                        text.replace("&gt;", ">");
+                        text.replace("&quot;", "\"");
+                        text.replace("&amp;", "&");
+
+                        emit showWikipediaFrame(title, text);
+                        emit outputResponse("I found some information. Take a look.");
+                        speak("I found some information. Take a look.");
+                        resetOnNextBegin = true;
+                    }
+
+                }
+
+                if (!isInfoFound) {
+                    emit outputResponse("Unfortunately, I don't understand you. Try again.");
+                    speak("Unfortunately, I don't understand you. Try again.");
+                    errorListeningSound->play();
+                }
             }
             break;
         case TimerGetTime:
