@@ -289,13 +289,45 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
 }
 
 void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
-    QProcess *s = new QProcess(this);
-    s->start("festival --tts");
-    s->write(speech.toUtf8());
-    s->closeWriteChannel();
+    if (settings.value("thewave/ttsEngine").toString() == "pico2wave" && QFile("/usr/bin/pico2wave").exists()) {
+        /*QProcess *s = new QProcess(this);
+        s->setInputChannelMode(QProcess::);
+        s->start();
+        s->waitForStarted();
+        s->waitForFinished();*/
+        QString command = "pico2wave -w=\"" + QDir::homePath() + "/.thewavevoice.wav\" \"" + speech + "\"";
+        QProcess::execute(command);
 
-    if (restartOnceComplete && !stopEverything) {
-        connect(s, SIGNAL(finished(int)), this, SLOT(begin()));
+        QSoundEffect* sound = new QSoundEffect();
+        sound->setSource(QUrl::fromLocalFile(QDir::homePath() + "/.thewavevoice.wav"));
+        sound->play();
+        connect(sound, &QSoundEffect::playingChanged, [=]() {
+            if (!sound->isPlaying()) {
+                sound->deleteLater();
+            }
+        });
+        connect(sound, &QSoundEffect::destroyed, [=]() {
+            bool success = QFile(QDir::homePath() + "/.thewavevoice.wav").remove();
+
+            if (restartOnceComplete && !stopEverything) {
+                begin();
+            }
+        });
+        //QSound sound();
+        //sound.play();
+
+        //while (!sound.isFinished()) {
+            //QApplication::processEvents();
+        //}
+    } else {
+        QProcess *s = new QProcess(this);
+        s->start("festival --tts");
+        s->write(speech.toUtf8());
+        s->closeWriteChannel();
+
+        if (restartOnceComplete && !stopEverything) {
+            connect(s, SIGNAL(finished(int)), this, SLOT(begin()));
+        }
     }
 }
 

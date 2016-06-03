@@ -116,8 +116,13 @@ private slots:
 
     void on_resetButton_clicked();
 
-
     void on_TouchFeedbackSwitch_toggled(bool checked);
+
+    void on_thewaveTTSpico2wave_clicked();
+
+    void on_thewaveTTSfestival_clicked();
+
+    void on_thewaveWikipediaSwitch_toggled(bool checked);
 
 public slots:
     void getNetworks();

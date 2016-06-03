@@ -21,6 +21,8 @@
 #include <QXmlSimpleReader>
 #include <QXmlInputSource>
 #include <QEventLoop>
+#include <QDir>
+#include <QApplication>
 
 class theWaveWorker : public QObject
 {

@@ -323,7 +323,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>4</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -915,6 +915,151 @@
              </item>
             </layout>
            </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_7">
+         <attribute name="icon">
+          <iconset theme="thewave" resource="resources.qrc">
+           <normaloff>:/icons/thewave.svg</normaloff>:/icons/thewave.svg</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>theWave</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="1" column="1">
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QRadioButton" name="thewaveTTSfestival">
+               <property name="text">
+                <string>Festival (fallbac&amp;k)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="thewaveTTSpico2wave">
+               <property name="text">
+                <string>pico&amp;2wave</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QFrame" name="displayHeader_6">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_20">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="displayLabel_6">
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Input</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="displayLine_6">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_27">
+            <property name="text">
+             <string>Text to Speech engine</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_28">
+            <property name="text">
+             <string>Search on Wikipedia</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="Switch" name="thewaveWikipediaSwitch">
+            <property name="text">
+             <string>WikipediaSwitch</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <spacer name="verticalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -1652,14 +1797,14 @@
             <second>0</second>
             <year>1969</year>
             <month>12</month>
-            <day>13</day>
+            <day>12</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>12</month>
-            <day>13</day>
+            <day>12</day>
            </date>
           </property>
           <property name="displayFormat">

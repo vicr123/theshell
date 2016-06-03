@@ -61,9 +61,17 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     }
     ui->redshiftIntensity->setValue(redshiftVal.toInt());
 
+    QString thewaveVoiceEngine = settings.value("thewave/ttsEngine", "festival").toString();
+    if (thewaveVoiceEngine == "pico2wave") {
+        ui->thewaveTTSpico2wave->setChecked(true);
+    } else if (thewaveVoiceEngine == "festival") {
+        ui->thewaveTTSfestival->setChecked(true);
+    }
+
     ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
     ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
+    ui->thewaveWikipediaSwitch->setChecked(settings.value("thewave/wikipediaSearch", true).toBool());
 
     eventTimer = new QTimer(this);
     eventTimer->setInterval(1000);
@@ -685,4 +693,20 @@ void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
 void InfoPaneDropdown::on_TouchFeedbackSwitch_toggled(bool checked)
 {
     settings.setValue("input/touchFeedbackSound", checked);
+}
+
+void InfoPaneDropdown::on_thewaveTTSpico2wave_clicked()
+{
+    settings.setValue("thewave/ttsEngine", "pico2wave");
+}
+
+void InfoPaneDropdown::on_thewaveTTSfestival_clicked()
+{
+    settings.setValue("thewave/ttsEngine", "festival");
+}
+
+
+void InfoPaneDropdown::on_thewaveWikipediaSwitch_toggled(bool checked)
+{
+    settings.setValue("thewave/wikipediaSearch", checked);
 }
