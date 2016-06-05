@@ -74,6 +74,8 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
     ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
     ui->thewaveWikipediaSwitch->setChecked(settings.value("thewave/wikipediaSearch", true).toBool());
+    ui->thewaveOffensiveSwitch->setChecked(settings.value("thewave/blockOffensiveWords", true).toBool());
+    ui->theWaveName->setText(settings.value("thewave/name", "").toString());
 
     eventTimer = new QTimer(this);
     eventTimer->setInterval(1000);
@@ -717,4 +719,14 @@ void InfoPaneDropdown::on_thewaveTTSespeak_clicked()
 {
     settings.setValue("thewave/ttsEngine", "espeak");
 
+}
+
+void InfoPaneDropdown::on_thewaveOffensiveSwitch_toggled(bool checked)
+{
+    settings.setValue("thewave/blockOffensiveWords", checked);
+}
+
+void InfoPaneDropdown::on_theWaveName_textEdited(const QString &arg1)
+{
+    settings.setValue("thewave/name", arg1);
 }

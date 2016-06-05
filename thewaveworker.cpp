@@ -12,6 +12,12 @@ theWaveWorker::theWaveWorker(QObject *parent) : QObject(parent)
     stopListeningSound = new QSoundEffect();
     stopListeningSound->setSource(QUrl("qrc:/sounds/notlistening.wav"));
 
+    geolocationSource = QGeoPositionInfoSource::createDefaultSource(this);
+    connect(geolocationSource, &QGeoPositionInfoSource::positionUpdated, [=](QGeoPositionInfo position) {
+        this->currentCoordinates = position.coordinate();
+    });
+    geolocationSource->startUpdates();
+
     numberDictionary["one"] = 1;
     numberDictionary["two"] = 2;
     numberDictionary["three"] = 3;
@@ -123,6 +129,7 @@ void theWaveWorker::outputAvailable() {
 }
 
 void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
+    QString name = settings.value("thewave/name").toString();
     if (resetOnNextBegin) {
         resetOnNextBegin = false;
         emit resetFrames();
@@ -130,16 +137,32 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
     QString parse = speech.toLower();
     if (speech == "") {
         emit outputResponse("That flew past me. Try again.");
-        speak("That flew past me. Try again.", true);
+        speak("That flew past me. Try again.", voiceFeedback);
     } else {
         switch (this->state) {
         case Idle:
             if (parse.contains("hello")) {
-                emit outputResponse("Hey there! How are you today?");
-                speak("Hey there! How are you today?");
+                if (name == "") {
+                    emit outputResponse("Hey there! How are you today?");
+                    speak("Hey there! How are you today?");
+                } else {
+                    emit outputResponse("Hello " + name + "! How are you today?");
+                    speak("Hello " + name + "! How are you today?");
+                }
+            } else if (parse == "who am i") {
+                if (name == "") {
+                    emit outputResponse("I'm not quite sure. Tell me in my settings.");
+                    speak("I'm not quite sure. Tell me in my settings.");
+                } else {
+                    emit outputResponse("You're " + name + ", aren't you?");
+                    speak("You're " + name + ", aren't you?");
+                }
             } else if (parse == "who are you") {
                 emit outputResponse("Me? I'm theWave. Pleased to meet you.");
                 speak("Me? I'm theWave. Pleased to meet you.");
+            } else if (parse == "fuck you") {
+                emit outputResponse("Did I do something wrong?");
+                speak("Did I do something wrong?");
             } else if (parse.contains("call")) {
                 emit outputResponse("Unfortunately, I can't place a call from this device.");
                 speak("Unfortunately, I can't place a call from this device.");
@@ -183,6 +206,30 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
             } else if (parse.startsWith("start", Qt::CaseInsensitive) || parse.startsWith("launch", Qt::CaseInsensitive)) {
                 emit launchApp(parse.remove(0, 6));
                 resetOnNextBegin = true;
+            } else if (parse == "where am i") {
+                geolocationSource->requestUpdate();
+                QGeoCoordinate coordinates = this->currentCoordinates;
+                QString output;
+                if (coordinates.isValid()) {
+                    output = "You're at " + QString::number(coordinates.latitude()) + " " + QString::number(coordinates.longitude());
+                } else {
+                    output = "I'm not quite sure where you are.";
+                }
+                emit outputResponse(output);
+                speak(output);
+            /*} else if (parse.contains("weather")) {
+                //Get the location the user wants
+                QString location = ""; //If Location is blank, get current location.
+
+                if (location == "") { //Use current location
+                    geolocationSource->requestUpdate();
+                    if (currentCoordinates.isValid()) {
+
+                    } else {
+                        emit outputResponse("I'm not sure where you are, so I can't get weather information. Try saying a city name. Sorry about that.");
+                        speak("I'm not sure where you are, so I can't get weather information. Try saying a city name. Sorry about that.");
+                    }
+                }*/
             } else {
                 emit outputResponse("Looking online for information...");
                 speak("Looking online for information...");
@@ -252,7 +299,7 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                 }
                 if (hour >= 60 || minute >= 60 || second >= 60) {
                     emit outputResponse("I'm sorry, that's not a valid time. I need a time given in hours, minutes and/or seconds. Otherwise, you can say \"Stop.\"");
-                    speak("I'm sorry, that's not a valid time. I need a time given in hours, minutes and or seconds. Otherwise, you can say \"Stop.\"", true);
+                    speak("I'm sorry, that's not a valid time. I need a time given in hours, minutes and or seconds. Otherwise, you can say \"Stop.\"", voiceFeedback);
                     state = TimerGetTime;
                 } else {
                     QString compiledSpeech = "I've set the timer for ";

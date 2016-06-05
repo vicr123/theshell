@@ -98,10 +98,13 @@ private slots:
 
     void on_thewave_launch_launchapp_clicked();
 
+    void thewave_outputSpeech(QString speech);
+
 private:
     Ui::Menu *ui;
 
     bool checkFocus(QLayout *layout);
+    QSettings settings;
 
     QList<App*> *apps;
     QList<App*> *appsShown;

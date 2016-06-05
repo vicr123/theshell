@@ -23,6 +23,7 @@
 #include <QEventLoop>
 #include <QDir>
 #include <QApplication>
+#include <QGeoPositionInfoSource>
 
 class theWaveWorker : public QObject
 {
@@ -78,6 +79,9 @@ private:
 
     QSoundEffect* startListeningSound, *okListeningSound, *errorListeningSound, *stopListeningSound;
     QAudioRecorder* recorder = NULL;
+
+    QGeoPositionInfoSource* geolocationSource;
+    QGeoCoordinate currentCoordinates;
 
     bool stopEverything = false;
     bool resetOnNextBegin = false;

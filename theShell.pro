@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui gui-private x11extras dbus multimedia xml network
+QT       += core gui gui-private x11extras dbus multimedia xml network positioning
 CONFIG   += c++11
 LIBS     += -lX11 -lxcb -lxcb-keysyms -lcups -lsystemd
 

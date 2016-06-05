@@ -339,18 +339,45 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
         }
     } else {
         bool showtheWaveOption = true;
-        if ((arg1.startsWith("call") && arg1.count() == 4) || arg1.startsWith("call ")) {
+        if (arg1.toLower() == "emergency call") {
+            QListWidgetItem *callItem = new QListWidgetItem();
+            callItem->setText("Place a call");
+            callItem->setIcon(QIcon::fromTheme("call-start"));
+            callItem->setData(Qt::UserRole, "thewave:emergency call");
+            ui->listWidget->addItem(callItem);
+
+            QListWidgetItem *call = new QListWidgetItem();
+            call->setText("Emergency Call");
+            call->setData(Qt::UserRole, "thewave:emergency call");
+            call->setIcon(QIcon(":/icons/blank.svg"));
+            QFont font = call->font();
+            font.setPointSize(30);
+            call->setFont(font);
+            ui->listWidget->addItem(call);
+            showtheWaveOption = false;
+        } else if ((arg1.startsWith("call") && arg1.count() == 4) || arg1.startsWith("call ")) {
             QListWidgetItem *call = new QListWidgetItem();
             QString parse = arg1;
             if (arg1.count() == 4 || arg1.count() == 5) {
                 call->setText("Place a call");
                 call->setData(Qt::UserRole, "thewave:call");
+                call->setIcon(QIcon::fromTheme("call-start"));
             } else {
                 parse.remove(0, 5);
-                call->setText("Place a call to " + (QString) parse.at(0).toUpper() + parse.right(parse.length() - 1) + "");
+                QListWidgetItem *callItem = new QListWidgetItem();
+                callItem->setText("Place a call");
+                callItem->setIcon(QIcon::fromTheme("call-start"));
+                callItem->setData(Qt::UserRole, "thewave:call " + parse);
+                ui->listWidget->addItem(callItem);
+
+                call->setText((QString) parse.at(0).toUpper() + parse.right(parse.length() - 1) + "");
                 call->setData(Qt::UserRole, "thewave:call " + parse);
+                call->setIcon(QIcon(":/icons/blank.svg"));
+
+                QFont font = call->font();
+                font.setPointSize(30);
+                call->setFont(font);
             }
-            call->setIcon(QIcon::fromTheme("call-start"));
             ui->listWidget->addItem(call);
             showtheWaveOption = false;
         }
@@ -568,9 +595,7 @@ void Menu::on_activateTheWave_clicked()
         ui->thewave_response->setText(response);
 
     });
-    connect(waveWorker, &theWaveWorker::outputSpeech, [=](QString speech) {
-        ui->thewave_line->setText(speech);
-    });
+    connect(waveWorker, SIGNAL(outputSpeech(QString)), this, SLOT(thewave_outputSpeech(QString)));
     connect(waveWorker, &theWaveWorker::startedListening, [=]() {
         //ui->pushButton->setIcon(QIcon::fromTheme("mic-on"));
         isListening = true;
@@ -593,6 +618,15 @@ void Menu::on_activateTheWave_clicked()
     });*/
 
     t->start();
+}
+
+void Menu::thewave_outputSpeech(QString speech) {
+    QString displaySpeech = speech;
+    if (settings.value("thewave/blockOffensiveWords").toBool()) {
+        displaySpeech.replace("shit", "s***");
+        displaySpeech.replace("fuck", "f***");
+    }
+    ui->thewave_line->setText(displaySpeech);
 }
 
 void Menu::on_closetheWaveButton_clicked()
@@ -632,6 +666,7 @@ void Menu::resetFrames() {
     ui->wikipediaFrame->setVisible(false);
     ui->thewave_spacerFrame->setVisible(true);
     ui->thewave_launchFrame->setVisible(false);
+    ui->thewaveWeatherFrame->setVisible(false);
 }
 
 void Menu::showWikipediaFrame(QString title, QString text) {
@@ -647,6 +682,7 @@ void Menu::on_thewave_line_returnPressed()
         QApplication::processEvents();
     }
     emit thewave_processText(ui->thewave_line->text());
+    thewave_outputSpeech(ui->thewave_line->text());
 }
 
 void Menu::on_closetheWaveButton_2_clicked()

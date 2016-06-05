@@ -927,51 +927,6 @@
           <string>theWave</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_7">
-          <item row="1" column="1">
-           <widget class="QFrame" name="frame">
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QRadioButton" name="thewaveTTSfestival">
-               <property name="text">
-                <string>Festival (fallbac&amp;k)</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="thewaveTTSespeak">
-               <property name="text">
-                <string>espeak</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="thewaveTTSpico2wave">
-               <property name="text">
-                <string>pico&amp;2wave</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item row="0" column="0" colspan="3">
            <widget class="QFrame" name="displayHeader_6">
             <property name="frameShape">
@@ -1021,7 +976,52 @@
             </layout>
            </widget>
           </item>
-          <item row="1" column="2">
+          <item row="2" column="1">
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QRadioButton" name="thewaveTTSfestival">
+               <property name="text">
+                <string>Festival (fallbac&amp;k)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="thewaveTTSespeak">
+               <property name="text">
+                <string>espeak</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="thewaveTTSpico2wave">
+               <property name="text">
+                <string>pico&amp;2wave</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="2">
            <spacer name="horizontalSpacer_13">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -1034,28 +1034,28 @@
             </property>
            </spacer>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="label_27">
             <property name="text">
              <string>Text to Speech engine</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="label_28">
             <property name="text">
              <string>Search on Wikipedia</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="3" column="1">
            <widget class="Switch" name="thewaveWikipediaSwitch">
             <property name="text">
              <string>WikipediaSwitch</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="5" column="1">
            <spacer name="verticalSpacer_14">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -1067,6 +1067,30 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>Block recognized offensive words</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="Switch" name="thewaveOffensiveSwitch">
+            <property name="text">
+             <string>OffensiveSwitch</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>Preferred Name</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="QLineEdit" name="theWaveName"/>
           </item>
          </layout>
         </widget>
@@ -1804,14 +1828,14 @@
             <second>0</second>
             <year>1969</year>
             <month>12</month>
-            <day>11</day>
+            <day>9</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>12</month>
-            <day>11</day>
+            <day>9</day>
            </date>
           </property>
           <property name="displayFormat">

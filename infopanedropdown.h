@@ -126,6 +126,10 @@ private slots:
 
     void on_thewaveTTSespeak_clicked();
 
+    void on_thewaveOffensiveSwitch_toggled(bool checked);
+
+    void on_theWaveName_textEdited(const QString &arg1);
+
 public slots:
     void getNetworks();
 
