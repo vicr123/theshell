@@ -18,4 +18,8 @@
         <file>thewave.svg</file>
         <file>blank.svg</file>
     </qresource>
+    <qresource prefix="/icons/flight">
+        <file alias="cancelled.svg">flight/cancelled.svg</file>
+        <file alias="unknown.svg">flight/unknown.svg</file>
+    </qresource>
 </RCC>

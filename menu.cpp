@@ -611,6 +611,7 @@ void Menu::on_activateTheWave_clicked()
     connect(waveWorker, SIGNAL(showWikipediaFrame(QString,QString)), this, SLOT(showWikipediaFrame(QString,QString)));
     connect(waveWorker, SIGNAL(launchApp(QString)), this, SLOT(thewave_launchapp(QString)));
     connect(waveWorker, SIGNAL(setTimer(QTime)), MainWin->getInfoPane(), SLOT(startTimer(QTime)));
+    connect(waveWorker, SIGNAL(showFlightFrame(QString)), this, SLOT(showFlightFrame(QString)));
     connect(this, SIGNAL(thewave_processText(QString,bool)), waveWorker, SLOT(processSpeech(QString,bool)));
     connect(ui->listentheWave, SIGNAL(clicked(bool)), waveWorker, SLOT(begin()));
     /*connect(w, &speechWorker::outputFrame, [=](QFrame *frame) {
@@ -644,7 +645,10 @@ void Menu::on_closetheWaveButton_clicked()
 
     anim->start();
 
-    waveWorker->deleteLater();
+    if (waveWorker != NULL) {
+        waveWorker->deleteLater();
+        waveWorker = NULL;
+    }
 }
 
 void Menu::showCallFrame(bool emergency) {
@@ -667,6 +671,7 @@ void Menu::resetFrames() {
     ui->thewave_spacerFrame->setVisible(true);
     ui->thewave_launchFrame->setVisible(false);
     ui->thewaveWeatherFrame->setVisible(false);
+    ui->thewave_flightFrame->setVisible(false);
 }
 
 void Menu::showWikipediaFrame(QString title, QString text) {
@@ -674,6 +679,12 @@ void Menu::showWikipediaFrame(QString title, QString text) {
     ui->wikipediaText->setHtml(text);
     ui->wikipediaFrame->setVisible(true);
     ui->thewave_spacerFrame->setVisible(false);
+}
+
+void Menu::showFlightFrame(QString flight) {
+    ui->flightNumber->setText(flight);
+    ui->flightImage->setPixmap(QIcon(":/icons/flight/unknown.svg").pixmap(500, 70));
+    ui->thewave_flightFrame->setVisible(true);
 }
 
 void Menu::on_thewave_line_returnPressed()

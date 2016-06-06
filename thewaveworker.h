@@ -55,6 +55,7 @@ signals:
     void showHelpFrame();
     void showWikipediaFrame(QString title, QString text);
     void launchApp(QString app);
+    void showFlightFrame(QString flight);
 
     void setTimer(QTime);
 
@@ -85,6 +86,7 @@ private:
 
     bool stopEverything = false;
     bool resetOnNextBegin = false;
+    bool speechPlaying = false;
 
     QSettings settings;
 };

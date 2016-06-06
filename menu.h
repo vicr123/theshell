@@ -100,6 +100,8 @@ private slots:
 
     void thewave_outputSpeech(QString speech);
 
+    void showFlightFrame(QString flight);
+
 private:
     Ui::Menu *ui;
 

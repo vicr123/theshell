@@ -206,6 +206,11 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
             } else if (parse.startsWith("start", Qt::CaseInsensitive) || parse.startsWith("launch", Qt::CaseInsensitive)) {
                 emit launchApp(parse.remove(0, 6));
                 resetOnNextBegin = true;
+            } else if (parse.contains("flight")) {
+                emit showFlightFrame("Unknown Airline 000");
+                emit outputResponse("I can't find flight information at the moment.");
+                speak("I can't find flight information at the moment.");
+                resetOnNextBegin = true;
             } else if (parse == "where am i") {
                 geolocationSource->requestUpdate();
                 QGeoCoordinate coordinates = this->currentCoordinates;
@@ -240,7 +245,7 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     QEventLoop eventLoop;
 
                     QNetworkRequest request;
-                    QUrl requestUrl("https://en.wikipedia.org/w/api.php?action=query&titles=" + parse.replace(" ", "%20") + "&format=xml&prop=extracts&redirects=true&exintro=true");
+                    QUrl requestUrl("https://en.wikipedia.org/w/api.php?action=query&titles=" + speech.replace(" ", "%20") + "&format=xml&prop=extracts&redirects=true&exintro=true");
                     request.setUrl(requestUrl);
                     request.setHeader(QNetworkRequest::UserAgentHeader, "theWave/2.0 (vicr12345@gmail.com)");
                     QNetworkAccessManager networkManager;
@@ -336,6 +341,11 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
 }
 
 void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
+    while (speechPlaying) {
+        QApplication::processEvents();
+    }
+
+    speechPlaying = true;
     if (settings.value("thewave/ttsEngine").toString() == "pico2wave" && QFile("/usr/bin/pico2wave").exists()) {
         /*QProcess *s = new QProcess(this);
         s->setInputChannelMode(QProcess::);
@@ -359,6 +369,7 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
             if (restartOnceComplete && !stopEverything) {
                 begin();
             }
+            speechPlaying = false;
         });
         //QSound sound();
         //sound.play();
@@ -373,6 +384,7 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
         if (restartOnceComplete && !stopEverything) {
             connect(s, SIGNAL(finished(int)), this, SLOT(begin()));
         }
+        speechPlaying = false;
     } else {
         QProcess *s = new QProcess(this);
         s->start("festival --tts");
@@ -382,6 +394,7 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
         if (restartOnceComplete && !stopEverything) {
             connect(s, SIGNAL(finished(int)), this, SLOT(begin()));
         }
+        speechPlaying = false;
     }
 }
 
