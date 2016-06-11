@@ -323,7 +323,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>4</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -485,7 +485,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QSlider" name="horizontalSlider">
+           <widget class="QSlider" name="brightnessSlider">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -1828,14 +1828,14 @@
             <second>0</second>
             <year>1969</year>
             <month>12</month>
-            <day>9</day>
+            <day>8</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>12</month>
-            <day>9</day>
+            <day>8</day>
            </date>
           </property>
           <property name="displayFormat">

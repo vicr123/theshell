@@ -517,6 +517,7 @@ void MainWindow::on_brightnessFrame_MouseExit()
     anim->start();
     connect(anim, &QPropertyAnimation::finished, [=]() {
         ui->brightnessSlider->setVisible(false);
+        anim->deleteLater();
     });
 
 }

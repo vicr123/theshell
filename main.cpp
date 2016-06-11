@@ -3,11 +3,11 @@
 #include "loginsplash.h"
 #include "segfaultdialog.h"
 #include "globalfilter.h"
+#include <nativeeventfilter.h>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QProcess>
 #include <QThread>
-#include <QAbstractNativeEventFilter>
 #include <QUrl>
 #include <QMediaPlayer>
 #include <QDebug>
@@ -17,6 +17,7 @@
 #include <unistd.h>
 
 MainWindow* MainWin = NULL;
+NativeEventFilter* NativeFilter = NULL;
 
 void catch_sigsegv(int signal) {
     qDebug() << "SEGFAULT! Quitting now!";
@@ -74,6 +75,9 @@ int main(int argc, char *argv[])
             return 0;
         }
     }
+
+    NativeFilter = new NativeEventFilter();
+    a.installNativeEventFilter(NativeFilter);
 
     lockfile.open(QFile::WriteOnly);
     lockfile.write(QByteArray());

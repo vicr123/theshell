@@ -43,7 +43,9 @@ SOURCES += main.cpp\
     touchkeyboard.cpp \
     powermanager.cpp \
     segfaultdialog.cpp \
-    globalfilter.cpp
+    globalfilter.cpp \
+    systrayicons.cpp \
+    nativeeventfilter.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -74,7 +76,9 @@ HEADERS  += mainwindow.h \
     touchkeyboard.h \
     powermanager.h \
     segfaultdialog.h \
-    globalfilter.h
+    globalfilter.h \
+    systrayicons.h \
+    nativeeventfilter.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

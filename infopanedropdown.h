@@ -130,6 +130,10 @@ private slots:
 
     void on_theWaveName_textEdited(const QString &arg1);
 
+    void on_brightnessSlider_sliderMoved(int position);
+
+    void on_brightnessSlider_valueChanged(int value);
+
 public slots:
     void getNetworks();
 

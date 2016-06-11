@@ -229,7 +229,15 @@ void InfoPaneDropdown::show(dropdownType showWith) {
     a->setDuration(500);
     connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
     a->start();
-    //QDialog::showFullScreen();
+
+    //Get Current Brightness
+    QProcess* backlight = new QProcess(this);
+    backlight->start("xbacklight -get");
+    backlight->waitForFinished();
+    float output = ceil(QString(backlight->readAll()).toFloat());
+    delete backlight;
+
+    ui->brightnessSlider->setValue((int) output);
 }
 
 void InfoPaneDropdown::close() {
@@ -729,4 +737,17 @@ void InfoPaneDropdown::on_thewaveOffensiveSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_theWaveName_textEdited(const QString &arg1)
 {
     settings.setValue("thewave/name", arg1);
+}
+
+
+void InfoPaneDropdown::on_brightnessSlider_sliderMoved(int position)
+{
+    QProcess* backlight = new QProcess(this);
+    backlight->start("xbacklight -set " + QString::number(position));
+    connect(backlight, SIGNAL(finished(int)), backlight, SLOT(deleteLater()));
+}
+
+void InfoPaneDropdown::on_brightnessSlider_valueChanged(int value)
+{
+    on_brightnessSlider_sliderMoved(value);
 }

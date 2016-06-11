@@ -413,6 +413,23 @@
        </widget>
       </item>
       <item>
+       <widget class="Line" name="line_7">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="SysTrayIcons" name="SysTray">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -530,6 +547,12 @@
     <signal>MouseEnter()</signal>
     <signal>MouseExit()</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>SysTrayIcons</class>
+   <extends>QFrame</extends>
+   <header>systrayicons.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

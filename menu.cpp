@@ -487,7 +487,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
 }
 
 bool Menu::eventFilter(QObject *object, QEvent *event) {
-    if (object != ui->thewave_line) {
+    if (object != ui->thewave_line && object != ui->lineEdit) {
         if (event->type() == QEvent::KeyPress) {
             QKeyEvent *e = (QKeyEvent*) event;
             if (e->key() != Qt::Key_Enter && e->key() != Qt::Key_Return) {
@@ -500,12 +500,13 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
                     on_lineEdit_textEdited(ui->lineEdit->text());
                 }
             }
-            //ui->lineEdit->keyPressEvent(e);
             e->ignore();
             return true;
         } else {
             return QDialog::eventFilter(object, event);
         }
+    } else {
+        return QDialog::eventFilter(object, event);
     }
 }
 
