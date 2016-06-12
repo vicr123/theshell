@@ -23,6 +23,8 @@
         <ul  class="navbarItems">
           <li  class="backToVictorTran"> <a  href="/index.html">
              &lt; Victor Tran </a> </li>
+          <li  class="backToHome"> <a  href="/theshell/index.html">
+             Home </a> </li>
           <li> <a  href="build.html"  class="selectedItem"> Download </a> </li>
           <li> <a  href="https://github.com/vicr123/theshell"> GitHub </a> </li>
         </ul>
