@@ -471,16 +471,16 @@ void MainWindow::on_batteryLabel_clicked()
 void MainWindow::on_volumeFrame_MouseEnter()
 {
     ui->volumeSlider->setVisible(true);
-    //ui->volumeSlider->resize(0, 0);
     QPropertyAnimation* anim = new QPropertyAnimation(ui->volumeSlider, "geometry");
     anim->setStartValue(ui->volumeSlider->geometry());
     QRect endGeometry = ui->volumeSlider->geometry();
-    endGeometry.setWidth(200);
+    endGeometry.setWidth(220);
     anim->setEndValue(endGeometry);
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->start();
+
 
     //Get Current Volume
     QProcess* mixer = new QProcess(this);
@@ -568,7 +568,7 @@ void MainWindow::on_brightnessFrame_MouseEnter()
     QPropertyAnimation* anim = new QPropertyAnimation(ui->brightnessSlider, "geometry");
     anim->setStartValue(ui->brightnessSlider->geometry());
     QRect endGeometry = ui->brightnessSlider->geometry();
-    endGeometry.setWidth(200);
+    endGeometry.setWidth(220);
     anim->setEndValue(endGeometry);
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
