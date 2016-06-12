@@ -54,7 +54,6 @@ void SysTrayIcons::SysTrayEvent(long opcode, long data2, long data3, long data4)
         QWindow* window = QWindow::fromWinId(data2);
         window->resize(16, 16);
 
-
         QWidget* widget = QWidget::createWindowContainer(window);
         widget->setFixedSize(16, 16);
         this->layout()->addWidget(widget);

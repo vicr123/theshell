@@ -361,7 +361,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="mprisSongName">
+          <widget class="ClickableLabel" name="mprisSongName">
            <property name="text">
             <string>&amp;mprisSongName</string>
            </property>

@@ -106,6 +106,16 @@ private slots:
 
     void on_timer_clicked();
 
+    void DBusNewService(QString name);
+
+    void on_mprisPause_clicked();
+
+    void on_mprisBack_clicked();
+
+    void on_pushButton_3_clicked();
+
+    void on_mprisSongName_clicked();
+
 private:
     Ui::MainWindow *ui;
     QList<WmWindow*> *windowList;
@@ -113,6 +123,9 @@ private:
     int hideTop = 0;
     bool hiding = false;
     bool lockHide = false;
+
+    QString mprisCurrentAppName = "";
+    QStringList mprisDetectedApps;
 
     void closeEvent(QCloseEvent*);
 

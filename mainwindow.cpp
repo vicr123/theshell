@@ -87,15 +87,23 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->brightnessSlider->setVisible(false);
     ui->mprisFrame->setVisible(false);
-    // TODO: Add Mpris support
-
-
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::DBusNewService(QString name) {
+    if (name.startsWith("org.mpris.MediaPlayer2.")) {
+        if (!mprisDetectedApps.contains(name)) {
+            mprisDetectedApps.append(name);
+            if (mprisCurrentAppName == "") {
+                mprisCurrentAppName = name;
+            }
+        }
+    }
+
 }
 
 void MainWindow::pullDownGesture() {
@@ -306,6 +314,79 @@ void MainWindow::reloadWindows() {
 
     ui->date->setText(QDateTime::currentDateTime().toString("ddd dd MMM yyyy"));
     ui->time->setText(QDateTime::currentDateTime().toString("hh:mm:ss"));
+
+    mprisDetectedApps.clear();
+    for (QString service : QDBusConnection::sessionBus().interface()->registeredServiceNames().value()) {
+        DBusNewService(service);
+    }
+
+    if (mprisCurrentAppName != "") {
+        ui->mprisFrame->setVisible(true);
+        if (!mprisDetectedApps.contains(mprisCurrentAppName)) { //Service closed.
+            if (mprisDetectedApps.count() > 0) { //Set to next app
+                mprisCurrentAppName = mprisDetectedApps.first();
+                ui->mprisFrame->setVisible(true);
+            } else { //Set to no app. Make mpris controller invisible.
+                mprisCurrentAppName = "";
+                ui->mprisFrame->setVisible(false);
+            }
+        }
+    } else { //Make mpris controller invisible
+        ui->mprisFrame->setVisible(false);
+    }
+
+    if (ui->mprisFrame->isVisible()) {
+        //Get Current Song Metadata
+        QDBusMessage MetadataRequest = QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
+        MetadataRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Metadata");
+
+        QDBusReply<QDBusVariant> reply(QDBusConnection::sessionBus().call(MetadataRequest));
+        QVariantMap replyData;
+        QDBusArgument arg(reply.value().variant().value<QDBusArgument>());
+
+        arg >> replyData;
+
+        QString title = "";
+        QString artist = "";
+
+        if (replyData.contains("xesam:title")) {
+            title = replyData.value("xesam:title").toString();
+        }
+
+        if (replyData.contains("xesam:artist")) {
+            QStringList artists = replyData.value("xesam:artist").toStringList();
+            for (QString art : artists) {
+                artist.append(art + ", ");
+            }
+            artist.remove(artist.length() - 2, 2);
+        }
+
+        if (title == "") {
+            QDBusMessage IdentityRequest = QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
+            IdentityRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2" << "Identity");
+
+            QDBusReply<QDBusVariant> reply(QDBusConnection::sessionBus().call(IdentityRequest));
+            ui->mprisSongName->setText(reply.value().variant().toString());
+        } else {
+            if (artist == "") {
+                ui->mprisSongName->setText(title);
+            } else {
+                ui->mprisSongName->setText(artist + " - " + title);
+            }
+        }
+
+        //Get Playback Status
+        QDBusMessage PlayStatRequest = QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
+        PlayStatRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "PlaybackStatus");
+        QDBusReply<QVariant> PlayStat = QDBusConnection::sessionBus().call(PlayStatRequest);
+        if (PlayStat.value().toString() == "Playing") {
+            ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-pause"));
+        } else {
+            ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-start"));
+
+        }
+
+    }
 }
 
 void MainWindow::activateWindow(QString windowTitle) {
@@ -603,4 +684,24 @@ void MainWindow::on_timerIcon_clicked()
 void MainWindow::on_timer_clicked()
 {
     infoPane->show(InfoPaneDropdown::Clock);
+}
+
+void MainWindow::on_mprisPause_clicked()
+{
+    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "PlayPause"), QDBus::NoBlock);
+}
+
+void MainWindow::on_mprisBack_clicked()
+{
+    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "Previous"), QDBus::NoBlock);
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "Next"), QDBus::NoBlock);
+}
+
+void MainWindow::on_mprisSongName_clicked()
+{
+    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2", "Raise"), QDBus::NoBlock);
 }
