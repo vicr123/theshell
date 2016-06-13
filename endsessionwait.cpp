@@ -226,6 +226,7 @@ void EndSessionWait::on_PowerOff_clicked()
     ui->askWhatToDo->setVisible(false);
     ui->poweringOff->setVisible(true);
     this->type = powerOff;
+    ui->label->setText("Power Off");
     this->showFullScreen();
 }
 
@@ -234,6 +235,7 @@ void EndSessionWait::on_Reboot_clicked()
     ui->askWhatToDo->setVisible(false);
     ui->poweringOff->setVisible(true);
     this->type = reboot;
+    ui->label->setText("Reboot");
     this->showFullScreen();
 }
 
@@ -242,5 +244,6 @@ void EndSessionWait::on_LogOut_clicked()
     ui->askWhatToDo->setVisible(false);
     ui->poweringOff->setVisible(true);
     this->type = logout;
+    ui->label->setText("Log Out");
     this->showFullScreen();
 }
