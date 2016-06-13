@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     segfaultdialog.cpp \
     globalfilter.cpp \
     systrayicons.cpp \
-    nativeeventfilter.cpp
+    nativeeventfilter.cpp \
+    hotkeyhud.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -78,7 +79,8 @@ HEADERS  += mainwindow.h \
     segfaultdialog.h \
     globalfilter.h \
     systrayicons.h \
-    nativeeventfilter.h
+    nativeeventfilter.h \
+    hotkeyhud.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -91,7 +93,8 @@ FORMS    += mainwindow.ui \
     loginsplash.ui \
     choosebackground.ui \
     touchkeyboard.ui \
-    segfaultdialog.ui
+    segfaultdialog.ui \
+    hotkeyhud.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

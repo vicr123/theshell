@@ -527,44 +527,53 @@ void InfoPaneDropdown::on_redshiftIntensity_valueChanged(int value)
 }
 
 void InfoPaneDropdown::newNotificationReceived(int id, QString summary, QString body, QIcon icon) {
-    QFrame* frame = new QFrame();
-    QHBoxLayout* layout = new QHBoxLayout();
-    layout->setMargin(0);
-    frame->setLayout(layout);
+    if (notificationFrames.keys().contains(id)) { //Notification already exists, update it.
+        QFrame* frame = notificationFrames.value(id);
+        frame->property("summaryLabel").value<QLabel*>()->setText(summary);
+        frame->property("bodyLabel").value<QLabel*>()->setText(body);
+    } else {
+        QFrame* frame = new QFrame();
+        QHBoxLayout* layout = new QHBoxLayout();
+        layout->setMargin(0);
+        frame->setLayout(layout);
 
-    QLabel* iconLabel = new QLabel();
-    iconLabel->setPixmap(icon.pixmap(22, 22));
-    layout->addWidget(iconLabel);
+        QLabel* iconLabel = new QLabel();
+        iconLabel->setPixmap(icon.pixmap(22, 22));
+        layout->addWidget(iconLabel);
 
-    QLabel* sumLabel = new QLabel();
-    sumLabel->setText(summary);
-    QFont font = sumLabel->font();
-    font.setBold(true);
-    sumLabel->setFont(font);
-    layout->addWidget(sumLabel);
+        QLabel* sumLabel = new QLabel();
+        sumLabel->setText(summary);
+        QFont font = sumLabel->font();
+        font.setBold(true);
+        sumLabel->setFont(font);
+        layout->addWidget(sumLabel);
 
-    QLabel* bodyLabel = new QLabel();
-    bodyLabel->setText(body);
-    bodyLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    layout->addWidget(bodyLabel);
+        QLabel* bodyLabel = new QLabel();
+        bodyLabel->setText(body);
+        bodyLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        layout->addWidget(bodyLabel);
 
-    QLabel* dateLabel = new QLabel();
-    dateLabel->setText(QDateTime::currentDateTime().toString("HH:mm:ss"));
-    layout->addWidget(dateLabel);
+        QLabel* dateLabel = new QLabel();
+        dateLabel->setText(QDateTime::currentDateTime().toString("HH:mm:ss"));
+        layout->addWidget(dateLabel);
 
-    QPushButton* button = new QPushButton();
-    button->setIcon(QIcon::fromTheme("window-close"));
-    connect(button, &QPushButton::clicked, [=]() {
-        emit closeNotification(id);
-    });
-    layout->addWidget(button);
+        QPushButton* button = new QPushButton();
+        button->setIcon(QIcon::fromTheme("window-close"));
+        connect(button, &QPushButton::clicked, [=]() {
+            emit closeNotification(id);
+        });
+        layout->addWidget(button);
 
-    ui->notificationsList->layout()->addWidget(frame);
-    ui->noNotifications->setVisible(false);
-    ui->clearAllNotifications->setVisible(true);
-    notificationFrames.insert(id, frame);
+        ui->notificationsList->layout()->addWidget(frame);
+        ui->noNotifications->setVisible(false);
+        ui->clearAllNotifications->setVisible(true);
+        frame->setProperty("summaryLabel", QVariant::fromValue(sumLabel));
+        frame->setProperty("bodyLabel", QVariant::fromValue(bodyLabel));
 
-    emit numNotificationsChanged(notificationFrames.count());
+        notificationFrames.insert(id, frame);
+
+        emit numNotificationsChanged(notificationFrames.count());
+    }
 }
 
 void InfoPaneDropdown::removeNotification(int id) {

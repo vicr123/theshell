@@ -247,7 +247,7 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     QNetworkRequest request;
                     QUrl requestUrl("https://en.wikipedia.org/w/api.php?action=query&titles=" + speech.replace(" ", "%20") + "&format=xml&prop=extracts&redirects=true&exintro=true");
                     request.setUrl(requestUrl);
-                    request.setHeader(QNetworkRequest::UserAgentHeader, "theWave/2.0 (vicr12345@gmail.com)");
+                    request.setHeader(QNetworkRequest::UserAgentHeader, "theWave/2.1 (vicr12345@gmail.com)");
                     QNetworkAccessManager networkManager;
                     connect(&networkManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
                     QNetworkReply* NetworkReply = networkManager.get(request);

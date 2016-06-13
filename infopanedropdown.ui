@@ -323,7 +323,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>6</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -920,7 +920,7 @@
         </widget>
         <widget class="QWidget" name="tab_7">
          <attribute name="icon">
-          <iconset theme="thewave" resource="resources.qrc">
+          <iconset theme="thewave">
            <normaloff>:/icons/thewave.svg</normaloff>:/icons/thewave.svg</iconset>
          </attribute>
          <attribute name="title">
@@ -1236,7 +1236,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>theShell 2.0</string>
+                <string>theShell 2.1</string>
                </property>
               </widget>
              </item>
@@ -1828,14 +1828,14 @@
             <second>0</second>
             <year>1969</year>
             <month>12</month>
-            <day>8</day>
+            <day>7</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>12</month>
-            <day>8</day>
+            <day>7</day>
            </date>
           </property>
           <property name="displayFormat">

@@ -25,7 +25,8 @@ public:
     enum shutdownType {
         powerOff,
         reboot,
-        logout
+        logout,
+        dummy //FOR TESTING
     };
 
     explicit EndSessionWait(shutdownType type, QWidget *parent = 0);

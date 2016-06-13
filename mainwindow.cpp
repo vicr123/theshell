@@ -496,7 +496,7 @@ void MainWindow::on_volumeFrame_MouseEnter()
                 if (line.contains("[off]")) {
                     ui->volumeSlider->setValue(0);
                 } else {
-                    QString percent = line.mid(line.indexOf("\[") + 1, 3).remove("\%");
+                    QString percent = line.mid(line.indexOf("\[") + 1, 3).remove("\%").remove("\]");
                     ui->volumeSlider->setValue(percent.toInt());
                     ui->volumeSlider->setMaximum(100);
                 }
@@ -564,7 +564,6 @@ void MainWindow::on_volumeSlider_valueChanged(int value)
 void MainWindow::on_brightnessFrame_MouseEnter()
 {
     ui->brightnessSlider->setVisible(true);
-    //ui->volumeSlider->resize(0, 0);
     QPropertyAnimation* anim = new QPropertyAnimation(ui->brightnessSlider, "geometry");
     anim->setStartValue(ui->brightnessSlider->geometry());
     QRect endGeometry = ui->brightnessSlider->geometry();
