@@ -137,8 +137,16 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
 
                     Hotkeys->show(QIcon::fromTheme("media-eject"), "Eject", "Attempting to eject disc...");
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) { //Power Off
-                    if (QMessageBox::question(Hotkeys, "Power Off", "Are you sure you wish to close all applications and power off the computer?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
-                        EndSession(EndSessionWait::powerOff);
+                    if (!isEndSessionBoxShowing) {
+                        isEndSessionBoxShowing = true;
+                        /*if (QMessageBox::question(Hotkeys, "Power Off", "Are you sure you wish to close all applications and power off the computer?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+                            EndSession(EndSessionWait::powerOff);
+                        }*/
+
+                        EndSessionWait* endSession = new EndSessionWait(EndSessionWait::ask);
+                        endSession->showFullScreen();
+                        endSession->exec();
+                        isEndSessionBoxShowing = false;
                     }
                 }
             }

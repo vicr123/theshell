@@ -39,6 +39,8 @@ private:
     QTime lastPress;
     HotkeyHud* Hotkeys;
     QDBusUnixFileDescriptor powerInhibit;
+
+    bool isEndSessionBoxShowing = false;
 };
 
 #endif // NATIVEEVENTFILTER_H

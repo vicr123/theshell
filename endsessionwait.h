@@ -26,6 +26,7 @@ public:
         powerOff,
         reboot,
         logout,
+        ask,
         dummy //FOR TESTING
     };
 
@@ -40,6 +41,17 @@ private slots:
     void on_pushButton_2_clicked();
 
     void EndSessionNow();
+    void on_CancelAsk_clicked();
+
+    void on_PowerOff_clicked();
+
+    void on_Reboot_clicked();
+
+    void on_LogOut_clicked();
+
+public slots:
+    void close();
+
 private:
     Ui::EndSessionWait *ui;
 

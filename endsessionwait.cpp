@@ -10,15 +10,22 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
     switch (type) {
     case powerOff:
         ui->label->setText("Power Off");
+        ui->askWhatToDo->setVisible(false);
         break;
     case reboot:
         ui->label->setText("Reboot");
+        ui->askWhatToDo->setVisible(false);
         break;
     case logout:
         ui->label->setText("Log out");
+        ui->askWhatToDo->setVisible(false);
         break;
     case dummy:
         ui->label->setText("Dummy");
+        ui->askWhatToDo->setVisible(false);
+        break;
+    case ask:
+        ui->poweringOff->setVisible(false);
     }
 
     this->type = type;
@@ -29,10 +36,27 @@ EndSessionWait::~EndSessionWait()
     delete ui;
 }
 
-void EndSessionWait::showFullScreen() {
-    QDialog::showFullScreen();
+void EndSessionWait::close() {
+    QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
+    anim->setDuration(250);
+    anim->setStartValue(1.0);
+    anim->setEndValue(0.0);
+    connect(anim, &QPropertyAnimation::finished, [=]() {
+        QDialog::close();
+    });
+    anim->start(QAbstractAnimation::DeleteWhenStopped);
+}
 
-    if (this->type != dummy) {
+void EndSessionWait::showFullScreen() {
+    this->setWindowOpacity(0.0);
+    QDialog::showFullScreen();
+    QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
+    anim->setDuration(250);
+    anim->setStartValue(0.0);
+    anim->setEndValue(1.0);
+    anim->start(QAbstractAnimation::DeleteWhenStopped);
+
+    if (this->type != dummy && this->type != ask) {
         QProcess p;
         p.start("wmctrl -lp");
         p.waitForStarted();
@@ -154,7 +178,7 @@ void EndSessionWait::performEndSession() {
     sound->play();
 
     QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
-    ui->frame->setGraphicsEffect(fadeEffect);
+    ui->poweringOff->setGraphicsEffect(fadeEffect);
     QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
     a->setDuration(500);
     a->setStartValue(1);
@@ -162,7 +186,7 @@ void EndSessionWait::performEndSession() {
     a->start();
 
     connect(a, &QPropertyAnimation::finished, [=]() {
-        ui->frame->setVisible(false);
+        ui->poweringOff->setVisible(false);
     });
 }
 
@@ -190,4 +214,33 @@ void EndSessionWait::EndSessionNow() {
 void EndSessionWait::on_pushButton_2_clicked()
 {
     this->close();
+}
+
+void EndSessionWait::on_CancelAsk_clicked()
+{
+    this->close();
+}
+
+void EndSessionWait::on_PowerOff_clicked()
+{
+    ui->askWhatToDo->setVisible(false);
+    ui->poweringOff->setVisible(true);
+    this->type = powerOff;
+    this->showFullScreen();
+}
+
+void EndSessionWait::on_Reboot_clicked()
+{
+    ui->askWhatToDo->setVisible(false);
+    ui->poweringOff->setVisible(true);
+    this->type = reboot;
+    this->showFullScreen();
+}
+
+void EndSessionWait::on_LogOut_clicked()
+{
+    ui->askWhatToDo->setVisible(false);
+    ui->poweringOff->setVisible(true);
+    this->type = logout;
+    this->showFullScreen();
 }
