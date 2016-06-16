@@ -3,6 +3,7 @@
 
 extern void EndSession(EndSessionWait::shutdownType type);
 extern MainWindow* MainWin;
+extern DbusEvents* DBusEvents;
 
 Menu::Menu(QWidget *parent) :
     QDialog(parent),
@@ -16,8 +17,6 @@ Menu::Menu(QWidget *parent) :
     this->layout()->removeWidget(ui->thewaveFrame);
     ui->offFrame->setGeometry(10, -this->height(), this->width() - 20, this->height() - 20);
     ui->thewaveFrame->setGeometry(10, -this->height(), this->width() - 20, this->height() - 20);
-    ui->commandLinkButton->setStyleSheet("background-color: #A00;");
-    ui->commandLinkButton_2->setStyleSheet("background-color: #A00;");
     ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16));
     ui->userIcon->setPixmap(QIcon::fromTheme("system-users").pixmap(16));
     ui->thewave_connection_disconnection_label->setPixmap(QIcon::fromTheme("network-disconnect").pixmap(16));
@@ -733,4 +732,10 @@ void Menu::on_thewave_launch_launchapp_clicked()
 {
     QProcess::startDetached(ui->thewave_launch_launchapp->property("appcommand").toString().remove("%u"));
     this->close();
+}
+
+void Menu::on_commandLinkButton_6_clicked()
+{
+    this->close();
+    DBusEvents->LockScreen();
 }

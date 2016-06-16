@@ -29,7 +29,6 @@ SOURCES += main.cpp\
     UGlobalHotkey-master/uglobalhotkeys.cpp \
     UGlobalHotkey-master/ukeysequence.cpp \
     upowerdbus.cpp \
-    lockscreen.cpp \
     infopanedropdown.cpp \
     clickablelabel.cpp \
     thewave.cpp \
@@ -46,7 +45,8 @@ SOURCES += main.cpp\
     globalfilter.cpp \
     systrayicons.cpp \
     nativeeventfilter.cpp \
-    hotkeyhud.cpp
+    hotkeyhud.cpp \
+    dbusevents.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -63,7 +63,6 @@ HEADERS  += mainwindow.h \
     UGlobalHotkey-master/uglobalhotkeys.h \
     UGlobalHotkey-master/ukeysequence.h \
     upowerdbus.h \
-    lockscreen.h \
     infopanedropdown.h \
     clickablelabel.h \
     thewave.h \
@@ -80,14 +79,14 @@ HEADERS  += mainwindow.h \
     globalfilter.h \
     systrayicons.h \
     nativeeventfilter.h \
-    hotkeyhud.h
+    hotkeyhud.h \
+    dbusevents.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
     endsessionwait.ui \
     background.ui \
     notificationdialog.ui \
-    lockscreen.ui \
     infopanedropdown.ui \
     thewave.ui \
     loginsplash.ui \

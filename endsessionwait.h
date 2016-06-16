@@ -49,6 +49,10 @@ private slots:
 
     void on_LogOut_clicked();
 
+    void on_Suspend_clicked();
+
+    void on_Hibernate_clicked();
+
 public slots:
     void close();
 
@@ -57,6 +61,7 @@ private:
 
     void performEndSession();
     shutdownType type;
+    bool alreadyShowing = false;
 };
 
 #endif // ENDSESSIONWAIT_H

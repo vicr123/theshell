@@ -18,6 +18,7 @@
 #include "app.h"
 #include "mainwindow.h"
 #include "thewaveworker.h"
+#include "dbusevents.h"
 
 #undef KeyPress
 
@@ -101,6 +102,8 @@ private slots:
     void thewave_outputSpeech(QString speech);
 
     void showFlightFrame(QString flight);
+
+    void on_commandLinkButton_6_clicked();
 
 private:
     Ui::Menu *ui;

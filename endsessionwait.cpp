@@ -48,13 +48,16 @@ void EndSessionWait::close() {
 }
 
 void EndSessionWait::showFullScreen() {
-    this->setWindowOpacity(0.0);
-    QDialog::showFullScreen();
-    QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
-    anim->setDuration(250);
-    anim->setStartValue(0.0);
-    anim->setEndValue(1.0);
-    anim->start(QAbstractAnimation::DeleteWhenStopped);
+    if (!alreadyShowing) {
+        alreadyShowing = true;
+        this->setWindowOpacity(0.0);
+        QDialog::showFullScreen();
+        QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
+        anim->setDuration(250);
+        anim->setStartValue(0.0);
+        anim->setEndValue(1.0);
+        anim->start(QAbstractAnimation::DeleteWhenStopped);
+    }
 
     if (this->type != dummy && this->type != ask) {
         QProcess p;
@@ -246,4 +249,26 @@ void EndSessionWait::on_LogOut_clicked()
     this->type = logout;
     ui->label->setText("Log Out");
     this->showFullScreen();
+}
+
+void EndSessionWait::on_Suspend_clicked()
+{
+    QList<QVariant> arguments;
+    arguments.append(true);
+
+    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Suspend");
+    message.setArguments(arguments);
+    QDBusConnection::systemBus().send(message);
+    this->close();
+}
+
+void EndSessionWait::on_Hibernate_clicked()
+{
+    QList<QVariant> arguments;
+    arguments.append(true);
+
+    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Hibernate");
+    message.setArguments(arguments);
+    QDBusConnection::systemBus().send(message);
+    this->close();
 }

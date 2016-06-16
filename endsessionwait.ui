@@ -604,21 +604,15 @@
           <layout class="QGridLayout" name="gridLayout_2">
            <item row="0" column="1">
             <widget class="QPushButton" name="Reboot">
+             <property name="styleSheet">
+              <string notr="true">background-color: #A00;</string>
+             </property>
              <property name="text">
               <string>Reboot</string>
              </property>
              <property name="icon">
-              <iconset theme="system-reboot"/>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QPushButton" name="PowerOff">
-             <property name="text">
-              <string>Power Off</string>
-             </property>
-             <property name="icon">
-              <iconset theme="system-shutdown"/>
+              <iconset theme="system-reboot">
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>
@@ -628,7 +622,42 @@
               <string>Log Out</string>
              </property>
              <property name="icon">
-              <iconset theme="system-log-out"/>
+              <iconset theme="system-log-out">
+               <normaloff>.</normaloff>.</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="PowerOff">
+             <property name="styleSheet">
+              <string notr="true">background-color: #A00;</string>
+             </property>
+             <property name="text">
+              <string>Power Off</string>
+             </property>
+             <property name="icon">
+              <iconset theme="system-shutdown">
+               <normaloff>.</normaloff>.</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="Suspend">
+             <property name="text">
+              <string>Suspend</string>
+             </property>
+             <property name="icon">
+              <iconset theme="system-suspend"/>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="Hibernate">
+             <property name="text">
+              <string>Hibernate</string>
+             </property>
+             <property name="icon">
+              <iconset theme="system-hibernate"/>
              </property>
             </widget>
            </item>
@@ -655,7 +684,11 @@
               <string>Cancel</string>
              </property>
              <property name="icon">
-              <iconset theme="dialog-cancel"/>
+              <iconset theme="dialog-cancel">
+               <normaloff>.</normaloff>.</iconset>
+             </property>
+             <property name="default">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

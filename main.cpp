@@ -3,6 +3,7 @@
 #include "loginsplash.h"
 #include "segfaultdialog.h"
 #include "globalfilter.h"
+#include "dbusevents.h"
 #include <nativeeventfilter.h>
 #include <QApplication>
 #include <QDesktopWidget>
@@ -18,6 +19,7 @@
 
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
+DbusEvents* DBusEvents = NULL;
 
 void catch_sigsegv(int signal) {
     qDebug() << "SEGFAULT! Quitting now!";
@@ -78,6 +80,8 @@ int main(int argc, char *argv[])
 
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
+
+    DBusEvents = new DbusEvents();
 
     lockfile.open(QFile::WriteOnly);
     lockfile.write(QByteArray());

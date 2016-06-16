@@ -20,6 +20,7 @@
 #include <QMessageBox>
 
 #include <X11/XF86keysym.h>
+#include <X11/keysym.h>
 #include <X11/Xlib.h>
 
 class NativeEventFilter : public QObject, public QAbstractNativeEventFilter

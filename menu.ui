@@ -293,6 +293,9 @@
       </item>
       <item>
        <widget class="QCommandLinkButton" name="commandLinkButton">
+        <property name="styleSheet">
+         <string notr="true">background-color: #A00;</string>
+        </property>
         <property name="text">
          <string>Power Off</string>
         </property>
@@ -313,6 +316,9 @@
       </item>
       <item>
        <widget class="QCommandLinkButton" name="commandLinkButton_2">
+        <property name="styleSheet">
+         <string notr="true">background-color: #A00;</string>
+        </property>
         <property name="text">
          <string>Reboot</string>
         </property>
@@ -374,7 +380,7 @@
       <item>
        <widget class="QCommandLinkButton" name="commandLinkButton_6">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="text">
          <string>Lock</string>
