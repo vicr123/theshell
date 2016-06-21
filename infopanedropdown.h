@@ -12,6 +12,7 @@
 #include <QFrame>
 #include <QLabel>
 #include <QMessageBox>
+#include <QFileDialog>
 #include <cups/cups.h>
 #include "notificationdbus.h"
 #include "upowerdbus.h"
@@ -134,6 +135,14 @@ private slots:
 
     void on_brightnessSlider_valueChanged(int value);
 
+    void on_settingsList_currentRowChanged(int currentRow);
+
+    void on_settingsTabs_currentChanged(int arg1);
+
+    void on_lockScreenBackgroundBrowse_clicked();
+
+    void on_lockScreenBackground_textEdited(const QString &arg1);
+
 public slots:
     void getNetworks();
 
@@ -170,6 +179,7 @@ private:
     QTime timeUntilTimeout;
 
     QSettings settings;
+    QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);
 };
 
 #endif // INFOPANEDROPDOWN_H

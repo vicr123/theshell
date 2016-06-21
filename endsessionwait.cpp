@@ -52,6 +52,11 @@ void EndSessionWait::showFullScreen() {
         alreadyShowing = true;
         this->setWindowOpacity(0.0);
         QDialog::showFullScreen();
+        //ui->terminateAppFrame->resize(ui->terminateAppFrame->width(), 0);
+        ui->terminateAppFrame->setGeometry(ui->terminateAppFrame->x(), ui->terminateAppFrame->y(), ui->terminateAppFrame->width(), 0);
+        ui->terminateAppFrame->setVisible(false);
+        ui->ExitFrameTop->resize(ui->ExitFrameTop->sizeHint());
+        ui->ExitFrameBottom->resize(ui->ExitFrameBottom->sizeHint());
         QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
         anim->setDuration(250);
         anim->setStartValue(0.0);
@@ -271,4 +276,227 @@ void EndSessionWait::on_Hibernate_clicked()
     message.setArguments(arguments);
     QDBusConnection::systemBus().send(message);
     this->close();
+}
+
+void EndSessionWait::on_terminateApp_clicked()
+{
+    int width = ui->ExitFrameTop->width();
+    QParallelAnimationGroup* group = new QParallelAnimationGroup();
+
+    QVariantAnimation* topAnim = new QVariantAnimation();
+    topAnim->setStartValue(ui->ExitFrameTop->height());
+    topAnim->setEndValue(0);
+    topAnim->setEasingCurve(QEasingCurve::OutCubic);
+    topAnim->setDuration(250);
+    connect(topAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->ExitFrameTop->resize(width, value.toInt());
+    });
+
+    QVariantAnimation* bottomAnim = new QVariantAnimation();
+    bottomAnim->setStartValue(ui->ExitFrameBottom->height());
+    bottomAnim->setEndValue(0);
+    bottomAnim->setEasingCurve(QEasingCurve::OutCubic);
+    bottomAnim->setDuration(250);
+    connect(bottomAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->ExitFrameBottom->resize(width, value.toInt());
+    });
+
+    QVariantAnimation* midAnim = new QVariantAnimation();
+    midAnim->setStartValue(ui->terminateAppFrame->height());
+    midAnim->setEndValue(ui->terminateAppFrame->sizeHint().height());
+    midAnim->setEasingCurve(QEasingCurve::OutCubic);
+    midAnim->setDuration(500);
+    connect(midAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->terminateAppFrame->resize(width, value.toInt());
+    });
+
+    group->addAnimation(midAnim);
+    group->addAnimation(topAnim);
+    group->addAnimation(bottomAnim);
+
+    group->start();
+
+    connect(group, &QParallelAnimationGroup::finished, [=]() {
+        ui->terminateAppFrame->resize(width, ui->terminateAppFrame->sizeHint().height());
+        ui->ExitFrameTop->resize(width, 0);
+        ui->ExitFrameBottom->resize(width, 0);
+    });
+    ui->terminateAppFrame->setVisible(true);
+
+    this->reloadAppList();
+}
+
+void EndSessionWait::reloadAppList() {
+    QList<WmWindow*> *wlist = new QList<WmWindow*>();
+
+    Display* d = QX11Info::display();
+    QList<Window> TopWindows;
+    unsigned int NumOfChildren;
+
+    Atom WindowListType;
+    int format;
+    unsigned long items, bytes;
+    unsigned char *data;
+    int retval = XGetWindowProperty(d, RootWindow(d, 0), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
+                                    False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
+
+    quint64 *windows = (quint64*) data;
+    for (int i = 0; i < items; i++) {
+        TopWindows.append((Window) windows[i]);
+
+    }
+    XFree(data);
+
+    //XQueryTree(QX11Info::display(), RootWindow(d, 0), new Window(), new Window(), &ChildList, &NumOfChildren);
+    for (Window win : TopWindows) {
+        XWindowAttributes attributes;
+
+        int retval = XGetWindowAttributes(d, win, &attributes);
+        unsigned long items, bytes;
+        unsigned char *netWmName;
+        XTextProperty wmName;
+        int format;
+        Atom ReturnType;
+        retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_VISIBLE_NAME", False), 0, 1024, False,
+                           XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &netWmName);
+        if (retval != 0 || netWmName == 0x0) {
+            retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_NAME", False), 0, 1024, False,
+                               AnyPropertyType, &ReturnType, &format, &items, &bytes, &netWmName);
+            if (retval != 0) {
+                retval = XGetWMName(d, win, &wmName);
+                if (retval == 1) {
+                    retval = 0;
+                } else {
+                    retval = 1;
+                }
+            }
+        }
+        if (retval == 0) {
+            WmWindow *w = new WmWindow();
+            w->setWID(win);
+
+            QString title;
+            if (netWmName) {
+                title = QString::fromLocal8Bit((char *) netWmName);
+                XFree(netWmName);
+            } else if (wmName.value) {
+                title = QString::fromLatin1((char *) wmName.value);
+                //XFree(wmName);
+            }
+
+            unsigned long *pidPointer;
+            unsigned long pitems, pbytes;
+            int pformat;
+            Atom pReturnType;
+            int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_PID", False), 0, 1024, False,
+                                            XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
+            if (retval == 0) {
+                unsigned long pid = *pidPointer;
+                w->setPID(pid);
+            }
+
+            XFree(pidPointer);
+
+            /*unsigned long icItems, icBytes;
+            unsigned char *icon;
+            int icFormat;
+            Atom icReturnType;
+            retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1048576, False,
+                               XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
+
+            w->setIcon(QIcon(QPixmap::fromImage(QImage::fromData(icon, icBytes))));
+            XFree(icon);*/
+
+            w->setTitle(title);
+
+            if (w->PID() != QCoreApplication::applicationPid()) {
+                wlist->append(w);
+            } else {
+                delete w;
+            }
+
+        }
+    }
+
+    ui->listWidget->clear();
+    for (WmWindow *wi : *wlist) {
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(wi->title() + " (PID " + QString::number(wi->PID()) + ")");
+        item->setData(Qt::UserRole, QVariant::fromValue(wi->PID()));
+        ui->listWidget->addItem(item);
+    }
+}
+
+void EndSessionWait::on_exitTerminate_clicked()
+{
+    QParallelAnimationGroup* group = new QParallelAnimationGroup();
+
+    QVariantAnimation* topAnim = new QVariantAnimation();
+    topAnim->setStartValue(ui->ExitFrameTop->height());
+    topAnim->setEndValue(ui->ExitFrameTop->sizeHint().height());
+    topAnim->setEasingCurve(QEasingCurve::OutCubic);
+    topAnim->setDuration(500);
+    topAnim->setKeyValueAt(0.5, 0);
+    connect(topAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->ExitFrameTop->resize(ui->ExitFrameTop->sizeHint().width(), value.toInt());
+    });
+
+    QVariantAnimation* bottomAnim = new QVariantAnimation();
+    bottomAnim->setStartValue(ui->ExitFrameBottom->height());
+    bottomAnim->setEndValue(ui->ExitFrameBottom->sizeHint().height());
+    bottomAnim->setEasingCurve(QEasingCurve::OutCubic);
+    bottomAnim->setDuration(500);
+    bottomAnim->setKeyValueAt(0.5, 0);
+    connect(bottomAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->ExitFrameBottom->resize(ui->ExitFrameTop->sizeHint().width(), value.toInt());
+    });
+
+    QVariantAnimation* midAnim = new QVariantAnimation();
+    midAnim->setStartValue(ui->terminateAppFrame->height());
+    midAnim->setEndValue(0);
+    midAnim->setEasingCurve(QEasingCurve::OutCubic);
+    midAnim->setDuration(500);
+    connect(midAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->terminateAppFrame->resize(ui->ExitFrameTop->width(), value.toInt());
+    });
+
+    group->addAnimation(midAnim);
+    group->addAnimation(topAnim);
+    group->addAnimation(bottomAnim);
+
+    group->start();
+
+    connect(group, &QParallelAnimationGroup::finished, [=]() {
+        ui->terminateAppFrame->resize(ui->ExitFrameTop->width(), 0);
+        ui->ExitFrameTop->resize(ui->ExitFrameTop->width(), ui->ExitFrameTop->sizeHint().height());
+        ui->ExitFrameBottom->resize(ui->ExitFrameBottom->width(), ui->ExitFrameTop->sizeHint().height());
+        ui->terminateAppFrame->setVisible(false);
+    });
+}
+
+void EndSessionWait::on_pushButton_5_clicked()
+{
+    //Send SIGTERM to app
+    QProcess::execute("kill -SIGTERM " + QString::number(ui->listWidget->selectedItems().first()->data(Qt::UserRole).value<unsigned long>()));
+    QThread::sleep(100);
+    reloadAppList();
+}
+
+void EndSessionWait::on_pushButton_4_clicked()
+{
+    //Send SIGKILL to app
+    QProcess::execute("kill -SIGKILL " + QString::number(ui->listWidget->selectedItems().first()->data(Qt::UserRole).value<unsigned long>()));
+    QThread::sleep(100);
+    reloadAppList();
+}
+
+void EndSessionWait::on_listWidget_currentRowChanged(int currentRow)
+{
+    if (currentRow == -1) {
+        ui->pushButton_5->setEnabled(false);
+        ui->pushButton_4->setEnabled(false);
+    } else {
+        ui->pushButton_5->setEnabled(true);
+        ui->pushButton_4->setEnabled(true);
+    }
 }

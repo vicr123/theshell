@@ -56,7 +56,7 @@ void HotkeyHud::show() {
     if (timeout == NULL) {
         timeout = new QTimer();
         timeout->setSingleShot(true);
-        timeout->setInterval(5000);
+        timeout->setInterval(1500);
         connect(timeout, SIGNAL(timeout()), this, SLOT(Timeout()));
 
     }

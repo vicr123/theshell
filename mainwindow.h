@@ -13,6 +13,7 @@
 #include <QSettings>
 #include <QSoundEffect>
 #include <QPainter>
+#include <QMenu>
 #include <math.h>
 #include "window.h"
 #include "menu.h"
@@ -27,6 +28,7 @@
 #include "FlowLayout/flowlayout.h"
 #include <X11/X.h>
 #include <X11/Xlib.h>
+#include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <X11/keysym.h>
 #include <QX11Info>
@@ -115,6 +117,8 @@ private slots:
     void on_pushButton_3_clicked();
 
     void on_mprisSongName_clicked();
+
+    void ActivateWindow();
 
 private:
     Ui::MainWindow *ui;

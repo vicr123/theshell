@@ -12,12 +12,14 @@
 #include <QIcon>
 #include "hotkeyhud.h"
 #include "endsessionwait.h"
+#include "dbusevents.h"
 #include <QDBusUnixFileDescriptor>
 #include <QDBusMessage>
 #include <QDBusConnection>
 #include <QDBusReply>
 #include <QDebug>
 #include <QMessageBox>
+#include <QSoundEffect>
 
 #include <X11/XF86keysym.h>
 #include <X11/keysym.h>

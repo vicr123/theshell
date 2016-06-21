@@ -1,6 +1,7 @@
 #include "nativeeventfilter.h"
 
 extern void EndSession(EndSessionWait::shutdownType type);
+extern DbusEvents* DBusEvents;
 
 NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
 {
@@ -20,6 +21,8 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_Eject), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_Sleep), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Delete), ControlMask | Mod1Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_L), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
 
     lastPress.start();
 }
@@ -33,7 +36,10 @@ NativeEventFilter::~NativeEventFilter() {
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_Eject), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_Sleep), AnyModifier, QX11Info::appRootWindow());
+    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Delete), ControlMask | Mod1Mask, QX11Info::appRootWindow());
+    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_L), Mod4Mask, QX11Info::appRootWindow());
 }
+
 
 bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *message, long *result) {
     if (eventType == "xcb_generic_event_t") {
@@ -118,6 +124,11 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     volumeAdj->start("amixer set Master " + QString::number(limit * (volume / (float) 100)) + " on");
                     connect(volumeAdj, SIGNAL(finished(int)), volumeAdj, SLOT(deleteLater()));
 
+                    QSoundEffect* volumeSound = new QSoundEffect();
+                    volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
+                    volumeSound->play();
+                    connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
+
                     Hotkeys->show(QIcon::fromTheme("audio-volume-high"), "Volume", volume);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume)) { //Decrease Volume by 5%
                     volume = volume - 5;
@@ -125,6 +136,11 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     QProcess* volumeAdj = new QProcess(this);
                     volumeAdj->start("amixer set Master " + QString::number(limit * (volume / (float) 100)) + " on");
                     connect(volumeAdj, SIGNAL(finished(int)), volumeAdj, SLOT(deleteLater()));
+
+                    QSoundEffect* volumeSound = new QSoundEffect();
+                    volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
+                    volumeSound->play();
+                    connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
 
                     Hotkeys->show(QIcon::fromTheme("audio-volume-high"), "Volume", volume);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioMute)) { //Set Volume to 0%
@@ -140,7 +156,8 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     connect(eject, SIGNAL(finished(int)), eject, SLOT(deleteLater()));
 
                     Hotkeys->show(QIcon::fromTheme("media-eject"), "Eject", "Attempting to eject disc...");
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) { //Power Off
+                } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) ||
+                           button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && button->state == ControlMask | Mod1Mask) { //Power Off
                     if (!isEndSessionBoxShowing) {
                         isEndSessionBoxShowing = true;
                         /*if (QMessageBox::question(Hotkeys, "Power Off", "Are you sure you wish to close all applications and power off the computer?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
@@ -152,13 +169,16 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                         endSession->exec();
                         isEndSessionBoxShowing = false;
                     }
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_Sleep)) { //Sleep
+
+                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_Sleep)) { //Suspend
                     QList<QVariant> arguments;
                     arguments.append(true);
 
                     QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Suspend");
                     message.setArguments(arguments);
                     QDBusConnection::systemBus().send(message);
+                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_L) && button->state == Mod4Mask) { //Lock Screen
+                    DBusEvents->LockScreen();
                 }
             }
         }

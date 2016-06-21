@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include <QObject>
+#include <QIcon>
 
 class WmWindow : public QObject
 {
@@ -12,8 +13,12 @@ public:
     QString title();
     void setTitle(QString);
 
-    int PID();
-    void setPID(int);
+    unsigned long PID();
+    void setPID(unsigned long);
+    unsigned long WID();
+    void setWID(unsigned long);
+    QIcon icon();
+    void setIcon(QIcon);
 signals:
 
 public slots:
@@ -21,6 +26,9 @@ public slots:
 private:
     QString winTitle;
     int id;
+    unsigned long pid;
+    unsigned long wid;
+    QIcon ic;
 };
 
 #endif // WINDOW_H

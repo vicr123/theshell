@@ -49,12 +49,6 @@ MainWindow::MainWindow(QWidget *parent) :
     infoKey->registerHotkey("Alt+F6");
     connect(infoKey, SIGNAL(activated(size_t)), this, SLOT(pullDownGesture()));
 
-    UGlobalHotkeys* runKey = new UGlobalHotkeys(this);
-    runKey->registerHotkey("Alt+F2");
-    connect(runKey, &UGlobalHotkeys::activated, [=]() {
-        QMessageBox::warning(this, "Hi", "Hi", QMessageBox::Ok, QMessageBox::Ok);
-    });
-
     infoPane = new InfoPaneDropdown(ndbus, updbus);
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(infoPane, SIGNAL(networkLabelChanged(QString)), this, SLOT(internetLabelChanged(QString)));
@@ -162,19 +156,19 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::reloadWindows() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    QProcess p; //Get all open windows
+    /*QProcess p; //Get all open windows
     p.start("wmctrl -lpG");
     p.waitForStarted();
     while (p.state() != 0) {
         QApplication::processEvents(); //Don't block UI while reloading windows
-    }
+    }*/
 
     QList<WmWindow*> *wlist = new QList<WmWindow*>();
 
     int hideTop = screenGeometry.y();
 
     int okCount = 0;
-    QString output(p.readAllStandardOutput());
+    /*QString output(p.readAllStandardOutput());
     for (QString window : output.split("\n")) {
         QStringList parts = window.split(" ");
         parts.removeAll("");
@@ -209,7 +203,115 @@ void MainWindow::reloadWindows() {
                 wlist->append(w);
             }
         }
+    }*/
+
+    Display* d = QX11Info::display();
+    QList<Window> TopWindows;
+    unsigned int NumOfChildren;
+
+    Atom WindowListType;
+    int format;
+    unsigned long items, bytes;
+    unsigned char *data;
+    int retval = XGetWindowProperty(d, RootWindow(d, 0), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
+                                    False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
+
+    quint64 *windows = (quint64*) data;
+    for (int i = 0; i < items; i++) {
+        TopWindows.append((Window) windows[i]);
+
     }
+    XFree(data);
+
+    //XQueryTree(QX11Info::display(), RootWindow(d, 0), new Window(), new Window(), &ChildList, &NumOfChildren);
+    for (Window win : TopWindows) {
+        XWindowAttributes attributes;
+
+        int retval = XGetWindowAttributes(d, win, &attributes);
+        unsigned long items, bytes;
+        unsigned char *netWmName;
+        XTextProperty wmName;
+        int format;
+        Atom ReturnType;
+        retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_VISIBLE_NAME", False), 0, 1024, False,
+                           XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &netWmName);
+        if (retval != 0 || netWmName == 0x0) {
+            retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_NAME", False), 0, 1024, False,
+                               AnyPropertyType, &ReturnType, &format, &items, &bytes, &netWmName);
+            if (retval != 0) {
+                retval = XGetWMName(d, win, &wmName);
+                if (retval == 1) {
+                    retval = 0;
+                } else {
+                    retval = 1;
+                }
+            }
+        }
+        if (retval == 0) {
+            WmWindow *w = new WmWindow();
+            w->setWID(win);
+
+            int windowx, windowy;
+            Window child;
+            retval = XTranslateCoordinates(d, win, RootWindow(d, 0), 0, 0, &windowx, &windowy, &child);
+            if (windowx >= this->x() &&
+                    windowy - 50 <= screenGeometry.y() + this->height() &&
+                    windowy - 50 - this->height() < hideTop) {
+                hideTop = attributes.y - 50 - this->height();
+            }
+
+            QString title;
+            if (netWmName) {
+                title = QString::fromLocal8Bit((char *) netWmName);
+                XFree(netWmName);
+            } else if (wmName.value) {
+                title = QString::fromLatin1((char *) wmName.value);
+                //XFree(wmName);
+            }
+
+            unsigned long *pidPointer;
+            unsigned long pitems, pbytes;
+            int pformat;
+            Atom pReturnType;
+            int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_PID", False), 0, 1024, False,
+                                            XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
+            if (retval == 0) {
+                unsigned long pid = *pidPointer;
+                w->setPID(pid);
+            }
+
+            XFree(pidPointer);
+
+            /*unsigned long icItems, icBytes;
+            unsigned char *icon;
+            int icFormat;
+            Atom icReturnType;
+            retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1048576, False,
+                               XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
+
+            w->setIcon(QIcon(QPixmap::fromImage(QImage::fromData(icon, icBytes))));
+            XFree(icon);*/
+
+            w->setTitle(title);
+
+            if (w->PID() != QCoreApplication::applicationPid()) {
+                wlist->append(w);
+                windowList->count();
+
+                for (WmWindow *wi : *windowList) {
+                    if (wi->title() == w->title()) {
+                        okCount++;
+                        break;
+                    }
+                }
+            } else {
+                delete w;
+            }
+
+        }
+    }
+
+
 
     if (hideTop + this->height() <= screenGeometry.y()) {
         hideTop = screenGeometry.y() - this->height();
@@ -220,6 +322,7 @@ void MainWindow::reloadWindows() {
         //FlowLayout* layout = new FlowLayout();
         //layout->setSpacing(6);
 
+        delete windowList;
         windowList = wlist;
 
         QLayoutItem* item;
@@ -230,19 +333,37 @@ void MainWindow::reloadWindows() {
         }
         for (WmWindow *w : *windowList) {
             QPushButton *button = new QPushButton();
+            button->setProperty("windowid", QVariant::fromValue(w->WID()));
             button->setText(w->title());
+            button->setContextMenuPolicy(Qt::CustomContextMenu);
+            connect(button, &QPushButton::customContextMenuRequested, [=](const QPoint &pos) {
+                QMenu* menu = new QMenu();
+
+                menu->addSection("For " + w->title());
+                menu->addAction(QIcon::fromTheme("window-close"), "Close", [=]() {
+                    //int retval = XDestroyWindow(QX11Info::display(), w->WID());
+                    XEvent event;
+
+                    event.xclient.type = ClientMessage;
+                    event.xclient.serial = 0;
+                    event.xclient.message_type = XInternAtom(QX11Info::display(), "_NET_CLOSE_WINDOW", False);
+                    event.xclient.window = w->WID();
+                    event.xclient.format = 32;
+                    event.xclient.data.l[0] = 0;
+                    event.xclient.data.l[1] = 2;
+
+                    int retval = XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
+                });
+
+                menu->exec(button->mapToGlobal(pos));
+            });
+            //button->setIcon(w->icon());
+            //connect(button, SIGNAL(clicked(bool)), this, SLOT(ActivateWindow()));
             QSignalMapper* mapper = new QSignalMapper(this);
             connect(button, SIGNAL(clicked()), mapper, SLOT(map()));
             mapper->setMapping(button, w->title());
             connect(mapper, SIGNAL(mapped(QString)), this, SLOT(activateWindow(QString)));
             ui->windowList->layout()->addWidget(button);
-            //layout->addWidget(button);
-
-            /*column++;
-            if (column == 4) {
-                column = 0;
-                row++;
-            }*/
         }
 
         ui->centralWidget->adjustSize();
@@ -412,6 +533,24 @@ void MainWindow::openingApp(QString AppName, QIcon AppIcon) {
     timer->start();
 }
 
+void MainWindow::ActivateWindow() {
+    XEvent event;
+    unsigned long winId = sender()->property("windowid").value<unsigned long>();
+
+    event.xclient.type = ClientMessage;
+    event.xclient.serial = 0;
+    event.xclient.send_event = True;
+    event.xclient.message_type = XInternAtom(QX11Info::display(), "_NET_ACTIVE_WINDOW", False);
+    event.xclient.window = winId;
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = 0;
+    event.xclient.data.l[1] = 0;
+    event.xclient.data.l[2] = 0;
+
+    int retval = XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, NoEventMask, &event);
+    retval = XMapRaised(QX11Info::display(), winId);
+}
+
 void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
     QMainWindow::setGeometry(x, y, w, h);
     QProcess::execute("wmctrl -r " + this->windowTitle() + " -e 0," +
@@ -496,7 +635,7 @@ void MainWindow::on_volumeFrame_MouseEnter()
                 if (line.contains("[off]")) {
                     ui->volumeSlider->setValue(0);
                 } else {
-                    QString percent = line.mid(line.indexOf("\[") + 1, 3).remove("\%").remove("\]");
+                    QString percent = line.mid(line.indexOf("\[") + 1, 3).remove("\%").remove("]");
                     ui->volumeSlider->setValue(percent.toInt());
                     ui->volumeSlider->setMaximum(100);
                 }

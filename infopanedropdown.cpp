@@ -35,7 +35,6 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     //ui->label_22->setPixmap(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)).pixmap(16, 16));
     ui->FlightSwitch->setOnIcon(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)));
 
-
     if (!QFile("/usr/bin/systemsettings5").exists()) {
         ui->pushButton_8->setVisible(false);
     }
@@ -70,6 +69,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
         ui->thewaveTTSfestival->setChecked(true);
     }
 
+    ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
     ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
     ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
@@ -103,6 +103,14 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
        }
     } while (allObjects.count() != 0);*/
 
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-login"), "Startup"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-display"), "Display"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("dialog-warning"), "Notifications"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("input-tablet"), "Input"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("system-lock-screen"), "Lock Screen"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("thewave", QIcon(":/icons/thewave.svg")), "theWave"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("emblem-warning"), "Danger"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), "About"));
 
 }
 
@@ -748,7 +756,6 @@ void InfoPaneDropdown::on_theWaveName_textEdited(const QString &arg1)
     settings.setValue("thewave/name", arg1);
 }
 
-
 void InfoPaneDropdown::on_brightnessSlider_sliderMoved(int position)
 {
     QProcess* backlight = new QProcess(this);
@@ -759,4 +766,30 @@ void InfoPaneDropdown::on_brightnessSlider_sliderMoved(int position)
 void InfoPaneDropdown::on_brightnessSlider_valueChanged(int value)
 {
     on_brightnessSlider_sliderMoved(value);
+}
+
+void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
+{
+    ui->settingsTabs->setCurrentIndex(currentRow);
+}
+
+void InfoPaneDropdown::on_settingsTabs_currentChanged(int arg1)
+{
+    ui->settingsList->item(arg1)->setSelected(true);
+}
+
+void InfoPaneDropdown::on_lockScreenBackgroundBrowse_clicked()
+{
+    QFileDialog dialog(this);
+    dialog.setAcceptMode(QFileDialog::AcceptOpen);
+    dialog.setNameFilter("Images (*.jpg *.jpeg *.bmp *.png *.gif *.svg)");
+    if (dialog.exec() == QDialog::Accepted) {
+        lockScreenSettings->setValue("background", dialog.selectedFiles().first());
+        ui->lockScreenBackground->setText(dialog.selectedFiles().first());
+    }
+}
+
+void InfoPaneDropdown::on_lockScreenBackground_textEdited(const QString &arg1)
+{
+    lockScreenSettings->setValue("background", arg1);
 }

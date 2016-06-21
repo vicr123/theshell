@@ -11,7 +11,26 @@
 #include <QDir>
 #include <QDBusMessage>
 #include <QDBusConnection>
+#include <QPropertyAnimation>
+#include <QVariantAnimation>
+#include <QParallelAnimationGroup>
+#include <QX11Info>
+#include <QThread>
 #include "window.h"
+
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xatom.h>
+
+#undef Status
+#undef Bool
+#undef None
+#undef FocusIn
+#undef FontChange
+#undef Expose
+#undef KeyPress
+#undef KeyRelease
+#undef FocusOut
 
 namespace Ui {
 class EndSessionWait;
@@ -52,6 +71,18 @@ private slots:
     void on_Suspend_clicked();
 
     void on_Hibernate_clicked();
+
+    void on_terminateApp_clicked();
+
+    void on_exitTerminate_clicked();
+
+    void reloadAppList();
+
+    void on_pushButton_5_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_listWidget_currentRowChanged(int currentRow);
 
 public slots:
     void close();

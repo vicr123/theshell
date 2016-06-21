@@ -1,5 +1,7 @@
 #include "systrayicons.h"
 
+#define None 0L
+
 extern NativeEventFilter* NativeFilter;
 
 SysTrayIcons::SysTrayIcons(QWidget *parent) : QFrame(parent)

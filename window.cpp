@@ -13,10 +13,26 @@ QString WmWindow::title() {
     return winTitle;
 }
 
-void WmWindow::setPID(int id) {
+void WmWindow::setPID(unsigned long id) {
     this->id = id;
 }
 
-int WmWindow::PID() {
+unsigned long WmWindow::PID() {
     return id;
+}
+
+void WmWindow::setWID(unsigned long wid) {
+    this->wid = id;
+}
+
+unsigned long WmWindow::WID() {
+    return this->wid;
+}
+
+void WmWindow::setIcon(QIcon icon) {
+    this->ic = icon;
+}
+
+QIcon WmWindow::icon() {
+    return ic;
 }
