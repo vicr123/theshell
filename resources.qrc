@@ -22,4 +22,8 @@
         <file alias="cancelled.svg">flight/cancelled.svg</file>
         <file alias="unknown.svg">flight/unknown.svg</file>
     </qresource>
+    <qresource prefix="/sounds/tones">
+        <file>happybee</file>
+        <file>playinginthedark</file>
+    </qresource>
 </RCC>

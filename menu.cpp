@@ -379,6 +379,13 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             }
             ui->listWidget->addItem(call);
             showtheWaveOption = false;
+        } else if (arg1.startsWith("pause") && arg1.count() == 5) {
+            QListWidgetItem *pause = new QListWidgetItem();
+            pause->setText("Pause");
+            pause->setIcon(QIcon::fromTheme("media-playback-pause"));
+            pause->setData(Qt::UserRole, "media:pause");
+            ui->listWidget->addItem(pause);
+            showtheWaveOption = false;
         }
 
         for (App *app : *apps) {
@@ -520,7 +527,6 @@ void Menu::on_lineEdit_returnPressed()
 void Menu::on_pushButton_3_clicked()
 {
     QProcess::startDetached("install_theos");
-    emit appOpening("theOS Installer", QIcon::fromTheme("install_theos"));
     this->close();
 }
 

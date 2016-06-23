@@ -21,11 +21,11 @@ unsigned long WmWindow::PID() {
     return id;
 }
 
-void WmWindow::setWID(unsigned long wid) {
-    this->wid = id;
+void WmWindow::setWID(Window wid) {
+    this->wid = wid;
 }
 
-unsigned long WmWindow::WID() {
+Window WmWindow::WID() {
     return this->wid;
 }
 
@@ -35,4 +35,12 @@ void WmWindow::setIcon(QIcon icon) {
 
 QIcon WmWindow::icon() {
     return ic;
+}
+
+bool WmWindow::attention() {
+    return attn;
+}
+
+void WmWindow::setAttention(bool attention) {
+    attn = attention;
 }

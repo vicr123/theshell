@@ -17,6 +17,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     connect(notificationEngine, SIGNAL(newNotification(int,QString,QString,QIcon)), this, SLOT(newNotificationReceived(int,QString,QString,QIcon)));
     connect(notificationEngine, SIGNAL(removeNotification(int)), this, SLOT(removeNotification(int)));
+    connect(notificationEngine, SIGNAL(NotificationClosed(int,int)), this, SLOT(notificationClosed(int,int)));
     connect(this, SIGNAL(closeNotification(int)), notificationEngine, SLOT(CloseNotificationUserInitiated(int)));
 
     connect(powerEngine, SIGNAL(batteryChanged(int)), this, SLOT(batteryLevelChanged(int)));
@@ -112,6 +113,9 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("emblem-warning"), "Danger"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), "About"));
 
+    ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
+    ui->timerToneSelect->addItem("Happy Bee");
+    ui->timerToneSelect->addItem("Playing in the Dark");
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -418,17 +422,31 @@ void InfoPaneDropdown::startTimer(QTime time) {
     connect(timer, &QTimer::timeout, [=]() {
         timeUntilTimeout = timeUntilTimeout.addSecs(-1);
         if (timeUntilTimeout == QTime(0, 0, 0)) {
-                   notificationEngine->Notify("theShell", 0, "", "Timer Elapsed",
-                                              "Your timer has completed.",
-                                              QStringList(), QVariantMap(), 0);
-                   ui->timeEdit->setVisible(true);
-                   ui->label_7->setVisible(false);
-                   ui->pushButton_2->setText("Start");
-                   playSound(QUrl::fromLocalFile("/usr/share/sounds/contemporary/alarm1.ogg"));
-                   timer->stop();
-                   delete timer;
-                   timer = NULL;
-                   emit timerVisibleChanged(false);
+            if (timerNotificationId != 0 ) {
+                notificationEngine->CloseNotification(timerNotificationId);
+            }
+            timerNotificationId = notificationEngine->Notify("theShell", 0, "", "Timer Elapsed",
+                                      "Your timer has completed.",
+                                      QStringList(), QVariantMap(), 0);
+            ui->timeEdit->setVisible(true);
+            ui->label_7->setVisible(false);
+            ui->pushButton_2->setText("Start");
+
+            timer->stop();
+            delete timer;
+            timer = NULL;
+            emit timerVisibleChanged(false);
+
+            QMediaPlaylist* playlist = new QMediaPlaylist();
+
+            if (ui->timerToneSelect->currentText() == "Happy Bee") {
+                playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/happybee")));
+            } else if (ui->timerToneSelect->currentText() == "Playing in the Dark") {
+                playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/playinginthedark")));
+            }
+            playlist->setPlaybackMode(QMediaPlaylist::Loop);
+            ringtone->setPlaylist(playlist);
+            ringtone->play();
         } else {
             ui->label_7->setText(timeUntilTimeout.toString("HH:mm:ss"));
             emit timerChanged(timeUntilTimeout.toString("HH:mm:ss"));
@@ -436,6 +454,13 @@ void InfoPaneDropdown::startTimer(QTime time) {
     });
     timer->start();
     emit timerChanged(timeUntilTimeout.toString("HH:mm:ss"));
+}
+
+void InfoPaneDropdown::notificationClosed(int id, int reason) {
+    if (id == timerNotificationId) {
+        ringtone->stop();
+        timerNotificationId = 0;
+    }
 }
 
 void InfoPaneDropdown::on_pushButton_2_clicked()

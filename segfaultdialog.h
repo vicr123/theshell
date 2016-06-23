@@ -12,7 +12,7 @@ class SegfaultDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SegfaultDialog(QWidget *parent = 0);
+    explicit SegfaultDialog(QString signal, QWidget *parent = 0);
     ~SegfaultDialog();
 
 private slots:

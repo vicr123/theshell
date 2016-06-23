@@ -13,6 +13,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QMediaPlaylist>
 #include <cups/cups.h>
 #include "notificationdbus.h"
 #include "upowerdbus.h"
@@ -143,6 +144,8 @@ private slots:
 
     void on_lockScreenBackground_textEdited(const QString &arg1);
 
+    void notificationClosed(int id, int reason);
+
 public slots:
     void getNetworks();
 
@@ -175,11 +178,14 @@ private:
     void mouseReleaseEvent(QMouseEvent *event);
     bool eventFilter(QObject *object, QEvent *event);
     QTimer* timer = NULL;
+    int timerNotificationId = 0;
     QTimer* eventTimer;
     QTime timeUntilTimeout;
 
     QSettings settings;
     QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);
+
+    QMediaPlayer* ringtone;
 };
 
 #endif // INFOPANEDROPDOWN_H

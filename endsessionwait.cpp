@@ -391,8 +391,10 @@ void EndSessionWait::reloadAppList() {
             int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_PID", False), 0, 1024, False,
                                             XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
             if (retval == 0) {
-                unsigned long pid = *pidPointer;
-                w->setPID(pid);
+                if (pidPointer != 0) {
+                    unsigned long pid = *pidPointer;
+                    w->setPID(pid);
+                }
             }
 
             XFree(pidPointer);
@@ -429,6 +431,7 @@ void EndSessionWait::reloadAppList() {
 
 void EndSessionWait::on_exitTerminate_clicked()
 {
+    int width = ui->terminateAppFrame->width();
     QParallelAnimationGroup* group = new QParallelAnimationGroup();
 
     QVariantAnimation* topAnim = new QVariantAnimation();
@@ -438,7 +441,7 @@ void EndSessionWait::on_exitTerminate_clicked()
     topAnim->setDuration(500);
     topAnim->setKeyValueAt(0.5, 0);
     connect(topAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->ExitFrameTop->resize(ui->ExitFrameTop->sizeHint().width(), value.toInt());
+        ui->ExitFrameTop->resize(width, value.toInt());
     });
 
     QVariantAnimation* bottomAnim = new QVariantAnimation();
@@ -448,7 +451,7 @@ void EndSessionWait::on_exitTerminate_clicked()
     bottomAnim->setDuration(500);
     bottomAnim->setKeyValueAt(0.5, 0);
     connect(bottomAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->ExitFrameBottom->resize(ui->ExitFrameTop->sizeHint().width(), value.toInt());
+        ui->ExitFrameBottom->resize(width, value.toInt());
     });
 
     QVariantAnimation* midAnim = new QVariantAnimation();
@@ -457,7 +460,7 @@ void EndSessionWait::on_exitTerminate_clicked()
     midAnim->setEasingCurve(QEasingCurve::OutCubic);
     midAnim->setDuration(500);
     connect(midAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->terminateAppFrame->resize(ui->ExitFrameTop->width(), value.toInt());
+        ui->terminateAppFrame->resize(width, value.toInt());
     });
 
     group->addAnimation(midAnim);
@@ -477,16 +480,16 @@ void EndSessionWait::on_exitTerminate_clicked()
 void EndSessionWait::on_pushButton_5_clicked()
 {
     //Send SIGTERM to app
-    QProcess::execute("kill -SIGTERM " + QString::number(ui->listWidget->selectedItems().first()->data(Qt::UserRole).value<unsigned long>()));
-    QThread::sleep(100);
+    kill(ui->listWidget->selectedItems().first()->data(Qt::UserRole).value<unsigned long>(), SIGTERM);
+    QThread::sleep(1);
     reloadAppList();
 }
 
 void EndSessionWait::on_pushButton_4_clicked()
 {
     //Send SIGKILL to app
-    QProcess::execute("kill -SIGKILL " + QString::number(ui->listWidget->selectedItems().first()->data(Qt::UserRole).value<unsigned long>()));
-    QThread::sleep(100);
+    kill(ui->listWidget->selectedItems().first()->data(Qt::UserRole).value<unsigned long>(), SIGKILL);
+    QThread::sleep(1);
     reloadAppList();
 }
 

@@ -41,7 +41,6 @@ public:
     void close();
 
 signals:
-    void appOpening(QString name, QIcon icon);
     void menuClosing();
 
     void thewave_processText(QString text, bool isText = false);

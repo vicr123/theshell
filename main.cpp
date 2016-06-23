@@ -21,25 +21,33 @@ MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
 DbusEvents* DBusEvents = NULL;
 
-void catch_sigsegv(int signal) {
-    qDebug() << "SEGFAULT! Quitting now!";
+void catch_signal(int signal) {
+    SegfaultDialog* dialog;
+    if (signal == SIGSEGV) {
+        qDebug() << "SEGFAULT! Quitting now!";
+        dialog = new SegfaultDialog("SIGSEGV");
+    } else {
+        qDebug() << "SIGBUS! Quitting now!";
+        dialog = new SegfaultDialog("SIGBUS");
+    }
     if (MainWin != NULL) {
         MainWin->close();
         delete MainWin;
     }
-    SegfaultDialog* dialog = new SegfaultDialog();
     dialog->exec();
     std::abort();
-    //QApplication::exit(1);
 }
 
 int main(int argc, char *argv[])
 {
-    struct sigaction segvact;
-    segvact.sa_handler = catch_sigsegv;
+    /*struct sigaction segvact;
+    segvact.sa_handler = catch_signal;
     sigemptyset(&segvact.sa_mask);
     segvact.sa_flags = 0;
-    sigaction(SIGSEGV, &segvact, 0);
+    sigaction(SIGSEGV, &segvact, 0);*/
+
+    signal(SIGSEGV, *catch_signal);
+    signal(SIGBUS, *catch_signal);
 
     QApplication a(argc, argv);
 

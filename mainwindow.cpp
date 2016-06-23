@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     this->setAttribute(Qt::WA_X11NetWmWindowTypeDock, true);
-    ui->pushButton_4->setVisible(false);
+    //ui->pushButton_4->setVisible(false);
 
     FlowLayout* flow = new FlowLayout(ui->windowList);
     ui->windowList->setLayout(flow);
@@ -71,7 +71,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->timer->setVisible(false);
     ui->timerIcon->setVisible(false);
     ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16, 16));
-    ui->openingAppFrame->setVisible(false);
 
     if (QFile("/usr/bin/amixer").exists()) {
         ui->volumeSlider->setVisible(false);
@@ -217,7 +216,7 @@ void MainWindow::reloadWindows() {
                                     False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
 
     quint64 *windows = (quint64*) data;
-    for (int i = 0; i < items; i++) {
+    for (unsigned int i = 0; i < items; i++) {
         TopWindows.append((Window) windows[i]);
 
     }
@@ -249,24 +248,19 @@ void MainWindow::reloadWindows() {
         }
         if (retval == 0) {
             WmWindow *w = new WmWindow();
-            w->setWID(win);
 
             int windowx, windowy;
             Window child;
             retval = XTranslateCoordinates(d, win, RootWindow(d, 0), 0, 0, &windowx, &windowy, &child);
-            if (windowx >= this->x() &&
-                    windowy - 50 <= screenGeometry.y() + this->height() &&
-                    windowy - 50 - this->height() < hideTop) {
-                hideTop = attributes.y - 50 - this->height();
-            }
+
 
             QString title;
             if (netWmName) {
                 title = QString::fromLocal8Bit((char *) netWmName);
                 XFree(netWmName);
-            } else if (wmName.value) {
+            /*} else if (wmName.value) {
                 title = QString::fromLatin1((char *) wmName.value);
-                //XFree(wmName);
+                //XFree(wmName);*/
             }
 
             unsigned long *pidPointer;
@@ -276,8 +270,10 @@ void MainWindow::reloadWindows() {
             int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_PID", False), 0, 1024, False,
                                             XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
             if (retval == 0) {
-                unsigned long pid = *pidPointer;
-                w->setPID(pid);
+                if (pidPointer != 0) {
+                    unsigned long pid = *pidPointer;
+                    w->setPID(pid);
+                }
             }
 
             XFree(pidPointer);
@@ -293,16 +289,48 @@ void MainWindow::reloadWindows() {
             XFree(icon);*/
 
             w->setTitle(title);
+            w->setWID(win);
 
             if (w->PID() != QCoreApplication::applicationPid()) {
-                wlist->append(w);
-                windowList->count();
+                bool minimized = false, skipTaskbar = false;
 
-                for (WmWindow *wi : *windowList) {
-                    if (wi->title() == w->title()) {
-                        okCount++;
-                        break;
+                {
+                    Atom returnType;
+                    int format;
+                    unsigned long items, bytes;
+                    Atom* atoms;
+
+                    XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_STATE", False), 0, 1024, False,
+                                       XA_ATOM, &returnType, &format, &items, &bytes, (unsigned char**) &atoms);
+
+                    for (unsigned int i = 0; i < items; i++) {
+                        if (atoms[i] == XInternAtom(d, "_NET_WM_STATE_HIDDEN", False)) {
+                            minimized = true;
+                        } else if (atoms[i] == XInternAtom(d, "_NET_WM_STATE_SKIP_TASKBAR", False)) {
+                            skipTaskbar = true;
+                        } else if (atoms[i] == XInternAtom(d, "_NET_WM_STATE_DEMANDS_ATTENTION", False)) {
+                            w->setAttention(true);
+                        }
                     }
+                }
+
+                if (!skipTaskbar) {
+                    if (!minimized && windowx >= this->x() &&
+                            windowy - 50 <= screenGeometry.y() + this->height() &&
+                            windowy - 50 - this->height() < hideTop) {
+                        hideTop = windowy - 50 - this->height();
+                    }
+
+                    wlist->append(w);
+
+                    for (WmWindow *wi : *windowList) {
+                        if (wi->title() == w->title()) {
+                            okCount++;
+                            break;
+                        }
+                    }
+                } else {
+                    delete w;
                 }
             } else {
                 delete w;
@@ -341,35 +369,45 @@ void MainWindow::reloadWindows() {
 
                 menu->addSection("For " + w->title());
                 menu->addAction(QIcon::fromTheme("window-close"), "Close", [=]() {
-                    //int retval = XDestroyWindow(QX11Info::display(), w->WID());
+                    unsigned long wid = w->WID();
                     XEvent event;
 
                     event.xclient.type = ClientMessage;
                     event.xclient.serial = 0;
+                    event.xclient.send_event = True;
                     event.xclient.message_type = XInternAtom(QX11Info::display(), "_NET_CLOSE_WINDOW", False);
-                    event.xclient.window = w->WID();
+                    event.xclient.window = wid;
                     event.xclient.format = 32;
                     event.xclient.data.l[0] = 0;
-                    event.xclient.data.l[1] = 2;
+                    event.xclient.data.l[1] = 0;
+                    event.xclient.data.l[2] = 0;
+                    event.xclient.data.l[3] = 0;
+                    event.xclient.data.l[4] = 0;
 
-                    int retval = XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
+                    long mask = SubstructureRedirectMask | SubstructureNotifyMask;
+
+                    int retval = XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, mask, &event);
                 });
 
+
                 menu->exec(button->mapToGlobal(pos));
+
             });
             //button->setIcon(w->icon());
-            //connect(button, SIGNAL(clicked(bool)), this, SLOT(ActivateWindow()));
-            QSignalMapper* mapper = new QSignalMapper(this);
+            connect(button, SIGNAL(clicked(bool)), this, SLOT(ActivateWindow()));
+            if (w->attention()) {
+                button->setStyleSheet("background-color: #A00;");
+            }
+            /*QSignalMapper* mapper = new QSignalMapper(this);
             connect(button, SIGNAL(clicked()), mapper, SLOT(map()));
             mapper->setMapping(button, w->title());
-            connect(mapper, SIGNAL(mapped(QString)), this, SLOT(activateWindow(QString)));
+            connect(mapper, SIGNAL(mapped(QString)), this, SLOT(activateWindow(QString)));*/
             ui->windowList->layout()->addWidget(button);
         }
 
         ui->centralWidget->adjustSize();
-        ui->openingAppFrame->setVisible(false);
         ui->windowList->layout()->setGeometry(ui->windowList->layout()->geometry());
-        this->setFixedSize(this->sizeHint());
+        //this->setFixedSize(this->sizeHint());
         //delete ui->windowList->layout();
 
         //ui->windowList->setLayout(layout);
@@ -393,8 +431,6 @@ void MainWindow::reloadWindows() {
             } else {
                 hiding = true;
             }
-
-            ui->openingAppFrame->setVisible(false);
         }
 
         if (hideTop != screenGeometry.y()) {
@@ -461,6 +497,7 @@ void MainWindow::reloadWindows() {
         QDBusMessage MetadataRequest = QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
         MetadataRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Metadata");
 
+
         QDBusReply<QDBusVariant> reply(QDBusConnection::sessionBus().call(MetadataRequest));
         QVariantMap replyData;
         QDBusArgument arg(reply.value().variant().value<QDBusArgument>());
@@ -519,23 +556,9 @@ void MainWindow::on_time_clicked()
     infoPane->show(InfoPaneDropdown::Clock);
 }
 
-void MainWindow::openingApp(QString AppName, QIcon AppIcon) {
-    ui->appOpeningLabel->setText("Opening " + AppName);
-    ui->appOpeningIcon->setPixmap(AppIcon.pixmap(16, 16));
-    ui->openingAppFrame->setVisible(true);
-
-    QTimer *timer = new QTimer(this);
-    timer->setInterval(10000);
-    timer->setSingleShot(true);
-    connect(timer, &QTimer::timeout, [=]() {
-        ui->openingAppFrame->setVisible(false);
-    });
-    timer->start();
-}
-
 void MainWindow::ActivateWindow() {
     XEvent event;
-    unsigned long winId = sender()->property("windowid").value<unsigned long>();
+    Window winId = sender()->property("windowid").value<Window>();
 
     event.xclient.type = ClientMessage;
     event.xclient.serial = 0;
@@ -555,7 +578,8 @@ void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command 
     QMainWindow::setGeometry(x, y, w, h);
     QProcess::execute("wmctrl -r " + this->windowTitle() + " -e 0," +
                       QString::number(x) + "," + QString::number(y) + "," +
-                      QString::number(w) + "," + QString::number(h));
+                      QString::number(w) + "," + QString::number(this->sizeHint().height()));
+    this->setFixedSize(w, this->sizeHint().height());
 }
 
 void MainWindow::setGeometry(QRect geometry) {

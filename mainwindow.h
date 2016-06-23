@@ -60,8 +60,6 @@ private slots:
 
     void on_time_clicked();
 
-    void openingApp(QString AppName, QIcon AppIcon);
-
     void on_date_clicked();
 
     void on_pushButton_2_clicked();

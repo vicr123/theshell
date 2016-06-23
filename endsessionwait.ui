@@ -708,7 +708,8 @@
                  <string>Terminate App</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="window-close"/>
+                 <iconset theme="window-close">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
@@ -782,7 +783,7 @@
             <item>
              <widget class="QLabel" name="label_8">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Terminating an app will allow the app to clean up and then exit. If that doesn't work, killing an app won't let it finish what it's doing. &lt;span style=&quot; font-weight:600;&quot;&gt;If you kill an app, you'll lose all unsaved work in that app.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Terminating an app will allow the app to clean up and then exit. If that doesn't work, you can kill the app, however, killing an app won't let it finish what it's doing. &lt;span style=&quot; font-weight:600;&quot;&gt;If you kill an app, you'll lose all unsaved work in that app.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
@@ -813,7 +814,8 @@
                  <string>Terminate</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="window-close"/>
+                 <iconset theme="window-close">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
@@ -826,7 +828,8 @@
                  <string>Kill</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="window-close"/>
+                 <iconset theme="window-close">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
@@ -836,7 +839,8 @@
                  <string>Done</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="dialog-ok"/>
+                 <iconset theme="dialog-ok">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
