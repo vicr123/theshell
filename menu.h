@@ -104,6 +104,8 @@ private slots:
 
     void on_commandLinkButton_6_clicked();
 
+    void on_commandLinkButton_4_clicked();
+
 private:
     Ui::Menu *ui;
 

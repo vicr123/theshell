@@ -15,6 +15,7 @@
 #include <QFileDialog>
 #include <QMediaPlaylist>
 #include <cups/cups.h>
+#include <QListWidgetItem>
 #include "notificationdbus.h"
 #include "upowerdbus.h"
 #include "endsessionwait.h"
@@ -145,6 +146,14 @@ private slots:
     void on_lockScreenBackground_textEdited(const QString &arg1);
 
     void notificationClosed(int id, int reason);
+
+    void newNetworkDevice(QDBusObjectPath device);
+
+    void on_networkList_itemActivated(QListWidgetItem *item);
+
+    void on_networkConnect_clicked();
+
+    void on_WifiSwitch_toggled(bool checked);
 
 public slots:
     void getNetworks();

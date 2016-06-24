@@ -146,7 +146,6 @@ void MainWindow::on_pushButton_clicked()
     m->setFocus();
 
     lockHide = true;
-    connect(m, SIGNAL(appOpening(QString,QIcon)), this, SLOT(openingApp(QString,QIcon)));
     connect(m, &Menu::menuClosing, [=]() {
         lockHide = false;
     });
@@ -389,8 +388,9 @@ void MainWindow::reloadWindows() {
                     int retval = XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, mask, &event);
                 });
 
-
+                lockHide = true;
                 menu->exec(button->mapToGlobal(pos));
+                lockHide = false;
 
             });
             //button->setIcon(w->icon());

@@ -67,6 +67,13 @@ Menu::Menu(QWidget *parent) :
     } else {
         ui->thewaveInternetFrame->setVisible(true);
     }
+
+    QString seatPath = QString(qgetenv("XDG_SEAT_PATH"));
+    if (seatPath == "") {
+        ui->commandLinkButton_4->setEnabled(false);
+    } else {
+        ui->commandLinkButton_4->setEnabled(true);
+    }
 }
 
 Menu::~Menu()
@@ -744,4 +751,13 @@ void Menu::on_commandLinkButton_6_clicked()
 {
     this->close();
     DBusEvents->LockScreen();
+}
+
+void Menu::on_commandLinkButton_4_clicked()
+{
+    this->close();
+    DBusEvents->LockScreen();
+
+    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.DisplayManager", QString(qgetenv("XDG_SEAT_PATH")), "org.freedesktop.DisplayManager.Seat", "SwitchToGreeter");
+    QDBusConnection::systemBus().send(message);
 }

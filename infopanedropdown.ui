@@ -234,7 +234,7 @@
         <item>
          <widget class="Switch" name="WifiSwitch">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="text">
            <string>WifiSwitch</string>
@@ -344,7 +344,7 @@
         <item>
          <widget class="QStackedWidget" name="settingsTabs">
           <property name="currentIndex">
-           <number>4</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="StartupSettings">
            <layout class="QGridLayout" name="gridLayout_2">
@@ -1646,17 +1646,17 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_10">
+       <widget class="QLabel" name="networkStatus">
         <property name="text">
          <string>Right now, you're not connected to any networks.</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QListWidget" name="listWidget"/>
+       <widget class="QListWidget" name="networkList"/>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="networkKey">
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
         </property>
@@ -1681,7 +1681,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="networkConnect">
           <property name="text">
            <string>Connect</string>
           </property>
@@ -1885,14 +1885,14 @@
             <second>0</second>
             <year>1969</year>
             <month>12</month>
-            <day>5</day>
+            <day>4</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>12</month>
-            <day>5</day>
+            <day>4</day>
            </date>
           </property>
           <property name="displayFormat">

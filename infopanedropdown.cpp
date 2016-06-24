@@ -29,10 +29,29 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     ui->label_7->setVisible(false);
     ui->pushButton_3->setVisible(false);
-    ui->label_10->setText("Coming soon. For now, use 'wifi-menu' in a terminal. Sorry for the inconvenience...");
-    ui->pushButton_4->setEnabled(false);
-    ui->lineEdit->setEnabled(false);
-    ui->listWidget->setEnabled(false);
+    ui->networkKey->setVisible(false);
+    ui->networkConnect->setVisible(false);
+
+    {
+        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "DeviceAdded", this, SLOT(newNetworkDevice(QDBusObjectPath)));
+        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "DeviceRemoved", this, SLOT(getNetworks()));
+
+        QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
+        QDBusReply<QList<QDBusObjectPath>> reply = i->call("GetDevices");
+
+        if (reply.isValid()) {
+            for (QDBusObjectPath device : reply.value()) {
+                newNetworkDevice(device);
+            }
+        }
+
+        delete i;
+    }
+
+    connect(this, &InfoPaneDropdown::networkLabelChanged, [=](QString label) {
+        ui->networkStatus->setText(label);
+    });
+
     //ui->label_22->setPixmap(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)).pixmap(16, 16));
     ui->FlightSwitch->setOnIcon(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)));
 
@@ -121,6 +140,26 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 InfoPaneDropdown::~InfoPaneDropdown()
 {
     delete ui;
+}
+
+void InfoPaneDropdown::newNetworkDevice(QDBusObjectPath device) {
+    QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus(), this);
+    if (i->property("DeviceType").toInt() == 2) { //WiFi Device
+        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wireless", "AccessPointAdded", this, SLOT(getNetworks()));
+        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wireless", "AccessPointRemoved", this, SLOT(getNetworks()));
+        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", "StateChanged", this, SLOT(getNetworks()));
+    } else if (i->property("DeviceType").toInt() == 1) { //Wired Device
+        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wired", "PropertiesChanged", this, SLOT(getNetworks()));
+    }
+    getNetworks();
+    delete i;
+}
+
+void InfoPaneDropdown::on_WifiSwitch_toggled(bool checked)
+{
+    QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
+    i->setProperty("WirelessEnabled", checked);
+    delete i;
 }
 
 void InfoPaneDropdown::processTimer() {
@@ -342,31 +381,225 @@ void InfoPaneDropdown::on_pushButton_clicked()
 
 void InfoPaneDropdown::getNetworks() {
     QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
+
+    //ui->WifiSwitch->setChecked(i->property("WlanEnabled").toBool());
+
     QDBusReply<QList<QDBusObjectPath>> reply = i->call("GetDevices");
 
+    QString NetworkLabel = "Disconnected from the Internet";
+    enum NetworkType {
+        None = 0,
+        Wireless = 1,
+        Wired = 2
+    };
+
+    NetworkType NetworkLabelType = NetworkType::None;
+
     if (reply.isValid()) {
+        ui->networkList->clear();
         for (QDBusObjectPath device : reply.value()) {
             QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus(), this);
             switch (i->property("DeviceType").toInt()) {
             case 1: //Ethernet
-
+            {
+                QDBusInterface *wire = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wired", QDBusConnection::systemBus(), this);
+                if (wire->property("Carrier").toBool()) { //Connected to a network
+                    NetworkLabel = "Connected over a wired connection";
+                    NetworkLabelType = NetworkType::Wired;
+                }
+                delete wire;
+            }
                 break;
             case 2: //WiFi
-                if (i->property("State").toInt() == 100) { //Connected to a network
-                    QDBusInterface *wifi = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wireless", QDBusConnection::systemBus(), this);
-                    QDBusInterface *ap = new QDBusInterface("org.freedesktop.NetworkManager", wifi->property("ActiveAccessPoint").value<QDBusObjectPath>().path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus(), this);
-                    emit networkLabelChanged("Connected to " + ap->property("Ssid").toString());
-                } else {
-                    emit networkLabelChanged("Disconnected from the internet.");
+            {
+                QDBusInterface *wifi = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wireless", QDBusConnection::systemBus(), this);
+                QString connectedSsid;
+                { //Detect Connected Network
+                    if (NetworkLabelType < NetworkType::Wireless) {
+                        QDBusInterface *ap = new QDBusInterface("org.freedesktop.NetworkManager", wifi->property("ActiveAccessPoint").value<QDBusObjectPath>().path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus(), this);
+                        switch (i->property("State").toInt()) {
+                        case 40:
+                        case 50:
+                        case 60:
+                            connectedSsid = ap->property("Ssid").toString();
+                            NetworkLabel = "Connecting to " + connectedSsid + "...";
+                            NetworkLabelType = NetworkType::Wireless;
+                            break;
+                        case 70:
+                            connectedSsid = ap->property("Ssid").toString();
+                            NetworkLabel = "Getting IP Address from " + connectedSsid + "...";
+                            NetworkLabelType = NetworkType::Wireless;
+                            break;
+                        case 80:
+                            connectedSsid = ap->property("Ssid").toString();
+                            NetworkLabel = "Doing some checks...";
+                            NetworkLabelType = NetworkType::Wireless;
+                            break;
+                        case 90:
+                            connectedSsid = ap->property("Ssid").toString();
+                            NetworkLabel = "Connecting to a secondary connection...";
+                            NetworkLabelType = NetworkType::Wireless;
+                            break;
+                        case 100:
+                            connectedSsid = ap->property("Ssid").toString();
+                            NetworkLabel = "Connected to " + connectedSsid;
+                            NetworkLabelType = NetworkType::Wireless;
+                            break;
+                        case 110:
+                        case 120:
+                            connectedSsid = ap->property("Ssid").toString();
+                            NetworkLabel = "Disconnecting from " + connectedSsid + "...";
+                            NetworkLabelType = NetworkType::Wireless;
+                            break;
+                        }
+                        delete ap;
+                    }
                 }
+
+                { //Detect Available Networks
+                    QList<QDBusObjectPath> accessPoints = wifi->property("AccessPoints").value<QList<QDBusObjectPath>>();
+                    for (QDBusObjectPath accessPoint : accessPoints) {
+                        QDBusInterface *ap = new QDBusInterface("org.freedesktop.NetworkManager", accessPoint.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus(), this);
+
+                        uchar strength = ap->property("Strength").value<uchar>();
+
+                        QListWidgetItem* apItem = new QListWidgetItem();
+                        apItem->setText(ap->property("Ssid").toString());
+                        if (strength < 15) {
+                            apItem->setIcon(QIcon::fromTheme("network-wireless-connected-00"));
+                        } else if (strength < 35) {
+                            apItem->setIcon(QIcon::fromTheme("network-wireless-connected-25"));
+                        } else if (strength < 65) {
+                            apItem->setIcon(QIcon::fromTheme("network-wireless-connected-50"));
+                        } else if (strength < 85) {
+                            apItem->setIcon(QIcon::fromTheme("network-wireless-connected-75"));
+                        } else {
+                            apItem->setIcon(QIcon::fromTheme("network-wireless-connected-100"));
+                        }
+                        if (ap->property("Ssid") == connectedSsid) {
+                            apItem->setBackground(QBrush(QColor(0, 255, 0, 100)));
+                        }
+                        apItem->setData(Qt::UserRole, QVariant::fromValue(accessPoint));
+                        apItem->setData(Qt::UserRole + 1, QVariant::fromValue(device));
+                        apItem->setData(Qt::UserRole + 2, ap->property("Ssid") == connectedSsid);
+                        ui->networkList->addItem(apItem);
+
+                        delete ap;
+                    }
+                }
+
+                delete wifi;
+            }
+
                 break;
             }
         }
     } else {
-
+        NetworkLabel = "NetworkManager Error";
     }
 
+    emit networkLabelChanged(NetworkLabel);
+}
 
+void InfoPaneDropdown::on_networkList_itemActivated(QListWidgetItem *item)
+{
+    ui->networkKey->setText("");
+    if (item == NULL) {
+        ui->networkKey->setVisible(false);
+        ui->networkConnect->setVisible(false);
+    } else {
+        if (item->data(Qt::UserRole + 2).toBool()) { //Connected to this network
+            ui->networkKey->setVisible(false);
+            ui->networkConnect->setText("Disconnect");
+            ui->networkConnect->setIcon(QIcon::fromTheme("network-disconnect"));
+            ui->networkConnect->setVisible(true);
+        } else { //Not connected to this network
+            QDBusInterface *ap = new QDBusInterface("org.freedesktop.NetworkManager", item->data(Qt::UserRole).value<QDBusObjectPath>().path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus(), this);
+
+
+            bool isSaved = false;
+            QDBusInterface *settings = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager/Settings", "org.freedesktop.NetworkManager.Settings", QDBusConnection::systemBus(), this);
+            QDBusReply<QList<QDBusObjectPath>> allConnections = settings->call("ListConnections");
+            for (QDBusObjectPath connection : allConnections.value()) {
+                QDBusInterface *settings = new QDBusInterface("org.freedesktop.NetworkManager", connection.path(), "org.freedesktop.NetworkManager.Settings.Connection", QDBusConnection::systemBus(), this);
+
+                QDBusReply<QMap<QString, QVariantMap>> reply = settings->call("GetSettings");
+                QMap<QString, QVariantMap> connectionSettings = reply.value();
+                if (connectionSettings.value("802-11-wireless").value("ssid").toString() == ap->property("Ssid")) {
+                    isSaved = true;
+                }
+            }
+
+            item->setData(Qt::UserRole + 3, isSaved);
+
+            if (ap->property("WpaFlags").toUInt() != 0 && !isSaved) {
+                ui->networkKey->setVisible(true);
+            } else {
+                ui->networkKey->setVisible(false);
+            }
+            ui->networkConnect->setText("Connect");
+            ui->networkConnect->setIcon(QIcon::fromTheme("network-connect"));
+            ui->networkConnect->setVisible(true);
+            delete ap;
+        }
+    }
+}
+
+void InfoPaneDropdown::on_networkConnect_clicked()
+{
+    QDBusObjectPath device = ui->networkList->selectedItems().first()->data(Qt::UserRole + 1).value<QDBusObjectPath>();
+    QDBusObjectPath accessPoint = ui->networkList->selectedItems().first()->data(Qt::UserRole).value<QDBusObjectPath>();
+
+    if (ui->networkList->selectedItems().first()->data(Qt::UserRole + 2).toBool()) { //Already connected, disconnect from this network
+        QDBusInterface *d = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus(), this);
+        d->call("Disconnect");
+        delete d;
+    } else { //Not connected, connect to this network
+        QDBusMessage message;
+        if (ui->networkList->selectedItems().first()->data(Qt::UserRole + 2).toBool()) { //This network is already known
+            message = QDBusMessage::createMethodCall("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "ActivateConnection");
+
+            QVariantList arguments;
+            arguments.append(QVariant::fromValue(QDBusObjectPath("/")));
+            arguments.append(QVariant::fromValue(device));
+            arguments.append(QVariant::fromValue(accessPoint));
+            message.setArguments(arguments);
+        } else {
+            QDBusInterface *ap = new QDBusInterface("org.freedesktop.NetworkManager", accessPoint.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus(), this);
+            uint wpaFlags = ap->property("WpaFlags").toUInt();
+
+            QMap<QString, QVariantMap> connection;
+
+            if (wpaFlags != 0) {
+                QVariantMap wireless;
+                wireless.insert("security", "802-11-wireless-security");
+                connection.insert("802-11-wireless", wireless);
+
+                QVariantMap wirelessSecurity;
+                if (wpaFlags == 0x1 || wpaFlags == 0x2) { //WEP Authentication
+                    wirelessSecurity.insert("key-mgmt", "none");
+                    wirelessSecurity.insert("wep-key0", ui->networkKey->text());
+                } else { //WPA Authentication
+                    wirelessSecurity.insert("key-mgmt", "wpa-psk");
+                    wirelessSecurity.insert("psk", ui->networkKey->text());
+                }
+                connection.insert("802-11-wireless-security", wirelessSecurity);
+            }
+            message = QDBusMessage::createMethodCall("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "AddAndActivateConnection");
+            QVariantList arguments;
+
+            arguments.append(QVariant::fromValue(connection));
+            arguments.append(QVariant::fromValue(device));
+            arguments.append(QVariant::fromValue(accessPoint));
+
+            message.setArguments(arguments);
+            delete ap;
+        }
+        QDBusMessage reply = QDBusConnection::systemBus().call(message);
+        qDebug() << reply.errorMessage();
+
+        ui->networkKey->setText("");
+    }
 }
 
 void InfoPaneDropdown::on_pushButton_5_clicked()
@@ -818,3 +1051,4 @@ void InfoPaneDropdown::on_lockScreenBackground_textEdited(const QString &arg1)
 {
     lockScreenSettings->setValue("background", arg1);
 }
+
