@@ -125,6 +125,10 @@ private:
     int hideTop = 0;
     bool hiding = false;
     bool lockHide = false;
+    int attentionDemandingWindows = 0;
+    bool borderBlinkOn = true;
+    bool warningAnimCreated = false;
+    int warningWidth = 0;
 
     QString mprisCurrentAppName = "";
     QStringList mprisDetectedApps;

@@ -155,6 +155,10 @@ private slots:
 
     void on_WifiSwitch_toggled(bool checked);
 
+    void on_networkList_itemChanged(QListWidgetItem *item);
+
+    void on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
 public slots:
     void getNetworks();
 

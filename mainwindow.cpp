@@ -222,6 +222,7 @@ void MainWindow::reloadWindows() {
     XFree(data);
 
     //XQueryTree(QX11Info::display(), RootWindow(d, 0), new Window(), new Window(), &ChildList, &NumOfChildren);
+    int demandAttention = 0;
     for (Window win : TopWindows) {
         XWindowAttributes attributes;
 
@@ -277,15 +278,70 @@ void MainWindow::reloadWindows() {
 
             XFree(pidPointer);
 
-            /*unsigned long icItems, icBytes;
-            unsigned char *icon;
-            int icFormat;
-            Atom icReturnType;
-            retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1048576, False,
-                               XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
+            /*{
+                unsigned long icItems, icBytes;
+                unsigned char *icon;
+                int icFormat;
+                Atom icReturnType;
 
-            w->setIcon(QIcon(QPixmap::fromImage(QImage::fromData(icon, icBytes))));
-            XFree(icon);*/
+                unsigned char *ret;
+                int width, height;
+
+
+                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1, False,
+                                   XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
+                width = *(int*) ret;
+                XFree(ret);
+
+                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 1, 1, False,
+                                   XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
+                height = *(int*) ret;
+                XFree(ret);
+
+                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 2, width * height, False,
+                                   XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
+
+                QList<unsigned long> imageData;
+                for (int i = 0; i < width * height * 4; i = i + 4) {
+                    unsigned long* dat = new unsigned long;
+                    memcpy(dat, ret + i, 4);
+                    //imageData.append((icon[i] << 24) | (icon[i + 1] << 16) | (icon[i + 2] << 8) | icon[i + 3]);
+                    imageData.append(*dat);
+                }
+
+                QImage image(width, height, QImage::Format_ARGB32);
+
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x = x + 4) {
+                        /*unsigned char a, r, g, b;
+                        unsigned char pixel = *(icon + ((y * width) + x));
+
+                        a = icon[y * width + x];
+                        r = icon[y * width + x + 1];
+                        g = icon[y * width + x + 2];
+                        b = icon[y * width + x + 3];
+
+                        if (r == g && g == b && b == 255) {
+                            pixel = pixel;
+                        }
+                        /*a = (pixel & 0xff000000) >> 24;
+                        r = (pixel & 0x00ff0000) >> 16;
+                        g = (pixel & 0x0000ff00) >> 8;
+                        b = (pixel & 0x000000ff);
+
+                        image.setPixelColor(x, y, QColor(r, g, b, a));
+
+                        image.setPixel(x, y, imageData[y * width + x]);
+                    }
+                }
+
+                /*for (int i = 0; i < height; i++) {
+                    memcpy(image.scanLine(i), icon + i * width, width * 4);
+                }
+
+                w->setIcon(QIcon(QPixmap::fromImage(image)));
+                XFree(icon);
+            }*/
 
             w->setTitle(title);
             w->setWID(win);
@@ -309,6 +365,7 @@ void MainWindow::reloadWindows() {
                             skipTaskbar = true;
                         } else if (atoms[i] == XInternAtom(d, "_NET_WM_STATE_DEMANDS_ATTENTION", False)) {
                             w->setAttention(true);
+                            demandAttention++;
                         }
                     }
                 }
@@ -338,14 +395,12 @@ void MainWindow::reloadWindows() {
         }
     }
 
-
-
     if (hideTop + this->height() <= screenGeometry.y()) {
         hideTop = screenGeometry.y() - this->height();
     }
 
     //int row = 0, column = 0;
-    if (okCount != wlist->count() || wlist->count() < windowList->count()) {
+    if (okCount != wlist->count() || wlist->count() < windowList->count() || demandAttention != attentionDemandingWindows) {
         //FlowLayout* layout = new FlowLayout();
         //layout->setSpacing(6);
 
@@ -411,10 +466,17 @@ void MainWindow::reloadWindows() {
         //delete ui->windowList->layout();
 
         //ui->windowList->setLayout(layout);
+        attentionDemandingWindows = demandAttention;
+        this->repaint();
     }
 
-    if (!lockHide) {
-        if (hideTop != this->hideTop) {
+    if (!lockHide) { //Check for move lock
+        if (hideTop < screenGeometry.top()) {
+            if (attentionDemandingWindows > 0) {
+                hideTop = screenGeometry.top() - this->height() + 2;
+            }
+        }
+        if (hideTop != this->hideTop) { //Check if we need to move out of the way
             this->hideTop = hideTop;
             QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
             anim->setStartValue(this->geometry());
@@ -613,7 +675,11 @@ void MainWindow::on_pushButton_2_clicked()
 }
 
 void MainWindow::internetLabelChanged(QString display) {
-    ui->networkLabel->setText(display);
+    if (display == "Flight Mode") {
+        ui->networkLabel->setPixmap(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)).pixmap(16, 16));
+    } else {
+        ui->networkLabel->setText(display);
+    }
 }
 
 void MainWindow::on_networkLabel_clicked()
@@ -789,6 +855,31 @@ void MainWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setPen(this->palette().color(QPalette::WindowText));
     painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+    if (this->attentionDemandingWindows > 0) {
+        if (!warningAnimCreated) {
+            warningAnimCreated = true;
+            QVariantAnimation* anim = new QVariantAnimation(this);
+            anim->setStartValue(0);
+            anim->setEndValue(this->width());
+            anim->setEasingCurve(QEasingCurve::OutBounce);
+            anim->setDuration(1000);
+            connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+            connect(anim, &QVariantAnimation::valueChanged, [=](QVariant var) {
+                this->warningWidth = var.toInt();
+                this->repaint();
+            });
+
+            anim->start();
+        }
+
+        painter.setPen(QColor::fromRgb(255, 0, 0));
+        int x1 = (this->width() / 2) - (this->warningWidth / 2);
+        int x2 = (this->width() / 2) + (this->warningWidth / 2);
+        painter.drawLine(x1, this->height() - 1, x2, this->height() - 1);
+        painter.drawLine(x1, this->height() - 2, x2, this->height() - 2);
+    } else {
+        warningAnimCreated = false;
+    }
     event->accept();
 }
 

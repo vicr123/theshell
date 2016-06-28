@@ -235,6 +235,13 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                         speak("I'm not sure where you are, so I can't get weather information. Try saying a city name. Sorry about that.");
                     }
                 }*/
+            } else if (parse.contains("happy birthday")) {
+                QString output = "It's not my birthday. But I'm assuming it's yours.";
+                if (name != "") {
+                    output = "It's not my birthday. But I'm assuming it's yours. Happy Birthday " + name + "!";
+                }
+                emit outputResponse(output);
+                speak(output);
             } else {
                 emit outputResponse("Looking online for information...");
                 speak("Looking online for information...");

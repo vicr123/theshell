@@ -95,6 +95,7 @@ int main(int argc, char *argv[])
     lockfile.write(QByteArray());
     lockfile.close();
 
+    qDBusRegisterMetaType<QList<QVariantMap>>();
     qDBusRegisterMetaType<QMap<QString, QVariantMap>>();
 
     QSettings settings;
