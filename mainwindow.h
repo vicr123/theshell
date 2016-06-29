@@ -25,6 +25,7 @@
 #include "touchkeyboard.h"
 #include "powermanager.h"
 #include "systrayicons.h"
+#include "fadebutton.h"
 #include "FlowLayout/flowlayout.h"
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -52,6 +53,7 @@ public:
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
     InfoPaneDropdown* getInfoPane();
+    void show();
 
 private slots:
     void on_pushButton_clicked();
@@ -118,6 +120,8 @@ private slots:
 
     void ActivateWindow();
 
+    void reloadScreens();
+
 private:
     Ui::MainWindow *ui;
     QList<WmWindow*> *windowList;
@@ -126,18 +130,23 @@ private:
     bool hiding = false;
     bool lockHide = false;
     int attentionDemandingWindows = 0;
+    int oldDesktop = 0;
+    Window oldActiveWindow = 0;
     bool borderBlinkOn = true;
     bool warningAnimCreated = false;
     int warningWidth = 0;
+    bool forceWindowMove = false;
 
     QString mprisCurrentAppName = "";
     QStringList mprisDetectedApps;
 
     void closeEvent(QCloseEvent*);
+    void paintEvent(QPaintEvent *event);
 
     InfoPaneDropdown *infoPane;
 
-    void paintEvent(QPaintEvent *event);
+    void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0,
+                                 long data2 = 0, long data3 = 0, long data4 = 0);
 };
 
 #endif // MAINWINDOW_H

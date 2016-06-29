@@ -14,7 +14,12 @@ TARGET = theshell
 TEMPLATE = app
 #QDBUSXML2CPP_ADAPTOR_HEADER_FLAGS = -l NotificationDBus -i notificationdbus.h
 #QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
-#DBUS_ADAPTORS = org.freedesktop.Notifications.xml
+#DBUS_ADAPTORS += org.freedesktop.Notifications.xml
+DBUS_ADAPTORS += appMenuRegistrar
+appMenuRegistrar.files = com.canonical.AppMenu.Registrar.xml
+appMenuRegistrar.header_flags = -l DBusMenuRegistrar -i dbusmenuregistrar.h
+
+DBUS_ADAPTORS = com.canonical.AppMenu.Registrar.xml
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -46,7 +51,9 @@ SOURCES += main.cpp\
     systrayicons.cpp \
     nativeeventfilter.cpp \
     hotkeyhud.cpp \
-    dbusevents.cpp
+    dbusevents.cpp \
+    dbusmenuregistrar.cpp \
+    fadebutton.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -80,7 +87,9 @@ HEADERS  += mainwindow.h \
     systrayicons.h \
     nativeeventfilter.h \
     hotkeyhud.h \
-    dbusevents.h
+    dbusevents.h \
+    dbusmenuregistrar.h \
+    fadebutton.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

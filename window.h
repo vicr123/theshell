@@ -36,6 +36,8 @@ public:
     void setIcon(QIcon);
     bool attention();
     void setAttention(bool attention);
+    int desktop();
+    void setDesktop(int desktop);
 signals:
 
 public slots:
@@ -47,6 +49,7 @@ private:
     Window wid = 0;
     QIcon ic;
     bool attn = false;
+    int dk = 0;
 };
 
 #endif // WINDOW_H

@@ -1,15 +1,24 @@
 #include "background.h"
 #include "ui_background.h"
 
-Background::Background(MainWindow* mainwindow, QWidget *parent) :
+Background::Background(MainWindow* mainwindow, QRect screenGeometry, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Background)
 {
+    Atom DesktopWindowTypeAtom;
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DESKTOP", False);
+    Window wid = this->winId();
+    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1);
+
+
     ui->setupUi(this);
     this->mainwindow = mainwindow;
-    this->setAttribute(Qt::WA_X11NetWmWindowTypeDesktop, true);
 
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    connect(QApplication::desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(deleteLater()));
+    connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(deleteLater()));
+
+    screenGeometry.moveTo(0, 0);
 
     QSettings settings;
     QString backPath = settings.value("desktop/background", "").toString();
@@ -28,6 +37,15 @@ Background::Background(MainWindow* mainwindow, QWidget *parent) :
 Background::~Background()
 {
     delete ui;
+}
+
+void Background::show() {
+    Atom DesktopWindowTypeAtom;
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DESKTOP", False);
+    Window wid = this->winId();
+    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1);
+    QDialog::show();
 }
 
 void Background::on_graphicsView_customContextMenuRequested(const QPoint &pos)

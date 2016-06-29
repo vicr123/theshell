@@ -4,6 +4,7 @@
 #include "segfaultdialog.h"
 #include "globalfilter.h"
 #include "dbusevents.h"
+#include "dbusmenuregistrar.h"
 #include <nativeeventfilter.h>
 #include <QApplication>
 #include <QDesktopWidget>
@@ -75,8 +76,6 @@ int main(int argc, char *argv[])
     a.setOrganizationDomain("");
     a.setApplicationName("theShell");
 
-    new GlobalFilter(&a);
-
     QFile lockfile(QDir::home().absolutePath() + "/.theshell.lck");
     if (lockfile.exists()) {
         if (QMessageBox::warning(0, "theShell already running", "theShell seems to already be running. "
@@ -86,14 +85,26 @@ int main(int argc, char *argv[])
         }
     }
 
+    lockfile.open(QFile::WriteOnly);
+    lockfile.write(QByteArray());
+    lockfile.close();
+
+    {
+        QDBusMessage kscreen = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
+        QVariantList args;
+        args.append("kscreen");
+        kscreen.setArguments(args);
+        QDBusConnection::sessionBus().call(kscreen);
+    }
+    MainWin = new MainWindow();
+
+    new GlobalFilter(&a);
+
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
 
     DBusEvents = new DbusEvents();
-
-    lockfile.open(QFile::WriteOnly);
-    lockfile.write(QByteArray());
-    lockfile.close();
+    new DBusMenuRegistrar();
 
     qDBusRegisterMetaType<QList<QVariantMap>>();
     qDBusRegisterMetaType<QMap<QString, QVariantMap>>();
@@ -134,12 +145,6 @@ int main(int argc, char *argv[])
     ksuperkey->start("ksuperkey -d -e \"Super_L=Alt_L|F5;Alt_R|F5\"");
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    MainWin = new MainWindow();
-    Background b(MainWin);
-    b.setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint);
-    b.setGeometry(screenGeometry);
-    b.showFullScreen();
-    b.setAttribute(Qt::WA_X11NetWmWindowTypeDesktop, true);
 
     MainWin->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     MainWin->setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width() + 1, MainWin->height());

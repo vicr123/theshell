@@ -10,6 +10,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(QApplication::desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(reloadScreens()));
+    connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(reloadScreens()));
+    connect(QApplication::desktop(), SIGNAL(primaryScreenChanged()), this, SLOT(reloadScreens()));
+
     this->setAttribute(Qt::WA_X11NetWmWindowTypeDock, true);
     //ui->pushButton_4->setVisible(false);
 
@@ -154,64 +158,50 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::reloadWindows() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    /*QProcess p; //Get all open windows
-    p.start("wmctrl -lpG");
-    p.waitForStarted();
-    while (p.state() != 0) {
-        QApplication::processEvents(); //Don't block UI while reloading windows
-    }*/
-
     QList<WmWindow*> *wlist = new QList<WmWindow*>();
 
     int hideTop = screenGeometry.y();
-
     int okCount = 0;
-    /*QString output(p.readAllStandardOutput());
-    for (QString window : output.split("\n")) {
-        QStringList parts = window.split(" ");
-        parts.removeAll("");
-        if (parts.length() >= 9) {
-            if (parts[2].toInt() != QCoreApplication::applicationPid()) {
-                WmWindow *w = new WmWindow(this);
-                w->setPID(parts[2].toInt());
-                QString title;
-                for (int i = 8; i != parts.length(); i++) {
-                    title = title.append(" " + parts[i]);
-                }
-                title = title.remove(0, 1);
-                if (title.length() > 47) {
-                    title.truncate(47);
-                    title.append("...");
-                }
-
-                if (parts[3].toInt() >= this->x() &&
-                        parts[4].toInt() - 50 <= screenGeometry.y() + this->height() &&
-                        parts[4].toInt() - 50 - this->height() < hideTop) {
-                    hideTop = parts[4].toInt() - 50 - this->height();
-                }
-
-                w->setTitle(title);
-
-                for (WmWindow *wi : *windowList) {
-                    if (wi->title() == w->title()) {
-                        okCount++;
-                    }
-                }
-
-                wlist->append(w);
-            }
-        }
-    }*/
 
     Display* d = QX11Info::display();
+
+    int currentDesktop;
+    {
+        unsigned long *desktop;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(d, DefaultRootWindow(d), XInternAtom(d, "_NET_CURRENT_DESKTOP", False), 0, 1024, False,
+                                        XA_CARDINAL, &ReturnType, &format, &items, &bytes, (unsigned char**) &desktop);
+        if (retval == 0 && desktop != 0) {
+            currentDesktop = *desktop;
+        }
+        XFree(desktop);
+    }
+
+    Window active;
+    {
+        Window *activeWin;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(d, DefaultRootWindow(d), XInternAtom(d, "_NET_ACTIVE_WINDOW", False), 0, 1024, False,
+                                        AnyPropertyType, &ReturnType, &format, &items, &bytes, (unsigned char**) &activeWin);
+        if (retval == 0 && activeWin != 0) {
+             active = *activeWin;
+        }
+        XFree(activeWin);
+    }
+
     QList<Window> TopWindows;
-    unsigned int NumOfChildren;
 
     Atom WindowListType;
     int format;
     unsigned long items, bytes;
     unsigned char *data;
-    int retval = XGetWindowProperty(d, RootWindow(d, 0), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
+    XGetWindowProperty(d, DefaultRootWindow(d), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
                                     False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
 
     quint64 *windows = (quint64*) data;
@@ -275,8 +265,21 @@ void MainWindow::reloadWindows() {
                     w->setPID(pid);
                 }
             }
-
             XFree(pidPointer);
+
+            {
+                unsigned long *desktop;
+                unsigned long items, bytes;
+                int format;
+                Atom ReturnType;
+                int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_DESKTOP", False), 0, 1024, False,
+                                                XA_CARDINAL, &ReturnType, &format, &items, &bytes, (unsigned char**) &desktop);
+                if (retval == 0 && desktop != 0) {
+                    w->setDesktop(*desktop);
+                }
+                XFree(desktop);
+            }
+
 
             /*{
                 unsigned long icItems, icBytes;
@@ -373,7 +376,7 @@ void MainWindow::reloadWindows() {
                 if (!skipTaskbar) {
                     if (!minimized && windowx >= this->x() &&
                             windowy - 50 <= screenGeometry.y() + this->height() &&
-                            windowy - 50 - this->height() < hideTop) {
+                            windowy - 50 - this->height() < hideTop && w->desktop() == currentDesktop) {
                         hideTop = windowy - 50 - this->height();
                     }
 
@@ -399,11 +402,8 @@ void MainWindow::reloadWindows() {
         hideTop = screenGeometry.y() - this->height();
     }
 
-    //int row = 0, column = 0;
-    if (okCount != wlist->count() || wlist->count() < windowList->count() || demandAttention != attentionDemandingWindows) {
-        //FlowLayout* layout = new FlowLayout();
-        //layout->setSpacing(6);
-
+    if (okCount != wlist->count() || wlist->count() < windowList->count() || demandAttention != attentionDemandingWindows ||
+            oldDesktop != currentDesktop || oldActiveWindow != active) {
         delete windowList;
         windowList = wlist;
 
@@ -414,8 +414,9 @@ void MainWindow::reloadWindows() {
             delete item;
         }
         for (WmWindow *w : *windowList) {
-            QPushButton *button = new QPushButton();
+            FadeButton *button = new FadeButton();
             button->setProperty("windowid", QVariant::fromValue(w->WID()));
+            button->setProperty("desktop", QVariant::fromValue(w->desktop()));
             button->setText(w->title());
             button->setContextMenuPolicy(Qt::CustomContextMenu);
             connect(button, &QPushButton::customContextMenuRequested, [=](const QPoint &pos) {
@@ -423,24 +424,7 @@ void MainWindow::reloadWindows() {
 
                 menu->addSection("For " + w->title());
                 menu->addAction(QIcon::fromTheme("window-close"), "Close", [=]() {
-                    unsigned long wid = w->WID();
-                    XEvent event;
-
-                    event.xclient.type = ClientMessage;
-                    event.xclient.serial = 0;
-                    event.xclient.send_event = True;
-                    event.xclient.message_type = XInternAtom(QX11Info::display(), "_NET_CLOSE_WINDOW", False);
-                    event.xclient.window = wid;
-                    event.xclient.format = 32;
-                    event.xclient.data.l[0] = 0;
-                    event.xclient.data.l[1] = 0;
-                    event.xclient.data.l[2] = 0;
-                    event.xclient.data.l[3] = 0;
-                    event.xclient.data.l[4] = 0;
-
-                    long mask = SubstructureRedirectMask | SubstructureNotifyMask;
-
-                    int retval = XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, mask, &event);
+                    sendMessageToRootWindow("_NET_CLOSE_WINDOW", w->WID());
                 });
 
                 lockHide = true;
@@ -448,6 +432,16 @@ void MainWindow::reloadWindows() {
                 lockHide = false;
 
             });
+            if (currentDesktop != w->desktop() && w->desktop() != 0xFFFFFFFF) {
+                button->setFade(true);
+            }
+            if (active == w->WID()) {
+                button->setCheckable(true);
+                button->setChecked(true);
+                connect(button, &FadeButton::toggled, [=]() {
+                    button->setChecked(true);
+                });
+            }
             //button->setIcon(w->icon());
             connect(button, SIGNAL(clicked(bool)), this, SLOT(ActivateWindow()));
             if (w->attention()) {
@@ -470,23 +464,27 @@ void MainWindow::reloadWindows() {
         this->repaint();
     }
 
+    oldDesktop = currentDesktop; //Keep the current desktop for tracking purposes
+    oldActiveWindow = active;
+
     if (!lockHide) { //Check for move lock
-        if (hideTop < screenGeometry.top()) {
+        if (hideTop < screenGeometry.y()) {
             if (attentionDemandingWindows > 0) {
-                hideTop = screenGeometry.top() - this->height() + 2;
+                hideTop = screenGeometry.y() - this->height() + 2;
             }
         }
-        if (hideTop != this->hideTop) { //Check if we need to move out of the way
+        if (hideTop != this->hideTop || forceWindowMove) { //Check if we need to move out of the way
             this->hideTop = hideTop;
             QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
             anim->setStartValue(this->geometry());
-            anim->setEndValue(QRect(this->x(), hideTop, screenGeometry.width() + 1, this->height()));
+            anim->setEndValue(QRect(screenGeometry.x(), hideTop, screenGeometry.width() + 1, this->height()));
             anim->setDuration(500);
             anim->setEasingCurve(QEasingCurve::OutCubic);
+            connect(anim, &QPropertyAnimation::finished, [=]() {
+                ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(ui->pushButton->width(), 0, 0, 0));
+            });
             connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
             anim->start();
-
-            //this->setGeometry(QRect(this->x(), -100, screenGeometry.width(), this->height()));
 
             if (hideTop == screenGeometry.y()) {
                 hiding = false;
@@ -500,6 +498,7 @@ void MainWindow::reloadWindows() {
                 if (QCursor::pos().y() <= this->y() + this->height() &&
                         QCursor::pos().x() > screenGeometry.x() &&
                         QCursor::pos().x() < screenGeometry.x() + screenGeometry.width()) {
+                    //Move away from the whole screen.
                     QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
                     anim->setStartValue(this->geometry());
 
@@ -508,6 +507,7 @@ void MainWindow::reloadWindows() {
                     anim->setEasingCurve(QEasingCurve::OutCubic);
 
                     connect(anim, &QPropertyAnimation::finished, [=]() {
+                        ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(ui->pushButton->width(), 0, 0, 0));
                         hiding = false;
                     });
                     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -530,6 +530,7 @@ void MainWindow::reloadWindows() {
             }
         }
     }
+    forceWindowMove = false;
 
     ui->date->setText(QDateTime::currentDateTime().toString("ddd dd MMM yyyy"));
     ui->time->setText(QDateTime::currentDateTime().toString("hh:mm:ss"));
@@ -619,21 +620,28 @@ void MainWindow::on_time_clicked()
 }
 
 void MainWindow::ActivateWindow() {
-    XEvent event;
     Window winId = sender()->property("windowid").value<Window>();
+    sendMessageToRootWindow("_NET_CURRENT_DESKTOP", winId, sender()->property("desktop").toInt());
+    sendMessageToRootWindow("_NET_ACTIVE_WINDOW", winId, 2);
+    int retval = XMapRaised(QX11Info::display(), winId);
+}
+
+void MainWindow::sendMessageToRootWindow(const char* message, Window window, long data0, long data1, long data2, long data3, long data4) {
+    XEvent event;
 
     event.xclient.type = ClientMessage;
     event.xclient.serial = 0;
     event.xclient.send_event = True;
-    event.xclient.message_type = XInternAtom(QX11Info::display(), "_NET_ACTIVE_WINDOW", False);
-    event.xclient.window = winId;
+    event.xclient.message_type = XInternAtom(QX11Info::display(), message, False);
+    event.xclient.window = window;
     event.xclient.format = 32;
-    event.xclient.data.l[0] = 0;
-    event.xclient.data.l[1] = 0;
-    event.xclient.data.l[2] = 0;
+    event.xclient.data.l[0] = data0;
+    event.xclient.data.l[1] = data1;
+    event.xclient.data.l[2] = data2;
+    event.xclient.data.l[3] = data3;
+    event.xclient.data.l[4] = data4;
 
-    int retval = XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, NoEventMask, &event);
-    retval = XMapRaised(QX11Info::display(), winId);
+    int retval = XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
 }
 
 void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
@@ -853,8 +861,6 @@ void MainWindow::on_volumeSlider_sliderReleased()
 
 void MainWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    painter.setPen(this->palette().color(QPalette::WindowText));
-    painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
     if (this->attentionDemandingWindows > 0) {
         if (!warningAnimCreated) {
             warningAnimCreated = true;
@@ -878,6 +884,8 @@ void MainWindow::paintEvent(QPaintEvent *event) {
         painter.drawLine(x1, this->height() - 1, x2, this->height() - 1);
         painter.drawLine(x1, this->height() - 2, x2, this->height() - 2);
     } else {
+        painter.setPen(this->palette().color(QPalette::WindowText));
+        painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
         warningAnimCreated = false;
     }
     event->accept();
@@ -957,4 +965,22 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_mprisSongName_clicked()
 {
     QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2", "Raise"), QDBus::NoBlock);
+}
+
+void MainWindow::reloadScreens() {
+    forceWindowMove = true;
+}
+
+void MainWindow::show() {
+    Atom DesktopWindowTypeAtom;
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
+    Window wid = this->winId();
+    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
+
+    unsigned long desktop = 0xFFFFFFFF;
+    retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
+                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+
+    QMainWindow::show();
 }

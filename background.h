@@ -8,6 +8,8 @@
 #include "mainwindow.h"
 #include "choosebackground.h"
 
+#include <X11/Xlib.h>
+
 class ChooseBackground;
 
 namespace Ui {
@@ -19,8 +21,10 @@ class Background : public QDialog
     Q_OBJECT
 
 public:
-    explicit Background(MainWindow* mainwindow, QWidget *parent = 0);
+    explicit Background(MainWindow* mainwindow, QRect screenGeometry, QWidget *parent = 0);
     ~Background();
+
+    void show();
 
 private slots:
     void on_graphicsView_customContextMenuRequested(const QPoint &pos);

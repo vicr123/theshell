@@ -44,3 +44,11 @@ bool WmWindow::attention() {
 void WmWindow::setAttention(bool attention) {
     attn = attention;
 }
+
+int WmWindow::desktop() {
+    return dk;
+}
+
+void WmWindow::setDesktop(int desktop) {
+    dk = desktop;
+}

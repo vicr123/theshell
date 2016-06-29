@@ -6,6 +6,7 @@
 #include <QUrl>
 #include <QSound>
 #include <QSettings>
+#include "background.h"
 
 class GlobalFilter : public QObject
 {
@@ -16,6 +17,7 @@ public:
 signals:
 
 public slots:
+    void reloadScreens();
 
 private:
     bool eventFilter(QObject *object, QEvent *event);
