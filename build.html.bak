@@ -21,10 +21,10 @@
           </div>
         </a>
         <ul  class="navbarItems">
-          <li  class="backToVictorTran"> <a  href="/index.html">
-             &lt; Victor Tran </a> </li>
-          <li  class="backToHome"> <a  href="/theshell/index.html">
-             Home </a> </li>
+          <li  class="backToVictorTran"> <a  href="/index.html"> &lt; Victor
+              Tran </a> </li>
+          <li  class="backToHome"> <a  href="/theshell/index.html"> Home </a>
+          </li>
           <li> <a  href="build.html"  class="selectedItem"> Download </a> </li>
           <li> <a  href="https://github.com/vicr123/theshell"> GitHub </a> </li>
         </ul>
@@ -42,9 +42,9 @@
     <div  class="sectionHeader">Information</div>
     <div  class="pageContent">
       <ul>
-        <li>Currently, the latest version of theShell is theShell 1.3</li>
+        <li>Currently, the latest version of theShell is theShell 2.0</li>
         <li>theShell has only been tested on Arch Linux. Some users have
-          reported success with Fedora.</li>
+          reported success with Gentoo.</li>
       </ul>
     </div>
     <div  class="sectionHeader">Download from the AUR</div>
