@@ -38,6 +38,8 @@ public:
     void setAttention(bool attention);
     int desktop();
     void setDesktop(int desktop);
+    bool isMinimized();
+    void setMinimized(bool minimized);
 signals:
 
 public slots:
@@ -50,6 +52,7 @@ private:
     QIcon ic;
     bool attn = false;
     int dk = 0;
+    bool min = false;
 };
 
 #endif // WINDOW_H

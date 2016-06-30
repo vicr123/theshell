@@ -60,8 +60,6 @@ private slots:
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
-    void on_lineEdit_textChanged(const QString &arg1);
-
     void on_lineEdit_textEdited(const QString &arg1);
 
     bool eventFilter(QObject *object, QEvent *event);

@@ -39,7 +39,7 @@ private:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     QPalette::ColorGroup IsActiveColorRole();
-    QSize sizeHint();
+    QSize sizeHint() const;
 
     QRect innerRect;
     int mouseClickPoint;

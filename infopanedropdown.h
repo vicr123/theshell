@@ -149,15 +149,11 @@ private slots:
 
     void newNetworkDevice(QDBusObjectPath device);
 
-    void on_networkList_itemActivated(QListWidgetItem *item);
-
     void on_networkConnect_clicked();
 
     void on_WifiSwitch_toggled(bool checked);
 
-    void on_networkList_itemChanged(QListWidgetItem *item);
-
-    void on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem);
 
 public slots:
     void getNetworks();
@@ -185,7 +181,6 @@ private:
     QMap<QString, QLabel*> printersStats;
     QMap<QString, QFrame*> printersStatFrames;
 
-    void resizeEvent(QResizeEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);

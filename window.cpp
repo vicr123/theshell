@@ -52,3 +52,11 @@ int WmWindow::desktop() {
 void WmWindow::setDesktop(int desktop) {
     dk = desktop;
 }
+
+bool WmWindow::isMinimized() {
+    return min;
+}
+
+void WmWindow::setMinimized(bool minimized) {
+    min = minimized;
+}

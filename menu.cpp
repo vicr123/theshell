@@ -82,6 +82,10 @@ Menu::~Menu()
 }
 
 void Menu::show(bool openTotheWave) {
+    unsigned long desktop = 0xFFFFFFFF;
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
+                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+
     QDialog::show();
     doCheckForClose = true;
 
@@ -322,9 +326,6 @@ void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
         this->close();
     }
 }
-void Menu::on_lineEdit_textChanged(const QString &arg1)
-{
-}
 
 void Menu::on_lineEdit_textEdited(const QString &arg1)
 {
@@ -392,6 +393,25 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             pause->setIcon(QIcon::fromTheme("media-playback-pause"));
             pause->setData(Qt::UserRole, "media:pause");
             ui->listWidget->addItem(pause);
+            showtheWaveOption = false;
+        } else if (arg1.startsWith("weather")) {
+            QListWidgetItem *weather = new QListWidgetItem();
+
+            QListWidgetItem *weatherItem = new QListWidgetItem();
+            weatherItem->setText("Weather");
+            weatherItem->setIcon(QIcon::fromTheme("weather-clear"));
+            weatherItem->setData(Qt::UserRole, "thewave:weather");
+            ui->listWidget->addItem(weatherItem);
+
+            weather->setText("20°C Clear");
+            weather->setData(Qt::UserRole, "thewave:weather");
+            weather->setIcon(QIcon::fromTheme("weather-clear"));
+
+            QFont font = weather->font();
+            font.setPointSize(30);
+            weather->setFont(font);
+
+            ui->listWidget->addItem(weather);
             showtheWaveOption = false;
         }
 

@@ -331,17 +331,16 @@ void EndSessionWait::reloadAppList() {
 
     Display* d = QX11Info::display();
     QList<Window> TopWindows;
-    unsigned int NumOfChildren;
 
     Atom WindowListType;
     int format;
     unsigned long items, bytes;
     unsigned char *data;
-    int retval = XGetWindowProperty(d, RootWindow(d, 0), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
+    XGetWindowProperty(d, RootWindow(d, 0), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
                                     False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
 
     quint64 *windows = (quint64*) data;
-    for (int i = 0; i < items; i++) {
+    for (unsigned long i = 0; i < items; i++) {
         TopWindows.append((Window) windows[i]);
 
     }

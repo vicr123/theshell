@@ -21,7 +21,7 @@ SysTrayIcons::SysTrayIcons(QWidget *parent) : QFrame(parent)
         this->layout()->addWidget(errorLabel);
     } else {
         if (XGetSelectionOwner(QX11Info::display(), selection) == None) {
-            int retval = XSetSelectionOwner(QX11Info::display(), selection, this->winId(), CurrentTime);
+            XSetSelectionOwner(QX11Info::display(), selection, this->winId(), CurrentTime);
             if (XGetSelectionOwner(QX11Info::display(), selection) == this->winId()) {
                 qDebug() << "Success!";
 

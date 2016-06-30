@@ -21,7 +21,6 @@
 #include "upowerdbus.h"
 #include "UGlobalHotkey-master/uglobalhotkeys.h"
 #include "infopanedropdown.h"
-#include "thewave.h"
 #include "touchkeyboard.h"
 #include "powermanager.h"
 #include "systrayicons.h"
@@ -121,6 +120,10 @@ private slots:
     void ActivateWindow();
 
     void reloadScreens();
+
+    void on_desktopNext_clicked();
+
+    void on_desktopBack_clicked();
 
 private:
     Ui::MainWindow *ui;

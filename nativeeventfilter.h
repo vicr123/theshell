@@ -13,6 +13,7 @@
 #include "hotkeyhud.h"
 #include "endsessionwait.h"
 #include "dbusevents.h"
+#include "rundialog.h"
 #include <QDBusUnixFileDescriptor>
 #include <QDBusMessage>
 #include <QDBusConnection>

@@ -367,14 +367,6 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
     }
 }
 
-void InfoPaneDropdown::resizeEvent(QResizeEvent *event) {
-    event->accept();
-    QSize size = event->size();
-
-    //ui->clockFrame->resize(size);
-
-}
-
 void InfoPaneDropdown::on_pushButton_clicked()
 {
     this->close();
@@ -531,7 +523,7 @@ void InfoPaneDropdown::getNetworks() {
     emit networkLabelChanged(NetworkLabel);
 }
 
-void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem)
 {
     ui->networkKey->setText("");
     if (current == NULL) {
@@ -572,16 +564,6 @@ void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *curren
             delete ap;
         }
     }
-}
-
-void InfoPaneDropdown::on_networkList_itemChanged(QListWidgetItem *item)
-{
-
-}
-
-void InfoPaneDropdown::on_networkList_itemActivated(QListWidgetItem *item)
-{
-
 }
 
 void InfoPaneDropdown::on_networkConnect_clicked()

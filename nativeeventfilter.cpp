@@ -23,6 +23,7 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_Sleep), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Delete), ControlMask | Mod1Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_L), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F2), Mod1Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
 
     lastPress.start();
 }
@@ -38,6 +39,7 @@ NativeEventFilter::~NativeEventFilter() {
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_Sleep), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Delete), ControlMask | Mod1Mask, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_L), Mod4Mask, QX11Info::appRootWindow());
+    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F2), Mod1Mask, QX11Info::appRootWindow());
 }
 
 
@@ -157,7 +159,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
 
                     Hotkeys->show(QIcon::fromTheme("media-eject"), "Eject", "Attempting to eject disc...");
                 } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) ||
-                           button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && button->state == ControlMask | Mod1Mask) { //Power Off
+                           button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == ControlMask | Mod1Mask)) { //Power Off
                     if (!isEndSessionBoxShowing) {
                         isEndSessionBoxShowing = true;
                         /*if (QMessageBox::question(Hotkeys, "Power Off", "Are you sure you wish to close all applications and power off the computer?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
@@ -179,6 +181,9 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     QDBusConnection::systemBus().send(message);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_L) && button->state == Mod4Mask) { //Lock Screen
                     DBusEvents->LockScreen();
+                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F2) && button->state == Mod1Mask) { //Run
+                    RunDialog* run = new RunDialog();
+                    run->show();
                 }
             }
         }

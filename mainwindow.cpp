@@ -165,8 +165,8 @@ void MainWindow::reloadWindows() {
 
     Display* d = QX11Info::display();
 
-    int currentDesktop;
-    {
+    int currentDesktop = 0;
+    { //Get the current desktop
         unsigned long *desktop;
         unsigned long items, bytes;
         int format;
@@ -180,8 +180,30 @@ void MainWindow::reloadWindows() {
         XFree(desktop);
     }
 
+    ui->desktopName->setProperty("desktopIndex", currentDesktop);
+
+    { //Get the desktop names
+        unsigned char *desktopNames;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(d, DefaultRootWindow(d), XInternAtom(d, "_NET_DESKTOP_NAMES", False), 0, 1024, False,
+                                        XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, (unsigned char**) &desktopNames);
+        if (retval == 0 && desktopNames != 0) {
+            QByteArray characterBytes = QByteArray::fromRawData((char *) desktopNames, items);
+            QList<QByteArray> nameList = characterBytes.split(0x0);
+            if (nameList.count() <= currentDesktop) {
+                ui->desktopName->setText("Desktop " + QString::number(currentDesktop + 1));
+            } else {
+                ui->desktopName->setText(QString(nameList.at(currentDesktop)));
+            }
+        }
+        XFree(desktopNames);
+    }
+
     Window active;
-    {
+    { //Get the active window
         Window *activeWin;
         unsigned long items, bytes;
         int format;
@@ -193,6 +215,26 @@ void MainWindow::reloadWindows() {
              active = *activeWin;
         }
         XFree(activeWin);
+    }
+
+    int numOfDesktops = 0;
+    { //Get the number of desktops
+        unsigned long *desktops;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(QX11Info::display(), DefaultRootWindow(QX11Info::display()), XInternAtom(QX11Info::display(), "_NET_NUMBER_OF_DESKTOPS", False), 0, 1024, False,
+                                        XA_CARDINAL, &ReturnType, &format, &items, &bytes, (unsigned char**) &desktops);
+        if (retval == 0 && desktops != 0) {
+            numOfDesktops = *desktops;
+        }
+        XFree(desktops);
+    }
+    if (numOfDesktops == 1) {
+        ui->desktopsFrame->setVisible(false);
+    } else {
+        ui->desktopsFrame->setVisible(true);
     }
 
     QList<Window> TopWindows;
@@ -350,7 +392,7 @@ void MainWindow::reloadWindows() {
             w->setWID(win);
 
             if (w->PID() != QCoreApplication::applicationPid()) {
-                bool minimized = false, skipTaskbar = false;
+                bool skipTaskbar = false;
 
                 {
                     Atom returnType;
@@ -363,7 +405,7 @@ void MainWindow::reloadWindows() {
 
                     for (unsigned int i = 0; i < items; i++) {
                         if (atoms[i] == XInternAtom(d, "_NET_WM_STATE_HIDDEN", False)) {
-                            minimized = true;
+                            w->setMinimized(true);
                         } else if (atoms[i] == XInternAtom(d, "_NET_WM_STATE_SKIP_TASKBAR", False)) {
                             skipTaskbar = true;
                         } else if (atoms[i] == XInternAtom(d, "_NET_WM_STATE_DEMANDS_ATTENTION", False)) {
@@ -374,7 +416,7 @@ void MainWindow::reloadWindows() {
                 }
 
                 if (!skipTaskbar) {
-                    if (!minimized && windowx >= this->x() &&
+                    if (!w->isMinimized() && windowx >= this->x() &&
                             windowy - 50 <= screenGeometry.y() + this->height() &&
                             windowy - 50 - this->height() < hideTop && w->desktop() == currentDesktop) {
                         hideTop = windowy - 50 - this->height();
@@ -432,7 +474,7 @@ void MainWindow::reloadWindows() {
                 lockHide = false;
 
             });
-            if (currentDesktop != w->desktop() && w->desktop() != 0xFFFFFFFF) {
+            if (w->isMinimized() || (currentDesktop != w->desktop() && w->desktop() != 0xFFFFFFFF)) {
                 button->setFade(true);
             }
             if (active == w->WID()) {
@@ -455,7 +497,6 @@ void MainWindow::reloadWindows() {
         }
 
         ui->centralWidget->adjustSize();
-        ui->windowList->layout()->setGeometry(ui->windowList->layout()->geometry());
         //this->setFixedSize(this->sizeHint());
         //delete ui->windowList->layout();
 
@@ -481,7 +522,12 @@ void MainWindow::reloadWindows() {
             anim->setDuration(500);
             anim->setEasingCurve(QEasingCurve::OutCubic);
             connect(anim, &QPropertyAnimation::finished, [=]() {
-                ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(ui->pushButton->width(), 0, 0, 0));
+                int adjustLeft = 0;
+                adjustLeft = adjustLeft + ui->pushButton->width();
+                if (ui->desktopsFrame->isVisible()) {
+                    adjustLeft = adjustLeft + ui->pushButton->width();
+                }
+                ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(adjustLeft, 0, 0, 0));
             });
             connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
             anim->start();
@@ -507,7 +553,12 @@ void MainWindow::reloadWindows() {
                     anim->setEasingCurve(QEasingCurve::OutCubic);
 
                     connect(anim, &QPropertyAnimation::finished, [=]() {
-                        ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(ui->pushButton->width(), 0, 0, 0));
+                        int adjustLeft = 0;
+                        adjustLeft = adjustLeft + ui->pushButton->width();
+                        if (ui->desktopsFrame->isVisible()) {
+                            adjustLeft = adjustLeft + ui->pushButton->width();
+                        }
+                        ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(adjustLeft, 0, 0, 0));
                         hiding = false;
                     });
                     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -621,9 +672,9 @@ void MainWindow::on_time_clicked()
 
 void MainWindow::ActivateWindow() {
     Window winId = sender()->property("windowid").value<Window>();
-    sendMessageToRootWindow("_NET_CURRENT_DESKTOP", winId, sender()->property("desktop").toInt());
+    sendMessageToRootWindow("_NET_CURRENT_DESKTOP", 0, sender()->property("desktop").toInt());
     sendMessageToRootWindow("_NET_ACTIVE_WINDOW", winId, 2);
-    int retval = XMapRaised(QX11Info::display(), winId);
+    XMapRaised(QX11Info::display(), winId);
 }
 
 void MainWindow::sendMessageToRootWindow(const char* message, Window window, long data0, long data1, long data2, long data3, long data4) {
@@ -641,7 +692,7 @@ void MainWindow::sendMessageToRootWindow(const char* message, Window window, lon
     event.xclient.data.l[3] = data3;
     event.xclient.data.l[4] = data4;
 
-    int retval = XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
+    XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
 }
 
 void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
@@ -913,7 +964,6 @@ InfoPaneDropdown* MainWindow::getInfoPane() {
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
     TouchKeyboard* keyboard = new TouchKeyboard();
     keyboard->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Dialog | Qt::FramelessWindowHint);
     keyboard->setAttribute(Qt::WA_ShowWithoutActivating, true);
@@ -974,7 +1024,6 @@ void MainWindow::reloadScreens() {
 void MainWindow::show() {
     Atom DesktopWindowTypeAtom;
     DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
-    Window wid = this->winId();
     int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
                      XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
 
@@ -983,4 +1032,52 @@ void MainWindow::show() {
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
     QMainWindow::show();
+}
+
+void MainWindow::on_desktopNext_clicked()
+{
+    int numOfDesktops = 0;
+    {
+        unsigned long *desktops;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(QX11Info::display(), DefaultRootWindow(QX11Info::display()), XInternAtom(QX11Info::display(), "_NET_NUMBER_OF_DESKTOPS", False), 0, 1024, False,
+                                        XA_CARDINAL, &ReturnType, &format, &items, &bytes, (unsigned char**) &desktops);
+        if (retval == 0 && desktops != 0) {
+            numOfDesktops = *desktops;
+        }
+        XFree(desktops);
+    }
+    int switchToDesktop = ui->desktopName->property("desktopIndex").toInt() + 1;
+    if (switchToDesktop == numOfDesktops) {
+        switchToDesktop = 0;
+    }
+
+    sendMessageToRootWindow("_NET_CURRENT_DESKTOP", 0, switchToDesktop);
+}
+
+void MainWindow::on_desktopBack_clicked()
+{
+    int numOfDesktops = 0;
+    {
+        unsigned long *desktops;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(QX11Info::display(), DefaultRootWindow(QX11Info::display()), XInternAtom(QX11Info::display(), "_NET_NUMBER_OF_DESKTOPS", False), 0, 1024, False,
+                                        XA_CARDINAL, &ReturnType, &format, &items, &bytes, (unsigned char**) &desktops);
+        if (retval == 0 && desktops != 0) {
+            numOfDesktops = *desktops;
+        }
+        XFree(desktops);
+    }
+    int switchToDesktop = ui->desktopName->property("desktopIndex").toInt() - 1;
+    if (switchToDesktop == -1) {
+        switchToDesktop = numOfDesktops - 1;
+    }
+
+    sendMessageToRootWindow("_NET_CURRENT_DESKTOP", 0, switchToDesktop);
 }

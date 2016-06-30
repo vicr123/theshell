@@ -36,7 +36,6 @@ SOURCES += main.cpp\
     upowerdbus.cpp \
     infopanedropdown.cpp \
     clickablelabel.cpp \
-    thewave.cpp \
     thewaveworker.cpp \
     loginsplash.cpp \
     notifications_adaptor.cpp \
@@ -53,7 +52,8 @@ SOURCES += main.cpp\
     hotkeyhud.cpp \
     dbusevents.cpp \
     dbusmenuregistrar.cpp \
-    fadebutton.cpp
+    fadebutton.cpp \
+    rundialog.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -72,7 +72,6 @@ HEADERS  += mainwindow.h \
     upowerdbus.h \
     infopanedropdown.h \
     clickablelabel.h \
-    thewave.h \
     thewaveworker.h \
     loginsplash.h \
     notifications_adaptor.h \
@@ -89,7 +88,8 @@ HEADERS  += mainwindow.h \
     hotkeyhud.h \
     dbusevents.h \
     dbusmenuregistrar.h \
-    fadebutton.h
+    fadebutton.h \
+    rundialog.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -97,12 +97,12 @@ FORMS    += mainwindow.ui \
     background.ui \
     notificationdialog.ui \
     infopanedropdown.ui \
-    thewave.ui \
     loginsplash.ui \
     choosebackground.ui \
     touchkeyboard.ui \
     segfaultdialog.ui \
-    hotkeyhud.ui
+    hotkeyhud.ui \
+    rundialog.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

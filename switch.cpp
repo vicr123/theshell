@@ -110,7 +110,7 @@ void Switch::checkChanging(bool checked) {
     animation->start();
 }
 
-QSize Switch::sizeHint() {
+QSize Switch::sizeHint() const {
     QFontMetrics metrics(this->font());
     int width = 33;
     if (iText == "") {

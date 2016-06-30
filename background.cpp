@@ -5,13 +5,6 @@ Background::Background(MainWindow* mainwindow, QRect screenGeometry, QWidget *pa
     QDialog(parent),
     ui(new Ui::Background)
 {
-    Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DESKTOP", False);
-    Window wid = this->winId();
-    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
-                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1);
-
-
     ui->setupUi(this);
     this->mainwindow = mainwindow;
 
@@ -42,8 +35,7 @@ Background::~Background()
 void Background::show() {
     Atom DesktopWindowTypeAtom;
     DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DESKTOP", False);
-    Window wid = this->winId();
-    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
                      XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1);
     QDialog::show();
 }

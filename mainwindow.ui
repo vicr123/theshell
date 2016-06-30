@@ -494,6 +494,63 @@
        </widget>
       </item>
       <item>
+       <widget class="QFrame" name="desktopsFrame">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="desktopBack">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="go-previous"/>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="desktopName">
+           <property name="text">
+            <string>Desktop 1</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="desktopNext">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="go-next"/>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <widget class="QFrame" name="windowList">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -504,7 +561,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="">
+       <widget class="QFrame" name="frame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
           <horstretch>0</horstretch>
