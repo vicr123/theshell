@@ -18,7 +18,14 @@
     <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
+   <item row="1" column="0" colspan="2">
+    <widget class="QRadioButton" name="radioButton">
+     <property name="text">
+      <string>Inbuilt Bac&amp;kgrounds</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -31,8 +38,33 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QListWidget" name="listWidget"/>
+   <item row="2" column="0" colspan="2">
+    <widget class="QListWidget" name="listWidget">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>150</width>
+       <height>84</height>
+      </size>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="movement">
+      <enum>QListView::Static</enum>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Adjust</enum>
+     </property>
+     <property name="viewMode">
+      <enum>QListView::IconMode</enum>
+     </property>
+    </widget>
    </item>
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label_15">
@@ -46,7 +78,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="5" column="1">
     <widget class="QPushButton" name="pushButton">
      <property name="text">
       <string>Done</string>
@@ -54,6 +86,23 @@
      <property name="icon">
       <iconset theme="dialog-ok">
        <normaloff>.</normaloff>.</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QRadioButton" name="radioButton_2">
+     <property name="text">
+      <string>Custo&amp;m Background</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLineEdit" name="lineEdit"/>
+   </item>
+   <item row="4" column="1">
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>Browse...</string>
      </property>
     </widget>
    </item>

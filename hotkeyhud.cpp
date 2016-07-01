@@ -36,6 +36,16 @@ void HotkeyHud::paintEvent(QPaintEvent *event) {
 }
 
 void HotkeyHud::show() {
+    Atom atoms[2];
+    atoms[0] = XInternAtom(QX11Info::display(), "_KDE_NET_WM_WINDOW_TYPE_ON_SCREEN_DISPLAY", False);
+    atoms[1] = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NOTIFICATION", False);
+    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &atoms, 2); //Change Window Type
+
+    unsigned long desktop = 0xFFFFFFFF;
+    retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
+                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+
     QDialog::show();
 
     if (!isShowing) {

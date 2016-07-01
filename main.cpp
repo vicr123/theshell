@@ -27,16 +27,19 @@ void catch_signal(int signal) {
     if (signal == SIGSEGV) {
         qDebug() << "SEGFAULT! Quitting now!";
         dialog = new SegfaultDialog("SIGSEGV");
-    } else {
+    } else if (signal == SIGBUS) {
         qDebug() << "SIGBUS! Quitting now!";
         dialog = new SegfaultDialog("SIGBUS");
+    } else if (signal == SIGABRT) {
+        qDebug() << "SIGABRT! Quitting now!";
+        dialog = new SegfaultDialog("SIGABRT");
     }
     if (MainWin != NULL) {
         MainWin->close();
         delete MainWin;
     }
     dialog->exec();
-    std::abort();
+    std::terminate();
 }
 
 int main(int argc, char *argv[])
@@ -49,6 +52,7 @@ int main(int argc, char *argv[])
 
     signal(SIGSEGV, *catch_signal);
     signal(SIGBUS, *catch_signal);
+    signal(SIGABRT, *catch_signal);
 
     QApplication a(argc, argv);
 
@@ -111,11 +115,7 @@ int main(int argc, char *argv[])
 
     QSettings settings;
 
-    QString windowManager = settings.value("startup/WindowManagerCommand", "").toString();
-    if (windowManager == "") {
-        windowManager = "kwin_x11";
-        settings.setValue("startup/WindowManagerCommand", windowManager);
-    }
+    QString windowManager = settings.value("startup/WindowManagerCommand", "kwin_x11").toString();
 
     if (autoStart) {
         QStringList autostartApps = settings.value("startup/autostart", "").toString().split(",");

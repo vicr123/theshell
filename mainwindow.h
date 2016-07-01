@@ -124,10 +124,14 @@ private slots:
     void on_desktopNext_clicked();
 
     void on_desktopBack_clicked();
+signals:
+    void reloadBackgrounds();
 
 private:
     Ui::MainWindow *ui;
     QList<WmWindow*> *windowList;
+
+    QSettings settings;
 
     int hideTop = 0;
     bool hiding = false;

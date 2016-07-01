@@ -95,6 +95,9 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->thewaveWikipediaSwitch->setChecked(settings.value("thewave/wikipediaSearch", true).toBool());
     ui->thewaveOffensiveSwitch->setChecked(settings.value("thewave/blockOffensiveWords", true).toBool());
     ui->theWaveName->setText(settings.value("thewave/name", "").toString());
+    ui->TextSwitch->setChecked(settings.value("bar/showText", true).toBool());
+    ui->windowManager->setText(settings.value("startup/WindowManagerCommand", "kwin_x11").toString());
+    ui->barDesktopsSwitch->setChecked(settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
 
     eventTimer = new QTimer(this);
     eventTimer->setInterval(1000);
@@ -123,6 +126,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     } while (allObjects.count() != 0);*/
 
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-login"), "Startup"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Bar"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-display"), "Display"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("dialog-warning"), "Notifications"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("input-tablet"), "Input"));
@@ -130,6 +134,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("thewave", QIcon(":/icons/thewave.svg")), "theWave"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("emblem-warning"), "Danger"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), "About"));
+    ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
 
     ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
     ui->timerToneSelect->addItem("Happy Bee");
@@ -271,6 +276,10 @@ void InfoPaneDropdown::show(dropdownType showWith) {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
     this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height());
+
+    unsigned long desktop = 0xFFFFFFFF;
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
+                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
     QDialog::show();
 
@@ -946,6 +955,7 @@ void InfoPaneDropdown::mousePressEvent(QMouseEvent *event) {
     mouseClickPoint = event->localPos().toPoint().y();
     initialPoint = mouseClickPoint;
     dragRect = this->geometry();
+    mouseMovedUp = false;
     event->accept();
 }
 
@@ -1072,4 +1082,19 @@ void InfoPaneDropdown::on_lockScreenBackgroundBrowse_clicked()
 void InfoPaneDropdown::on_lockScreenBackground_textEdited(const QString &arg1)
 {
     lockScreenSettings->setValue("background", arg1);
+}
+
+void InfoPaneDropdown::on_TextSwitch_toggled(bool checked)
+{
+    settings.setValue("bar/showText", checked);
+}
+
+void InfoPaneDropdown::on_windowManager_textEdited(const QString &arg1)
+{
+    settings.setValue("startup/WindowManagerCommand", arg1);
+}
+
+void InfoPaneDropdown::on_barDesktopsSwitch_toggled(bool checked)
+{
+    settings.setValue("bar/showWindowsFromOtherDesktops", checked);
 }

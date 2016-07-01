@@ -15,9 +15,11 @@ public:
     explicit GlobalFilter(QApplication *application, QObject *parent = 0);
 
 signals:
+    void removeBackgrounds();
 
 public slots:
     void reloadScreens();
+    void reloadBackgrounds();
 
 private:
     bool eventFilter(QObject *object, QEvent *event);

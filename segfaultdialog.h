@@ -2,6 +2,8 @@
 #define SEGFAULTDIALOG_H
 
 #include <QDialog>
+#include <execinfo.h>
+#include <QMessageBox>
 
 namespace Ui {
 class SegfaultDialog;
@@ -17,6 +19,8 @@ public:
 
 private slots:
     void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::SegfaultDialog *ui;

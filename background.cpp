@@ -8,20 +8,25 @@ Background::Background(MainWindow* mainwindow, QRect screenGeometry, QWidget *pa
     ui->setupUi(this);
     this->mainwindow = mainwindow;
 
-    connect(QApplication::desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(deleteLater()));
-    connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(deleteLater()));
-
     screenGeometry.moveTo(0, 0);
 
+    QPixmap background(screenGeometry.size());
+
     QSettings settings;
-    QString backPath = settings.value("desktop/background", "").toString();
-    if (backPath == "") {
-        backPath = "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png";
-        settings.setValue("desktop/background", backPath);
+    QString backPath = settings.value("desktop/background", "inbuilt:triangles").toString();
+
+    if (backPath.startsWith("inbuilt:")) { //Inbuilt background
+        QSvgRenderer renderer(QString(":/backgrounds/" + backPath.split(":").at(1)));
+        QPainter painter(&background);
+        renderer.render(&painter, background.rect());
+    } else {
+        background.load(backPath);
+        background = background.scaled(screenGeometry.size());
     }
 
     QGraphicsScene* scene = new QGraphicsScene();
-    scene->addPixmap(QPixmap(backPath));
+
+    scene->addPixmap(background);
     scene->setSceneRect(screenGeometry);
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setSceneRect(screenGeometry);
@@ -72,6 +77,7 @@ void Background::on_actionOpen_System_Settings_triggered()
 
 void Background::on_actionChange_Background_triggered()
 {
-    ChooseBackground *background = new ChooseBackground(this);
+    ChooseBackground *background = new ChooseBackground();
+    connect(background, SIGNAL(reloadBackgrounds()), mainwindow, SIGNAL(reloadBackgrounds()));
     background->show();
 }

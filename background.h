@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QMenu>
 #include <QDesktopWidget>
+#include <QSvgRenderer>
 #include "mainwindow.h"
 #include "choosebackground.h"
 

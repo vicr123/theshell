@@ -155,6 +155,12 @@ private slots:
 
     void on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem);
 
+    void on_TextSwitch_toggled(bool checked);
+
+    void on_windowManager_textEdited(const QString &arg1);
+
+    void on_barDesktopsSwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 

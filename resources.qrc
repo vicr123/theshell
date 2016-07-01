@@ -26,4 +26,10 @@
         <file>happybee</file>
         <file>playinginthedark</file>
     </qresource>
+    <qresource prefix="/backgrounds">
+        <file alias="blueprint">backgrounds/blueprint</file>
+        <file alias="triangles">backgrounds/triangles</file>
+        <file alias="triplecircle">backgrounds/triplecircle</file>
+        <file alias="shatter">backgrounds/shatter</file>
+    </qresource>
 </RCC>

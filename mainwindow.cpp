@@ -62,8 +62,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
     infoPane->getNetworks();
 
-    QSettings settings;
-
     QString loginSoundPath = settings.value("sounds/login", "").toString();
     if (loginSoundPath == "") {
         loginSoundPath = "/usr/share/sounds/contemporary/login.ogg";
@@ -323,7 +321,7 @@ void MainWindow::reloadWindows() {
             }
 
 
-            /*{
+            {
                 unsigned long icItems, icBytes;
                 unsigned char *icon;
                 int icFormat;
@@ -335,58 +333,42 @@ void MainWindow::reloadWindows() {
 
                 retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1, False,
                                    XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
+                if (ret == 0x0) break;
                 width = *(int*) ret;
                 XFree(ret);
 
                 retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 1, 1, False,
                                    XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
+                if (ret == 0x0) break;
                 height = *(int*) ret;
                 XFree(ret);
 
-                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 2, width * height, False,
+                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 2, width * height * 4, False,
                                    XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
-
-                QList<unsigned long> imageData;
-                for (int i = 0; i < width * height * 4; i = i + 4) {
-                    unsigned long* dat = new unsigned long;
-                    memcpy(dat, ret + i, 4);
-                    //imageData.append((icon[i] << 24) | (icon[i + 1] << 16) | (icon[i + 2] << 8) | icon[i + 3]);
-                    imageData.append(*dat);
-                }
 
                 QImage image(width, height, QImage::Format_ARGB32);
 
                 for (int y = 0; y < height; y++) {
-                    for (int x = 0; x < width; x = x + 4) {
-                        /*unsigned char a, r, g, b;
-                        unsigned char pixel = *(icon + ((y * width) + x));
+                    for (int x = 0; x < width * 8; x = x + 8) {
+                        unsigned long a, r, g, b;
 
-                        a = icon[y * width + x];
-                        r = icon[y * width + x + 1];
-                        g = icon[y * width + x + 2];
-                        b = icon[y * width + x + 3];
+                        b = (icon[y * width * 8 + x + 0]);
+                        g = (icon[y * width * 8 + x + 1]);
+                        r = (icon[y * width * 8 + x + 2]);
+                        a = (icon[y * width * 8 + x + 3]);
 
-                        if (r == g && g == b && b == 255) {
-                            pixel = pixel;
-                        }
-                        /*a = (pixel & 0xff000000) >> 24;
-                        r = (pixel & 0x00ff0000) >> 16;
-                        g = (pixel & 0x0000ff00) >> 8;
-                        b = (pixel & 0x000000ff);
+                        QColor col = QColor(r, g, b, a);
 
-                        image.setPixelColor(x, y, QColor(r, g, b, a));
-
-                        image.setPixel(x, y, imageData[y * width + x]);
+                        image.setPixelColor(x / 8, y, col);
                     }
                 }
 
-                /*for (int i = 0; i < height; i++) {
-                    memcpy(image.scanLine(i), icon + i * width, width * 4);
-                }
+                QPixmap iconPixmap(QPixmap::fromImage(image).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                w->setIcon(QIcon(iconPixmap));
+                //delete iconPixmap;
 
-                w->setIcon(QIcon(QPixmap::fromImage(image)));
                 XFree(icon);
-            }*/
+            }
 
             w->setTitle(title);
             w->setWID(win);
@@ -416,18 +398,21 @@ void MainWindow::reloadWindows() {
                 }
 
                 if (!skipTaskbar) {
-                    if (!w->isMinimized() && windowx >= this->x() &&
-                            windowy - 50 <= screenGeometry.y() + this->height() &&
-                            windowy - 50 - this->height() < hideTop && w->desktop() == currentDesktop) {
-                        hideTop = windowy - 50 - this->height();
-                    }
+                    if (settings.value("bar/showWindowsFromOtherDesktops", true).toBool() ||
+                                     w->desktop() == currentDesktop) {
+                        if (!w->isMinimized() && windowx >= this->x() &&
+                                windowy - 50 <= screenGeometry.y() + this->height() &&
+                                windowy - 50 - this->height() < hideTop && w->desktop() == currentDesktop) {
+                            hideTop = windowy - 50 - this->height();
+                        }
 
-                    wlist->append(w);
+                        wlist->append(w);
 
-                    for (WmWindow *wi : *windowList) {
-                        if (wi->title() == w->title()) {
-                            okCount++;
-                            break;
+                        for (WmWindow *wi : *windowList) {
+                            if (wi->title() == w->title()) {
+                                okCount++;
+                                break;
+                            }
                         }
                     }
                 } else {
@@ -446,6 +431,9 @@ void MainWindow::reloadWindows() {
 
     if (okCount != wlist->count() || wlist->count() < windowList->count() || demandAttention != attentionDemandingWindows ||
             oldDesktop != currentDesktop || oldActiveWindow != active) {
+        for (WmWindow* win : *windowList) {
+            delete win;
+        }
         delete windowList;
         windowList = wlist;
 
@@ -459,12 +447,14 @@ void MainWindow::reloadWindows() {
             FadeButton *button = new FadeButton();
             button->setProperty("windowid", QVariant::fromValue(w->WID()));
             button->setProperty("desktop", QVariant::fromValue(w->desktop()));
-            button->setText(w->title());
+            if (settings.value("bar/showText", true).toBool()) {
+                button->setText(w->title());
+            }
             button->setContextMenuPolicy(Qt::CustomContextMenu);
             connect(button, &QPushButton::customContextMenuRequested, [=](const QPoint &pos) {
                 QMenu* menu = new QMenu();
 
-                menu->addSection("For " + w->title());
+                menu->addSection(w->icon(), "For " + w->title());
                 menu->addAction(QIcon::fromTheme("window-close"), "Close", [=]() {
                     sendMessageToRootWindow("_NET_CLOSE_WINDOW", w->WID());
                 });
@@ -484,23 +474,16 @@ void MainWindow::reloadWindows() {
                     button->setChecked(true);
                 });
             }
-            //button->setIcon(w->icon());
+            button->setIcon(w->icon());
             connect(button, SIGNAL(clicked(bool)), this, SLOT(ActivateWindow()));
             if (w->attention()) {
                 button->setStyleSheet("background-color: #A00;");
             }
-            /*QSignalMapper* mapper = new QSignalMapper(this);
-            connect(button, SIGNAL(clicked()), mapper, SLOT(map()));
-            mapper->setMapping(button, w->title());
-            connect(mapper, SIGNAL(mapped(QString)), this, SLOT(activateWindow(QString)));*/
             ui->windowList->layout()->addWidget(button);
         }
 
         ui->centralWidget->adjustSize();
-        //this->setFixedSize(this->sizeHint());
-        //delete ui->windowList->layout();
 
-        //ui->windowList->setLayout(layout);
         attentionDemandingWindows = demandAttention;
         this->repaint();
     }

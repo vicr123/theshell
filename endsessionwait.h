@@ -1,6 +1,24 @@
 #ifndef ENDSESSIONWAIT_H
 #define ENDSESSIONWAIT_H
 
+#include <X11/Xlib.h>
+#define Bool int
+#define Status int
+#include <X11/Xutil.h>
+#include <X11/Xatom.h>
+
+#undef Status
+#undef Bool
+#undef None
+#undef FocusIn
+#undef FontChange
+#undef Expose
+#undef KeyPress
+#undef KeyRelease
+#undef FocusOut
+#undef CursorShape
+#undef Unsorted
+
 #include <QDialog>
 #include <QProcess>
 #include <QMediaPlayer>
@@ -20,19 +38,6 @@
 
 #include <signal.h>
 
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/Xatom.h>
-
-#undef Status
-#undef Bool
-#undef None
-#undef FocusIn
-#undef FontChange
-#undef Expose
-#undef KeyPress
-#undef KeyRelease
-#undef FocusOut
 
 namespace Ui {
 class EndSessionWait;

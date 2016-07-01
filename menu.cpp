@@ -321,6 +321,15 @@ void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
             ui->thewave_line->setText(item->data(Qt::UserRole).toString().split(":").at(1));
             on_thewave_line_returnPressed();
         }
+    } else if (item->data(Qt::UserRole).toString().startsWith("power:")) {
+        QString operation = item->data(Qt::UserRole).toString().split(":").at(1);
+        if (operation == "off") {
+            EndSession(EndSessionWait::powerOff);
+        } else if (operation == "reboot") {
+            EndSession(EndSessionWait::reboot);
+        } else if (operation ==  "logout") {
+            EndSession(EndSessionWait::logout);
+        }
     } else {
         QProcess::startDetached(item->data(Qt::UserRole).toString().remove("%u"));
         this->close();
@@ -435,13 +444,19 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             QListWidgetItem *i = new QListWidgetItem();
             i->setText("Power Off");
             i->setIcon(QIcon::fromTheme("system-shutdown"));
-            i->setData(Qt::UserRole, "POWEROFF");
+            i->setData(Qt::UserRole, "power:off");
             ui->listWidget->addItem(i);
         } else if (QString("restart").contains(arg1, Qt::CaseInsensitive) || QString("reboot").contains(arg1, Qt::CaseInsensitive)) {
             QListWidgetItem *i = new QListWidgetItem();
             i->setText("Reboot");
             i->setIcon(QIcon::fromTheme("system-reboot"));
-            i->setData(Qt::UserRole, "REBOOT");
+            i->setData(Qt::UserRole, "power:reboot");
+            ui->listWidget->addItem(i);
+        } else if (QString("logout").contains(arg1, Qt::CaseInsensitive) || QString("logoff").contains(arg1, Qt::CaseInsensitive)) {
+            QListWidgetItem *i = new QListWidgetItem();
+            i->setText("Log Out");
+            i->setIcon(QIcon::fromTheme("system-log-out"));
+            i->setData(Qt::UserRole, "power:logout");
             ui->listWidget->addItem(i);
         }
 
