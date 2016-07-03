@@ -53,10 +53,11 @@ public:
     InfoPaneDropdown* getInfoPane();
     void show();
 
+public slots:
+    void on_openMenu_clicked();
+
 private slots:
-    void on_pushButton_clicked();
     void reloadWindows();
-    void activateWindow(QString windowTitle);
 
     void on_time_clicked();
 

@@ -74,6 +74,11 @@ Menu::Menu(QWidget *parent) :
     } else {
         ui->commandLinkButton_4->setEnabled(true);
     }
+
+    QPalette listPal = ui->listWidget->palette(); //Set List Palette so active colours aren't greyed out
+    listPal.setBrush(QPalette::Inactive, QPalette::Highlight, listPal.brush(QPalette::Active, QPalette::Highlight));
+    listPal.setBrush(QPalette::Inactive, QPalette::HighlightedText, listPal.brush(QPalette::Active, QPalette::HighlightedText));
+    ui->listWidget->setPalette(listPal);
 }
 
 Menu::~Menu()
@@ -535,34 +540,76 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
 }
 
 bool Menu::eventFilter(QObject *object, QEvent *event) {
-    if (object != ui->thewave_line && object != ui->lineEdit) {
-        if (event->type() == QEvent::KeyPress) {
-            QKeyEvent *e = (QKeyEvent*) event;
-            if (e->key() != Qt::Key_Enter && e->key() != Qt::Key_Return) {
-                if (istheWaveReady) {
-                    ui->thewave_line->setText(ui->thewave_line->text().append(e->text()));
-                    ui->thewave_line->setFocus();
-                } else {
-                    ui->lineEdit->setText(ui->lineEdit->text().append(e->text()));
-                    ui->lineEdit->setFocus();
-                    on_lineEdit_textEdited(ui->lineEdit->text());
+    if (event->type() == QEvent::KeyPress && ((QKeyEvent*) event)->key() == Qt::Key_Escape) {
+        this->close();
+        return true;
+    } else {
+        if (object != ui->thewave_line && object != ui->lineEdit) {
+            if (event->type() == QEvent::KeyPress) {
+                QKeyEvent *e = (QKeyEvent*) event;
+                if (e->key() != Qt::Key_Enter && e->key() != Qt::Key_Return) {
+                    if (istheWaveReady) {
+                        ui->thewave_line->setText(ui->thewave_line->text().append(e->text())); //Type letter into theWave
+                        ui->thewave_line->setFocus();
+                    } else {
+                        if (e->key() != Qt::Key_Up && e->key() != Qt::Key_Down) {
+                            ui->lineEdit->setText(ui->lineEdit->text().append(e->text())); //Type letter into search box
+                            ui->lineEdit->setFocus();
+                            on_lineEdit_textEdited(ui->lineEdit->text());
+                        } else {
+                            int currentRow;
+                            if (ui->listWidget->selectedItems().count() == 0) {
+                                currentRow = -1;
+                            } else {
+                                currentRow = ui->listWidget->selectionModel()->selectedIndexes().first().row();
+                            }
+
+                            if (e->key() == Qt::Key_Down) {
+                                if (currentRow == -1) {
+                                    ui->listWidget->item(0)->setSelected(true);
+                                    ui->listWidget->scrollToItem(ui->listWidget->item(0));
+                                } else if (currentRow == ui->listWidget->count() - 1) {
+                                    ui->listWidget->item(0)->setSelected(true);
+                                    ui->listWidget->scrollToItem(ui->listWidget->item(0));
+                                } else {
+                                    ui->listWidget->item(currentRow + 1)->setSelected(true);
+                                    ui->listWidget->scrollToItem(ui->listWidget->item(currentRow + 1));
+                                }
+                            } else if (e->key() == Qt::Key_Up) {
+                                if (currentRow == -1) {
+                                    ui->listWidget->item(ui->listWidget->count() - 1)->setSelected(true);
+                                    ui->listWidget->scrollToItem(ui->listWidget->item(ui->listWidget->count() - 1));
+                                } else if (currentRow == 0) {
+                                    ui->listWidget->item(ui->listWidget->count() - 1)->setSelected(true);
+                                    ui->listWidget->scrollToItem(ui->listWidget->item(ui->listWidget->count() - 1));
+                                } else {
+                                    ui->listWidget->item(currentRow - 1)->setSelected(true);
+                                    ui->listWidget->scrollToItem(ui->listWidget->item(currentRow - 1));
+                                }
+                            }
+                        }
+                    }
                 }
+                e->ignore();
+                return true;
+            } else {
+                return QDialog::eventFilter(object, event);
             }
-            e->ignore();
-            return true;
         } else {
             return QDialog::eventFilter(object, event);
         }
-    } else {
-        return QDialog::eventFilter(object, event);
     }
 }
 
 void Menu::on_lineEdit_returnPressed()
 {
     if (ui->listWidget->count() > 0) {
-        ui->listWidget->selectedItems().append(ui->listWidget->item(0));
-        on_listWidget_itemClicked(ui->listWidget->item(0));
+        if (ui->listWidget->selectedItems().count() == 1) {
+            on_listWidget_itemClicked(ui->listWidget->selectedItems().first());
+        } else {
+            ui->listWidget->selectedItems().append(ui->listWidget->item(0));
+            on_listWidget_itemClicked(ui->listWidget->item(0));
+        }
     }
 }
 

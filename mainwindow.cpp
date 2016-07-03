@@ -14,8 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(reloadScreens()));
     connect(QApplication::desktop(), SIGNAL(primaryScreenChanged()), this, SLOT(reloadScreens()));
 
-    this->setAttribute(Qt::WA_X11NetWmWindowTypeDock, true);
-    //ui->pushButton_4->setVisible(false);
+    this->setAttribute(Qt::WA_AlwaysShowToolTips, true);
 
     FlowLayout* flow = new FlowLayout(ui->windowList);
     ui->windowList->setLayout(flow);
@@ -43,9 +42,9 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->batteryFrame->setVisible(false);
     }
 
-    UGlobalHotkeys* menuKey = new UGlobalHotkeys(this);
-    menuKey->registerHotkey("Alt+F5");
-    connect(menuKey, SIGNAL(activated(size_t)), this, SLOT(on_pushButton_clicked()));
+    //UGlobalHotkeys* menuKey = new UGlobalHotkeys(this);
+    //menuKey->registerHotkey("Alt+F5");
+    //connect(menuKey, SIGNAL(activated(size_t)), this, SLOT(on_pushButton_clicked()));
 
     UGlobalHotkeys* infoKey = new UGlobalHotkeys(this);
     infoKey->registerHotkey("Alt+F6");
@@ -134,7 +133,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     event->accept();
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_openMenu_clicked()
 {
     this->setFocus();
     Menu* m = new Menu(this);
@@ -257,7 +256,6 @@ void MainWindow::reloadWindows() {
         int retval = XGetWindowAttributes(d, win, &attributes);
         unsigned long items, bytes;
         unsigned char *netWmName;
-        XTextProperty wmName;
         int format;
         Atom ReturnType;
         retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_VISIBLE_NAME", False), 0, 1024, False,
@@ -266,12 +264,7 @@ void MainWindow::reloadWindows() {
             retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_NAME", False), 0, 1024, False,
                                AnyPropertyType, &ReturnType, &format, &items, &bytes, &netWmName);
             if (retval != 0) {
-                retval = XGetWMName(d, win, &wmName);
-                if (retval == 1) {
-                    retval = 0;
-                } else {
-                    retval = 1;
-                }
+                retval = 1;
             }
         }
         if (retval == 0) {
@@ -286,9 +279,6 @@ void MainWindow::reloadWindows() {
             if (netWmName) {
                 title = QString::fromLocal8Bit((char *) netWmName);
                 XFree(netWmName);
-            /*} else if (wmName.value) {
-                title = QString::fromLatin1((char *) wmName.value);
-                //XFree(wmName);*/
             }
 
             unsigned long *pidPointer;
@@ -363,7 +353,6 @@ void MainWindow::reloadWindows() {
 
                 QPixmap iconPixmap(QPixmap::fromImage(image).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
                 w->setIcon(QIcon(iconPixmap));
-                //delete iconPixmap;
 
                 XFree(icon);
             }
@@ -393,6 +382,8 @@ void MainWindow::reloadWindows() {
                             demandAttention++;
                         }
                     }
+
+                    delete[] atoms;
                 }
 
                 if (!skipTaskbar) {
@@ -504,9 +495,9 @@ void MainWindow::reloadWindows() {
             anim->setEasingCurve(QEasingCurve::OutCubic);
             connect(anim, &QPropertyAnimation::finished, [=]() {
                 int adjustLeft = 0;
-                adjustLeft = adjustLeft + ui->pushButton->width();
+                adjustLeft = adjustLeft + ui->openMenu->width();
                 if (ui->desktopsFrame->isVisible()) {
-                    adjustLeft = adjustLeft + ui->pushButton->width();
+                    adjustLeft = adjustLeft + ui->openMenu->width();
                 }
                 ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(adjustLeft, 0, 0, 0));
             });
@@ -535,9 +526,9 @@ void MainWindow::reloadWindows() {
 
                     connect(anim, &QPropertyAnimation::finished, [=]() {
                         int adjustLeft = 0;
-                        adjustLeft = adjustLeft + ui->pushButton->width();
+                        adjustLeft = adjustLeft + ui->openMenu->width();
                         if (ui->desktopsFrame->isVisible()) {
-                            adjustLeft = adjustLeft + ui->pushButton->width();
+                            adjustLeft = adjustLeft + ui->openMenu->width();
                         }
                         ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(adjustLeft, 0, 0, 0));
                         hiding = false;
@@ -636,14 +627,9 @@ void MainWindow::reloadWindows() {
             ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-pause"));
         } else {
             ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-start"));
-
         }
 
     }
-}
-
-void MainWindow::activateWindow(QString windowTitle) {
-    QProcess::startDetached("wmctrl -a " + windowTitle);
 }
 
 void MainWindow::on_time_clicked()
@@ -695,9 +681,6 @@ void MainWindow::on_date_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    //theWave *w = new theWave(infoPane);
-    //w->show();
-
     this->setFocus();
     Menu* m = new Menu(this);
     m->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);

@@ -33,6 +33,9 @@ void catch_signal(int signal) {
     } else if (signal == SIGABRT) {
         qDebug() << "SIGABRT! Quitting now!";
         dialog = new SegfaultDialog("SIGABRT");
+    } else if (signal == SIGILL) {
+        qDebug() << "SIGILL! Quitting now!";
+        dialog = new SegfaultDialog("SIGILL");
     }
     if (MainWin != NULL) {
         MainWin->close();
@@ -53,6 +56,7 @@ int main(int argc, char *argv[])
     signal(SIGSEGV, *catch_signal);
     signal(SIGBUS, *catch_signal);
     signal(SIGABRT, *catch_signal);
+    signal(SIGILL, *catch_signal);
 
     QApplication a(argc, argv);
 
@@ -141,8 +145,8 @@ int main(int argc, char *argv[])
         splash->showFullScreen();
     }
 
-    QProcess* ksuperkey = new QProcess();
-    ksuperkey->start("ksuperkey -d -e \"Super_L=Alt_L|F5;Alt_R|F5\"");
+    //QProcess* ksuperkey = new QProcess();
+    //ksuperkey->start("ksuperkey -d -e \"Super_L=Alt_L|F5;Alt_R|F5\"");
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 

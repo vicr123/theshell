@@ -88,6 +88,9 @@
         <property name="enabled">
          <bool>true</bool>
         </property>
+        <property name="toolTip">
+         <string>theWave</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -384,6 +387,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="mprisBack">
+           <property name="toolTip">
+            <string>Previous</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -398,6 +404,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="mprisPause">
+           <property name="toolTip">
+            <string>Pause</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -412,6 +421,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_3">
+           <property name="toolTip">
+            <string>Next</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -468,12 +480,15 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="openMenu">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Open the Gateway to your PC</string>
         </property>
         <property name="text">
          <string/>
@@ -516,6 +531,9 @@
          </property>
          <item>
           <widget class="QPushButton" name="desktopBack">
+           <property name="toolTip">
+            <string>Previous Desktop</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -537,6 +555,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="desktopNext">
+           <property name="toolTip">
+            <string>Next Desktop</string>
+           </property>
            <property name="text">
             <string/>
            </property>
