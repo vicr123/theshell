@@ -22,7 +22,6 @@
 #include "UGlobalHotkey-master/uglobalhotkeys.h"
 #include "infopanedropdown.h"
 #include "touchkeyboard.h"
-#include "powermanager.h"
 #include "systrayicons.h"
 #include "fadebutton.h"
 #include "FlowLayout/flowlayout.h"

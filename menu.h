@@ -45,6 +45,10 @@ signals:
 
     void thewave_processText(QString text, bool isText = false);
 
+    void thewaveBegin();
+
+    void thewaveStop();
+
 private slots:
     void checkForclose();
 
@@ -100,9 +104,13 @@ private slots:
 
     void showFlightFrame(QString flight);
 
+    void thewaveLoudnessChanged(qreal loudness);
+
     void on_commandLinkButton_6_clicked();
 
     void on_commandLinkButton_4_clicked();
+
+    void on_listentheWave_clicked();
 
 private:
     Ui::Menu *ui;
@@ -120,7 +128,7 @@ private:
     void changeEvent(QEvent* event);
 
     theWaveWorker* waveWorker;
-    bool isListening;
+    bool isListening = false;
     bool istheWaveReady = false;
 };
 

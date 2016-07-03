@@ -5,10 +5,6 @@ extern DbusEvents* DBusEvents;
 
 NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
 {
-    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Inhibit");
-    message.setArguments(QList<QVariant>() << "handle-power-key" << "theShell" << "theShell Handles Hardware Power Keys" << "block");
-    QDBusReply<QDBusUnixFileDescriptor> reply = QDBusConnection::systemBus().call(message);
-    powerInhibit = reply;
 
     Hotkeys = new HotkeyHud();
     Hotkeys->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);

@@ -52,6 +52,10 @@ public:
         powerOff,
         reboot,
         logout,
+
+        //These should not be shown.
+        suspend,
+        hibernate,
         ask,
         dummy //FOR TESTING
     };

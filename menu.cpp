@@ -574,12 +574,7 @@ void Menu::on_pushButton_3_clicked()
 
 void Menu::on_commandLinkButton_5_clicked()
 {
-    QList<QVariant> arguments;
-    arguments.append(true);
-
-    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Suspend");
-    message.setArguments(arguments);
-    QDBusConnection::systemBus().send(message);
+    EndSession(EndSessionWait::suspend);
     this->close();
 }
 
@@ -604,12 +599,8 @@ void Menu::setGeometry(QRect geometry) {
 
 void Menu::on_commandLinkButton_7_clicked()
 {
-    QList<QVariant> arguments;
-    arguments.append(true);
-
-    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Hibernate");
-    message.setArguments(arguments);
-    QDBusConnection::systemBus().send(message);
+    EndSession(EndSessionWait::hibernate);
+    this->close();
 }
 
 void Menu::on_commandLinkButton_8_clicked()
@@ -660,13 +651,28 @@ void Menu::on_activateTheWave_clicked()
     connect(waveWorker, SIGNAL(launchApp(QString)), this, SLOT(thewave_launchapp(QString)));
     connect(waveWorker, SIGNAL(setTimer(QTime)), MainWin->getInfoPane(), SLOT(startTimer(QTime)));
     connect(waveWorker, SIGNAL(showFlightFrame(QString)), this, SLOT(showFlightFrame(QString)));
+    connect(waveWorker, SIGNAL(loudnessChanged(qreal)), this, SLOT(thewaveLoudnessChanged(qreal)));
     connect(this, SIGNAL(thewave_processText(QString,bool)), waveWorker, SLOT(processSpeech(QString,bool)));
-    connect(ui->listentheWave, SIGNAL(clicked(bool)), waveWorker, SLOT(begin()));
+    connect(this, SIGNAL(thewaveBegin()), waveWorker, SLOT(begin()));
+    connect(this, SIGNAL(thewaveStop()), waveWorker, SLOT(endAndProcess()));
     /*connect(w, &speechWorker::outputFrame, [=](QFrame *frame) {
         ui->frame->layout()->addWidget(frame);
     });*/
 
     t->start();
+}
+
+void Menu::thewaveLoudnessChanged(qreal loudness) {
+    if (loudness == -1) {
+        ui->speechBar->setMaximum(0);
+        ui->speechBar->setValue(0);
+    } else if (loudness == -2) {
+        ui->speechBar->setVisible(false);
+    } else {
+        ui->speechBar->setMaximum(100);
+        ui->speechBar->setValue(loudness * 100);
+        ui->speechBar->setVisible(true);
+    }
 }
 
 void Menu::thewave_outputSpeech(QString speech) {
@@ -795,4 +801,13 @@ void Menu::on_commandLinkButton_4_clicked()
 
     QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.DisplayManager", QString(qgetenv("XDG_SEAT_PATH")), "org.freedesktop.DisplayManager.Seat", "SwitchToGreeter");
     QDBusConnection::systemBus().send(message);
+}
+
+void Menu::on_listentheWave_clicked()
+{
+    if (this->isListening) {
+        emit thewaveStop();
+    } else {
+        emit thewaveBegin();
+    }
 }

@@ -25,6 +25,7 @@ signals:
     void batteryChanged(int batteryPercent);
 public slots:
     void DeviceChanged();
+    void checkUpower();
 
 private slots:
 
@@ -39,6 +40,13 @@ private:
 
     NotificationDBus* notificationDBus;
     bool hasBat;
+
+    QDBusUnixFileDescriptor powerInhibit;
+
+    QTimer* checkTimer;
+    QSettings settings;
+
+    bool isLidClosed;
 };
 
 #endif // UPOWERDBUS_H

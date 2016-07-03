@@ -44,7 +44,6 @@ SOURCES += main.cpp\
     switch.cpp \
     FlowLayout/flowlayout.cpp \
     touchkeyboard.cpp \
-    powermanager.cpp \
     segfaultdialog.cpp \
     globalfilter.cpp \
     systrayicons.cpp \
@@ -80,7 +79,6 @@ HEADERS  += mainwindow.h \
     switch.h \
     FlowLayout/flowlayout.h \
     touchkeyboard.h \
-    powermanager.h \
     segfaultdialog.h \
     globalfilter.h \
     systrayicons.h \

@@ -43,6 +43,7 @@ public:
 signals:
     void outputSpeech(QString);
     void outputResponse(QString);
+    void loudnessChanged(qreal loudness);
     void outputFrame(QFrame *);
     void complete();
     void startedListening();
@@ -62,6 +63,8 @@ signals:
 public slots:
     void begin();
 
+    void endAndProcess();
+
     void processSpeech(QString speech, bool voiceFeedback = true);
 
     void quit();
@@ -74,6 +77,8 @@ private slots:
 private:
     QProcess *speechProc;
     QString buffer;
+    QTime endListenTimer;
+    qreal oldLoudness = 0;
 
     void speak(QString speech, bool restartOnceComplete = false);
     SpeechState state = Idle;

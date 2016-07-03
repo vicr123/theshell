@@ -106,5 +106,5 @@ void ChooseBackground::on_pushButton_clicked()
 
 void ChooseBackground::on_pushButton_2_clicked()
 {
-    ui->lineEdit->setText(QFileDialog::getOpenFileName(this, "Select Background", "", "Images(*.png *.jpg *.jpeg *.bmp *.gif)"));
+    ui->lineEdit->setText(QFileDialog::getOpenFileName(this, "Select Background", "", "Images (*.png *.jpg *.jpeg *.bmp *.gif)"));
 }

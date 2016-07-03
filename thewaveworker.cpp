@@ -60,38 +60,83 @@ void theWaveWorker::begin() {
         emit resetFrames();
     }
 
-    speechProc = new QProcess(this);
+    /*speechProc = new QProcess(this);
     speechProc->setProcessChannelMode(QProcess::MergedChannels);
     connect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
     speechProc->start("pocketsphinx_continuous -inmic yes");
     speechProc->waitForStarted();
-    speechProc->waitForFinished(-1);
+    speechProc->waitForFinished(-1);*/
 
-    /*recorder = new QAudioRecorder(this);
+    recorder = new QAudioRecorder(this);
     QAudioEncoderSettings settings;
-    settings.setCodec("audio/wav");
-    settings.setQuality(QMultimedia::HighQuality);
+    settings.setCodec("audio/PCM");
+    settings.setChannelCount(1);
+    settings.setSampleRate(16000);
+    settings.setQuality(QMultimedia::NormalQuality);
+    settings.setEncodingMode(QMultimedia::ConstantQualityEncoding);
 
     QAudioProbe* probe = new QAudioProbe(this);
-    probe->setSource(recorder);
     connect(probe, SIGNAL(audioBufferProbed(QAudioBuffer)), this, SLOT(soundBuffer(QAudioBuffer)));
+    connect(recorder, SIGNAL(destroyed(QObject*)), probe, SLOT(deleteLater()));
+    probe->setSource(recorder);
+    oldLoudness = 0;
 
-    recorder->setEncodingSettings(settings);
-    recorder->setOutputLocation(QUrl::fromLocalFile("/home/victor/sound.wav"));
+    recorder->setEncodingSettings(settings, QVideoEncoderSettings(), "wav");
+    recorder->setOutputLocation(QUrl::fromLocalFile(QDir::homePath() + "/.thewaveSpeech.wav"));
     recorder->record();
 
+    endListenTimer.start();
+    startListeningSound->play();
     emit outputSpeech("Go for it!");
-    emit startedListening();*/
+    emit startedListening();
 }
 
 void theWaveWorker::soundBuffer(QAudioBuffer buffer) {
-    float avg;
-    const float* data = buffer.data<float>();
-    for (int i = 0; i < buffer.byteCount(); i++) {
-        avg = avg + data[i];
+    //Get loudness of sound
+    qreal loudness = 0;
+    qreal peak_value(USHRT_MAX);
+
+    for (int i = 0; i < buffer.frameCount(); i++) {
+        qreal value = qAbs(qreal(buffer.constData<qint16>()[i]));
+        if (value > loudness) {
+            loudness = value;
+        }
     }
 
-    avg = avg / buffer.byteCount();
+    loudness /= peak_value;
+
+    emit loudnessChanged(loudness);
+
+    //If loudness has changed considerably, reset timer
+    if (oldLoudness - 0.01 > loudness || oldLoudness + 0.01 < loudness) {
+        oldLoudness = loudness;
+        endListenTimer.restart();
+        //qDebug() << "Loudness Reset!";
+    }
+
+    //If loudness has stayed the same for a second, stop listening.
+    if (endListenTimer.elapsed() >= 1000) {
+        //qDebug() << "Stop listening now!";
+        endAndProcess();
+    }
+}
+
+void theWaveWorker::endAndProcess() {
+    recorder->stop();
+    //delete recorder;
+    recorder = NULL;
+
+    okListeningSound->play();
+    emit outputSpeech("Processing...");
+    emit stoppedListening();
+
+    emit loudnessChanged(-1);
+
+    speechProc = new QProcess(this);
+    speechProc->setProcessChannelMode(QProcess::MergedChannels);
+    connect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
+    speechProc->start("pocketsphinx_continuous -infile \"" + QDir::homePath() + "/.thewaveSpeech.wav\"");
+    speechProc->waitForStarted();
 }
 
 void theWaveWorker::outputAvailable() {
@@ -102,25 +147,15 @@ void theWaveWorker::outputAvailable() {
         for (QString outputString : bufferOutput) {
             qDebug() << outputString;
             if (outputString.startsWith("INFO:")) {
-                if (outputString.contains("Ready")) {
-                    //QSound::play(":/sounds/listening.wav");
-                    startListeningSound->play();
-                    emit outputSpeech("Go for it!");
-                    emit startedListening();
-                } else if (outputString.contains("Listening")) {
-                    emit outputSpeech("Listening...");
-                } else if (outputString.contains("words recognized") && outputString.contains("ngram_search_fwdtree")) {
-                    emit outputSpeech("Processing...");
-                    okListeningSound->play();
-                }
             } else if (outputString.startsWith("-") || outputString == "Current configuration:" || outputString.startsWith("[NAME]")) {
             } else {
                 if (outputString != "") {
                     emit outputSpeech(outputString);
-                    emit stoppedListening();
-                    speechProc->kill();
-
                     processSpeech(outputString);
+                    disconnect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
+                    speechProc->kill();
+                    delete speechProc;
+                    emit loudnessChanged(-2);
                 }
             }
         }
@@ -354,11 +389,6 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
 
     speechPlaying = true;
     if (settings.value("thewave/ttsEngine").toString() == "pico2wave" && QFile("/usr/bin/pico2wave").exists()) {
-        /*QProcess *s = new QProcess(this);
-        s->setInputChannelMode(QProcess::);
-        s->start();
-        s->waitForStarted();
-        s->waitForFinished();*/
         QString command = "pico2wave -w=\"" + QDir::homePath() + "/.thewavevoice.wav\" \"" + speech + "\"";
         QProcess::execute(command);
 

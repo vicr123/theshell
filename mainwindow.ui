@@ -520,7 +520,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset theme="go-previous"/>
+            <iconset theme="go-previous">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -540,7 +541,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset theme="go-next"/>
+            <iconset theme="go-next">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>

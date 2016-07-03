@@ -23,12 +23,7 @@ SysTrayIcons::SysTrayIcons(QWidget *parent) : QFrame(parent)
         if (XGetSelectionOwner(QX11Info::display(), selection) == None) {
             XSetSelectionOwner(QX11Info::display(), selection, this->winId(), CurrentTime);
             if (XGetSelectionOwner(QX11Info::display(), selection) == this->winId()) {
-                qDebug() << "Success!";
 
-                /*QTimer* timer = new QTimer();
-                timer->setInterval(2000);
-                connect(timer, SIGNAL(timeout()), this, SLOT(checkForSysTrayIcons()));
-                timer->start();*/
             } else {
                 QLabel* errorLabel = new QLabel();
                 errorLabel->setText("System Tray Unavailable.");
