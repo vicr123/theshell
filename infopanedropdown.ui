@@ -350,7 +350,7 @@
         <item>
          <widget class="QStackedWidget" name="settingsTabs">
           <property name="currentIndex">
-           <number>1</number>
+           <number>8</number>
           </property>
           <widget class="QWidget" name="StartupSettings">
            <layout class="QGridLayout" name="gridLayout_2">
@@ -1180,16 +1180,23 @@
                 <number>0</number>
                </property>
                <item>
+                <widget class="QRadioButton" name="thewaveTTSsilent">
+                 <property name="text">
+                  <string>Silent</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QRadioButton" name="thewaveTTSfestival">
                  <property name="text">
-                  <string>Festival (fallbac&amp;k)</string>
+                  <string>Festi&amp;val</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QRadioButton" name="thewaveTTSespeak">
                  <property name="text">
-                  <string>espeak</string>
+                  <string>espea&amp;k</string>
                  </property>
                 </widget>
                </item>
@@ -1414,7 +1421,7 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>theShell 2.2</string>
+                  <string>theShell 2.3</string>
                  </property>
                 </widget>
                </item>
@@ -2125,14 +2132,14 @@
             <second>0</second>
             <year>1969</year>
             <month>12</month>
-            <day>3</day>
+            <day>2</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>12</month>
-            <day>3</day>
+            <day>2</day>
            </date>
           </property>
           <property name="displayFormat">

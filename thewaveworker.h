@@ -24,6 +24,14 @@
 #include <QDir>
 #include <QApplication>
 #include <QGeoPositionInfoSource>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <akonadi/control.h>
+#include <akonadi/servermanager.h>
+#include <akonadi/session.h>
+#include "menu.h"
+
+class Menu;
 
 class theWaveWorker : public QObject
 {
@@ -56,7 +64,9 @@ signals:
     void showHelpFrame();
     void showWikipediaFrame(QString title, QString text);
     void launchApp(QString app);
+    void doLaunchApp(QString app);
     void showFlightFrame(QString flight);
+    void showSettingsFrame(QIcon icon, QString setting, bool isOn);
 
     void setTimer(QTime);
 
@@ -71,8 +81,18 @@ public slots:
 
     void soundBuffer(QAudioBuffer buffer);
 
+    bool launchAkonadi();
+
+    void launchAppReply(QString app);
+
+    void launchApp_disambiguation(QStringList apps);
+
+    void currentSettingChanged(bool isOn);
+
 private slots:
     void outputAvailable();
+
+    void SetSetting(QString setting, bool isOn);
 
 private:
     QProcess *speechProc;
@@ -85,6 +105,7 @@ private:
 
     QSoundEffect* startListeningSound, *okListeningSound, *errorListeningSound, *stopListeningSound;
     QAudioRecorder* recorder = NULL;
+    QAudioProbe* probe = NULL;
 
     QGeoPositionInfoSource* geolocationSource;
     QGeoCoordinate currentCoordinates;
@@ -92,6 +113,8 @@ private:
     bool stopEverything = false;
     bool resetOnNextBegin = false;
     bool speechPlaying = false;
+
+    QString currentSetting;
 
     QSettings settings;
 };

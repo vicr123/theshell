@@ -86,6 +86,8 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
         ui->thewaveTTSespeak->setChecked(true);
     } else if (thewaveVoiceEngine == "festival") {
         ui->thewaveTTSfestival->setChecked(true);
+    } else if (thewaveVoiceEngine == "none") {
+        ui->thewaveTTSsilent->setChecked(true);
     }
 
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
@@ -156,7 +158,7 @@ void InfoPaneDropdown::newNetworkDevice(QDBusObjectPath device) {
         QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wired", "PropertiesChanged", this, SLOT(getNetworks()));
     }
     getNetworks();
-    delete i;
+    i->deleteLater();
 }
 
 void InfoPaneDropdown::on_WifiSwitch_toggled(bool checked)
@@ -165,7 +167,10 @@ void InfoPaneDropdown::on_WifiSwitch_toggled(bool checked)
     if (i->property("WirelessEnabled").toBool() != checked) {
         i->setProperty("WirelessEnabled", checked);
     }
-    delete i;
+    i->deleteLater();
+    if (!ui->WifiSwitch->isChecked()) {
+        ui->WifiSwitch->setChecked(checked);
+    }
 }
 
 void InfoPaneDropdown::processTimer() {
@@ -392,8 +397,9 @@ void InfoPaneDropdown::getNetworks() {
     }
     enum NetworkType {
         None = 0,
-        Wireless = 1,
-        Wired = 2
+        Bluetooth = 1,
+        Wireless = 2,
+        Wired = 3
     };
 
     NetworkType NetworkLabelType = NetworkType::None;
@@ -401,8 +407,9 @@ void InfoPaneDropdown::getNetworks() {
     if (reply.isValid()) {
         ui->networkList->clear();
         for (QDBusObjectPath device : reply.value()) {
-            QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus(), this);
-            switch (i->property("DeviceType").toInt()) {
+            QDBusInterface *deviceInterface = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus(), this);
+            QString interface = deviceInterface->property("Interface").toString();
+            switch (deviceInterface->property("DeviceType").toInt()) {
             case 1: //Ethernet
             {
                 QDBusInterface *wire = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wired", QDBusConnection::systemBus(), this);
@@ -420,7 +427,22 @@ void InfoPaneDropdown::getNetworks() {
                 { //Detect Connected Network
                     if (NetworkLabelType < NetworkType::Wireless) {
                         QDBusInterface *ap = new QDBusInterface("org.freedesktop.NetworkManager", wifi->property("ActiveAccessPoint").value<QDBusObjectPath>().path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus(), this);
-                        switch (i->property("State").toInt()) {
+                        switch (deviceInterface->property("State").toInt()) {
+                        case 30:
+                            if (!connectedNetworks.keys().contains(interface)) {
+                                connectedNetworks.insert(interface, "");
+                            } else {
+                                if (connectedNetworks.value(interface) != "") {
+                                    connectedNetworks.insert(interface, "");
+                                    QVariantMap hints;
+                                    hints.insert("category", "network.disconnected");
+                                    hints.insert("transient", true);
+                                    notificationEngine->Notify("theShell", 0, "", "Wireless Connection",
+                                                               "You've been disconnected from the internet",
+                                                               QStringList(), hints, -1);
+                                }
+                            }
+                            break;
                         case 40:
                         case 50:
                         case 60:
@@ -448,6 +470,19 @@ void InfoPaneDropdown::getNetworks() {
                             NetworkLabel = "Connected to " + connectedSsid;
                             NetworkLabelType = NetworkType::Wireless;
                             ui->networkMac->setText("MAC Address: " + wifi->property("PermHwAddress").toString());
+                            if (!connectedNetworks.keys().contains(interface)) {
+                                connectedNetworks.insert(interface, connectedSsid);
+                            } else {
+                                if (connectedNetworks.value(interface) != connectedSsid) {
+                                    connectedNetworks.insert(interface, connectedSsid);
+                                    QVariantMap hints;
+                                    hints.insert("category", "network.connected");
+                                    hints.insert("transient", true);
+                                    notificationEngine->Notify("theShell", 0, "", "Wireless Connection",
+                                                               "You're now connected to the network \"" + connectedSsid + "\"",
+                                                               QStringList(), hints, -1);
+                                }
+                            }
                             break;
                         case 110:
                         case 120:
@@ -496,7 +531,20 @@ void InfoPaneDropdown::getNetworks() {
             }
 
                 break;
+            case 5: //Bluetooth
+            {
+                if (NetworkLabelType < NetworkType::Bluetooth) {
+                    QDBusInterface *bt = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Bluetooth", QDBusConnection::systemBus(), this);
+                    switch (deviceInterface->property("State").toInt()) {
+                        case 100:
+                        NetworkLabel = "Connected to " + bt->property("Name").toString() + " over Bluetooth";
+                        NetworkLabelType = NetworkType::Bluetooth;
+                    }
+                }
             }
+                break;
+            }
+            delete deviceInterface;
         }
     } else {
         NetworkLabel = "NetworkManager Error";
@@ -532,10 +580,10 @@ void InfoPaneDropdown::getNetworks() {
     emit networkLabelChanged(NetworkLabel);
 }
 
-void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem)
+void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem*)
 {
     ui->networkKey->setText("");
-    if (current == NULL) {
+    if (current == NULL || !current) {
         ui->networkKey->setVisible(false);
         ui->networkConnect->setVisible(false);
     } else {
@@ -1033,7 +1081,6 @@ void InfoPaneDropdown::on_thewaveWikipediaSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_thewaveTTSespeak_clicked()
 {
     settings.setValue("thewave/ttsEngine", "espeak");
-
 }
 
 void InfoPaneDropdown::on_thewaveOffensiveSwitch_toggled(bool checked)
@@ -1097,4 +1144,9 @@ void InfoPaneDropdown::on_windowManager_textEdited(const QString &arg1)
 void InfoPaneDropdown::on_barDesktopsSwitch_toggled(bool checked)
 {
     settings.setValue("bar/showWindowsFromOtherDesktops", checked);
+}
+
+void InfoPaneDropdown::on_thewaveTTSsilent_clicked()
+{
+    settings.setValue("thewave/ttsEngine", "none");
 }

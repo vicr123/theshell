@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
     a.installNativeEventFilter(NativeFilter);
 
     DBusEvents = new DbusEvents();
-    new DBusMenuRegistrar();
+    //new DBusMenuRegistrar();
 
     qDBusRegisterMetaType<QList<QVariantMap>>();
     qDBusRegisterMetaType<QMap<QString, QVariantMap>>();

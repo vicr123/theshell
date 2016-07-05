@@ -22,6 +22,8 @@
 
 #undef KeyPress
 
+class theWaveWorker;
+
 namespace Ui {
 class Menu;
 }
@@ -40,14 +42,22 @@ public:
     void show(bool openTotheWave = false);
     void close();
 
+    QFrame* theWaveFrame;
+
 signals:
     void menuClosing();
 
     void thewave_processText(QString text, bool isText = false);
 
+    void thewave_sayLaunchApp(QString app);
+
+    void thewave_sayLaunchApp_disambiguation(QStringList apps);
+
     void thewaveBegin();
 
     void thewaveStop();
+
+    void currentSettingChanged(bool isOn);
 
 private slots:
     void checkForclose();
@@ -112,6 +122,12 @@ private slots:
 
     void on_listentheWave_clicked();
 
+    void on_thewave_launch_disambiguation_itemClicked(QListWidgetItem *item);
+
+    void showSettingFrame(QIcon icon, QString text, bool isOn);
+
+    void on_thewaveSettingsFrame_Switch_toggled(bool checked);
+
 private:
     Ui::Menu *ui;
 
@@ -122,6 +138,7 @@ private:
     QList<App*> *appsShown;
 
     bool doCheckForClose = false;
+    bool istheWaveOpen = false;
 
     //void closeEvent(QCloseEvent *event);
     void paintEvent(QPaintEvent* event);

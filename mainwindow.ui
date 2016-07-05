@@ -252,7 +252,7 @@
       <item>
        <widget class="ClickableLabel" name="notifications">
         <property name="text">
-         <string>0 Notifications</string>
+         <string>No Notifications</string>
         </property>
        </widget>
       </item>

@@ -151,9 +151,7 @@ private slots:
 
     void on_networkConnect_clicked();
 
-    void on_WifiSwitch_toggled(bool checked);
-
-    void on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem);
+    void on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem*);
 
     void on_TextSwitch_toggled(bool checked);
 
@@ -161,12 +159,17 @@ private slots:
 
     void on_barDesktopsSwitch_toggled(bool checked);
 
+    void on_thewaveTTSsilent_clicked();
+
 public slots:
     void getNetworks();
 
     void startTimer(QTime time);
 
     bool isQuietOn();
+
+    //Switches for theWave
+    void on_WifiSwitch_toggled(bool checked);
 
 private:
     Ui::InfoPaneDropdown *ui;
@@ -186,6 +189,7 @@ private:
     QMap<QString, QFrame*> printersFrames;
     QMap<QString, QLabel*> printersStats;
     QMap<QString, QFrame*> printersStatFrames;
+    QMap<QString, QString> connectedNetworks;
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
