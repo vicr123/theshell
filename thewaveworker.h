@@ -69,6 +69,7 @@ signals:
     void showFlightFrame(QString flight);
     void showSettingsFrame(QIcon icon, QString setting, bool isOn);
     void showMathematicsFrame(QString expression, QString answer);
+    void showMediaFrame(QPixmap art, QString title, QString artist, bool isPlaying);
 
     void setTimer(QTime);
 

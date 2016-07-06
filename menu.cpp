@@ -724,7 +724,8 @@ void Menu::on_activateTheWave_clicked()
     connect(waveWorker, SIGNAL(showFlightFrame(QString)), this, SLOT(showFlightFrame(QString))); //Flight
     connect(waveWorker, SIGNAL(loudnessChanged(qreal)), this, SLOT(thewaveLoudnessChanged(qreal))); //Input Loudness
     connect(waveWorker, SIGNAL(showSettingsFrame(QIcon,QString,bool)), this, SLOT(showSettingFrame(QIcon,QString,bool))); //Settings
-    connect(waveWorker, SIGNAL(showMathematicsFrame(QString,QString)), this, SLOT(showMathematicsFrame(QString,QString)));
+    connect(waveWorker, SIGNAL(showMathematicsFrame(QString,QString)), this, SLOT(showMathematicsFrame(QString,QString))); //Mathematics
+    connect(waveWorker, SIGNAL(showMediaFrame(QPixmap,QString,QString,bool)), this, SLOT(showMediaFrame(QPixmap,QString,QString,bool))); //Media Player
     connect(this, SIGNAL(thewave_processText(QString,bool)), waveWorker, SLOT(processSpeech(QString,bool))); //Manual Input Text Processing
     connect(this, SIGNAL(thewaveBegin()), waveWorker, SLOT(begin())); //Begin
     connect(this, SIGNAL(thewaveStop()), waveWorker, SLOT(endAndProcess())); //Stop
@@ -807,6 +808,19 @@ void Menu::resetFrames() {
     ui->thewave_flightFrame->setVisible(false);
     ui->thewaveSettingsFrame->setVisible(false);
     ui->thewaveMathematicsFrame->setVisible(false);
+    ui->thewaveMediaFrame->setVisible(false);
+}
+
+void Menu::showMediaFrame(QPixmap art, QString title, QString artist, bool isPlaying) {
+    ui->thewaveMedia_Art->setPixmap(art.scaled(32, 32));
+    ui->thewaveMedia_Title->setText(title);
+    ui->thewaveMedia_Artist->setText(artist);
+    if (isPlaying) {
+        ui->thewaveMedia_Play->setIcon(QIcon::fromTheme("media-playback-pause"));
+    } else {
+        ui->thewaveMedia_Play->setIcon(QIcon::fromTheme("media-playback-start"));
+    }
+    ui->thewaveMediaFrame->setVisible(true);
 }
 
 void Menu::showWikipediaFrame(QString title, QString text) {
@@ -940,4 +954,19 @@ void Menu::on_thewave_launch_disambiguation_itemClicked(QListWidgetItem *item)
 void Menu::on_thewaveSettingsFrame_Switch_toggled(bool checked)
 {
     emit currentSettingChanged(checked);
+}
+
+void Menu::on_thewaveMedia_Next_clicked()
+{
+    MainWin->nextSong();
+}
+
+void Menu::on_thewaveMedia_Play_clicked()
+{
+    MainWin->playPause();
+}
+
+void Menu::on_thewaveMedia_Back_clicked()
+{
+    MainWin->previousSong();
 }

@@ -53,6 +53,18 @@ public:
     InfoPaneDropdown* getInfoPane();
     void show();
 
+    bool isMprisAvailable();
+    bool isMprisPlaying();
+    void nextSong();
+    void playPause();
+    void play();
+    void pause();
+    void previousSong();
+    QString mprisApp();
+    QString songName();
+    QString songArtist();
+    QString songAlbum();
+
 public slots:
     void on_openMenu_clicked();
 
@@ -113,7 +125,7 @@ private slots:
 
     void on_mprisBack_clicked();
 
-    void on_pushButton_3_clicked();
+    void on_mprisForward_clicked();
 
     void on_mprisSongName_clicked();
 
@@ -146,6 +158,10 @@ private:
 
     QString mprisCurrentAppName = "";
     QStringList mprisDetectedApps;
+    QString mprisTitle;
+    QString mprisArtist;
+    QString mprisAlbum;
+    bool mprisPlaying;
 
     void closeEvent(QCloseEvent*);
     void paintEvent(QPaintEvent *event);

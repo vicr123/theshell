@@ -306,6 +306,57 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                 }
                 emit outputResponse(output);
                 speak(output);
+            } else if (words.contains("song") || words.contains("playing") || words.contains("play") || words.contains("pause") ||
+                       ((words.contains("track") || words.contains("song") || words.contains("playing")) &&
+                        (words.contains("next") || words.contains("previous") || words.contains("now") || words.contains("current")))) { //Media Player Controls
+                if (words.contains("pause")) {
+                    MainWin->pause();
+                    emit outputResponse("Paused.");
+                    speak("Paused");
+                } else if (words.contains("play")) {
+                    MainWin->play();
+                    emit outputResponse("Playing.");
+                    speak("Playing");
+                } else if (words.contains("next")) {
+                    MainWin->nextSong();
+                    emit outputResponse("Next Track");
+                    speak("Next Track");
+                } else if (words.contains("previous")) {
+                    MainWin->previousSong();
+                    emit outputResponse("Previous Track");
+                    speak("Previous Track");
+                } else if (words.contains("playing") || words.contains("current")) {
+                    if (MainWin->isMprisAvailable()) {
+                        QString title = MainWin->songName();
+                        QString artists = MainWin->songArtist();
+                        QString album = MainWin->songAlbum();
+                        bool playing = MainWin->isMprisPlaying();
+                        QPixmap art = QIcon::fromTheme("audio").pixmap(32, 32);
+                        QString response;
+                        if (title != "" && artists != "" && album != "") {
+                            response = "Right now, " + title + " by " + artists + " on the album " + album + " is playing.";
+                            emit showMediaFrame(art, title, artists + " · " + album, playing);
+                        } else if (title != "" && artists != "" && album == "") {
+                            response = "Right now, " + title + " by " + artists + " is playing.";
+                            emit showMediaFrame(art, title, artists, playing);
+                        } else if (title != "" && artists == "" && album != "") {
+                            response = "Right now, " + title + " on the album " + album + " is playing.";
+                            emit showMediaFrame(art, title, album, playing);
+                        } else if (title != "" && artists == "" && album != "") {
+                            response = "Right now, " + title + " is playing.";
+                            emit showMediaFrame(art, title, MainWin->mprisApp(), playing);
+                        } else {
+                            response = "I'm not sure what's playing now.";
+                            //emit showMediaFrame(art, title, artists + " · " + album);
+                        }
+                        emit outputResponse(response);
+                        speak(response);
+                    } else {
+                        emit outputResponse("There's no media player open now.");
+                        speak("There's no media player open now.");
+                    }
+                }
+                resetOnNextBegin = true;
             } else if ((words.contains("calculate") || words.contains("add") || words.contains("plus") || parse.contains("+") || words.contains("subtract") || words.contains("minus") ||
                         parse.contains("-") || words.contains("times") || words.contains("multiply") || parse.contains("*") ||
                         words.contains("over") || words.contains("divide") || parse.contains("divided by") ||

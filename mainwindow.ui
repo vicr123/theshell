@@ -420,7 +420,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="mprisForward">
            <property name="toolTip">
             <string>Next</string>
            </property>

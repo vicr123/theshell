@@ -130,6 +130,14 @@ private slots:
 
     void showMathematicsFrame(QString expression, QString answer);
 
+    void showMediaFrame(QPixmap art, QString title, QString artist, bool isPlaying);
+
+    void on_thewaveMedia_Next_clicked();
+
+    void on_thewaveMedia_Play_clicked();
+
+    void on_thewaveMedia_Back_clicked();
+
 private:
     Ui::Menu *ui;
 

@@ -596,6 +596,7 @@ void MainWindow::reloadWindows() {
         if (replyData.contains("xesam:title")) {
             title = replyData.value("xesam:title").toString();
         }
+        this->mprisTitle = title;
 
         if (replyData.contains("xesam:artist")) {
             QStringList artists = replyData.value("xesam:artist").toStringList();
@@ -603,6 +604,13 @@ void MainWindow::reloadWindows() {
                 artist.append(art + ", ");
             }
             artist.remove(artist.length() - 2, 2);
+        }
+        this->mprisArtist = artist;
+
+        if (replyData.contains("xesam:album")) {
+            this->mprisAlbum = replyData.value("xesam:album").toString();
+        } else {
+            this->mprisAlbum = "";
         }
 
         if (title == "") {
@@ -625,8 +633,10 @@ void MainWindow::reloadWindows() {
         QDBusReply<QVariant> PlayStat = QDBusConnection::sessionBus().call(PlayStatRequest);
         if (PlayStat.value().toString() == "Playing") {
             ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-pause"));
+            mprisPlaying = true;
         } else {
             ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-start"));
+            mprisPlaying = false;
         }
 
     }
@@ -963,17 +973,17 @@ void MainWindow::on_timer_clicked()
 
 void MainWindow::on_mprisPause_clicked()
 {
-    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "PlayPause"), QDBus::NoBlock);
+    playPause();
 }
 
 void MainWindow::on_mprisBack_clicked()
 {
-    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "Previous"), QDBus::NoBlock);
+    previousSong();
 }
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_mprisForward_clicked()
 {
-    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "Next"), QDBus::NoBlock);
+    nextSong();
 }
 
 void MainWindow::on_mprisSongName_clicked()
@@ -1044,4 +1054,46 @@ void MainWindow::on_desktopBack_clicked()
     }
 
     sendMessageToRootWindow("_NET_CURRENT_DESKTOP", 0, switchToDesktop);
+}
+
+bool MainWindow::isMprisAvailable() {
+    return ui->mprisFrame->isVisible();
+}
+
+bool MainWindow::isMprisPlaying() {
+    return this->mprisPlaying;
+}
+
+void MainWindow::nextSong() {
+    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "Next"), QDBus::NoBlock);
+}
+
+void MainWindow::playPause() {
+    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "PlayPause"), QDBus::NoBlock);
+}
+
+void MainWindow::play() {
+    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "Play"), QDBus::NoBlock);
+}
+void MainWindow::pause() {
+    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "Pause"), QDBus::NoBlock);
+}
+
+void MainWindow::previousSong() {
+    QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "Previous"), QDBus::NoBlock);
+}
+
+QString MainWindow::mprisApp() {
+    return this->mprisCurrentAppName;
+}
+
+QString MainWindow::songName() {
+    return this->mprisTitle;
+}
+
+QString MainWindow::songArtist() {
+    return this->mprisArtist;
+}
+QString MainWindow::songAlbum() {
+    return this->mprisAlbum;
 }
