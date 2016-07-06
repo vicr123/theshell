@@ -25,6 +25,10 @@ theWaveWorker::theWaveWorker(QObject *parent) : QObject(parent)
     });
     geolocationSource->startUpdates();
 
+    numberDictionary["quarter"] = 0.25;
+    numberDictionary["half"] = 0.5;
+    numberDictionary["zero"] = 0;
+    numberDictionary["a"] = 1;
     numberDictionary["one"] = 1;
     numberDictionary["two"] = 2;
     numberDictionary["three"] = 3;
@@ -54,7 +58,11 @@ theWaveWorker::theWaveWorker(QObject *parent) : QObject(parent)
     numberDictionary["ninety"] = 90;
     numberDictionary["hundred"] = 100;
     numberDictionary["thousand"] = 1000;
-    numberDictionary["million"] = 100000;
+    numberDictionary["million"] = 1000000;
+
+    numberDictionary["pi"] = M_PI;
+    numberDictionary["tau"] = M_PI * 2;
+    numberDictionary["e"] = M_E;
 
     recorder = new QAudioRecorder(this);
     QAudioEncoderSettings settings;
@@ -298,6 +306,384 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                 }
                 emit outputResponse(output);
                 speak(output);
+            } else if ((words.contains("calculate") || words.contains("add") || words.contains("plus") || parse.contains("+") || words.contains("subtract") || words.contains("minus") ||
+                        parse.contains("-") || words.contains("times") || words.contains("multiply") || parse.contains("*") ||
+                        words.contains("over") || words.contains("divide") || parse.contains("divided by") ||
+                        parse.contains("/") || words.contains("exponent") || parse.contains("to the power of") || parse.contains("^") ||
+                        words.contains("squared") || words.contains("cubed") || words.contains("factorial"))) {
+                QString numbersAndOperations = parse;
+                numbersAndOperations.remove("calculate");
+                numbersAndOperations.replace("+", " + ");
+                numbersAndOperations.replace("-", " - ");
+                numbersAndOperations.replace("*", " * ");
+                numbersAndOperations.replace("/", " / ");
+                numbersAndOperations.replace("^", " ^ ");
+                numbersAndOperations.replace("add", "+");
+                numbersAndOperations.replace("plus", "+");
+                numbersAndOperations.replace("minus", "-");
+                numbersAndOperations.replace("subtract", "-");
+                numbersAndOperations.replace("negative", "-");
+                numbersAndOperations.replace("times", "*");
+                numbersAndOperations.replace("multiply", "*");
+                numbersAndOperations.replace("over", "/");
+                numbersAndOperations.replace("divided by", "/");
+                numbersAndOperations.replace("divide", "/");
+                numbersAndOperations.replace("exponent", "^");
+                numbersAndOperations.replace("to the power of", "^");
+                numbersAndOperations.replace("squared", "^ 2");
+                numbersAndOperations.replace("cubed", "^ 3");
+                numbersAndOperations.replace("factorial", "!");
+
+                QStringList numberReplacer = numbersAndOperations.split(" ");
+                float currentNumber = 0;
+                int startIndex = -1;
+                bool doingPoints = false;
+                for (QString part : numberReplacer) {
+                    bool isNum;
+                    part.toFloat(&isNum);
+                    if (isNum) {
+                    } else if (part == "point") {
+                        if (startIndex != -1) {
+                            numberReplacer.replace(startIndex, QString::number(currentNumber));
+                            for (int i = startIndex + 1; i < numberReplacer.indexOf(part); i++) {
+                                numberReplacer.replace(i, "");
+                            }
+                            currentNumber = 0;
+                        }
+                        numberReplacer.replace(numberReplacer.indexOf("point"), ".");
+                        startIndex = numberReplacer.indexOf(part + 1);
+                        doingPoints = true;
+                    } else if (numberDictionary.keys().contains(part)) {
+                        float number = numberDictionary.value(part);
+                        if (doingPoints) {
+                            currentNumber = QString::number(currentNumber).append(QString::number(number)).toInt();
+                        } else if (number >= 100) {
+                            currentNumber = currentNumber * number;
+                        } else {
+                            currentNumber = currentNumber + number;
+                        }
+                        if (startIndex == -1) {
+                            startIndex = numberReplacer.indexOf(part);
+                        }
+                    } else {
+                        if (startIndex != -1) {
+                            numberReplacer.replace(startIndex, QString::number(currentNumber));
+                            for (int i = startIndex + 1; i < numberReplacer.indexOf(part); i++) {
+                                numberReplacer.replace(i, "");
+                            }
+                            currentNumber = 0;
+                            startIndex = -1;
+                        }
+                        doingPoints = false;
+                    }
+                }
+
+                if (startIndex != -1) {
+                    numberReplacer.replace(startIndex, QString::number(currentNumber));
+                    for (int i = startIndex + 1; i < numberReplacer.count(); i++) {
+                        numberReplacer.replace(i, "");
+                    }
+                }
+
+                numberReplacer.removeAll("");
+                numbersAndOperations = numberReplacer.join(" ");
+                numbersAndOperations.replace(" . ", ".");
+
+                QString displayExpression = numbersAndOperations;
+                displayExpression.replace("*", "×");
+                displayExpression.replace("/", "÷");
+                displayExpression.replace(" ^ 2", "²");
+                displayExpression.replace(" ^ 3", "³");
+                displayExpression.replace(" ^ - 1", "⁻¹");
+                displayExpression.replace(" ^ - 2", "⁻²");
+                displayExpression.replace(" ^ - 3", "⁻³");
+                displayExpression.replace(" !", "!");
+                displayExpression.append(" =");
+
+                bool hasErrorOccurred = false;
+                QString errorMessage;
+                QStringList expressionToCalculate = numbersAndOperations.split(" ");
+
+                while (expressionToCalculate.contains("!") && hasErrorOccurred == false) { //Calcuate Factorials
+                    int index = expressionToCalculate.indexOf("!");
+                    float number = expressionToCalculate.at(index - 1).toFloat();
+                    /*if (index >= 2) {
+                        if (expressionToCalculate.at(index - 2) == "-") {
+                            hasErrorOccurred = true;
+                            errorMessage = "factorialNeg";
+                        }
+                    }*/
+                    if (qFloor(number) != number || qCeil(number) != number) {
+                        hasErrorOccurred = true;
+                        errorMessage = "factorialNonInt";
+                    } else if (number == 0) {
+                        expressionToCalculate.removeAt(index);
+                        expressionToCalculate.removeAt(index - 1);
+                        expressionToCalculate.insert(index - 1, "0");
+                    } else {
+                        float result = 1;
+
+                        for (int i = 2; i <= number; i++) {
+                            result = result * i;
+                        }
+
+                        expressionToCalculate.removeAt(index);
+                        expressionToCalculate.removeAt(index - 1);
+                        expressionToCalculate.insert(index - 1, QString::number(result));
+                    }
+                }
+
+
+                while (expressionToCalculate.contains("^") && hasErrorOccurred == false) {
+                    int index = expressionToCalculate.indexOf("^");
+                    float base = expressionToCalculate.at(index - 1).toFloat();
+                    if (index >= 2) {
+                        if (expressionToCalculate.at(index - 2) == "-") {
+                            base = base * -1;
+                        }
+                    }
+
+                    float exponent;
+                    if (expressionToCalculate.at(index + 1) == "-") {
+                        exponent = expressionToCalculate.at(index + 2).toFloat() * -1;
+                    } else {
+                        exponent = expressionToCalculate.at(index + 1).toFloat();
+                    }
+
+                    if (base == 0 && exponent == 0) {
+                        hasErrorOccurred = true;
+                        errorMessage = "0^0";
+                    } else {
+                        float result = qPow(base, exponent);
+                        if (base < 0) {
+                            expressionToCalculate.removeAt(index + 2);
+                        }
+                        expressionToCalculate.removeAt(index + 1);
+                        expressionToCalculate.removeAt(index);
+                        expressionToCalculate.removeAt(index - 1);
+                        if (exponent < 0) {
+                            expressionToCalculate.removeAt(index - 2);
+                            expressionToCalculate.insert(index - 2, QString::number(result));
+                        } else {
+                            expressionToCalculate.insert(index - 1, QString::number(result));
+                        }
+                    }
+                }
+
+                while ((expressionToCalculate.contains("/") || expressionToCalculate.contains("*")) && hasErrorOccurred == false) {
+                    bool doDiv;
+                    int divIndex = expressionToCalculate.indexOf("/");
+                    int mulIndex = expressionToCalculate.indexOf("*");
+
+                    if (divIndex == -1) {
+                        doDiv = false;
+                    } else if (mulIndex == -1) {
+                        doDiv = true;
+                    } else if (mulIndex < divIndex) {
+                        doDiv = false;
+                    } else {
+                        doDiv = true;
+                    }
+
+                    if (doDiv) {
+                        int index = divIndex;
+                        float divisor = expressionToCalculate.at(index - 1).toFloat();
+                        if (index >= 2) {
+                            if (expressionToCalculate.at(index - 2) == "-") {
+                                divisor = divisor * -1;
+                            }
+                        }
+
+                        float dividend;
+                        if (expressionToCalculate.at(index + 1) == "-") {
+                            dividend = expressionToCalculate.at(index + 2).toFloat() * -1;
+                        } else {
+                            dividend = expressionToCalculate.at(index + 1).toFloat();
+                        }
+
+                        if (dividend == 0 && divisor == 0) {
+                            hasErrorOccurred = true;
+                            errorMessage = "0div0";
+                        } else if (dividend == 0) {
+                            hasErrorOccurred = true;
+                            errorMessage = "div0";
+                        } else {
+                            float result = divisor / dividend;
+                            if (dividend < 0) {
+                                expressionToCalculate.removeAt(index + 2);
+                            }
+                            expressionToCalculate.removeAt(index + 1);
+                            expressionToCalculate.removeAt(index);
+                            expressionToCalculate.removeAt(index - 1);
+                            if (divisor < 0) {
+                                expressionToCalculate.removeAt(index - 2);
+                                expressionToCalculate.insert(index - 2, QString::number(result));
+                            } else {
+                                expressionToCalculate.insert(index - 1, QString::number(result));
+                            }
+                        }
+                    } else {
+                        int index = mulIndex;
+                        float multiplicand = expressionToCalculate.at(index - 1).toFloat();
+                        if (index >= 2) {
+                            if (expressionToCalculate.at(index - 2) == "-") {
+                                multiplicand = multiplicand * -1;
+                            }
+                        }
+
+                        float multiplier;
+                        if (expressionToCalculate.at(index + 1) == "-") {
+                            multiplier = expressionToCalculate.at(index + 2).toFloat() * -1;
+                        } else {
+                            multiplier = expressionToCalculate.at(index + 1).toFloat();
+                        }
+
+                        float result = multiplicand * multiplier;
+                        if (multiplicand < 0) {
+                            expressionToCalculate.removeAt(index + 2);
+                        }
+                        expressionToCalculate.removeAt(index + 1);
+                        expressionToCalculate.removeAt(index);
+                        expressionToCalculate.removeAt(index - 1);
+                        if (multiplier < 0) {
+                            expressionToCalculate.removeAt(index - 2);
+                            expressionToCalculate.insert(index - 2, QString::number(result));
+                        } else {
+                            expressionToCalculate.insert(index - 1, QString::number(result));
+                        }
+                    }
+                }
+
+                int ignoreNegativeCount = 0;
+                int ignoreNegativeIndex = 0;
+                while ((expressionToCalculate.contains("+") || expressionToCalculate.count("-") > ignoreNegativeCount) && hasErrorOccurred == false) {
+                    bool doAdd;
+                    int addIndex = expressionToCalculate.indexOf("+");
+                    int subIndex = expressionToCalculate.indexOf("-", ignoreNegativeIndex);
+
+                    if (addIndex == -1) {
+                        doAdd = false;
+                    } else if (subIndex == -1) {
+                        doAdd = true;
+                    } else if (subIndex < addIndex) {
+                        doAdd = false;
+                    } else {
+                        doAdd = true;
+                    }
+
+                    if (doAdd) {
+                        int index = addIndex;
+                        float addend1 = expressionToCalculate.at(index - 1).toFloat();
+                        if (index >= 2) {
+                            if (expressionToCalculate.at(index - 2) == "-") {
+                                addend1 = addend1 * -1;
+                            }
+                        }
+
+                        float addend2;
+                        if (expressionToCalculate.at(index + 1) == "-") {
+                            addend2 = expressionToCalculate.at(index + 2).toFloat() * -1;
+                        } else {
+                            addend2 = expressionToCalculate.at(index + 1).toFloat();
+                        }
+
+                        float result = addend1 + addend2;
+                        if (addend2 < 0) {
+                            expressionToCalculate.removeAt(index + 2);
+                        }
+                        expressionToCalculate.removeAt(index + 1);
+                        expressionToCalculate.removeAt(index);
+                        expressionToCalculate.removeAt(index - 1);
+                        if (addend1 < 0) {
+                            expressionToCalculate.removeAt(index - 2);
+                            expressionToCalculate.insert(index - 2, QString::number(result));
+                        } else {
+                            expressionToCalculate.insert(index - 1, QString::number(result));
+                        }
+                    } else {
+                        int index = subIndex;
+                        if (index == 0) {
+                            ignoreNegativeCount++;
+                            ignoreNegativeIndex = index + 1;
+                        } else {
+                            bool minuendIsFloat;
+                            expressionToCalculate.at(index - 1).toFloat(&minuendIsFloat);
+                            if (minuendIsFloat) {
+                                float minuend = expressionToCalculate.at(index - 1).toFloat();
+                                if (index >= 2) {
+                                    if (expressionToCalculate.at(index - 2) == "-") {
+                                        minuend = minuend * -1;
+                                    }
+                                }
+
+                                float subtrahend;
+                                if (expressionToCalculate.at(index + 1) == "-") {
+                                    subtrahend = expressionToCalculate.at(index + 2).toFloat() * -1;
+                                } else {
+                                    subtrahend = expressionToCalculate.at(index + 1).toFloat();
+                                }
+
+                                float result = minuend - subtrahend;
+                                if (subtrahend < 0) {
+                                    expressionToCalculate.removeAt(index + 2);
+                                }
+                                expressionToCalculate.removeAt(index + 1);
+                                expressionToCalculate.removeAt(index);
+                                expressionToCalculate.removeAt(index - 1);
+                                if (minuend < 0) {
+                                    expressionToCalculate.removeAt(index - 2);
+                                    expressionToCalculate.insert(index - 2, QString::number(result));
+                                } else {
+                                    expressionToCalculate.insert(index - 1, QString::number(result));
+                                }
+                            } else {
+                                ignoreNegativeCount++;
+                                ignoreNegativeIndex = index + 1;
+                            }
+                        }
+                    }
+                }
+
+                if (hasErrorOccurred) {
+                    if (errorMessage == "0div0") {
+                        emit showMathematicsFrame(displayExpression, "indeterminate");
+                        if (name == "") {
+                            emit outputResponse("You've broken mathematics!");
+                            speak("You've broken mathematics!");
+                        } else {
+                            emit outputResponse("You've broken mathematics, " + name + "!");
+                            speak("You've broken mathematics, " + name + "!");
+                        }
+                    } else if (errorMessage == "div0") {
+                        emit showMathematicsFrame(displayExpression, "undefined");
+                        emit outputResponse("I can't divide by 0.");
+                        speak("I can't divide by 0.");
+                    } else if (errorMessage == "0^0") {
+                        emit showMathematicsFrame(displayExpression, "undefined");
+                        emit outputResponse("I can't raise 0 to the power of 0.");
+                        speak("I can't raise 0 to the power of 0.");
+                    } else if (errorMessage == "factorialNeg") {
+                        emit showMathematicsFrame(displayExpression, "undefined");
+                        emit outputResponse("I can't calculate the factorial of a negative number.");
+                        speak("I can't calculate the factorial of a negative number.");
+                    } else if (errorMessage == "factorialNonInt") {
+                        emit showMathematicsFrame(displayExpression, "undefined");
+                        emit outputResponse("I can't calculate the factorial of a number that isn't an integer.");
+                        speak("I can't calculate the factorial of a number that isn't an integer.");
+                    }
+                } else {
+                    QString speakText = expressionToCalculate.first();
+                    speakText.replace("e+", " times 10 to the power of ");
+                    speakText.replace("e-", " times 10 to the power of negative ");
+                    if (speakText.left(1) == "-") {
+                        speakText.replace(0, 1, "negative ");
+                    }
+                    emit showMathematicsFrame(displayExpression, expressionToCalculate.first());
+                    emit outputResponse("");
+                    speak(speakText);
+                }
+
+                resetOnNextBegin = true;
             /*} else if (parse.contains("weather")) {
                 //Get the location the user wants
                 QString location = ""; //If Location is blank, get current location.

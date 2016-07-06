@@ -128,6 +128,8 @@ private slots:
 
     void on_thewaveSettingsFrame_Switch_toggled(bool checked);
 
+    void showMathematicsFrame(QString expression, QString answer);
+
 private:
     Ui::Menu *ui;
 

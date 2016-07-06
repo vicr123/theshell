@@ -724,6 +724,7 @@ void Menu::on_activateTheWave_clicked()
     connect(waveWorker, SIGNAL(showFlightFrame(QString)), this, SLOT(showFlightFrame(QString))); //Flight
     connect(waveWorker, SIGNAL(loudnessChanged(qreal)), this, SLOT(thewaveLoudnessChanged(qreal))); //Input Loudness
     connect(waveWorker, SIGNAL(showSettingsFrame(QIcon,QString,bool)), this, SLOT(showSettingFrame(QIcon,QString,bool))); //Settings
+    connect(waveWorker, SIGNAL(showMathematicsFrame(QString,QString)), this, SLOT(showMathematicsFrame(QString,QString)));
     connect(this, SIGNAL(thewave_processText(QString,bool)), waveWorker, SLOT(processSpeech(QString,bool))); //Manual Input Text Processing
     connect(this, SIGNAL(thewaveBegin()), waveWorker, SLOT(begin())); //Begin
     connect(this, SIGNAL(thewaveStop()), waveWorker, SLOT(endAndProcess())); //Stop
@@ -805,6 +806,7 @@ void Menu::resetFrames() {
     ui->thewaveWeatherFrame->setVisible(false);
     ui->thewave_flightFrame->setVisible(false);
     ui->thewaveSettingsFrame->setVisible(false);
+    ui->thewaveMathematicsFrame->setVisible(false);
 }
 
 void Menu::showWikipediaFrame(QString title, QString text) {
@@ -825,6 +827,12 @@ void Menu::showSettingFrame(QIcon icon, QString text, bool isOn) {
     ui->thewaveSettingsFrame_Name->setText(text);
     ui->thewaveSettingsFrame_Switch->setChecked(isOn);
     ui->thewaveSettingsFrame->setVisible(true);
+}
+
+void Menu::showMathematicsFrame(QString expression, QString answer) {
+    ui->thewaveMathematicsFrame->setVisible(true);
+    ui->thewaveMathematics_expression->setText(expression);
+    ui->thewaveMathematics_answer->setText(answer);
 }
 
 void Menu::on_thewave_line_returnPressed()

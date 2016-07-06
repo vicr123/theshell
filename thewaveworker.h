@@ -26,6 +26,7 @@
 #include <QGeoPositionInfoSource>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
+#include <qmath.h>
 #include <akonadi/control.h>
 #include <akonadi/servermanager.h>
 #include <akonadi/session.h>
@@ -42,7 +43,7 @@ class theWaveWorker : public QObject
         TimerGetTime,
     };
 
-    QMap<QString, int> numberDictionary;
+    QMap<QString, float> numberDictionary;
 
 public:
     explicit theWaveWorker(QObject *parent = 0);
@@ -67,6 +68,7 @@ signals:
     void doLaunchApp(QString app);
     void showFlightFrame(QString flight);
     void showSettingsFrame(QIcon icon, QString setting, bool isOn);
+    void showMathematicsFrame(QString expression, QString answer);
 
     void setTimer(QTime);
 
