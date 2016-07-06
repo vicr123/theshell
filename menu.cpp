@@ -208,7 +208,26 @@ void Menu::show(bool openTotheWave) {
 void Menu::changeEvent(QEvent *event) {
     QDialog::changeEvent(event);
     if (event->type() == QEvent::ActivationChange) {
-        if (!istheWaveOpen) {
+        if (istheWaveOpen) {
+            QRect screenGeometry = QApplication::desktop()->screenGeometry();
+            if (this->isActiveWindow()) {
+                QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+                animation->setStartValue(this->geometry());
+                animation->setEndValue(QRect(screenGeometry.x(), this->y(), this->width(), this->height()));
+                animation->setDuration(500);
+                animation->setEasingCurve(QEasingCurve::OutCubic);
+                animation->start();
+                connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+            } else {
+                QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+                animation->setStartValue(this->geometry());
+                animation->setEndValue(QRect(screenGeometry.x() - (this->width() - 50), this->y(), this->width(), this->height()));
+                animation->setDuration(500);
+                animation->setEasingCurve(QEasingCurve::OutCubic);
+                animation->start();
+                connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+            }
+        } else {
             if (!this->isActiveWindow()) {
                 this->close();
             }
@@ -787,14 +806,17 @@ void Menu::on_closetheWaveButton_clicked()
 
 void Menu::showCallFrame(bool emergency) {
     ui->thewave_callFrame->setVisible(true);
+    ui->thewave_callFrame->setBackupText("Can't place a call from this device.");
 }
 
 void Menu::showMessageFrame() {
     ui->thewave_messageframe->setVisible(true);
+    ui->thewave_messageframe->setBackupText("Can't send messages from this device.");
 }
 
 void Menu::showHelpFrame() {
     ui->thewave_helpFrame->setVisible(true);
+    ui->thewave_helpFrame->setBackupText("theWave Help.");
 }
 
 void Menu::resetFrames() {
@@ -821,6 +843,12 @@ void Menu::showMediaFrame(QPixmap art, QString title, QString artist, bool isPla
         ui->thewaveMedia_Play->setIcon(QIcon::fromTheme("media-playback-start"));
     }
     ui->thewaveMediaFrame->setVisible(true);
+
+    if (artist == "") {
+        ui->thewaveMediaFrame->setBackupText("Now Playing: " + title);
+    } else {
+        ui->thewaveMediaFrame->setBackupText("Now Playing: " + title + " · " + artist);
+    }
 }
 
 void Menu::showWikipediaFrame(QString title, QString text) {
@@ -828,12 +856,14 @@ void Menu::showWikipediaFrame(QString title, QString text) {
     ui->wikipediaText->setHtml(text);
     ui->wikipediaFrame->setVisible(true);
     ui->thewave_spacerFrame->setVisible(false);
+    ui->wikipediaFrame->setBackupText("Wikipedia Content");
 }
 
 void Menu::showFlightFrame(QString flight) {
     ui->flightNumber->setText(flight);
     ui->flightImage->setPixmap(QIcon(":/icons/flight/unknown.svg").pixmap(500, 70));
     ui->thewave_flightFrame->setVisible(true);
+    ui->wikipediaFrame->setBackupText(flight + " has been cancelled.");
 }
 
 void Menu::showSettingFrame(QIcon icon, QString text, bool isOn) {
@@ -841,12 +871,14 @@ void Menu::showSettingFrame(QIcon icon, QString text, bool isOn) {
     ui->thewaveSettingsFrame_Name->setText(text);
     ui->thewaveSettingsFrame_Switch->setChecked(isOn);
     ui->thewaveSettingsFrame->setVisible(true);
+    ui->thewaveSettingsFrame->setBackupText(text + " has been switched " + (isOn ? "on" : "off"));
 }
 
 void Menu::showMathematicsFrame(QString expression, QString answer) {
     ui->thewaveMathematicsFrame->setVisible(true);
     ui->thewaveMathematics_expression->setText(expression);
     ui->thewaveMathematics_answer->setText(answer);
+    ui->thewaveMathematicsFrame->setBackupText(expression + answer);
 }
 
 void Menu::on_thewave_line_returnPressed()
@@ -969,4 +1001,47 @@ void Menu::on_thewaveMedia_Play_clicked()
 void Menu::on_thewaveMedia_Back_clicked()
 {
     MainWin->previousSong();
+}
+
+
+
+/*******************************************************
+ *
+ * theWaveFrame Code STARTS HERE.
+ *
+ ******************************************************/
+
+theWaveFrame::theWaveFrame(QWidget *parent) : QFrame(parent)
+{
+    this->setMouseTracking(true);
+}
+
+void theWaveFrame::mousePressEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        QPixmap pixmap = QPixmap::grabWidget(this);
+        QByteArray pngArray;
+        QBuffer buffer(&pngArray);
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "PNG");
+        buffer.close();
+
+        QDrag *drag = new QDrag(this);
+        QMimeData *mime = new QMimeData();
+        mime->setData("image/png", pngArray);
+        /*if (this->backupText() != "") {
+            //mime->setText(this->backupText());
+            mime->setText(this->backupText());
+        }*/
+        drag->setMimeData(mime);
+        drag->setPixmap(pixmap);
+        drag->exec();
+    }
+}
+
+void theWaveFrame::setBackupText(QString text) {
+    this->bText = text;
+}
+
+QString theWaveFrame::backupText() {
+    return this->bText;
 }

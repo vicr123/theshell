@@ -13,6 +13,7 @@
 #include <QPainter>
 #include <QMimeType>
 #include <QMimeDatabase>
+#include <QDrag>
 #include <systemd/sd-login.h>
 #include "endsessionwait.h"
 #include "app.h"
@@ -23,6 +24,23 @@
 #undef KeyPress
 
 class theWaveWorker;
+
+class theWaveFrame : public QFrame
+{
+    Q_OBJECT
+    Q_PROPERTY(QString backupText READ backupText WRITE setBackupText)
+public:
+    explicit theWaveFrame(QWidget *parent = 0);
+
+signals:
+
+public slots:
+    QString backupText();
+    void setBackupText(QString text);
+private:
+    void mousePressEvent(QMouseEvent *event);
+    QString bText;
+};
 
 namespace Ui {
 class Menu;

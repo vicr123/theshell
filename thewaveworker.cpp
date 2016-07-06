@@ -308,7 +308,7 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                 speak(output);
             } else if (words.contains("song") || words.contains("playing") || words.contains("play") || words.contains("pause") ||
                        ((words.contains("track") || words.contains("song") || words.contains("playing")) &&
-                        (words.contains("next") || words.contains("previous") || words.contains("now") || words.contains("current")))) { //Media Player Controls
+                        (words.contains("next") || words.contains("previous") || words.contains("now") || words.contains("current") || words.contains("what")))) { //Media Player Controls
                 if (words.contains("pause")) {
                     MainWin->pause();
                     emit outputResponse("Paused.");
@@ -325,14 +325,14 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     MainWin->previousSong();
                     emit outputResponse("Previous Track");
                     speak("Previous Track");
-                } else if (words.contains("playing") || words.contains("current")) {
+                } else if (words.contains("playing") || words.contains("current") || words.contains("what")) {
                     if (MainWin->isMprisAvailable()) {
                         QString title = MainWin->songName();
                         QString artists = MainWin->songArtist();
                         QString album = MainWin->songAlbum();
                         bool playing = MainWin->isMprisPlaying();
                         QPixmap art = QIcon::fromTheme("audio").pixmap(32, 32);
-                        QString response;
+                        QString response = "Not sure what you want me to do with the music.";
                         if (title != "" && artists != "" && album != "") {
                             response = "Right now, " + title + " by " + artists + " on the album " + album + " is playing.";
                             emit showMediaFrame(art, title, artists + " · " + album, playing);
@@ -506,13 +506,13 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                         errorMessage = "0^0";
                     } else {
                         float result = qPow(base, exponent);
-                        if (base < 0) {
+                        if (exponent < 0) {
                             expressionToCalculate.removeAt(index + 2);
                         }
                         expressionToCalculate.removeAt(index + 1);
                         expressionToCalculate.removeAt(index);
                         expressionToCalculate.removeAt(index - 1);
-                        if (exponent < 0) {
+                        if (base < 0) {
                             expressionToCalculate.removeAt(index - 2);
                             expressionToCalculate.insert(index - 2, QString::number(result));
                         } else {

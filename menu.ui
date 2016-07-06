@@ -592,7 +592,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="thewave_callFrame">
+       <widget class="theWaveFrame" name="thewave_callFrame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -673,7 +673,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="thewave_messageframe">
+       <widget class="theWaveFrame" name="thewave_messageframe">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -764,7 +764,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="thewave_helpFrame">
+       <widget class="theWaveFrame" name="thewave_helpFrame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -884,7 +884,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="wikipediaFrame">
+       <widget class="theWaveFrame" name="wikipediaFrame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -977,7 +977,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="thewaveWeatherFrame">
+       <widget class="theWaveFrame" name="thewaveWeatherFrame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -1007,7 +1007,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="thewave_launchFrame">
+       <widget class="theWaveFrame" name="thewave_launchFrame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -1131,7 +1131,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="thewave_flightFrame">
+       <widget class="theWaveFrame" name="thewave_flightFrame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -1234,7 +1234,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="thewaveSettingsFrame">
+       <widget class="theWaveFrame" name="thewaveSettingsFrame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -1308,7 +1308,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="thewaveMathematicsFrame">
+       <widget class="theWaveFrame" name="thewaveMathematicsFrame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -1378,7 +1378,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="thewaveMediaFrame">
+       <widget class="theWaveFrame" name="thewaveMediaFrame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -1617,6 +1617,12 @@ p, li { white-space: pre-wrap; }
    <class>Switch</class>
    <extends>QPushButton</extends>
    <header>switch.h</header>
+  </customwidget>
+  <customwidget>
+   <class>theWaveFrame</class>
+   <extends>QFrame</extends>
+   <header>menu.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

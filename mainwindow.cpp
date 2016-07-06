@@ -95,7 +95,6 @@ void MainWindow::DBusNewService(QString name) {
             }
         }
     }
-
 }
 
 void MainWindow::pullDownGesture() {
