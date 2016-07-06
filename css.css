@@ -319,6 +319,12 @@ div.blockLanding#theshell {
     color: white;
 }
 
+div.blockLanding#thewave {
+    background-color: green;
+    background: url("images/wavebar.png") no-repeat center center;
+    background-size: 100% cover;
+    color: white;
+}
 
 div.blockLanding#whoami {
     background-color: green;
@@ -366,6 +372,12 @@ div.blockTitle#opensource {
     color: white;
 }
 
+div.blockTitle#thewave {
+    background-color: green;
+    background: url("images/wavebar.png") no-repeat left center;
+    background-size: cover;
+    color: white;
+}
 
 div.blockLanding {
     display: flex;
