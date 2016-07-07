@@ -49,6 +49,8 @@ public:
     explicit theWaveWorker(QObject *parent = 0);
     ~theWaveWorker();
 
+    bool isDisabled();
+
 signals:
     void outputSpeech(QString);
     void outputResponse(QString);
@@ -119,6 +121,7 @@ private:
     bool stopEverything = false;
     bool resetOnNextBegin = false;
     bool speechPlaying = false;
+    bool disabled = false;
 
     QString currentSetting;
 

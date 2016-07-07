@@ -161,6 +161,8 @@ private slots:
 
     void on_thewaveTTSsilent_clicked();
 
+    void on_theWaveSwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 

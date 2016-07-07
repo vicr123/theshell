@@ -96,6 +96,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
     ui->thewaveWikipediaSwitch->setChecked(settings.value("thewave/wikipediaSearch", true).toBool());
     ui->thewaveOffensiveSwitch->setChecked(settings.value("thewave/blockOffensiveWords", true).toBool());
+    ui->theWaveSwitch->setChecked(settings.value("thewave/enabled", true).toBool());
     ui->theWaveName->setText(settings.value("thewave/name", "").toString());
     ui->TextSwitch->setChecked(settings.value("bar/showText", true).toBool());
     ui->windowManager->setText(settings.value("startup/WindowManagerCommand", "kwin_x11").toString());
@@ -1149,4 +1150,9 @@ void InfoPaneDropdown::on_barDesktopsSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_thewaveTTSsilent_clicked()
 {
     settings.setValue("thewave/ttsEngine", "none");
+}
+
+void InfoPaneDropdown::on_theWaveSwitch_toggled(bool checked)
+{
+    settings.setValue("thewave/enabled", checked);
 }

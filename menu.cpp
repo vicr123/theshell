@@ -424,153 +424,155 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
         }
     } else {
         bool showtheWaveOption = true;
-        if (arg1.toLower() == "emergency call") {
-            QListWidgetItem *callItem = new QListWidgetItem();
-            callItem->setText("Place a call");
-            callItem->setIcon(QIcon::fromTheme("call-start"));
-            callItem->setData(Qt::UserRole, "thewave:emergency call");
-            ui->listWidget->addItem(callItem);
-
-            QListWidgetItem *call = new QListWidgetItem();
-            call->setText("Emergency Call");
-            call->setData(Qt::UserRole, "thewave:emergency call");
-            call->setIcon(QIcon(":/icons/blank.svg"));
-            QFont font = call->font();
-            font.setPointSize(30);
-            call->setFont(font);
-            ui->listWidget->addItem(call);
-            showtheWaveOption = false;
-        } else if ((arg1.startsWith("call") && arg1.count() == 4) || arg1.startsWith("call ")) {
-            QListWidgetItem *call = new QListWidgetItem();
-            QString parse = arg1;
-            if (arg1.count() == 4 || arg1.count() == 5) {
-                call->setText("Place a call");
-                call->setData(Qt::UserRole, "thewave:call");
-                call->setIcon(QIcon::fromTheme("call-start"));
-            } else {
-                parse.remove(0, 5);
+        if (settings.value("thewave/enabled", true).toBool()) {
+            if (arg1.toLower() == "emergency call") {
                 QListWidgetItem *callItem = new QListWidgetItem();
                 callItem->setText("Place a call");
                 callItem->setIcon(QIcon::fromTheme("call-start"));
-                callItem->setData(Qt::UserRole, "thewave:call " + parse);
+                callItem->setData(Qt::UserRole, "thewave:emergency call");
                 ui->listWidget->addItem(callItem);
 
-                call->setText((QString) parse.at(0).toUpper() + parse.right(parse.length() - 1) + "");
-                call->setData(Qt::UserRole, "thewave:call " + parse);
+                QListWidgetItem *call = new QListWidgetItem();
+                call->setText("Emergency Call");
+                call->setData(Qt::UserRole, "thewave:emergency call");
                 call->setIcon(QIcon(":/icons/blank.svg"));
-
                 QFont font = call->font();
                 font.setPointSize(30);
                 call->setFont(font);
-            }
-            ui->listWidget->addItem(call);
-            showtheWaveOption = false;
-        } else if (arg1.startsWith("weather")) {
-            QListWidgetItem *weather = new QListWidgetItem();
-
-            QListWidgetItem *weatherItem = new QListWidgetItem();
-            weatherItem->setText("Weather");
-            weatherItem->setIcon(QIcon::fromTheme("weather-clear"));
-            weatherItem->setData(Qt::UserRole, "thewave:weather");
-            ui->listWidget->addItem(weatherItem);
-
-            weather->setText("Unknown");
-            weather->setData(Qt::UserRole, "thewave:weather");
-            weather->setIcon(QIcon::fromTheme("dialog-error"));
-
-            QFont font = weather->font();
-            font.setPointSize(30);
-            weather->setFont(font);
-
-            ui->listWidget->addItem(weather);
-            showtheWaveOption = false;
-        }  else if (arg1.startsWith("play") && MainWin->isMprisAvailable()) {
-            QListWidgetItem *i = new QListWidgetItem();
-            i->setText("Play");
-            i->setIcon(QIcon::fromTheme("media-playback-start"));
-            i->setData(Qt::UserRole, "media:play");
-            ui->listWidget->addItem(i);
-            showtheWaveOption = false;
-        } else if (arg1.startsWith("pause") && MainWin->isMprisAvailable()) {
-            QListWidgetItem *i = new QListWidgetItem();
-            i->setText("Pause");
-            i->setIcon(QIcon::fromTheme("media-playback-pause"));
-            i->setData(Qt::UserRole, "media:pause");
-            ui->listWidget->addItem(i);
-            showtheWaveOption = false;
-        } else if (arg1.startsWith("next") && MainWin->isMprisAvailable()) {
-            QListWidgetItem *i = new QListWidgetItem();
-            i->setText("Next Track");
-            i->setIcon(QIcon::fromTheme("media-skip-forward"));
-            i->setData(Qt::UserRole, "media:next");
-            ui->listWidget->addItem(i);
-            showtheWaveOption = false;
-        } else if (arg1.startsWith("previous") || arg1.startsWith("back") && MainWin->isMprisAvailable()) {
-            QListWidgetItem *i = new QListWidgetItem();
-            i->setText("Previous Track");
-            i->setIcon(QIcon::fromTheme("media-skip-backward"));
-            i->setData(Qt::UserRole, "media:previous");
-            ui->listWidget->addItem(i);
-            showtheWaveOption = false;
-        } else if ((arg1.contains("current") || arg1.contains("what") || arg1.contains("now")) &&
-                   (arg1.contains("track") || arg1.contains("song") || arg1.contains("playing")) && MainWin->isMprisAvailable()) { //Get current song info
-            QListWidgetItem *nowPlaying = new QListWidgetItem();
-            nowPlaying->setText("Now Playing");
-            nowPlaying->setIcon(QIcon::fromTheme("media-playback-start"));
-            nowPlaying->setData(Qt::UserRole, "thewave:current track");
-            ui->listWidget->addItem(nowPlaying);
-
-            QListWidgetItem *title = new QListWidgetItem();
-            title->setText(MainWin->songName());
-            title->setData(Qt::UserRole, "thewave:current track");
-            title->setIcon(QIcon(":/icons/blank.svg"));
-            QFont font = title->font();
-            font.setPointSize(30);
-            title->setFont(font);
-            ui->listWidget->addItem(title);
-
-            if (MainWin->songAlbum() != "" || MainWin->songArtist() != "") {
-                QListWidgetItem *extra = new QListWidgetItem();
-                if (MainWin->songArtist() != "" && MainWin->songAlbum() != "") {
-                    extra->setText(MainWin->songArtist() + " · " + MainWin->songAlbum());
-                } else if (MainWin->songArtist() == "") {
-                    extra->setText(MainWin->songAlbum());
+                ui->listWidget->addItem(call);
+                showtheWaveOption = false;
+            } else if ((arg1.startsWith("call") && arg1.count() == 4) || arg1.startsWith("call ")) {
+                QListWidgetItem *call = new QListWidgetItem();
+                QString parse = arg1;
+                if (arg1.count() == 4 || arg1.count() == 5) {
+                    call->setText("Place a call");
+                    call->setData(Qt::UserRole, "thewave:call");
+                    call->setIcon(QIcon::fromTheme("call-start"));
                 } else {
-                    extra->setText(MainWin->songArtist());
+                    parse.remove(0, 5);
+                    QListWidgetItem *callItem = new QListWidgetItem();
+                    callItem->setText("Place a call");
+                    callItem->setIcon(QIcon::fromTheme("call-start"));
+                    callItem->setData(Qt::UserRole, "thewave:call " + parse);
+                    ui->listWidget->addItem(callItem);
+
+                    call->setText((QString) parse.at(0).toUpper() + parse.right(parse.length() - 1) + "");
+                    call->setData(Qt::UserRole, "thewave:call " + parse);
+                    call->setIcon(QIcon(":/icons/blank.svg"));
+
+                    QFont font = call->font();
+                    font.setPointSize(30);
+                    call->setFont(font);
                 }
-                extra->setData(Qt::UserRole, "thewave:current track");
-                extra->setIcon(QIcon(":/icons/blank.svg"));
-                ui->listWidget->addItem(extra);
+                ui->listWidget->addItem(call);
+                showtheWaveOption = false;
+            } else if (arg1.startsWith("weather")) {
+                QListWidgetItem *weather = new QListWidgetItem();
+
+                QListWidgetItem *weatherItem = new QListWidgetItem();
+                weatherItem->setText("Weather");
+                weatherItem->setIcon(QIcon::fromTheme("weather-clear"));
+                weatherItem->setData(Qt::UserRole, "thewave:weather");
+                ui->listWidget->addItem(weatherItem);
+
+                weather->setText("Unknown");
+                weather->setData(Qt::UserRole, "thewave:weather");
+                weather->setIcon(QIcon::fromTheme("dialog-error"));
+
+                QFont font = weather->font();
+                font.setPointSize(30);
+                weather->setFont(font);
+
+                ui->listWidget->addItem(weather);
+                showtheWaveOption = false;
+            }  else if (arg1.startsWith("play") && MainWin->isMprisAvailable()) {
+                QListWidgetItem *i = new QListWidgetItem();
+                i->setText("Play");
+                i->setIcon(QIcon::fromTheme("media-playback-start"));
+                i->setData(Qt::UserRole, "media:play");
+                ui->listWidget->addItem(i);
+                showtheWaveOption = false;
+            } else if (arg1.startsWith("pause") && MainWin->isMprisAvailable()) {
+                QListWidgetItem *i = new QListWidgetItem();
+                i->setText("Pause");
+                i->setIcon(QIcon::fromTheme("media-playback-pause"));
+                i->setData(Qt::UserRole, "media:pause");
+                ui->listWidget->addItem(i);
+                showtheWaveOption = false;
+            } else if (arg1.startsWith("next") && MainWin->isMprisAvailable()) {
+                QListWidgetItem *i = new QListWidgetItem();
+                i->setText("Next Track");
+                i->setIcon(QIcon::fromTheme("media-skip-forward"));
+                i->setData(Qt::UserRole, "media:next");
+                ui->listWidget->addItem(i);
+                showtheWaveOption = false;
+            } else if (arg1.startsWith("previous") || arg1.startsWith("back") && MainWin->isMprisAvailable()) {
+                QListWidgetItem *i = new QListWidgetItem();
+                i->setText("Previous Track");
+                i->setIcon(QIcon::fromTheme("media-skip-backward"));
+                i->setData(Qt::UserRole, "media:previous");
+                ui->listWidget->addItem(i);
+                showtheWaveOption = false;
+            } else if ((arg1.contains("current") || arg1.contains("what") || arg1.contains("now")) &&
+                       (arg1.contains("track") || arg1.contains("song") || arg1.contains("playing")) && MainWin->isMprisAvailable()) { //Get current song info
+                QListWidgetItem *nowPlaying = new QListWidgetItem();
+                nowPlaying->setText("Now Playing");
+                nowPlaying->setIcon(QIcon::fromTheme("media-playback-start"));
+                nowPlaying->setData(Qt::UserRole, "thewave:current track");
+                ui->listWidget->addItem(nowPlaying);
+
+                QListWidgetItem *title = new QListWidgetItem();
+                title->setText(MainWin->songName());
+                title->setData(Qt::UserRole, "thewave:current track");
+                title->setIcon(QIcon(":/icons/blank.svg"));
+                QFont font = title->font();
+                font.setPointSize(30);
+                title->setFont(font);
+                ui->listWidget->addItem(title);
+
+                if (MainWin->songAlbum() != "" || MainWin->songArtist() != "") {
+                    QListWidgetItem *extra = new QListWidgetItem();
+                    if (MainWin->songArtist() != "" && MainWin->songAlbum() != "") {
+                        extra->setText(MainWin->songArtist() + " · " + MainWin->songAlbum());
+                    } else if (MainWin->songArtist() == "") {
+                        extra->setText(MainWin->songAlbum());
+                    } else {
+                        extra->setText(MainWin->songArtist());
+                    }
+                    extra->setData(Qt::UserRole, "thewave:current track");
+                    extra->setIcon(QIcon(":/icons/blank.svg"));
+                    ui->listWidget->addItem(extra);
+                }
+
+                QListWidgetItem *space = new QListWidgetItem();
+                ui->listWidget->addItem(space);
+
+                QListWidgetItem *play = new QListWidgetItem();
+                play->setText("Play");
+                play->setIcon(QIcon::fromTheme("media-playback-start"));
+                play->setData(Qt::UserRole, "media:play");
+                ui->listWidget->addItem(play);
+
+                QListWidgetItem *pause = new QListWidgetItem();
+                pause->setText("Pause");
+                pause->setIcon(QIcon::fromTheme("media-playback-pause"));
+                pause->setData(Qt::UserRole, "media:pause");
+                ui->listWidget->addItem(pause);
+
+                QListWidgetItem *next = new QListWidgetItem();
+                next->setText("Next Track");
+                next->setIcon(QIcon::fromTheme("media-skip-forward"));
+                next->setData(Qt::UserRole, "media:next");
+                ui->listWidget->addItem(next);
+
+                QListWidgetItem *prev = new QListWidgetItem();
+                prev->setText("Previous Track");
+                prev->setIcon(QIcon::fromTheme("media-skip-backward"));
+                prev->setData(Qt::UserRole, "media:previous");
+                ui->listWidget->addItem(prev);
+
+                showtheWaveOption = false;
             }
-
-            QListWidgetItem *space = new QListWidgetItem();
-            ui->listWidget->addItem(space);
-
-            QListWidgetItem *play = new QListWidgetItem();
-            play->setText("Play");
-            play->setIcon(QIcon::fromTheme("media-playback-start"));
-            play->setData(Qt::UserRole, "media:play");
-            ui->listWidget->addItem(play);
-
-            QListWidgetItem *pause = new QListWidgetItem();
-            pause->setText("Pause");
-            pause->setIcon(QIcon::fromTheme("media-playback-pause"));
-            pause->setData(Qt::UserRole, "media:pause");
-            ui->listWidget->addItem(pause);
-
-            QListWidgetItem *next = new QListWidgetItem();
-            next->setText("Next Track");
-            next->setIcon(QIcon::fromTheme("media-skip-forward"));
-            next->setData(Qt::UserRole, "media:next");
-            ui->listWidget->addItem(next);
-
-            QListWidgetItem *prev = new QListWidgetItem();
-            prev->setText("Previous Track");
-            prev->setIcon(QIcon::fromTheme("media-skip-backward"));
-            prev->setData(Qt::UserRole, "media:previous");
-            ui->listWidget->addItem(prev);
-
-            showtheWaveOption = false;
         }
 
         for (App *app : *apps) {
@@ -671,7 +673,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             }
         }
 
-        if (showtheWaveOption) {
+        if (showtheWaveOption && settings.value("thewave/enabled", true).toBool()) {
             QListWidgetItem *wave = new QListWidgetItem();
             wave->setText("Ask theWave about \"" + arg1 + "\"");
             wave->setIcon(QIcon(":/icons/thewave.svg"));
@@ -820,63 +822,71 @@ void Menu::on_activateTheWave_clicked()
     anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
     anim->setEndValue(QRect(10, 10, this->width() - 20, this->height() - 20));
     anim->setDuration(500);
-
     anim->setEasingCurve(QEasingCurve::OutCubic);
-
     anim->start();
 
-    QThread *t = new QThread();
-    waveWorker = new theWaveWorker(this);
-    waveWorker->moveToThread(t);
-    //connect(t, SIGNAL(started()), waveWorker, SLOT(begin()));
-    connect(t, &QThread::started, [=]() {
-       this->istheWaveReady = true;
-    });
-    connect(waveWorker, SIGNAL(finished()), waveWorker, SLOT(deleteLater()));
-    connect(t, SIGNAL(finished()), t, SLOT(deleteLater()));
-    connect(waveWorker, &theWaveWorker::outputResponse, [=](QString response) {
-        ui->thewave_response->setText(response);
-    });
-    connect(waveWorker, SIGNAL(outputSpeech(QString)), this, SLOT(thewave_outputSpeech(QString)));
-    connect(waveWorker, &theWaveWorker::startedListening, [=]() {
-        //ui->pushButton->setIcon(QIcon::fromTheme("mic-on"));
-        isListening = true;
-    });
-    connect(waveWorker, &theWaveWorker::stoppedListening, [=]() {
-        //ui->pushButton->setIcon(QIcon::fromTheme("mic-off"));
-        isListening = false;
-    });
-    connect(waveWorker, &theWaveWorker::doLaunchApp, [=](QString appName) {
-        for (App *app : *this->apps) {
-            if (app->name() == appName) {
-                QProcess::startDetached(app->command().remove("%u"));
-                this->close();
-            }
-        }
-    });
-    connect(waveWorker, SIGNAL(showCallFrame(bool)), this, SLOT(showCallFrame(bool))); //Call
-    connect(waveWorker, SIGNAL(resetFrames()), this, SLOT(resetFrames())); //Reset
-    connect(waveWorker, SIGNAL(showMessageFrame()), this, SLOT(showMessageFrame())); //Text Message
-    connect(waveWorker, SIGNAL(showHelpFrame()), this, SLOT(showHelpFrame())); //Help
-    connect(waveWorker, SIGNAL(showWikipediaFrame(QString,QString)), this, SLOT(showWikipediaFrame(QString,QString))); //Wikipedia
-    connect(waveWorker, SIGNAL(launchApp(QString)), this, SLOT(thewave_launchapp(QString))); //Launch
-    connect(waveWorker, SIGNAL(setTimer(QTime)), MainWin->getInfoPane(), SLOT(startTimer(QTime))); //Start a timer
-    connect(waveWorker, SIGNAL(showFlightFrame(QString)), this, SLOT(showFlightFrame(QString))); //Flight
-    connect(waveWorker, SIGNAL(loudnessChanged(qreal)), this, SLOT(thewaveLoudnessChanged(qreal))); //Input Loudness
-    connect(waveWorker, SIGNAL(showSettingsFrame(QIcon,QString,bool)), this, SLOT(showSettingFrame(QIcon,QString,bool))); //Settings
-    connect(waveWorker, SIGNAL(showMathematicsFrame(QString,QString)), this, SLOT(showMathematicsFrame(QString,QString))); //Mathematics
-    connect(waveWorker, SIGNAL(showMediaFrame(QPixmap,QString,QString,bool)), this, SLOT(showMediaFrame(QPixmap,QString,QString,bool))); //Media Player
-    connect(this, SIGNAL(thewave_processText(QString,bool)), waveWorker, SLOT(processSpeech(QString,bool))); //Manual Input Text Processing
-    connect(this, SIGNAL(thewaveBegin()), waveWorker, SLOT(begin())); //Begin
-    connect(this, SIGNAL(thewaveStop()), waveWorker, SLOT(endAndProcess())); //Stop
-    connect(this, SIGNAL(thewave_sayLaunchApp(QString)), waveWorker, SLOT(launchAppReply(QString))); //Launch App User Reply
-    connect(this, SIGNAL(thewave_sayLaunchApp_disambiguation(QStringList)), waveWorker, SLOT(launchApp_disambiguation(QStringList))); //Lauch App Disambiguation Reply
-    connect(this, SIGNAL(currentSettingChanged(bool)), waveWorker, SLOT(currentSettingChanged(bool)));
-    /*connect(w, &speechWorker::outputFrame, [=](QFrame *frame) {
-        ui->frame->layout()->addWidget(frame);
-    });*/
+    waveWorker = new theWaveWorker();
 
-    t->start();
+    if (waveWorker->isDisabled()) {
+        ui->thewaveDisabledFrame->setVisible(true);
+        ui->thewaveFrameInner->setVisible(false);
+        ui->listentheWave->setVisible(false);
+    } else {
+        ui->thewaveDisabledFrame->setVisible(false);
+        ui->thewaveFrameInner->setVisible(true);
+        ui->listentheWave->setVisible(true);
+
+        QThread *t = new QThread();
+        waveWorker->moveToThread(t);
+
+        //connect(t, SIGNAL(started()), waveWorker, SLOT(begin()));
+        connect(t, &QThread::started, [=]() {
+           this->istheWaveReady = true;
+        });
+        connect(waveWorker, SIGNAL(finished()), waveWorker, SLOT(deleteLater()));
+        connect(t, SIGNAL(finished()), t, SLOT(deleteLater()));
+        connect(waveWorker, &theWaveWorker::outputResponse, [=](QString response) {
+            ui->thewave_response->setText(response);
+        });
+        connect(waveWorker, SIGNAL(outputSpeech(QString)), this, SLOT(thewave_outputSpeech(QString)));
+        connect(waveWorker, &theWaveWorker::startedListening, [=]() {
+            isListening = true;
+        });
+        connect(waveWorker, &theWaveWorker::stoppedListening, [=]() {
+            isListening = false;
+        });
+        connect(waveWorker, &theWaveWorker::doLaunchApp, [=](QString appName) {
+            for (App *app : *this->apps) {
+                if (app->name() == appName) {
+                    QProcess::startDetached(app->command().remove("%u"));
+                    this->close();
+                }
+            }
+        });
+        connect(waveWorker, SIGNAL(showCallFrame(bool)), this, SLOT(showCallFrame(bool))); //Call
+        connect(waveWorker, SIGNAL(resetFrames()), this, SLOT(resetFrames())); //Reset
+        connect(waveWorker, SIGNAL(showMessageFrame()), this, SLOT(showMessageFrame())); //Text Message
+        connect(waveWorker, SIGNAL(showHelpFrame()), this, SLOT(showHelpFrame())); //Help
+        connect(waveWorker, SIGNAL(showWikipediaFrame(QString,QString)), this, SLOT(showWikipediaFrame(QString,QString))); //Wikipedia
+        connect(waveWorker, SIGNAL(launchApp(QString)), this, SLOT(thewave_launchapp(QString))); //Launch
+        connect(waveWorker, SIGNAL(setTimer(QTime)), MainWin->getInfoPane(), SLOT(startTimer(QTime))); //Start a timer
+        connect(waveWorker, SIGNAL(showFlightFrame(QString)), this, SLOT(showFlightFrame(QString))); //Flight
+        connect(waveWorker, SIGNAL(loudnessChanged(qreal)), this, SLOT(thewaveLoudnessChanged(qreal))); //Input Loudness
+        connect(waveWorker, SIGNAL(showSettingsFrame(QIcon,QString,bool)), this, SLOT(showSettingFrame(QIcon,QString,bool))); //Settings
+        connect(waveWorker, SIGNAL(showMathematicsFrame(QString,QString)), this, SLOT(showMathematicsFrame(QString,QString))); //Mathematics
+        connect(waveWorker, SIGNAL(showMediaFrame(QPixmap,QString,QString,bool)), this, SLOT(showMediaFrame(QPixmap,QString,QString,bool))); //Media Player
+        connect(this, SIGNAL(thewave_processText(QString,bool)), waveWorker, SLOT(processSpeech(QString,bool))); //Manual Input Text Processing
+        connect(this, SIGNAL(thewaveBegin()), waveWorker, SLOT(begin())); //Begin
+        connect(this, SIGNAL(thewaveStop()), waveWorker, SLOT(endAndProcess())); //Stop
+        connect(this, SIGNAL(thewave_sayLaunchApp(QString)), waveWorker, SLOT(launchAppReply(QString))); //Launch App User Reply
+        connect(this, SIGNAL(thewave_sayLaunchApp_disambiguation(QStringList)), waveWorker, SLOT(launchApp_disambiguation(QStringList))); //Lauch App Disambiguation Reply
+        connect(this, SIGNAL(currentSettingChanged(bool)), waveWorker, SLOT(currentSettingChanged(bool)));
+        /*connect(w, &speechWorker::outputFrame, [=](QFrame *frame) {
+            ui->frame->layout()->addWidget(frame);
+        });*/
+
+        t->start();
+    }
 }
 
 void Menu::thewaveLoudnessChanged(qreal loudness) {
