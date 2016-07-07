@@ -14,6 +14,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(reloadScreens()));
     connect(QApplication::desktop(), SIGNAL(primaryScreenChanged()), this, SLOT(reloadScreens()));
 
+    gatewayMenu = new Menu(this);
+    gatewayMenu->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    connect(gatewayMenu, &Menu::menuClosing, [=]() {
+        lockHide = false;
+    });
+
     this->setAttribute(Qt::WA_AlwaysShowToolTips, true);
 
     FlowLayout* flow = new FlowLayout(ui->windowList);
@@ -23,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QTimer *timer = new QTimer(this);
     timer->setInterval(100);
-    connect(timer, SIGNAL(timeout()), this, SLOT(reloadWindows()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(doUpdate()));
     timer->start();
 
     NotificationDBus* ndbus = new NotificationDBus(this);
@@ -134,22 +140,10 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 void MainWindow::on_openMenu_clicked()
 {
-    this->setFocus();
-    Menu* m = new Menu(this);
-    m->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    //m->setGeometry(this->x(), this->y() + this->height() - 1, m->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
-    m->setGeometry(this->x() - m->width(), this->y() + this->height() - 1, m->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
-    m->show();
-    m->setFocus();
-
-    lockHide = true;
-    connect(m, &Menu::menuClosing, [=]() {
-        lockHide = false;
-    });
+    openMenu();
 }
 
-void MainWindow::reloadWindows() {
+void MainWindow::doUpdate() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
     QList<WmWindow*> *wlist = new QList<WmWindow*>();
@@ -690,7 +684,7 @@ void MainWindow::on_date_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    this->setFocus();
+    /*this->setFocus();
     Menu* m = new Menu(this);
     m->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
@@ -703,7 +697,9 @@ void MainWindow::on_pushButton_2_clicked()
     connect(m, SIGNAL(appOpening(QString,QIcon)), this, SLOT(openingApp(QString,QIcon)));
     connect(m, &Menu::menuClosing, [=]() {
         lockHide = false;
-    });
+    });*/
+
+    openMenu(true);
 }
 
 void MainWindow::internetLabelChanged(QString display) {
@@ -1053,6 +1049,16 @@ void MainWindow::on_desktopBack_clicked()
     }
 
     sendMessageToRootWindow("_NET_CURRENT_DESKTOP", 0, switchToDesktop);
+}
+
+void MainWindow::openMenu(bool openTotheWave, bool startListening) {
+    this->setFocus();
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
+    gatewayMenu->show(openTotheWave, startListening);
+    gatewayMenu->setFocus();
+
+    lockHide = true;
 }
 
 bool MainWindow::isMprisAvailable() {

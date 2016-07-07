@@ -38,7 +38,9 @@ public slots:
     QString backupText();
     void setBackupText(QString text);
 private:
+    QPoint startPosition;
     void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
     QString bText;
 };
 
@@ -57,7 +59,7 @@ public:
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
 
-    void show(bool openTotheWave = false);
+    void show(bool openTotheWave = false, bool startListening = false);
     void close();
 
     QFrame* theWaveFrame;
@@ -76,6 +78,11 @@ signals:
     void thewaveStop();
 
     void currentSettingChanged(bool isOn);
+
+public slots:
+    void collapse();
+
+    void uncollapse();
 
 private slots:
     void checkForclose();

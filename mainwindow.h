@@ -36,6 +36,8 @@
 
 #undef Bool
 
+class Menu;
+
 namespace Ui {
 class MainWindow;
 }
@@ -66,10 +68,10 @@ public:
     QString songAlbum();
 
 public slots:
-    void on_openMenu_clicked();
+    void openMenu(bool openTotheWave = false, bool startListening = false);
 
+    void doUpdate();
 private slots:
-    void reloadWindows();
 
     void on_time_clicked();
 
@@ -136,12 +138,16 @@ private slots:
     void on_desktopNext_clicked();
 
     void on_desktopBack_clicked();
+
+    void on_openMenu_clicked();
+
 signals:
     void reloadBackgrounds();
 
 private:
     Ui::MainWindow *ui;
     QList<WmWindow*> *windowList;
+    Menu* gatewayMenu;
 
     QSettings settings;
 

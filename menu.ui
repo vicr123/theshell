@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>560</width>
-    <height>2796</height>
+    <height>2867</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -875,6 +875,48 @@
             <widget class="QLabel" name="label_14">
              <property name="text">
               <string>I can open apps</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="mathIcon">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="label_18">
+             <property name="text">
+              <string>I can do some calculations</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="settingsIcon">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLabel" name="label_22">
+             <property name="text">
+              <string>I can change some settings for you</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="mediaIcon">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLabel" name="label_23">
+             <property name="text">
+              <string>I can control the media player</string>
              </property>
             </widget>
            </item>

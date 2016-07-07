@@ -13,6 +13,7 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/blueprint"), ""));
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/triplecircle"), ""));
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/shatter"), ""));
+    ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/slice"), ""));
 
     if (backPath.startsWith("inbuilt:")) { //Inbuilt background
         ui->radioButton->setChecked(true);
@@ -25,6 +26,8 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
             ui->listWidget->item(2)->setSelected(true);
         } else if (selection == "shatter") {
             ui->listWidget->item(2)->setSelected(true);
+        } else if (selection == "slice") {
+            ui->listWidget->item(3)->setSelected(true);
         }
         ui->lineEdit->setEnabled(false);
         ui->pushButton_2->setEnabled(false);
@@ -93,6 +96,10 @@ void ChooseBackground::on_listWidget_currentRowChanged(int currentRow)
         break;
     case 3:
         settings.setValue("desktop/background", "inbuilt:shatter");
+        emit reloadBackgrounds();
+        break;
+    case 4:
+        settings.setValue("desktop/background", "inbuilt:slice");
         emit reloadBackgrounds();
         break;
     }

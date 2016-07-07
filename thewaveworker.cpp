@@ -4,7 +4,6 @@ extern MainWindow* MainWin;
 
 theWaveWorker::theWaveWorker(QObject *parent) : QObject(parent)
 {
-
     startListeningSound = new QSoundEffect(this);
     startListeningSound->setSource(QUrl("qrc:/sounds/listening.wav"));
     okListeningSound = new QSoundEffect(this);
@@ -13,11 +12,6 @@ theWaveWorker::theWaveWorker(QObject *parent) : QObject(parent)
     errorListeningSound->setSource(QUrl("qrc:/sounds/what.wav"));
     stopListeningSound = new QSoundEffect(this);
     stopListeningSound->setSource(QUrl("qrc:/sounds/notlistening.wav"));
-    /*connect(startListeningSound, &QSoundEffect::playingChanged, [=]() {
-        if (!startListeningSound->isPlaying()) {
-            recorder->record();
-        }
-    });*/
 
     geolocationSource = QGeoPositionInfoSource::createDefaultSource(this);
     connect(geolocationSource, &QGeoPositionInfoSource::positionUpdated, [=](QGeoPositionInfo position) {
@@ -74,37 +68,38 @@ theWaveWorker::theWaveWorker(QObject *parent) : QObject(parent)
 
     probe = new QAudioProbe(this);
     connect(probe, SIGNAL(audioBufferProbed(QAudioBuffer)), this, SLOT(soundBuffer(QAudioBuffer)));
-    probe->setSource(recorder);
     oldLoudness = 0;
 
     QFile(QDir::homePath() + "/.thewaveSpeech.wav").remove();
     recorder->setEncodingSettings(settings, QVideoEncoderSettings(), "wav");
     recorder->setOutputLocation(QUrl::fromLocalFile(QDir::homePath() + "/.thewaveSpeech.wav"));
+
+    testRecorder = new QAudioRecorder(this);
+    testRecorder->setEncodingSettings(settings, QVideoEncoderSettings(), "wav");
+    testRecorder->setOutputLocation(QUrl::fromLocalFile(QDir::homePath() + "/.thewaveBeforeSpeech.wav"));
 }
 
 theWaveWorker::~theWaveWorker() {
-    //emit finished();
+    this->stopEverything = true;
+    emit finished();
 }
 
 void theWaveWorker::begin() {
-    if (resetOnNextBegin) {
-        resetOnNextBegin = false;
-        emit resetFrames();
+    if (resetOnNextBegin) { //Check if we need to reset frames
+        resetOnNextBegin = false; //Reset Frame Reset bit
+        emit resetFrames(); //Tell UI to reset frames
     }
 
-    /*speechProc = new QProcess(this);
-    speechProc->setProcessChannelMode(QProcess::MergedChannels);
-    connect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
-    speechProc->start("pocketsphinx_continuous -inmic yes");
-    speechProc->waitForStarted();
-    speechProc->waitForFinished(-1);*/
+    maxLoudnessForSession = 0; //Reset maximum loudness
+    isListeningAfterLoudnessChange = false; //Reset if recorder is listening
+    //recorder->record(); //Record audio
+    testRecorder->record();
+    probe->setSource(testRecorder);
 
-    recorder->record();
-
-    endListenTimer.start();
-    startListeningSound->play();
+    endListenTimer.start(); //Start end listening timer
+    startListeningSound->play(); //Play start sound
     emit outputSpeech("Go for it!");
-    emit startedListening();
+    emit startedListening(); //Tell UI that we're listening
 }
 
 void theWaveWorker::soundBuffer(QAudioBuffer buffer) {
@@ -129,25 +124,42 @@ void theWaveWorker::soundBuffer(QAudioBuffer buffer) {
         endListenTimer.restart();
     }
 
-    //If loudness has stayed the same for a second, stop listening.
-    if (endListenTimer.elapsed() >= 1000) {
+    //Set the maximum loudness
+    if (maxLoudnessForSession < loudness) {
+        maxLoudnessForSession = loudness;
+        if (!isListeningAfterLoudnessChange && loudness > 0.1) { //Start actual recording now
+            testRecorder->stop();
+            isListeningAfterLoudnessChange = true;
+            recorder->record();
+            probe->setSource(recorder);
+        }
+    }
+
+    //If loudness has stayed the same for a second and there has been audio input, stop listening.
+    if (endListenTimer.elapsed() >= 1000 && maxLoudnessForSession > 0.1) {
         endAndProcess();
     }
 }
 
 void theWaveWorker::endAndProcess() {
     recorder->stop();
-
-    okListeningSound->play();
-    emit outputSpeech("Processing...");
+    testRecorder->stop();
     emit stoppedListening();
     emit loudnessChanged(-1);
 
-    speechProc = new QProcess(this);
-    speechProc->setProcessChannelMode(QProcess::MergedChannels);
-    connect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
-    speechProc->start("pocketsphinx_continuous -infile \"" + QDir::homePath() + "/.thewaveSpeech.wav\"");
-    speechProc->waitForStarted();
+    if (recorder->duration() <= 1000 || maxLoudnessForSession < 0.1) { //Don't process if too short or not loud enough
+        stopListeningSound->play();
+        emit loudnessChanged(-2);
+    } else {
+        okListeningSound->play();
+        emit outputSpeech("Processing...");
+
+        speechProc = new QProcess(this);
+        speechProc->setProcessChannelMode(QProcess::MergedChannels);
+        connect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
+        speechProc->start("pocketsphinx_continuous -infile \"" + QDir::homePath() + "/.thewaveSpeech.wav\"");
+        speechProc->waitForStarted();
+    }
 }
 
 void theWaveWorker::outputAvailable() {
@@ -189,14 +201,16 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
     } else {
         switch (this->state) {
         case Idle:
-            if (words.contains("hello")) { //Hello
+            if (words.contains("hello") || words.contains("hi")) { //Hello
                 if (name == "") {
-                    emit outputResponse("Hey there! How are you today?");
-                    speak("Hey there! How are you today?");
+                    emit outputResponse("Hey there! Just tell me what you'd like me to do.");
+                    speak("Hey there! Just tell me what you'd like me to do.");
                 } else {
-                    emit outputResponse("Hello " + name + "! How are you today?");
-                    speak("Hello " + name + "! How are you today?");
+                    emit outputResponse("Hello " + name + "! Just tell me what you'd like me to do.");
+                    speak("Hello " + name + "! Just tell me what you'd like me to do.");
                 }
+                emit showHelpFrame();
+                resetOnNextBegin = true;
             } else if (parse == "who am i") { //Name Testing
                 if (name == "") {
                     emit outputResponse("I'm not quite sure. Tell me in my settings.");
@@ -364,6 +378,8 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                         words.contains("squared") || words.contains("cubed") || words.contains("factorial"))) {
                 QString numbersAndOperations = parse;
                 numbersAndOperations.remove("calculate");
+                numbersAndOperations.remove("what is");
+                numbersAndOperations.remove("what's");
                 numbersAndOperations.replace("+", " + ");
                 numbersAndOperations.replace("-", " - ");
                 numbersAndOperations.replace("*", " * ");
@@ -765,7 +781,9 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     QEventLoop eventLoop;
 
                     QNetworkRequest request;
-                    QUrl requestUrl("https://en.wikipedia.org/w/api.php?action=query&titles=" + speech.replace(" ", "%20") + "&format=xml&prop=extracts&redirects=true&exintro=true");
+                    QString term = speech;
+                    term.replace(" ", "+");
+                    QUrl requestUrl("https://en.wikipedia.org/w/api.php?action=query&titles=" + term + "&format=xml&prop=extracts&redirects=true&exintro=true");
                     request.setUrl(requestUrl);
                     request.setHeader(QNetworkRequest::UserAgentHeader, "theWave/2.1 (vicr12345@gmail.com)");
                     QNetworkAccessManager networkManager;
@@ -788,12 +806,20 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                         text.replace("&quot;", "\"");
                         text.replace("&amp;", "&");
 
+                        if (stopEverything) {
+                            return;
+                        }
+
                         emit showWikipediaFrame(title, text);
                         emit outputResponse("I found some information. Take a look.");
                         speak("I found some information. Take a look.");
                         resetOnNextBegin = true;
                     }
 
+                }
+
+                if (stopEverything) {
+                    return;
                 }
 
                 if (!isInfoFound) {
@@ -805,7 +831,8 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
             break;
         case TimerGetTime:
             TimerGetTime:
-            if (words.contains("hour") || words.contains("minute") || words.contains("second")) {
+            if (words.contains("hour") || words.contains("minute") || words.contains("second") ||
+                    words.contains("hours") || words.contains("minutes") || words.contains("seconds")) {
                 int currentNumber = 0, hour = 0, minute = 0, second = 0;
                 for (QString part : words) {
                     if (numberDictionary.contains(part)) {
@@ -877,6 +904,10 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
         QApplication::processEvents();
     }
 
+    if (stopEverything) {
+        return;
+    }
+
     speechPlaying = true;
     if (settings.value("thewave/ttsEngine").toString() == "pico2wave" && QFile("/usr/bin/pico2wave").exists()) {
         QString command = "pico2wave -w=\"" + QDir::homePath() + "/.thewavevoice.wav\" \"" + speech + "\"";
@@ -911,7 +942,9 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
         if (restartOnceComplete && !stopEverything) {
             connect(s, SIGNAL(finished(int)), this, SLOT(begin()));
         }
-        speechPlaying = false;
+        connect(s, static_cast<void(QProcess::*)(int)>(&QProcess::finished), [=]() {
+            speechPlaying = false;
+        });
     } else if (settings.value("thewave/ttsEngine").toString() == "festival" && QFile("/usr/bin/festival").exists()) {
         QProcess *s = new QProcess(this);
         s->start("festival --tts");
@@ -955,6 +988,9 @@ void theWaveWorker::launchAppReply(QString app) {
 
     while (speechPlaying) {
         QApplication::processEvents();
+        if (stopEverything) {
+            return;
+        }
     }
 
     emit doLaunchApp(app);

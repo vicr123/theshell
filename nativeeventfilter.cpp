@@ -23,6 +23,7 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F2), Mod1Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Super_L), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Super_R), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_space), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
 
     lastPress.start();
 }
@@ -41,6 +42,7 @@ NativeEventFilter::~NativeEventFilter() {
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F2), Mod1Mask, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Super_L), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Super_R), AnyModifier, QX11Info::appRootWindow());
+    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_space), Mod4Mask, QX11Info::appRootWindow());
 }
 
 
@@ -186,7 +188,9 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     RunDialog* run = new RunDialog();
                     run->show();
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Super_L) || button->detail == XKeysymToKeycode(QX11Info::display(), XK_Super_R)) {
-                    MainWin->on_openMenu_clicked();
+                    MainWin->openMenu();
+                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_space) && button->state == Mod4Mask) { //Lock Screen
+                    MainWin->openMenu(true, true);
                 }
             }
         }

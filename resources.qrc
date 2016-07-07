@@ -31,5 +31,6 @@
         <file alias="triangles">backgrounds/triangles</file>
         <file alias="triplecircle">backgrounds/triplecircle</file>
         <file alias="shatter">backgrounds/shatter</file>
+        <file alias="slice">backgrounds/slice</file>
     </qresource>
 </RCC>

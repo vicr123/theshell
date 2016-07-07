@@ -102,11 +102,14 @@ private:
     QString buffer;
     QTime endListenTimer;
     qreal oldLoudness = 0;
+    qreal maxLoudnessForSession = 0;
+    bool isListeningAfterLoudnessChange = false;
 
     void speak(QString speech, bool restartOnceComplete = false);
     SpeechState state = Idle;
 
     QSoundEffect* startListeningSound, *okListeningSound, *errorListeningSound, *stopListeningSound;
+    QAudioRecorder* testRecorder = NULL;
     QAudioRecorder* recorder = NULL;
     QAudioProbe* probe = NULL;
 

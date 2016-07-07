@@ -25,6 +25,9 @@ Menu::Menu(QWidget *parent) :
     ui->messageIcon->setPixmap(QIcon::fromTheme("message-send").pixmap(32));
     ui->launchIcon->setPixmap(QIcon::fromTheme("system-run").pixmap(32));
     ui->infoIcon->setPixmap(QIcon::fromTheme("text-html").pixmap(32));
+    ui->mathIcon->setPixmap(QIcon::fromTheme("accessories-calculator").pixmap(32));
+    ui->settingsIcon->setPixmap(QIcon::fromTheme("preferences-system").pixmap(32));
+    ui->mediaIcon->setPixmap(QIcon::fromTheme("media-playback-start").pixmap(32));
 
     this->setMouseTracking(true);
 
@@ -88,144 +91,140 @@ Menu::~Menu()
     delete ui;
 }
 
-void Menu::show(bool openTotheWave) {
-    unsigned long desktop = 0xFFFFFFFF;
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
-                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+void Menu::show(bool openTotheWave, bool startListening) {
+    if (this->isVisible()) {
+        this->uncollapse();
+    } else {
+        unsigned long desktop = 0xFFFFFFFF;
+        XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
+                         XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
-    QDialog::show();
-    doCheckForClose = true;
+        QDialog::show();
+        doCheckForClose = true;
 
-    QDir appFolder("/usr/share/applications/");
-    QDirIterator iterator(appFolder, QDirIterator::Subdirectories);
+        ui->offFrame->setGeometry(10, this->height(), this->width() - 20, this->height() - 20);
+        ui->thewaveFrame->setGeometry(10, this->height(), this->width() - 20, this->height() - 20);
 
-    while (iterator.hasNext()) {
-        QString appFile = iterator.next();
-        QFile file(appFile);
-        if (file.exists() & QFileInfo(file).suffix().contains("desktop")) {
-            file.open(QFile::ReadOnly);
-            QString appinfo(file.readAll());
+        apps->clear();
+        ui->listWidget->clear();
+        ui->lineEdit->setText("");
 
-            QStringList desktopLines;
-            QString currentDesktopLine;
-            for (QString desktopLine : appinfo.split("\n")) {
-                if (desktopLine.startsWith("[") && currentDesktopLine != "") {
-                    desktopLines.append(currentDesktopLine);
-                    currentDesktopLine = "";
+        QDir appFolder("/usr/share/applications/");
+        QDirIterator iterator(appFolder, QDirIterator::Subdirectories);
+
+        while (iterator.hasNext()) {
+            QString appFile = iterator.next();
+            QFile file(appFile);
+            if (file.exists() & QFileInfo(file).suffix().contains("desktop")) {
+                file.open(QFile::ReadOnly);
+                QString appinfo(file.readAll());
+
+                QStringList desktopLines;
+                QString currentDesktopLine;
+                for (QString desktopLine : appinfo.split("\n")) {
+                    if (desktopLine.startsWith("[") && currentDesktopLine != "") {
+                        desktopLines.append(currentDesktopLine);
+                        currentDesktopLine = "";
+                    }
+                    currentDesktopLine.append(desktopLine + "\n");
                 }
-                currentDesktopLine.append(desktopLine + "\n");
-            }
-            desktopLines.append(currentDesktopLine);
+                desktopLines.append(currentDesktopLine);
 
-            for (QString desktopPart : desktopLines) {
-                App *app = new App();
-                bool isApplication = false;
-                bool display = true;
-                for (QString line : desktopPart.split("\n")) {
-                    if (line.startsWith("genericname=", Qt::CaseInsensitive)) {
-                        app->setDescription(line.split("=")[1]);
-                    } else if (line.startsWith("name=", Qt::CaseInsensitive)) {
-                        app->setName(line.split("=")[1]);
-                    } else if (line.startsWith("icon=", Qt::CaseInsensitive)) {
-                        QString iconname = line.split("=")[1];
-                        QIcon icon;
-                        if (QFile(iconname).exists()) {
-                            icon = QIcon(iconname);
-                        } else {
-                            icon = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
-                        }
-                        app->setIcon(icon);
-                    } else if (line.startsWith("exec=", Qt::CaseInsensitive)) {
-                        app->setCommand(line.split("=")[1].remove(QRegExp("%.")));
-                    } else if (line.startsWith("description=", Qt::CaseInsensitive)) {
-                        app->setDescription(line.split("=")[1]);
-                    } else if (line.startsWith("type=", Qt::CaseInsensitive)) {
-                        if (line.split("=")[1] == "Application") {
-                            isApplication = true;
-                        }
-                    } else if (line.startsWith("nodisplay=", Qt::CaseInsensitive)) {
-                        if (line.split("=")[1] == "true") {
-                            display = false;
-                            break;
-                        }
-                    } else if (line.startsWith("onlyshowin=", Qt::CaseInsensitive)) {
-                        if (!line.split("=")[1].contains("theshell;")) {
-                            display = false;
-                        }
-                    } else if (line.startsWith("notshowin=", Qt::CaseInsensitive)) {
-                        if (line.split("=")[1].contains("theshell;")) {
-                            display = false;
+                for (QString desktopPart : desktopLines) {
+                    App *app = new App();
+                    bool isApplication = false;
+                    bool display = true;
+                    for (QString line : desktopPart.split("\n")) {
+                        if (line.startsWith("genericname=", Qt::CaseInsensitive)) {
+                            app->setDescription(line.split("=")[1]);
+                        } else if (line.startsWith("name=", Qt::CaseInsensitive)) {
+                            app->setName(line.split("=")[1]);
+                        } else if (line.startsWith("icon=", Qt::CaseInsensitive)) {
+                            QString iconname = line.split("=")[1];
+                            QIcon icon;
+                            if (QFile(iconname).exists()) {
+                                icon = QIcon(iconname);
+                            } else {
+                                icon = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
+                            }
+                            app->setIcon(icon);
+                        } else if (line.startsWith("exec=", Qt::CaseInsensitive)) {
+                            app->setCommand(line.split("=")[1].remove(QRegExp("%.")));
+                        } else if (line.startsWith("description=", Qt::CaseInsensitive)) {
+                            app->setDescription(line.split("=")[1]);
+                        } else if (line.startsWith("type=", Qt::CaseInsensitive)) {
+                            if (line.split("=")[1] == "Application") {
+                                isApplication = true;
+                            }
+                        } else if (line.startsWith("nodisplay=", Qt::CaseInsensitive)) {
+                            if (line.split("=")[1] == "true") {
+                                display = false;
+                                break;
+                            }
+                        } else if (line.startsWith("onlyshowin=", Qt::CaseInsensitive)) {
+                            if (!line.split("=")[1].contains("theshell;")) {
+                                display = false;
+                            }
+                        } else if (line.startsWith("notshowin=", Qt::CaseInsensitive)) {
+                            if (line.split("=")[1].contains("theshell;")) {
+                                display = false;
+                            }
                         }
                     }
-                }
-                if (isApplication && display) {
-                    apps->append(app);
+                    if (isApplication && display) {
+                        apps->append(app);
+                    }
                 }
             }
         }
-    }
 
-    App *waveApp = new App();
-    waveApp->setCommand("thewave");
-    waveApp->setIcon(QIcon(":/icons/thewave.svg"));
-    waveApp->setName("theWave");
-    waveApp->setDescription("Personal Assistant");
-    apps->append(waveApp);
+        App *waveApp = new App();
+        waveApp->setCommand("thewave");
+        waveApp->setIcon(QIcon(":/icons/thewave.svg"));
+        waveApp->setName("theWave");
+        waveApp->setDescription("Personal Assistant");
+        apps->append(waveApp);
 
-    //hotkeyManager->registerHotkey("Power");
-
-    for (App *app : *apps) {
-        QListWidgetItem *i = new QListWidgetItem();
-        if (app->description() == "") {
-            i->setText(app->name());
-        } else {
-            i->setText(app->description() + " | " + app->name());
+        for (App *app : *apps) {
+            QListWidgetItem *i = new QListWidgetItem();
+            if (app->description() == "") {
+                i->setText(app->name());
+            } else {
+                i->setText(app->description() + " | " + app->name());
+            }
+            i->setIcon(app->icon());
+            i->setData(Qt::UserRole, app->command());
+            appsShown->append(app);
+            ui->listWidget->addItem(i);
         }
-        i->setIcon(app->icon());
-        i->setData(Qt::UserRole, app->command());
-        appsShown->append(app);
-        ui->listWidget->addItem(i);
+
+        QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+        animation->setStartValue(this->geometry());
+        animation->setEndValue(QRect(this->x() + this->width(), this->y(), this->width(), this->height()));
+        animation->setDuration(500);
+        animation->setEasingCurve(QEasingCurve::OutCubic);
+        animation->start();
+        connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+
+        ui->lineEdit->setFocus();
     }
 
-    QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
-    animation->setStartValue(this->geometry());
-    animation->setEndValue(QRect(this->x() + this->width(), this->y(), this->width(), this->height()));
-    animation->setDuration(500);
-    animation->setEasingCurve(QEasingCurve::OutCubic);
-    animation->start();
-    connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
-
-    if (openTotheWave) {
+    if (openTotheWave && !this->istheWaveOpen) {
         ui->activateTheWave->click();
     }
-
-    /*QTimer *t = new QTimer(this);
-    t->setInterval(1);
-    connect(t, SIGNAL(timeout()), this, SLOT(checkForclose()));
-    t->start();*/
+    if (startListening && openTotheWave) {
+        ui->listentheWave->click();
+    }
 }
 
 void Menu::changeEvent(QEvent *event) {
     QDialog::changeEvent(event);
     if (event->type() == QEvent::ActivationChange) {
         if (istheWaveOpen) {
-            QRect screenGeometry = QApplication::desktop()->screenGeometry();
             if (this->isActiveWindow()) {
-                QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
-                animation->setStartValue(this->geometry());
-                animation->setEndValue(QRect(screenGeometry.x(), this->y(), this->width(), this->height()));
-                animation->setDuration(500);
-                animation->setEasingCurve(QEasingCurve::OutCubic);
-                animation->start();
-                connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+                uncollapse();
             } else {
-                QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
-                animation->setStartValue(this->geometry());
-                animation->setEndValue(QRect(screenGeometry.x() - (this->width() - 50), this->y(), this->width(), this->height()));
-                animation->setDuration(500);
-                animation->setEasingCurve(QEasingCurve::OutCubic);
-                animation->start();
-                connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+                collapse();
             }
         } else {
             if (!this->isActiveWindow()) {
@@ -235,7 +234,33 @@ void Menu::changeEvent(QEvent *event) {
     }
 }
 
+void Menu::collapse() {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+    animation->setStartValue(this->geometry());
+    animation->setEndValue(QRect(screenGeometry.x() - (this->width() - 50), this->y(), this->width(), this->height()));
+    animation->setDuration(500);
+    animation->setEasingCurve(QEasingCurve::OutCubic);
+    animation->start();
+    connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+
+}
+
+void Menu::uncollapse() {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+    animation->setStartValue(this->geometry());
+    animation->setEndValue(QRect(screenGeometry.x(), this->y(), this->width(), this->height()));
+    animation->setDuration(500);
+    animation->setEasingCurve(QEasingCurve::OutCubic);
+    animation->start();
+    connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+}
+
 void Menu::close() {
+    if (istheWaveOpen) {
+        ui->closetheWaveButton->click();
+    }
     QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
     animation->setStartValue(this->geometry());
     animation->setEndValue(QRect(this->x() - this->width(), this->y(), this->width(), this->height()));
@@ -346,7 +371,9 @@ void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
     if (item->data(Qt::UserRole).toString().startsWith("thewave")) {
         ui->activateTheWave->click();
         if (item->data(Qt::UserRole).toString().split(":").count() > 1) {
-            ui->thewave_line->setText(item->data(Qt::UserRole).toString().split(":").at(1));
+            QStringList request = item->data(Qt::UserRole).toString().split(":");
+            request.removeFirst();
+            ui->thewave_line->setText(request.join(" "));
             on_thewave_line_returnPressed();
         }
     } else if (item->data(Qt::UserRole).toString().startsWith("power:")) {
@@ -358,6 +385,20 @@ void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
         } else if (operation ==  "logout") {
             EndSession(EndSessionWait::logout);
         }
+    } else if (item->data(Qt::UserRole).toString().startsWith("media:")) {
+        QString operation = item->data(Qt::UserRole).toString().split(":").at(1);
+        if (operation == "play") {
+            MainWin->play();
+        } else if (operation == "pause") {
+            MainWin->pause();
+        } else if (operation ==  "next") {
+            MainWin->nextSong();
+        } else if (operation ==  "previous") {
+            MainWin->previousSong();
+        }
+        MainWin->doUpdate();
+        QThread::msleep(50);
+        on_lineEdit_textEdited(ui->lineEdit->text());
     } else {
         QProcess::startDetached(item->data(Qt::UserRole).toString().remove("%u"));
         this->close();
@@ -424,13 +465,6 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             }
             ui->listWidget->addItem(call);
             showtheWaveOption = false;
-        } else if (arg1.startsWith("pause") && arg1.count() == 5) {
-            QListWidgetItem *pause = new QListWidgetItem();
-            pause->setText("Pause");
-            pause->setIcon(QIcon::fromTheme("media-playback-pause"));
-            pause->setData(Qt::UserRole, "media:pause");
-            ui->listWidget->addItem(pause);
-            showtheWaveOption = false;
         } else if (arg1.startsWith("weather")) {
             QListWidgetItem *weather = new QListWidgetItem();
 
@@ -449,6 +483,93 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             weather->setFont(font);
 
             ui->listWidget->addItem(weather);
+            showtheWaveOption = false;
+        }  else if (arg1.startsWith("play") && MainWin->isMprisAvailable()) {
+            QListWidgetItem *i = new QListWidgetItem();
+            i->setText("Play");
+            i->setIcon(QIcon::fromTheme("media-playback-start"));
+            i->setData(Qt::UserRole, "media:play");
+            ui->listWidget->addItem(i);
+            showtheWaveOption = false;
+        } else if (arg1.startsWith("pause") && MainWin->isMprisAvailable()) {
+            QListWidgetItem *i = new QListWidgetItem();
+            i->setText("Pause");
+            i->setIcon(QIcon::fromTheme("media-playback-pause"));
+            i->setData(Qt::UserRole, "media:pause");
+            ui->listWidget->addItem(i);
+            showtheWaveOption = false;
+        } else if (arg1.startsWith("next") && MainWin->isMprisAvailable()) {
+            QListWidgetItem *i = new QListWidgetItem();
+            i->setText("Next Track");
+            i->setIcon(QIcon::fromTheme("media-skip-forward"));
+            i->setData(Qt::UserRole, "media:next");
+            ui->listWidget->addItem(i);
+            showtheWaveOption = false;
+        } else if (arg1.startsWith("previous") || arg1.startsWith("back") && MainWin->isMprisAvailable()) {
+            QListWidgetItem *i = new QListWidgetItem();
+            i->setText("Previous Track");
+            i->setIcon(QIcon::fromTheme("media-skip-backward"));
+            i->setData(Qt::UserRole, "media:previous");
+            ui->listWidget->addItem(i);
+            showtheWaveOption = false;
+        } else if ((arg1.contains("current") || arg1.contains("what") || arg1.contains("now")) &&
+                   (arg1.contains("track") || arg1.contains("song") || arg1.contains("playing")) && MainWin->isMprisAvailable()) { //Get current song info
+            QListWidgetItem *nowPlaying = new QListWidgetItem();
+            nowPlaying->setText("Now Playing");
+            nowPlaying->setIcon(QIcon::fromTheme("media-playback-start"));
+            nowPlaying->setData(Qt::UserRole, "thewave:current track");
+            ui->listWidget->addItem(nowPlaying);
+
+            QListWidgetItem *title = new QListWidgetItem();
+            title->setText(MainWin->songName());
+            title->setData(Qt::UserRole, "thewave:current track");
+            title->setIcon(QIcon(":/icons/blank.svg"));
+            QFont font = title->font();
+            font.setPointSize(30);
+            title->setFont(font);
+            ui->listWidget->addItem(title);
+
+            if (MainWin->songAlbum() != "" || MainWin->songArtist() != "") {
+                QListWidgetItem *extra = new QListWidgetItem();
+                if (MainWin->songArtist() != "" && MainWin->songAlbum() != "") {
+                    extra->setText(MainWin->songArtist() + " · " + MainWin->songAlbum());
+                } else if (MainWin->songArtist() == "") {
+                    extra->setText(MainWin->songAlbum());
+                } else {
+                    extra->setText(MainWin->songArtist());
+                }
+                extra->setData(Qt::UserRole, "thewave:current track");
+                extra->setIcon(QIcon(":/icons/blank.svg"));
+                ui->listWidget->addItem(extra);
+            }
+
+            QListWidgetItem *space = new QListWidgetItem();
+            ui->listWidget->addItem(space);
+
+            QListWidgetItem *play = new QListWidgetItem();
+            play->setText("Play");
+            play->setIcon(QIcon::fromTheme("media-playback-start"));
+            play->setData(Qt::UserRole, "media:play");
+            ui->listWidget->addItem(play);
+
+            QListWidgetItem *pause = new QListWidgetItem();
+            pause->setText("Pause");
+            pause->setIcon(QIcon::fromTheme("media-playback-pause"));
+            pause->setData(Qt::UserRole, "media:pause");
+            ui->listWidget->addItem(pause);
+
+            QListWidgetItem *next = new QListWidgetItem();
+            next->setText("Next Track");
+            next->setIcon(QIcon::fromTheme("media-skip-forward"));
+            next->setData(Qt::UserRole, "media:next");
+            ui->listWidget->addItem(next);
+
+            QListWidgetItem *prev = new QListWidgetItem();
+            prev->setText("Previous Track");
+            prev->setIcon(QIcon::fromTheme("media-skip-backward"));
+            prev->setData(Qt::UserRole, "media:previous");
+            ui->listWidget->addItem(prev);
+
             showtheWaveOption = false;
         }
 
@@ -797,6 +918,7 @@ void Menu::on_closetheWaveButton_clicked()
 
     if (waveWorker != NULL) {
         //waveWorker->quit(); //This deletes the worker thread.
+        waveWorker->disconnect();
         waveWorker->deleteLater();
         waveWorker = NULL;
     }
@@ -1003,8 +1125,6 @@ void Menu::on_thewaveMedia_Back_clicked()
     MainWin->previousSong();
 }
 
-
-
 /*******************************************************
  *
  * theWaveFrame Code STARTS HERE.
@@ -1013,12 +1133,19 @@ void Menu::on_thewaveMedia_Back_clicked()
 
 theWaveFrame::theWaveFrame(QWidget *parent) : QFrame(parent)
 {
-    this->setMouseTracking(true);
+
 }
 
 void theWaveFrame::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
-        QPixmap pixmap = QPixmap::grabWidget(this);
+        this->startPosition = event->pos();
+    }
+}
+
+void theWaveFrame::mouseMoveEvent(QMouseEvent *event)
+ {
+    if (event->buttons() & Qt::LeftButton && ((event->pos() - this->startPosition).manhattanLength() >= QApplication::startDragDistance())) {
+        QPixmap pixmap = this->grab();
         QByteArray pngArray;
         QBuffer buffer(&pngArray);
         buffer.open(QIODevice::WriteOnly);
@@ -1034,7 +1161,9 @@ void theWaveFrame::mousePressEvent(QMouseEvent *event) {
         }*/
         drag->setMimeData(mime);
         drag->setPixmap(pixmap);
+        ((Menu*) this->window())->collapse();
         drag->exec();
+        ((Menu*) this->window())->uncollapse();
     }
 }
 
