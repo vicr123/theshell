@@ -79,7 +79,7 @@ theWaveWorker::theWaveWorker(QObject *parent) : QObject(parent)
         testRecorder->setEncodingSettings(settings, QVideoEncoderSettings(), "wav");
         testRecorder->setOutputLocation(QUrl::fromLocalFile(QDir::homePath() + "/.thewaveBeforeSpeech.wav"));
     } else {
-        emit this->disabled = true;
+        this->disabled = true;
     }
 }
 
@@ -89,21 +89,29 @@ theWaveWorker::~theWaveWorker() {
 }
 
 void theWaveWorker::begin() {
-    if (resetOnNextBegin) { //Check if we need to reset frames
-        resetOnNextBegin = false; //Reset Frame Reset bit
-        emit resetFrames(); //Tell UI to reset frames
+    if (!isRunning) {
+        isRunning = true;
+        if (resetOnNextBegin) { //Check if we need to reset frames
+            resetOnNextBegin = false; //Reset Frame Reset bit
+            emit resetFrames(); //Tell UI to reset frames
+        }
+
+        maxLoudnessForSession = 0; //Reset maximum loudness
+        isListeningAfterLoudnessChange = false; //Reset if recorder is listening
+        //recorder->record(); //Record audio
+        testRecorder->record();
+        probe->setSource(testRecorder);
+
+        endListenTimer.start(); //Start end listening timer
+        startListeningSound->play(); //Play start sound
+        emit outputSpeech("Go for it!");
+        emit startedListening(); //Tell UI that we're listening
+
+        if (this->state == Idle) {
+            emit showBigListenFrame();
+        }
+        noVoiceInput = true;
     }
-
-    maxLoudnessForSession = 0; //Reset maximum loudness
-    isListeningAfterLoudnessChange = false; //Reset if recorder is listening
-    //recorder->record(); //Record audio
-    testRecorder->record();
-    probe->setSource(testRecorder);
-
-    endListenTimer.start(); //Start end listening timer
-    startListeningSound->play(); //Play start sound
-    emit outputSpeech("Go for it!");
-    emit startedListening(); //Tell UI that we're listening
 }
 
 void theWaveWorker::soundBuffer(QAudioBuffer buffer) {
@@ -146,23 +154,37 @@ void theWaveWorker::soundBuffer(QAudioBuffer buffer) {
 }
 
 void theWaveWorker::endAndProcess() {
-    recorder->stop();
-    testRecorder->stop();
-    emit stoppedListening();
-    emit loudnessChanged(-1);
+    if (isRunning) {
+        recorder->stop();
+        testRecorder->stop();
+        emit stoppedListening();
+        emit loudnessChanged(-1);
 
-    if (recorder->duration() <= 1000 || maxLoudnessForSession < 0.1) { //Don't process if too short or not loud enough
-        stopListeningSound->play();
-        emit loudnessChanged(-2);
-    } else {
-        okListeningSound->play();
-        emit outputSpeech("Processing...");
+        if (recorder->duration() <= 1000 || maxLoudnessForSession < 0.1) { //Don't process if too short or not loud enough
+            stopListeningSound->play();
+            emit loudnessChanged(-2);
+            emit outputSpeech("");
 
-        speechProc = new QProcess(this);
-        speechProc->setProcessChannelMode(QProcess::MergedChannels);
-        connect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
-        speechProc->start("pocketsphinx_continuous -infile \"" + QDir::homePath() + "/.thewaveSpeech.wav\"");
-        speechProc->waitForStarted();
+            if (this->state == Idle) {
+                emit hideBigListenFrame();
+            }
+            isRunning = false;
+        } else {
+            okListeningSound->play();
+            emit outputSpeech("Processing...");
+
+            speechProc = new QProcess(this);
+            speechProc->setProcessChannelMode(QProcess::MergedChannels);
+            connect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
+            connect(speechProc, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                [=](int exitCode, QProcess::ExitStatus exitStatus){
+                if (noVoiceInput) {
+                    processSpeech("");
+                }
+            });
+            speechProc->start("pocketsphinx_continuous -infile \"" + QDir::homePath() + "/.thewaveSpeech.wav\"");
+            speechProc->waitForStarted();
+        }
     }
 }
 
@@ -177,6 +199,7 @@ void theWaveWorker::outputAvailable() {
             } else if (outputString.startsWith("-") || outputString == "Current configuration:" || outputString.startsWith("[NAME]")) {
             } else {
                 if (outputString != "") {
+                    noVoiceInput = false;
                     emit outputSpeech(outputString);
                     processSpeech(outputString);
                     disconnect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
@@ -206,31 +229,8 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
         } else {
             switch (this->state) {
             case Idle:
-                if (words.contains("hello") || words.contains("hi")) { //Hello
-                    if (name == "") {
-                        emit outputResponse("Hey there! Just tell me what you'd like me to do.");
-                        speak("Hey there! Just tell me what you'd like me to do.");
-                    } else {
-                        emit outputResponse("Hello " + name + "! Just tell me what you'd like me to do.");
-                        speak("Hello " + name + "! Just tell me what you'd like me to do.");
-                    }
-                    emit showHelpFrame();
-                    resetOnNextBegin = true;
-                } else if (parse == "who am i") { //Name Testing
-                    if (name == "") {
-                        emit outputResponse("I'm not quite sure. Tell me in my settings.");
-                        speak("I'm not quite sure. Tell me in my settings.");
-                    } else {
-                        emit outputResponse("You're " + name + ", aren't you?");
-                        speak("You're " + name + ", aren't you?");
-                    }
-                } else if (parse == "who are you") { //Who are you
-                    emit outputResponse("Me? I'm theWave. Pleased to meet you.");
-                    speak("Me? I'm theWave. Pleased to meet you.");
-                } else if (parse == "fuck you") { //Fun
-                    emit outputResponse("Did I do something wrong?");
-                    speak("Did I do something wrong?");
-                } else if (words.contains("call")) { //Place Call
+                emit hideBigListenFrame();
+                if (words.contains("call") || words.contains("ring") || words.contains("dial")) { //Place Call
                     emit outputResponse("Unfortunately, I can't place a call from this device.");
                     speak("Unfortunately, I can't place a call from this device.");
                     emit showCallFrame(false);
@@ -242,7 +242,7 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     resetOnNextBegin = true;
                 } else if (words.contains("e-mail") || words.contains("email")) { //Send Email
                     if (launchAkonadi()) {
-                        emit outputResponse("Who are you sending this email to?.");
+                        emit outputResponse("Who are you sending this email to?");
                         speak("Who are you sending this email to?"); //Pronunciation issues... :P
                     }
                 } else if (words.contains("timer") || words.contains("countdown") || parse.contains("count down")) { //Set Timer
@@ -776,6 +776,30 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     }
                     emit outputResponse(output);
                     speak(output);
+                } else if (words.contains("hello") || words.contains("hi") | words.contains("hey")) { //Hello
+                    if (name == "") {
+                        emit outputResponse("Hey there! Just tell me what you'd like me to do.");
+                        speak("Hey there! Just tell me what you'd like me to do.");
+                    } else {
+                        emit outputResponse("Hello " + name + "! Just tell me what you'd like me to do.");
+                        speak("Hello " + name + "! Just tell me what you'd like me to do.");
+                    }
+                    emit showHelpFrame();
+                    resetOnNextBegin = true;
+                } else if (parse == "who am i") { //Name Testing
+                    if (name == "") {
+                        emit outputResponse("I'm not quite sure. Tell me in my settings.");
+                        speak("I'm not quite sure. Tell me in my settings.");
+                    } else {
+                        emit outputResponse("You're " + name + ", aren't you?");
+                        speak("You're " + name + ", aren't you?");
+                    }
+                } else if (parse == "who are you") { //Who are you
+                    emit outputResponse("Me? I'm theWave. Pleased to meet you.");
+                    speak("Me? I'm theWave. Pleased to meet you.");
+                } else if (parse == "fuck you") { //Fun
+                    emit outputResponse("Did I do something wrong?");
+                    speak("Did I do something wrong?");
                 } else { //Look Online
                     emit outputResponse("Looking online for information...");
                     speak("Looking online for information...");
@@ -889,6 +913,7 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                 }
             }
         }
+        isRunning = false;
     } else {
         this->disabled = true;
     }

@@ -350,7 +350,7 @@
         <item>
          <widget class="QStackedWidget" name="settingsTabs">
           <property name="currentIndex">
-           <number>6</number>
+           <number>8</number>
           </property>
           <widget class="QWidget" name="StartupSettings">
            <layout class="QGridLayout" name="gridLayout_2">
@@ -1196,7 +1196,7 @@
                <item>
                 <widget class="QRadioButton" name="thewaveTTSsilent">
                  <property name="text">
-                  <string>Silent</string>
+                  <string>Si&amp;lent</string>
                  </property>
                 </widget>
                </item>
@@ -1435,7 +1435,7 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>theShell 2.3</string>
+                  <string>theShell 3.0</string>
                  </property>
                 </widget>
                </item>
@@ -2145,15 +2145,15 @@
             <minute>15</minute>
             <second>0</second>
             <year>1969</year>
-            <month>12</month>
-            <day>1</day>
+            <month>11</month>
+            <day>30</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
-            <month>12</month>
-            <day>1</day>
+            <month>11</month>
+            <day>30</day>
            </date>
           </property>
           <property name="displayFormat">

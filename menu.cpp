@@ -835,6 +835,7 @@ void Menu::on_activateTheWave_clicked()
         ui->thewaveDisabledFrame->setVisible(false);
         ui->thewaveFrameInner->setVisible(true);
         ui->listentheWave->setVisible(true);
+        ui->theWaveSpeakFrame->setVisible(false);
 
         QThread *t = new QThread();
         waveWorker->moveToThread(t);
@@ -863,6 +864,67 @@ void Menu::on_activateTheWave_clicked()
                 }
             }
         });
+        connect(waveWorker, &theWaveWorker::showBigListenFrame, [=]() {
+            QString name = settings.value("thewave/name").toString();
+            if (name == "") {
+                switch (qrand() % 5) {
+                case 0:
+                    ui->theWaveSpeakGreeting->setText("Hey there. What's next?");
+                    break;
+                case 1:
+                    ui->theWaveSpeakGreeting->setText("What can I do for you?");
+                    break;
+                case 2:
+                    ui->theWaveSpeakGreeting->setText("Hello.");
+                    break;
+                case 3:
+                    ui->theWaveSpeakGreeting->setText("Oh, hey there!");
+                    break;
+                case 4:
+                    QTime current = QTime::currentTime();
+                    if (current.hour() < 12) {
+                        ui->theWaveSpeakGreeting->setText("Good morning!");
+                    } else if (current.hour() < 17) {
+                        ui->theWaveSpeakGreeting->setText("Good afternoon!");
+                    } else {
+                        ui->theWaveSpeakGreeting->setText("Good evening!");
+                    }
+                    break;
+                }
+            } else {
+                switch (qrand() % 5) {
+                case 0:
+                    ui->theWaveSpeakGreeting->setText("Hey, " + name + ". What's next?");
+                    break;
+                case 1:
+                    ui->theWaveSpeakGreeting->setText("What can I do for you, " + name + "?");
+                    break;
+                case 2:
+                    ui->theWaveSpeakGreeting->setText("Hello " + name + "!");
+                    break;
+                case 3:
+                    ui->theWaveSpeakGreeting->setText("Oh, hey " + name + "!");
+                    break;
+                case 4:
+                    QTime current = QTime::currentTime();
+                    if (current.hour() < 12) {
+                        ui->theWaveSpeakGreeting->setText("Good morning " + name + "!");
+                    } else if (current.hour() < 17) {
+                        ui->theWaveSpeakGreeting->setText("Good afternoon " + name + "!");
+                    } else {
+                        ui->theWaveSpeakGreeting->setText("Good evening " + name + "!");
+                    }
+                    break;
+                }
+            }
+
+            ui->thewaveFrameInner->setVisible(false);
+            ui->theWaveSpeakFrame->setVisible(true);
+        });
+        connect(waveWorker, &theWaveWorker::hideBigListenFrame, [=]() {
+            ui->thewaveFrameInner->setVisible(true);
+            ui->theWaveSpeakFrame->setVisible(false);
+        });
         connect(waveWorker, SIGNAL(showCallFrame(bool)), this, SLOT(showCallFrame(bool))); //Call
         connect(waveWorker, SIGNAL(resetFrames()), this, SLOT(resetFrames())); //Reset
         connect(waveWorker, SIGNAL(showMessageFrame()), this, SLOT(showMessageFrame())); //Text Message
@@ -881,6 +943,8 @@ void Menu::on_activateTheWave_clicked()
         connect(this, SIGNAL(thewave_sayLaunchApp(QString)), waveWorker, SLOT(launchAppReply(QString))); //Launch App User Reply
         connect(this, SIGNAL(thewave_sayLaunchApp_disambiguation(QStringList)), waveWorker, SLOT(launchApp_disambiguation(QStringList))); //Lauch App Disambiguation Reply
         connect(this, SIGNAL(currentSettingChanged(bool)), waveWorker, SLOT(currentSettingChanged(bool)));
+
+        connect(waveWorker, SIGNAL(loudnessChanged(qreal)), ui->theWaveFeedback, SLOT(addLevel(qreal)));
         /*connect(w, &speechWorker::outputFrame, [=](QFrame *frame) {
             ui->frame->layout()->addWidget(frame);
         });*/
@@ -909,6 +973,7 @@ void Menu::thewave_outputSpeech(QString speech) {
         displaySpeech.replace("fuck", "f***");
     }
     ui->thewave_line->setText(displaySpeech);
+    ui->theWaveBigSpeechLabel->setText(displaySpeech);
 }
 
 void Menu::on_closetheWaveButton_clicked()
@@ -923,7 +988,7 @@ void Menu::on_closetheWaveButton_clicked()
     anim->setEndValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
     anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::OutCubic);
-
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->start();
 
     if (waveWorker != NULL) {
@@ -934,6 +999,7 @@ void Menu::on_closetheWaveButton_clicked()
     }
 
     istheWaveOpen = false;
+    ui->listWidget->setFocus();
 }
 
 void Menu::showCallFrame(bool emergency) {

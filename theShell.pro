@@ -52,7 +52,8 @@ SOURCES += main.cpp\
     dbusevents.cpp \
     dbusmenuregistrar.cpp \
     fadebutton.cpp \
-    rundialog.cpp
+    rundialog.cpp \
+    thewavefeedbackframe.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -87,7 +88,8 @@ HEADERS  += mainwindow.h \
     dbusevents.h \
     dbusmenuregistrar.h \
     fadebutton.h \
-    rundialog.h
+    rundialog.h \
+    thewavefeedbackframe.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

@@ -59,6 +59,8 @@ signals:
     void complete();
     void startedListening();
     void stoppedListening();
+    void showBigListenFrame();
+    void hideBigListenFrame();
     void finished();
 
     void resetFrames();
@@ -122,6 +124,8 @@ private:
     bool resetOnNextBegin = false;
     bool speechPlaying = false;
     bool disabled = false;
+    bool isRunning = false;
+    bool noVoiceInput = true;
 
     QString currentSetting;
 
