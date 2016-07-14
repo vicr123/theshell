@@ -140,6 +140,7 @@ void theWaveWorker::soundBuffer(QAudioBuffer buffer) {
     if (maxLoudnessForSession < loudness) {
         maxLoudnessForSession = loudness;
         if (!isListeningAfterLoudnessChange && loudness > 0.1) { //Start actual recording now
+            emit outputSpeech("Listening...");
             testRecorder->stop();
             isListeningAfterLoudnessChange = true;
             recorder->record();
@@ -224,8 +225,28 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
         QString parse = speech.toLower();
         QStringList words = parse.split(" ");
         if (speech == "") {
-            emit outputResponse("That flew past me. Try again.");
-            speak("That flew past me. Try again.", voiceFeedback);
+            QString output;
+            switch (qrand() % 5) {
+            case 0:
+                output = "That flew past me. Try again.";
+                break;
+            case 1:
+                output = "Not sure what you said. Try again.";
+                break;
+            case 2:
+                output = "I didn't get that. Could you please say that again?";
+                break;
+            case 3:
+                output = "Sorry, what was that again?";
+                break;
+            case 4:
+                output = "I don't know what you just said. Try again.";
+                break;
+            }
+
+            emit outputResponse(output);
+            emit outputSpeech(output);
+            speak(output, voiceFeedback);
         } else {
             switch (this->state) {
             case Idle:
@@ -241,10 +262,14 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     emit showMessageFrame();
                     resetOnNextBegin = true;
                 } else if (words.contains("e-mail") || words.contains("email")) { //Send Email
-                    if (launchAkonadi()) {
-                        emit outputResponse("Who are you sending this email to?");
-                        speak("Who are you sending this email to?"); //Pronunciation issues... :P
-                    }
+                    //if (launchAkonadi()) {
+                        //emit outputResponse("Who are you sending this email to?");
+                        //speak("Who are you sending this email to?"); //Pronunciation issues... :P
+                        //this->state = emailGetRecipient;
+                    //}
+                    emit outputResponse("I'm not able to send email yet. Sorry about that.");
+                    speak("I'm not able to send email yet. Sorry about that."); //Pronunciation issues... :P
+
                 } else if (words.contains("timer") || words.contains("countdown") || parse.contains("count down")) { //Set Timer
                     QStringList parseSpace = parse.split(" ");
                     int currentNumber = 0, hour = 0, minute = 0, second = 0;
@@ -769,6 +794,26 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                             speak("I'm not sure where you are, so I can't get weather information. Try saying a city name. Sorry about that.");
                         }
                     }*/
+                } else if (words.contains("time")) {
+                    if (words.contains("in") || words.contains("at")) {
+                        QString output = "I can't get times for other places yet.";
+                        emit outputResponse(output);
+                        speak(output);
+                    } else { //Local time
+                        QTime currentTime = QTime::currentTime();
+                        QString output = "Right now, it's " + currentTime.toString("hh:mm:ss") + " in " + QLocale::countryToString(QTimeZone::systemTimeZone().country()) + ".";
+
+                        emit outputResponse(output);
+                        speak(output);
+                    }
+                } else if (words.at(0) == "spell") {
+                    QString output = parse;
+                    output = output.remove("spell ") + ": ";
+                    QString spelling = parse;
+                    spelling = spelling.remove("spell ").split("").join(" ");
+                    output.append(spelling);
+                    emit outputResponse("");
+                    speak(output);
                 } else if (parse.contains("happy birthday")) { //Fun
                     QString output = "It's not my birthday. But I'm assuming it's yours.";
                     if (name != "") {
@@ -800,51 +845,85 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                 } else if (parse == "fuck you") { //Fun
                     emit outputResponse("Did I do something wrong?");
                     speak("Did I do something wrong?");
-                } else { //Look Online
-                    emit outputResponse("Looking online for information...");
-                    speak("Looking online for information...");
+                } else if (parse.contains("what's the best") || parse.contains("what is the best")) { //Fun
+                    if (parse.contains("operating system")) {
+                        emit outputResponse("theOS. What else?");
+                        speak("the O S. What else?");
+                    } else if (words.contains("phone")) {
+                        emit outputResponse("I'm kind of drawn to the Plasma Mobiles.");
+                        speak("I'm kind of drawn to the Plasma Mobiles.");
+                    } else if (words.contains("tablet")) {
+                        emit outputResponse("Any tablet computer really. As long as theOS is installed on it.");
+                        speak("Any tablet computer really. As long as the O S is installed on it.");
+                    }
+                } else if (parse == "tell me a joke") {
+                    QString output;
+                    switch (qrand() % 3) {
+                    case 0:
+                        output = "I'm always nervous when it comes to jokes. It's kind of... nerve racking.";
+                        break;
+                    case 1:
+                        output = "Two men walked into a bar. They walked out again.\n\nActually, that was a pretty bad joke.";
+                        break;
+                    case 2:
+                        output = "If you're trying to laugh, just smile. It'll make you feel better.";
+                        break;
+                    }
 
+                    emit outputResponse(output);
+                    speak(output);
+                } else { //Look Online
+                    bool doLookupSpeech = false;
+                    if (settings.value("thewave/wikipediaSearch", true).toBool()) {
+                        doLookupSpeech = true;
+                    }
                     bool isInfoFound = false;
 
-                    if (settings.value("thewave/wikipediaSearch", true).toBool()) {
-                        QEventLoop eventLoop;
+                    if (doLookupSpeech) {
+                        emit outputResponse("Looking online for information...");
+                        speak("Looking online for information...");
 
-                        QNetworkRequest request;
-                        QString term = speech;
-                        term.replace(" ", "+");
-                        QUrl requestUrl("https://en.wikipedia.org/w/api.php?action=query&titles=" + term + "&format=xml&prop=extracts&redirects=true&exintro=true");
-                        request.setUrl(requestUrl);
-                        request.setHeader(QNetworkRequest::UserAgentHeader, "theWave/2.1 (vicr12345@gmail.com)");
-                        QNetworkAccessManager networkManager;
-                        connect(&networkManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
-                        QNetworkReply* NetworkReply = networkManager.get(request);
 
-                        eventLoop.exec();
+                        if (settings.value("thewave/wikipediaSearch", true).toBool()) {
+                            QEventLoop eventLoop;
 
-                        QString reply(NetworkReply->readAll());
-                        qDebug() << reply;
+                            QNetworkRequest request;
+                            QString term = speech;
+                            term.replace(" ", "+");
+                            QUrl requestUrl("https://en.wikipedia.org/w/api.php?action=query&titles=" + term + "&format=xml&prop=extracts&redirects=true&exintro=true");
+                            request.setUrl(requestUrl);
+                            request.setHeader(QNetworkRequest::UserAgentHeader, "theWave/2.1 (vicr12345@gmail.com)");
+                            QNetworkAccessManager networkManager;
+                            connect(&networkManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
+                            QNetworkReply* NetworkReply = networkManager.get(request);
 
-                        if (reply.contains("title=") && !reply.contains("missing=\"\"")) {
-                            isInfoFound = true;
-                            QString title = reply.split("title=\"").at(1).split("\"").at(0);
-                            QString text;
+                            eventLoop.exec();
 
-                            text = "<!DOCTYPE HTML><html><head></head><body>" + reply.split("<extract xml:space=\"preserve\">").at(1).split("</extract>").at(0) + "</body></html>";
-                            text.replace("&lt;", "<");
-                            text.replace("&gt;", ">");
-                            text.replace("&quot;", "\"");
-                            text.replace("&amp;", "&");
+                            QString reply(NetworkReply->readAll());
+                            qDebug() << reply;
 
-                            if (stopEverything) {
-                                return;
+                            if (reply.contains("title=") && !reply.contains("missing=\"\"")) {
+                                isInfoFound = true;
+                                QString title = reply.split("title=\"").at(1).split("\"").at(0);
+                                QString text;
+
+                                text = "<!DOCTYPE HTML><html><head></head><body>" + reply.split("<extract xml:space=\"preserve\">").at(1).split("</extract>").at(0) + "</body></html>";
+                                text.replace("&lt;", "<");
+                                text.replace("&gt;", ">");
+                                text.replace("&quot;", "\"");
+                                text.replace("&amp;", "&");
+
+                                if (stopEverything) {
+                                    return;
+                                }
+
+                                emit showWikipediaFrame(title, text);
+                                emit outputResponse("I found some information. Take a look.");
+                                speak("I found some information. Take a look.");
+                                resetOnNextBegin = true;
                             }
 
-                            emit showWikipediaFrame(title, text);
-                            emit outputResponse("I found some information. Take a look.");
-                            speak("I found some information. Take a look.");
-                            resetOnNextBegin = true;
                         }
-
                     }
 
                     if (stopEverything) {
@@ -852,8 +931,24 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     }
 
                     if (!isInfoFound) {
-                        emit outputResponse("Unfortunately, I don't understand you. Try again.");
-                        speak("Unfortunately, I don't understand you. Try again.");
+                        QString output;
+                        switch (qrand() % 4) {
+                        case 0:
+                            output = "Unfortunately, I don't understand what that means.";
+                            break;
+                        case 1:
+                            output = "Not sure what you want me to do.";
+                            break;
+                        case 2:
+                            output = "I don't know how to interpret that. Sorry about that.";
+                            break;
+                        case 3:
+                            output = "I probably misheard you. Could you try again?";
+                            break;
+                        }
+
+                        emit outputResponse(output);
+                        speak(output);
                         errorListeningSound->play();
                     }
                 }
@@ -878,8 +973,9 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                         }
                     }
                     if (hour >= 60 || minute >= 60 || second >= 60) {
-                        emit outputResponse("I'm sorry, that's not a valid time. I need a time given in hours, minutes and/or seconds. Otherwise, you can say \"Stop.\"");
-                        speak("I'm sorry, that's not a valid time. I need a time given in hours, minutes and or seconds. Otherwise, you can say \"Stop.\"", voiceFeedback);
+                        emit outputResponse("I'm sorry, how long is the timer?");
+                        emit outputHint("Try saying \"ten seconds\" or \"three hours ten minutes twenty seconds.\"");
+                        speak("I'm sorry, how long is the timer?", voiceFeedback);
                         state = TimerGetTime;
                     } else {
                         QString compiledSpeech = "I've set the timer for ";
@@ -907,10 +1003,17 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     emit outputResponse("OK, I cancelled the timer.");
                     speak("OK, I cancelled the timer.");
                 } else {
-                    emit outputResponse("I'm sorry, I don't understand what you mean. I need a time given in hours, minutes and/or seconds. Otherwise, you can say \"Stop.\"");
-                    speak("I'm sorry, I don't understand what you mean. I need a time given in hours, minutes and or seconds. Otherwise, you can say \"Stop.\"", true);
+                    emit outputResponse("I'm sorry, how long is the timer?");
+                    emit outputHint("Try saying \"ten seconds\" or \"three hours ten minutes twenty seconds.\"");
+                    speak("I'm sorry, how long is the timer?", voiceFeedback);
                     state = TimerGetTime;
                 }
+                break;
+            case emailGetRecipient:
+            {
+
+            }
+                break;
             }
         }
         isRunning = false;

@@ -149,7 +149,9 @@ void Menu::show(bool openTotheWave, bool startListening) {
                             }
                             app->setIcon(icon);
                         } else if (line.startsWith("exec=", Qt::CaseInsensitive)) {
-                            app->setCommand(line.split("=")[1].remove(QRegExp("%.")));
+                            QStringList command = line.split("=");
+                            command.removeFirst();
+                            app->setCommand(command.join("=").remove(QRegExp("%.")));
                         } else if (line.startsWith("description=", Qt::CaseInsensitive)) {
                             app->setDescription(line.split("=")[1]);
                         } else if (line.startsWith("type=", Qt::CaseInsensitive)) {
@@ -400,7 +402,21 @@ void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
         QThread::msleep(50);
         on_lineEdit_textEdited(ui->lineEdit->text());
     } else {
-        QProcess::startDetached(item->data(Qt::UserRole).toString().remove("%u"));
+        QString command = item->data(Qt::UserRole).toString().remove("%u");
+        command.remove("env ");
+        QProcess* process = new QProcess();
+        QStringList environment = process->environment();
+        QStringList commandSpace = command.split(" ");
+        for (QString part : commandSpace) {
+            if (part.contains("=")) {
+                environment.append(part);
+                commandSpace.removeOne(part);
+            }
+        }
+        commandSpace.removeAll("");
+        process->start(commandSpace.join(" "));
+        connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
+        //QProcess::startDetached(item->data(Qt::UserRole).toString().remove("%u"));
         this->close();
     }
 }
@@ -836,6 +852,8 @@ void Menu::on_activateTheWave_clicked()
         ui->thewaveFrameInner->setVisible(true);
         ui->listentheWave->setVisible(true);
         ui->theWaveSpeakFrame->setVisible(false);
+        ui->thewave_hintFrame->setVisible(false);
+        ui->thewaveHintIcon->setPixmap(QIcon::fromTheme("dialog-information").pixmap(16, 16));
 
         QThread *t = new QThread();
         waveWorker->moveToThread(t);
@@ -848,6 +866,11 @@ void Menu::on_activateTheWave_clicked()
         connect(t, SIGNAL(finished()), t, SLOT(deleteLater()));
         connect(waveWorker, &theWaveWorker::outputResponse, [=](QString response) {
             ui->thewave_response->setText(response);
+            ui->thewave_hintFrame->setVisible(false);
+        });
+        connect(waveWorker, &theWaveWorker::outputHint, [=](QString hint) {
+            ui->thewaveHint->setText(hint);
+            ui->thewave_hintFrame->setVisible(true);
         });
         connect(waveWorker, SIGNAL(outputSpeech(QString)), this, SLOT(thewave_outputSpeech(QString)));
         connect(waveWorker, &theWaveWorker::startedListening, [=]() {

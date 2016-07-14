@@ -18,7 +18,9 @@ void theWaveFeedbackFrame::paintEvent(QPaintEvent *event) {
         indeterminateStage++;
     }
     for (qreal level : levels) {
-        painter.drawLine(i, this->height(), i, this->height() - (level * this->height()));
+        //painter.drawLine(i, this->height(), i, this->height() - (level * this->height()));
+        int distanceFromMiddle = (level * this->height()) / 2;
+        painter.drawLine(i, this->height() / 2 + distanceFromMiddle, i, this->height() / 2 - distanceFromMiddle);
         i = i - 2;
     }
 

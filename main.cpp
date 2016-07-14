@@ -104,6 +104,10 @@ int main(int argc, char *argv[])
         kscreen.setArguments(args);
         QDBusConnection::sessionBus().call(kscreen);
     }
+
+    QProcess polkitProcess;
+    polkitProcess.start("/usr/lib/ts-polkitagent");
+
     MainWin = new MainWindow();
 
     new GlobalFilter(&a);

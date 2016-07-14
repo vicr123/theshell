@@ -41,6 +41,10 @@ class theWaveWorker : public QObject
     enum SpeechState {
         Idle,
         TimerGetTime,
+        emailGetRecipient,
+        emailGetSubject,
+        emailGetBody,
+        emailConfirm
     };
 
     QMap<QString, float> numberDictionary;
@@ -54,6 +58,7 @@ public:
 signals:
     void outputSpeech(QString);
     void outputResponse(QString);
+    void outputHint(QString);
     void loudnessChanged(qreal loudness);
     void outputFrame(QFrame *);
     void complete();

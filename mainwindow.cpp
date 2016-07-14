@@ -1052,13 +1052,19 @@ void MainWindow::on_desktopBack_clicked()
 }
 
 void MainWindow::openMenu(bool openTotheWave, bool startListening) {
-    this->setFocus();
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
-    gatewayMenu->show(openTotheWave, startListening);
-    gatewayMenu->setFocus();
+    if (gatewayMenu->isVisible()) {
+        if (openTotheWave) {
+            gatewayMenu->show(openTotheWave, startListening);
 
-    lockHide = true;
+        }
+    } else {
+        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
+        gatewayMenu->show(openTotheWave, startListening);
+        gatewayMenu->setFocus();
+
+        lockHide = true;
+    }
 }
 
 bool MainWindow::isMprisAvailable() {
