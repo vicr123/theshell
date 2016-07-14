@@ -80,7 +80,7 @@ void EndSessionWait::showFullScreen() {
             parts.removeAll("");
             if (parts.length() >= 4) {
                 if (parts[2].toInt() != QCoreApplication::applicationPid()) {
-                    WmWindow *w = new WmWindow(this);
+                    WmWindow *w = new WmWindow();
                     w->setPID(parts[2].toInt());
                     QString title;
                     for (int i = 4; i != parts.length(); i++) {
@@ -138,7 +138,7 @@ void EndSessionWait::on_pushButton_clicked()
         QApplication::processEvents();
     }
 
-    QList<WmWindow*> *wlist = new QList<WmWindow*>();
+    QList<WmWindow> wlist;
 
     QString output(p.readAllStandardOutput());
     for (QString window : output.split("\n")) {
@@ -146,16 +146,16 @@ void EndSessionWait::on_pushButton_clicked()
         parts.removeAll("");
         if (parts.length() >= 4) {
             if (parts[2].toInt() != QCoreApplication::applicationPid()) {
-                WmWindow *w = new WmWindow(this);
-                w->setPID(parts[2].toInt());
+                WmWindow w;
+                w.setPID(parts[2].toInt());
                 QString title;
                 for (int i = 4; i != parts.length(); i++) {
                     title = title.append(" " + parts[i]);
                 }
                 title = title.remove(0, 1);
 
-                w->setTitle(title);
-                wlist->append(w);
+                w.setTitle(title);
+                wlist.append(w);
             }
         }
     }

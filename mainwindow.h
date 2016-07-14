@@ -146,7 +146,7 @@ signals:
 
 private:
     Ui::MainWindow *ui;
-    QList<WmWindow*> *windowList;
+    QList<WmWindow> windowList;
     Menu* gatewayMenu;
 
     QSettings settings;

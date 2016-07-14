@@ -8,37 +8,26 @@
 
 typedef unsigned long Window;
 
-/*#undef None
-#undef Bool
-#undef KeyPress
-#undef KeyRelease
-#undef FocusIn
-#undef FocusOut
-#undef FontChange
-#undef Expose
-#undef Unsorted
-#undef Status*/
-
-class WmWindow : public QObject
+class WmWindow
 {
-    Q_OBJECT
-public:
-    explicit WmWindow(QObject *parent = 0);
 
-    QString title();
+public:
+    explicit WmWindow();
+
+    QString title() const;
     void setTitle(QString);
 
-    unsigned long PID();
+    unsigned long PID() const;
     void setPID(unsigned long);
-    Window WID();
+    Window WID() const;
     void setWID(Window);
-    QIcon icon();
+    QIcon icon() const;
     void setIcon(QIcon);
-    bool attention();
+    bool attention() const;
     void setAttention(bool attention);
-    int desktop();
+    int desktop() const;
     void setDesktop(int desktop);
-    bool isMinimized();
+    bool isMinimized() const;
     void setMinimized(bool minimized);
 signals:
 

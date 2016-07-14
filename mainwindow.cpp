@@ -25,8 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
     FlowLayout* flow = new FlowLayout(ui->windowList);
     ui->windowList->setLayout(flow);
 
-    windowList = new QList<WmWindow*>();
-
     QTimer *timer = new QTimer(this);
     timer->setInterval(100);
     connect(timer, SIGNAL(timeout()), this, SLOT(doUpdate()));
@@ -146,7 +144,7 @@ void MainWindow::on_openMenu_clicked()
 void MainWindow::doUpdate() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    QList<WmWindow*> *wlist = new QList<WmWindow*>();
+    QList<WmWindow> wlist;
 
     int hideTop = screenGeometry.y();
     int okCount = 0;
@@ -261,7 +259,7 @@ void MainWindow::doUpdate() {
             }
         }
         if (retval == 0) {
-            WmWindow *w = new WmWindow();
+            WmWindow w;
 
             int windowx, windowy;
             Window child;
@@ -283,7 +281,7 @@ void MainWindow::doUpdate() {
             if (retval == 0) {
                 if (pidPointer != 0) {
                     unsigned long pid = *pidPointer;
-                    w->setPID(pid);
+                    w.setPID(pid);
                 }
             }
             XFree(pidPointer);
@@ -296,7 +294,7 @@ void MainWindow::doUpdate() {
                 int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_DESKTOP", False), 0, 1024, False,
                                                 XA_CARDINAL, &ReturnType, &format, &items, &bytes, (unsigned char**) &desktop);
                 if (retval == 0 && desktop != 0) {
-                    w->setDesktop(*desktop);
+                    w.setDesktop(*desktop);
                 }
                 XFree(desktop);
             }
@@ -345,15 +343,15 @@ void MainWindow::doUpdate() {
                 }
 
                 QPixmap iconPixmap(QPixmap::fromImage(image).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-                w->setIcon(QIcon(iconPixmap));
+                w.setIcon(QIcon(iconPixmap));
 
                 XFree(icon);
             }
 
-            w->setTitle(title);
-            w->setWID(win);
+            w.setTitle(title);
+            w.setWID(win);
 
-            if (w->PID() != QCoreApplication::applicationPid()) {
+            if (w.PID() != QCoreApplication::applicationPid()) {
                 bool skipTaskbar = false;
 
                 {
@@ -367,11 +365,11 @@ void MainWindow::doUpdate() {
 
                     for (unsigned int i = 0; i < items; i++) {
                         if (atoms[i] == XInternAtom(d, "_NET_WM_STATE_HIDDEN", False)) {
-                            w->setMinimized(true);
+                            w.setMinimized(true);
                         } else if (atoms[i] == XInternAtom(d, "_NET_WM_STATE_SKIP_TASKBAR", False)) {
                             skipTaskbar = true;
                         } else if (atoms[i] == XInternAtom(d, "_NET_WM_STATE_DEMANDS_ATTENTION", False)) {
-                            w->setAttention(true);
+                            w.setAttention(true);
                             demandAttention++;
                         }
                     }
@@ -381,27 +379,23 @@ void MainWindow::doUpdate() {
 
                 if (!skipTaskbar) {
                     if (settings.value("bar/showWindowsFromOtherDesktops", true).toBool() ||
-                                     w->desktop() == currentDesktop) {
-                        if (!w->isMinimized() && windowx >= this->x() &&
+                                     w.desktop() == currentDesktop) {
+                        if (!w.isMinimized() && windowx >= this->x() &&
                                 windowy - 50 <= screenGeometry.y() + this->height() &&
-                                windowy - 50 - this->height() < hideTop && w->desktop() == currentDesktop) {
+                                windowy - 50 - this->height() < hideTop && w.desktop() == currentDesktop) {
                             hideTop = windowy - 50 - this->height();
                         }
 
-                        wlist->append(w);
+                        wlist.append(w);
 
-                        for (WmWindow *wi : *windowList) {
-                            if (wi->title() == w->title()) {
+                        for (WmWindow wi : windowList) {
+                            if (wi.title() == w.title()) {
                                 okCount++;
                                 break;
                             }
                         }
                     }
-                } else {
-                    delete w;
                 }
-            } else {
-                delete w;
             }
 
         }
@@ -411,12 +405,9 @@ void MainWindow::doUpdate() {
         hideTop = screenGeometry.y() - this->height();
     }
 
-    if (okCount != wlist->count() || wlist->count() < windowList->count() || demandAttention != attentionDemandingWindows ||
+    if (okCount != wlist.count() || wlist.count() < windowList.count() || demandAttention != attentionDemandingWindows ||
             oldDesktop != currentDesktop || oldActiveWindow != active) {
-        for (WmWindow* win : *windowList) {
-            delete win;
-        }
-        delete windowList;
+
         windowList = wlist;
 
         QLayoutItem* item;
@@ -425,20 +416,20 @@ void MainWindow::doUpdate() {
             delete item->widget();
             delete item;
         }
-        for (WmWindow *w : *windowList) {
+        for (WmWindow w : windowList) {
             FadeButton *button = new FadeButton();
-            button->setProperty("windowid", QVariant::fromValue(w->WID()));
-            button->setProperty("desktop", QVariant::fromValue(w->desktop()));
+            button->setProperty("windowid", QVariant::fromValue(w.WID()));
+            button->setProperty("desktop", QVariant::fromValue(w.desktop()));
             if (settings.value("bar/showText", true).toBool()) {
-                button->setText(w->title());
+                button->setText(w.title());
             }
             button->setContextMenuPolicy(Qt::CustomContextMenu);
             connect(button, &QPushButton::customContextMenuRequested, [=](const QPoint &pos) {
                 QMenu* menu = new QMenu();
 
-                menu->addSection(w->icon(), "For " + w->title());
+                menu->addSection(w.icon(), "For " + w.title());
                 menu->addAction(QIcon::fromTheme("window-close"), "Close", [=]() {
-                    sendMessageToRootWindow("_NET_CLOSE_WINDOW", w->WID());
+                    sendMessageToRootWindow("_NET_CLOSE_WINDOW", w.WID());
                 });
 
                 lockHide = true;
@@ -446,19 +437,19 @@ void MainWindow::doUpdate() {
                 lockHide = false;
 
             });
-            if (w->isMinimized() || (currentDesktop != w->desktop() && w->desktop() != 0xFFFFFFFF)) {
+            if (w.isMinimized() || (currentDesktop != w.desktop() && w.desktop() != 0xFFFFFFFF)) {
                 button->setFade(true);
             }
-            if (active == w->WID()) {
+            if (active == w.WID()) {
                 button->setCheckable(true);
                 button->setChecked(true);
                 connect(button, &FadeButton::toggled, [=]() {
                     button->setChecked(true);
                 });
             }
-            button->setIcon(w->icon());
+            button->setIcon(w.icon());
             connect(button, SIGNAL(clicked(bool)), this, SLOT(ActivateWindow()));
-            if (w->attention()) {
+            if (w.attention()) {
                 button->setStyleSheet("background-color: #A00;");
             }
             ui->windowList->layout()->addWidget(button);

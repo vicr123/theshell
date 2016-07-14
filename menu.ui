@@ -181,7 +181,7 @@
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>Exit theShell</string>
+          <string>End Session</string>
          </property>
          <property name="icon">
           <iconset theme="system-shutdown">
@@ -222,7 +222,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Exit</string>
+         <string>End Session</string>
         </property>
        </widget>
       </item>
