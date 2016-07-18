@@ -4,11 +4,11 @@
 #include <QObject>
 #include <QIcon>
 
-class App : public QObject
+class App
 {
-    Q_OBJECT
+
 public:
-    explicit App(QObject *parent = 0);
+    explicit App();
 
     QString name();
     void setName(QString name);

@@ -14,12 +14,15 @@ public:
 
     bool fade();
     void setFade(bool fade);
+
+    void setFullText(QString fullText);
 signals:
 
 public slots:
 
 private:
     bool f = false;
+    QString txt;
 };
 
 #endif // FADEBUTTON_H

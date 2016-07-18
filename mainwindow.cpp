@@ -421,7 +421,7 @@ void MainWindow::doUpdate() {
             button->setProperty("windowid", QVariant::fromValue(w.WID()));
             button->setProperty("desktop", QVariant::fromValue(w.desktop()));
             if (settings.value("bar/showText", true).toBool()) {
-                button->setText(w.title());
+                button->setFullText(w.title());
             }
             button->setContextMenuPolicy(Qt::CustomContextMenu);
             connect(button, &QPushButton::customContextMenuRequested, [=](const QPoint &pos) {

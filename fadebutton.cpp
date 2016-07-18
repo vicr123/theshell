@@ -22,3 +22,9 @@ void FadeButton::setFade(bool fade) {
     this->setPalette(pal);
     this->repaint();
 }
+
+void FadeButton::setFullText(QString fullText) {
+    this->txt = fullText;
+    QFontMetrics metrics(this->font());
+    this->setText(metrics.elidedText(fullText, Qt::ElideRight, 200));
+}

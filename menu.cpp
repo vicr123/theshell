@@ -50,13 +50,12 @@ Menu::Menu(QWidget *parent) :
         //ui->label_4->setText(fullname + ", what do you want to do now?");
     }
 
-
-    apps = new QList<App*>();
-    appsShown = new QList<App*>();
-
     ui->listWidget->installEventFilter(this);
-
+    ui->activateTheWave->installEventFilter(this);
+    ui->pushButton->installEventFilter(this);
+    ui->pushButton_3->installEventFilter(this);
     this->installEventFilter(this);
+
 
     if (QFile("/usr/bin/install_theos").exists()) {
         ui->InstallLayout->setVisible(true);
@@ -105,7 +104,7 @@ void Menu::show(bool openTotheWave, bool startListening) {
         ui->offFrame->setGeometry(10, this->height(), this->width() - 20, this->height() - 20);
         ui->thewaveFrame->setGeometry(10, this->height(), this->width() - 20, this->height() - 20);
 
-        apps->clear();
+        apps.clear();
         ui->listWidget->clear();
         ui->lineEdit->setText("");
 
@@ -131,14 +130,14 @@ void Menu::show(bool openTotheWave, bool startListening) {
                 desktopLines.append(currentDesktopLine);
 
                 for (QString desktopPart : desktopLines) {
-                    App *app = new App();
+                    App app;
                     bool isApplication = false;
                     bool display = true;
                     for (QString line : desktopPart.split("\n")) {
                         if (line.startsWith("genericname=", Qt::CaseInsensitive)) {
-                            app->setDescription(line.split("=")[1]);
+                            app.setDescription(line.split("=")[1]);
                         } else if (line.startsWith("name=", Qt::CaseInsensitive)) {
-                            app->setName(line.split("=")[1]);
+                            app.setName(line.split("=")[1]);
                         } else if (line.startsWith("icon=", Qt::CaseInsensitive)) {
                             QString iconname = line.split("=")[1];
                             QIcon icon;
@@ -147,13 +146,13 @@ void Menu::show(bool openTotheWave, bool startListening) {
                             } else {
                                 icon = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
                             }
-                            app->setIcon(icon);
+                            app.setIcon(icon);
                         } else if (line.startsWith("exec=", Qt::CaseInsensitive)) {
                             QStringList command = line.split("=");
                             command.removeFirst();
-                            app->setCommand(command.join("=").remove(QRegExp("%.")));
+                            app.setCommand(command.join("=").remove(QRegExp("%.")));
                         } else if (line.startsWith("description=", Qt::CaseInsensitive)) {
-                            app->setDescription(line.split("=")[1]);
+                            app.setDescription(line.split("=")[1]);
                         } else if (line.startsWith("type=", Qt::CaseInsensitive)) {
                             if (line.split("=")[1] == "Application") {
                                 isApplication = true;
@@ -174,29 +173,29 @@ void Menu::show(bool openTotheWave, bool startListening) {
                         }
                     }
                     if (isApplication && display) {
-                        apps->append(app);
+                        apps.append(app);
                     }
                 }
             }
         }
 
-        App *waveApp = new App();
-        waveApp->setCommand("thewave");
-        waveApp->setIcon(QIcon(":/icons/thewave.svg"));
-        waveApp->setName("theWave");
-        waveApp->setDescription("Personal Assistant");
-        apps->append(waveApp);
+        App waveApp;
+        waveApp.setCommand("thewave");
+        waveApp.setIcon(QIcon(":/icons/thewave.svg"));
+        waveApp.setName("theWave");
+        waveApp.setDescription("Personal Assistant");
+        apps.append(waveApp);
 
-        for (App *app : *apps) {
+        for (App app : apps) {
             QListWidgetItem *i = new QListWidgetItem();
-            if (app->description() == "") {
-                i->setText(app->name());
+            if (app.description() == "") {
+                i->setText(app.name());
             } else {
-                i->setText(app->description() + " | " + app->name());
+                i->setText(app.description() + " | " + app.name());
             }
-            i->setIcon(app->icon());
-            i->setData(Qt::UserRole, app->command());
-            appsShown->append(app);
+            i->setIcon(app.icon());
+            i->setData(Qt::UserRole, app.command());
+            appsShown.append(app);
             ui->listWidget->addItem(i);
         }
 
@@ -424,18 +423,18 @@ void Menu::on_listWidget_itemClicked(QListWidgetItem *item)
 void Menu::on_lineEdit_textEdited(const QString &arg1)
 {
     ui->listWidget->clear();
-    appsShown->clear();
+    appsShown.clear();
     if (arg1 == "") {
-        for (App *app : *apps) {
+        for (App app : apps) {
             QListWidgetItem *i = new QListWidgetItem();
-            if (app->description() == "") {
-                i->setText(app->name());
+            if (app.description() == "") {
+                i->setText(app.name());
             } else {
-                i->setText(app->description() + " | " + app->name());
+                i->setText(app.description() + " | " + app.name());
             }
-            i->setIcon(app->icon());
-            i->setData(Qt::UserRole, app->command());
-            appsShown->append(app);
+            i->setIcon(app.icon());
+            i->setData(Qt::UserRole, app.command());
+            appsShown.append(app);
             ui->listWidget->addItem(i);
         }
     } else {
@@ -591,17 +590,17 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             }
         }
 
-        for (App *app : *apps) {
-            if (app->name().contains(arg1, Qt::CaseInsensitive) || app->description().contains(arg1, Qt::CaseInsensitive)) {
+        for (App app : apps) {
+            if (app.name().contains(arg1, Qt::CaseInsensitive) || app.description().contains(arg1, Qt::CaseInsensitive)) {
                 QListWidgetItem *i = new QListWidgetItem();
-                if (app->description() == "") {
-                    i->setText(app->name());
+                if (app.description() == "") {
+                    i->setText(app.name());
                 } else {
-                    i->setText(app->description() + " | " + app->name());
+                    i->setText(app.description() + " | " + app.name());
                 }
-                i->setIcon(app->icon());
-                i->setData(Qt::UserRole, app->command());
-                appsShown->append(app);
+                i->setIcon(app.icon());
+                i->setData(Qt::UserRole, app.command());
+                appsShown.append(app);
                 ui->listWidget->addItem(i);
 
             }
@@ -630,16 +629,16 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
         QString pathEnv = QProcessEnvironment::systemEnvironment().value("PATH");
         for (QString env : pathEnv.split(":")) {
             if (QFile(env.append("/" + arg1.split(" ")[0])).exists()) {
-                App* app = new App();
-                app->setName(arg1);
-                app->setCommand(arg1);
-                app->setIcon(QIcon::fromTheme("system-run"));
-                appsShown->append(app);
+                App app;
+                app.setName(arg1);
+                app.setCommand(arg1);
+                app.setIcon(QIcon::fromTheme("system-run"));
+                appsShown.append(app);
 
                 QListWidgetItem *i = new QListWidgetItem();
-                i->setText(app->name());
-                i->setIcon(app->icon());
-                i->setData(Qt::UserRole, app->command());
+                i->setText(app.name());
+                i->setIcon(app.icon());
+                i->setData(Qt::UserRole, app.command());
                 ui->listWidget->addItem(i);
                 break;
             }
@@ -647,44 +646,44 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
 
         QUrl uri = QUrl::fromUserInput(arg1);
         if (uri.scheme() == "http" || uri.scheme() == "https") {
-            App* app = new App();
-            app->setName("Go to " + uri.toDisplayString());
-            app->setCommand("xdg-open \"" + uri.toString() + "\"");
-            app->setIcon(QIcon::fromTheme("text-html"));
-            appsShown->append(app);
+            App app;
+            app.setName("Go to " + uri.toDisplayString());
+            app.setCommand("xdg-open \"" + uri.toString() + "\"");
+            app.setIcon(QIcon::fromTheme("text-html"));
+            appsShown.append(app);
 
             QListWidgetItem *i = new QListWidgetItem();
-            i->setText(app->name());
-            i->setIcon(app->icon());
-            i->setData(Qt::UserRole, app->command());
+            i->setText(app.name());
+            i->setIcon(app.icon());
+            i->setData(Qt::UserRole, app.command());
             ui->listWidget->addItem(i);
         } else if (uri.scheme() == "file") {
             if (QDir(uri.path() + "/").exists()) {
-                App* app = new App();
-                app->setName("Open " + uri.path());
-                app->setCommand("xdg-open \"" + uri.toString() + "\"");
-                app->setIcon(QIcon::fromTheme("system-file-manager"));
-                appsShown->append(app);
+                App app;
+                app.setName("Open " + uri.path());
+                app.setCommand("xdg-open \"" + uri.toString() + "\"");
+                app.setIcon(QIcon::fromTheme("system-file-manager"));
+                appsShown.append(app);
 
                 QListWidgetItem *i = new QListWidgetItem();
-                i->setText(app->name());
-                i->setIcon(app->icon());
-                i->setData(Qt::UserRole, app->command());
+                i->setText(app.name());
+                i->setIcon(app.icon());
+                i->setData(Qt::UserRole, app.command());
                 ui->listWidget->addItem(i);
             } else if (QFile(uri.path()).exists()) {
-                App* app = new App();
-                app->setName("Open " + uri.path());
-                app->setCommand("xdg-open \"" + uri.toString() + "\"");
+                App app;
+                app.setName("Open " + uri.path());
+                app.setCommand("xdg-open \"" + uri.toString() + "\"");
                 QFile f(uri.toString());
                 QFileInfo info(f);
                 QMimeType mime = (new QMimeDatabase())->mimeTypeForFile(info);
-                app->setIcon(QIcon::fromTheme(mime.iconName(), QIcon::fromTheme("application-octet-stream")));
-                appsShown->append(app);
+                app.setIcon(QIcon::fromTheme(mime.iconName(), QIcon::fromTheme("application-octet-stream")));
+                appsShown.append(app);
 
                 QListWidgetItem *i = new QListWidgetItem();
-                i->setText(app->name());
-                i->setIcon(app->icon());
-                i->setData(Qt::UserRole, app->command());
+                i->setText(app.name());
+                i->setIcon(app.icon());
+                i->setData(Qt::UserRole, app.command());
                 ui->listWidget->addItem(i);
             }
         }
@@ -697,8 +696,6 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             ui->listWidget->addItem(wave);
         }
     }
-
-
 }
 
 bool Menu::eventFilter(QObject *object, QEvent *event) {
@@ -706,7 +703,8 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
         this->close();
         return true;
     } else {
-        if (object != ui->thewave_line && object != ui->lineEdit) {
+        //if (object != ui->thewave_line && object != ui->lineEdit) {
+        //if (ui->thewave_line->hasFocus() || ui->lineEdit->hasFocus()) {
             if (event->type() == QEvent::KeyPress) {
                 QKeyEvent *e = (QKeyEvent*) event;
                 if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
@@ -720,7 +718,7 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
                             on_lineEdit_returnPressed();
                         }
                     }
-                    return false;
+                    event->ignore();
                 } else {
                     if (istheWaveReady) {
                         ui->thewave_line->setText(ui->thewave_line->text().append(e->text())); //Type letter into theWave
@@ -769,9 +767,13 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
             } else {
                 return QDialog::eventFilter(object, event);
             }
-        } else {
+        /*} else {
+            if (event->type() == QEvent::KeyPress) {
+                event->ignore();
+                return true;
+            }
             return QDialog::eventFilter(object, event);
-        }
+        }*/
     }
 }
 
@@ -880,9 +882,9 @@ void Menu::on_activateTheWave_clicked()
             isListening = false;
         });
         connect(waveWorker, &theWaveWorker::doLaunchApp, [=](QString appName) {
-            for (App *app : *this->apps) {
-                if (app->name() == appName) {
-                    QProcess::startDetached(app->command().remove("%u"));
+            for (App app : this->apps) {
+                if (app.name() == appName) {
+                    QProcess::startDetached(app.command().remove("%u"));
                     this->close();
                 }
             }
@@ -1119,9 +1121,9 @@ void Menu::on_closetheWaveButton_2_clicked()
 
 void Menu::thewave_launchapp(QString appName) {
     ui->thewave_launchFrame->setVisible(true);
-    QList<App*> apps;
-    for (App *app : *this->apps) {
-        if (app->name().remove(" ").contains(appName.remove(" "), Qt::CaseInsensitive)) {
+    QList<App> apps;
+    for (App app : this->apps) {
+        if (app.name().remove(" ").contains(appName.remove(" "), Qt::CaseInsensitive)) {
             apps.append(app);
         }
     }
@@ -1141,12 +1143,12 @@ void Menu::thewave_launchapp(QString appName) {
         ui->thewave_launch_launchapp->setVisible(true);
         ui->thewave_spacerFrame->setVisible(true);
 
-        ui->thewave_launch_appName->setText(apps.first()->name());
-        ui->thewave_launch_appIcon->setPixmap(apps.first()->icon().pixmap(64));
-        ui->thewave_launch_launchapp->setProperty("appcommand", apps.first()->command());
+        ui->thewave_launch_appName->setText(apps.first().name());
+        ui->thewave_launch_appIcon->setPixmap(apps.first().icon().pixmap(64));
+        ui->thewave_launch_launchapp->setProperty("appcommand", apps.first().command());
 
 
-        emit thewave_sayLaunchApp(apps.first()->name());
+        emit thewave_sayLaunchApp(apps.first().name());
     } else {
         ui->thewave_launch_error->setVisible(false);
         ui->thewave_launchOneAppFrame->setVisible(false);
@@ -1155,13 +1157,13 @@ void Menu::thewave_launchapp(QString appName) {
 
         ui->thewave_launch_disambiguation->clear();
         QStringList appNames;
-        for (App *app : apps) {
+        for (App app : apps) {
             QListWidgetItem* item = new QListWidgetItem();
-            item->setText(app->name());
-            item->setIcon(app->icon());
-            item->setData(Qt::UserRole, app->command());
+            item->setText(app.name());
+            item->setIcon(app.icon());
+            item->setData(Qt::UserRole, app.command());
             ui->thewave_launch_disambiguation->addItem(item);
-            appNames.append(app->name());
+            appNames.append(app.name());
         }
 
         emit (thewave_sayLaunchApp_disambiguation(appNames));

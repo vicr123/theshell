@@ -550,6 +550,9 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                         if (base == 0 && exponent == 0) {
                             hasErrorOccurred = true;
                             errorMessage = "0^0";
+                        } else if (base == 0 && exponent < 0) {
+                            hasErrorOccurred = true;
+                            errorMessage = "0^neg";
                         } else {
                             float result = qPow(base, exponent);
                             if (exponent < 0) {
@@ -759,6 +762,10 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                             emit showMathematicsFrame(displayExpression, "undefined");
                             emit outputResponse("I can't raise 0 to the power of 0.");
                             speak("I can't raise 0 to the power of 0.");
+                        } else if (errorMessage == "0^neg") {
+                            emit showMathematicsFrame(displayExpression, "undefined");
+                            emit outputResponse("I can't raise 0 to the power of a negative number. That would be dividing by zero, which is bad.");
+                            speak("I can't raise 0 to the power of a negative number. That would be dividing by zero, which is bad.");
                         } else if (errorMessage == "factorialNeg") {
                             emit showMathematicsFrame(displayExpression, "undefined");
                             emit outputResponse("I can't calculate the factorial of a negative number.");

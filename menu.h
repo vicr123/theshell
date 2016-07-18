@@ -169,8 +169,8 @@ private:
     bool checkFocus(QLayout *layout);
     QSettings settings;
 
-    QList<App*> *apps;
-    QList<App*> *appsShown;
+    QList<App> apps;
+    QList<App> appsShown;
 
     bool doCheckForClose = false;
     bool istheWaveOpen = false;
