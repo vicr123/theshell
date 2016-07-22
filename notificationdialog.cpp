@@ -1,6 +1,8 @@
 #include "notificationdialog.h"
 #include "ui_notificationdialog.h"
 
+extern QIcon getIconFromTheme(QString name, QColor textColor);
+
 NotificationDialog::NotificationDialog(QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NotificationDialog)
@@ -46,6 +48,11 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
     //w.setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width(), w.height());
     this->setGeometry(QRect(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height()));
 
+    QColor color = this->palette().color(QPalette::Window);
+
+
+    // Don't forget to add extra categories to the notificationdbus class too!
+
     if (hints.keys().contains("category")) {
         QString category = hints.value("category").toString();
         if (category == "network.connected") {
@@ -54,6 +61,16 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
             ui->label->setPixmap(QIcon::fromTheme("network-disconnect").pixmap(24, 24));
         } else if (category == "email.arrived") {
             ui->label->setPixmap(QIcon::fromTheme("mail-receive").pixmap(24, 24));
+        } else if (category == "battery.charging") {
+            ui->label->setPixmap(getIconFromTheme("battery-charging.svg", color).pixmap(24, 24));
+        } else if (category == "battery.charged") {
+            ui->label->setPixmap(getIconFromTheme("battery-charged.svg", color).pixmap(24, 24));
+        } else if (category == "battery.discharging") {
+            ui->label->setPixmap(getIconFromTheme("battery-not-charging.svg", color).pixmap(24, 24));
+        } else if (category == "battery.low") {
+            ui->label->setPixmap(getIconFromTheme("battery-low.svg", color).pixmap(24, 24));
+        } else if (category == "battery.critical") {
+            ui->label->setPixmap(getIconFromTheme("battery-critical.svg", color).pixmap(24, 24));
         } else {
             ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(24, 24));
         }

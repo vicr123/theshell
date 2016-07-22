@@ -15,6 +15,7 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/shatter"), ""));
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/slice"), ""));
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/nav"), ""));
+    ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/leftwaves"), ""));
 
     if (backPath.startsWith("inbuilt:")) { //Inbuilt background
         ui->radioButton->setChecked(true);
@@ -31,6 +32,8 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
             ui->listWidget->item(4)->setSelected(true);
         } else if (selection == "nav") {
             ui->listWidget->item(5)->setSelected(true);
+        } else if (selection == "leftwaves") {
+            ui->listWidget->item(6)->setSelected(true);
         }
         ui->lineEdit->setEnabled(false);
         ui->pushButton_2->setEnabled(false);
@@ -107,6 +110,10 @@ void ChooseBackground::on_listWidget_currentRowChanged(int currentRow)
         break;
     case 5:
         settings.setValue("desktop/background", "inbuilt:nav");
+        emit reloadBackgrounds();
+        break;
+    case 6:
+        settings.setValue("desktop/background", "inbuilt:leftwaves");
         emit reloadBackgrounds();
         break;
     }

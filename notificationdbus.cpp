@@ -1,5 +1,7 @@
 #include "notificationdbus.h"
 
+extern QIcon getIconFromTheme(QString name, QColor textColor);
+
 NotificationDBus::NotificationDBus(QObject *parent) : QObject(parent)
 {
     new NotificationsAdaptor(this);
@@ -56,8 +58,29 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
     }
 
     if (!transient) {
+
+        QColor color = QApplication::palette("QLabel").color(QPalette::Window);
         QIcon icon = QIcon::fromTheme("dialog-warning");
-        if (hints.keys().contains("urgency")) {
+        if (hints.keys().contains("category")) {
+            QString category = hints.value("category").toString();
+            if (category == "network.connected") {
+                icon = QIcon::fromTheme("network-connect").pixmap(24, 24);
+            } else if (category == "network.disconnected") {
+                icon = QIcon::fromTheme("network-disconnect").pixmap(24, 24);
+            } else if (category == "email.arrived") {
+                icon = QIcon::fromTheme("mail-receive").pixmap(24, 24);
+            } else if (category == "battery.charging") {
+                icon = getIconFromTheme("battery-charging.svg", color).pixmap(24, 24);
+            } else if (category == "battery.charged") {
+                icon = getIconFromTheme("battery-charged.svg", color).pixmap(24, 24);
+            } else if (category == "battery.discharging") {
+                icon = getIconFromTheme("battery-not-charging.svg", color).pixmap(24, 24);
+            } else if (category == "battery.low") {
+                icon = getIconFromTheme("battery-low.svg", color).pixmap(24, 24);
+            } else if (category == "battery.critical") {
+                icon = getIconFromTheme("battery-critical.svg", color).pixmap(24, 24);
+            }
+        } else if (hints.keys().contains("urgency")) {
             QChar urgency = hints.value("urgency").toChar();
             if (urgency == 0) {
                 icon = QIcon::fromTheme("dialog-information");

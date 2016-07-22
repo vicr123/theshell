@@ -36,6 +36,9 @@ private:
     bool halfHourBatteryWarning = false;
     bool tenMinuteBatteryWarning = false;
 
+    bool isCharging = false;
+    bool isConnectedToPower = false;
+
     int batteryLowNotificationNumber = 0;
 
     NotificationDBus* notificationDBus;

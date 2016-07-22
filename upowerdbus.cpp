@@ -50,9 +50,21 @@ void UPowerDBus::DeviceChanged() {
         qulonglong timeToEmpty = i->property("TimeToEmpty").toULongLong();
         QString state;
         switch (i->property("State").toUInt()) {
-        case 1:
-
+        case 1: //Charging
             state = " and charging";
+
+            if (!isCharging) {
+                QVariantMap hints;
+                hints.insert("category", "battery.charging");
+                hints.insert("transient", true);
+                this->notificationDBus->Notify("theShell", 0, "", "Charging",
+                                               "The power cable has been plugged in and the battery is now being charged."
+                                               , QStringList(), hints, 10000);
+            }
+
+            isCharging = true;
+            isConnectedToPower = true;
+
             if (timeToFull != 0) {
                 state.append(" (" + QDateTime::fromTime_t(timeToFull).toUTC().toString("h:mm") + ")");
             }
@@ -65,49 +77,86 @@ void UPowerDBus::DeviceChanged() {
                 batteryLowNotificationNumber = 0;
             }
             break;
-        case 2:
+        case 2: //Discharging
             state = " battery left";
-                if (timeToEmpty != 0) {
-                    state.append(" (" + QDateTime::fromTime_t(timeToEmpty).toUTC().toString("h:mm") + ")");
+            if (isConnectedToPower) {
+                QVariantMap hints;
+                hints.insert("category", "battery.discharging");
+                hints.insert("transient", true);
+                this->notificationDBus->Notify("theShell", 0, "", "Discharging",
+                                               "The power cable has been removed, and your PC is now running on battery power."
+                                               , QStringList(), hints, 10000);
+            }
+            isConnectedToPower = false;
+            isCharging = false;
 
-                    if (timeToEmpty <= 600 && tenMinuteBatteryWarning == false) { //Ten minutes left! Critical!
-                        QVariantMap hints;
-                        hints.insert("urgency", 2);
-                        batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Critically Low",
-                                                       "You have about 10 minutes of battery remaining."
-                                                       " Either plug in your PC or save your work"
-                                                       " and power off the PC and change the battery.", QStringList(), hints, 0);
+            if (timeToEmpty != 0) {
+                state.append(" (" + QDateTime::fromTime_t(timeToEmpty).toUTC().toString("h:mm") + ")");
 
-                        tenMinuteBatteryWarning = true;
-                        halfHourBatteryWarning = true;
-                        hourBatteryWarning = true;
-                    } else if (timeToEmpty <= 1800 && halfHourBatteryWarning == false) { //Half hour left! Low!
-                        batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Low",
-                                                       "You have about half an hour of battery remaining."
-                                                       " You should plug in your PC now.", QStringList(), QVariantMap(), 10000);
+                if (timeToEmpty <= 600 && tenMinuteBatteryWarning == false) { //Ten minutes left! Critical!
+                    QVariantMap hints;
+                    hints.insert("urgency", 2);
+                    hints.insert("category", "battery.critical");
+                    batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Critically Low",
+                                                   "You have about 10 minutes of battery remaining."
+                                                   " Either plug in your PC or save your work"
+                                                   " and power off the PC and change the battery.", QStringList(), hints, 0);
+
+                    tenMinuteBatteryWarning = true;
+                    halfHourBatteryWarning = true;
+                    hourBatteryWarning = true;
+                } else if (timeToEmpty <= 1800 && halfHourBatteryWarning == false) { //Half hour left! Low!
+                    QVariantMap hints;
+                    hints.insert("category", "battery.low");
+                    batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Low",
+                                                   "You have about half an hour of battery remaining."
+                                                   " You should plug in your PC now.", QStringList(), hints, 10000);
 
 
-                        halfHourBatteryWarning = true;
-                        hourBatteryWarning = true;
-                    } else if (timeToEmpty <= 3600 && hourBatteryWarning == false) { //One hour left! Warning!
-                        batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Warning",
-                                                       "You have about an hour of battery remaining."
-                                                        " You may want to plug in your PC now.", QStringList(), QVariantMap(), 10000);
-                        hourBatteryWarning = true;
-                    }
+                    halfHourBatteryWarning = true;
+                    hourBatteryWarning = true;
+                } else if (timeToEmpty <= 3600 && hourBatteryWarning == false) { //One hour left! Warning!
+                    QVariantMap hints;
+                    hints.insert("urgency", 2);
+                    hints.insert("category", "battery.low");
+                    batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Warning",
+                                                   "You have about an hour of battery remaining."
+                                                    " You may want to plug in your PC now.", QStringList(), hints, 10000);
+                    hourBatteryWarning = true;
                 }
+            }
             break;
-        case 3:
+        case 3: //Empty
             state = " - Empty";
             break;
-        case 4:
+        case 4: //Charged
             state = " Fully Charged.";
+            if (isCharging) {
+                QVariantMap hints;
+                hints.insert("category", "battery.charged");
+                hints.insert("transient", true);
+                this->notificationDBus->Notify("theShell", 0, "", "Battery Charged",
+                                               "The battery has been charged completely."
+                                               , QStringList(), hints, 10000);
+            }
+            isCharging = false;
+            isConnectedToPower = true;
             break;
-        case 5:
+        case 5: //Pending Charge
             state = " Not charging";
             break;
-        case 6:
+        case 6: //Pending Discharge
             state = " Fully Charged.";
+            if (isCharging) {
+                QVariantMap hints;
+                hints.insert("category", "battery.charged");
+                hints.insert("transient", true);
+                this->notificationDBus->Notify("theShell", 0, "", "Battery Charged",
+                                               "The battery has been charged completely."
+                                               , QStringList(), hints, 10000);
+            }
+            isCharging = false;
+            isConnectedToPower = true;
             break;
         }
 

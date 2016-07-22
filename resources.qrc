@@ -9,9 +9,19 @@
     </qresource>
     <qresource prefix="/icons/dark">
         <file>images/dark/flight.svg</file>
+        <file>images/dark/battery-charged.svg</file>
+        <file>images/dark/battery-charging.svg</file>
+        <file>images/dark/battery-not-charging.svg</file>
+        <file>images/dark/battery-low.svg</file>
+        <file>images/dark/battery-critical.svg</file>
     </qresource>
     <qresource prefix="/icons/light">
         <file>images/light/flight.svg</file>
+        <file>images/light/battery-charged.svg</file>
+        <file>images/light/battery-charging.svg</file>
+        <file>images/light/battery-not-charging.svg</file>
+        <file>images/light/battery-low.svg</file>
+        <file>images/light/battery-critical.svg</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icon.svg</file>
@@ -33,5 +43,6 @@
         <file alias="shatter">backgrounds/shatter</file>
         <file alias="slice">backgrounds/slice</file>
         <file alias="nav">backgrounds/nav</file>
+        <file alias="leftwaves">backgrounds/leftwaves</file>
     </qresource>
 </RCC>

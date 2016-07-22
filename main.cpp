@@ -47,21 +47,16 @@ void catch_signal(int signal) {
 
 int main(int argc, char *argv[])
 {
-    /*struct sigaction segvact;
-    segvact.sa_handler = catch_signal;
-    sigemptyset(&segvact.sa_mask);
-    segvact.sa_flags = 0;
-    sigaction(SIGSEGV, &segvact, 0);*/
-
-    signal(SIGSEGV, *catch_signal);
-    signal(SIGBUS, *catch_signal);
-    signal(SIGABRT, *catch_signal);
-    signal(SIGILL, *catch_signal);
+    signal(SIGSEGV, *catch_signal); //Catch SIGSEGV
+    signal(SIGBUS, *catch_signal); //Catch SIGBUS
+    signal(SIGABRT, *catch_signal); //Catch SIGABRT
+    signal(SIGILL, *catch_signal); //Catch SIGILL
 
     QApplication a(argc, argv);
 
     bool showSplash = true;
     bool autoStart = true;
+    bool startKscreen = true;
 
     QStringList args = a.arguments();
     args.removeFirst();
@@ -71,12 +66,15 @@ int main(int argc, char *argv[])
             qDebug() << "Usage: theshell [OPTIONS]";
             qDebug() << "  -s, --no-splash-screen       Don't show the splash screen";
             qDebug() << "  -a, --no-autostart           Don't autostart executables";
+            qDebug() << "  -k, --no-kscreen             Don't autostart KScreen";
             qDebug() << "  -h, --help                   Show this help output";
             return 0;
         } else if (arg == "-s" || arg == "--no-splash-screen") {
             showSplash = false;
         } else if (arg == "-a" || arg == "--no-autostart") {
             autoStart = false;
+        } else if (arg == "-k" || arg == "--no-kscreen") {
+            startKscreen = false;
         }
     }
 
@@ -97,7 +95,7 @@ int main(int argc, char *argv[])
     lockfile.write(QByteArray());
     lockfile.close();
 
-    {
+    if (startKscreen) {
         QDBusMessage kscreen = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
         QVariantList args;
         args.append("kscreen");
