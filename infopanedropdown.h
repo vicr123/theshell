@@ -145,7 +145,7 @@ private slots:
 
     void on_lockScreenBackground_textEdited(const QString &arg1);
 
-    void notificationClosed(int id, int reason);
+    void notificationClosed(uint id, uint reason);
 
     void newNetworkDevice(QDBusObjectPath device);
 
@@ -162,6 +162,10 @@ private slots:
     void on_thewaveTTSsilent_clicked();
 
     void on_theWaveSwitch_toggled(bool checked);
+
+    void bluetoothEnabledChanged();
+
+    void on_BluetoothSwitch_toggled(bool checked);
 
 public slots:
     void getNetworks();

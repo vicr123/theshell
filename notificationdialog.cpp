@@ -36,7 +36,6 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
             uint id2 = id;
             QString key = action;
             dbusParent->invokeAction(id2, key);
-            this->close(2);
         });
         ui->actionsLayout->addWidget(button);
     }

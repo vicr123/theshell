@@ -17,7 +17,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     connect(notificationEngine, SIGNAL(newNotification(int,QString,QString,QIcon)), this, SLOT(newNotificationReceived(int,QString,QString,QIcon)));
     connect(notificationEngine, SIGNAL(removeNotification(int)), this, SLOT(removeNotification(int)));
-    connect(notificationEngine, SIGNAL(NotificationClosed(int,int)), this, SLOT(notificationClosed(int,int)));
+    connect(notificationEngine, SIGNAL(NotificationClosed(uint,uint)), this, SLOT(notificationClosed(uint,uint)));
     connect(this, SIGNAL(closeNotification(int)), notificationEngine, SLOT(CloseNotificationUserInitiated(int)));
 
     connect(powerEngine, SIGNAL(batteryChanged(int)), this, SLOT(batteryLevelChanged(int)));
@@ -46,6 +46,18 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
         }
 
         delete i;
+    }
+
+    {
+        QDBusInterface interface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus());
+
+        if (interface.isValid()) {
+            ui->BluetoothSwitch->setEnabled(true);
+            ui->BluetoothSwitch->setChecked(interface.property("BluetoothEnabled").toBool());
+            QDBusConnection::sessionBus().connect("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", "BluetoothEnabledChanged", this, SLOT(bluetoothEnabledChanged()));
+        } else {
+            ui->BluetoothSwitch->setEnabled(false);
+        }
     }
 
     connect(this, &InfoPaneDropdown::networkLabelChanged, [=](QString label) {
@@ -147,6 +159,10 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 InfoPaneDropdown::~InfoPaneDropdown()
 {
     delete ui;
+}
+
+void InfoPaneDropdown::bluetoothEnabledChanged() {
+    ui->BluetoothSwitch->setChecked(QDBusInterface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus()).property("BluetoothEnabled").toBool());
 }
 
 void InfoPaneDropdown::newNetworkDevice(QDBusObjectPath device) {
@@ -415,8 +431,35 @@ void InfoPaneDropdown::getNetworks() {
             {
                 QDBusInterface *wire = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wired", QDBusConnection::systemBus(), this);
                 if (wire->property("Carrier").toBool()) { //Connected to a network
+                    if (!connectedNetworks.keys().contains(interface)) {
+                        connectedNetworks.insert(interface, "true");
+                    } else {
+                        if (connectedNetworks.value(interface) == "false") {
+                            connectedNetworks.insert(interface, "false");
+                            QVariantMap hints;
+                            hints.insert("category", "network.disconnected");
+                            hints.insert("transient", true);
+                            notificationEngine->Notify("theShell", 0, "", "Wired Connection",
+                                                       "You've been disconnected from the internet over a wired connection",
+                                                       QStringList(), hints, -1);
+                        }
+                    }
                     NetworkLabel = "Connected over a wired connection";
                     NetworkLabelType = NetworkType::Wired;
+                } else {
+                    if (!connectedNetworks.keys().contains(interface)) {
+                        connectedNetworks.insert(interface, "false");
+                    } else {
+                        if (connectedNetworks.value(interface) == "true") {
+                            connectedNetworks.insert(interface, "true");
+                            QVariantMap hints;
+                            hints.insert("category", "network.connected");
+                            hints.insert("transient", true);
+                            notificationEngine->Notify("theShell", 0, "", "Wired Connection",
+                                                       "You're now connected to the internet over a wired connection",
+                                                       QStringList(), hints, -1);
+                        }
+                    }
                 }
                 delete wire;
             }
@@ -439,7 +482,7 @@ void InfoPaneDropdown::getNetworks() {
                                     hints.insert("category", "network.disconnected");
                                     hints.insert("transient", true);
                                     notificationEngine->Notify("theShell", 0, "", "Wireless Connection",
-                                                               "You've been disconnected from the internet",
+                                                               "You've been disconnected from the internet over a wireless connection",
                                                                QStringList(), hints, -1);
                                 }
                             }
@@ -537,9 +580,38 @@ void InfoPaneDropdown::getNetworks() {
                 if (NetworkLabelType < NetworkType::Bluetooth) {
                     QDBusInterface *bt = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Bluetooth", QDBusConnection::systemBus(), this);
                     switch (deviceInterface->property("State").toInt()) {
-                        case 100:
+                    case 100:
+                        if (!connectedNetworks.keys().contains(interface)) {
+                            connectedNetworks.insert(interface, "true");
+                        } else {
+                            if (connectedNetworks.value(interface) == "false") {
+                                connectedNetworks.insert(interface, "true");
+                                QVariantMap hints;
+                                hints.insert("category", "network.connected");
+                                hints.insert("transient", true);
+                                notificationEngine->Notify("theShell", 0, "", "Bluetooth Connection",
+                                                           "You're now connected to the internet over a bluetooth connection",
+                                                           QStringList(), hints, -1);
+                            }
+                        }
+
                         NetworkLabel = "Connected to " + bt->property("Name").toString() + " over Bluetooth";
                         NetworkLabelType = NetworkType::Bluetooth;
+                        break;
+                    default:
+                        if (!connectedNetworks.keys().contains(interface)) {
+                            connectedNetworks.insert(interface, "false");
+                        } else {
+                            if (connectedNetworks.value(interface) == "true") {
+                                connectedNetworks.insert(interface, "false");
+                                QVariantMap hints;
+                                hints.insert("category", "network.disconnected");
+                                hints.insert("transient", true);
+                                notificationEngine->Notify("theShell", 0, "", "Bluetooth Connection",
+                                                           "You've been disconnected from the internet over a bluetooth connection",
+                                                           QStringList(), hints, -1);
+                            }
+                        }
                     }
                 }
             }
@@ -769,7 +841,7 @@ void InfoPaneDropdown::startTimer(QTime time) {
     emit timerChanged(timeUntilTimeout.toString("HH:mm:ss"));
 }
 
-void InfoPaneDropdown::notificationClosed(int id, int reason) {
+void InfoPaneDropdown::notificationClosed(uint id, uint reason) {
     if (id == timerNotificationId) {
         ringtone->stop();
         timerNotificationId = 0;
@@ -1155,4 +1227,9 @@ void InfoPaneDropdown::on_thewaveTTSsilent_clicked()
 void InfoPaneDropdown::on_theWaveSwitch_toggled(bool checked)
 {
     settings.setValue("thewave/enabled", checked);
+}
+
+void InfoPaneDropdown::on_BluetoothSwitch_toggled(bool checked)
+{
+    QDBusInterface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus()).setProperty("BluetoothEnabled", checked);
 }

@@ -31,8 +31,6 @@ MainWindow::MainWindow(QWidget *parent) :
     timer->start();
 
     NotificationDBus* ndbus = new NotificationDBus(this);
-    connect(ndbus, SIGNAL(newNotification(int,QString,QString,QIcon)), this, SLOT(incrementNotificationCounter()));
-    connect(ndbus, SIGNAL(removeNotification(int)), this, SLOT(decrementNotificationCounter()));
 
     UPowerDBus* updbus = new UPowerDBus(ndbus, this);
     connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
@@ -301,6 +299,7 @@ void MainWindow::doUpdate() {
 
 
             {
+                bool noIcon = false;
                 unsigned long icItems, icBytes;
                 unsigned char *icon;
                 int icFormat;
@@ -312,40 +311,51 @@ void MainWindow::doUpdate() {
 
                 retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1, False,
                                    XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
-                if (ret == 0x0) break;
-                width = *(int*) ret;
-                XFree(ret);
+                if (ret == 0x0) {
+                    noIcon = true;
+                } else {
+                    width = *(int*) ret;
+                    XFree(ret);
+                }
 
                 retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 1, 1, False,
                                    XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
-                if (ret == 0x0) break;
-                height = *(int*) ret;
-                XFree(ret);
 
-                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 2, width * height * 4, False,
-                                   XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
-
-                QImage image(width, height, QImage::Format_ARGB32);
-
-                for (int y = 0; y < height; y++) {
-                    for (int x = 0; x < width * 8; x = x + 8) {
-                        unsigned long a, r, g, b;
-
-                        b = (icon[y * width * 8 + x + 0]);
-                        g = (icon[y * width * 8 + x + 1]);
-                        r = (icon[y * width * 8 + x + 2]);
-                        a = (icon[y * width * 8 + x + 3]);
-
-                        QColor col = QColor(r, g, b, a);
-
-                        image.setPixelColor(x / 8, y, col);
-                    }
+                if (ret == 0x0) {
+                    noIcon = true;
+                } else {
+                    height = *(int*) ret;
+                    XFree(ret);
                 }
 
-                QPixmap iconPixmap(QPixmap::fromImage(image).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-                w.setIcon(QIcon(iconPixmap));
+                if (!noIcon) {
+                    retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 2, width * height * 4, False,
+                                       XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
 
-                XFree(icon);
+                    QImage image(width, height, QImage::Format_ARGB32);
+
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width * 8; x = x + 8) {
+                            unsigned long a, r, g, b;
+
+                            b = (icon[y * width * 8 + x + 0]);
+                            g = (icon[y * width * 8 + x + 1]);
+                            r = (icon[y * width * 8 + x + 2]);
+                            a = (icon[y * width * 8 + x + 3]);
+
+                            QColor col = QColor(r, g, b, a);
+
+                            image.setPixelColor(x / 8, y, col);
+                        }
+                    }
+
+                    QPixmap iconPixmap(QPixmap::fromImage(image).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                    w.setIcon(QIcon(iconPixmap));
+
+                    XFree(icon);
+                } else {
+
+                }
             }
 
             w.setTitle(title);

@@ -2,8 +2,8 @@
 <node>
   <interface name="org.freedesktop.Notifications">
     <signal name="NotificationClosed">
-      <arg name="id" type="i" direction="out"/>
-      <arg name="reason" type="i" direction="out"/>
+      <arg name="id" type="u" direction="out"/>
+      <arg name="reason" type="u" direction="out"/>
     </signal>
     <signal name="ActionInvoked">
       <arg name="id" type="u" direction="out"/>
@@ -28,13 +28,17 @@
       <arg name="expire_timeout" type="i" direction="in"/>
     </method>
     <method name="CloseNotification">
-      <arg name="id" type="i" direction="in"/>
+      <arg name="id" type="u" direction="in"/>
     </method>
     <method name="GetServerInformation">
       <arg type="s" direction="out"/>
       <arg name="vendor" type="s" direction="out"/>
       <arg name="version" type="s" direction="out"/>
       <arg name="spec_version" type="s" direction="out"/>
+    </method>
+    <method name="invokeAction">
+      <arg name="id" type="u" direction="in"/>
+      <arg name="key" type="s" direction="in"/>
     </method>
   </interface>
 </node>

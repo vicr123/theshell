@@ -108,11 +108,27 @@ void Menu::show(bool openTotheWave, bool startListening) {
         ui->listWidget->clear();
         ui->lineEdit->setText("");
 
-        QDir appFolder("/usr/share/applications/");
-        QDirIterator iterator(appFolder, QDirIterator::Subdirectories);
+        QStringList appList;
 
-        while (iterator.hasNext()) {
-            QString appFile = iterator.next();
+        QDir appFolder("/usr/share/applications/");
+        QDirIterator* iterator = new QDirIterator(appFolder, QDirIterator::Subdirectories);
+
+        while (iterator->hasNext()) {
+            appList.append(iterator->next());
+        }
+
+        delete iterator;
+
+        appFolder = QDir(QDir::homePath() + "/.local/share/applications");
+        if (appFolder.exists()) {
+            iterator = new QDirIterator(appFolder, QDirIterator::Subdirectories);
+            while (iterator->hasNext()) {
+                appList.append(iterator->next());
+            }
+            delete iterator;
+        }
+
+        for (QString appFile : appList) {
             QFile file(appFile);
             if (file.exists() & QFileInfo(file).suffix().contains("desktop")) {
                 file.open(QFile::ReadOnly);

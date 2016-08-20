@@ -4,7 +4,7 @@
 #include "segfaultdialog.h"
 #include "globalfilter.h"
 #include "dbusevents.h"
-#include "dbusmenuregistrar.h"
+//#include "dbusmenuregistrar.h"
 #include <nativeeventfilter.h>
 #include <QApplication>
 #include <QDesktopWidget>
@@ -103,15 +103,22 @@ int main(int argc, char *argv[])
         QDBusConnection::sessionBus().call(kscreen);
     }
 
+    QDBusConnection dbus = QDBusConnection::sessionBus();
+    dbus.registerService("org.thesuite.theshell");
+
     QProcess polkitProcess;
     polkitProcess.start("/usr/lib/ts-polkitagent");
+
+    QProcess btProcess;
+    btProcess.start("ts-bt");
+    btProcess.waitForStarted();
+
+    NativeFilter = new NativeEventFilter();
+    a.installNativeEventFilter(NativeFilter);
 
     MainWin = new MainWindow();
 
     new GlobalFilter(&a);
-
-    NativeFilter = new NativeEventFilter();
-    a.installNativeEventFilter(NativeFilter);
 
     DBusEvents = new DbusEvents();
     //new DBusMenuRegistrar();

@@ -11,7 +11,7 @@
 #include <QTimer>
 #include <QWindow>
 #include <QApplication>
-#include <nativeeventfilter.h>
+#include "nativeeventfilter.h"
 
 //Xlib needs to be included LAST.
 #include <X11/Xlib.h>

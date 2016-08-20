@@ -12,14 +12,14 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = theshell
 TEMPLATE = app
-#QDBUSXML2CPP_ADAPTOR_HEADER_FLAGS = -l NotificationDBus -i notificationdbus.h
-#QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
-#DBUS_ADAPTORS += org.freedesktop.Notifications.xml
-DBUS_ADAPTORS += appMenuRegistrar
-appMenuRegistrar.files = com.canonical.AppMenu.Registrar.xml
-appMenuRegistrar.header_flags = -l DBusMenuRegistrar -i dbusmenuregistrar.h
+QDBUSXML2CPP_ADAPTOR_HEADER_FLAGS = -l NotificationDBus -i notificationdbus.h
+QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
+DBUS_ADAPTORS += org.freedesktop.Notifications.xml
+#DBUS_ADAPTORS += appMenuRegistrar
+#appMenuRegistrar.files = com.canonical.AppMenu.Registrar.xml
+#appMenuRegistrar.header_flags = -l DBusMenuRegistrar -i dbusmenuregistrar.h
 
-DBUS_ADAPTORS = com.canonical.AppMenu.Registrar.xml
+#DBUS_ADAPTORS += com.canonical.AppMenu.Registrar.xml
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -38,7 +38,7 @@ SOURCES += main.cpp\
     clickablelabel.cpp \
     thewaveworker.cpp \
     loginsplash.cpp \
-    notifications_adaptor.cpp \
+    #notifications_adaptor.cpp \
     hoverframe.cpp \
     choosebackground.cpp \
     switch.cpp \
@@ -50,7 +50,6 @@ SOURCES += main.cpp\
     nativeeventfilter.cpp \
     hotkeyhud.cpp \
     dbusevents.cpp \
-    dbusmenuregistrar.cpp \
     fadebutton.cpp \
     rundialog.cpp \
     thewavefeedbackframe.cpp
@@ -74,7 +73,7 @@ HEADERS  += mainwindow.h \
     clickablelabel.h \
     thewaveworker.h \
     loginsplash.h \
-    notifications_adaptor.h \
+    #notifications_adaptor.h \
     hoverframe.h \
     choosebackground.h \
     switch.h \
@@ -86,7 +85,6 @@ HEADERS  += mainwindow.h \
     nativeeventfilter.h \
     hotkeyhud.h \
     dbusevents.h \
-    dbusmenuregistrar.h \
     fadebutton.h \
     rundialog.h \
     thewavefeedbackframe.h

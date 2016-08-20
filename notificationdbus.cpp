@@ -18,7 +18,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
                               QString app_icon, QString summary,
                               QString body, QStringList actions,
                               QVariantMap hints, int expire_timeout) {
-    if (replaces_id == 0) {
+    if (replaces_id == 0 || dialogs.count() <= replaces_id) {
         replaces_id = nextId;
         nextId++;
 
@@ -45,6 +45,15 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
             d->show();
         }
         dialogs.append(d);
+
+        QDBusMessage NotificationEmit = QDBusMessage::createMethodCall("org.thesuite.tsscreenlock", "/org/thesuite/tsscreenlock", "org.thesuite.tsscreenlock.Notifications", "newNotification");
+        QVariantList NotificationArgs;
+        NotificationArgs.append(summary);
+        NotificationArgs.append(body);
+        NotificationArgs.append(replaces_id);
+        NotificationArgs.append(actions);
+        NotificationEmit.setArguments(NotificationArgs);
+        QDBusConnection::sessionBus().call(NotificationEmit, QDBus::NoBlock);
     } else {
         dialogs.at(replaces_id - 1)->setParams(summary, body);
         dialogs.at(replaces_id - 1)->show();
@@ -101,7 +110,7 @@ QString NotificationDBus::GetServerInformation(QString &vendor, QString &version
     return "theShell";
 }
 
-void NotificationDBus::CloseNotification(int id) {
+void NotificationDBus::CloseNotification(uint id) {
     NotificationDialog *d = dialogs.at(id - 1);
     d->close(3);
 }
@@ -112,7 +121,7 @@ void NotificationDBus::CloseNotificationUserInitiated(int id) {
 }
 
 void NotificationDBus::sendCloseNotification(int id, int reason) {
-    emit NotificationClosed(id, reason);
+    emit NotificationClosed((uint) id, (uint) reason);
 
     if (reason == 2 || reason == 3) {
         emit removeNotification(id);
@@ -121,6 +130,8 @@ void NotificationDBus::sendCloseNotification(int id, int reason) {
 
 void NotificationDBus::invokeAction(uint id, QString key) {
     emit ActionInvoked(id, key);
+    NotificationDialog *d = dialogs.at(id - 1);
+    d->close(2);
 }
 
 void NotificationDBus::setDropdownPane(InfoPaneDropdown *pane) {

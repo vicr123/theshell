@@ -224,7 +224,7 @@
         <item>
          <widget class="QLabel" name="label_23">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="text">
            <string>Wi-Fi</string>
@@ -257,7 +257,7 @@
         <item>
          <widget class="QLabel" name="label_24">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="text">
            <string>Bluetooth</string>
@@ -267,7 +267,7 @@
         <item>
          <widget class="Switch" name="BluetoothSwitch">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="text">
            <string>BluetoothSwitch</string>
@@ -2146,14 +2146,14 @@
             <second>0</second>
             <year>1969</year>
             <month>11</month>
-            <day>30</day>
+            <day>29</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>11</month>
-            <day>30</day>
+            <day>29</day>
            </date>
           </property>
           <property name="displayFormat">
