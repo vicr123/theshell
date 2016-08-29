@@ -58,8 +58,8 @@ void UPowerDBus::DeviceChanged() {
                 hints.insert("category", "battery.charging");
                 hints.insert("transient", true);
                 this->notificationDBus->Notify("theShell", 0, "", "Charging",
-                                               "The power cable has been plugged in and the battery is now being charged."
-                                               , QStringList(), hints, 10000);
+                                               "The power cable has been plugged in and the battery is now being charged.",
+                                               QStringList(), hints, 10000);
             }
 
             isCharging = true;
@@ -84,8 +84,8 @@ void UPowerDBus::DeviceChanged() {
                 hints.insert("category", "battery.discharging");
                 hints.insert("transient", true);
                 this->notificationDBus->Notify("theShell", 0, "", "Discharging",
-                                               "The power cable has been removed, and your PC is now running on battery power."
-                                               , QStringList(), hints, 10000);
+                                               "The power cable has been removed, and your PC is now running on battery power.",
+                                               QStringList(), hints, 10000);
             }
             isConnectedToPower = false;
             isCharging = false;

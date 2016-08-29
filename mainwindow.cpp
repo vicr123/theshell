@@ -44,10 +44,6 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->batteryFrame->setVisible(false);
     }
 
-    //UGlobalHotkeys* menuKey = new UGlobalHotkeys(this);
-    //menuKey->registerHotkey("Alt+F5");
-    //connect(menuKey, SIGNAL(activated(size_t)), this, SLOT(on_pushButton_clicked()));
-
     UGlobalHotkeys* infoKey = new UGlobalHotkeys(this);
     infoKey->registerHotkey("Alt+F6");
     connect(infoKey, SIGNAL(activated(size_t)), this, SLOT(pullDownGesture()));

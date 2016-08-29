@@ -82,8 +82,9 @@ int main(int argc, char *argv[])
     a.setOrganizationDomain("");
     a.setApplicationName("theShell");
 
-    QFile lockfile(QDir::home().absolutePath() + "/.theshell.lck");
-    if (lockfile.exists()) {
+    QSettings settings;
+
+    if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.thesuite.theshell")) {
         if (QMessageBox::warning(0, "theShell already running", "theShell seems to already be running. "
                                                                "Do you wish to start theShell anyway?",
                              QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
@@ -91,9 +92,8 @@ int main(int argc, char *argv[])
         }
     }
 
-    lockfile.open(QFile::WriteOnly);
-    lockfile.write(QByteArray());
-    lockfile.close();
+    QDBusConnection dbus = QDBusConnection::sessionBus();
+    dbus.registerService("org.thesuite.theshell");
 
     if (startKscreen) {
         QDBusMessage kscreen = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
@@ -103,39 +103,7 @@ int main(int argc, char *argv[])
         QDBusConnection::sessionBus().call(kscreen);
     }
 
-    QDBusConnection dbus = QDBusConnection::sessionBus();
-    dbus.registerService("org.thesuite.theshell");
-
-    QProcess polkitProcess;
-    polkitProcess.start("/usr/lib/ts-polkitagent");
-
-    QProcess btProcess;
-    btProcess.start("ts-bt");
-    btProcess.waitForStarted();
-
-    NativeFilter = new NativeEventFilter();
-    a.installNativeEventFilter(NativeFilter);
-
-    MainWin = new MainWindow();
-
-    new GlobalFilter(&a);
-
-    DBusEvents = new DbusEvents();
-    //new DBusMenuRegistrar();
-
-    qDBusRegisterMetaType<QList<QVariantMap>>();
-    qDBusRegisterMetaType<QMap<QString, QVariantMap>>();
-
-    QSettings settings;
-
     QString windowManager = settings.value("startup/WindowManagerCommand", "kwin_x11").toString();
-
-    if (autoStart) {
-        QStringList autostartApps = settings.value("startup/autostart", "").toString().split(",");
-        for (QString app : autostartApps) {
-            QProcess::startDetached(app);
-        }
-    }
 
     while (!QProcess::startDetached(windowManager)) {
         windowManager = QInputDialog::getText(0, "Window Manager couldn't start",
@@ -147,11 +115,38 @@ int main(int argc, char *argv[])
         }
     }
 
-
     if (showSplash) {
         LoginSplash* splash = new LoginSplash();
         splash->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
         splash->showFullScreen();
+    }
+
+
+    QProcess polkitProcess;
+    polkitProcess.start("/usr/lib/ts-polkitagent");
+
+    QProcess btProcess;
+    btProcess.start("ts-bt");
+    btProcess.waitForStarted(); //Wait for ts-bt to start so that the Bluetooth toggle will work properly
+
+    NativeFilter = new NativeEventFilter();
+    a.installNativeEventFilter(NativeFilter);
+
+    MainWin = new MainWindow();
+
+    new GlobalFilter(&a);
+
+    DBusEvents = new DbusEvents();
+
+    qDBusRegisterMetaType<QList<QVariantMap>>();
+    qDBusRegisterMetaType<QMap<QString, QVariantMap>>();
+
+
+    if (autoStart) {
+        QStringList autostartApps = settings.value("startup/autostart", "").toString().split(",");
+        for (QString app : autostartApps) {
+            QProcess::startDetached(app);
+        }
     }
 
     //QProcess* ksuperkey = new QProcess();
