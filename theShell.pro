@@ -14,7 +14,7 @@ TARGET = theshell
 TEMPLATE = app
 QDBUSXML2CPP_ADAPTOR_HEADER_FLAGS = -l NotificationDBus -i notificationdbus.h
 QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
-DBUS_ADAPTORS += org.freedesktop.Notifications.xml
+#DBUS_ADAPTORS += org.freedesktop.Notifications.xml
 #DBUS_ADAPTORS += appMenuRegistrar
 #appMenuRegistrar.files = com.canonical.AppMenu.Registrar.xml
 #appMenuRegistrar.header_flags = -l DBusMenuRegistrar -i dbusmenuregistrar.h
@@ -38,7 +38,7 @@ SOURCES += main.cpp\
     clickablelabel.cpp \
     thewaveworker.cpp \
     loginsplash.cpp \
-    #notifications_adaptor.cpp \
+    notifications_adaptor.cpp \
     hoverframe.cpp \
     choosebackground.cpp \
     switch.cpp \
@@ -73,7 +73,7 @@ HEADERS  += mainwindow.h \
     clickablelabel.h \
     thewaveworker.h \
     loginsplash.h \
-    #notifications_adaptor.h \
+    notifications_adaptor.h \
     hoverframe.h \
     choosebackground.h \
     switch.h \
