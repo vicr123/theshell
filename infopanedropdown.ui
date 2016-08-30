@@ -1435,7 +1435,7 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>theShell 3.0</string>
+                  <string>theShell 4.0</string>
                  </property>
                 </widget>
                </item>
@@ -2146,14 +2146,14 @@
             <second>0</second>
             <year>1969</year>
             <month>11</month>
-            <day>29</day>
+            <day>28</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>11</month>
-            <day>29</day>
+            <day>28</day>
            </date>
           </property>
           <property name="displayFormat">
