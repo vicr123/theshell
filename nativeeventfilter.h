@@ -45,6 +45,7 @@ private:
     HotkeyHud* Hotkeys;
 
     bool isEndSessionBoxShowing = false;
+    bool ignoreSuper = false;
 };
 
 #endif // NATIVEEVENTFILTER_H

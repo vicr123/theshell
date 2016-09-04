@@ -31,7 +31,6 @@ signals:
 public slots:
 
 private slots:
-    void checkForSysTrayIcons();
     void SysTrayEvent(long opcode, long data2, long data3, long data4);
 };
 

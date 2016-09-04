@@ -6,10 +6,12 @@ extern MainWindow* MainWin;
 
 NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
 {
-
+    //Create the Hotkey window and set appropriate flags
     Hotkeys = new HotkeyHud();
     Hotkeys->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     Hotkeys->setAttribute(Qt::WA_ShowWithoutActivating, true);
+
+    //Capture required keys
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessUp), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessDown), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
@@ -25,6 +27,7 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Super_R), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_space), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
 
+    //Start the Last Pressed timer to ignore repeated keys
     lastPress.start();
 }
 
@@ -49,7 +52,8 @@ NativeEventFilter::~NativeEventFilter() {
 bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *message, long *result) {
     if (eventType == "xcb_generic_event_t") {
         xcb_generic_event_t* event = static_cast<xcb_generic_event_t*>(message);
-        if (event->response_type == XCB_CLIENT_MESSAGE || event->response_type == (XCB_CLIENT_MESSAGE | 128)) {
+        if (event->response_type == XCB_CLIENT_MESSAGE || event->response_type == (XCB_CLIENT_MESSAGE | 128)) { //System Tray Event
+            //Get the message
             xcb_client_message_event_t* client = static_cast<xcb_client_message_event_t*>(message);
 
             xcb_atom_t type = client->type;
@@ -59,11 +63,12 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
             free(reply);
 
             if (client->type == type) {
+                //Dock the system tray
                 emit SysTrayEvent(client->data.data32[1], client->data.data32[2], client->data.data32[3], client->data.data32[4]);
             }
-        } else if (event->response_type == XCB_KEY_PRESS) {
+        } else if (event->response_type == XCB_KEY_PRESS) { //Key Press Event
             if (lastPress.restart() > 100) {
-                xcb_key_press_event_t* button = static_cast<xcb_key_press_event_t*>(message);
+                xcb_key_release_event_t* button = static_cast<xcb_key_release_event_t*>(message);
 
                 //Get Current Brightness
                 QProcess* backlight = new QProcess(this);
@@ -102,7 +107,6 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                         }
                     }
                 }
-
 
                 if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessUp)) { //Increase brightness by 10%
                     currentBrightness = currentBrightness + 10;
@@ -155,44 +159,54 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     connect(volumeAdj, SIGNAL(finished(int)), volumeAdj, SLOT(deleteLater()));
 
                     Hotkeys->show(QIcon::fromTheme("audio-volume-high"), "Volume", volume);
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_Eject)) { //Eject Disc
-                    QProcess* eject = new QProcess(this);
-                    eject->start("eject");
-                    connect(eject, SIGNAL(finished(int)), eject, SLOT(deleteLater()));
-
-                    Hotkeys->show(QIcon::fromTheme("media-eject"), "Eject", "Attempting to eject disc...");
-                } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) ||
-                           button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == (ControlMask | Mod1Mask))) { //Power Off
-                    if (!isEndSessionBoxShowing) {
-                        isEndSessionBoxShowing = true;
-                        /*if (QMessageBox::question(Hotkeys, "Power Off", "Are you sure you wish to close all applications and power off the computer?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
-                            EndSession(EndSessionWait::powerOff);
-                        }*/
-
-                        EndSessionWait* endSession = new EndSessionWait(EndSessionWait::ask);
-                        endSession->showFullScreen();
-                        endSession->exec();
-                        isEndSessionBoxShowing = false;
-                    }
-
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_Sleep)) { //Suspend
-                    QList<QVariant> arguments;
-                    arguments.append(true);
-
-                    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Suspend");
-                    message.setArguments(arguments);
-                    QDBusConnection::systemBus().send(message);
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_L) && button->state == Mod4Mask) { //Lock Screen
-                    DBusEvents->LockScreen();
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F2) && button->state == Mod1Mask) { //Run
-                    RunDialog* run = new RunDialog();
-                    run->show();
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Super_L) || button->detail == XKeysymToKeycode(QX11Info::display(), XK_Super_R)) {
-                    MainWin->openMenu();
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_space) && button->state == Mod4Mask) { //Lock Screen
-                    MainWin->openMenu(true, true);
                 }
             }
+        } else if (event->response_type == XCB_KEY_RELEASE) {
+            xcb_key_release_event_t* button = static_cast<xcb_key_release_event_t*>(message);
+
+            if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_Eject)) { //Eject Disc
+                QProcess* eject = new QProcess(this);
+                eject->start("eject");
+                connect(eject, SIGNAL(finished(int)), eject, SLOT(deleteLater()));
+
+                Hotkeys->show(QIcon::fromTheme("media-eject"), "Eject", "Attempting to eject disc...");
+            } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) ||
+                       button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == (ControlMask | Mod1Mask))) { //Power Off
+                if (!isEndSessionBoxShowing) {
+                    isEndSessionBoxShowing = true;
+                    /*if (QMessageBox::question(Hotkeys, "Power Off", "Are you sure you wish to close all applications and power off the computer?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+                        EndSession(EndSessionWait::powerOff);
+                    }*/
+
+                    EndSessionWait* endSession = new EndSessionWait(EndSessionWait::ask);
+                    endSession->showFullScreen();
+                    endSession->exec();
+                    isEndSessionBoxShowing = false;
+                }
+
+            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_Sleep)) { //Suspend
+                QList<QVariant> arguments;
+                arguments.append(true);
+
+                QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Suspend");
+                message.setArguments(arguments);
+                QDBusConnection::systemBus().send(message);
+            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_L) && button->state == Mod4Mask) { //Lock Screen
+                ignoreSuper = true;
+                DBusEvents->LockScreen();
+            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F2) && button->state == Mod1Mask) { //Run
+                RunDialog* run = new RunDialog();
+                run->show();
+            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Super_L) || button->detail == XKeysymToKeycode(QX11Info::display(), XK_Super_R)) {
+                if (!ignoreSuper) { //Check that the user is not doing a key combination
+                    MainWin->openMenu();
+                }
+                ignoreSuper = false;
+            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_space) && button->state == Mod4Mask) { //theWave
+                ignoreSuper = true;
+                MainWin->openMenu(true, true);
+            }
+
         }
     }
     return false;
