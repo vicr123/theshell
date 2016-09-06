@@ -57,8 +57,8 @@
       <h1>theWave</h1>
       <h2>Speak to your PC</h2>
       theWave is a personal assistant built into theShell that allows you to
-      control many aspects of your PC just be speaking to it.
-      <div><a href="#" class="button">Learn more &gt;</a></div>
+      control many aspects of your PC just by speaking to it.
+      <div><a href="thewave.html" class="button">Learn more &gt;</a></div>
     </div>
     <!--<div  class="blockTitle"  id="touch">
       <h1>Touch Friendly*</h1>      <h2>Stop pressing small buttons!</h2>      theShell is touch friendly. Enjoy the simplicity of using theShell with      features made just for touch. <span  class="disclaimer">*Touchegg        configuration required. Touch has not yet been tested, but we're trying        to code for it.</span>      <div><a  href="#"  class="button">Learn more &gt;</a></div>    </div>-->

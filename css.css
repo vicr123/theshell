@@ -412,3 +412,11 @@ div.blockLanding {
         height: 200px;
     }
 }
+
+div.blockLanding#break {
+    background: linear-gradient(to top right, rgb(0, 100, 255), rgb(0, 200, 255));
+    background-size: 100% cover;
+    color: white;
+}
+
+
