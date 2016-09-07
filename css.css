@@ -398,6 +398,9 @@ div.blockLanding {
 @media (max-width: 1050px) {
     div.blockTitle {
         height: 500px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: calc(100% - 20px);
     }
     
     div.blockTitle#bar {
@@ -406,11 +409,31 @@ div.blockLanding {
     
     div.blockLanding {
         height: 300px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: calc(100% - 20px);
     }
     
     div.blockSmall {
         height: 200px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: calc(100% - 20px);
     }
+    
+    div.sectionHeader {
+        padding-left: 10px;
+        padding-right: 10px;
+        width: calc(100% - 20px);
+    }
+    
+    div.pageContent {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    
 }
 
 div.blockLanding#break {
