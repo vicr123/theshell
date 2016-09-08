@@ -108,7 +108,19 @@ void Menu::show(bool openTotheWave, bool startListening) {
         ui->listWidget->clear();
         ui->lineEdit->setText("");
 
-        QStringList appList;
+
+        QStringList appList, pinnedAppsList;
+
+        settings.beginGroup("gateway");
+        int count = settings.beginReadArray("pinnedItems");
+        for (int i = 0; i < count; i++) {
+            settings.setArrayIndex(i);
+            appList.append(settings.value("desktopEntry").toString());
+            pinnedAppsList.append(settings.value("desktopEntry").toString());
+        }
+        settings.endArray();
+        settings.endGroup();
+        pinnedAppsCount = pinnedAppsList.count();
 
         QDir appFolder("/usr/share/applications/");
         QDirIterator* iterator = new QDirIterator(appFolder, QDirIterator::Subdirectories);
@@ -147,6 +159,12 @@ void Menu::show(bool openTotheWave, bool startListening) {
 
                 for (QString desktopPart : desktopLines) {
                     App app;
+                    app.setDesktopEntry(appFile);
+
+                    if (pinnedAppsList.contains(appFile)) {
+                        app.setPinned(true);
+                    }
+
                     bool isApplication = false;
                     bool display = true;
                     for (QString line : desktopPart.split("\n")) {
@@ -202,7 +220,19 @@ void Menu::show(bool openTotheWave, bool startListening) {
         waveApp.setDescription("Personal Assistant");
         apps.append(waveApp);
 
+        int index = 0;
         for (App app : apps) {
+            if (index == pinnedAppsCount && pinnedAppsCount != 0) {
+                QListWidgetItem* sep = new QListWidgetItem();
+                sep->setSizeHint(QSize(50, 1));
+                sep->setFlags(Qt::NoItemFlags);
+                ui->listWidget->addItem(sep);
+
+                QFrame *sepLine = new QFrame();
+                sepLine->setFrameShape(QFrame::HLine);
+                ui->listWidget->setItemWidget(sep, sepLine);
+            }
+
             QListWidgetItem *i = new QListWidgetItem();
             if (app.description() == "") {
                 i->setText(app.name());
@@ -211,8 +241,10 @@ void Menu::show(bool openTotheWave, bool startListening) {
             }
             i->setIcon(app.icon());
             i->setData(Qt::UserRole, app.command());
+            i->setData(Qt::UserRole + 1, QVariant::fromValue(app));
             appsShown.append(app);
             ui->listWidget->addItem(i);
+            index++;
         }
 
         QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
@@ -441,7 +473,19 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
     ui->listWidget->clear();
     appsShown.clear();
     if (arg1 == "") {
+        int index = 0;
         for (App app : apps) {
+            if (index == pinnedAppsCount && pinnedAppsCount != 0) {
+                QListWidgetItem* sep = new QListWidgetItem();
+                sep->setSizeHint(QSize(50, 1));
+                sep->setFlags(Qt::NoItemFlags);
+                ui->listWidget->addItem(sep);
+
+                QFrame *sepLine = new QFrame();
+                sepLine->setFrameShape(QFrame::HLine);
+                ui->listWidget->setItemWidget(sep, sepLine);
+            }
+
             QListWidgetItem *i = new QListWidgetItem();
             if (app.description() == "") {
                 i->setText(app.name());
@@ -450,8 +494,10 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             }
             i->setIcon(app.icon());
             i->setData(Qt::UserRole, app.command());
+            i->setData(Qt::UserRole + 1, QVariant::fromValue(app));
             appsShown.append(app);
             ui->listWidget->addItem(i);
+            index++;
         }
     } else {
         bool showtheWaveOption = true;
@@ -607,18 +653,20 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
         }
 
         for (App app : apps) {
-            if (app.name().contains(arg1, Qt::CaseInsensitive) || app.description().contains(arg1, Qt::CaseInsensitive)) {
-                QListWidgetItem *i = new QListWidgetItem();
-                if (app.description() == "") {
-                    i->setText(app.name());
-                } else {
-                    i->setText(app.description() + " | " + app.name());
+            if (!app.isPinned()) {
+                if (app.name().contains(arg1, Qt::CaseInsensitive) || app.description().contains(arg1, Qt::CaseInsensitive)) {
+                    QListWidgetItem *i = new QListWidgetItem();
+                    if (app.description() == "") {
+                        i->setText(app.name());
+                    } else {
+                        i->setText(app.description() + " | " + app.name());
+                    }
+                    i->setIcon(app.icon());
+                    i->setData(Qt::UserRole, app.command());
+                    i->setData(Qt::UserRole + 1, QVariant::fromValue(app));
+                    appsShown.append(app);
+                    ui->listWidget->addItem(i);
                 }
-                i->setIcon(app.icon());
-                i->setData(Qt::UserRole, app.command());
-                appsShown.append(app);
-                ui->listWidget->addItem(i);
-
             }
         }
 
@@ -1240,6 +1288,74 @@ void Menu::on_thewaveMedia_Play_clicked()
 void Menu::on_thewaveMedia_Back_clicked()
 {
     MainWin->previousSong();
+}
+
+void Menu::on_listWidget_customContextMenuRequested(const QPoint &pos)
+{
+    QListWidgetItem* item = ui->listWidget->itemAt(pos);
+
+    if (item != NULL) {
+        App app = item->data(Qt::UserRole + 1).value<App>();
+        if (app.desktopEntry() != "") {
+            QMenu* menu = new QMenu();
+            menu->addSection(app.icon(), "For \"" + app.name() + "\"");
+
+            if (app.isPinned()) {
+                menu->addAction(QIcon::fromTheme("bookmark-remove-folder"), "Undock", [=, &app]() {
+                    settings.beginGroup("gateway");
+                    QStringList oldEntries;
+
+                    int count = settings.beginReadArray("pinnedItems");
+                    for (int i = 0; i < count; i++) {
+                        settings.setArrayIndex(i);
+                        oldEntries.append(settings.value("desktopEntry").toString());
+                    }
+                    settings.endArray();
+
+                    oldEntries.removeAll(app.desktopEntry());
+
+                    settings.beginWriteArray("pinnedItems");
+                    int i = 0;
+                    for (QString entry : oldEntries) {
+                        settings.setArrayIndex(i);
+                        settings.setValue("desktopEntry", entry);
+                        i++;
+                    }
+                    settings.endArray();
+                    settings.endGroup();
+
+                    on_lineEdit_textEdited(ui->lineEdit->text());
+                });
+            } else {
+                menu->addAction(QIcon::fromTheme("bookmark-add-folder"), "Dock", [=, &app]() {
+                    settings.beginGroup("gateway");
+                    QStringList oldEntries;
+
+                    int count = settings.beginReadArray("pinnedItems");
+                    for (int i = 0; i < count; i++) {
+                        settings.setArrayIndex(i);
+                        oldEntries.append(settings.value("desktopEntry").toString());
+                    }
+                    settings.endArray();
+
+                    oldEntries.append(app.desktopEntry());
+
+                    settings.beginWriteArray("pinnedItems");
+                    int i = 0;
+                    for (QString entry : oldEntries) {
+                        settings.setArrayIndex(i);
+                        settings.setValue("desktopEntry", entry);
+                        i++;
+                    }
+                    settings.endArray();
+                    settings.endGroup();
+
+                    on_lineEdit_textEdited(ui->lineEdit->text());
+                });
+            }
+            menu->exec(ui->listWidget->mapToGlobal(pos));
+        }
+    }
 }
 
 /*******************************************************

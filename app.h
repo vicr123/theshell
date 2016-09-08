@@ -21,6 +21,12 @@ public:
 
     QString description();
     void setDescription(QString desc);
+
+    bool isPinned();
+    void setPinned(bool pinned);
+
+    QString desktopEntry();
+    void setDesktopEntry(QString entry);
 signals:
 
 public slots:
@@ -30,6 +36,10 @@ private:
     QIcon appicon;
     QString appcommand;
     QString appdesc = "";
+    QString appfile = "";
+    bool pin = false;
 };
+
+Q_DECLARE_METATYPE(App)
 
 #endif // APP_H

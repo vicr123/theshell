@@ -163,6 +163,8 @@ private slots:
 
     void on_thewaveMedia_Back_clicked();
 
+    void on_listWidget_customContextMenuRequested(const QPoint &pos);
+
 private:
     Ui::Menu *ui;
 
@@ -171,6 +173,7 @@ private:
 
     QList<App> apps;
     QList<App> appsShown;
+    int pinnedAppsCount = 0;
 
     bool doCheckForClose = false;
     bool istheWaveOpen = false;

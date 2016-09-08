@@ -36,3 +36,19 @@ QString App::description() {
 void App::setDescription(QString desc) {
     appdesc = desc;
 }
+
+bool App::isPinned() {
+    return pin;
+}
+
+void App::setPinned(bool pinned) {
+    pin = pinned;
+}
+
+QString App::desktopEntry() {
+    return appfile;
+}
+
+void App::setDesktopEntry(QString entry) {
+    appfile = entry;
+}
