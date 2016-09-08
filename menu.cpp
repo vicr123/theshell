@@ -652,8 +652,9 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             }
         }
 
+        int i = 0;
         for (App app : apps) {
-            if (!app.isPinned()) {
+            if (i >= pinnedAppsCount || pinnedAppsCount == 0) {
                 if (app.name().contains(arg1, Qt::CaseInsensitive) || app.description().contains(arg1, Qt::CaseInsensitive)) {
                     QListWidgetItem *i = new QListWidgetItem();
                     if (app.description() == "") {
@@ -668,6 +669,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                     ui->listWidget->addItem(i);
                 }
             }
+            i++;
         }
 
         if (QString("shutdown").contains(arg1, Qt::CaseInsensitive) || QString("power off").contains(arg1, Qt::CaseInsensitive)) {

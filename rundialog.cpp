@@ -107,3 +107,12 @@ void RunDialog::paintEvent(QPaintEvent *event) {
     painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
     event->accept();
 }
+
+void RunDialog::changeEvent(QEvent *event) {
+    QDialog::changeEvent(event);
+    if (event->type() == QEvent::ActivationChange) {
+        if (!this->isActiveWindow()) {
+            this->close();
+        }
+    }
+}

@@ -54,6 +54,7 @@ private:
     Ui::RunDialog *ui;
 
     void paintEvent(QPaintEvent* event);
+    void changeEvent(QEvent* event);
 };
 
 #endif // RUNDIALOG_H
