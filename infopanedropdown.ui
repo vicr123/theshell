@@ -350,7 +350,7 @@
         <item>
          <widget class="QStackedWidget" name="settingsTabs">
           <property name="currentIndex">
-           <number>4</number>
+           <number>8</number>
           </property>
           <widget class="QWidget" name="StartupSettings">
            <layout class="QGridLayout" name="gridLayout_2">
@@ -1459,7 +1459,7 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>theShell 4.0</string>
+                  <string>theShell 4.1</string>
                  </property>
                 </widget>
                </item>
