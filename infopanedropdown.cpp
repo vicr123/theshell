@@ -105,8 +105,9 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
     ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
-    ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
     ui->thewaveWikipediaSwitch->setChecked(settings.value("thewave/wikipediaSearch", true).toBool());
+    ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
+    ui->SuperkeyGatewaySwitch->setChecked(settings.value("input/superkeyGateway", true).toBool());
     ui->thewaveOffensiveSwitch->setChecked(settings.value("thewave/blockOffensiveWords", true).toBool());
     ui->theWaveSwitch->setChecked(settings.value("thewave/enabled", true).toBool());
     ui->theWaveName->setText(settings.value("thewave/name", "").toString());
@@ -1232,4 +1233,9 @@ void InfoPaneDropdown::on_theWaveSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_BluetoothSwitch_toggled(bool checked)
 {
     QDBusInterface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus()).setProperty("BluetoothEnabled", checked);
+}
+
+void InfoPaneDropdown::on_SuperkeyGatewaySwitch_toggled(bool checked)
+{
+    settings.setValue("input/superkeyGateway", checked);
 }

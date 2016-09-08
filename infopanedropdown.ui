@@ -350,7 +350,7 @@
         <item>
          <widget class="QStackedWidget" name="settingsTabs">
           <property name="currentIndex">
-           <number>8</number>
+           <number>4</number>
           </property>
           <widget class="QWidget" name="StartupSettings">
            <layout class="QGridLayout" name="gridLayout_2">
@@ -927,7 +927,14 @@
           </widget>
           <widget class="QWidget" name="InputSettings">
            <layout class="QGridLayout" name="gridLayout_6">
-            <item row="2" column="1">
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_38">
+              <property name="text">
+               <string>Use Super Key to open Gateway</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
              <spacer name="verticalSpacer_13">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -1020,6 +1027,23 @@
                 </widget>
                </item>
               </layout>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="Switch" name="SuperkeyGatewaySwitch">
+              <property name="text">
+               <string>SuperkeyGatewaySwitch</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0" colspan="3">
+             <widget class="QLabel" name="label_39">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you'd like to use the Super Key for another key combination, turn this off so that theShell won't take control of it. &lt;span style=&quot; font-weight:600;&quot;&gt;Changing t&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;his setting requires you to log out and then log back in.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
            </layout>
@@ -2146,14 +2170,14 @@
             <second>0</second>
             <year>1969</year>
             <month>11</month>
-            <day>28</day>
+            <day>27</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>11</month>
-            <day>28</day>
+            <day>27</day>
            </date>
           </property>
           <property name="displayFormat">
@@ -2185,6 +2209,13 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_37">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;quot;Happy Bee&amp;quot; copyright (c) Kevin MacLeod. Licensed under the Creative Commons CC-BY license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QComboBox" name="timerToneSelect">

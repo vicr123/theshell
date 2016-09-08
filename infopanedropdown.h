@@ -167,6 +167,8 @@ private slots:
 
     void on_BluetoothSwitch_toggled(bool checked);
 
+    void on_SuperkeyGatewaySwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 

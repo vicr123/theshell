@@ -46,6 +46,8 @@ private:
 
     bool isEndSessionBoxShowing = false;
     bool ignoreSuper = false;
+
+    QSettings settings;
 };
 
 #endif // NATIVEEVENTFILTER_H
