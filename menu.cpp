@@ -801,7 +801,10 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
                             }
 
                             if (e->key() == Qt::Key_Down) {
-                                if (currentRow == -1) {
+                                if (currentRow == pinnedAppsCount - 1 && pinnedAppsCount != 0) {
+                                    ui->listWidget->item(pinnedAppsCount + 1)->setSelected(true);
+                                    ui->listWidget->scrollToItem(ui->listWidget->item(pinnedAppsCount + 1));
+                                } else if (currentRow == -1) {
                                     ui->listWidget->item(0)->setSelected(true);
                                     ui->listWidget->scrollToItem(ui->listWidget->item(0));
                                 } else if (currentRow == ui->listWidget->count() - 1) {
@@ -812,7 +815,10 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
                                     ui->listWidget->scrollToItem(ui->listWidget->item(currentRow + 1));
                                 }
                             } else if (e->key() == Qt::Key_Up) {
-                                if (currentRow == -1) {
+                                if (currentRow == pinnedAppsCount + 1 && pinnedAppsCount != 0) {
+                                    ui->listWidget->item(pinnedAppsCount - 1)->setSelected(true);
+                                    ui->listWidget->scrollToItem(ui->listWidget->item(pinnedAppsCount - 1));
+                                } else if (currentRow == -1) {
                                     ui->listWidget->item(ui->listWidget->count() - 1)->setSelected(true);
                                     ui->listWidget->scrollToItem(ui->listWidget->item(ui->listWidget->count() - 1));
                                 } else if (currentRow == 0) {
