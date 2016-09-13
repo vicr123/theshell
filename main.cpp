@@ -4,6 +4,7 @@
 #include "segfaultdialog.h"
 #include "globalfilter.h"
 #include "dbusevents.h"
+#include <iostream>
 //#include "dbusmenuregistrar.h"
 #include <nativeeventfilter.h>
 #include <QApplication>
@@ -22,27 +23,54 @@ MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
 DbusEvents* DBusEvents = NULL;
 
-void catch_signal(int signal) {
-    SegfaultDialog* dialog;
-    if (signal == SIGSEGV) {
-        qDebug() << "SEGFAULT! Quitting now!";
-        dialog = new SegfaultDialog("SIGSEGV");
-    } else if (signal == SIGBUS) {
-        qDebug() << "SIGBUS! Quitting now!";
-        dialog = new SegfaultDialog("SIGBUS");
-    } else if (signal == SIGABRT) {
-        qDebug() << "SIGABRT! Quitting now!";
-        dialog = new SegfaultDialog("SIGABRT");
-    } else if (signal == SIGILL) {
-        qDebug() << "SIGILL! Quitting now!";
-        dialog = new SegfaultDialog("SIGILL");
+void raise_signal(QString message) {
+    //Clean up required stuff
+
+    //Delete the Native Event Filter so that keyboard bindings are cleared
+    if (NativeFilter != NULL) {
+        delete NativeFilter;
+        NativeFilter = NULL;
     }
+
+    SegfaultDialog* dialog;
+    dialog = new SegfaultDialog(message);
     if (MainWin != NULL) {
         MainWin->close();
         delete MainWin;
     }
     dialog->exec();
-    std::terminate();
+    raise(SIGKILL);
+}
+
+void catch_signal(int signal) {
+    if (signal == SIGSEGV) {
+        qDebug() << "SEGFAULT! Quitting now!";
+        raise_signal("Signal: SIGSEGV (Segmentation Fault)");
+    } else if (signal == SIGBUS) {
+        qDebug() << "SIGBUS! Quitting now!";
+        raise_signal("Signal: SIGBUS (Bus Error)");
+    } else if (signal == SIGABRT) {
+        qDebug() << "SIGABRT! Quitting now!";
+        raise_signal("Signal: SIGABRT (Abort)");
+    } else if (signal == SIGILL) {
+        qDebug() << "SIGILL! Quitting now!";
+        raise_signal("Signal: SIGILL (Illegal Operation)");
+    }
+}
+
+
+void QtHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+    switch (type) {
+    case QtDebugMsg:
+    case QtInfoMsg:
+    case QtWarningMsg:
+    case QtCriticalMsg:
+        std::cout << msg.toStdString();
+        break;
+    case QtFatalMsg:
+        std::cout << msg.toStdString();
+        raise_signal(msg);
+    }
 }
 
 int main(int argc, char *argv[])
@@ -51,6 +79,8 @@ int main(int argc, char *argv[])
     signal(SIGBUS, *catch_signal); //Catch SIGBUS
     signal(SIGABRT, *catch_signal); //Catch SIGABRT
     signal(SIGILL, *catch_signal); //Catch SIGILL
+
+    qInstallMessageHandler(QtHandler);
 
     QApplication a(argc, argv);
 

@@ -9,7 +9,7 @@ SegfaultDialog::SegfaultDialog(QString signal, QWidget *parent) :
 
     this->setFixedSize(this->size());
     ui->label_3->setText("To debug, attach a debugger to PID " + QString::number(QApplication::applicationPid()));
-    ui->signal->setText("Signal: " + signal);
+    ui->signal->setText(signal);
 }
 
 SegfaultDialog::~SegfaultDialog()
@@ -32,4 +32,12 @@ void SegfaultDialog::on_pushButton_2_clicked()
         trace.append(QString(charBt[i]) + "\n");
     }
     QMessageBox::information(this, "Backtrace", trace, QMessageBox::Ok, QMessageBox::Ok);
+}
+
+void SegfaultDialog::on_pushButton_3_clicked()
+{
+    if (QMessageBox::warning(this, "Reset theShell?", "You're about to reset theShell. Are you sure?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+        QSettings().clear();
+        this->close();
+    }
 }

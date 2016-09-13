@@ -803,7 +803,7 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
                             }
 
                             if (e->key() == Qt::Key_Down) {
-                                if (currentRow == pinnedAppsCount - 1 && pinnedAppsCount != 0) {
+                                if (currentRow == pinnedAppsCount - 1 && pinnedAppsCount != 0 && ui->lineEdit->text() == "") {
                                     ui->listWidget->item(pinnedAppsCount + 1)->setSelected(true);
                                     ui->listWidget->scrollToItem(ui->listWidget->item(pinnedAppsCount + 1));
                                 } else if (currentRow == -1) {
