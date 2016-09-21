@@ -33,8 +33,10 @@
         <file alias="unknown.svg">flight/unknown.svg</file>
     </qresource>
     <qresource prefix="/sounds/tones">
-        <file>happybee</file>
-        <file>playinginthedark</file>
+        <file alias="happybee">happybee.ogg</file>
+        <file alias="playinginthedark">playinginthedark.ogg</file>
+        <file alias="icecream">icecream.ogg</file>
+        <file alias="party">party.ogg</file>
     </qresource>
     <qresource prefix="/backgrounds">
         <file alias="blueprint">backgrounds/blueprint</file>

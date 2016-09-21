@@ -155,6 +155,8 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
     ui->timerToneSelect->addItem("Happy Bee");
     ui->timerToneSelect->addItem("Playing in the Dark");
+    ui->timerToneSelect->addItem("Ice Cream Truck");
+    ui->timerToneSelect->addItem("Party Complex");
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -829,6 +831,10 @@ void InfoPaneDropdown::startTimer(QTime time) {
                 playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/happybee")));
             } else if (ui->timerToneSelect->currentText() == "Playing in the Dark") {
                 playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/playinginthedark")));
+            } else if (ui->timerToneSelect->currentText() == "Ice Cream Truck") {
+                playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/icecream")));
+            } else if (ui->timerToneSelect->currentText() == "Party Complex") {
+                playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/party")));
             }
             playlist->setPlaybackMode(QMediaPlaylist::Loop);
             ringtone->setPlaylist(playlist);
