@@ -97,6 +97,7 @@ int main(int argc, char *argv[])
             qDebug() << "  -s, --no-splash-screen       Don't show the splash screen";
             qDebug() << "  -a, --no-autostart           Don't autostart executables";
             qDebug() << "  -k, --no-kscreen             Don't autostart KScreen";
+            qDebug() << "      --debug                  Allows you to quit theShell instead of powering off";
             qDebug() << "  -h, --help                   Show this help output";
             return 0;
         } else if (arg == "-s" || arg == "--no-splash-screen") {
@@ -251,4 +252,19 @@ void EndSession(EndSessionWait::shutdownType type) {
         break;
     }
 
+}
+
+QString calculateSize(quint64 size) {
+    QString ret;
+    if (size > 1073741824) {
+        ret = QString::number(((float) size / 1024 / 1024 / 1024), 'f', 2).append(" GiB");
+    } else if (size > 1048576) {
+        ret = QString::number(((float) size / 1024 / 1024), 'f', 2).append(" MiB");
+    } else if (size > 1024) {
+        ret = QString::number(((float) size / 1024), 'f', 2).append(" KiB");
+    } else {
+        ret = QString::number((float) size, 'f', 2).append(" B");
+    }
+
+    return ret;
 }

@@ -295,6 +295,19 @@
        </widget>
       </item>
       <item>
+       <widget class="QCommandLinkButton" name="exitButton">
+        <property name="text">
+         <string>Exit theShell</string>
+        </property>
+        <property name="icon">
+         <iconset theme="application-exit"/>
+        </property>
+        <property name="description">
+         <string>Exits theShell, leaving everything else open</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCommandLinkButton" name="commandLinkButton">
         <property name="styleSheet">
          <string notr="true">background-color: #A00;</string>

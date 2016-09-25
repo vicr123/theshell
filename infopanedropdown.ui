@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>922</width>
+    <width>964</width>
     <height>1955</height>
    </rect>
   </property>
@@ -106,7 +106,7 @@
          <item>
           <widget class="ClickableLabel" name="batteryLabel">
            <property name="text">
-            <string>Battery</string>
+            <string>System Status</string>
            </property>
           </widget>
          </item>
@@ -1765,7 +1765,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Battery</string>
+         <string>System Status</string>
         </property>
        </widget>
       </item>
@@ -1773,6 +1773,20 @@
        <widget class="QLabel" name="currentBattery">
         <property name="text">
          <string>Current Battery Power:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="theshellUptime">
+        <property name="text">
+         <string>theShell Uptime:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="systemUptime">
+        <property name="text">
+         <string>System Uptime: </string>
         </property>
        </widget>
       </item>
@@ -2170,14 +2184,14 @@
             <second>0</second>
             <year>1969</year>
             <month>11</month>
-            <day>27</day>
+            <day>25</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>11</month>
-            <day>27</day>
+            <day>25</day>
            </date>
           </property>
           <property name="displayFormat">
@@ -2213,7 +2227,10 @@
           <item>
            <widget class="QLabel" name="label_37">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;quot;Happy Bee&amp;quot; copyright (c) Kevin MacLeod. Licensed under the Creative Commons CC-BY license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;quot;Happy Bee&amp;quot;, &amp;quot;Salty Ditty&amp;quot; copyright (c) Kevin MacLeod. Licensed under the Creative Commons CC-BY license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

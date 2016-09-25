@@ -20,6 +20,7 @@ public:
     explicit UPowerDBus(NotificationDBus* notificationDBus, QObject *parent = 0);
 
     bool hasBattery();
+    int currentBattery();
 signals:
     void updateDisplay(QString display);
     void batteryChanged(int batteryPercent);
@@ -43,6 +44,7 @@ private:
 
     NotificationDBus* notificationDBus;
     bool hasBat;
+    int batLevel;
 
     QDBusUnixFileDescriptor powerInhibit;
 

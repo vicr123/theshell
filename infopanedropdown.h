@@ -20,6 +20,7 @@
 #include "upowerdbus.h"
 #include "endsessionwait.h"
 #include "UGlobalHotkey-master/uglobalhotkeys.h"
+#include <sys/sysinfo.h>
 
 class UPowerDBus;
 
@@ -113,8 +114,6 @@ private slots:
 
     void on_redshiftPause_toggled(bool checked);
 
-    void batteryLevelChanged(int battery);
-
     void on_printLabel_clicked();
 
     void on_resetButton_clicked();
@@ -169,6 +168,8 @@ private slots:
 
     void on_SuperkeyGatewaySwitch_toggled(bool checked);
 
+    void updateSysInfo();
+
 public slots:
     void getNetworks();
 
@@ -207,6 +208,8 @@ private:
     int timerNotificationId = 0;
     QTimer* eventTimer;
     QTime timeUntilTimeout;
+    QTime startTime;
+    void reject();
 
     QSettings settings;
     QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);

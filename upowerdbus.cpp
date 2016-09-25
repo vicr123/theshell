@@ -161,11 +161,16 @@ void UPowerDBus::DeviceChanged() {
         }
 
         emit updateDisplay(QString::number(percentage) + "%" + state);
+        batLevel = percentage;
     }
 }
 
 bool UPowerDBus::hasBattery() {
     return hasBat;
+}
+
+int UPowerDBus::currentBattery() {
+    return batLevel;
 }
 
 void UPowerDBus::checkUpower() {

@@ -41,6 +41,8 @@ private slots:
 private:
     Ui::Background *ui;
 
+    void reject();
+
     MainWindow* mainwindow;
 };
 

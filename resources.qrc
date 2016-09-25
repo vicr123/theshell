@@ -37,6 +37,7 @@
         <file alias="playinginthedark">playinginthedark.ogg</file>
         <file alias="icecream">icecream.ogg</file>
         <file alias="party">party.ogg</file>
+        <file alias="saltyditty">saltyditty.ogg</file>
     </qresource>
     <qresource prefix="/backgrounds">
         <file alias="blueprint">backgrounds/blueprint</file>

@@ -29,6 +29,10 @@ Menu::Menu(QWidget *parent) :
     ui->settingsIcon->setPixmap(QIcon::fromTheme("preferences-system").pixmap(32));
     ui->mediaIcon->setPixmap(QIcon::fromTheme("media-playback-start").pixmap(32));
 
+    if (!QApplication::arguments().contains("--debug")) {
+        ui->exitButton->setVisible(false);
+    }
+
     this->setMouseTracking(true);
 
     QString name = qgetenv("USER");
@@ -319,7 +323,7 @@ void Menu::close() {
     connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
     connect(animation, &QPropertyAnimation::finished, [=]() {
         emit menuClosing();
-        QDialog::close();
+        QDialog::hide();
     });
 
     doCheckForClose = false;
@@ -1414,4 +1418,13 @@ void theWaveFrame::setBackupText(QString text) {
 
 QString theWaveFrame::backupText() {
     return this->bText;
+}
+
+void Menu::on_exitButton_clicked()
+{
+    QApplication::exit(0);
+}
+
+void Menu::reject() {
+    this->close();
 }

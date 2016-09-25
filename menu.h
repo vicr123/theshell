@@ -165,6 +165,8 @@ private slots:
 
     void on_listWidget_customContextMenuRequested(const QPoint &pos);
 
+    void on_exitButton_clicked();
+
 private:
     Ui::Menu *ui;
 
@@ -181,6 +183,8 @@ private:
     //void closeEvent(QCloseEvent *event);
     void paintEvent(QPaintEvent* event);
     void changeEvent(QEvent* event);
+
+    void reject();
 
     theWaveWorker* waveWorker;
     bool isListening = false;

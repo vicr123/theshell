@@ -4,12 +4,15 @@
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern void EndSession(EndSessionWait::shutdownType type);
+extern QString calculateSize(quint64 size);
 
 InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoPaneDropdown)
 {
     ui->setupUi(this);
+
+    startTime.start();
 
     this->notificationEngine = notificationEngine;
     this->powerEngine = powerEngine;
@@ -20,10 +23,9 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     connect(notificationEngine, SIGNAL(NotificationClosed(uint,uint)), this, SLOT(notificationClosed(uint,uint)));
     connect(this, SIGNAL(closeNotification(int)), notificationEngine, SLOT(CloseNotificationUserInitiated(int)));
 
-    connect(powerEngine, SIGNAL(batteryChanged(int)), this, SLOT(batteryLevelChanged(int)));
-
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateSysInfo()));
     timer->setInterval(1000);
     timer->start();
 
@@ -152,11 +154,13 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), "About"));
     ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
 
+    //Set up timer ringtones
     ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
     ui->timerToneSelect->addItem("Happy Bee");
     ui->timerToneSelect->addItem("Playing in the Dark");
     ui->timerToneSelect->addItem("Ice Cream Truck");
     ui->timerToneSelect->addItem("Party Complex");
+    ui->timerToneSelect->addItem("Salty Ditty");
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -835,6 +839,8 @@ void InfoPaneDropdown::startTimer(QTime time) {
                 playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/icecream")));
             } else if (ui->timerToneSelect->currentText() == "Party Complex") {
                 playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/party")));
+            } else if (ui->timerToneSelect->currentText() == "Salty Ditty") {
+                playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/saltyditty")));
             }
             playlist->setPlaybackMode(QMediaPlaylist::Loop);
             ringtone->setPlaylist(playlist);
@@ -1029,8 +1035,21 @@ void InfoPaneDropdown::on_redshiftPause_toggled(bool checked)
     settings.setValue("display/redshiftPaused", !checked);
 }
 
-void InfoPaneDropdown::batteryLevelChanged(int battery) {
-    ui->currentBattery->setText("Current Battery Percentage: " + QString::number(battery));
+void InfoPaneDropdown::updateSysInfo() {
+    ui->currentBattery->setText("Current Battery Percentage: " + QString::number(powerEngine->currentBattery()).append("%"));
+
+    QTime uptime(0, 0);
+    uptime = uptime.addMSecs(startTime.elapsed());
+    ui->theshellUptime->setText("theShell Uptime: " + uptime.toString("hh:mm:ss"));
+
+    struct sysinfo* info = new struct sysinfo;
+    if (sysinfo(info) == 0) {
+        QTime sysUptime(0, 0);
+        sysUptime = sysUptime.addSecs(info->uptime);
+        ui->systemUptime->setText("System Uptime: " + sysUptime.toString("hh:mm:ss"));
+    } else {
+        ui->systemUptime->setText("Couldn't get system uptime");
+    }
 }
 
 void InfoPaneDropdown::on_printLabel_clicked()
@@ -1244,4 +1263,8 @@ void InfoPaneDropdown::on_BluetoothSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_SuperkeyGatewaySwitch_toggled(bool checked)
 {
     settings.setValue("input/superkeyGateway", checked);
+}
+
+void InfoPaneDropdown::reject() {
+    this->close();
 }

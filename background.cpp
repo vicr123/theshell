@@ -30,6 +30,7 @@ Background::Background(MainWindow* mainwindow, QRect screenGeometry, QWidget *pa
     scene->setSceneRect(screenGeometry);
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setSceneRect(screenGeometry);
+
 }
 
 Background::~Background()
@@ -80,4 +81,8 @@ void Background::on_actionChange_Background_triggered()
     ChooseBackground *background = new ChooseBackground();
     connect(background, SIGNAL(reloadBackgrounds()), mainwindow, SIGNAL(reloadBackgrounds()));
     background->show();
+}
+
+void Background::reject() {
+
 }
