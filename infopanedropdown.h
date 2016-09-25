@@ -54,16 +54,12 @@ public:
 
 signals:
     void networkLabelChanged(QString label);
-
     void closeNotification(int id);
-
     void numNotificationsChanged(int notifications);
-
     void timerChanged(QString timer);
-
     void timerVisibleChanged(bool timerVisible);
-
     void timerEnabledChanged(bool timerEnabled);
+    void notificationsSilencedChanged(bool silenced);
 
 private slots:
     void on_pushButton_clicked();
@@ -169,6 +165,8 @@ private slots:
     void on_SuperkeyGatewaySwitch_toggled(bool checked);
 
     void updateSysInfo();
+
+    void on_QuietCheck_toggled(bool checked);
 
 public slots:
     void getNetworks();

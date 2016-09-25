@@ -1268,3 +1268,8 @@ void InfoPaneDropdown::on_SuperkeyGatewaySwitch_toggled(bool checked)
 void InfoPaneDropdown::reject() {
     this->close();
 }
+
+void InfoPaneDropdown::on_QuietCheck_toggled(bool checked)
+{
+    emit this->notificationsSilencedChanged(checked);
+}

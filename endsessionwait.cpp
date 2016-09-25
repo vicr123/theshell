@@ -327,7 +327,7 @@ void EndSessionWait::on_terminateApp_clicked()
 }
 
 void EndSessionWait::reloadAppList() {
-    QList<WmWindow*> *wlist = new QList<WmWindow*>();
+    QList<WmWindow> wlist;
 
     Display* d = QX11Info::display();
     QList<Window> TopWindows;
@@ -371,8 +371,8 @@ void EndSessionWait::reloadAppList() {
             }
         }
         if (retval == 0) {
-            WmWindow *w = new WmWindow();
-            w->setWID(win);
+            WmWindow w;
+            w.setWID(win);
 
             QString title;
             if (netWmName) {
@@ -392,38 +392,86 @@ void EndSessionWait::reloadAppList() {
             if (retval == 0) {
                 if (pidPointer != 0) {
                     unsigned long pid = *pidPointer;
-                    w->setPID(pid);
+                    w.setPID(pid);
                 }
             }
 
             XFree(pidPointer);
 
-            /*unsigned long icItems, icBytes;
-            unsigned char *icon;
-            int icFormat;
-            Atom icReturnType;
-            retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1048576, False,
-                               XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
 
-            w->setIcon(QIcon(QPixmap::fromImage(QImage::fromData(icon, icBytes))));
-            XFree(icon);*/
+            {
+                bool noIcon = false;
+                unsigned long icItems, icBytes;
+                unsigned char *icon;
+                int icFormat;
+                Atom icReturnType;
 
-            w->setTitle(title);
+                unsigned char *ret;
+                int width, height;
 
-            if (w->PID() != QCoreApplication::applicationPid()) {
-                wlist->append(w);
-            } else {
-                delete w;
+
+                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1, False,
+                                   XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
+                if (ret == 0x0) {
+                    noIcon = true;
+                } else {
+                    width = *(int*) ret;
+                    XFree(ret);
+                }
+
+                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 1, 1, False,
+                                   XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
+
+                if (ret == 0x0) {
+                    noIcon = true;
+                } else {
+                    height = *(int*) ret;
+                    XFree(ret);
+                }
+
+                if (!noIcon) {
+                    retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 2, width * height * 4, False,
+                                       XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
+
+                    QImage image(width, height, QImage::Format_ARGB32);
+
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width * 8; x = x + 8) {
+                            unsigned long a, r, g, b;
+
+                            b = (icon[y * width * 8 + x + 0]);
+                            g = (icon[y * width * 8 + x + 1]);
+                            r = (icon[y * width * 8 + x + 2]);
+                            a = (icon[y * width * 8 + x + 3]);
+
+                            QColor col = QColor(r, g, b, a);
+
+                            image.setPixelColor(x / 8, y, col);
+                        }
+                    }
+
+                    QPixmap iconPixmap(QPixmap::fromImage(image).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                    w.setIcon(QIcon(iconPixmap));
+
+                    XFree(icon);
+                }
+            }
+
+            w.setTitle(title);
+
+            if (w.PID() != QCoreApplication::applicationPid()) {
+                wlist.append(w);
             }
 
         }
     }
 
     ui->listWidget->clear();
-    for (WmWindow *wi : *wlist) {
+    for (WmWindow wi : wlist) {
         QListWidgetItem* item = new QListWidgetItem();
-        item->setText(wi->title() + " (PID " + QString::number(wi->PID()) + ")");
-        item->setData(Qt::UserRole, QVariant::fromValue(wi->PID()));
+        item->setText(wi.title() + " (PID " + QString::number(wi.PID()) + ")");
+        item->setData(Qt::UserRole, QVariant::fromValue(wi.PID()));
+        item->setIcon(wi.icon());
         ui->listWidget->addItem(item);
     }
 }

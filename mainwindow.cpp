@@ -55,6 +55,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(infoPane, SIGNAL(timerChanged(QString)), this, SLOT(setTimer(QString)));
     connect(infoPane, SIGNAL(timerVisibleChanged(bool)), this, SLOT(setTimerVisible(bool)));
     connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
+    connect(infoPane, &InfoPaneDropdown::notificationsSilencedChanged, [=](bool silenced) {
+        ui->notifications->setShowDisabled(silenced);
+    });
     infoPane->getNetworks();
 
     QString loginSoundPath = settings.value("sounds/login", "").toString();
@@ -349,8 +352,6 @@ void MainWindow::doUpdate() {
                     w.setIcon(QIcon(iconPixmap));
 
                     XFree(icon);
-                } else {
-
                 }
             }
 

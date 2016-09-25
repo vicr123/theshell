@@ -14,6 +14,8 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
     //Capture required keys
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessUp), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessDown), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessUp), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessDown), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioRaiseVolume), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioMute), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
@@ -38,6 +40,8 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
 NativeEventFilter::~NativeEventFilter() {
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessUp), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessDown), AnyModifier, QX11Info::appRootWindow());
+    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessUp), AnyModifier, QX11Info::appRootWindow());
+    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessDown), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioRaiseVolume), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioMute), AnyModifier, QX11Info::appRootWindow());
@@ -112,6 +116,13 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     }
                 }
 
+                int kbdBrightness = -1, maxKbdBrightness = -1;
+                QDBusInterface keyboardInterface("org.freedesktop.UPower", "/org/freedesktop/UPower/KbdBacklight", "org.freedesktop.UPower.KbdBacklight", QDBusConnection::systemBus());
+                if (keyboardInterface.isValid()) {
+                    kbdBrightness = keyboardInterface.call("GetBrightness").arguments().first().toInt();
+                    maxKbdBrightness = keyboardInterface.call("GetMaxBrightness").arguments().first().toInt();
+                }
+
                 if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessUp)) { //Increase brightness by 10%
                     currentBrightness = currentBrightness + 10;
                     if (currentBrightness > 100) currentBrightness = 100;
@@ -163,6 +174,18 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     connect(volumeAdj, SIGNAL(finished(int)), volumeAdj, SLOT(deleteLater()));
 
                     Hotkeys->show(QIcon::fromTheme("audio-volume-high"), "Volume", volume);
+                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessUp)) { //Increase keyboard brightness by 5%
+                    kbdBrightness += (((float) maxKbdBrightness / 100) * 5);
+                    if (kbdBrightness > maxKbdBrightness) kbdBrightness = maxKbdBrightness;
+                    keyboardInterface.call("SetBrightness", kbdBrightness);
+
+                    Hotkeys->show(QIcon::fromTheme("input-keyboard"), "Keyboard Brightness", ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
+                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessDown)) { //Decrease keyboard brightness by 5%
+                    kbdBrightness -= (((float) maxKbdBrightness / 100) * 5);
+                    if (kbdBrightness < 0) kbdBrightness = 0;
+                    keyboardInterface.call("SetBrightness", kbdBrightness);
+
+                    Hotkeys->show(QIcon::fromTheme("input-keyboard"), "Keyboard Brightness", ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
                 }
             }
         } else if (event->response_type == XCB_KEY_RELEASE) {
@@ -177,17 +200,11 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
             } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) ||
                        button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == (ControlMask | Mod1Mask))) { //Power Off
                 if (!isEndSessionBoxShowing) {
-                    isEndSessionBoxShowing = true;
-                    /*if (QMessageBox::question(Hotkeys, "Power Off", "Are you sure you wish to close all applications and power off the computer?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
-                        EndSession(EndSessionWait::powerOff);
-                    }*/
-
                     EndSessionWait* endSession = new EndSessionWait(EndSessionWait::ask);
                     endSession->showFullScreen();
                     endSession->exec();
                     isEndSessionBoxShowing = false;
                 }
-
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_Sleep)) { //Suspend
                 QList<QVariant> arguments;
                 arguments.append(true);
