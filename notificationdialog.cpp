@@ -3,7 +3,7 @@
 
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 
-NotificationDialog::NotificationDialog(QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, QWidget *parent) :
+NotificationDialog::NotificationDialog(QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NotificationDialog)
 {
@@ -22,8 +22,23 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
     //pal().background().setColor(this->palette().foreground().color());
     //pal().foreground().setColor(background);
     this->setPalette(pal);*/
-    ui->title->setText(title);
-    ui->body->setText(body);
+
+
+    switch (type) {
+    case normalType:
+        ui->notificationType->setCurrentIndex(0);
+        ui->title->setText(title);
+        ui->body->setText(body);
+        ui->page2->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Ignored);
+        break;
+    case callType:
+        ui->notificationType->setCurrentIndex(1);
+        ui->title1->setText(title);
+        ui->body1->setText(body);
+        break;
+    }
+
+    this->setFixedHeight(this->sizeHint().height());
 
     for (int i = 0; i < actions.length(); i = i + 2) {
         QString action = actions.at(i);
@@ -70,6 +85,8 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
             ui->label->setPixmap(getIconFromTheme("battery-low.svg", color).pixmap(24, 24));
         } else if (category == "battery.critical") {
             ui->label->setPixmap(getIconFromTheme("battery-critical.svg", color).pixmap(24, 24));
+        } else if (category == "call.incoming") {
+            ui->label->setPixmap(QIcon::fromTheme("call-start").pixmap(24, 24));
         } else {
             ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(24, 24));
         }

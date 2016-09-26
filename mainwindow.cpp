@@ -425,10 +425,11 @@ void MainWindow::doUpdate() {
         }
         for (WmWindow w : windowList) {
             FadeButton *button = new FadeButton();
+
             button->setProperty("windowid", QVariant::fromValue(w.WID()));
             button->setProperty("desktop", QVariant::fromValue(w.desktop()));
             if (settings.value("bar/showText", true).toBool()) {
-                button->setFullText(w.title());
+                button->setFullText(w.title().replace("&", "&&"));
             }
             button->setContextMenuPolicy(Qt::CustomContextMenu);
             connect(button, &QPushButton::customContextMenuRequested, [=](const QPoint &pos) {
@@ -456,9 +457,13 @@ void MainWindow::doUpdate() {
             }
             button->setIcon(w.icon());
             connect(button, SIGNAL(clicked(bool)), this, SLOT(ActivateWindow()));
+
+            //If window is requesting attention, highlight it
             if (w.attention()) {
-                button->setStyleSheet("background-color: #A00;");
+                button->setStyleSheet("background-color: #AAAA0000;");
             }
+
+            //Add the button to the layout
             ui->windowList->layout()->addWidget(button);
         }
 
@@ -546,8 +551,9 @@ void MainWindow::doUpdate() {
     }
     forceWindowMove = false;
 
+    //Update date and time
     ui->date->setText(QDateTime::currentDateTime().toString("ddd dd MMM yyyy"));
-    ui->time->setText(QDateTime::currentDateTime().toString("hh:mm:ss"));
+    ui->time->setText(QDateTime::currentDateTime().time().toString(Qt::TextDate));
 
     mprisDetectedApps.clear();
     for (QString service : QDBusConnection::sessionBus().interface()->registeredServiceNames().value()) {

@@ -22,6 +22,8 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         replaces_id = nextId;
         nextId++;
 
+        NotificationDialog::notificationType type = NotificationDialog::normalType;
+
         bool showDialog = true;
         if (dropdownPane != NULL) {
             if (dropdownPane->isQuietOn()) {
@@ -35,7 +37,36 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
             }
         }
 
-        NotificationDialog *d = new NotificationDialog(summary, body, actions, replaces_id, hints, expire_timeout);
+        if (app_name == "KDE Connect") { //Do special notifications for KDE Connect
+            QString kdeEventId = hints.value("x-kde-eventId").toString();
+            qDebug() << kdeEventId;
+            if (kdeEventId == "pingReceived") {
+                body = "Ping received from " + summary;
+                summary = "KDE Connect";
+            } else if (kdeEventId == "callReceived") {
+                QString tempBody, tempSummary;
+                tempSummary = "Incoming Call (" + summary + ")";
+                tempBody = body.remove("Incoming call from ");
+                summary = tempSummary;
+                body = tempBody;
+                hints.insert("category", "call.incoming");
+                type = NotificationDialog::callType;
+                expire_timeout = 30000;
+            } else if (kdeEventId == "missedCall") {
+                showDialog = false;
+            } else if (kdeEventId == "smsReceived") {
+                summary = "KDE Connect";
+            } else if (kdeEventId == "notification") {
+                QString appName = body.left(body.indexOf(":"));
+                QString appSummary = body.mid(body.indexOf(":") + 2, body.indexOf("‐") - body.indexOf(":") - 3);
+                QString appBody = body.right(body.indexOf("‐") + 12);
+                summary = appSummary + " (" + appName + " from " + summary + ")";
+                body = appBody;
+                hints.insert("transient", true);
+            }
+        }
+
+        NotificationDialog *d = new NotificationDialog(summary, body, actions, replaces_id, hints, expire_timeout, type);
         d->dbusParent = this;
 
         connect(d, SIGNAL(closing(int, int)), this, SLOT(sendCloseNotification(int, int)));
@@ -59,14 +90,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         dialogs.at(replaces_id - 1)->show();
     }
 
-    bool transient = false;
-    if (hints.keys().contains("transient")) {
-        if (hints.value("transient").toBool() == true) {
-            transient = true;
-        }
-    }
-
-    if (!transient) {
+    if (!hints.value("transient", false).toBool()) {
 
         QColor color = QApplication::palette("QLabel").color(QPalette::Window);
         QIcon icon = QIcon::fromTheme("dialog-warning");

@@ -23,7 +23,12 @@ class NotificationDialog : public QDialog
     Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
 public:
-    explicit NotificationDialog(QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, QWidget *parent = 0);
+    enum notificationType {
+        normalType,
+        callType,
+    };
+
+    explicit NotificationDialog(QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type = normalType, QWidget *parent = 0);
     ~NotificationDialog();
 
     void show();

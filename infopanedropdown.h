@@ -45,7 +45,8 @@ public:
         Battery = 1,
         Network = 2,
         Notifications = 3,
-        Print = 4
+        KDEConnect = 4,
+        Print = 5
     };
 
     void show(dropdownType showWith);
@@ -167,6 +168,12 @@ private slots:
     void updateSysInfo();
 
     void on_QuietCheck_toggled(bool checked);
+
+    void on_kdeconnectLabel_clicked();
+
+    void updateKdeconnect();
+
+    void on_startKdeconnect_clicked();
 
 public slots:
     void getNetworks();

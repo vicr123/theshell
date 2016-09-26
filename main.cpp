@@ -152,6 +152,10 @@ int main(int argc, char *argv[])
         splash->showFullScreen();
     }
 
+    if (!QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect") && QFile("/usr/lib/kdeconnectd").exists()) {
+        //Start KDE Connect if it is not running and it is existant on the PC
+        QProcess::startDetached("/usr/lib/kdeconnectd");
+    }
 
     QProcess polkitProcess;
     polkitProcess.start("/usr/lib/ts-polkitagent");
@@ -179,9 +183,6 @@ int main(int argc, char *argv[])
             QProcess::startDetached(app);
         }
     }
-
-    //QProcess* ksuperkey = new QProcess();
-    //ksuperkey->start("ksuperkey -d -e \"Super_L=Alt_L|F5;Alt_R|F5\"");
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 

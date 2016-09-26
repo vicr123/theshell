@@ -26,6 +26,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
     connect(timer, SIGNAL(timeout()), this, SLOT(updateSysInfo()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateKdeconnect()));
     timer->setInterval(1000);
     timer->start();
 
@@ -33,6 +34,11 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->pushButton_3->setVisible(false);
     ui->networkKey->setVisible(false);
     ui->networkConnect->setVisible(false);
+
+    if (!QFile("/usr/lib/kdeconnectd").exists()) {
+        //If KDE Connect is not installed, hide the KDE Connect option
+        ui->kdeconnectLabel->setVisible(false);
+    }
 
     {
         QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "DeviceAdded", this, SLOT(newNetworkDevice(QDBusObjectPath)));
@@ -338,7 +344,7 @@ void InfoPaneDropdown::close() {
     a->setEasingCurve(QEasingCurve::OutCubic);
     a->setDuration(500);
     connect(a, &QPropertyAnimation::finished, [=]() {
-        QDialog::close();
+        QDialog::hide();
     });
     connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
     a->start();
@@ -354,12 +360,14 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
     ui->clockFrame->setVisible(false);
     ui->settingsFrame->setVisible(false);
     ui->printFrame->setVisible(false);
+    ui->kdeconnectFrame->setVisible(false);
 
     ui->clockLabel->setShowDisabled(true);
     ui->batteryLabel->setShowDisabled(true);
     ui->notificationsLabel->setShowDisabled(true);
     ui->networkLabel->setShowDisabled(true);
     ui->printLabel->setShowDisabled(true);
+    ui->kdeconnectLabel->setShowDisabled(true);
 
     switch (changeTo) {
     case Settings:
@@ -387,16 +395,18 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
     case Print:
         ui->printFrame->setVisible(true);
         ui->printLabel->setShowDisabled(false);
-
+    case KDEConnect:
+        ui->kdeconnectFrame->setVisible(true);
+        ui->kdeconnectLabel->setShowDisabled(false);
     }
 
-    if (changeTo == 0) {
+    if (changeTo == Clock) {
         ui->pushButton_5->setEnabled(false);
         ui->pushButton_6->setEnabled(true);
-    } else if (changeTo == 4) {
+    } else if (changeTo == Print) {
         ui->pushButton_5->setEnabled(true);
         ui->pushButton_6->setEnabled(false);
-    } else if (changeTo == -1) {
+    } else if (changeTo == Settings) {
         ui->pushButton_5->setEnabled(false);
         ui->pushButton_6->setEnabled(false);
     } else {
@@ -1272,4 +1282,45 @@ void InfoPaneDropdown::reject() {
 void InfoPaneDropdown::on_QuietCheck_toggled(bool checked)
 {
     emit this->notificationsSilencedChanged(checked);
+}
+
+void InfoPaneDropdown::on_kdeconnectLabel_clicked()
+{
+    changeDropDown(KDEConnect);
+}
+
+void InfoPaneDropdown::updateKdeconnect() {
+    if (!QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect")) {
+        ui->kdeconnectNotRunning->setVisible(true);
+        ui->kdeconnectArea->setVisible(false);
+    } else {
+        ui->kdeconnectNotRunning->setVisible(false);
+        ui->kdeconnectArea->setVisible(true);
+        int currentSelectedDevice = ui->kdeconnectDevices->currentRow();
+        QDBusInterface kdeconnectDaemon("org.kde.kdeconnect", "/modules/kdeconnect", "org.kde.kdeconnect.daemon");
+        QDBusReply<QStringList> foundDevices = kdeconnectDaemon.call("devices", false, true);
+
+        ui->kdeconnectDevices->clear();
+        for (QString device : foundDevices.value()) {
+            QDBusInterface deviceInterface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device");
+            bool isReachable = deviceInterface.property("isReachable").toBool();
+            QListWidgetItem* item = new QListWidgetItem;
+            item->setText(deviceInterface.property("name").toString());
+            item->setIcon(QIcon::fromTheme(deviceInterface.property("iconName").toString()));
+            if (!isReachable) {
+                item->setTextColor(ui->kdeconnectDevices->palette().color(QPalette::Disabled, QPalette::Text));
+            }
+            ui->kdeconnectDevices->addItem(item);
+        }
+
+        if (currentSelectedDevice != -1 && ui->kdeconnectDevices->count() > currentSelectedDevice) {
+            ui->kdeconnectDevices->setCurrentRow(currentSelectedDevice);
+        }
+    }
+}
+
+void InfoPaneDropdown::on_startKdeconnect_clicked()
+{
+    //Start KDE Connect
+    QProcess::startDetached("/usr/lib/kdeconnectd");
 }
