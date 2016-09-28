@@ -675,6 +675,7 @@ void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command 
                       QString::number(x) + "," + QString::number(y) + "," +
                       QString::number(w) + "," + QString::number(this->sizeHint().height()));
     this->setFixedSize(w, this->sizeHint().height());
+    ui->infoScrollArea->setFixedWidth(w - this->centralWidget()->layout()->margin());
 }
 
 void MainWindow::setGeometry(QRect geometry) {
@@ -732,6 +733,19 @@ void MainWindow::on_batteryLabel_clicked()
 void MainWindow::on_volumeFrame_MouseEnter()
 {
     ui->volumeSlider->setVisible(true);
+
+    QVariantAnimation* anim = new QVariantAnimation;
+    connect(anim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->volumeSlider->setFixedWidth(value.toInt());
+    });
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    anim->setStartValue(ui->volumeSlider->width());
+    anim->setEndValue(150);
+    anim->setDuration(250);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->start();
+
+    /*
     QPropertyAnimation* anim = new QPropertyAnimation(ui->volumeSlider, "geometry");
     anim->setStartValue(ui->volumeSlider->geometry());
     QRect endGeometry = ui->volumeSlider->geometry();
@@ -740,7 +754,7 @@ void MainWindow::on_volumeFrame_MouseEnter()
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    anim->start();
+    anim->start();*/
 
 
     //Get Current Volume
@@ -774,6 +788,21 @@ void MainWindow::on_volumeFrame_MouseEnter()
 
 void MainWindow::on_volumeFrame_MouseExit()
 {
+
+    QVariantAnimation* anim = new QVariantAnimation;
+    connect(anim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->volumeSlider->setFixedWidth(value.toInt());
+    });
+    connect(anim, &QVariantAnimation::finished, [=]() {
+        ui->volumeSlider->setVisible(false);
+        anim->deleteLater();
+    });
+    anim->setStartValue(ui->volumeSlider->width());
+    anim->setEndValue(0);
+    anim->setDuration(250);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->start();
+    /*
     QPropertyAnimation* anim = new QPropertyAnimation(ui->volumeSlider, "geometry");
     anim->setStartValue(ui->volumeSlider->geometry());
     QRect endGeometry = ui->volumeSlider->geometry();
@@ -785,7 +814,7 @@ void MainWindow::on_volumeFrame_MouseExit()
     anim->start();
     connect(anim, &QPropertyAnimation::finished, [=]() {
         ui->volumeSlider->setVisible(false);
-    });
+    });*/
 }
 
 void MainWindow::on_volumeSlider_sliderMoved(int position)
@@ -825,7 +854,17 @@ void MainWindow::on_volumeSlider_valueChanged(int value)
 void MainWindow::on_brightnessFrame_MouseEnter()
 {
     ui->brightnessSlider->setVisible(true);
-    QPropertyAnimation* anim = new QPropertyAnimation(ui->brightnessSlider, "geometry");
+    QVariantAnimation* anim = new QVariantAnimation;
+    connect(anim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->brightnessSlider->setFixedWidth(value.toInt());
+    });
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    anim->setStartValue(ui->brightnessSlider->width());
+    anim->setEndValue(150);
+    anim->setDuration(250);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->start();
+    /*QPropertyAnimation* anim = new QPropertyAnimation(ui->brightnessSlider, "geometry");
     anim->setStartValue(ui->brightnessSlider->geometry());
     QRect endGeometry = ui->brightnessSlider->geometry();
     endGeometry.setWidth(220);
@@ -833,7 +872,7 @@ void MainWindow::on_brightnessFrame_MouseEnter()
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    anim->start();
+    anim->start();*/
 
     //Get Current Brightness
     QProcess* backlight = new QProcess(this);
@@ -847,6 +886,22 @@ void MainWindow::on_brightnessFrame_MouseEnter()
 
 void MainWindow::on_brightnessFrame_MouseExit()
 {
+
+    QVariantAnimation* anim = new QVariantAnimation;
+    connect(anim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->brightnessSlider->setFixedWidth(value.toInt());
+    });
+    connect(anim, &QVariantAnimation::finished, [=]() {
+        ui->brightnessSlider->setVisible(false);
+        anim->deleteLater();
+    });
+    anim->setStartValue(ui->brightnessSlider->width());
+    anim->setEndValue(0);
+    anim->setDuration(250);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->start();
+
+    /*
     QPropertyAnimation* anim = new QPropertyAnimation(ui->brightnessSlider, "geometry");
     anim->setStartValue(ui->brightnessSlider->geometry());
     QRect endGeometry = ui->brightnessSlider->geometry();
@@ -859,7 +914,7 @@ void MainWindow::on_brightnessFrame_MouseExit()
     connect(anim, &QPropertyAnimation::finished, [=]() {
         ui->brightnessSlider->setVisible(false);
         anim->deleteLater();
-    });
+    });*/
 
 }
 

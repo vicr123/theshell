@@ -80,7 +80,6 @@ bool MouseScrollWidget::eventFilter(QObject *object, QEvent *event) {
     if (event->type() == QEvent::MouseMove || event->type() == QEvent::Enter) {
         QMouseEvent* mouseEvent = (QMouseEvent*) event;
         QPoint point = ((QWidget*) object)->mapTo(this, mouseEvent->pos());
-        qDebug() << mouseEvent->x() << mouseEvent->y();
 
         if (point.x() < 10) {
             shiftLeft.start();

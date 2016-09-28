@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1376</width>
+    <width>1826</width>
     <height>132</height>
    </rect>
   </property>
@@ -34,8 +34,20 @@
     <property name="sizeConstraint">
      <enum>QLayout::SetMaximumSize</enum>
     </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>9</number>
+    </property>
     <item>
-     <widget class="MouseScrollWidget" name="scrollArea">
+     <widget class="MouseScrollWidget" name="infoScrollArea">
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
@@ -53,19 +65,19 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1358</width>
-         <height>68</height>
+         <width>1826</width>
+         <height>77</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="leftMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
          <number>0</number>
@@ -180,7 +192,7 @@
           <item>
            <widget class="HoverFrame" name="brightnessFrame">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -302,7 +314,7 @@
           <item>
            <widget class="HoverFrame" name="volumeFrame">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -518,6 +530,12 @@
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <property name="spacing">
        <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>9</number>
       </property>
       <item>
        <widget class="QPushButton" name="openMenu">
