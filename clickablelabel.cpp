@@ -11,14 +11,6 @@ void ClickableLabel::mousePressEvent(QMouseEvent *event) {
     event->accept();
 }
 
-void ClickableLabel::mouseMoveEvent(QMouseEvent *event) {
-    event->accept();
-}
-
-void ClickableLabel::mouseReleaseEvent(QMouseEvent *event) {
-    event->accept();
-}
-
 bool ClickableLabel::showDisabled() {
     return isShowDisabled;
 }

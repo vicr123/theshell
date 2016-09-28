@@ -11,6 +11,7 @@
 #include <QDateTime>
 #include <QIcon>
 #include <QSystemTrayIcon>
+#include <QSoundEffect>
 #include "notificationdbus.h"
 
 class UPowerDBus : public QObject
@@ -27,6 +28,7 @@ signals:
 public slots:
     void DeviceChanged();
     void checkUpower();
+    void devicesChanged();
 
 private slots:
 

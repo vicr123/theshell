@@ -620,7 +620,7 @@ void MainWindow::doUpdate() {
             if (artist == "") {
                 ui->mprisSongName->setText(title);
             } else {
-                ui->mprisSongName->setText(artist + " - " + title);
+                ui->mprisSongName->setText(artist + " · " + title);
             }
         }
 
