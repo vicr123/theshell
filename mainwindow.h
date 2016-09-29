@@ -141,6 +141,8 @@ private slots:
 
     void on_openMenu_clicked();
 
+    void on_mprisSelection_triggered(QAction *arg1);
+
 signals:
     void reloadBackgrounds();
 
@@ -168,6 +170,7 @@ private:
     QString mprisArtist;
     QString mprisAlbum;
     bool mprisPlaying;
+    bool pauseMprisMenuUpdate = false;
 
     void closeEvent(QCloseEvent*);
     void paintEvent(QPaintEvent *event);

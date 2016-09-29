@@ -434,6 +434,19 @@
               </widget>
              </item>
              <item>
+              <widget class="QToolButton" name="mprisSelection">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="popupMode">
+                <enum>QToolButton::InstantPopup</enum>
+               </property>
+               <property name="arrowType">
+                <enum>Qt::DownArrow</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="mprisBack">
                <property name="toolTip">
                 <string>Previous</string>

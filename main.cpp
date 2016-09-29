@@ -65,10 +65,10 @@ void QtHandler(QtMsgType type, const QMessageLogContext &context, const QString 
     case QtInfoMsg:
     case QtWarningMsg:
     case QtCriticalMsg:
-        std::cout << msg.toStdString();
+        std::cout << msg.toStdString() + "\n";
         break;
     case QtFatalMsg:
-        std::cout << msg.toStdString();
+        std::cout << msg.toStdString() + "\n";
         raise_signal(msg);
     }
 }

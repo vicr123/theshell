@@ -10,10 +10,23 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //Set the menu of the MPRIS Media Player selection to a new menu.
+    //Items will be populated during the update event.
+    QMenu* mprisSelectionMenu = new QMenu();
+    ui->mprisSelection->setMenu(mprisSelectionMenu);
+    connect(mprisSelectionMenu, &QMenu::aboutToShow, [=]() {
+        pauseMprisMenuUpdate = true;
+    });
+    connect(mprisSelectionMenu, &QMenu::aboutToHide, [=]() {
+        pauseMprisMenuUpdate = false;
+    });
+
+    //Connect signals related to multiple monitor management
     connect(QApplication::desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(reloadScreens()));
     connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(reloadScreens()));
     connect(QApplication::desktop(), SIGNAL(primaryScreenChanged()), this, SLOT(reloadScreens()));
 
+    //Create the gateway and set required flags
     gatewayMenu = new Menu(this);
     gatewayMenu->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(gatewayMenu, &Menu::menuClosing, [=]() {
@@ -25,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     FlowLayout* flow = new FlowLayout(ui->windowList);
     ui->windowList->setLayout(flow);
 
+    //Create the update event timer and start it
     QTimer *timer = new QTimer(this);
     timer->setInterval(100);
     connect(timer, SIGNAL(timeout()), this, SLOT(doUpdate()));
@@ -576,6 +590,27 @@ void MainWindow::doUpdate() {
     }
 
     if (ui->mprisFrame->isVisible()) {
+        if (!pauseMprisMenuUpdate) {
+            if (mprisDetectedApps.count() > 1) {
+                QMenu* menu = ui->mprisSelection->menu();
+                menu->clear();
+                for (QString app : mprisDetectedApps) {
+                    QAction* action = new QAction();
+                    action->setData(app);
+                    action->setCheckable(true);
+                    if (mprisCurrentAppName == app) {
+                        action->setChecked(true);
+                    }
+                    action->setText(app.remove("org.mpris.MediaPlayer2."));
+                    menu->addAction(action);
+                }
+                //ui->mprisSelection->setMenu(menu);
+                ui->mprisSelection->setVisible(true);
+            } else {
+                ui->mprisSelection->setVisible(false);
+            }
+        }
+
         //Get Current Song Metadata
         QDBusMessage MetadataRequest = QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
         MetadataRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Metadata");
@@ -800,7 +835,7 @@ void MainWindow::on_volumeFrame_MouseExit()
     anim->setStartValue(ui->volumeSlider->width());
     anim->setEndValue(0);
     anim->setDuration(250);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->setEasingCurve(QEasingCurve::InCubic);
     anim->start();
     /*
     QPropertyAnimation* anim = new QPropertyAnimation(ui->volumeSlider, "geometry");
@@ -898,7 +933,7 @@ void MainWindow::on_brightnessFrame_MouseExit()
     anim->setStartValue(ui->brightnessSlider->width());
     anim->setEndValue(0);
     anim->setDuration(250);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->setEasingCurve(QEasingCurve::InCubic);
     anim->start();
 
     /*
@@ -1166,4 +1201,9 @@ QString MainWindow::songArtist() {
 }
 QString MainWindow::songAlbum() {
     return this->mprisAlbum;
+}
+
+void MainWindow::on_mprisSelection_triggered(QAction *arg1)
+{
+    mprisCurrentAppName = arg1->data().toString();
 }

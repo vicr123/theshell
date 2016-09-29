@@ -395,6 +395,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
     case Print:
         ui->printFrame->setVisible(true);
         ui->printLabel->setShowDisabled(false);
+        break;
     case KDEConnect:
         ui->kdeconnectFrame->setVisible(true);
         ui->kdeconnectLabel->setShowDisabled(false);
