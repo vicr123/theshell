@@ -31,6 +31,7 @@ Menu::Menu(QWidget *parent) :
 
     if (!QApplication::arguments().contains("--debug")) {
         ui->exitButton->setVisible(false);
+        ui->fakeEndButton->setVisible(false);
     }
 
     this->setMouseTracking(true);
@@ -1427,4 +1428,9 @@ void Menu::on_exitButton_clicked()
 
 void Menu::reject() {
     this->close();
+}
+
+void Menu::on_fakeEndButton_clicked()
+{
+    EndSession(EndSessionWait::dummy);
 }

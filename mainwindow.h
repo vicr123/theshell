@@ -176,9 +176,6 @@ private:
     void paintEvent(QPaintEvent *event);
 
     InfoPaneDropdown *infoPane;
-
-    void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0,
-                                 long data2 = 0, long data3 = 0, long data4 = 0);
 };
 
 #endif // MAINWINDOW_H

@@ -269,3 +269,22 @@ QString calculateSize(quint64 size) {
 
     return ret;
 }
+
+
+void sendMessageToRootWindow(const char* message, Window window, long data0, long data1, long data2, long data3, long data4) {
+    XEvent event;
+
+    event.xclient.type = ClientMessage;
+    event.xclient.serial = 0;
+    event.xclient.send_event = True;
+    event.xclient.message_type = XInternAtom(QX11Info::display(), message, False);
+    event.xclient.window = window;
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = data0;
+    event.xclient.data.l[1] = data1;
+    event.xclient.data.l[2] = data2;
+    event.xclient.data.l[3] = data3;
+    event.xclient.data.l[4] = data4;
+
+    XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
+}

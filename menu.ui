@@ -300,7 +300,8 @@
          <string>Exit theShell</string>
         </property>
         <property name="icon">
-         <iconset theme="application-exit"/>
+         <iconset theme="application-exit">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="description">
          <string>Exits theShell, leaving everything else open</string>
@@ -308,9 +309,17 @@
        </widget>
       </item>
       <item>
+       <widget class="QCommandLinkButton" name="fakeEndButton">
+        <property name="text">
+         <string>Fake Exit</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCommandLinkButton" name="commandLinkButton">
         <property name="styleSheet">
-         <string notr="true">background-color: #A00;</string>
+         <string notr="true">background-color: #A00;
+color: #FFF;</string>
         </property>
         <property name="text">
          <string>Power Off</string>
@@ -333,7 +342,8 @@
       <item>
        <widget class="QCommandLinkButton" name="commandLinkButton_2">
         <property name="styleSheet">
-         <string notr="true">background-color: #A00;</string>
+         <string notr="true">background-color: #A00;
+color: #FFF;</string>
         </property>
         <property name="text">
          <string>Reboot</string>

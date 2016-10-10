@@ -1,6 +1,8 @@
 #include "endsessionwait.h"
 #include "ui_endsessionwait.h"
 
+extern void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0, long data2 = 0, long data3 = 0, long data4 = 0);
+
 EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EndSessionWait)
@@ -39,15 +41,25 @@ EndSessionWait::~EndSessionWait()
 void EndSessionWait::close() {
     QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
     anim->setDuration(250);
-    anim->setStartValue(1.0);
+    anim->setStartValue(this->windowOpacity());
     anim->setEndValue(0.0);
     connect(anim, &QPropertyAnimation::finished, [=]() {
         QDialog::close();
+        anim->deleteLater();
     });
-    anim->start(QAbstractAnimation::DeleteWhenStopped);
+    anim->start();
 }
 
 void EndSessionWait::showFullScreen() {
+    QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
+    anim->setDuration(250);
+    anim->setStartValue(this->windowOpacity());
+    if (this->type == ask) {
+        anim->setEndValue(1.0);
+    } else {
+        anim->setEndValue(0.8);
+    }
+
     if (!alreadyShowing) {
         alreadyShowing = true;
         this->setWindowOpacity(0.0);
@@ -57,15 +69,53 @@ void EndSessionWait::showFullScreen() {
         ui->terminateAppFrame->setVisible(false);
         ui->ExitFrameTop->resize(ui->ExitFrameTop->sizeHint());
         ui->ExitFrameBottom->resize(ui->ExitFrameBottom->sizeHint());
-        QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
-        anim->setDuration(250);
-        anim->setStartValue(0.0);
-        anim->setEndValue(1.0);
         anim->start(QAbstractAnimation::DeleteWhenStopped);
+    } else {
+        QParallelAnimationGroup* parallelAnimGroup = new QParallelAnimationGroup;
+        QSequentialAnimationGroup* animGroup = new QSequentialAnimationGroup;
+
+        {
+            //Animate the "End Session" dialog out
+            QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
+            ui->askWhatToDo->setGraphicsEffect(fadeEffect);
+            QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
+            a->setDuration(250);
+            a->setStartValue(1);
+            a->setEndValue(0);
+            animGroup->addAnimation(a);
+        }
+
+        {
+            //Animate the "Ending Session" dialog in
+            QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
+            ui->poweringOff->setGraphicsEffect(fadeEffect);
+            QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
+            a->setDuration(250);
+            a->setStartValue(0);
+            a->setEndValue(1);
+            animGroup->addAnimation(a);
+        }
+
+        connect(animGroup, &QSequentialAnimationGroup::currentAnimationChanged, [=](QAbstractAnimation* current) {
+            if (animGroup->indexOfAnimation(current) == 1) {
+                ui->askWhatToDo->setVisible(false);
+                ui->poweringOff->setVisible(true);
+            }
+        });
+        parallelAnimGroup->addAnimation(animGroup);
+        parallelAnimGroup->addAnimation(anim);
+
+        connect(parallelAnimGroup, SIGNAL(finished()), parallelAnimGroup, SLOT(deleteLater()));
+        parallelAnimGroup->start();
+
+        while (parallelAnimGroup->state() == QSequentialAnimationGroup::Running) {
+            QApplication::processEvents();
+        }
     }
 
+
     if (this->type != dummy && this->type != ask) {
-        QProcess p;
+        /*QProcess p;
         p.start("wmctrl -lp");
         p.waitForStarted();
         while (p.state() != 0) {
@@ -92,19 +142,111 @@ void EndSessionWait::showFullScreen() {
                     wlist->append(w);
                 }
             }
+        }*/
+
+        //Prepare a window list
+        QList<WmWindow> wlist;
+
+        //Get the current display
+        Display* d = QX11Info::display();
+
+        //Create list of all top windows and populate it
+        QList<Window> TopWindows;
+
+        Atom WindowListType;
+        int format;
+        unsigned long items, bytes;
+        unsigned char *data;
+        XGetWindowProperty(d, RootWindow(d, 0), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
+                                        False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
+
+        quint64 *windows = (quint64*) data;
+        for (unsigned long i = 0; i < items; i++) {
+            TopWindows.append((Window) windows[i]);
+
+        }
+        XFree(data);
+
+        for (Window win : TopWindows) {
+            XWindowAttributes attributes;
+
+            int retval = XGetWindowAttributes(d, win, &attributes);
+            unsigned long items, bytes;
+            unsigned char *netWmName;
+            XTextProperty wmName;
+            int format;
+            Atom ReturnType;
+            retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_VISIBLE_NAME", False), 0, 1024, False,
+                               XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &netWmName);
+            if (retval != 0 || netWmName == 0x0) {
+                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_NAME", False), 0, 1024, False,
+                                   AnyPropertyType, &ReturnType, &format, &items, &bytes, &netWmName);
+                if (retval != 0) {
+                    retval = XGetWMName(d, win, &wmName);
+                    if (retval == 1) {
+                        retval = 0;
+                    } else {
+                        retval = 1;
+                    }
+                }
+            }
+            if (retval == 0) {
+                WmWindow w;
+                w.setWID(win);
+
+                QString title;
+                if (netWmName) {
+                    title = QString::fromLocal8Bit((char *) netWmName);
+                    XFree(netWmName);
+                } else if (wmName.value) {
+                    title = QString::fromLatin1((char *) wmName.value);
+                    //XFree(wmName);
+                }
+
+                unsigned long *pidPointer;
+                unsigned long pitems, pbytes;
+                int pformat;
+                Atom pReturnType;
+                int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_PID", False), 0, 1024, False,
+                                                XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
+                if (retval == 0) {
+                    if (pidPointer != 0) {
+                        unsigned long pid = *pidPointer;
+                        w.setPID(pid);
+                    }
+                }
+
+                XFree(pidPointer);
+
+                //Set the title of the window
+                w.setTitle(title);
+
+                //Make sure PID is not current application PID
+                if (w.PID() != QCoreApplication::applicationPid()) {
+                    wlist.append(w);
+                }
+            }
         }
 
+        for (WmWindow window : wlist) {
 
-        for (WmWindow* window : *wlist) {
-            p.start("wmctrl -c " + window->title());
+            if (QApplication::arguments().contains("--debug")) {
+                if (!window.title().toLower().contains("theterminal") && !window.title().toLower().contains("qt creator")) {
+                    sendMessageToRootWindow("_NET_CLOSE_WINDOW", window.WID());
+                }
+            } else {
+                sendMessageToRootWindow("_NET_CLOSE_WINDOW", window.WID());
+            }
+            /*p.start("wmctrl -c " + window.title());
             p.waitForStarted();
             while (p.state() != 0) {
                 QApplication::processEvents();
-            }
+            }*/
         }
 
         bool appsOpen = true;
 
+        QProcess p;
         while (appsOpen) {
             appsOpen = false;
             p.start("wmctrl -lp");
@@ -164,8 +306,6 @@ void EndSessionWait::on_pushButton_clicked()
 }
 
 void EndSessionWait::performEndSession() {
-    QFile(QDir::home().absolutePath() + "/.theshell.lck").remove();
-
     QSettings settings;
     QString logoutSoundPath = settings.value("sounds/logout", "").toString();
     if (logoutSoundPath == "") {
@@ -185,13 +325,22 @@ void EndSessionWait::performEndSession() {
     sound->setMedia(QUrl::fromLocalFile(logoutSoundPath));
     sound->play();
 
+    QParallelAnimationGroup* animGroup = new QParallelAnimationGroup();
     QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
     ui->poweringOff->setGraphicsEffect(fadeEffect);
     QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
     a->setDuration(500);
     a->setStartValue(1);
     a->setEndValue(0);
-    a->start();
+    animGroup->addAnimation(a);
+
+    QPropertyAnimation* opacity = new QPropertyAnimation(this, "windowOpacity");
+    opacity->setDuration(250);
+    opacity->setStartValue(this->windowOpacity());
+    opacity->setEndValue(1.0);
+    animGroup->addAnimation(opacity);
+
+    animGroup->start();
 
     connect(a, &QPropertyAnimation::finished, [=]() {
         ui->poweringOff->setVisible(false);
@@ -204,12 +353,14 @@ void EndSessionWait::EndSessionNow() {
     arguments.append(true);
     switch (type) {
     case powerOff:
+        //Power off the PC
         message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "PowerOff");
         message.setArguments(arguments);
         QDBusConnection::systemBus().send(message);
 
         break;
     case reboot:
+        //Reboot the PC
         message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Reboot");
         message.setArguments(arguments);
         QDBusConnection::systemBus().send(message);
@@ -231,8 +382,8 @@ void EndSessionWait::on_CancelAsk_clicked()
 
 void EndSessionWait::on_PowerOff_clicked()
 {
-    ui->askWhatToDo->setVisible(false);
-    ui->poweringOff->setVisible(true);
+    //ui->askWhatToDo->setVisible(false);
+    //ui->poweringOff->setVisible(true);
     this->type = powerOff;
     ui->label->setText("Power Off");
     this->showFullScreen();
@@ -240,8 +391,8 @@ void EndSessionWait::on_PowerOff_clicked()
 
 void EndSessionWait::on_Reboot_clicked()
 {
-    ui->askWhatToDo->setVisible(false);
-    ui->poweringOff->setVisible(true);
+    //ui->askWhatToDo->setVisible(false);
+    //ui->poweringOff->setVisible(true);
     this->type = reboot;
     ui->label->setText("Reboot");
     this->showFullScreen();
@@ -249,8 +400,8 @@ void EndSessionWait::on_Reboot_clicked()
 
 void EndSessionWait::on_LogOut_clicked()
 {
-    ui->askWhatToDo->setVisible(false);
-    ui->poweringOff->setVisible(true);
+    //ui->askWhatToDo->setVisible(false);
+    //ui->poweringOff->setVisible(true);
     this->type = logout;
     ui->label->setText("Log Out");
     this->showFullScreen();
@@ -289,7 +440,7 @@ void EndSessionWait::on_terminateApp_clicked()
     topAnim->setEasingCurve(QEasingCurve::OutCubic);
     topAnim->setDuration(250);
     connect(topAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->ExitFrameTop->resize(width, value.toInt());
+        ui->ExitFrameTop->setFixedHeight(value.toInt());
     });
 
     QVariantAnimation* bottomAnim = new QVariantAnimation();
@@ -298,16 +449,16 @@ void EndSessionWait::on_terminateApp_clicked()
     bottomAnim->setEasingCurve(QEasingCurve::OutCubic);
     bottomAnim->setDuration(250);
     connect(bottomAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->ExitFrameBottom->resize(width, value.toInt());
+        ui->ExitFrameBottom->setFixedHeight(value.toInt());
     });
 
     QVariantAnimation* midAnim = new QVariantAnimation();
     midAnim->setStartValue(ui->terminateAppFrame->height());
     midAnim->setEndValue(ui->terminateAppFrame->sizeHint().height());
     midAnim->setEasingCurve(QEasingCurve::OutCubic);
-    midAnim->setDuration(500);
+    midAnim->setDuration(250);
     connect(midAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->terminateAppFrame->resize(width, value.toInt());
+        ui->terminateAppFrame->setFixedHeight(value.toInt());
     });
 
     group->addAnimation(midAnim);
@@ -317,9 +468,9 @@ void EndSessionWait::on_terminateApp_clicked()
     group->start();
 
     connect(group, &QParallelAnimationGroup::finished, [=]() {
-        ui->terminateAppFrame->resize(width, ui->terminateAppFrame->sizeHint().height());
-        ui->ExitFrameTop->resize(width, 0);
-        ui->ExitFrameBottom->resize(width, 0);
+        ui->terminateAppFrame->setFixedHeight(ui->terminateAppFrame->sizeHint().height());
+        ui->ExitFrameTop->setFixedHeight(0);
+        ui->ExitFrameBottom->setFixedHeight(0);
     });
     ui->terminateAppFrame->setVisible(true);
 
@@ -488,7 +639,7 @@ void EndSessionWait::on_exitTerminate_clicked()
     topAnim->setDuration(500);
     topAnim->setKeyValueAt(0.5, 0);
     connect(topAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->ExitFrameTop->resize(width, value.toInt());
+        ui->ExitFrameTop->setFixedHeight(value.toInt());
     });
 
     QVariantAnimation* bottomAnim = new QVariantAnimation();
@@ -498,7 +649,7 @@ void EndSessionWait::on_exitTerminate_clicked()
     bottomAnim->setDuration(500);
     bottomAnim->setKeyValueAt(0.5, 0);
     connect(bottomAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->ExitFrameBottom->resize(width, value.toInt());
+        ui->ExitFrameBottom->setFixedHeight(value.toInt());
     });
 
     QVariantAnimation* midAnim = new QVariantAnimation();
@@ -507,7 +658,7 @@ void EndSessionWait::on_exitTerminate_clicked()
     midAnim->setEasingCurve(QEasingCurve::OutCubic);
     midAnim->setDuration(500);
     connect(midAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->terminateAppFrame->resize(width, value.toInt());
+        ui->terminateAppFrame->setFixedHeight(value.toInt());
     });
 
     group->addAnimation(midAnim);
@@ -517,9 +668,9 @@ void EndSessionWait::on_exitTerminate_clicked()
     group->start();
 
     connect(group, &QParallelAnimationGroup::finished, [=]() {
-        ui->terminateAppFrame->resize(ui->ExitFrameTop->width(), 0);
-        ui->ExitFrameTop->resize(ui->ExitFrameTop->width(), ui->ExitFrameTop->sizeHint().height());
-        ui->ExitFrameBottom->resize(ui->ExitFrameBottom->width(), ui->ExitFrameTop->sizeHint().height());
+        ui->terminateAppFrame->setFixedHeight(0);
+        ui->ExitFrameTop->setFixedHeight(ui->ExitFrameTop->sizeHint().height());
+        ui->ExitFrameBottom->setFixedHeight(ui->ExitFrameBottom->sizeHint().height());
         ui->terminateAppFrame->setVisible(false);
     });
 }

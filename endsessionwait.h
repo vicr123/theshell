@@ -32,6 +32,7 @@
 #include <QPropertyAnimation>
 #include <QVariantAnimation>
 #include <QParallelAnimationGroup>
+#include <QSequentialAnimationGroup>
 #include <QX11Info>
 #include <QThread>
 #include "window.h"

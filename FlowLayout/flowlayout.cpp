@@ -186,6 +186,7 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
         this->parentWidget()->setFixedSize(rect.width(), y + lineHeight);
     return y + lineHeight - rect.y() + bottom;
 }
+
 int FlowLayout::smartSpacing(QStyle::PixelMetric pm) const
 {
     QObject *parent = this->parent();

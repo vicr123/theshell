@@ -167,6 +167,8 @@ private slots:
 
     void on_exitButton_clicked();
 
+    void on_fakeEndButton_clicked();
+
 private:
     Ui::Menu *ui;
 

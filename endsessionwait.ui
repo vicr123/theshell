@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>518</width>
-    <height>801</height>
+    <width>783</width>
+    <height>983</height>
    </rect>
   </property>
   <property name="palette">
@@ -516,7 +516,7 @@
          <item>
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Closing all programs and getting ready to exit. Please wait...</string>
+            <string>Closing all open applications. Please wait...</string>
            </property>
           </widget>
          </item>
@@ -621,18 +621,12 @@
               <property name="text">
                <string>End Session</string>
               </property>
-              <property name="buddy">
-               <cstring></cstring>
-              </property>
              </widget>
             </item>
             <item>
              <widget class="QLabel" name="label_4">
               <property name="text">
                <string>You're about to power off your PC. Are you sure?</string>
-              </property>
-              <property name="buddy">
-               <cstring></cstring>
               </property>
              </widget>
             </item>
@@ -641,7 +635,8 @@
               <item row="0" column="1">
                <widget class="QPushButton" name="Reboot">
                 <property name="styleSheet">
-                 <string notr="true">background-color: #A00;</string>
+                 <string notr="true">background-color: #A00;
+color: #FFF;</string>
                 </property>
                 <property name="text">
                  <string>Reboot</string>
@@ -666,7 +661,8 @@
               <item row="0" column="0">
                <widget class="QPushButton" name="PowerOff">
                 <property name="styleSheet">
-                 <string notr="true">background-color: #A00;</string>
+                 <string notr="true">background-color: #A00;
+color: #FFF;</string>
                 </property>
                 <property name="text">
                  <string>Power Off</string>
@@ -702,7 +698,8 @@
               <item row="1" column="2">
                <widget class="QPushButton" name="terminateApp">
                 <property name="styleSheet">
-                 <string notr="true">background-color: #A00;</string>
+                 <string notr="true">background-color: #A00;
+color: #FFF;</string>
                 </property>
                 <property name="text">
                  <string>Terminate App</string>
@@ -755,18 +752,12 @@
               <property name="text">
                <string>Terminate App</string>
               </property>
-              <property name="buddy">
-               <cstring></cstring>
-              </property>
              </widget>
             </item>
             <item>
              <widget class="QLabel" name="label_6">
               <property name="text">
                <string>Select the app that you want to terminate</string>
-              </property>
-              <property name="buddy">
-               <cstring></cstring>
               </property>
              </widget>
             </item>

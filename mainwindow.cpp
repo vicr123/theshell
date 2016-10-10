@@ -3,6 +3,7 @@
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
+extern void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0, long data2 = 0, long data3 = 0, long data4 = 0);
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -372,7 +373,16 @@ void MainWindow::doUpdate() {
             w.setTitle(title);
             w.setWID(win);
 
-            if (w.PID() != QCoreApplication::applicationPid()) {
+            bool addToList = true;
+            if (w.PID() == QApplication::applicationPid()) {
+                addToList = false;
+                if (w.title() == "Ending Session") {
+                    hideTop = 0;
+                    lockHide = false;
+                }
+            }
+
+            if (addToList) {
                 bool skipTaskbar = false;
 
                 {
@@ -509,7 +519,7 @@ void MainWindow::doUpdate() {
                 if (ui->desktopsFrame->isVisible()) {
                     adjustLeft = adjustLeft + ui->openMenu->width();
                 }
-                ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(adjustLeft, 0, 0, 0));
+                //ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(adjustLeft, 0, 0, 0));
             });
             connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
             anim->start();
@@ -540,7 +550,7 @@ void MainWindow::doUpdate() {
                         if (ui->desktopsFrame->isVisible()) {
                             adjustLeft = adjustLeft + ui->openMenu->width();
                         }
-                        ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(adjustLeft, 0, 0, 0));
+                        //ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(adjustLeft, 0, 0, 0));
                         hiding = false;
                     });
                     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -684,24 +694,6 @@ void MainWindow::ActivateWindow() {
     sendMessageToRootWindow("_NET_CURRENT_DESKTOP", 0, sender()->property("desktop").toInt());
     sendMessageToRootWindow("_NET_ACTIVE_WINDOW", winId, 2);
     XMapRaised(QX11Info::display(), winId);
-}
-
-void MainWindow::sendMessageToRootWindow(const char* message, Window window, long data0, long data1, long data2, long data3, long data4) {
-    XEvent event;
-
-    event.xclient.type = ClientMessage;
-    event.xclient.serial = 0;
-    event.xclient.send_event = True;
-    event.xclient.message_type = XInternAtom(QX11Info::display(), message, False);
-    event.xclient.window = window;
-    event.xclient.format = 32;
-    event.xclient.data.l[0] = data0;
-    event.xclient.data.l[1] = data1;
-    event.xclient.data.l[2] = data2;
-    event.xclient.data.l[3] = data3;
-    event.xclient.data.l[4] = data4;
-
-    XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
 }
 
 void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
