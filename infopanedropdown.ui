@@ -1466,7 +1466,7 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>theShell 4.1</string>
+                  <string>theShell 5.0</string>
                  </property>
                 </widget>
                </item>
@@ -1604,7 +1604,8 @@
               <string>Start KDE Connect Daemon</string>
              </property>
              <property name="icon">
-              <iconset theme="kdeconnect"/>
+              <iconset theme="kdeconnect">
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>
@@ -2295,14 +2296,14 @@
             <second>0</second>
             <year>1969</year>
             <month>11</month>
-            <day>24</day>
+            <day>23</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>11</month>
-            <day>24</day>
+            <day>23</day>
            </date>
           </property>
           <property name="displayFormat">
