@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Noto+Sans");
+@import url("https://fonts.googleapis.com/css?family=Rubik");
 
 @keyframes fadeIn {
     from {
@@ -10,15 +10,22 @@
     }
 }
 
+* {
+    font-family: 'Rubik', 'Noto Sans', sans-serif;
+}
+
 body {
     /*padding-top: 50px;*/
-    font-family: 'Noto Sans', sans-serif;
     margin: 0px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-weight: 400;
 }
 
 div.navbar {
     position: fixed;
-    height: 50px;
+    height: 48px;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -45,7 +52,7 @@ div.navbarContent {
 
 div.navbarImage {
     display: flex;
-    padding-top: calc(1em + 5px);
+    padding-top: calc(1em + 3px);
 }
 
 @media (max-width: 1050px) {
@@ -213,6 +220,7 @@ code {
     padding: 5px;
     border-radius: 5px;
     overflow: auto;
+    font-family: monospace;
 }
 
 div.sectionHeader {
