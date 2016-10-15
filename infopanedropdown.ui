@@ -1790,41 +1790,75 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="notificationsList">
+       <widget class="QScrollArea" name="notificationsScroll">
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+        <property name="widgetResizable">
+         <bool>true</bool>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_9">
-         <property name="leftMargin">
-          <number>0</number>
+        <widget class="QWidget" name="notificationsListLayout">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>928</width>
+           <height>231</height>
+          </rect>
          </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-        </layout>
+         <layout class="QVBoxLayout" name="verticalLayout_17">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="notificationsList">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>20</number>
+             </property>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
        </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_6">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>21</height>
-         </size>
-        </property>
-       </spacer>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -2296,14 +2330,14 @@
             <second>0</second>
             <year>1969</year>
             <month>11</month>
-            <day>23</day>
+            <day>22</day>
            </datetime>
           </property>
           <property name="date">
            <date>
             <year>1969</year>
             <month>11</month>
-            <day>23</day>
+            <day>22</day>
            </date>
           </property>
           <property name="displayFormat">
