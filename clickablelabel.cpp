@@ -8,7 +8,10 @@ ClickableLabel::ClickableLabel(QWidget* parent) :
 
 void ClickableLabel::mousePressEvent(QMouseEvent *event) {
     emit clicked();
-    //event->accept();
+}
+
+void ClickableLabel::mouseReleaseEvent(QMouseEvent *event) {
+    event->accept();
 }
 
 bool ClickableLabel::showDisabled() {
