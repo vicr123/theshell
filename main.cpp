@@ -18,6 +18,8 @@
 #include <QInputDialog>
 #include <signal.h>
 #include <unistd.h>
+#include <X11/Xcursor/Xcursor.h>
+#include <X11/Xlib.h>
 
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
@@ -134,6 +136,32 @@ int main(int argc, char *argv[])
         QDBusConnection::sessionBus().call(kscreen);
     }
 
+    {
+        QDBusMessage touchpad = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
+        QVariantList args;
+        args.append("touchpad");
+        touchpad.setArguments(args);
+        QDBusConnection::sessionBus().call(touchpad);
+    }
+
+    {
+        QDBusMessage sni = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
+        QVariantList args;
+        args.append("statusnotifierwatcher");
+        sni.setArguments(args);
+        QDBusConnection::sessionBus().call(sni);
+    }
+
+    {
+        //Set cursors
+        XcursorSetTheme(QX11Info::display(), "Breeze_Snow");
+        XcursorSetDefaultSize(QX11Info::display(), 24);
+
+        Cursor cursor = XcursorLibraryLoadCursor(QX11Info::display(), "left_ptr");
+        XDefineCursor(QX11Info::display(), DefaultRootWindow(QX11Info::display()), cursor);
+        XFreeCursor(QX11Info::display(), cursor);
+    }
+
     QString windowManager = settings.value("startup/WindowManagerCommand", "kwin_x11").toString();
 
     while (!QProcess::startDetached(windowManager)) {
@@ -156,6 +184,7 @@ int main(int argc, char *argv[])
         //Start KDE Connect if it is not running and it is existant on the PC
         QProcess::startDetached("/usr/lib/kdeconnectd");
     }
+
 
     QProcess polkitProcess;
     polkitProcess.start("/usr/lib/ts-polkitagent");

@@ -11,6 +11,8 @@
 #include <QTimer>
 #include <QWindow>
 #include <QApplication>
+#include <QMouseEvent>
+#include <QWheelEvent>
 #include "nativeeventfilter.h"
 
 //Xlib needs to be included LAST.
@@ -32,6 +34,29 @@ public slots:
 
 private slots:
     void SysTrayEvent(long opcode, long data2, long data3, long data4);
+    void SniItemRegistered(QString service);
+    void SniItemUnregistered(QString service);
+
+private:
+    QStringList availableSniServices;
+};
+
+class SniIcon : public QLabel
+{
+    Q_OBJECT
+public:
+    explicit SniIcon(QString service, QWidget *parent = 0);
+
+private slots:
+    void SniItemUnregistered(QString service);
+    void ReloadIcon();
+
+private:
+    QString service;
+    QDBusInterface* interface;
+
+    void mousePressEvent(QMouseEvent* event);
+    void wheelEvent(QWheelEvent* event);
 };
 
 #endif // SYSTRAYICONS_H

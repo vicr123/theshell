@@ -48,6 +48,27 @@ SysTrayIcons::SysTrayIcons(QWidget *parent) : QFrame(parent)
             this->layout()->addWidget(errorLabel);
         }
     }
+
+    //Register a new DBus service
+    QString service = "org.freedesktop.StatusNotifierHost-" + QString::number(QApplication::applicationPid());
+    QDBusConnection::sessionBus().registerService(service);
+
+    //Connect to SNI signals
+    QDBusConnection::sessionBus().connect("org.kde.StatusNotifierWatcher", "/StatusNotifierWatcher", "org.kde.StatusNotifierWatcher", "StatusNotifierItemRegistered", this, SLOT(SniItemRegistered(QString)));
+    QDBusConnection::sessionBus().connect("org.kde.StatusNotifierWatcher", "/StatusNotifierWatcher", "org.kde.StatusNotifierWatcher", "StatusNotifierItemUnregistered", this, SLOT(SniItemUnregistered(QString)));
+
+    //Tell SNI about a new system tray host
+    QDBusMessage message = QDBusMessage::createMethodCall("org.kde.StatusNotifierWatcher", "/StatusNotifierWatcher", "org.kde.StatusNotifierWatcher", "RegisterStatusNotifierHost");
+    QVariantList messageArgs;
+    messageArgs.append(service);
+    message.setArguments(messageArgs);
+    QDBusConnection::sessionBus().call(message);
+
+    //Get all current SNI items
+    QDBusInterface interface("org.kde.StatusNotifierWatcher", "/StatusNotifierWatcher", "org.kde.StatusNotifierWatcher");
+    for (QString service : interface.property("RegisteredStatusNotifierItems").toStringList()) {
+        SniItemRegistered(service);
+    }
 }
 
 void SysTrayIcons::SysTrayEvent(long opcode, long data2, long data3, long data4) {
@@ -66,5 +87,74 @@ void SysTrayIcons::SysTrayEvent(long opcode, long data2, long data3, long data4)
         connect(window, &QWindow::visibleChanged, [=](bool visible) {
            widget->setVisible(visible);
         });
+    }
+}
+
+void SysTrayIcons::SniItemRegistered(QString service) {
+    if (!availableSniServices.contains(service)) {
+        availableSniServices.append(service);
+
+        SniIcon* icon = new SniIcon(service);
+        this->layout()->addWidget(icon);
+    }
+}
+
+void SysTrayIcons::SniItemUnregistered(QString service) {
+    if (availableSniServices.contains(service)) {
+        availableSniServices.removeAll(service);
+    }
+}
+
+SniIcon::SniIcon(QString service, QWidget *parent) : QLabel(parent) {
+    this->service = service;
+    QStringList pathParts = service.split("/");
+    service = pathParts.first();
+    pathParts.removeFirst();
+    QString path = pathParts.join("/");
+    path.insert(0, "/");
+    interface = new QDBusInterface(service, path, "org.kde.StatusNotifierItem");
+    QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewTitle", this, SLOT(ReloadIcon()));
+    QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewIcon", this, SLOT(ReloadIcon()));
+    QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewAttentionIcon", this, SLOT(ReloadIcon()));
+    QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewOverlayIcon", this, SLOT(ReloadIcon()));
+    QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewToolTip", this, SLOT(ReloadIcon()));
+    QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewStatus", this, SLOT(ReloadIcon()));
+
+    QDBusConnection::sessionBus().connect("org.kde.StatusNotifierWatcher", "/StatusNotifierWatcher", "org.kde.StatusNotifierWatcher", "StatusNotifierItemUnregistered", this, SLOT(SniItemUnregistered(QString)));
+    ReloadIcon();
+}
+
+void SniIcon::SniItemUnregistered(QString service) {
+    if (service == this->service) {
+        this->deleteLater();
+    }
+}
+
+void SniIcon::ReloadIcon() {
+    if (interface->property("IconName").toString() != "") {
+        this->setPixmap(QIcon::fromTheme(interface->property("IconName").toString()).pixmap(16, 16));
+    } else {
+        //TODO: Load other image data
+    }
+
+    this->setToolTip(interface->property("Title").toString());
+}
+
+void SniIcon::mousePressEvent(QMouseEvent *event) {
+    QPoint pos = this->mapToGlobal(event->pos());
+    if (event->button() == Qt::LeftButton) {
+        interface->call("Activate", pos.x(), pos.y());
+    } else if (event->button() == Qt::RightButton) {
+        interface->call("ContextMenu", pos.x(), pos.y());
+    } else if (event->button() == Qt::MiddleButton) {
+        interface->call("SecondaryActivate", pos.x(), pos.y());
+    }
+}
+
+void SniIcon::wheelEvent(QWheelEvent *event) {
+    if (event->orientation() == Qt::Vertical) {
+        interface->call("Scroll", event->delta(), "vertical");
+    } else {
+        interface->call("Scroll", event->delta(), "horizontal");
     }
 }
