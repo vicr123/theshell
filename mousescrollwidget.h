@@ -3,6 +3,7 @@
 
 #include <QScrollArea>
 #include <QMouseEvent>
+#include <QWheelEvent>
 #include <QTimer>
 #include <QApplication>
 #include <QStyle>
@@ -25,6 +26,7 @@ public slots:
 private:
     QTimer shiftLeft, shiftRight;
     void mouseMoveEvent(QMouseEvent* event);
+    void wheelEvent(QWheelEvent* event);
     bool eventFilter(QObject *object, QEvent *event);
 
     void setEventFilter(QWidget* widget);

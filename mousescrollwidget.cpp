@@ -35,9 +35,15 @@ void MouseScrollWidget::mouseMoveEvent(QMouseEvent *event) {
     }
 }
 
+void MouseScrollWidget::wheelEvent(QWheelEvent *event) {
+    //this->scroll(event->delta(), 0);
+    if (event->orientation() == Qt::Vertical) {
+        this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() - event->delta());
+    }
+}
+
 void MouseScrollWidget::setWidget(QWidget *widget) {
     QScrollArea::setWidget(widget);
-
 }
 
 void MouseScrollWidget::setEventFilter(QWidget *widget) {
@@ -112,10 +118,17 @@ bool MouseScrollWidget::eventFilter(QObject *object, QEvent *event) {
     } else if (event->type() == QEvent::Leave) {
         shiftLeft.stop();
         shiftRight.stop();
-    } else if (event->type() == QEvent::Scroll) {
+    /*} else if (event->type() == QEvent::Scroll) {
         QScrollEvent* scrollEvent = (QScrollEvent*) event;
 
-        this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() + scrollEvent->contentPos().y());
+        this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() + scrollEvent->contentPos().y());*/
+    /*} else if (event->type() == QEvent::Wheel) {
+        QWheelEvent* wheelEvent = (QWheelEvent*) event;
+
+        //this->scroll(wheelEvent->delta(), 0);
+        if (wheelEvent->orientation() == Qt::Vertical) {
+            this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() + wheelEvent->delta() / 8 / 15);
+        }*/
     }
     return false;
 }
