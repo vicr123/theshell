@@ -30,7 +30,7 @@ void raise_signal(QString message) {
 
     //Delete the Native Event Filter so that keyboard bindings are cleared
     if (NativeFilter != NULL) {
-        delete NativeFilter;
+        NativeFilter->deleteLater();
         NativeFilter = NULL;
     }
 
@@ -38,7 +38,7 @@ void raise_signal(QString message) {
     dialog = new SegfaultDialog(message);
     if (MainWin != NULL) {
         MainWin->close();
-        delete MainWin;
+        MainWin->deleteLater();
     }
     dialog->exec();
     raise(SIGKILL);
@@ -59,7 +59,6 @@ void catch_signal(int signal) {
         raise_signal("Signal: SIGILL (Illegal Operation)");
     }
 }
-
 
 void QtHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
     switch (type) {
