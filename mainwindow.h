@@ -19,7 +19,6 @@
 #include "menu.h"
 #include "notificationdbus.h"
 #include "upowerdbus.h"
-#include "UGlobalHotkey-master/uglobalhotkeys.h"
 #include "infopanedropdown.h"
 #include "touchkeyboard.h"
 #include "systrayicons.h"

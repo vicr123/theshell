@@ -38,6 +38,7 @@ void MouseScrollWidget::mouseMoveEvent(QMouseEvent *event) {
 void MouseScrollWidget::wheelEvent(QWheelEvent *event) {
     //this->scroll(event->delta(), 0);
     if (event->orientation() == Qt::Vertical) {
+        //It's more natural to scroll downwards to go to the right, so subtract delta rather than add.
         this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() - event->delta());
     }
 }

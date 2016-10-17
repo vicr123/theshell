@@ -59,10 +59,6 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->batteryFrame->setVisible(false);
     }
 
-    UGlobalHotkeys* infoKey = new UGlobalHotkeys(this);
-    infoKey->registerHotkey("Alt+F6");
-    connect(infoKey, SIGNAL(activated(size_t)), this, SLOT(pullDownGesture()));
-
     infoPane = new InfoPaneDropdown(ndbus, updbus);
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(infoPane, SIGNAL(networkLabelChanged(QString)), this, SLOT(internetLabelChanged(QString)));

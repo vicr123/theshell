@@ -19,7 +19,6 @@
 #include "notificationdbus.h"
 #include "upowerdbus.h"
 #include "endsessionwait.h"
-#include "UGlobalHotkey-master/uglobalhotkeys.h"
 #include <sys/sysinfo.h>
 
 class UPowerDBus;

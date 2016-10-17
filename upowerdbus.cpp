@@ -31,7 +31,7 @@ void UPowerDBus::devicesChanged() {
 
     if (reply.isValid()) { //Check if the reply is ok
         for (QDBusObjectPath device : reply.value()) {
-            if (device.path().contains("battery") || device.path().contains("media_player") || device.path().contains("computer")) { //This is a battery or media player or tablet computer
+            if (device.path().contains("battery") || device.path().contains("media_player") || device.path().contains("computer") || device.path().contains("phone")) { //This is a battery or media player or tablet computer
                 QDBusConnection::systemBus().connect("org.freedesktop.UPower", device.path(),
                                                      "org.freedesktop.DBus.Properties", "PropertiesChanged", this,
                                                                       SLOT(DeviceChanged()));
@@ -185,7 +185,7 @@ void UPowerDBus::DeviceChanged() {
             } else {
                 displayOutput.append("No Battery Inserted");
             }
-        } else if (i->path().contains("media_player") || i->path().contains("computer")) {
+        } else if (i->path().contains("media_player") || i->path().contains("computer") || i->path().contains("phone")) {
             //This is an external media player (or tablet)
             //Get the model of this media player
             QString model = i->property("Model").toString();

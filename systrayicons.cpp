@@ -140,7 +140,7 @@ void SniIcon::ReloadIcon() {
     this->setToolTip(interface->property("Title").toString());
 }
 
-void SniIcon::mousePressEvent(QMouseEvent *event) {
+void SniIcon::mouseReleaseEvent(QMouseEvent *event) {
     QPoint pos = this->mapToGlobal(event->pos());
     if (event->button() == Qt::LeftButton) {
         interface->call("Activate", pos.x(), pos.y());

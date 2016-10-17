@@ -30,9 +30,6 @@ SOURCES += main.cpp\
     background.cpp \
     notificationdbus.cpp \
     notificationdialog.cpp \
-    UGlobalHotkey-master/uexception.cpp \
-    UGlobalHotkey-master/uglobalhotkeys.cpp \
-    UGlobalHotkey-master/ukeysequence.cpp \
     upowerdbus.cpp \
     infopanedropdown.cpp \
     clickablelabel.cpp \
@@ -64,11 +61,6 @@ HEADERS  += mainwindow.h \
     notificationdbus.h \
     notifications_adaptor.h \
     notificationdialog.h \
-    UGlobalHotkey-master/hotkeymap.h \
-    UGlobalHotkey-master/uexception.h \
-    UGlobalHotkey-master/uglobal.h \
-    UGlobalHotkey-master/uglobalhotkeys.h \
-    UGlobalHotkey-master/ukeysequence.h \
     upowerdbus.h \
     infopanedropdown.h \
     clickablelabel.h \

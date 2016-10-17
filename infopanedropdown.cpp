@@ -128,10 +128,6 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     connect(eventTimer, SIGNAL(timeout()), this, SLOT(processTimer()));
     eventTimer->start();
 
-    UGlobalHotkeys* exitKey = new UGlobalHotkeys(this);
-    exitKey->registerHotkey("Alt+F7");
-    connect(exitKey, SIGNAL(activated(size_t)), this, SLOT(on_pushButton_clicked()));
-
     QObjectList allObjects;
     allObjects.append(this);
 
