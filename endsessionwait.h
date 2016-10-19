@@ -35,6 +35,9 @@
 #include <QSequentialAnimationGroup>
 #include <QX11Info>
 #include <QThread>
+#include <QProgressBar>
+#include <QLabel>
+#include <QTimer>
 #include "window.h"
 
 #include <signal.h>
@@ -65,6 +68,7 @@ public:
     ~EndSessionWait();
 
     void showFullScreen();
+    void reject();
 
 private slots:
     void on_pushButton_clicked();
@@ -82,8 +86,6 @@ private slots:
 
     void on_Suspend_clicked();
 
-    void on_Hibernate_clicked();
-
     void on_terminateApp_clicked();
 
     void on_exitTerminate_clicked();
@@ -96,6 +98,8 @@ private slots:
 
     void on_listWidget_currentRowChanged(int currentRow);
 
+    void on_DummyExit_clicked();
+
 public slots:
     void close();
 
@@ -105,6 +109,8 @@ private:
     void performEndSession();
     shutdownType type;
     bool alreadyShowing = false;
+
+    QVariantAnimation* powerOffTimer;
 };
 
 #endif // ENDSESSIONWAIT_H

@@ -110,6 +110,14 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
         ui->thewaveTTSsilent->setChecked(true);
     }
 
+    if (settings.value("ui/useFullScreenEndSession", false).toBool()) {
+        ui->endSessionConfirmFullScreen->setChecked(true);
+        ui->endSessionConfirmInMenu->setChecked(false);
+    } else {
+        ui->endSessionConfirmFullScreen->setChecked(false);
+        ui->endSessionConfirmInMenu->setChecked(true);
+    }
+
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
     ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
@@ -147,6 +155,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-login"), "Startup"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Bar"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Gateway"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-display"), "Display"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("dialog-warning"), "Notifications"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("input-tablet"), "Input"));
@@ -350,7 +359,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
     //QFrame *currentDropDownFrame;
     this->currentDropDown = changeTo;
 
-    ui->networkFrame->setVisible(false);
+    /*ui->networkFrame->setVisible(false);
     ui->batteryFrame->setVisible(false);
     ui->notificationsFrame->setVisible(false);
     ui->clockFrame->setVisible(false);
@@ -395,6 +404,31 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
     case KDEConnect:
         ui->kdeconnectFrame->setVisible(true);
         ui->kdeconnectLabel->setShowDisabled(false);
+    }*/
+
+    //Switch to the requested frame
+    switch (changeTo) {
+    case Clock:
+        ui->pageStack->setCurrentWidget(ui->clockFrame);
+        break;
+    case Battery:
+        ui->pageStack->setCurrentWidget(ui->statusFrame);
+        break;
+    case Notifications:
+        ui->pageStack->setCurrentWidget(ui->notificationsFrame);
+        break;
+    case Network:
+        ui->pageStack->setCurrentWidget(ui->networkFrame);
+        break;
+    case KDEConnect:
+        ui->pageStack->setCurrentWidget(ui->kdeConnectFrame);
+        break;
+    case Print:
+        ui->pageStack->setCurrentWidget(ui->printFrame);
+        break;
+    case Settings:
+        ui->pageStack->setCurrentWidget(ui->settingsFrame);
+        break;
     }
 
     if (changeTo == Clock) {
@@ -1320,4 +1354,47 @@ void InfoPaneDropdown::on_startKdeconnect_clicked()
 {
     //Start KDE Connect
     QProcess::startDetached("/usr/lib/kdeconnectd");
+}
+
+void InfoPaneDropdown::on_endSessionConfirmFullScreen_toggled(bool checked)
+{
+    if (checked) {
+        settings.setValue("ui/useFullScreenEndSession", true);
+    }
+}
+
+void InfoPaneDropdown::on_endSessionConfirmInMenu_toggled(bool checked)
+{
+    if (checked) {
+        settings.setValue("ui/useFullScreenEndSession", false);
+    }
+}
+
+void InfoPaneDropdown::on_pageStack_currentChanged(int arg1)
+{
+    ui->clockLabel->setShowDisabled(true);
+    ui->batteryLabel->setShowDisabled(true);
+    ui->notificationsLabel->setShowDisabled(true);
+    ui->networkLabel->setShowDisabled(true);
+    ui->printLabel->setShowDisabled(true);
+    ui->kdeconnectLabel->setShowDisabled(true);
+
+    if (ui->pageStack->currentWidget() == ui->clockFrame) {
+        ui->clockLabel->setShowDisabled(false);
+
+    } else if (ui->pageStack->currentWidget() == ui->statusFrame) {
+        ui->batteryLabel->setShowDisabled(false);
+
+    } else if (ui->pageStack->currentWidget() == ui->notificationsFrame) {
+        ui->notificationsLabel->setShowDisabled(false);
+
+    } else if (ui->pageStack->currentWidget() == ui->networkFrame) {
+        ui->networkLabel->setShowDisabled(false);
+
+    } else if (ui->pageStack->currentWidget() == ui->printFrame) {
+        ui->printLabel->setShowDisabled(false);
+
+    } else if (ui->pageStack->currentWidget() == ui->kdeConnectFrame) {
+        ui->kdeconnectLabel->setShowDisabled(false);
+    }
 }

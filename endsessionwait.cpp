@@ -9,6 +9,34 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    powerOffTimer = new QVariantAnimation();
+    powerOffTimer->setStartValue(0);
+    powerOffTimer->setEndValue(300);
+    powerOffTimer->setDuration(30000);
+    connect(powerOffTimer, &QVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->idleProgressBar->setValue(value.toInt());
+        ui->idleWarning->setText("If you don't do anything, we'll power off for you in " + QString::number(30 - (value.toInt() / 10)) + " seconds.");
+    });
+    connect(powerOffTimer, &QVariantAnimation::finished, [=]() {
+        //Power off the device
+        this->type = powerOff;
+        ui->label->setText("Power Off");
+
+        //We need to use a QTimer to run the function on the event loop because we do something strange in this->showFullScreen()
+        QTimer* invokeTimer = new QTimer();
+        invokeTimer->setInterval(0);
+        invokeTimer->setSingleShot(true);
+        connect(invokeTimer, &QTimer::timeout, [=]() {
+            invokeTimer->deleteLater();
+            this->showFullScreen();
+        });
+        invokeTimer->start();
+    });
+
+    if (!QApplication::arguments().contains("--debug")) {
+        ui->DummyExit->setVisible(false);
+    }
+
     switch (type) {
     case powerOff:
         ui->label->setText("Power Off");
@@ -39,15 +67,7 @@ EndSessionWait::~EndSessionWait()
 }
 
 void EndSessionWait::close() {
-    QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
-    anim->setDuration(250);
-    anim->setStartValue(this->windowOpacity());
-    anim->setEndValue(0.0);
-    connect(anim, &QPropertyAnimation::finished, [=]() {
-        QDialog::close();
-        anim->deleteLater();
-    });
-    anim->start();
+    this->reject();
 }
 
 void EndSessionWait::showFullScreen() {
@@ -70,6 +90,7 @@ void EndSessionWait::showFullScreen() {
         ui->ExitFrameTop->resize(ui->ExitFrameTop->sizeHint());
         ui->ExitFrameBottom->resize(ui->ExitFrameBottom->sizeHint());
         anim->start(QAbstractAnimation::DeleteWhenStopped);
+        powerOffTimer->start();
     } else {
         QParallelAnimationGroup* parallelAnimGroup = new QParallelAnimationGroup;
         QSequentialAnimationGroup* animGroup = new QSequentialAnimationGroup;
@@ -115,6 +136,8 @@ void EndSessionWait::showFullScreen() {
 
 
     if (this->type != dummy && this->type != ask) {
+        powerOffTimer->stop();
+        powerOffTimer->setCurrentTime(0);
         /*QProcess p;
         p.start("wmctrl -lp");
         p.waitForStarted();
@@ -382,8 +405,6 @@ void EndSessionWait::on_CancelAsk_clicked()
 
 void EndSessionWait::on_PowerOff_clicked()
 {
-    //ui->askWhatToDo->setVisible(false);
-    //ui->poweringOff->setVisible(true);
     this->type = powerOff;
     ui->label->setText("Power Off");
     this->showFullScreen();
@@ -391,8 +412,6 @@ void EndSessionWait::on_PowerOff_clicked()
 
 void EndSessionWait::on_Reboot_clicked()
 {
-    //ui->askWhatToDo->setVisible(false);
-    //ui->poweringOff->setVisible(true);
     this->type = reboot;
     ui->label->setText("Reboot");
     this->showFullScreen();
@@ -400,8 +419,6 @@ void EndSessionWait::on_Reboot_clicked()
 
 void EndSessionWait::on_LogOut_clicked()
 {
-    //ui->askWhatToDo->setVisible(false);
-    //ui->poweringOff->setVisible(true);
     this->type = logout;
     ui->label->setText("Log Out");
     this->showFullScreen();
@@ -418,20 +435,10 @@ void EndSessionWait::on_Suspend_clicked()
     this->close();
 }
 
-void EndSessionWait::on_Hibernate_clicked()
-{
-    QList<QVariant> arguments;
-    arguments.append(true);
-
-    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Hibernate");
-    message.setArguments(arguments);
-    QDBusConnection::systemBus().send(message);
-    this->close();
-}
-
 void EndSessionWait::on_terminateApp_clicked()
 {
-    int width = ui->ExitFrameTop->width();
+    powerOffTimer->stop();
+    powerOffTimer->setCurrentTime(0);
     QParallelAnimationGroup* group = new QParallelAnimationGroup();
 
     QVariantAnimation* topAnim = new QVariantAnimation();
@@ -629,7 +636,7 @@ void EndSessionWait::reloadAppList() {
 
 void EndSessionWait::on_exitTerminate_clicked()
 {
-    int width = ui->terminateAppFrame->width();
+    powerOffTimer->start();
     QParallelAnimationGroup* group = new QParallelAnimationGroup();
 
     QVariantAnimation* topAnim = new QVariantAnimation();
@@ -700,4 +707,27 @@ void EndSessionWait::on_listWidget_currentRowChanged(int currentRow)
         ui->pushButton_5->setEnabled(true);
         ui->pushButton_4->setEnabled(true);
     }
+}
+
+void EndSessionWait::on_DummyExit_clicked()
+{
+    //Fake Exit
+    this->type = dummy;
+    ui->label->setText("Dummy");
+    this->showFullScreen();
+}
+
+void EndSessionWait::reject() {
+    powerOffTimer->stop();
+    powerOffTimer->setCurrentTime(0);
+
+    QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
+    anim->setDuration(250);
+    anim->setStartValue(this->windowOpacity());
+    anim->setEndValue(0.0);
+    connect(anim, &QPropertyAnimation::finished, [=]() {
+        QDialog::reject();
+        anim->deleteLater();
+    });
+    anim->start();
 }

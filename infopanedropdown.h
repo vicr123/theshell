@@ -16,6 +16,8 @@
 #include <QMediaPlaylist>
 #include <cups/cups.h>
 #include <QListWidgetItem>
+#include <QRadioButton>
+#include <QStackedWidget>
 #include "notificationdbus.h"
 #include "upowerdbus.h"
 #include "endsessionwait.h"
@@ -173,6 +175,12 @@ private slots:
     void updateKdeconnect();
 
     void on_startKdeconnect_clicked();
+
+    void on_endSessionConfirmFullScreen_toggled(bool checked);
+
+    void on_endSessionConfirmInMenu_toggled(bool checked);
+
+    void on_pageStack_currentChanged(int arg1);
 
 public slots:
     void getNetworks();

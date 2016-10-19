@@ -357,41 +357,47 @@ bool Menu::checkFocus(QLayout *layout) {
 
 void Menu::on_pushButton_clicked()
 {
-    bool showWarningPane = false;
-    if (MainWin->getInfoPane()->isTimerRunning()) {
-        showWarningPane = true;
-        ui->timerIcon->setVisible(true);
-        ui->timerLabel->setVisible(true);
+    if (settings.value("ui/useFullScreenEndSession", false).toBool()) {
+        EndSessionWait* endSession = new EndSessionWait(EndSessionWait::ask);
+        endSession->showFullScreen();
+        endSession->exec();
     } else {
-        ui->timerIcon->setVisible(false);
-        ui->timerLabel->setVisible(false);
+        bool showWarningPane = false;
+        if (MainWin->getInfoPane()->isTimerRunning()) {
+            showWarningPane = true;
+            ui->timerIcon->setVisible(true);
+            ui->timerLabel->setVisible(true);
+        } else {
+            ui->timerIcon->setVisible(false);
+            ui->timerLabel->setVisible(false);
+        }
+
+        if (false) {
+            showWarningPane = true;
+            ui->userIcon->setVisible(true);
+            ui->userLabel->setVisible(true);
+        } else {
+            ui->userIcon->setVisible(false);
+            ui->userLabel->setVisible(false);
+        }
+
+        if (showWarningPane) {
+            ui->shutdownText->setText("Before you power off your PC, you may want to check this.");
+            ui->shutdownWarnings->setVisible(true);
+        } else {
+            ui->shutdownText->setText("You're about to power off your PC. Are you sure?");
+            ui->shutdownWarnings->setVisible(false);
+        }
+
+        QPropertyAnimation* anim = new QPropertyAnimation(ui->offFrame, "geometry");
+        anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
+        anim->setEndValue(QRect(10, 10, this->width() - 20, this->height() - 20));
+        anim->setDuration(500);
+
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+
+        anim->start();
     }
-
-    if (false) {
-        showWarningPane = true;
-        ui->userIcon->setVisible(true);
-        ui->userLabel->setVisible(true);
-    } else {
-        ui->userIcon->setVisible(false);
-        ui->userLabel->setVisible(false);
-    }
-
-    if (showWarningPane) {
-        ui->shutdownText->setText("Before you power off your PC, you may want to check this.");
-        ui->shutdownWarnings->setVisible(true);
-    } else {
-        ui->shutdownText->setText("You're about to power off your PC. Are you sure?");
-        ui->shutdownWarnings->setVisible(false);
-    }
-
-    QPropertyAnimation* anim = new QPropertyAnimation(ui->offFrame, "geometry");
-    anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
-    anim->setEndValue(QRect(10, 10, this->width() - 20, this->height() - 20));
-    anim->setDuration(500);
-
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-
-    anim->start();
 }
 
 void Menu::on_pushButton_2_clicked()
@@ -588,7 +594,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                 i->setData(Qt::UserRole, "media:next");
                 ui->listWidget->addItem(i);
                 showtheWaveOption = false;
-            } else if (arg1.startsWith("previous") || arg1.startsWith("back") && MainWin->isMprisAvailable()) {
+            } else if ((arg1.startsWith("previous") || arg1.startsWith("back")) && MainWin->isMprisAvailable()) {
                 QListWidgetItem *i = new QListWidgetItem();
                 i->setText("Previous Track");
                 i->setIcon(QIcon::fromTheme("media-skip-backward"));
