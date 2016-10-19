@@ -1370,8 +1370,9 @@ void InfoPaneDropdown::on_endSessionConfirmInMenu_toggled(bool checked)
     }
 }
 
-void InfoPaneDropdown::on_pageStack_currentChanged(int arg1)
+void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
 {
+    QWidget* switchingWidget = ui->pageStack->widget(switchTo);
     ui->clockLabel->setShowDisabled(true);
     ui->batteryLabel->setShowDisabled(true);
     ui->notificationsLabel->setShowDisabled(true);
@@ -1379,22 +1380,17 @@ void InfoPaneDropdown::on_pageStack_currentChanged(int arg1)
     ui->printLabel->setShowDisabled(true);
     ui->kdeconnectLabel->setShowDisabled(true);
 
-    if (ui->pageStack->currentWidget() == ui->clockFrame) {
+    if (switchingWidget == ui->clockFrame) {
         ui->clockLabel->setShowDisabled(false);
-
-    } else if (ui->pageStack->currentWidget() == ui->statusFrame) {
+    } else if (switchingWidget == ui->statusFrame) {
         ui->batteryLabel->setShowDisabled(false);
-
-    } else if (ui->pageStack->currentWidget() == ui->notificationsFrame) {
+    } else if (switchingWidget == ui->notificationsFrame) {
         ui->notificationsLabel->setShowDisabled(false);
-
-    } else if (ui->pageStack->currentWidget() == ui->networkFrame) {
+    } else if (switchingWidget == ui->networkFrame) {
         ui->networkLabel->setShowDisabled(false);
-
-    } else if (ui->pageStack->currentWidget() == ui->printFrame) {
+    } else if (switchingWidget == ui->printFrame) {
         ui->printLabel->setShowDisabled(false);
-
-    } else if (ui->pageStack->currentWidget() == ui->kdeConnectFrame) {
+    } else if (switchingWidget == ui->kdeConnectFrame) {
         ui->kdeconnectLabel->setShowDisabled(false);
     }
 }

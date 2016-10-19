@@ -17,7 +17,7 @@
 #include <cups/cups.h>
 #include <QListWidgetItem>
 #include <QRadioButton>
-#include <QStackedWidget>
+#include "animatedstackedwidget.h"
 #include "notificationdbus.h"
 #include "upowerdbus.h"
 #include "endsessionwait.h"
@@ -180,7 +180,7 @@ private slots:
 
     void on_endSessionConfirmInMenu_toggled(bool checked);
 
-    void on_pageStack_currentChanged(int arg1);
+    void on_pageStack_switchingFrame(int switchTo);
 
 public slots:
     void getNetworks();

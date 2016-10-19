@@ -50,7 +50,8 @@ SOURCES += main.cpp\
     fadebutton.cpp \
     rundialog.cpp \
     thewavefeedbackframe.cpp \
-    mousescrollwidget.cpp
+    mousescrollwidget.cpp \
+    animatedstackedwidget.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -81,7 +82,8 @@ HEADERS  += mainwindow.h \
     fadebutton.h \
     rundialog.h \
     thewavefeedbackframe.h \
-    mousescrollwidget.h
+    mousescrollwidget.h \
+    animatedstackedwidget.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
