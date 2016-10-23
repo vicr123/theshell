@@ -247,8 +247,7 @@ void MainWindow::doUpdate() {
     }
     XFree(data);
 
-    //XQueryTree(QX11Info::display(), RootWindow(d, 0), new Window(), new Window(), &ChildList, &NumOfChildren);
-    int demandAttention = 0;
+    int demandAttention = 0; //Space for storing number of windows that demand attention
     for (Window win : TopWindows) {
         XWindowAttributes attributes;
 

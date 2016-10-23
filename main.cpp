@@ -114,6 +114,12 @@ int main(int argc, char *argv[])
     a.setOrganizationDomain("");
     a.setApplicationName("theShell");
 
+    if (showSplash) {
+        LoginSplash* splash = new LoginSplash();
+        splash->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+        splash->showFullScreen();
+    }
+
     QSettings settings;
 
     if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.thesuite.theshell")) {
@@ -173,11 +179,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    if (showSplash) {
-        LoginSplash* splash = new LoginSplash();
-        splash->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-        splash->showFullScreen();
-    }
 
     if (!QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect") && QFile("/usr/lib/kdeconnectd").exists()) {
         //Start KDE Connect if it is not running and it is existant on the PC

@@ -48,6 +48,7 @@ private:
     int nextId = 1;
 
     InfoPaneDropdown* dropdownPane = NULL;
+    QSettings settings;
 };
 
 #endif // NOTIFICATIONDBUS_H

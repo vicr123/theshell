@@ -7,6 +7,8 @@ LoginSplash::LoginSplash(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->label_3->setPixmap(QIcon(":/icons/icon.svg").pixmap(512, 512));
+
     QTimer *timer = new QTimer();
     timer->setSingleShot(true);
     timer->setInterval(5000);

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>563</width>
-    <height>421</height>
+    <width>560</width>
+    <height>591</height>
    </rect>
   </property>
   <property name="palette">
@@ -469,21 +469,33 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLabel" name="label">
-        <property name="font">
-         <font>
-          <pointsize>20</pointsize>
-         </font>
+       <widget class="QLabel" name="label_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>512</width>
+          <height>512</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>512</width>
+          <height>512</height>
+         </size>
         </property>
         <property name="text">
-         <string>Welcome back!</string>
+         <string/>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Logging in...</string>
+        <property name="pixmap">
+         <pixmap resource="resources.qrc">:/icons/icon.svg</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

@@ -39,7 +39,6 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
 
         if (app_name == "KDE Connect") { //Do special notifications for KDE Connect
             QString kdeEventId = hints.value("x-kde-eventId").toString();
-            qDebug() << kdeEventId;
             if (kdeEventId == "pingReceived") {
                 body = "Ping received from " + summary;
                 summary = "KDE Connect";
@@ -77,14 +76,30 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         }
         dialogs.append(d);
 
-        QDBusMessage NotificationEmit = QDBusMessage::createMethodCall("org.thesuite.tsscreenlock", "/org/thesuite/tsscreenlock", "org.thesuite.tsscreenlock.Notifications", "newNotification");
-        QVariantList NotificationArgs;
-        NotificationArgs.append(summary);
-        NotificationArgs.append(body);
-        NotificationArgs.append(replaces_id);
-        NotificationArgs.append(actions);
-        NotificationEmit.setArguments(NotificationArgs);
-        QDBusConnection::sessionBus().call(NotificationEmit, QDBus::NoBlock);
+        //Send the notification to the lock screen if the user desires
+        if (settings.value("notifications/lockScreen").toString() != "none") {
+            //If the notification is transient, don't send it to the lock screen
+            if (!hints.value("transient", false).toBool()) {
+                //Create a DBus message relaying the message to the lock screen
+                QDBusMessage NotificationEmit = QDBusMessage::createMethodCall("org.thesuite.tsscreenlock", "/org/thesuite/tsscreenlock", "org.thesuite.tsscreenlock.Notifications", "newNotification");
+                QVariantList NotificationArgs;
+
+                if (settings.value("notifications/lockScreen", "noContents").toString() == "contents") {
+                    NotificationArgs.append(summary);
+                    NotificationArgs.append(body);
+                    NotificationArgs.append(replaces_id);
+                    NotificationArgs.append(actions);
+                } else {
+                    NotificationArgs.append(app_name);
+                    NotificationArgs.append("New Notification");
+                    NotificationArgs.append(replaces_id);
+                    NotificationArgs.append(QStringList());
+                }
+
+                NotificationEmit.setArguments(NotificationArgs);
+                QDBusConnection::sessionBus().call(NotificationEmit, QDBus::NoBlock);
+            }
+        }
     } else {
         dialogs.at(replaces_id - 1)->setParams(summary, body);
         dialogs.at(replaces_id - 1)->show();

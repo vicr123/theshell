@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QTimer>
+#include <QLabel>
+#include <QIcon>
 
 namespace Ui {
 class LoginSplash;

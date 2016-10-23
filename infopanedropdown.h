@@ -17,6 +17,7 @@
 #include <cups/cups.h>
 #include <QListWidgetItem>
 #include <QRadioButton>
+#include <QLineEdit>
 #include "animatedstackedwidget.h"
 #include "notificationdbus.h"
 #include "upowerdbus.h"
@@ -182,6 +183,12 @@ private slots:
 
     void on_pageStack_switchingFrame(int switchTo);
 
+    void on_showNotificationsContents_toggled(bool checked);
+
+    void on_showNotificationsOnly_toggled(bool checked);
+
+    void on_showNotificationsNo_toggled(bool checked);
+
 public slots:
     void getNetworks();
 
@@ -225,6 +232,8 @@ private:
 
     QSettings settings;
     QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);
+
+    bool networkListUpdating = false;
 
     QMediaPlayer* ringtone;
 };

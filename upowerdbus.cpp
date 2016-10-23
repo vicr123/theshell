@@ -53,7 +53,22 @@ void UPowerDBus::devicesChanged() {
 void UPowerDBus::DeviceChanged() {
     QString displayOutput;
     for (QDBusInterface *i : allDevices) {
-        double percentage = i->property("Percentage").toDouble();
+        //Get the percentage of battery remaining.
+        //We do the calculation ourselves because UPower can be inaccurate sometimes
+        double percentage;
+
+        //Check that the battery actually reports energy information
+        double energyFull = i->property("EnergyFull").toDouble();
+        double energy = i->property("Energy").toDouble();
+        double energyEmpty = i->property("EnergyEmpty").toDouble();
+        if (energyFull == 0 && energy == 0 && energyEmpty == 0) {
+            //The battery does not report energy information, so get the percentage from UPower.
+            percentage = i->property("Percentage").toDouble();
+        } else {
+            //Calculate the percentage ourself, and round it to an integer.
+            //Add 0.5 because C++ always rounds down.
+            percentage = (int) (((energy - energyEmpty) / (energyFull - energyEmpty) * 100) + 0.5);
+        }
         if (i->path().contains("battery")) {
             //PC Battery
             if (i->property("IsPresent").toBool()) {
@@ -84,7 +99,7 @@ void UPowerDBus::DeviceChanged() {
                     isConnectedToPower = true;
 
                     if (timeToFull != 0) {
-                        state.append(" - " + QDateTime::fromTime_t(timeToFull).toUTC().toString("h:mm"));
+                        state.append(" · " + QDateTime::fromTime_t(timeToFull).toUTC().toString("h:mm"));
                     }
 
                     if (hourBatteryWarning) {
@@ -110,7 +125,7 @@ void UPowerDBus::DeviceChanged() {
                     isCharging = false;
 
                     if (timeToEmpty != 0) {
-                        state.append(" - " + QDateTime::fromTime_t(timeToEmpty).toUTC().toString("h:mm"));
+                        state.append(" · " + QDateTime::fromTime_t(timeToEmpty).toUTC().toString("h:mm"));
 
                         if (timeToEmpty <= 600 && tenMinuteBatteryWarning == false) { //Ten minutes left! Critical!
                             QVariantMap hints;
