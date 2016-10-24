@@ -205,7 +205,7 @@ void UPowerDBus::DeviceChanged() {
             //Get the model of this media player
             QString model = i->property("Model").toString();
 
-            if (i->property("Serial").toString().length() == 40 && QFile("/usr/bin/idevice_id").exists()) { //This is probably an iOS device
+            if (i->property("Serial").toString().length() == 40 && i->property("Vendor").toString().contains("Apple") && QFile("/usr/bin/idevice_id").exists()) { //This is probably an iOS device
                 //Get the name of the iOS device
                 QProcess iosName;
                 iosName.start("idevice_id " + i->property("Serial").toString());

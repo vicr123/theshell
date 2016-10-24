@@ -101,10 +101,12 @@ MainWindow::~MainWindow()
 void MainWindow::DBusNewService(QString name) {
     if (name.startsWith("org.mpris.MediaPlayer2.")) {
         if (!mprisDetectedApps.contains(name)) {
+            QDBusConnection::sessionBus().connect(name, "/org/mpris/MediaPlayer2/", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(updateMpris()));
             mprisDetectedApps.append(name);
             if (mprisCurrentAppName == "") {
                 mprisCurrentAppName = name;
             }
+            updateMpris();
         }
     }
 }
@@ -593,7 +595,9 @@ void MainWindow::doUpdate() {
     } else { //Make mpris controller invisible
         ui->mprisFrame->setVisible(false);
     }
+}
 
+void MainWindow::updateMpris() {
     if (ui->mprisFrame->isVisible()) {
         if (!pauseMprisMenuUpdate) {
             if (mprisDetectedApps.count() > 1) {

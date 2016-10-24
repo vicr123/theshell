@@ -142,6 +142,8 @@ private slots:
 
     void on_mprisSelection_triggered(QAction *arg1);
 
+    void updateMpris();
+
 signals:
     void reloadBackgrounds();
 
