@@ -321,7 +321,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>2</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -493,14 +493,14 @@
              <second>0</second>
              <year>1969</year>
              <month>11</month>
-             <day>17</day>
+             <day>16</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>11</month>
-             <day>17</day>
+             <day>16</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -2665,7 +2665,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>theShell 5.0</string>
+                   <string>theShell 5.1</string>
                   </property>
                  </widget>
                 </item>
@@ -2751,6 +2751,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>AnimatedStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>animatedstackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>Switch</class>
    <extends>QPushButton</extends>
    <header>switch.h</header>
@@ -2762,12 +2768,6 @@
    <slots>
     <signal>clicked()</signal>
    </slots>
-  </customwidget>
-  <customwidget>
-   <class>AnimatedStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header>animatedstackedwidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
