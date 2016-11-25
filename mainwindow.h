@@ -14,6 +14,7 @@
 #include <QSoundEffect>
 #include <QPainter>
 #include <QMenu>
+#include <QAction>
 #include <math.h>
 #include "window.h"
 #include "menu.h"

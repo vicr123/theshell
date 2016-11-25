@@ -28,6 +28,8 @@ Menu::Menu(QWidget *parent) :
     ui->mathIcon->setPixmap(QIcon::fromTheme("accessories-calculator").pixmap(32));
     ui->settingsIcon->setPixmap(QIcon::fromTheme("preferences-system").pixmap(32));
     ui->mediaIcon->setPixmap(QIcon::fromTheme("media-playback-start").pixmap(32));
+    ui->commandLinkButton->setProperty("type", "destructive");
+    ui->commandLinkButton_2->setProperty("type", "destructive");
 
     if (!QApplication::arguments().contains("--debug")) {
         ui->exitButton->setVisible(false);

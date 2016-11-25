@@ -14,6 +14,7 @@
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <QDrag>
+#include <QCommandLinkButton>
 #include <systemd/sd-login.h>
 #include "endsessionwait.h"
 #include "app.h"

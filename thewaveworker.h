@@ -27,9 +27,9 @@
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <qmath.h>
-#include <akonadi/control.h>
-#include <akonadi/servermanager.h>
-#include <akonadi/session.h>
+#include <KF5/AkonadiCore/control.h>
+#include <KF5/AkonadiCore/servermanager.h>
+#include <KF5/AkonadiCore/session.h>
 #include "menu.h"
 
 class Menu;

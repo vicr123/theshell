@@ -13,6 +13,11 @@ Desktop Environment written using the Qt toolkit
 - xbacklight
 - kscreen
 - NetworkManager
+- libsystemd
+- akonadi (on Ubuntu, you'll need libkf5akonadi-dev - thanks SparkyCola)
+- libcups
+- libxcb
+- libxcursor
 - [tsscreenlock](https://github.com/vicr123/tsscreenlock)
 - [ts-polkitagent](https://github.com/vicr123/ts-polkitagent)
 - [ts-bt](https://github.com/vicr123/ts-bt)

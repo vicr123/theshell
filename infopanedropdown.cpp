@@ -767,21 +767,22 @@ void InfoPaneDropdown::getNetworks() {
             //Hide individual frames
             ui->networkInfoWirelessFrame->setVisible(false);
 
-            //Do the rest on the first device
-            switch (NetworkLabelType) {
-            case Wireless:
-            {
-                QDBusInterface* firstDeviceInterface = new QDBusInterface("org.freedesktop.NetworkManager", devices.first().path(), "org.freedesktop.NetworkManager.Device.Wireless", QDBusConnection::systemBus());
-                QDBusObjectPath activeAccessPoint = firstDeviceInterface->property("ActiveAccessPoint").value<QDBusObjectPath>();
-                QDBusInterface* activeAccessPointInterface = new QDBusInterface("org.freedesktop.NetworkManager", activeAccessPoint.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus());
-                ui->networkWirelessStrength->setText("Signal Strength: " + QString::number(activeAccessPointInterface->property("Strength").toInt()) + "%");
-                ui->networkWirelessFrequency->setText("Frequency: " + QString::number(activeAccessPointInterface->property("Frequency").toFloat() / 1e3f, 'f', 1) + " GHz");
-                activeAccessPointInterface->deleteLater();
-                firstDeviceInterface->deleteLater();
-                ui->networkInfoWirelessFrame->setVisible(true);
+            if (devices.count() > 0) {
+                //Do the rest on the first device
+                switch (NetworkLabelType) {
+                case Wireless:
+                {
+                    QDBusInterface* firstDeviceInterface = new QDBusInterface("org.freedesktop.NetworkManager", devices.first().path(), "org.freedesktop.NetworkManager.Device.Wireless", QDBusConnection::systemBus());
+                    QDBusObjectPath activeAccessPoint = firstDeviceInterface->property("ActiveAccessPoint").value<QDBusObjectPath>();
+                    QDBusInterface* activeAccessPointInterface = new QDBusInterface("org.freedesktop.NetworkManager", activeAccessPoint.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus());
+                    ui->networkWirelessStrength->setText("Signal Strength: " + QString::number(activeAccessPointInterface->property("Strength").toInt()) + "%");
+                    ui->networkWirelessFrequency->setText("Frequency: " + QString::number(activeAccessPointInterface->property("Frequency").toFloat() / 1e3f, 'f', 1) + " GHz");
+                    activeAccessPointInterface->deleteLater();
+                    firstDeviceInterface->deleteLater();
+                    ui->networkInfoWirelessFrame->setVisible(true);
+                }
+                }
             }
-            }
-
 
             ui->networkInfoFrame->setVisible(true);
 

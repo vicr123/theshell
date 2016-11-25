@@ -604,7 +604,7 @@ void MainWindow::updateMpris() {
                 QMenu* menu = ui->mprisSelection->menu();
                 menu->clear();
                 for (QString app : mprisDetectedApps) {
-                    QAction* action = new QAction();
+                    QAction* action = new QAction(NULL);
                     action->setData(app);
                     action->setCheckable(true);
                     if (mprisCurrentAppName == app) {

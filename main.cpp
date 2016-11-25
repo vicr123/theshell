@@ -4,6 +4,7 @@
 #include "segfaultdialog.h"
 #include "globalfilter.h"
 #include "dbusevents.h"
+#include "onboarding.h"
 #include <iostream>
 //#include "dbusmenuregistrar.h"
 #include <nativeeventfilter.h>
@@ -88,6 +89,7 @@ int main(int argc, char *argv[])
     bool showSplash = true;
     bool autoStart = true;
     bool startKscreen = true;
+    bool startOnboarding = false;
 
     QStringList args = a.arguments();
     args.removeFirst();
@@ -98,6 +100,7 @@ int main(int argc, char *argv[])
             qDebug() << "  -s, --no-splash-screen       Don't show the splash screen";
             qDebug() << "  -a, --no-autostart           Don't autostart executables";
             qDebug() << "  -k, --no-kscreen             Don't autostart KScreen";
+            qDebug() << "      --onboard                Start with onboarding screen";
             qDebug() << "      --debug                  Allows you to quit theShell instead of powering off";
             qDebug() << "  -h, --help                   Show this help output";
             return 0;
@@ -107,6 +110,8 @@ int main(int argc, char *argv[])
             autoStart = false;
         } else if (arg == "-k" || arg == "--no-kscreen") {
             startKscreen = false;
+        } else if (arg == "--onboard") {
+            startOnboarding = true;
         }
     }
 
@@ -195,6 +200,13 @@ int main(int argc, char *argv[])
 
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
+
+    if (settings.value("startup/lastOnboarding", 0) < 1 || startOnboarding) {
+        Onboarding* onboardingWindow = new Onboarding();
+        onboardingWindow->showFullScreen();
+        onboardingWindow->exec();
+        settings.setValue("startup/lastOnboarding", 1);
+    }
 
     MainWin = new MainWindow();
 

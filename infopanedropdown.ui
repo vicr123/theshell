@@ -493,14 +493,14 @@
              <second>0</second>
              <year>1969</year>
              <month>11</month>
-             <day>16</day>
+             <day>15</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>11</month>
-             <day>16</day>
+             <day>15</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -1053,8 +1053,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>928</width>
-            <height>442</height>
+            <width>165</width>
+            <height>59</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -2665,7 +2665,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>theShell 5.1</string>
+                   <string>theShell 5.2</string>
                   </property>
                  </widget>
                 </item>
