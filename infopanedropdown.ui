@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>964</width>
-    <height>664</height>
+    <height>835</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -321,7 +321,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -397,9 +397,21 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="gridVisible">
+              <bool>true</bool>
+             </property>
+             <property name="verticalHeaderFormat">
+              <enum>QCalendarWidget::ISOWeekNumbers</enum>
+             </property>
+             <property name="navigationBarVisible">
+              <bool>true</bool>
+             </property>
+             <property name="dateEditEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
-           <item row="2" column="1">
+           <item row="3" column="1">
             <spacer name="verticalSpacer_4">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -451,6 +463,46 @@
              </property>
             </spacer>
            </item>
+           <item row="2" column="0" colspan="3">
+            <layout class="QHBoxLayout" name="horizontalLayout_30">
+             <item>
+              <spacer name="horizontalSpacer_19">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="calendarTodayButton">
+               <property name="text">
+                <string>Today</string>
+               </property>
+               <property name="icon">
+                <iconset theme="go-next"/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_20">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
           </layout>
          </item>
         </layout>
@@ -493,14 +545,14 @@
              <second>0</second>
              <year>1969</year>
              <month>11</month>
-             <day>15</day>
+             <day>14</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>11</month>
-             <day>15</day>
+             <day>14</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -592,6 +644,81 @@
         </layout>
        </item>
        <item>
+        <widget class="Line" name="line_10">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_19">
+         <item>
+          <widget class="QLabel" name="label_48">
+           <property name="font">
+            <font>
+             <pointsize>20</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Stopwatch</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="stopwatchLabel">
+           <property name="font">
+            <font>
+             <pointsize>50</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>00:00:00</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_29">
+           <item>
+            <spacer name="horizontalSpacer_18">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="stopwatchReset">
+             <property name="text">
+              <string>Reset</string>
+             </property>
+             <property name="icon">
+              <iconset theme="edit-undo"/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="stopwatchStart">
+             <property name="text">
+              <string>Start</string>
+             </property>
+             <property name="icon">
+              <iconset theme="media-playback-start"/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
         <spacer name="verticalSpacer_5">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -607,6 +734,8 @@
       </layout>
       <zorder>verticalSpacer_5</zorder>
       <zorder>line</zorder>
+      <zorder>verticalLayoutWidget</zorder>
+      <zorder>line_10</zorder>
      </widget>
      <widget class="QWidget" name="statusFrame">
       <property name="autoFillBackground">
@@ -1054,7 +1183,7 @@
             <x>0</x>
             <y>0</y>
             <width>165</width>
-            <height>59</height>
+            <height>58</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">

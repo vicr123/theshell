@@ -27,6 +27,14 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
     connect(timer, SIGNAL(timeout()), this, SLOT(updateSysInfo()));
     connect(timer, SIGNAL(timeout()), this, SLOT(updateKdeconnect()));
+    connect(timer, &QTimer::timeout, [=]() {
+        //Run the timer faster when a stopwatch is running.
+        if (stopwatchRunning) {
+            timer->setInterval(100);
+        } else {
+            timer->setInterval(1000);
+        }
+    });
     timer->setInterval(1000);
     timer->start();
 
@@ -326,6 +334,13 @@ void InfoPaneDropdown::timerTick() {
     ui->date->setText(QDateTime::currentDateTime().toString("ddd dd MMM yyyy"));
     ui->time->setText(QDateTime::currentDateTime().toString("hh:mm:ss"));
 
+    //Also update the stopwatch
+    QTime stopwatchTime = QTime::fromMSecsSinceStartOfDay(0);
+    stopwatchTime = stopwatchTime.addMSecs(stopwatchTimeAdd);
+    if (stopwatchRunning) {
+        stopwatchTime = stopwatchTime.addMSecs(this->stopwatchTime.elapsed());
+    }
+    ui->stopwatchLabel->setText(stopwatchTime.toString("hh:mm:ss.zzz"));
 }
 
 void InfoPaneDropdown::show(dropdownType showWith) {
@@ -1515,4 +1530,33 @@ void InfoPaneDropdown::on_showNotificationsNo_toggled(bool checked)
     if (checked) {
         settings.setValue("notifications/lockScreen", "none");
     }
+}
+
+void InfoPaneDropdown::on_stopwatchStart_clicked()
+{
+    if (stopwatchRunning) {
+        stopwatchRunning = false;
+        stopwatchTimeAdd += stopwatchTime.elapsed();
+
+        ui->stopwatchReset->setVisible(true);
+        ui->stopwatchStart->setText("Start");
+        ui->stopwatchStart->setIcon(QIcon::fromTheme("media-playback-start"));
+    } else {
+        stopwatchTime.restart();
+        stopwatchRunning = true;
+
+        ui->stopwatchReset->setVisible(false);
+        ui->stopwatchStart->setText("Stop");
+        ui->stopwatchStart->setIcon(QIcon::fromTheme("media-playback-stop"));
+    }
+}
+
+void InfoPaneDropdown::on_stopwatchReset_clicked()
+{
+    stopwatchTimeAdd = 0;
+}
+
+void InfoPaneDropdown::on_calendarTodayButton_clicked()
+{
+    ui->calendarWidget->setSelectedDate(QDate::currentDate());
 }

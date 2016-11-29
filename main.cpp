@@ -90,6 +90,7 @@ int main(int argc, char *argv[])
     bool autoStart = true;
     bool startKscreen = true;
     bool startOnboarding = false;
+    bool startWm = true;
 
     QStringList args = a.arguments();
     args.removeFirst();
@@ -100,6 +101,7 @@ int main(int argc, char *argv[])
             qDebug() << "  -s, --no-splash-screen       Don't show the splash screen";
             qDebug() << "  -a, --no-autostart           Don't autostart executables";
             qDebug() << "  -k, --no-kscreen             Don't autostart KScreen";
+            qDebug() << "      --no-wm                  Don't autostart the window manager";
             qDebug() << "      --onboard                Start with onboarding screen";
             qDebug() << "      --debug                  Allows you to quit theShell instead of powering off";
             qDebug() << "  -h, --help                   Show this help output";
@@ -110,6 +112,8 @@ int main(int argc, char *argv[])
             autoStart = false;
         } else if (arg == "-k" || arg == "--no-kscreen") {
             startKscreen = false;
+        } else if (arg == "--no-wm") {
+            startWm = false;
         } else if (arg == "--onboard") {
             startOnboarding = true;
         }
@@ -174,13 +178,15 @@ int main(int argc, char *argv[])
 
     QString windowManager = settings.value("startup/WindowManagerCommand", "kwin_x11").toString();
 
-    while (!QProcess::startDetached(windowManager)) {
-        windowManager = QInputDialog::getText(0, "Window Manager couldn't start",
-                              "The window manager \"" + windowManager + "\" could not start. \n\n"
-                              "Enter the name or path of a window manager to attempt to start a different window"
-                              "manager, or hit 'Cancel' to start theShell without a window manager.");
-        if (windowManager == "") {
-            break;
+    if (startWm) {
+        while (!QProcess::startDetached(windowManager)) {
+            windowManager = QInputDialog::getText(0, "Window Manager couldn't start",
+                                  "The window manager \"" + windowManager + "\" could not start. \n\n"
+                                  "Enter the name or path of a window manager to attempt to start a different window"
+                                  "manager, or hit 'Cancel' to start theShell without a window manager.");
+            if (windowManager == "") {
+                break;
+            }
         }
     }
 

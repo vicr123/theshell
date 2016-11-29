@@ -14,6 +14,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QMediaPlaylist>
+#include <QCalendarWidget>
 #include <cups/cups.h>
 #include <QListWidgetItem>
 #include <QRadioButton>
@@ -189,6 +190,12 @@ private slots:
 
     void on_showNotificationsNo_toggled(bool checked);
 
+    void on_stopwatchStart_clicked();
+
+    void on_stopwatchReset_clicked();
+
+    void on_calendarTodayButton_clicked();
+
 public slots:
     void getNetworks();
 
@@ -229,6 +236,10 @@ private:
     QTime timeUntilTimeout;
     QTime startTime;
     void reject();
+
+    QTime stopwatchTime;
+    int stopwatchTimeAdd = 0;
+    bool stopwatchRunning = false;
 
     QSettings settings;
     QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);
