@@ -91,6 +91,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->brightnessSlider->setVisible(false);
     ui->mprisFrame->setVisible(false);
+
+    this->setFocusPolicy(Qt::NoFocus);
 }
 
 MainWindow::~MainWindow()
@@ -274,10 +276,9 @@ void MainWindow::doUpdate() {
             Window child;
             retval = XTranslateCoordinates(d, win, RootWindow(d, 0), 0, 0, &windowx, &windowy, &child);
 
-
             QString title;
             if (netWmName) {
-                title = QString::fromLocal8Bit((char *) netWmName);
+                title = QString::fromUtf8((char *) netWmName);
                 XFree(netWmName);
             }
 
