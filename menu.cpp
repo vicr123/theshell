@@ -193,7 +193,16 @@ void Menu::show(bool openTotheWave, bool startListening) {
                         } else if (line.startsWith("exec=", Qt::CaseInsensitive)) {
                             QStringList command = line.split("=");
                             command.removeFirst();
-                            app.setCommand(command.join("=").remove(QRegExp("%.")));
+
+                            QString commandLine = command.join("=");
+                            commandLine.remove("%u");
+                            commandLine.remove("%U");
+                            commandLine.remove("%f");
+                            commandLine.remove("%F");
+                            commandLine.remove("%k");
+                            commandLine.remove("%i");
+                            commandLine.replace("%c", "\"" + app.name() + "\"");
+                            app.setCommand(commandLine);
                         } else if (line.startsWith("description=", Qt::CaseInsensitive)) {
                             app.setDescription(line.split("=")[1]);
                         } else if (line.startsWith("type=", Qt::CaseInsensitive)) {
