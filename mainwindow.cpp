@@ -691,9 +691,34 @@ void MainWindow::on_time_clicked()
 
 void MainWindow::ActivateWindow() {
     Window winId = sender()->property("windowid").value<Window>();
-    sendMessageToRootWindow("_NET_CURRENT_DESKTOP", 0, sender()->property("desktop").toInt());
-    sendMessageToRootWindow("_NET_ACTIVE_WINDOW", winId, 2);
-    XMapRaised(QX11Info::display(), winId);
+
+
+    Window activeWindow = 0;
+    { //Get the active window
+        Window *activeWin;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(QX11Info::display(), DefaultRootWindow(QX11Info::display()), XInternAtom(QX11Info::display(), "_NET_ACTIVE_WINDOW", False), 0, 1024, False,
+                                        AnyPropertyType, &ReturnType, &format, &items, &bytes, (unsigned char**) &activeWin);
+        if (retval == 0 && activeWin != 0) {
+             activeWindow = *activeWin;
+        }
+        XFree(activeWin);
+    }
+
+    if (winId == activeWindow) {
+        //Minimise the window
+        sendMessageToRootWindow("WM_CHANGE_STATE", winId, 3);
+    } else {
+        //Switch to the desktop that the window is in
+        sendMessageToRootWindow("_NET_CURRENT_DESKTOP", 0, sender()->property("desktop").toInt());
+
+        //Activate the window
+        sendMessageToRootWindow("_NET_ACTIVE_WINDOW", winId, 2);
+        XMapRaised(QX11Info::display(), winId);
+    }
 }
 
 void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.

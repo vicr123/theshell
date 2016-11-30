@@ -12,6 +12,7 @@ Menu::Menu(QWidget *parent) :
     ui->setupUi(this);
 
     ui->offFrame->setParent(this);
+    ui->offFrame->setVisible(false);
     ui->thewaveFrame->setParent(this);
     this->layout()->removeWidget(ui->offFrame);
     this->layout()->removeWidget(ui->thewaveFrame);
@@ -28,6 +29,7 @@ Menu::Menu(QWidget *parent) :
     ui->mathIcon->setPixmap(QIcon::fromTheme("accessories-calculator").pixmap(32));
     ui->settingsIcon->setPixmap(QIcon::fromTheme("preferences-system").pixmap(32));
     ui->mediaIcon->setPixmap(QIcon::fromTheme("media-playback-start").pixmap(32));
+
     ui->commandLinkButton->setProperty("type", "destructive");
     ui->commandLinkButton_2->setProperty("type", "destructive");
 
@@ -391,6 +393,7 @@ void Menu::on_pushButton_clicked()
             ui->shutdownWarnings->setVisible(false);
         }
 
+        ui->offFrame->setVisible(true);
         QPropertyAnimation* anim = new QPropertyAnimation(ui->offFrame, "geometry");
         anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
         anim->setEndValue(QRect(10, 10, this->width() - 20, this->height() - 20));
@@ -409,6 +412,10 @@ void Menu::on_pushButton_2_clicked()
     anim->setEndValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
     anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    connect(anim, &QPropertyAnimation::finished, [=]() {
+        ui->offFrame->setVisible(false);
+    });
 
     anim->start();
 }
