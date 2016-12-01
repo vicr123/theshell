@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    MainWin->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    MainWin->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus);
     MainWin->setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width() + 1, MainWin->height());
     MainWin->show();
 

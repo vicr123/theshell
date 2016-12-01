@@ -465,7 +465,6 @@ void MainWindow::doUpdate() {
                 lockHide = true;
                 menu->exec(button->mapToGlobal(pos));
                 lockHide = false;
-
             });
             if (w.isMinimized() || (currentDesktop != w.desktop() && w.desktop() != 0xFFFFFFFF)) {
                 button->setFade(true);
@@ -487,6 +486,21 @@ void MainWindow::doUpdate() {
 
             //Add the button to the layout
             ui->windowList->layout()->addWidget(button);
+
+            //Change the icon geometry of the window
+            unsigned long* iconGeometry = (unsigned long*) malloc(sizeof(unsigned long) * 4);
+
+            QPoint buttonScreenCoordinates = button->mapToGlobal(QPoint(0, 0));
+            if (buttonScreenCoordinates.y() < 0) buttonScreenCoordinates.setY(0);
+            if (buttonScreenCoordinates.x() < 0) buttonScreenCoordinates.setX(0);
+            iconGeometry[0] = buttonScreenCoordinates.x();
+            iconGeometry[1] = buttonScreenCoordinates.y();
+            iconGeometry[2] = button->width();
+            iconGeometry[3] = button->height();
+            XChangeProperty(QX11Info::display(), w.WID(), XInternAtom(QX11Info::display(), "_NET_WM_ICON_GEOMETRY", False),
+                            XA_CARDINAL, 32, PropModeReplace, (unsigned char*) iconGeometry, 4);
+
+            free(iconGeometry);
         }
 
         ui->centralWidget->adjustSize();
