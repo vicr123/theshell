@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     signal(SIGABRT, *catch_signal); //Catch SIGABRT
     signal(SIGILL, *catch_signal); //Catch SIGILL
 
-    qInstallMessageHandler(QtHandler);
+    //qInstallMessageHandler(QtHandler);
 
     QApplication a(argc, argv);
 
