@@ -11,13 +11,15 @@
 #include <QDebug>
 #include <QDBusInterface>
 #include <QSettings>
+#include <QTimer>
+#include "notificationdbus.h"
 #include "newmedia.h"
 
 class DbusEvents : public QObject
 {
     Q_OBJECT
 public:
-    explicit DbusEvents(QObject *parent = 0);
+    explicit DbusEvents(NotificationDBus* notifications, QObject *parent = 0);
 
 signals:
 
@@ -28,13 +30,17 @@ public slots:
 
     void NewUdisksInterface(QDBusObjectPath path);
 
+    void DetectNewDevices();
+
 private slots:
     void SleepingNow();
 
 private:
     QProcess* LockScreenProcess = NULL;
 
+    NotificationDBus* notificationEngine;
     QSettings settings;
+    QStringList connectediOSDevices;
 };
 
 #endif // DBUSEVENTS_H

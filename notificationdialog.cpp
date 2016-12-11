@@ -85,6 +85,10 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
             ui->label->setPixmap(getIconFromTheme("battery-low.svg", color).pixmap(24, 24));
         } else if (category == "battery.critical") {
             ui->label->setPixmap(getIconFromTheme("battery-critical.svg", color).pixmap(24, 24));
+        } else if (category == "device.added") {
+            ui->label->setPixmap(getIconFromTheme("connect.svg", color).pixmap(24, 24));
+        } else if (category == "device.removed") {
+            ui->label->setPixmap(getIconFromTheme("disconnect.svg", color).pixmap(24, 24));
         } else if (category == "call.incoming") {
             ui->label->setPixmap(QIcon::fromTheme("call-start").pixmap(24, 24));
         } else {

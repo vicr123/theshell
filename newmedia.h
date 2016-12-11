@@ -9,6 +9,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QLabel>
+#include <QToolButton>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -46,6 +47,8 @@ public:
     void setGeometry(QRect geometry);
 private slots:
     void on_closeButton_clicked();
+
+    void on_doNothingOptionToolButton_clicked();
 
 private:
     Ui::NewMedia *ui;

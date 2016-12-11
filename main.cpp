@@ -218,8 +218,6 @@ int main(int argc, char *argv[])
 
     new GlobalFilter(&a);
 
-    DBusEvents = new DbusEvents();
-
     qDBusRegisterMetaType<QList<QVariantMap>>();
     qDBusRegisterMetaType<QMap<QString, QVariantMap>>();
 

@@ -4,6 +4,7 @@
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0, long data2 = 0, long data3 = 0, long data4 = 0);
+extern DbusEvents* DBusEvents;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -58,6 +59,8 @@ MainWindow::MainWindow(QWidget *parent) :
     } else {
         ui->batteryFrame->setVisible(false);
     }
+
+    DBusEvents = new DbusEvents(ndbus);
 
     infoPane = new InfoPaneDropdown(ndbus, updbus);
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);

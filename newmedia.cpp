@@ -8,6 +8,9 @@ NewMedia::NewMedia(QString description, QWidget *parent) :
     ui->setupUi(this);
 
     ui->description->setText(description);
+    if (!QFile("/usr/bin/thefile").exists()) {
+        ui->openFiles->setVisible(false);
+    }
 }
 
 NewMedia::~NewMedia()
@@ -92,6 +95,11 @@ void NewMedia::paintEvent(QPaintEvent *event) {
 }
 
 void NewMedia::on_closeButton_clicked()
+{
+    this->close();
+}
+
+void NewMedia::on_doNothingOptionToolButton_clicked()
 {
     this->close();
 }

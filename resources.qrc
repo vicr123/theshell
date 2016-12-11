@@ -15,6 +15,8 @@
         <file>images/dark/battery-not-charging.svg</file>
         <file>images/dark/battery-low.svg</file>
         <file>images/dark/battery-critical.svg</file>
+        <file>images/dark/connect.svg</file>
+        <file>images/dark/disconnect.svg</file>
     </qresource>
     <qresource prefix="/icons/light">
         <file>images/light/flight.svg</file>
@@ -23,6 +25,8 @@
         <file>images/light/battery-not-charging.svg</file>
         <file>images/light/battery-low.svg</file>
         <file>images/light/battery-critical.svg</file>
+        <file>images/light/connect.svg</file>
+        <file>images/light/disconnect.svg</file>
     </qresource>
     <qresource prefix="/icons">
         <file>icon.svg</file>

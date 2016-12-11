@@ -1,8 +1,9 @@
 #include "dbusevents.h"
 
-DbusEvents::DbusEvents(QObject *parent) : QObject(parent)
+DbusEvents::DbusEvents(NotificationDBus* notifications, QObject *parent) : QObject(parent)
 {
     qint64 pid = QApplication::applicationPid(); //Get this PID
+    this->notificationEngine = notifications;
     QDBusMessage sessionRequest = QDBusMessage::createMethodCall("org.freedesktop.login1",
                                                                  "/org/freedesktop/login1",
                                                                  "org.freedesktop.login1.Manager", "GetSessionByPid"); //Get this session
@@ -24,6 +25,19 @@ DbusEvents::DbusEvents(QObject *parent) : QObject(parent)
 
     QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager",
                                          "InterfacesAdded", "oa{sa{sv}}", this, SLOT(NewUdisksInterface(QDBusObjectPath)));
+
+    if (QFile("/usr/bin/idevice_id").exists()) {
+        QProcess deviceId;
+        deviceId.start("/usr/bin/idevice_id -l");
+        deviceId.waitForFinished();
+
+        connectediOSDevices = QString(deviceId.readAll()).split("\n", QString::SkipEmptyParts);
+    }
+
+    QTimer* driveDetect = new QTimer;
+    driveDetect->setInterval(1000);
+    connect(driveDetect, SIGNAL(timeout()), this, SLOT(DetectNewDevices()));
+    driveDetect->start();
 }
 
 void DbusEvents::LockScreen() {
@@ -56,6 +70,42 @@ void DbusEvents::NewUdisksInterface(QDBusObjectPath path) {
             QString description = interface.property("Model").toString() + " was just connected. What do you want to do?";
             NewMedia* mediaWindow = new NewMedia(description);
             mediaWindow->show();
+        }
+    }
+}
+
+void DbusEvents::DetectNewDevices() {
+    if (QFile("/usr/bin/idevice_id").exists()) {
+        QProcess deviceId;
+        deviceId.start("/usr/bin/idevice_id -l");
+        deviceId.waitForFinished();
+
+        //Detect disconnected devices
+        QStringList foundDevices = QString(deviceId.readAll()).split("\n", QString::SkipEmptyParts);
+        for (QString device : connectediOSDevices) {
+            if (!foundDevices.contains(device)) {
+                connectediOSDevices.removeOne(device);
+            }
+        }
+
+        //Detect connected device
+        for (QString device : foundDevices) {
+            if (!connectediOSDevices.contains(device)) {
+                QProcess deviceNameProc;
+                deviceNameProc.start("/usr/bin/idevice_id " + device);
+                deviceNameProc.waitForFinished();
+
+                QString deviceName = deviceNameProc.readAll().trimmed();
+                if (deviceName == "") {
+                    deviceName = "iOS Device";
+                }
+
+                QVariantMap hints;
+                hints.insert("transient", true);
+                hints.insert("category", "device.added");
+                notificationEngine->Notify("theShell", 0, "", deviceName + " Connected", deviceName + " has been connected to this PC.", QStringList(), hints, -1);
+                connectediOSDevices.append(device);
+            }
         }
     }
 }
