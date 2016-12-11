@@ -132,7 +132,7 @@ void SniIcon::SniItemUnregistered(QString service) {
 
 void SniIcon::ReloadIcon() {
     if (interface->property("IconName").toString() != "") {
-        this->setPixmap(QIcon::fromTheme(interface->property("IconName").toString()).pixmap(16, 16));
+        this->setPixmap(QIcon::fromTheme(interface->property("IconName").toString()).pixmap(24, 24));
     } else {
         //TODO: Load other image data
         QDBusMessage message = QDBusMessage::createMethodCall(interface->service(), interface->path(), "org.freedesktop.DBus.Properties", "Get");

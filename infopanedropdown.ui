@@ -321,7 +321,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -484,7 +484,8 @@
                 <string>Today</string>
                </property>
                <property name="icon">
-                <iconset theme="go-next"/>
+                <iconset theme="go-next">
+                 <normaloff>.</normaloff>.</iconset>
                </property>
               </widget>
              </item>
@@ -545,14 +546,14 @@
              <second>0</second>
              <year>1969</year>
              <month>11</month>
-             <day>14</day>
+             <day>13</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>11</month>
-             <day>14</day>
+             <day>13</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -700,7 +701,8 @@
               <string>Reset</string>
              </property>
              <property name="icon">
-              <iconset theme="edit-undo"/>
+              <iconset theme="edit-undo">
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>
@@ -710,7 +712,8 @@
               <string>Start</string>
              </property>
              <property name="icon">
-              <iconset theme="media-playback-start"/>
+              <iconset theme="media-playback-start">
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>
@@ -734,7 +737,6 @@
       </layout>
       <zorder>verticalSpacer_5</zorder>
       <zorder>line</zorder>
-      <zorder>verticalLayoutWidget</zorder>
       <zorder>line_10</zorder>
      </widget>
      <widget class="QWidget" name="statusFrame">
@@ -1483,7 +1485,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>9</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2080,6 +2082,13 @@
            </widget>
            <widget class="QWidget" name="NotificationsSettings">
             <layout class="QGridLayout" name="gridLayout_3">
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_49">
+               <property name="text">
+                <string>Show options when connecting media</string>
+               </property>
+              </widget>
+             </item>
              <item row="4" column="0">
               <widget class="QLabel" name="label_43">
                <property name="text">
@@ -2128,7 +2137,7 @@
                </property>
               </widget>
              </item>
-             <item row="5" column="0" colspan="3">
+             <item row="8" column="0" colspan="3">
               <spacer name="verticalSpacer_10">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -2256,6 +2265,20 @@
                  </spacer>
                 </item>
                </layout>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="3">
+              <widget class="Line" name="line_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="Switch" name="MediaSwitch">
+               <property name="text">
+                <string>MediaSwitch</string>
+               </property>
               </widget>
              </item>
             </layout>

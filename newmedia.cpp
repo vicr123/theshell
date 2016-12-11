@@ -1,46 +1,33 @@
-#include "rundialog.h"
-#include "ui_rundialog.h"
+#include "newmedia.h"
+#include "ui_newmedia.h"
 
-RunDialog::RunDialog(QWidget *parent) :
+NewMedia::NewMedia(QString description, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::RunDialog)
+    ui(new Ui::NewMedia)
 {
     ui->setupUi(this);
+
+    ui->description->setText(description);
 }
 
-RunDialog::~RunDialog()
+NewMedia::~NewMedia()
 {
     delete ui;
 }
 
-void RunDialog::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
+
+void NewMedia::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
     QDialog::setGeometry(x, y, w, h);
     QProcess::execute("wmctrl -r " + this->windowTitle() + " -e 0," +
                       QString::number(x) + "," + QString::number(y) + "," +
                       QString::number(w) + "," + QString::number(h));
 }
 
-void RunDialog::setGeometry(QRect geometry) {
+void NewMedia::setGeometry(QRect geometry) {
     this->setGeometry(geometry.x(), geometry.y(), geometry.width(), geometry.height());
 }
 
-void RunDialog::on_cancelButton_clicked()
-{
-    this->close();
-}
-
-void RunDialog::on_runButton_clicked()
-{
-    QProcess::startDetached(ui->command->text());
-    this->close();
-}
-
-void RunDialog::on_command_returnPressed()
-{
-    ui->runButton->click();
-}
-
-void RunDialog::show() {
+void NewMedia::show() {
     Atom DesktopWindowTypeAtom;
     DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NOTIFICATION", False);
     int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
@@ -76,11 +63,9 @@ void RunDialog::show() {
     event.xclient.data.l[0] = 2;
 
     XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
-
-    ui->command->setFocus();
 }
 
-void RunDialog::close() {
+void NewMedia::close() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
     QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
@@ -95,22 +80,18 @@ void RunDialog::close() {
     anim->start();
 }
 
-void RunDialog::reject() {
+void NewMedia::reject() {
     this->close();
 }
 
-void RunDialog::paintEvent(QPaintEvent *event) {
+void NewMedia::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setPen(this->palette().color(QPalette::WindowText));
     painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
     event->accept();
 }
 
-void RunDialog::changeEvent(QEvent *event) {
-    QDialog::changeEvent(event);
-    if (event->type() == QEvent::ActivationChange) {
-        if (!this->isActiveWindow()) {
-            this->close();
-        }
-    }
+void NewMedia::on_closeButton_clicked()
+{
+    this->close();
 }

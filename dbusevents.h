@@ -8,6 +8,10 @@
 #include <QApplication>
 #include <QDBusObjectPath>
 #include <QDBusReply>
+#include <QDebug>
+#include <QDBusInterface>
+#include <QSettings>
+#include "newmedia.h"
 
 class DbusEvents : public QObject
 {
@@ -22,6 +26,7 @@ public slots:
 
     void UnlockScreen();
 
+    void NewUdisksInterface(QDBusObjectPath path);
 
 private slots:
     void SleepingNow();
@@ -29,6 +34,7 @@ private slots:
 private:
     QProcess* LockScreenProcess = NULL;
 
+    QSettings settings;
 };
 
 #endif // DBUSEVENTS_H

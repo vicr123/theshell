@@ -196,6 +196,8 @@ private slots:
 
     void on_calendarTodayButton_clicked();
 
+    void on_MediaSwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 

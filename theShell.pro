@@ -52,7 +52,8 @@ SOURCES += main.cpp\
     thewavefeedbackframe.cpp \
     mousescrollwidget.cpp \
     animatedstackedwidget.cpp \
-    onboarding.cpp
+    onboarding.cpp \
+    newmedia.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -85,7 +86,8 @@ HEADERS  += mainwindow.h \
     thewavefeedbackframe.h \
     mousescrollwidget.h \
     animatedstackedwidget.h \
-    onboarding.h
+    onboarding.h \
+    newmedia.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -99,7 +101,8 @@ FORMS    += mainwindow.ui \
     segfaultdialog.ui \
     hotkeyhud.ui \
     rundialog.ui \
-    onboarding.ui
+    onboarding.ui \
+    newmedia.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

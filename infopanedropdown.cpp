@@ -150,6 +150,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->TextSwitch->setChecked(settings.value("bar/showText", true).toBool());
     ui->windowManager->setText(settings.value("startup/WindowManagerCommand", "kwin_x11").toString());
     ui->barDesktopsSwitch->setChecked(settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
+    ui->MediaSwitch->setChecked(settings.value("notifications/mediaInsert", true).toBool());
 
     eventTimer = new QTimer(this);
     eventTimer->setInterval(1000);
@@ -1559,4 +1560,9 @@ void InfoPaneDropdown::on_stopwatchReset_clicked()
 void InfoPaneDropdown::on_calendarTodayButton_clicked()
 {
     ui->calendarWidget->setSelectedDate(QDate::currentDate());
+}
+
+void InfoPaneDropdown::on_MediaSwitch_toggled(bool checked)
+{
+    settings.setValue("notifications/mediaInsert", checked);
 }

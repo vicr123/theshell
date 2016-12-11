@@ -22,6 +22,8 @@ DbusEvents::DbusEvents(QObject *parent) : QObject(parent)
                                         "org.freedesktop.login1.Manager", "PrepareForSleep",
                                         this, SLOT(SleepingNow())); //Register Sleep
 
+    QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager",
+                                         "InterfacesAdded", "oa{sa{sv}}", this, SLOT(NewUdisksInterface(QDBusObjectPath)));
 }
 
 void DbusEvents::LockScreen() {
@@ -44,4 +46,16 @@ void DbusEvents::UnlockScreen() {
 
 void DbusEvents::SleepingNow() {
     LockScreen();
+}
+
+void DbusEvents::NewUdisksInterface(QDBusObjectPath path) {
+    if (path.path().startsWith("/org/freedesktop/UDisks2/drives")) {
+        if (settings.value("notifications/mediaInsert", true).toBool()) {
+            QDBusInterface interface("org.freedesktop.UDisks2", path.path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
+
+            QString description = interface.property("Model").toString() + " was just connected. What do you want to do?";
+            NewMedia* mediaWindow = new NewMedia(description);
+            mediaWindow->show();
+        }
+    }
 }
