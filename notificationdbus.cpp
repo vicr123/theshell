@@ -127,6 +127,10 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
                 icon = getIconFromTheme("battery-low.svg", color).pixmap(24, 24);
             } else if (category == "battery.critical") {
                 icon = getIconFromTheme("battery-critical.svg", color).pixmap(24, 24);
+            } else if (category == "device.added") {
+                icon = getIconFromTheme("connect.svg", color).pixmap(24, 24);
+            } else if (category == "device.removed") {
+                icon = getIconFromTheme("disconnect.svg", color).pixmap(24, 24);
             }
         } else if (hints.keys().contains("urgency")) {
             QChar urgency = hints.value("urgency").toChar();

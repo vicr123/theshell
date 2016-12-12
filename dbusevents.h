@@ -33,6 +33,8 @@ public slots:
 
     void RemoveUdisksInterface(QDBusObjectPath path, QStringList interfaces);
 
+    void NotificationAction(uint id, QString key);
+
     void DetectNewDevices();
 
 private slots:
@@ -44,6 +46,7 @@ private:
     NotificationDBus* notificationEngine;
     QSettings settings;
     QStringList connectediOSDevices;
+    QMap<uint, QDBusObjectPath> notificationIds;
 };
 
 #endif // DBUSEVENTS_H

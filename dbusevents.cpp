@@ -28,6 +28,8 @@ DbusEvents::DbusEvents(NotificationDBus* notifications, QObject *parent) : QObje
     QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager",
                                          "InterfacesRemoved", this, SLOT(RemoveUdisksInterface(QDBusObjectPath,QStringList)));
 
+    connect(notifications, SIGNAL(ActionInvoked(uint,QString)), this, SLOT(NotificationAction(uint,QString)));
+
     if (QFile("/usr/bin/idevice_id").exists()) {
         QProcess deviceId;
         deviceId.start("/usr/bin/idevice_id -l");
@@ -69,9 +71,15 @@ void DbusEvents::NewUdisksInterface(QDBusObjectPath path) {
         if (settings.value("notifications/mediaInsert", true).toBool()) {
             QDBusInterface interface("org.freedesktop.UDisks2", path.path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
 
-            QString description = interface.property("Model").toString() + " was just connected. What do you want to do?";
-            NewMedia* mediaWindow = new NewMedia(description);
-            mediaWindow->show();
+            QString deviceName = interface.property("Model").toString();
+            QStringList actions;
+            actions.append("action");
+            actions.append("Perform Action...");
+            QVariantMap hints;
+            hints.insert("transient", true);
+            hints.insert("category", "device.added");
+            uint id = notificationEngine->Notify("theShell", 0, "", deviceName + " Connected", deviceName + " has been connected to this PC.", actions, hints, -1);
+            notificationIds.insert(id, path);
 
             QSoundEffect* mediaSound = new QSoundEffect();
             mediaSound->setSource(QUrl("qrc:/sounds/media-insert.wav"));
@@ -87,6 +95,18 @@ void DbusEvents::RemoveUdisksInterface(QDBusObjectPath path, QStringList interfa
         mediaSound->setSource(QUrl("qrc:/sounds/media-remove.wav"));
         mediaSound->play();
         connect(mediaSound, SIGNAL(playingChanged()), mediaSound, SLOT(deleteLater()));
+    }
+}
+
+void DbusEvents::NotificationAction(uint id, QString key) {
+    if (notificationIds.keys().contains(id)) {
+        if (key == "action") {
+            QDBusInterface interface("org.freedesktop.UDisks2", notificationIds.value(id).path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
+
+            QString description = interface.property("Model").toString() + " was just connected. What do you want to do?";
+            NewMedia* mediaWindow = new NewMedia(description);
+            mediaWindow->show();
+        }
     }
 }
 
