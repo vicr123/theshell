@@ -86,6 +86,14 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
         ui->pushButton_8->setVisible(false);
     }
 
+    //Set up theme button combo box
+    int themeAccentColorIndex = themeSettings->value("color/accent", 0).toInt();
+    ui->themeButtonColor->addItem("Blue");
+    ui->themeButtonColor->addItem("Green");
+    ui->themeButtonColor->addItem("Orange");
+    ui->themeButtonColor->addItem("Pink");
+    ui->themeButtonColor->addItem("Turquoise");
+
     QString redshiftStart = settings.value("display/redshiftStart", "").toString();
     if (redshiftStart == "") {
         redshiftStart = ui->startRedshift->time().toString();
@@ -138,6 +146,13 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
         ui->showNotificationsOnly->setChecked(true);
     }
 
+    QString themeType = themeSettings->value("color/type", "dark").toString();
+    if (themeType == "light") {
+        ui->lightColorThemeRadio->setChecked(true);
+    } else {
+        ui->darkColorThemeRadio->setChecked(true);
+    }
+
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
     ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
@@ -151,6 +166,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->windowManager->setText(settings.value("startup/WindowManagerCommand", "kwin_x11").toString());
     ui->barDesktopsSwitch->setChecked(settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
     ui->MediaSwitch->setChecked(settings.value("notifications/mediaInsert", true).toBool());
+    ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
 
     eventTimer = new QTimer(this);
     eventTimer->setInterval(1000);
@@ -178,6 +194,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Bar"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Gateway"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-display"), "Display"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-theme"), "Theme"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("dialog-warning"), "Notifications"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("input-tablet"), "Input"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("system-lock-screen"), "Lock Screen"));
@@ -1565,4 +1582,23 @@ void InfoPaneDropdown::on_calendarTodayButton_clicked()
 void InfoPaneDropdown::on_MediaSwitch_toggled(bool checked)
 {
     settings.setValue("notifications/mediaInsert", checked);
+}
+
+void InfoPaneDropdown::on_lightColorThemeRadio_toggled(bool checked)
+{
+    if (checked) {
+        themeSettings->setValue("color/type", "light");
+    }
+}
+
+void InfoPaneDropdown::on_darkColorThemeRadio_toggled(bool checked)
+{
+    if (checked) {
+        themeSettings->setValue("color/type", "dark");
+    }
+}
+
+void InfoPaneDropdown::on_themeButtonColor_currentIndexChanged(int index)
+{
+    themeSettings->setValue("color/accent", index);
 }

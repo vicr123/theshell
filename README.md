@@ -21,6 +21,7 @@ Desktop Environment written using the Qt toolkit
 - [tsscreenlock](https://github.com/vicr123/tsscreenlock)
 - [ts-polkitagent](https://github.com/vicr123/ts-polkitagent)
 - [ts-bt](https://github.com/vicr123/ts-bt)
+- [ts-qtplatform](https://github.com/vicr123/ts-qtplatform)
 - alsa-utils (optional, for volume controls)
 - pocketsphinx (optional, for voice control)
 - festival (optional, for voice control)

@@ -10,8 +10,9 @@
 #define ChangelogOnbording "New in theShell 5.2: \n"\
     "- New Onboarding experience. Every time theShell updates, you'll get a changelog.\n" \
     "- theWave now uses theCalculator to process calculations.\n" \
-    "" \
-    "" \
+    "- theShell now uses its own platform abstraction module to theme your system. Change the theming in theShell Settings.\n" \
+    "- theShell now uses the Contemporary theme to display widgets.\n"\
+    "- theShell now displays notifications when it detects a connected device\n" \
     ""
 
 namespace Ui {

@@ -19,6 +19,7 @@
 #include <QListWidgetItem>
 #include <QRadioButton>
 #include <QLineEdit>
+#include <QComboBox>
 #include "animatedstackedwidget.h"
 #include "notificationdbus.h"
 #include "upowerdbus.h"
@@ -198,6 +199,12 @@ private slots:
 
     void on_MediaSwitch_toggled(bool checked);
 
+    void on_lightColorThemeRadio_toggled(bool checked);
+
+    void on_darkColorThemeRadio_toggled(bool checked);
+
+    void on_themeButtonColor_currentIndexChanged(int index);
+
 public slots:
     void getNetworks();
 
@@ -245,6 +252,7 @@ private:
 
     QSettings settings;
     QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);
+    QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
 
     bool networkListUpdating = false;
 
