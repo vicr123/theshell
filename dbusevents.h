@@ -12,6 +12,7 @@
 #include <QDBusInterface>
 #include <QSettings>
 #include <QTimer>
+#include <QSoundEffect>
 #include "notificationdbus.h"
 #include "newmedia.h"
 
@@ -29,6 +30,8 @@ public slots:
     void UnlockScreen();
 
     void NewUdisksInterface(QDBusObjectPath path);
+
+    void RemoveUdisksInterface(QDBusObjectPath path, QStringList interfaces);
 
     void DetectNewDevices();
 

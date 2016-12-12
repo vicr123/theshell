@@ -7,6 +7,8 @@
         <file>volfeedback.wav</file>
         <file>click.wav</file>
         <file>charging.wav</file>
+        <file>media-remove.wav</file>
+        <file>media-insert.wav</file>
     </qresource>
     <qresource prefix="/icons/dark">
         <file>images/dark/flight.svg</file>

@@ -24,7 +24,9 @@ DbusEvents::DbusEvents(NotificationDBus* notifications, QObject *parent) : QObje
                                         this, SLOT(SleepingNow())); //Register Sleep
 
     QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager",
-                                         "InterfacesAdded", "oa{sa{sv}}", this, SLOT(NewUdisksInterface(QDBusObjectPath)));
+                                         "InterfacesAdded", this, SLOT(NewUdisksInterface(QDBusObjectPath)));
+    QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager",
+                                         "InterfacesRemoved", this, SLOT(RemoveUdisksInterface(QDBusObjectPath,QStringList)));
 
     if (QFile("/usr/bin/idevice_id").exists()) {
         QProcess deviceId;
@@ -70,7 +72,21 @@ void DbusEvents::NewUdisksInterface(QDBusObjectPath path) {
             QString description = interface.property("Model").toString() + " was just connected. What do you want to do?";
             NewMedia* mediaWindow = new NewMedia(description);
             mediaWindow->show();
+
+            QSoundEffect* mediaSound = new QSoundEffect();
+            mediaSound->setSource(QUrl("qrc:/sounds/media-insert.wav"));
+            mediaSound->play();
+            connect(mediaSound, SIGNAL(playingChanged()), mediaSound, SLOT(deleteLater()));
         }
+    }
+}
+
+void DbusEvents::RemoveUdisksInterface(QDBusObjectPath path, QStringList interfaces) {
+    if (interfaces.contains("org.freedesktop.UDisks2.Drive")) {
+        QSoundEffect* mediaSound = new QSoundEffect();
+        mediaSound->setSource(QUrl("qrc:/sounds/media-remove.wav"));
+        mediaSound->play();
+        connect(mediaSound, SIGNAL(playingChanged()), mediaSound, SLOT(deleteLater()));
     }
 }
 
@@ -86,6 +102,11 @@ void DbusEvents::DetectNewDevices() {
             for (QString device : connectediOSDevices) {
                 if (!foundDevices.contains(device)) {
                     connectediOSDevices.removeOne(device);
+
+                    QSoundEffect* mediaSound = new QSoundEffect();
+                    mediaSound->setSource(QUrl("qrc:/sounds/media-remove.wav"));
+                    mediaSound->play();
+                    connect(mediaSound, SIGNAL(playingChanged()), mediaSound, SLOT(deleteLater()));
                 }
             }
 
@@ -106,6 +127,11 @@ void DbusEvents::DetectNewDevices() {
                     hints.insert("category", "device.added");
                     notificationEngine->Notify("theShell", 0, "", deviceName + " Connected", deviceName + " has been connected to this PC.", QStringList(), hints, -1);
                     connectediOSDevices.append(device);
+
+                    QSoundEffect* mediaSound = new QSoundEffect();
+                    mediaSound->setSource(QUrl("qrc:/sounds/media-insert.wav"));
+                    mediaSound->play();
+                    connect(mediaSound, SIGNAL(playingChanged()), mediaSound, SLOT(deleteLater()));
                 }
             }
         }
