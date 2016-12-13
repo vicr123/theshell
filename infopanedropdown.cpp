@@ -42,6 +42,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->pushButton_3->setVisible(false);
     ui->networkKey->setVisible(false);
     ui->networkConnect->setVisible(false);
+    ui->resetButton->setProperty("type", "destructive");
 
     if (!QFile("/usr/lib/kdeconnectd").exists()) {
         //If KDE Connect is not installed, hide the KDE Connect option
@@ -167,6 +168,14 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->barDesktopsSwitch->setChecked(settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
     ui->MediaSwitch->setChecked(settings.value("notifications/mediaInsert", true).toBool());
     ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
+
+    QString defaultFont;
+    if (QFontDatabase().families().contains("Rubik")) {
+        defaultFont = "Rubik";
+    } else {
+        defaultFont = "Noto Sans";
+    }
+    ui->systemFont->setFont(QFont(themeSettings->value("fonts/defaultFamily", defaultFont).toString(), themeSettings->value("font/defaultSize", 10).toInt()));
 
     eventTimer = new QTimer(this);
     eventTimer->setInterval(1000);
@@ -1601,4 +1610,11 @@ void InfoPaneDropdown::on_darkColorThemeRadio_toggled(bool checked)
 void InfoPaneDropdown::on_themeButtonColor_currentIndexChanged(int index)
 {
     themeSettings->setValue("color/accent", index);
+}
+
+void InfoPaneDropdown::on_systemFont_currentFontChanged(const QFont &f)
+{
+    themeSettings->setValue("fonts/defaultFamily", f.family());
+    themeSettings->setValue("fonts/smallFamily", f.family());
+    //ui->systemFont->setFont(QFont(themeSettings->value("font/defaultFamily", defaultFont).toString(), themeSettings->value("font/defaultSize", 10).toInt()));
 }

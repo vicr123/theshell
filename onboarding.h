@@ -7,7 +7,10 @@
 #include <QSettings>
 #include <QLabel>
 
-#define ChangelogOnbording "New in theShell 5.2: \n"\
+#define ChangelogOnbording "New in theShell 5.3:\n"\
+    "- Default system font can be set in theme settings."\
+    "\n"\
+    "New in theShell 5.2: \n"\
     "- New Onboarding experience. Every time theShell updates, you'll get a changelog.\n" \
     "- theWave now uses theCalculator to process calculations.\n" \
     "- theShell now uses its own platform abstraction module to theme your system. Change the theming in theShell Settings.\n" \

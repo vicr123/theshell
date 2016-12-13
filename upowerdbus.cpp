@@ -51,7 +51,7 @@ void UPowerDBus::devicesChanged() {
 }
 
 void UPowerDBus::DeviceChanged() {
-    QString displayOutput;
+    QStringList displayOutput;
     for (QDBusInterface *i : allDevices) {
         //Get the percentage of battery remaining.
         //We do the calculation ourselves because UPower can be inaccurate sometimes
@@ -219,31 +219,61 @@ void UPowerDBus::DeviceChanged() {
                 }
             }
             if (i->property("State").toUInt() == 0) {
-                displayOutput.append(" · " + model + " battery unavailable. Device trusted?");
+                displayOutput.append(model + " battery unavailable. Device trusted?");
             } else {
-                displayOutput.append(" · " + QString::number(percentage) + "% battery on " + model);
+                QString batteryText;
+                batteryText.append(QString::number(percentage) + "% battery on " + model);
                 switch (i->property("State").toUInt()) {
                 case 1:
-                    displayOutput.append(" (Charging)");
+                    batteryText.append(" (Charging)");
                     break;
                 case 2:
-                    displayOutput.append(" (Discharging)");
+                    batteryText.append(" (Discharging)");
                     break;
                 case 3:
-                    displayOutput.append(" (Empty)");
+                    batteryText.append(" (Empty)");
                     break;
                 case 4:
                 case 6:
-                    displayOutput.append(" (Full)");
+                    batteryText.append(" (Full)");
                     break;
                 case 5:
-                    displayOutput.append(" (Not Charging)");
+                    batteryText.append(" (Not Charging)");
                     break;
                 }
+                displayOutput.append(batteryText);
             }
         }
     }
-    emit updateDisplay(displayOutput);
+
+    //If KDE Connect is running, check the battery status of connected devices.
+    if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect")) {
+        //Get connected devices
+        QDBusMessage devicesMessage = QDBusMessage::createMethodCall("org.kde.kdeconnect", "/modules/kdeconnect", "org.kde.kdeconnect.daemon", "devices");
+        devicesMessage.setArguments(QVariantList() << true);
+        QDBusReply<QStringList> connectedDevices = QDBusConnection::sessionBus().call(devicesMessage);
+        for (QString device : connectedDevices.value()) {
+            QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device");
+            QString name = interface.property("name").toString();
+            QDBusInterface batteryInterface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device.battery");
+            QDBusReply<int> currentCharge = batteryInterface.call("charge");
+            QDBusReply<bool> charging = batteryInterface.call("isCharging");
+
+            QString batteryText;
+            if (charging) {
+                if (currentCharge == 100) {
+                    batteryText = QString::number(currentCharge) + "% battery on " + name + " (Full)";
+                } else {
+                    batteryText = QString::number(currentCharge) + "% battery on " + name + " (Charging)";
+                }
+            } else {
+                batteryText = QString::number(currentCharge) + "% battery on " + name + " (Discharging)";
+            }
+            displayOutput.append(batteryText);
+        }
+    }
+
+    emit updateDisplay(displayOutput.join(" · "));
 }
 
 bool UPowerDBus::hasBattery() {

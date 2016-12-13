@@ -207,11 +207,11 @@ int main(int argc, char *argv[])
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
 
-    if (settings.value("startup/lastOnboarding", 0) < 1 || startOnboarding) {
+    if (settings.value("startup/lastOnboarding", 0) < 2 || startOnboarding) {
         Onboarding* onboardingWindow = new Onboarding();
         onboardingWindow->showFullScreen();
         onboardingWindow->exec();
-        settings.setValue("startup/lastOnboarding", 1);
+        settings.setValue("startup/lastOnboarding", 2);
     }
 
     MainWin = new MainWindow();

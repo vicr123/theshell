@@ -20,6 +20,7 @@
 #include <QRadioButton>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QFontComboBox>
 #include "animatedstackedwidget.h"
 #include "notificationdbus.h"
 #include "upowerdbus.h"
@@ -204,6 +205,8 @@ private slots:
     void on_darkColorThemeRadio_toggled(bool checked);
 
     void on_themeButtonColor_currentIndexChanged(int index);
+
+    void on_systemFont_currentFontChanged(const QFont &f);
 
 public slots:
     void getNetworks();
