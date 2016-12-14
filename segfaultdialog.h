@@ -5,6 +5,7 @@
 #include <execinfo.h>
 #include <QMessageBox>
 #include <QSettings>
+#include <QPushButton>
 
 namespace Ui {
 class SegfaultDialog;

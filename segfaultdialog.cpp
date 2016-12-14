@@ -9,6 +9,7 @@ SegfaultDialog::SegfaultDialog(QString signal, QWidget *parent) :
 
     this->setFixedSize(this->size());
     ui->label_3->setText("To debug, attach a debugger to PID " + QString::number(QApplication::applicationPid()));
+    ui->pushButton_3->setProperty("type", "destructive");
     ui->signal->setText(signal);
 }
 

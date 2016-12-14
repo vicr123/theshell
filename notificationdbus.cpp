@@ -62,6 +62,11 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
                 summary = appSummary + " (" + appName + " from " + summary + ")";
                 body = appBody;
                 hints.insert("transient", true);
+            } else if (kdeEventId == "batteryLow") {
+                summary = summary.remove(": Low Battery");
+                body = "The battery is low. Connect the device to power.";
+                expire_timeout = 10000;
+                hints.insert("category", "battery.low");
             }
         }
 
@@ -155,8 +160,10 @@ QString NotificationDBus::GetServerInformation(QString &vendor, QString &version
 }
 
 void NotificationDBus::CloseNotification(uint id) {
-    NotificationDialog *d = dialogs.at(id - 1);
-    d->close(3);
+    if (dialogs.count() + 2 > id) {
+        NotificationDialog *d = dialogs.at(id - 1);
+        d->close(3);
+    }
 }
 
 void NotificationDBus::CloseNotificationUserInitiated(int id) {
