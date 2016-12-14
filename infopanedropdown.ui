@@ -321,7 +321,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -546,14 +546,14 @@
              <second>0</second>
              <year>1969</year>
              <month>11</month>
-             <day>11</day>
+             <day>10</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>11</month>
-             <day>11</day>
+             <day>10</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -1184,8 +1184,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>165</width>
-            <height>59</height>
+            <width>928</width>
+            <height>620</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1366,9 +1366,46 @@
        </item>
        <item>
         <widget class="QFrame" name="kdeconnectArea">
-         <layout class="QHBoxLayout" name="horizontalLayout_24">
+         <layout class="QVBoxLayout" name="verticalLayout_20">
           <item>
            <widget class="QListWidget" name="kdeconnectDevices"/>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_24">
+            <item>
+             <spacer name="horizontalSpacer_22">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pingDeviceButton">
+              <property name="text">
+               <string>Ping</string>
+              </property>
+              <property name="icon">
+               <iconset theme="network-connect"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="locateDeviceButton">
+              <property name="text">
+               <string>Locate</string>
+              </property>
+              <property name="icon">
+               <iconset theme="audio-volume-high"/>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>

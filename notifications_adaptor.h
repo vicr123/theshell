@@ -36,8 +36,8 @@ class NotificationsAdaptor: public QDBusAbstractAdaptor
     Q_CLASSINFO("D-Bus Introspection", ""
 "  <interface name=\"org.freedesktop.Notifications\">\n"
 "    <signal name=\"NotificationClosed\">\n"
-"      <arg direction=\"out\" type=\"i\" name=\"id\"/>\n"
-"      <arg direction=\"out\" type=\"i\" name=\"reason\"/>\n"
+"      <arg direction=\"out\" type=\"u\" name=\"id\"/>\n"
+"      <arg direction=\"out\" type=\"u\" name=\"reason\"/>\n"
 "    </signal>\n"
 "    <signal name=\"ActionInvoked\">\n"
 "      <arg direction=\"out\" type=\"u\" name=\"id\"/>\n"
@@ -59,7 +59,7 @@ class NotificationsAdaptor: public QDBusAbstractAdaptor
 "      <arg direction=\"in\" type=\"i\" name=\"expire_timeout\"/>\n"
 "    </method>\n"
 "    <method name=\"CloseNotification\">\n"
-"      <arg direction=\"in\" type=\"i\" name=\"id\"/>\n"
+"      <arg direction=\"in\" type=\"u\" name=\"id\"/>\n"
 "    </method>\n"
 "    <method name=\"GetServerInformation\">\n"
 "      <arg direction=\"out\" type=\"s\"/>\n"
@@ -78,13 +78,13 @@ public:
 
 public: // PROPERTIES
 public Q_SLOTS: // METHODS
-    void CloseNotification(int id);
+    void CloseNotification(uint id);
     QStringList GetCapabilities();
     QString GetServerInformation(QString &vendor, QString &version, QString &spec_version);
     uint Notify(const QString &app_name, uint replaces_id, const QString &app_icon, const QString &summary, const QString &body, const QStringList &actions, const QVariantMap &hints, int expire_timeout);
 Q_SIGNALS: // SIGNALS
     void ActionInvoked(uint id, const QString &action_key);
-    void NotificationClosed(int id, int reason);
+    void NotificationClosed(uint id, uint reason);
 };
 
 #endif

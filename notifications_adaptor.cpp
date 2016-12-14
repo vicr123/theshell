@@ -34,7 +34,7 @@ NotificationsAdaptor::~NotificationsAdaptor()
     // destructor
 }
 
-void NotificationsAdaptor::CloseNotification(int id)
+void NotificationsAdaptor::CloseNotification(uint id)
 {
     // handle method call org.freedesktop.Notifications.CloseNotification
     parent()->CloseNotification(id);

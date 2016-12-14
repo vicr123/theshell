@@ -256,20 +256,22 @@ void UPowerDBus::DeviceChanged() {
             QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device");
             QString name = interface.property("name").toString();
             QDBusInterface batteryInterface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device.battery");
-            QDBusReply<int> currentCharge = batteryInterface.call("charge");
-            QDBusReply<bool> charging = batteryInterface.call("isCharging");
+            if (batteryInterface.isValid()) {
+                QDBusReply<int> currentCharge = batteryInterface.call("charge");
+                QDBusReply<bool> charging = batteryInterface.call("isCharging");
 
-            QString batteryText;
-            if (charging) {
-                if (currentCharge == 100) {
-                    batteryText = QString::number(currentCharge) + "% battery on " + name + " (Full)";
+                QString batteryText;
+                if (charging) {
+                    if (currentCharge == 100) {
+                        batteryText = QString::number(currentCharge) + "% battery on " + name + " (Full)";
+                    } else {
+                        batteryText = QString::number(currentCharge) + "% battery on " + name + " (Charging)";
+                    }
                 } else {
-                    batteryText = QString::number(currentCharge) + "% battery on " + name + " (Charging)";
+                    batteryText = QString::number(currentCharge) + "% battery on " + name + " (Discharging)";
                 }
-            } else {
-                batteryText = QString::number(currentCharge) + "% battery on " + name + " (Discharging)";
+                displayOutput.append(batteryText);
             }
-            displayOutput.append(batteryText);
         }
     }
 

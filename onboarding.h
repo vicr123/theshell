@@ -9,6 +9,9 @@
 
 #define ChangelogOnbording "New in theShell 5.3:\n"\
     "- Default system font can be set in theme settings."\
+    "- Battery indicator now shows battery for devices connected over KDE Connect\n"\
+    "- Added some KDE Connect actions in the status center\n"\
+    "- The stopwatch is now shown on the bar when being used."\
     "\n"\
     "New in theShell 5.2: \n"\
     "- New Onboarding experience. Every time theShell updates, you'll get a changelog.\n" \

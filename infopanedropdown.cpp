@@ -368,6 +368,7 @@ void InfoPaneDropdown::timerTick() {
         stopwatchTime = stopwatchTime.addMSecs(this->stopwatchTime.elapsed());
     }
     ui->stopwatchLabel->setText(stopwatchTime.toString("hh:mm:ss.zzz"));
+    updateTimers();
 }
 
 void InfoPaneDropdown::show(dropdownType showWith) {
@@ -998,12 +999,14 @@ void InfoPaneDropdown::startTimer(QTime time) {
     connect(timer, &QTimer::timeout, [=]() {
         timeUntilTimeout = timeUntilTimeout.addSecs(-1);
         if (timeUntilTimeout == QTime(0, 0, 0)) {
-            if (timerNotificationId != 0 ) {
+            if (timerNotificationId != 0) {
                 notificationEngine->CloseNotification(timerNotificationId);
             }
+            QVariantMap hints;
+            hints.insert("x-thesuite-timercomplete", true);
             timerNotificationId = notificationEngine->Notify("theShell", 0, "", "Timer Elapsed",
                                       "Your timer has completed.",
-                                      QStringList(), QVariantMap(), 0);
+                                      QStringList(), hints, 0);
             ui->timeEdit->setVisible(true);
             ui->label_7->setVisible(false);
             ui->pushButton_2->setText("Start");
@@ -1029,13 +1032,35 @@ void InfoPaneDropdown::startTimer(QTime time) {
             playlist->setPlaybackMode(QMediaPlaylist::Loop);
             ringtone->setPlaylist(playlist);
             ringtone->play();
+            updateTimers();
         } else {
             ui->label_7->setText(timeUntilTimeout.toString("HH:mm:ss"));
-            emit timerChanged(timeUntilTimeout.toString("HH:mm:ss"));
+            updateTimers();
         }
     });
     timer->start();
-    emit timerChanged(timeUntilTimeout.toString("HH:mm:ss"));
+    updateTimers();
+}
+
+void InfoPaneDropdown::updateTimers() {
+    QStringList parts;
+    if (timer != NULL) {
+        parts.append(timeUntilTimeout.toString("HH:mm:ss"));
+    }
+
+    if (stopwatchRunning) {
+        QTime stopwatchTime = QTime::fromMSecsSinceStartOfDay(0);
+        stopwatchTime = stopwatchTime.addMSecs(stopwatchTimeAdd);
+        stopwatchTime = stopwatchTime.addMSecs(this->stopwatchTime.elapsed());
+        parts.append(stopwatchTime.toString("hh:mm:ss"));
+    }
+
+    if (parts.count() != 0) {
+        emit timerVisibleChanged(true);
+        emit timerChanged(parts.join(" · "));
+    } else {
+        emit timerVisibleChanged(false);
+    }
 }
 
 void InfoPaneDropdown::notificationClosed(uint id, uint reason) {
@@ -1055,13 +1080,11 @@ void InfoPaneDropdown::on_pushButton_2_clicked()
             ui->pushButton_3->setVisible(true);
             ui->label_7->setEnabled(false);
             ui->pushButton_2->setText("Resume");
-            emit timerEnabledChanged(false);
         } else {
             timer->start();
             ui->pushButton_3->setVisible(false);
             ui->label_7->setEnabled(true);
             ui->pushButton_2->setText("Pause");
-            emit timerEnabledChanged(true);
         }
     }
 }
@@ -1481,8 +1504,9 @@ void InfoPaneDropdown::updateKdeconnect() {
             QListWidgetItem* item = new QListWidgetItem;
             item->setText(deviceInterface.property("name").toString());
             item->setIcon(QIcon::fromTheme(deviceInterface.property("iconName").toString()));
+            item->setData(Qt::UserRole, device);
             if (!isReachable) {
-                item->setTextColor(ui->kdeconnectDevices->palette().color(QPalette::Disabled, QPalette::Text));
+                item->setForeground(ui->kdeconnectDevices->palette().brush(QPalette::Disabled, QPalette::Text));
             }
             ui->kdeconnectDevices->addItem(item);
         }
@@ -1617,4 +1641,24 @@ void InfoPaneDropdown::on_systemFont_currentFontChanged(const QFont &f)
     themeSettings->setValue("fonts/defaultFamily", f.family());
     themeSettings->setValue("fonts/smallFamily", f.family());
     //ui->systemFont->setFont(QFont(themeSettings->value("font/defaultFamily", defaultFont).toString(), themeSettings->value("font/defaultSize", 10).toInt()));
+}
+
+void InfoPaneDropdown::on_locateDeviceButton_clicked()
+{
+    if (ui->kdeconnectDevices->selectedItems().count() != 0) {
+        if (QMessageBox::question(this, "Locate Device", "Your device will ring at full volume. Tap the button on the screen of the device to silence it.", QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok) == QMessageBox::Ok) {
+            QString device = ui->kdeconnectDevices->selectedItems().first()->data(Qt::UserRole).toString();
+            QDBusInterface findPhone("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device + "/findmyphone", "org.kde.kdeconnect.device.findmyphone");
+            findPhone.call("ring");
+        }
+    }
+}
+
+void InfoPaneDropdown::on_pingDeviceButton_clicked()
+{
+    if (ui->kdeconnectDevices->selectedItems().count() != 0) {
+        QString device = ui->kdeconnectDevices->selectedItems().first()->data(Qt::UserRole).toString();
+        QDBusInterface findPhone("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device + "/ping", "org.kde.kdeconnect.device.ping");
+        findPhone.call("sendPing");
+    }
 }

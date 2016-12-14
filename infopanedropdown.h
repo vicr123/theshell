@@ -208,6 +208,12 @@ private slots:
 
     void on_systemFont_currentFontChanged(const QFont &f);
 
+    void on_locateDeviceButton_clicked();
+
+    void on_pingDeviceButton_clicked();
+
+    void updateTimers();
+
 public slots:
     void getNetworks();
 

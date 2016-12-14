@@ -95,6 +95,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
                     NotificationArgs.append(replaces_id);
                     NotificationArgs.append(QStringList());
                 }
+                NotificationArgs.append(hints);
 
                 NotificationEmit.setArguments(NotificationArgs);
                 QDBusConnection::sessionBus().call(NotificationEmit, QDBus::NoBlock);

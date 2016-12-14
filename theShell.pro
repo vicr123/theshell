@@ -19,6 +19,10 @@ QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
 #appMenuRegistrar.files = com.canonical.AppMenu.Registrar.xml
 #appMenuRegistrar.header_flags = -l DBusMenuRegistrar -i dbusmenuregistrar.h
 
+#notifications.files = org.freedesktop.Notifications.xml
+#notifications.header_flags = -l NotificationDBus -i notificationdbus.h
+#DBUS_ADAPTORS += notifications
+
 #DBUS_ADAPTORS += com.canonical.AppMenu.Registrar.xml
 
 SOURCES += main.cpp\
