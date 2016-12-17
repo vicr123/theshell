@@ -29,7 +29,7 @@
    <item>
     <widget class="QStackedWidget" name="stack">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="barLocationPage">
       <layout class="QGridLayout" name="gridLayout">
@@ -73,7 +73,7 @@
           <item>
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>The bar moves out of the way to accommodate other windows. Move your mouse to the top of the screen to get to the bar.</string>
+             <string>The bar moves off the screen to make way for other windows. Move your mouse to the top of the screen to get to the bar.</string>
             </property>
            </widget>
           </item>
@@ -101,7 +101,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>330</height>
+           <height>315</height>
           </size>
          </property>
         </spacer>
@@ -127,17 +127,29 @@
              </font>
             </property>
             <property name="text">
-             <string>Open apps super speedy</string>
+             <string>Do stuff super speedy!</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Just open the gateway and type what you want. You don't even need to click on the search box!</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>Search your apps and other stuff. Just type what you want once you open the gateway. You don't even have to click on the search box!</string>
+             <string>- Open apps by typing in the name of the app
+- Get information about playing media by typing in &quot;current song&quot; (or something like that)
+- Open websites by typing in the address</string>
             </property>
             <property name="wordWrap">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
            </widget>
           </item>
