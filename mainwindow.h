@@ -25,6 +25,7 @@
 #include "systrayicons.h"
 #include "fadebutton.h"
 #include "FlowLayout/flowlayout.h"
+#include "tutorialwindow.h"
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

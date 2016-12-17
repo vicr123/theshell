@@ -1002,36 +1002,39 @@ void InfoPaneDropdown::startTimer(QTime time) {
             if (timerNotificationId != 0) {
                 notificationEngine->CloseNotification(timerNotificationId);
             }
-            QVariantMap hints;
-            hints.insert("x-thesuite-timercomplete", true);
-            timerNotificationId = notificationEngine->Notify("theShell", 0, "", "Timer Elapsed",
-                                      "Your timer has completed.",
-                                      QStringList(), hints, 0);
-            ui->timeEdit->setVisible(true);
-            ui->label_7->setVisible(false);
-            ui->pushButton_2->setText("Start");
 
             timer->stop();
             delete timer;
             timer = NULL;
-            emit timerVisibleChanged(false);
 
-            QMediaPlaylist* playlist = new QMediaPlaylist();
+            if (!ui->QuietCheck->isChecked()) { //Check if we should show the notification so the user isn't stuck listening to the tone
+                QVariantMap hints;
+                hints.insert("x-thesuite-timercomplete", true);
+                timerNotificationId = notificationEngine->Notify("theShell", 0, "", "Timer Elapsed",
+                                          "Your timer has completed.",
+                                          QStringList(), hints, 0);
+                ui->timeEdit->setVisible(true);
+                ui->label_7->setVisible(false);
+                ui->pushButton_2->setText("Start");
 
-            if (ui->timerToneSelect->currentText() == "Happy Bee") {
-                playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/happybee")));
-            } else if (ui->timerToneSelect->currentText() == "Playing in the Dark") {
-                playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/playinginthedark")));
-            } else if (ui->timerToneSelect->currentText() == "Ice Cream Truck") {
-                playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/icecream")));
-            } else if (ui->timerToneSelect->currentText() == "Party Complex") {
-                playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/party")));
-            } else if (ui->timerToneSelect->currentText() == "Salty Ditty") {
-                playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/saltyditty")));
+
+                QMediaPlaylist* playlist = new QMediaPlaylist();
+
+                if (ui->timerToneSelect->currentText() == "Happy Bee") {
+                    playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/happybee")));
+                } else if (ui->timerToneSelect->currentText() == "Playing in the Dark") {
+                    playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/playinginthedark")));
+                } else if (ui->timerToneSelect->currentText() == "Ice Cream Truck") {
+                    playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/icecream")));
+                } else if (ui->timerToneSelect->currentText() == "Party Complex") {
+                    playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/party")));
+                } else if (ui->timerToneSelect->currentText() == "Salty Ditty") {
+                    playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/saltyditty")));
+                }
+                playlist->setPlaybackMode(QMediaPlaylist::Loop);
+                ringtone->setPlaylist(playlist);
+                ringtone->play();
             }
-            playlist->setPlaybackMode(QMediaPlaylist::Loop);
-            ringtone->setPlaylist(playlist);
-            ringtone->play();
             updateTimers();
         } else {
             ui->label_7->setText(timeUntilTimeout.toString("HH:mm:ss"));

@@ -321,7 +321,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -546,14 +546,14 @@
              <second>0</second>
              <year>1969</year>
              <month>11</month>
-             <day>10</day>
+             <day>8</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>11</month>
-             <day>10</day>
+             <day>8</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -1391,7 +1391,8 @@
                <string>Ping</string>
               </property>
               <property name="icon">
-               <iconset theme="network-connect"/>
+               <iconset theme="network-connect">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -1401,7 +1402,8 @@
                <string>Locate</string>
               </property>
               <property name="icon">
-               <iconset theme="audio-volume-high"/>
+               <iconset theme="audio-volume-high">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>

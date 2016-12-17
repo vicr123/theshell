@@ -125,6 +125,9 @@
            </widget>
           </item>
           <item>
+           <widget class="BTHandsfree" name="phonesWidget" native="true"/>
+          </item>
+          <item>
            <widget class="Line" name="line">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -713,6 +716,12 @@
    <class>MouseScrollWidget</class>
    <extends>QScrollArea</extends>
    <header>mousescrollwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BTHandsfree</class>
+   <extends>QWidget</extends>
+   <header>bthandsfree.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

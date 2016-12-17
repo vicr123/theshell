@@ -5,6 +5,7 @@
 #include "globalfilter.h"
 #include "dbusevents.h"
 #include "onboarding.h"
+#include "tutorialwindow.h"
 #include <iostream>
 //#include "dbusmenuregistrar.h"
 #include <nativeeventfilter.h>
@@ -25,6 +26,7 @@
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
 DbusEvents* DBusEvents = NULL;
+TutorialWindow* TutorialWin = NULL;
 
 void raise_signal(QString message) {
     //Clean up required stuff
@@ -91,6 +93,7 @@ int main(int argc, char *argv[])
     bool startKscreen = true;
     bool startOnboarding = false;
     bool startWm = true;
+    bool tutorialDoSettings = false;
 
     QStringList args = a.arguments();
     args.removeFirst();
@@ -103,6 +106,7 @@ int main(int argc, char *argv[])
             qDebug() << "  -k, --no-kscreen             Don't autostart KScreen";
             qDebug() << "      --no-wm                  Don't autostart the window manager";
             qDebug() << "      --onboard                Start with onboarding screen";
+            qDebug() << "      --tutorial               Show all tutorials";
             qDebug() << "      --debug                  Allows you to quit theShell instead of powering off";
             qDebug() << "  -h, --help                   Show this help output";
             return 0;
@@ -116,6 +120,8 @@ int main(int argc, char *argv[])
             startWm = false;
         } else if (arg == "--onboard") {
             startOnboarding = true;
+        } else if (arg == "--tutorial") {
+            tutorialDoSettings = true;
         }
     }
 
@@ -190,6 +196,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    TutorialWin = new TutorialWindow(tutorialDoSettings);
 
     if (!QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect") && QFile("/usr/lib/kdeconnectd").exists()) {
         //Start KDE Connect if it is not running and it is existant on the PC

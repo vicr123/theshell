@@ -21,6 +21,7 @@
 #include "mainwindow.h"
 #include "thewaveworker.h"
 #include "dbusevents.h"
+#include "tutorialwindow.h"
 
 #undef KeyPress
 

@@ -5,6 +5,7 @@ extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0, long data2 = 0, long data3 = 0, long data4 = 0);
 extern DbusEvents* DBusEvents;
+extern TutorialWindow* TutorialWin;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -85,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->timer->setVisible(false);
     ui->timerIcon->setVisible(false);
     ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16, 16));
+    //ui->phonesFrame->setVisible(false);
 
     if (QFile("/usr/bin/amixer").exists()) {
         ui->volumeSlider->setVisible(false);
@@ -546,8 +548,14 @@ void MainWindow::doUpdate() {
 
             if (hideTop == screenGeometry.y()) {
                 hiding = false;
+
+                //Hide the tutorial for the bar
+                TutorialWin->hideScreen(TutorialWindow::BarLocation);
             } else {
                 hiding = true;
+
+                //Show the tutorial for the bar
+                TutorialWin->showScreen(TutorialWindow::BarLocation);
             }
         }
 
@@ -575,6 +583,9 @@ void MainWindow::doUpdate() {
                     });
                     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
                     anim->start();
+
+                    //Hide the tutorial for the bar
+                    TutorialWin->hideScreen(TutorialWindow::BarLocation);
                 }
             } else {
                 if (QCursor::pos().y() > screenGeometry.y() + this->height() ||

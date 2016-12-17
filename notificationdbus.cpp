@@ -17,14 +17,55 @@ QStringList NotificationDBus::GetCapabilities() {
 uint NotificationDBus::Notify(QString app_name, uint replaces_id,
                               QString app_icon, QString summary,
                               QString body, QStringList actions,
-                              QVariantMap hints, int expire_timeout) {
+                              QVariantMap hints, int expire_timeout) {\
+    NotificationDialog::notificationType type = NotificationDialog::normalType;
+    bool showDialog = true;
+
+    if (app_name == "tsbt") { //Do special notifications for ts-bt
+        if (hints.value("call-incoming", false).toBool()) {
+            summary = "Incoming Call (" + hints.value("device").toString() + ")";
+            body = hints.value("caller").toString();
+            hints.insert("category", "call.incoming");
+            type = NotificationDialog::callType;
+            expire_timeout = 0;
+        }
+    } else if (app_name == "KDE Connect") { //Do special notifications for KDE Connect
+        QString kdeEventId = hints.value("x-kde-eventId").toString();
+        if (kdeEventId == "pingReceived") {
+            body = "Ping received from " + summary;
+            summary = "KDE Connect";
+        } else if (kdeEventId == "callReceived") {
+            QString tempBody, tempSummary;
+            tempSummary = "Incoming Call (" + summary + ")";
+            tempBody = body.remove("Incoming call from ");
+            summary = tempSummary;
+            body = tempBody;
+            hints.insert("category", "call.incoming");
+            type = NotificationDialog::callType;
+            expire_timeout = 30000;
+        } else if (kdeEventId == "missedCall") {
+            showDialog = false;
+        } else if (kdeEventId == "smsReceived") {
+            summary = "KDE Connect";
+        } else if (kdeEventId == "notification") {
+            QString appName = body.left(body.indexOf(":"));
+            QString appSummary = body.mid(body.indexOf(":") + 2, body.indexOf("‐") - body.indexOf(":") - 3);
+            QString appBody = body.right(body.indexOf("‐") + 12);
+            summary = appSummary + " (" + appName + " from " + summary + ")";
+            body = appBody;
+            hints.insert("transient", true);
+        } else if (kdeEventId == "batteryLow") {
+            summary = summary.remove(": Low Battery");
+            body = "The battery is low. Connect the device to power.";
+            expire_timeout = 10000;
+            hints.insert("category", "battery.low");
+        }
+    }
+
     if (replaces_id == 0 || dialogs.count() <= replaces_id) {
         replaces_id = nextId;
         nextId++;
 
-        NotificationDialog::notificationType type = NotificationDialog::normalType;
-
-        bool showDialog = true;
         if (dropdownPane != NULL) {
             if (dropdownPane->isQuietOn()) {
                 if (hints.keys().contains("urgency")) {
@@ -37,38 +78,6 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
             }
         }
 
-        if (app_name == "KDE Connect") { //Do special notifications for KDE Connect
-            QString kdeEventId = hints.value("x-kde-eventId").toString();
-            if (kdeEventId == "pingReceived") {
-                body = "Ping received from " + summary;
-                summary = "KDE Connect";
-            } else if (kdeEventId == "callReceived") {
-                QString tempBody, tempSummary;
-                tempSummary = "Incoming Call (" + summary + ")";
-                tempBody = body.remove("Incoming call from ");
-                summary = tempSummary;
-                body = tempBody;
-                hints.insert("category", "call.incoming");
-                type = NotificationDialog::callType;
-                expire_timeout = 30000;
-            } else if (kdeEventId == "missedCall") {
-                showDialog = false;
-            } else if (kdeEventId == "smsReceived") {
-                summary = "KDE Connect";
-            } else if (kdeEventId == "notification") {
-                QString appName = body.left(body.indexOf(":"));
-                QString appSummary = body.mid(body.indexOf(":") + 2, body.indexOf("‐") - body.indexOf(":") - 3);
-                QString appBody = body.right(body.indexOf("‐") + 12);
-                summary = appSummary + " (" + appName + " from " + summary + ")";
-                body = appBody;
-                hints.insert("transient", true);
-            } else if (kdeEventId == "batteryLow") {
-                summary = summary.remove(": Low Battery");
-                body = "The battery is low. Connect the device to power.";
-                expire_timeout = 10000;
-                hints.insert("category", "battery.low");
-            }
-        }
 
         NotificationDialog *d = new NotificationDialog(summary, body, actions, replaces_id, hints, expire_timeout, type);
         d->dbusParent = this;
@@ -160,9 +169,11 @@ QString NotificationDBus::GetServerInformation(QString &vendor, QString &version
 }
 
 void NotificationDBus::CloseNotification(uint id) {
-    if (dialogs.count() + 2 > id) {
-        NotificationDialog *d = dialogs.at(id - 1);
-        d->close(3);
+    if (id != 0) {
+        if (dialogs.count() >= id) {
+            NotificationDialog *d = dialogs.at(id - 1);
+            d->close(3);
+        }
     }
 }
 

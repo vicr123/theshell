@@ -4,6 +4,7 @@
 extern void EndSession(EndSessionWait::shutdownType type);
 extern MainWindow* MainWin;
 extern DbusEvents* DBusEvents;
+extern TutorialWindow* TutorialWin;
 
 Menu::Menu(QWidget *parent) :
     QDialog(parent),
@@ -274,6 +275,9 @@ void Menu::show(bool openTotheWave, bool startListening) {
         connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
 
         ui->lineEdit->setFocus();
+
+        //Show Tutorial Screen
+        TutorialWin->showScreen(TutorialWindow::GatewaySearch);
     }
 
     if (openTotheWave && !this->istheWaveOpen) {
@@ -341,6 +345,9 @@ void Menu::close() {
     });
 
     doCheckForClose = false;
+
+    //Hide Tutorial Screen
+    TutorialWin->hideScreen(TutorialWindow::GatewaySearch);
 }
 
 void Menu::checkForclose() {
