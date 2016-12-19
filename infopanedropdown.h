@@ -21,6 +21,13 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QFontComboBox>
+#include <QCheckBox>
+#include <QLayout>
+#include <QtCharts/QChartView>
+#include <QtCharts/QChart>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QValueAxis>
+#include <QtCharts/QDateTimeAxis>
 #include "animatedstackedwidget.h"
 #include "notificationdbus.h"
 #include "upowerdbus.h"
@@ -28,6 +35,8 @@
 #include <sys/sysinfo.h>
 
 class UPowerDBus;
+
+using namespace QtCharts;
 
 namespace Ui {
 class InfoPaneDropdown;
@@ -214,6 +223,12 @@ private slots:
 
     void updateTimers();
 
+    void updateBatteryChart();
+
+    void on_batteryChartUpdateButton_clicked();
+
+    void on_batteryChartShowProjected_toggled(bool checked);
+
 public slots:
     void getNetworks();
 
@@ -266,6 +281,8 @@ private:
     bool networkListUpdating = false;
 
     QMediaPlayer* ringtone;
+
+    QChart* batteryChart;
 };
 
 #endif // INFOPANEDROPDOWN_H

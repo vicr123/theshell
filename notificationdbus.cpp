@@ -1,6 +1,7 @@
 #include "notificationdbus.h"
 
 extern QIcon getIconFromTheme(QString name, QColor textColor);
+extern TutorialWindow* TutorialWin;
 
 NotificationDBus::NotificationDBus(QObject *parent) : QObject(parent)
 {
@@ -187,6 +188,10 @@ void NotificationDBus::sendCloseNotification(int id, int reason) {
 
     if (reason == 2 || reason == 3) {
         emit removeNotification(id);
+    }
+
+    if (reason == 1) {
+        TutorialWin->showScreen(TutorialWindow::MissedNotification);
     }
 }
 

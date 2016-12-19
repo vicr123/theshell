@@ -1145,6 +1145,9 @@ void MainWindow::show() {
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
     QMainWindow::show();
+
+    //Show Gateway tutorial
+    TutorialWin->showScreen(TutorialWindow::Gateway);
 }
 
 void MainWindow::on_desktopNext_clicked()
@@ -1202,12 +1205,12 @@ void MainWindow::openMenu(bool openTotheWave, bool startListening) {
 
         }
     } else {
+        lockHide = true;
+
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
         gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
         gatewayMenu->show(openTotheWave, startListening);
         gatewayMenu->setFocus();
-
-        lockHide = true;
     }
 }
 

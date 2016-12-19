@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui gui-private x11extras dbus multimedia xml network positioning svg
+QT       += core gui gui-private x11extras dbus multimedia xml network positioning svg charts
 CONFIG   += c++11
 LIBS     += -lX11 -lxcb -lxcb-keysyms -lcups -lsystemd -lKF5AkonadiCore -lXcursor
 

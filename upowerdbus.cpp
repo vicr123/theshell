@@ -39,6 +39,10 @@ void UPowerDBus::devicesChanged() {
                 QDBusInterface *i = new QDBusInterface("org.freedesktop.UPower", device.path(), "org.freedesktop.UPower.Device", QDBusConnection::systemBus(), this);
                 allDevices.append(i);
             }
+
+            if (device.path().contains("battery")) {
+                batteryPath = device;
+            }
         }
         if (allDevices.length() == 0) {
             hasBat = false;
@@ -99,7 +103,10 @@ void UPowerDBus::DeviceChanged() {
                     isConnectedToPower = true;
 
                     if (timeToFull != 0) {
-                        state.append(" · " + QDateTime::fromTime_t(timeToFull).toUTC().toString("h:mm"));
+                        timeRemain = QDateTime::fromTime_t(timeToFull).toUTC();
+                        state.append(" · " + timeRemain.toString("h:mm"));
+                    } else {
+                        timeRemain = QDateTime(QDate(0, 0, 0));
                     }
 
                     if (hourBatteryWarning) {
@@ -125,7 +132,8 @@ void UPowerDBus::DeviceChanged() {
                     isCharging = false;
 
                     if (timeToEmpty != 0) {
-                        state.append(" · " + QDateTime::fromTime_t(timeToEmpty).toUTC().toString("h:mm"));
+                        timeRemain = QDateTime::fromTime_t(timeToEmpty).toUTC();
+                        state.append(" · " + timeRemain.toString("h:mm"));
 
                         if (timeToEmpty <= 600 && tenMinuteBatteryWarning == false) { //Ten minutes left! Critical!
                             QVariantMap hints;
@@ -158,6 +166,8 @@ void UPowerDBus::DeviceChanged() {
                                                             " You may want to plug in your PC now.", QStringList(), hints, 10000);
                             hourBatteryWarning = true;
                         }
+                    } else {
+                        timeRemain = QDateTime(QDate(0, 0, 0));
                     }
                     state += ")";
                     break;
@@ -165,21 +175,6 @@ void UPowerDBus::DeviceChanged() {
                     state = " (Empty)";
                     break;
                 case 4: //Charged
-                    state = " (Full)";
-                    if (isCharging) {
-                        QVariantMap hints;
-                        hints.insert("category", "battery.charged");
-                        hints.insert("transient", true);
-                        this->notificationDBus->Notify("theShell", 0, "", "Battery Charged",
-                                                       "The battery has been charged completely."
-                                                       , QStringList(), hints, 10000);
-                    }
-                    isCharging = false;
-                    isConnectedToPower = true;
-                    break;
-                case 5: //Pending Charge
-                    state = " (Not Charging)";
-                    break;
                 case 6: //Pending Discharge
                     state = " (Full)";
                     if (isCharging) {
@@ -192,6 +187,10 @@ void UPowerDBus::DeviceChanged() {
                     }
                     isCharging = false;
                     isConnectedToPower = true;
+                    timeRemain = QDateTime(QDate(0, 0, 0));
+                    break;
+                case 5: //Pending Charge
+                    state = " (Not Charging)";
                     break;
                 }
 
@@ -309,4 +308,16 @@ void UPowerDBus::checkUpower() {
             this->isLidClosed = false;
         }
     }
+}
+
+QDBusObjectPath UPowerDBus::defaultBattery() {
+    return batteryPath;
+}
+
+QDateTime UPowerDBus::batteryTimeRemaining() {
+    return timeRemain;
+}
+
+bool UPowerDBus::charging() {
+    return isCharging;
 }

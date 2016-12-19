@@ -12,6 +12,7 @@
     "- Battery indicator now shows battery for devices connected over KDE Connect\n"\
     "- Added some KDE Connect actions in the status center\n"\
     "- The stopwatch is now shown on the bar when being used."\
+    "- New Charge History in the Status Center. Go to the System Status pane in the Status Center to take a look."\
     "\n"\
     "New in theShell 5.2: \n"\
     "- New Onboarding experience. Every time theShell updates, you'll get a changelog.\n" \

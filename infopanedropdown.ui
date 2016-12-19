@@ -321,7 +321,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -546,14 +546,14 @@
              <second>0</second>
              <year>1969</year>
              <month>11</month>
-             <day>8</day>
+             <day>6</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>11</month>
-             <day>8</day>
+             <day>6</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -778,17 +778,81 @@
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+        <widget class="QFrame" name="batteryChartArea">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>424</height>
-          </size>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-        </spacer>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_21">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_33">
+            <item>
+             <widget class="QLabel" name="label_54">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Charge History</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="batteryChartShowProjected">
+              <property name="text">
+               <string>Show projected charge</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="batteryChartLastUpdate">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Last updated 11:30:42</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="batteryChartUpdateButton">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset theme="view-refresh">
+                <normaloff>.</normaloff>.</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -1184,8 +1248,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>928</width>
-            <height>620</height>
+            <width>165</width>
+            <height>58</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -3096,19 +3160,29 @@
      </widget>
     </widget>
    </item>
+   <item>
+    <widget class="QLabel" name="upArrow">
+     <property name="text">
+      <string>UpArrow</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>Switch</class>
+   <extends>QPushButton</extends>
+   <header>switch.h</header>
+  </customwidget>
   <customwidget>
    <class>AnimatedStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>animatedstackedwidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Switch</class>
-   <extends>QPushButton</extends>
-   <header>switch.h</header>
   </customwidget>
   <customwidget>
    <class>ClickableLabel</class>

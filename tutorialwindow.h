@@ -18,6 +18,7 @@
 #undef FocusOut
 #undef FontChange
 #undef Expose
+#undef Status
 
 namespace Ui {
 class TutorialWindow;
@@ -32,13 +33,18 @@ public:
     ~TutorialWindow();
 
     enum AvailableScreens {
+        Gateway,
         BarLocation,
-        GatewaySearch
+        GatewaySearch,
+        MissedNotification
     };
 
 public slots:
     void showScreen(AvailableScreens screen);
     void hideScreen(AvailableScreens screen);
+
+private slots:
+    void on_dismissMissedNotification_clicked();
 
 private:
     Ui::TutorialWindow *ui;

@@ -43,7 +43,20 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->networkKey->setVisible(false);
     ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
+    ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16, 16));
 
+    //Set up battery chart
+    batteryChart = new QChart();
+    batteryChart->setBackgroundVisible(false);
+    batteryChart->legend()->hide();
+
+    QChartView* batteryChartView = new QChartView(batteryChart);
+    batteryChartView->setRenderHint(QPainter::Antialiasing);
+    ui->batteryChartArea->layout()->addWidget(batteryChartView);
+
+    updateBatteryChart();
+
+    //Set up KDE Connect
     if (!QFile("/usr/lib/kdeconnectd").exists()) {
         //If KDE Connect is not installed, hide the KDE Connect option
         ui->kdeconnectLabel->setVisible(false);
@@ -385,7 +398,7 @@ void InfoPaneDropdown::show(dropdownType showWith) {
 
     QPropertyAnimation* a = new QPropertyAnimation(this, "geometry");
     a->setStartValue(this->geometry());
-    a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), this->height()));
+    a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), screenGeometry.height()));
     a->setEasingCurve(QEasingCurve::OutCubic);
     a->setDuration(500);
     connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
@@ -416,55 +429,7 @@ void InfoPaneDropdown::close() {
 }
 
 void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
-    //QFrame *currentDropDownFrame;
     this->currentDropDown = changeTo;
-
-    /*ui->networkFrame->setVisible(false);
-    ui->batteryFrame->setVisible(false);
-    ui->notificationsFrame->setVisible(false);
-    ui->clockFrame->setVisible(false);
-    ui->settingsFrame->setVisible(false);
-    ui->printFrame->setVisible(false);
-    ui->kdeconnectFrame->setVisible(false);
-
-    ui->clockLabel->setShowDisabled(true);
-    ui->batteryLabel->setShowDisabled(true);
-    ui->notificationsLabel->setShowDisabled(true);
-    ui->networkLabel->setShowDisabled(true);
-    ui->printLabel->setShowDisabled(true);
-    ui->kdeconnectLabel->setShowDisabled(true);
-
-    switch (changeTo) {
-    case Settings:
-        ui->settingsFrame->setVisible(true);
-
-        break;
-    case Clock:
-        ui->clockFrame->setVisible(true);
-        ui->clockLabel->setShowDisabled(false);
-        break;
-    case Battery:
-        ui->batteryFrame->setVisible(true);
-        ui->batteryLabel->setShowDisabled(false);
-        break;
-    case Notifications:
-        ui->notificationsFrame->setVisible(true);
-        ui->notificationsLabel->setShowDisabled(false);
-        break;
-    case Network:
-        ui->networkFrame->setVisible(true);
-        ui->networkLabel->setShowDisabled(false);
-
-        getNetworks();
-        break;
-    case Print:
-        ui->printFrame->setVisible(true);
-        ui->printLabel->setShowDisabled(false);
-        break;
-    case KDEConnect:
-        ui->kdeconnectFrame->setVisible(true);
-        ui->kdeconnectLabel->setShowDisabled(false);
-    }*/
 
     //Switch to the requested frame
     switch (changeTo) {
@@ -473,6 +438,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
         break;
     case Battery:
         ui->pageStack->setCurrentWidget(ui->statusFrame);
+        updateBatteryChart();
         break;
     case Notifications:
         ui->pageStack->setCurrentWidget(ui->notificationsFrame);
@@ -1664,4 +1630,124 @@ void InfoPaneDropdown::on_pingDeviceButton_clicked()
         QDBusInterface findPhone("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device + "/ping", "org.kde.kdeconnect.device.ping");
         findPhone.call("sendPing");
     }
+}
+
+void InfoPaneDropdown::on_batteryChartUpdateButton_clicked()
+{
+    updateBatteryChart();
+}
+
+//DBus Battery Info Structure
+struct BatteryInfo {
+    uint time, state;
+    double value;
+};
+Q_DECLARE_METATYPE(BatteryInfo)
+
+const QDBusArgument &operator<<(QDBusArgument &argument, const BatteryInfo &info) {
+    argument.beginStructure();
+    argument << info.time << info.value << info.state;
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, BatteryInfo &info) {
+    argument.beginStructure();
+    argument >> info.time >> info.value >> info.state;
+    argument.endStructure();
+    return argument;
+}
+
+void InfoPaneDropdown::updateBatteryChart() {
+    for (QAbstractAxis* axis : batteryChart->axes()) {
+        batteryChart->removeAxis(axis);
+    }
+
+    QDBusMessage historyMessage = QDBusMessage::createMethodCall("org.freedesktop.UPower", powerEngine->defaultBattery().path(), "org.freedesktop.UPower.Device", "GetHistory");
+    QVariantList historyMessageArguments;
+    historyMessageArguments.append("charge");
+    historyMessageArguments.append((uint) 0); //Get surplus data so we can plot some data off the left of the graph
+    historyMessageArguments.append((uint) 10000);
+    historyMessage.setArguments(historyMessageArguments);
+
+    QDBusReply<QDBusArgument> historyArgument = QDBusConnection::systemBus().call(historyMessage);
+
+    QLineSeries* batteryChartData = new QLineSeries;
+    batteryChartData->setColor(this->palette().color(QPalette::WindowText));
+
+    QLineSeries* batteryChartTimeRemainingData = new QLineSeries;
+    //batteryChartTimeRemainingData->setColor(this->palette().color(QPalette::Disabled, QPalette::WindowText));
+    batteryChartTimeRemainingData->setBrush(QBrush(this->palette().color(QPalette::Disabled, QPalette::WindowText)));
+
+    QPen remainingTimePen;
+    remainingTimePen.setColor(this->palette().color(QPalette::Disabled, QPalette::WindowText));
+    remainingTimePen.setDashPattern(QVector<qreal>() << 3 << 3);
+    remainingTimePen.setDashOffset(3);
+    batteryChartTimeRemainingData->setPen(remainingTimePen);
+
+    QDateTime remainingTime = powerEngine->batteryTimeRemaining();
+
+    if (historyArgument.isValid()) {
+        QDBusArgument arrayArgument = historyArgument.value();
+        arrayArgument.beginArray();
+        while (!arrayArgument.atEnd()) {
+            BatteryInfo info;
+            arrayArgument >> info;
+
+            qint64 mSecs = info.time;
+            mSecs = mSecs * 1000;
+
+            if (info.value != 0 && info.state != 0) {
+                batteryChartData->append(mSecs, info.value);
+            }
+        }
+        arrayArgument.endArray();
+        batteryChartData->append(QDateTime::currentMSecsSinceEpoch(), batteryChartData->at(batteryChartData->count() - 1).y());
+
+        if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked()) {
+            QDateTime lastDateTime = QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x());
+            batteryChartTimeRemainingData->append(batteryChartData->at(batteryChartData->count() - 1));
+            QDateTime endDateTime = lastDateTime.addMSecs(remainingTime.toMSecsSinceEpoch());
+            if (powerEngine->charging()) {
+                batteryChartTimeRemainingData->append(endDateTime.toMSecsSinceEpoch(), 100);
+            } else {
+                batteryChartTimeRemainingData->append(endDateTime.toMSecsSinceEpoch(), 0);
+            }
+        }
+
+    }
+
+    batteryChart->removeAllSeries();
+    batteryChart->addSeries(batteryChartData);
+    batteryChart->addSeries(batteryChartTimeRemainingData);
+
+    QDateTimeAxis* xAxis = new QDateTimeAxis;
+    if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked()) {
+        xAxis->setMax(QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x()).addMSecs(remainingTime.toMSecsSinceEpoch()));
+    } else {
+        xAxis->setMax(QDateTime::currentDateTime());
+    }
+    xAxis->setMin(xAxis->max().addDays(-1));
+    batteryChart->addAxis(xAxis, Qt::AlignBottom);
+    xAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
+    xAxis->setFormat("dd/MM/yy hh:mm");
+    xAxis->setTickCount(9);
+    batteryChartData->attachAxis(xAxis);
+    batteryChartTimeRemainingData->attachAxis(xAxis);
+
+    QValueAxis* yAxis = new QValueAxis;
+    yAxis->setLabelFormat("%i%%");
+    yAxis->setMax(100);
+    yAxis->setMin(0);
+    yAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
+    batteryChart->addAxis(yAxis, Qt::AlignLeft);
+    batteryChartData->attachAxis(yAxis);
+    batteryChartTimeRemainingData->attachAxis(yAxis);
+
+    ui->batteryChartLastUpdate->setText("Last updated " + QDateTime::currentDateTime().toString("hh:mm:ss"));
+}
+
+void InfoPaneDropdown::on_batteryChartShowProjected_toggled(bool checked)
+{
+    updateBatteryChart();
 }

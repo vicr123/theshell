@@ -22,6 +22,9 @@ public:
 
     bool hasBattery();
     int currentBattery();
+    QDBusObjectPath defaultBattery();
+    QDateTime batteryTimeRemaining();
+    bool charging();
 signals:
     void updateDisplay(QString display);
     void batteryChanged(int batteryPercent);
@@ -52,6 +55,10 @@ private:
 
     QTimer* checkTimer;
     QSettings settings;
+
+    QDBusObjectPath batteryPath;
+
+    QDateTime timeRemain;
 
     bool isLidClosed;
 };

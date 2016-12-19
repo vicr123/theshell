@@ -27,8 +27,6 @@ TutorialWindow::TutorialWindow(bool doSettings, QWidget *parent) :
 
     this->showFullScreen();
     this->doSettings = doSettings;
-
-    //sendMessageToRootWindow("_NET_WM_STATE", this->winId(), 1, XInternAtom(QX11Info::display(), "_NET_WM_STATE_SKIP_PAGER", False), XInternAtom(QX11Info::display(), "_NET_WM_STATE_SKIP_TASKBAR", False), 1);
 }
 
 TutorialWindow::~TutorialWindow()
@@ -50,6 +48,13 @@ void TutorialWindow::resizeEvent(QResizeEvent *event) {
 
 void TutorialWindow::showScreen(AvailableScreens screen) {
     switch (screen) {
+    case Gateway:
+        if (!settings.value("gateway", false).toBool() || doSettings) {
+            ui->stack->setCurrentWidget(ui->gatewayPage);
+            maskWidget = ui->gatewayFrame;
+            settings.setValue("gateway", true);
+        }
+        break;
     case BarLocation:
         if (!settings.value("barLocation", false).toBool() || doSettings) {
             ui->stack->setCurrentWidget(ui->barLocationPage);
@@ -64,6 +69,13 @@ void TutorialWindow::showScreen(AvailableScreens screen) {
             settings.setValue("gatewaySearch", true);
         }
         break;
+    case MissedNotification:
+        if (!settings.value("missedNotification", false).toBool() || doSettings) {
+            ui->stack->setCurrentWidget(ui->missedNotificationPage);
+            maskWidget = ui->missedNotificationFrame;
+            settings.setValue("missedNotification", true);
+        }
+        break;
     }
     doMask();
 }
@@ -71,15 +83,25 @@ void TutorialWindow::showScreen(AvailableScreens screen) {
 void TutorialWindow::hideScreen(AvailableScreens screen) {
     bool doSwitch = false;
     switch (screen) {
+    case Gateway:
+        if (maskWidget == ui->gatewayFrame) doSwitch = true;
+        break;
     case BarLocation:
         if (maskWidget == ui->barLocationFrame) doSwitch = true;
         break;
     case GatewaySearch:
         if (maskWidget == ui->gatewaySearchFrame) doSwitch = true;
         break;
-
+    case MissedNotification:
+        if (maskWidget == ui->missedNotificationFrame) doSwitch = true;
+        break;
     }
 
     if (doSwitch) maskWidget = NULL;
     doMask();
+}
+
+void TutorialWindow::on_dismissMissedNotification_clicked()
+{
+    hideScreen(MissedNotification);
 }

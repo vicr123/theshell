@@ -9,6 +9,7 @@
 #include "notificationdialog.h"
 #include "notifications_adaptor.h"
 #include "infopanedropdown.h"
+#include "tutorialwindow.h"
 
 class NotificationDialog;
 
