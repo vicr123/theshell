@@ -847,6 +847,44 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     }
                     emit showHelpFrame();
                     resetOnNextBegin = true;
+                } else if (parse == "roll a die") { //Roll a die
+                    QString output;
+                    switch (qrand() % 6) {
+                    case 0:
+                        output = "One.";
+                        break;
+                    case 1:
+                        output = "Two.";
+                        break;
+                    case 2:
+                        output = "Three.";
+                        break;
+                    case 3:
+                        output = "Four.";
+                        break;
+                    case 4:
+                        output = "Five.";
+                        break;
+                    case 5:
+                        output = "Six.";
+                        break;
+                    }
+
+                    emit outputResponse(output);
+                    speak(output);
+                } else if (parse == "flip a coin") { //Flip a coin
+                    QString output;
+                    switch (qrand() % 2) {
+                    case 0:
+                        output = "Heads.";
+                        break;
+                    case 1:
+                        output = "Tails.";
+                        break;
+                    }
+
+                    emit outputResponse(output);
+                    speak(output);
                 } else if (parse == "who am i") { //Name Testing
                     if (name == "") {
                         emit outputResponse("I'm not quite sure. Tell me in my settings.");
@@ -858,9 +896,37 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                 } else if (parse == "who are you") { //Who are you
                     emit outputResponse("Me? I'm theWave. Pleased to meet you.");
                     speak("Me? I'm theWave. Pleased to meet you.");
-                } else if (parse == "fuck you") { //Fun
-                    emit outputResponse("Did I do something wrong?");
-                    speak("Did I do something wrong?");
+                } else if (parse == "fuck you" || parse == "i hate you" || parse == "you're useless" || parse == "you're shit") { //Fun
+                    int numberOfChoices;
+                    if (parse == "fuck you" || parse == "you're shit") {
+                        numberOfChoices = 4;
+                    } else {
+                        numberOfChoices = 3;
+                    }
+
+                    switch (qrand() % numberOfChoices) {
+                    case 0:
+                        emit outputResponse("Did I do something wrong?");
+                        speak("Did I do something wrong?");
+                        break;
+                    case 1:
+                        emit outputResponse("Oops?");
+                        speak("Oops?");
+                        break;
+                    case 2:
+                        emit outputResponse("Ouch. That hurts.");
+                        speak("Ouch. That hurts.");
+                        break;
+                    case 3:
+                        if (name == "") {
+                            emit outputResponse("No need to swear at me.");
+                            speak("No need to swear at me.");
+                        } else {
+                            emit outputResponse("No need to swear at me, " + name + ".");
+                            speak("No need to swear at me, " + name + ".");
+                        }
+                        break;
+                    }
                 } else if (parse.contains("what's the best") || parse.contains("what is the best")) { //Fun
                     if (parse.contains("operating system")) {
                         emit outputResponse("theOS. What else?");
@@ -874,7 +940,7 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                     }
                 } else if (parse == "tell me a joke") {
                     QString output;
-                    switch (qrand() % 3) {
+                    switch (qrand() % 6) {
                     case 0:
                         output = "I'm always nervous when it comes to jokes. It's kind of... nerve racking.";
                         break;
@@ -883,6 +949,15 @@ void theWaveWorker::processSpeech(QString speech, bool voiceFeedback) {
                         break;
                     case 2:
                         output = "If you're trying to laugh, just smile. It'll make you feel better.";
+                        break;
+                    case 3:
+                        output = "A man walks into a pizzeria. The seller asks \"Do you want your pizza in six or eight slices?\" The man replies \"I'm not hungry, so I'll go for six pieces.\"";
+                        break;
+                    case 4:
+                        output = "What day does the egg fear the most? Boilday.\n\nIs that even a day?";
+                        break;
+                    case 5:
+                        output = "I like cheese. Do you?";
                         break;
                     }
 
@@ -1060,6 +1135,14 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
         return;
     }
 
+    speech = speech.replace("\"", "\\\"");
+    if (settings.value("thewave/blockOffensiveWords").toBool()) {
+        speech = speech.replace("shit", "s-", Qt::CaseInsensitive);
+        speech = speech.replace("fuck", "f-", Qt::CaseInsensitive);
+        speech = speech.replace("cunt", "c-", Qt::CaseInsensitive);
+        speech = speech.replace("bitch", "b-", Qt::CaseInsensitive);
+    }
+
     speechPlaying = true;
     if (settings.value("thewave/ttsEngine").toString() == "pico2wave" && QFile("/usr/bin/pico2wave").exists()) {
         QString command = "pico2wave -w=\"" + QDir::homePath() + "/.thewavevoice.wav\" \"" + speech + "\"";
@@ -1081,12 +1164,6 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
             }
             speechPlaying = false;
         });
-        //QSound sound();
-        //sound.play();
-
-        //while (!sound.isFinished()) {
-            //QApplication::processEvents();
-        //}
     } else if (settings.value("thewave/ttsEngine").toString() == "espeak" && QFile("/usr/bin/espeak").exists()) {
         QProcess *s = new QProcess(this);
         s->start("espeak \"" + speech + "\"");

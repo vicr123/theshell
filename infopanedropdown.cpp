@@ -390,11 +390,19 @@ void InfoPaneDropdown::show(dropdownType showWith) {
 
     this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height());
 
+    Atom DesktopWindowTypeAtom;
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
+
     unsigned long desktop = 0xFFFFFFFF;
     XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
     QDialog::show();
+
+    this->setFixedWidth(screenGeometry.width());
+    this->setFixedHeight(screenGeometry.height());
 
     QPropertyAnimation* a = new QPropertyAnimation(this, "geometry");
     a->setStartValue(this->geometry());
@@ -1750,4 +1758,9 @@ void InfoPaneDropdown::updateBatteryChart() {
 void InfoPaneDropdown::on_batteryChartShowProjected_toggled(bool checked)
 {
     updateBatteryChart();
+}
+
+void InfoPaneDropdown::on_upArrow_clicked()
+{
+    this->close();
 }

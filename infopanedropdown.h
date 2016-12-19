@@ -229,6 +229,8 @@ private slots:
 
     void on_batteryChartShowProjected_toggled(bool checked);
 
+    void on_upArrow_clicked();
+
 public slots:
     void getNetworks();
 

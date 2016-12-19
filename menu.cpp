@@ -975,6 +975,14 @@ void Menu::on_activateTheWave_clicked()
         connect(waveWorker, SIGNAL(finished()), waveWorker, SLOT(deleteLater()));
         connect(t, SIGNAL(finished()), t, SLOT(deleteLater()));
         connect(waveWorker, &theWaveWorker::outputResponse, [=](QString response) {
+            if (settings.value("thewave/blockOffensiveWords").toBool()) {
+                //Sorry... If there's a better way though, that'd be good :)
+                response.replace("shit", "s***", Qt::CaseInsensitive);
+                response.replace("fuck", "f***", Qt::CaseInsensitive);
+                response.replace("cunt", "c***", Qt::CaseInsensitive);
+                response.replace("bitch", "b****", Qt::CaseInsensitive);
+            }
+
             ui->thewave_response->setText(response);
             ui->thewave_hintFrame->setVisible(false);
         });
@@ -1102,8 +1110,11 @@ void Menu::thewaveLoudnessChanged(qreal loudness) {
 void Menu::thewave_outputSpeech(QString speech) {
     QString displaySpeech = speech;
     if (settings.value("thewave/blockOffensiveWords").toBool()) {
-        displaySpeech.replace("shit", "s***");
-        displaySpeech.replace("fuck", "f***");
+        //Sorry... If there's a better way though, that'd be good :)
+        displaySpeech.replace("shit", "s***", Qt::CaseInsensitive);
+        displaySpeech.replace("fuck", "f***", Qt::CaseInsensitive);
+        displaySpeech.replace("cunt", "c***", Qt::CaseInsensitive);
+        displaySpeech.replace("bitch", "b****", Qt::CaseInsensitive);
     }
     ui->thewave_line->setText(displaySpeech);
     ui->theWaveBigSpeechLabel->setText(displaySpeech);
@@ -1111,6 +1122,10 @@ void Menu::thewave_outputSpeech(QString speech) {
 
 void Menu::on_closetheWaveButton_clicked()
 {
+    if (this->isListening) {
+        emit thewaveStop();
+    }
+
     this->istheWaveReady = false;
     this->resetFrames();
     ui->thewave_response->setText("Hit \"Speak\" to start speaking.");
