@@ -59,7 +59,8 @@ SOURCES += main.cpp\
     onboarding.cpp \
     newmedia.cpp \
     bthandsfree.cpp \
-    tutorialwindow.cpp
+    tutorialwindow.cpp \
+    screenshotwindow.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -95,7 +96,8 @@ HEADERS  += mainwindow.h \
     onboarding.h \
     newmedia.h \
     bthandsfree.h \
-    tutorialwindow.h
+    tutorialwindow.h \
+    screenshotwindow.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -111,7 +113,8 @@ FORMS    += mainwindow.ui \
     rundialog.ui \
     onboarding.ui \
     newmedia.ui \
-    tutorialwindow.ui
+    tutorialwindow.ui \
+    screenshotwindow.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

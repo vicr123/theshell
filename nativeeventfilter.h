@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QSoundEffect>
 #include "mainwindow.h"
+#include "screenshotwindow.h"
 
 #include <X11/XF86keysym.h>
 #include <X11/keysym.h>

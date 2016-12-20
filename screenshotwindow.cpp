@@ -1,0 +1,84 @@
+#include "screenshotwindow.h"
+#include "ui_screenshotwindow.h"
+
+screenshotWindow::screenshotWindow(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::screenshotWindow)
+{
+    ui->setupUi(this);
+
+    ui->discardButton->setProperty("type", "destructive");
+
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+
+    ui->label->setParent(this);
+    ui->label->raise();
+
+    QScreen* currentScreen = NULL;
+    for (QScreen* screen : QApplication::screens()) {
+        if (screen->geometry().contains(QCursor::pos())) {
+            currentScreen = screen;
+        }
+    }
+
+    if (currentScreen != NULL) {
+        screenshotPixmap = currentScreen->grabWindow(0, currentScreen->geometry().x(), currentScreen->geometry().y(), currentScreen->geometry().width(), currentScreen->geometry().height());
+        ui->label->setPixmap(screenshotPixmap);
+
+        this->setGeometry(currentScreen->geometry());
+        this->setFixedSize(currentScreen->geometry().size());
+    } else {
+
+    }
+}
+
+screenshotWindow::~screenshotWindow()
+{
+    delete ui;
+}
+
+void screenshotWindow::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    painter.setBrush(QColor(0, 0, 0, 150));
+    painter.setPen(QColor(0, 0, 0, 0));
+    painter.drawRect(0, 0, this->width(), this->height());
+}
+
+void screenshotWindow::show() {
+    QDialog::show();
+
+    ui->label->setGeometry(0, 0, this->width(), this->height());
+
+    QRectF endGeometry = ui->label->geometry();
+    //qreal scaleFactor = endGeometry.width() - (endGeometry.width() - 50);
+    //endGeometry.adjust(50, endGeometry.height() * scaleFactor, -50, -endGeometry.height() * scaleFactor);
+    //endGeometry.adjust(75, 75, -75, -75);
+    qreal newHeight = ((endGeometry.width() - 100) / endGeometry.width()) * endGeometry.height();
+    endGeometry.setHeight(newHeight);
+    endGeometry.setWidth(endGeometry.width() - 100);
+    endGeometry.moveTo(100 / 2, ((ui->label->height() - newHeight) / 2) - 25);
+
+    QPropertyAnimation* anim = new QPropertyAnimation(ui->label, "geometry");
+    anim->setStartValue(ui->label->geometry());
+    anim->setEndValue(endGeometry);
+    anim->setDuration(500);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    anim->start();
+}
+
+void screenshotWindow::on_discardButton_clicked()
+{
+    this->close();
+}
+
+void screenshotWindow::on_copyButton_clicked()
+{
+
+}
+
+void screenshotWindow::on_saveButton_clicked()
+{
+
+}
