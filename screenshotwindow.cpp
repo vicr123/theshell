@@ -26,6 +26,12 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
         screenshotPixmap = currentScreen->grabWindow(0, currentScreen->geometry().x(), currentScreen->geometry().y(), currentScreen->geometry().width(), currentScreen->geometry().height());
         ui->label->setPixmap(screenshotPixmap);
 
+        QSoundEffect* takeScreenshot = new QSoundEffect();
+        takeScreenshot->setSource(QUrl("qrc:/sounds/screenshot.wav"));
+        takeScreenshot->play();
+        connect(takeScreenshot, SIGNAL(playingChanged()), takeScreenshot, SLOT(deleteLater()));
+
+
         this->setGeometry(currentScreen->geometry());
         this->setFixedSize(currentScreen->geometry().size());
     } else {
@@ -75,10 +81,17 @@ void screenshotWindow::on_discardButton_clicked()
 
 void screenshotWindow::on_copyButton_clicked()
 {
-
+    QClipboard* clipboard = QApplication::clipboard();
+    clipboard->setPixmap(screenshotPixmap);
+    this->close();
 }
 
 void screenshotWindow::on_saveButton_clicked()
 {
 
+}
+
+void screenshotWindow::close() {
+    QDialog::close();
+    this->deleteLater();
 }

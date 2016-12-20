@@ -10,6 +10,8 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 #include <QPushButton>
+#include <QClipboard>
+#include <QSoundEffect>
 
 namespace Ui {
 class screenshotWindow;
@@ -25,6 +27,8 @@ public:
 
 public slots:
     void show();
+
+    void close();
 
 private slots:
     void on_discardButton_clicked();
