@@ -76,7 +76,28 @@ void screenshotWindow::show() {
 
 void screenshotWindow::on_discardButton_clicked()
 {
-    this->close();
+    QRect newGeometry = ui->label->geometry();
+    newGeometry.moveTop(this->height() / 2);
+
+    QParallelAnimationGroup* animGroup = new QParallelAnimationGroup();
+
+    QPropertyAnimation* anim = new QPropertyAnimation(ui->label, "geometry");
+    anim->setStartValue(ui->label->geometry());
+    anim->setEndValue(newGeometry);
+    anim->setDuration(500);
+    anim->setEasingCurve(QEasingCurve::InQuint);
+    animGroup->addAnimation(anim);
+
+    QPropertyAnimation* closeAnim = new QPropertyAnimation(this, "windowOpacity");
+    closeAnim->setStartValue(1);
+    closeAnim->setEndValue(0);
+    closeAnim->setDuration(500);
+    closeAnim->setEasingCurve(QEasingCurve::InQuint);
+    animGroup->addAnimation(closeAnim);
+
+    connect(animGroup, SIGNAL(finished()), animGroup, SLOT(deleteLater()));
+    connect(animGroup, SIGNAL(finished()), this, SLOT(close()));
+    animGroup->start();
 }
 
 void screenshotWindow::on_copyButton_clicked()

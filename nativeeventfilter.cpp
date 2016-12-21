@@ -230,7 +230,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_space) && button->state == Mod4Mask) { //theWave
                 ignoreSuper = true;
                 MainWin->openMenu(true, true);
-            } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XK_P) && button->state == Mod4Mask | Mod1Mask) ||
+            } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XK_P) && (button->state == (Mod4Mask | Mod1Mask))) ||
                        (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Print))) { //Take screenshot
                 if (button->state & Mod4Mask) {
                     ignoreSuper = true;

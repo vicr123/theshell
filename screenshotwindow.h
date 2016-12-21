@@ -12,6 +12,8 @@
 #include <QPushButton>
 #include <QClipboard>
 #include <QSoundEffect>
+#include <QParallelAnimationGroup>
+#include <QGraphicsOpacityEffect>
 
 namespace Ui {
 class screenshotWindow;
