@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>964</width>
+    <width>1200</width>
     <height>835</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>theShellStatusCenter</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="theshell" resource="resources.qrc">
+   <iconset theme="theshell" resource="../thePhoto/resources.qrc">
     <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -546,14 +546,14 @@
              <second>0</second>
              <year>1969</year>
              <month>11</month>
-             <day>6</day>
+             <day>5</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>11</month>
-             <day>6</day>
+             <day>5</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -1248,8 +1248,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>928</width>
-            <height>599</height>
+            <width>165</width>
+            <height>58</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1588,7 +1588,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>8</number>
+            <number>10</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -3200,8 +3200,6 @@
    </slots>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
