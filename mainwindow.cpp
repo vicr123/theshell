@@ -38,7 +38,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setAttribute(Qt::WA_AlwaysShowToolTips, true);
 
-    FlowLayout* flow = new FlowLayout(ui->windowList);
+    int spacing = -1;
+    if (QApplication::style()->objectName() == "contemporary") {
+        spacing = 0;
+    }
+    FlowLayout* flow = new FlowLayout(ui->windowList, -1, spacing, spacing);
     ui->windowList->setLayout(flow);
 
     //Create the update event timer and start it
