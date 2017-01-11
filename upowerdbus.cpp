@@ -1,9 +1,14 @@
 #include "upowerdbus.h"
+#include "power_adaptor.h"
 
 extern void EndSession(EndSessionWait::shutdownType type);
 UPowerDBus::UPowerDBus(NotificationDBus* notificationDBus, QObject *parent) : QObject(parent)
 {
+    new PowerAdaptor(this);
+    QDBusConnection::sessionBus().registerObject("/org/thesuite/Power", "org.thesuite.Power", this);
+
     this->notificationDBus = notificationDBus;
+    connect(notificationDBus, SIGNAL(ActionInvoked(uint,QString)), this, SLOT(ActionInvoked(uint,QString)));
 
     //Inhibit logind's handling of some power events
     QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Inhibit");
@@ -56,6 +61,10 @@ void UPowerDBus::devicesChanged() {
 
 void UPowerDBus::DeviceChanged() {
     QStringList displayOutput;
+    if (isPowerStretchOn) {
+        displayOutput.append("<span style=\"background-color: orange; color: black;\">Power Stretch on</span>");
+    }
+
     for (QDBusInterface *i : allDevices) {
         //Get the percentage of battery remaining.
         //We do the calculation ourselves because UPower can be inaccurate sometimes
@@ -76,6 +85,7 @@ void UPowerDBus::DeviceChanged() {
         if (i->path().contains("battery")) {
             //PC Battery
             if (i->property("IsPresent").toBool()) {
+                bool showRed = false;
                 qulonglong timeToFull = i->property("TimeToFull").toULongLong();
                 qulonglong timeToEmpty = i->property("TimeToEmpty").toULongLong();
 
@@ -86,12 +96,20 @@ void UPowerDBus::DeviceChanged() {
                     state = " (Charging";
 
                     if (!isCharging) {
+                        QString message;
+
+                        if (isPowerStretchOn) {
+                            setPowerStretch(false);
+                            message = "The power cable has been plugged in and the battery is now being charged. Power Stretch has been turned off.";
+                        } else {
+                            message = "The power cable has been plugged in and the battery is now being charged.";
+                        }
+
                         QVariantMap hints;
                         hints.insert("category", "battery.charging");
                         hints.insert("transient", true);
                         this->notificationDBus->Notify("theShell", 0, "", "Charging",
-                                                       "The power cable has been plugged in and the battery is now being charged.",
-                                                       QStringList(), hints, 10000);
+                                                       message, QStringList(), hints, 10000);
 
                         QSoundEffect* chargingSound = new QSoundEffect();
                         chargingSound->setSource(QUrl("qrc:/sounds/charging.wav"));
@@ -139,31 +157,52 @@ void UPowerDBus::DeviceChanged() {
                             QVariantMap hints;
                             hints.insert("urgency", 2);
                             hints.insert("category", "battery.critical");
+
+                            QStringList actions;
+                            if (!isPowerStretchOn) {
+                                actions.append("power-stretch-on");
+                                actions.append("Turn on Power Stretch");
+                            }
                             batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Critically Low",
                                                            "You have about 10 minutes of battery remaining."
                                                            " Either plug in your PC or save your work"
-                                                           " and power off the PC and change the battery.", QStringList(), hints, 0);
+                                                           " and power off the PC and change the battery.", actions, hints, 0);
 
                             tenMinuteBatteryWarning = true;
                             halfHourBatteryWarning = true;
                             hourBatteryWarning = true;
+                            showRed = true;
                         } else if (timeToEmpty <= 1800 && halfHourBatteryWarning == false) { //Half hour left! Low!
                             QVariantMap hints;
+                            hints.insert("urgency", 2);
                             hints.insert("category", "battery.low");
+
+                            QStringList actions;
+                            if (!isPowerStretchOn) {
+                                actions.append("power-stretch-on");
+                                actions.append("Turn on Power Stretch");
+                            }
                             batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Low",
                                                            "You have about half an hour of battery remaining."
-                                                           " You should plug in your PC now.", QStringList(), hints, 10000);
+                                                           " You should plug in your PC now.", actions, hints, 10000);
 
 
                             halfHourBatteryWarning = true;
                             hourBatteryWarning = true;
+                            showRed = true;
                         } else if (timeToEmpty <= 3600 && hourBatteryWarning == false) { //One hour left! Warning!
                             QVariantMap hints;
                             hints.insert("urgency", 2);
                             hints.insert("category", "battery.low");
+
+                            QStringList actions;
+                            if (!isPowerStretchOn) {
+                                actions.append("power-stretch-on");
+                                actions.append("Turn on Power Stretch");
+                            }
                             batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Warning",
                                                            "You have about an hour of battery remaining."
-                                                            " You may want to plug in your PC now.", QStringList(), hints, 10000);
+                                                            " You may want to plug in your PC now.", actions, hints, 10000);
                             hourBatteryWarning = true;
                         }
                     } else {
@@ -194,7 +233,11 @@ void UPowerDBus::DeviceChanged() {
                     break;
                 }
 
-                displayOutput.append(QString::number(percentage) + "% PC Battery" + state);
+                if (showRed) {
+                    displayOutput.append("<span style=\"background-color: red; color: black;\">" + QString::number(percentage) + "% PC Battery" + state + "</span>");
+                } else {
+                    displayOutput.append(QString::number(percentage) + "% PC Battery" + state);
+                }
                 batLevel = percentage;
             } else {
                 displayOutput.append("No Battery Inserted");
@@ -320,4 +363,24 @@ QDateTime UPowerDBus::batteryTimeRemaining() {
 
 bool UPowerDBus::charging() {
     return isCharging;
+}
+
+bool UPowerDBus::powerStretch() {
+    return isPowerStretchOn;
+}
+
+void UPowerDBus::setPowerStretch(bool on) {
+    if (isPowerStretchOn != on) {
+        isPowerStretchOn = on;
+        emit powerStretchChanged(on);
+        this->devicesChanged();
+    }
+}
+
+void UPowerDBus::ActionInvoked(uint id, QString action_key) {
+    if (id == batteryLowNotificationNumber) {
+        if (action_key == "power-stretch-on") {
+            setPowerStretch(true);
+        }
+    }
 }

@@ -13,6 +13,11 @@
     "- Added some KDE Connect actions in the status center\n"\
     "- The stopwatch is now shown on the bar when being used."\
     "- New Charge History in the Status Center. Go to the System Status pane in the Status Center to take a look."\
+    "- Add scrollbar on the bar when content runs off the bar\n"\
+    "- Added Power Stretch.\n"\
+    "- Added icon in bar for wireless reception\n"\
+    "- theShell now uses the-libs for integration with other the-applications.\n"\
+    "- Dragging down on an item in the bar to open the status center has been added\n"\
     "\n"\
     "New in theShell 5.2: \n"\
     "- New Onboarding experience. Every time theShell updates, you'll get a changelog.\n" \

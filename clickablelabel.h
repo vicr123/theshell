@@ -17,12 +17,18 @@ public:
     bool showDisabled();
 signals:
     void clicked();
+    void dragging(int x, int y);
+    void mouseReleased();
+
 private:
     void mousePressEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
     //void paintEvent(QPaintEvent *event);
 
     bool isShowDisabled = false;
+    bool isClicked = false;
+    bool didDrag = false;
 };
 
 #endif // CLICKABLELABEL_H

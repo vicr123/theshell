@@ -266,13 +266,13 @@ void Menu::show(bool openTotheWave, bool startListening) {
             index++;
         }
 
-        QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+        tPropertyAnimation* animation = new tPropertyAnimation(this, "geometry");
         animation->setStartValue(this->geometry());
         animation->setEndValue(QRect(this->x() + this->width(), this->y(), this->width(), this->height()));
         animation->setDuration(500);
         animation->setEasingCurve(QEasingCurve::OutCubic);
-        animation->start();
         connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
+        animation->start();
 
         ui->lineEdit->setFocus();
 
@@ -307,7 +307,7 @@ void Menu::changeEvent(QEvent *event) {
 
 void Menu::collapse() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+    tPropertyAnimation* animation = new tPropertyAnimation(this, "geometry");
     animation->setStartValue(this->geometry());
     animation->setEndValue(QRect(screenGeometry.x() - (this->width() - 50), this->y(), this->width(), this->height()));
     animation->setDuration(500);
@@ -319,7 +319,7 @@ void Menu::collapse() {
 
 void Menu::uncollapse() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+    tPropertyAnimation* animation = new tPropertyAnimation(this, "geometry");
     animation->setStartValue(this->geometry());
     animation->setEndValue(QRect(screenGeometry.x(), this->y(), this->width(), this->height()));
     animation->setDuration(500);
@@ -332,18 +332,17 @@ void Menu::close() {
     if (istheWaveOpen) {
         ui->closetheWaveButton->click();
     }
-    QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+    tPropertyAnimation* animation = new tPropertyAnimation(this, "geometry");
     animation->setStartValue(this->geometry());
     animation->setEndValue(QRect(this->x() - this->width(), this->y(), this->width(), this->height()));
     animation->setDuration(500);
     animation->setEasingCurve(QEasingCurve::OutCubic);
-    animation->start();
     connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
-    connect(animation, &QPropertyAnimation::finished, [=]() {
+    connect(animation, &tPropertyAnimation::finished, [=]() {
         emit menuClosing();
         QDialog::hide();
     });
-
+    animation->start();
     doCheckForClose = false;
 
     //Hide Tutorial Screen
@@ -410,7 +409,7 @@ void Menu::on_pushButton_clicked()
         }
 
         ui->offFrame->setVisible(true);
-        QPropertyAnimation* anim = new QPropertyAnimation(ui->offFrame, "geometry");
+        tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
         anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
         anim->setEndValue(QRect(10, 10, this->width() - 20, this->height() - 20));
         anim->setDuration(500);
@@ -423,13 +422,13 @@ void Menu::on_pushButton_clicked()
 
 void Menu::on_pushButton_2_clicked()
 {
-    QPropertyAnimation* anim = new QPropertyAnimation(ui->offFrame, "geometry");
+    tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
     anim->setStartValue(QRect(10, 10, this->width() - 20, this->height() - 20));
     anim->setEndValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
     anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    connect(anim, &QPropertyAnimation::finished, [=]() {
+    connect(anim, &tPropertyAnimation::finished, [=]() {
         ui->offFrame->setVisible(false);
     });
 
@@ -944,7 +943,7 @@ void Menu::on_activateTheWave_clicked()
 {
     istheWaveOpen = true;
     this->resetFrames();
-    QPropertyAnimation* anim = new QPropertyAnimation(ui->thewaveFrame, "geometry");
+    tPropertyAnimation* anim = new tPropertyAnimation(ui->thewaveFrame, "geometry");
     anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
     anim->setEndValue(QRect(10, 10, this->width() - 20, this->height() - 20));
     anim->setDuration(500);
@@ -1131,7 +1130,7 @@ void Menu::on_closetheWaveButton_clicked()
     ui->thewave_response->setText("Hit \"Speak\" to start speaking.");
     ui->thewave_line->setText("");
 
-    QPropertyAnimation* anim = new QPropertyAnimation(ui->thewaveFrame, "geometry");
+    tPropertyAnimation* anim = new tPropertyAnimation(ui->thewaveFrame, "geometry");
     anim->setStartValue(QRect(10, 10, this->width() - 20, this->height() - 20));
     anim->setEndValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
     anim->setDuration(500);

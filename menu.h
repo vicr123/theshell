@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QFocusEvent>
 #include <QTimer>
-#include <QPropertyAnimation>
+#include <tpropertyanimation.h>
 #include <QDir>
 #include <QList>
 #include <QListWidgetItem>

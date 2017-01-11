@@ -138,22 +138,22 @@ void NotificationDialog::show() {
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
     QDialog::show();
-
+    closed = false;
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     this->setGeometry(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height());
 
     //QThread::sleep(1); //Buffer for Window Manager Animations
 
-    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+    tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
     anim->setStartValue(this->geometry());
     anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), this->height()));
-    anim->setDuration(100);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    anim->start();
-    connect(anim, &QPropertyAnimation::finished, [=](){
+    anim->setDuration(500);
+    anim->setEasingCurve(QEasingCurve::OutBounce);
+    connect(anim, &tPropertyAnimation::finished, [=](){
         this->repaint();
     });
+    anim->start();
 
     if (timeout != -1) {
         QTimer *t = new QTimer(this);
@@ -172,20 +172,22 @@ void NotificationDialog::on_pushButton_clicked()
 }
 
 void NotificationDialog::close(int reason) {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    if (!closed) {
+        QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
-    anim->setStartValue(this->geometry());
-    anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height()));
-    anim->setDuration(500);
-    anim->setEasingCurve(QEasingCurve::InCubic);
-    connect(anim, &QPropertyAnimation::finished, [=]() {
-        QDialog::close();
-        //delete this;
-    });
-    anim->start();
+        tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
+        anim->setStartValue(this->geometry());
+        anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height()));
+        anim->setDuration(500);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        connect(anim, &tPropertyAnimation::finished, [=]() {
+            QDialog::close();
+            //delete this;
+        });
+        anim->start();
 
-    emit closing(id, reason);
+        emit closing(id, reason);
+    }
 }
 
 void NotificationDialog::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.

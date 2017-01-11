@@ -9,6 +9,7 @@ Desktop Environment written using the Qt toolkit
 ## Dependencies
 - qmake
 - A EWMH compatible window manager. (KWin is the default)
+- [the-libs](https://github.com/vicr123/the-libs)
 - wmctrl
 - xbacklight
 - kscreen

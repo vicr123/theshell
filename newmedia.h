@@ -5,7 +5,7 @@
 #include <QProcess>
 #include <QX11Info>
 #include <QDesktopWidget>
-#include <QPropertyAnimation>
+#include <tpropertyanimation.h>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QLabel>

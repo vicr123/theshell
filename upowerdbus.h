@@ -17,6 +17,7 @@
 class UPowerDBus : public QObject
 {
     Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.thesuite.Power")
 public:
     explicit UPowerDBus(NotificationDBus* notificationDBus, QObject *parent = 0);
 
@@ -25,15 +26,23 @@ public:
     QDBusObjectPath defaultBattery();
     QDateTime batteryTimeRemaining();
     bool charging();
+
+    Q_SCRIPTABLE bool powerStretch();
+
 signals:
     void updateDisplay(QString display);
     void batteryChanged(int batteryPercent);
+
+    Q_SCRIPTABLE void powerStretchChanged(bool powerStretch);
+
 public slots:
     void DeviceChanged();
     void checkUpower();
     void devicesChanged();
+    void setPowerStretch(bool on);
 
 private slots:
+    void ActionInvoked(uint id, QString action_key);
 
 private:
     QList<QDBusInterface*> allDevices;
@@ -44,6 +53,8 @@ private:
 
     bool isCharging = false;
     bool isConnectedToPower = false;
+
+    bool isPowerStretchOn = false;
 
     int batteryLowNotificationNumber = 0;
 

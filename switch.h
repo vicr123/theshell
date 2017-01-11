@@ -6,7 +6,7 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QStaticText>
-#include <QVariantAnimation>
+#include <tvariantanimation.h>
 
 class Switch : public QPushButton
 {

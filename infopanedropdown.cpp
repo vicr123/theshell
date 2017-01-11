@@ -38,6 +38,12 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     timer->setInterval(1000);
     timer->start();
 
+    connect(powerEngine, &UPowerDBus::powerStretchChanged, [=](bool isOn) {
+        ui->PowerStretchSwitch->setChecked(isOn);
+        emit batteryStretchChanged(isOn);
+        doNetworkCheck();
+    });
+
     ui->label_7->setVisible(false);
     ui->pushButton_3->setVisible(false);
     ui->networkKey->setVisible(false);
@@ -183,8 +189,8 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
 
     QString defaultFont;
-    if (QFontDatabase().families().contains("Rubik")) {
-        defaultFont = "Rubik";
+    if (QFontDatabase().families().contains("Contemporary")) {
+        defaultFont = "Contemporary";
     } else {
         defaultFont = "Noto Sans";
     }
@@ -194,6 +200,12 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     eventTimer->setInterval(1000);
     connect(eventTimer, SIGNAL(timeout()), this, SLOT(processTimer()));
     eventTimer->start();
+
+    networkCheckTimer = new QTimer(this);
+    networkCheckTimer->setInterval(60000);
+    connect(networkCheckTimer, SIGNAL(timeout()), this, SLOT(doNetworkCheck()));
+    networkCheckTimer->start();
+    doNetworkCheck();
 
     QObjectList allObjects;
     allObjects.append(this);
@@ -385,7 +397,7 @@ void InfoPaneDropdown::timerTick() {
 }
 
 void InfoPaneDropdown::show(dropdownType showWith) {
-    changeDropDown(showWith);
+    changeDropDown(showWith, false);
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
     this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height());
@@ -404,13 +416,8 @@ void InfoPaneDropdown::show(dropdownType showWith) {
     this->setFixedWidth(screenGeometry.width());
     this->setFixedHeight(screenGeometry.height());
 
-    QPropertyAnimation* a = new QPropertyAnimation(this, "geometry");
-    a->setStartValue(this->geometry());
-    a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), screenGeometry.height()));
-    a->setEasingCurve(QEasingCurve::OutCubic);
-    a->setDuration(500);
-    connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
-    a->start();
+    previousDragY = -1;
+    completeDragDown();
 
     //Get Current Brightness
     QProcess* backlight = new QProcess(this);
@@ -424,44 +431,44 @@ void InfoPaneDropdown::show(dropdownType showWith) {
 
 void InfoPaneDropdown::close() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    QPropertyAnimation* a = new QPropertyAnimation(this, "geometry");
+    tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
     a->setStartValue(this->geometry());
     a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), this->width(), this->height()));
     a->setEasingCurve(QEasingCurve::OutCubic);
     a->setDuration(500);
-    connect(a, &QPropertyAnimation::finished, [=]() {
+    connect(a, &tPropertyAnimation::finished, [=]() {
         QDialog::hide();
     });
     connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
     a->start();
 }
 
-void InfoPaneDropdown::changeDropDown(dropdownType changeTo) {
+void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     this->currentDropDown = changeTo;
 
     //Switch to the requested frame
     switch (changeTo) {
     case Clock:
-        ui->pageStack->setCurrentWidget(ui->clockFrame);
+        ui->pageStack->setCurrentWidget(ui->clockFrame, doAnimation);
         break;
     case Battery:
-        ui->pageStack->setCurrentWidget(ui->statusFrame);
+        ui->pageStack->setCurrentWidget(ui->statusFrame, doAnimation);
         updateBatteryChart();
         break;
     case Notifications:
-        ui->pageStack->setCurrentWidget(ui->notificationsFrame);
+        ui->pageStack->setCurrentWidget(ui->notificationsFrame, doAnimation);
         break;
     case Network:
-        ui->pageStack->setCurrentWidget(ui->networkFrame);
+        ui->pageStack->setCurrentWidget(ui->networkFrame, doAnimation);
         break;
     case KDEConnect:
-        ui->pageStack->setCurrentWidget(ui->kdeConnectFrame);
+        ui->pageStack->setCurrentWidget(ui->kdeConnectFrame, doAnimation);
         break;
     case Print:
-        ui->pageStack->setCurrentWidget(ui->printFrame);
+        ui->pageStack->setCurrentWidget(ui->printFrame, doAnimation);
         break;
     case Settings:
-        ui->pageStack->setCurrentWidget(ui->settingsFrame);
+        ui->pageStack->setCurrentWidget(ui->settingsFrame, doAnimation);
         break;
     }
 
@@ -497,6 +504,7 @@ void InfoPaneDropdown::getNetworks() {
 
     //Create a variable to store text on main window
     QString NetworkLabel = "Disconnected from the Internet";
+    int signalStrength = -1;
 
     //Check if we are in flight mode
     if (ui->FlightSwitch->isChecked()) {
@@ -522,6 +530,8 @@ void InfoPaneDropdown::getNetworks() {
 
         //Clear the list of network connections
         ui->networkList->clear();
+
+        bool allowAppendNoNetworkMessage = false;
 
         //Iterate over all devices
         for (QDBusObjectPath device : reply.value()) {
@@ -552,6 +562,7 @@ void InfoPaneDropdown::getNetworks() {
                     }
                     NetworkLabel = "Connected over a wired connection";
                     NetworkLabelType = NetworkType::Wired;
+                    allowAppendNoNetworkMessage = true;
                 } else {
                     if (!connectedNetworks.keys().contains(interface)) {
                         connectedNetworks.insert(interface, "false");
@@ -564,6 +575,7 @@ void InfoPaneDropdown::getNetworks() {
                             notificationEngine->Notify("theShell", 0, "", "Wired Connection",
                                                        "You're now connected to the internet over a wired connection",
                                                        QStringList(), hints, -1);
+                            doNetworkCheck();
                         }
                     }
                 }
@@ -615,8 +627,22 @@ void InfoPaneDropdown::getNetworks() {
                             NetworkLabel = "Connecting to a secondary connection...";
                             NetworkLabelType = NetworkType::Wireless;
                             break;
-                        case 100:
+                        case 100: {
                             connectedSsid = ap->property("Ssid").toString();
+                            int strength = ap->property("Strength").toInt();
+
+                            if (strength < 15) {
+                                signalStrength = 0;
+                            } else if (strength < 35) {
+                                signalStrength = 1;
+                            } else if (strength < 65) {
+                                signalStrength = 2;
+                            } else if (strength < 85) {
+                                signalStrength = 3;
+                            } else {
+                                signalStrength = 4;
+                            }
+
                             NetworkLabel = "Connected to " + connectedSsid;
                             NetworkLabelType = NetworkType::Wireless;
                             ui->networkMac->setText("MAC Address: " + wifi->property("PermHwAddress").toString());
@@ -631,9 +657,12 @@ void InfoPaneDropdown::getNetworks() {
                                     notificationEngine->Notify("theShell", 0, "", "Wireless Connection",
                                                                "You're now connected to the network \"" + connectedSsid + "\"",
                                                                QStringList(), hints, -1);
+                                    doNetworkCheck();
                                 }
                             }
+                            allowAppendNoNetworkMessage = true;
                             break;
+                            }
                         case 110:
                         case 120:
                             connectedSsid = ap->property("Ssid").toString();
@@ -711,6 +740,7 @@ void InfoPaneDropdown::getNetworks() {
 
                         NetworkLabel = "Connected to " + bt->property("Name").toString() + " over Bluetooth";
                         NetworkLabelType = NetworkType::Bluetooth;
+                        allowAppendNoNetworkMessage = true;
                         break;
                     default:
                         if (!connectedNetworks.keys().contains(interface)) {
@@ -732,6 +762,11 @@ void InfoPaneDropdown::getNetworks() {
                 break;
             }
             delete deviceInterface;
+        }
+
+        if (allowAppendNoNetworkMessage && !networkOk) {
+            signalStrength = -2;
+            NetworkLabel.prepend("Can't get to the internet · ");
         }
 
         //If possible, restore the current selection
@@ -813,7 +848,7 @@ void InfoPaneDropdown::getNetworks() {
     networkListUpdating = false;
 
     //Emit change signal
-    emit networkLabelChanged(NetworkLabel);
+    emit networkLabelChanged(NetworkLabel, signalStrength);
 }
 
 void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem*)
@@ -990,7 +1025,6 @@ void InfoPaneDropdown::startTimer(QTime time) {
                 ui->timeEdit->setVisible(true);
                 ui->label_7->setVisible(false);
                 ui->pushButton_2->setText("Start");
-
 
                 QMediaPlaylist* playlist = new QMediaPlaylist();
 
@@ -1316,7 +1350,7 @@ void InfoPaneDropdown::mouseMoveEvent(QMouseEvent *event) {
 void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     if (initialPoint - 5 > mouseClickPoint && initialPoint + 5 < mouseClickPoint) {
-        QPropertyAnimation* a = new QPropertyAnimation(this, "geometry");
+        tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
         a->setStartValue(this->geometry());
         a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), this->height()));
         a->setEasingCurve(QEasingCurve::OutCubic);
@@ -1327,7 +1361,7 @@ void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
         if (mouseMovedUp) {
             this->close();
         } else {
-            QPropertyAnimation* a = new QPropertyAnimation(this, "geometry");
+            tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
             a->setStartValue(this->geometry());
             a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), this->height()));
             a->setEasingCurve(QEasingCurve::OutCubic);
@@ -1763,4 +1797,83 @@ void InfoPaneDropdown::on_batteryChartShowProjected_toggled(bool checked)
 void InfoPaneDropdown::on_upArrow_clicked()
 {
     this->close();
+}
+
+void InfoPaneDropdown::on_PowerStretchSwitch_toggled(bool checked)
+{
+    powerEngine->setPowerStretch(checked);
+    emit batteryStretchChanged(checked);
+}
+
+void InfoPaneDropdown::doNetworkCheck() {
+    if (powerEngine->powerStretch()) {
+        //Always set networkOk to true because we don't update when power stretch is on
+        networkOk = true;
+    } else {
+        //Do some network checks to see if network is working
+
+        QNetworkAccessManager* manager = new QNetworkAccessManager;
+        if (manager->networkAccessible() == QNetworkAccessManager::NotAccessible) {
+            networkOk = false;
+            return;
+        }
+
+        connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply* reply) {
+            if (reply->error() != QNetworkReply::NoError) {
+                networkOk = false;
+            } else {
+                networkOk = true;
+            }
+            manager->deleteLater();
+        });
+        manager->get(QNetworkRequest(QUrl("http://vicr123.github.io/")));
+    }
+}
+
+void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
+    changeDropDown(showWith, false);
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+
+    this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height() + y, screenGeometry.width(), screenGeometry.height());
+
+    Atom DesktopWindowTypeAtom;
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
+
+    unsigned long desktop = 0xFFFFFFFF;
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
+                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+
+    QDialog::show();
+
+    this->setFixedWidth(screenGeometry.width());
+    this->setFixedHeight(screenGeometry.height());
+
+    //Get Current Brightness
+    QProcess* backlight = new QProcess(this);
+    backlight->start("xbacklight -get");
+    backlight->waitForFinished();
+    float output = ceil(QString(backlight->readAll()).toFloat());
+    delete backlight;
+
+    ui->brightnessSlider->setValue((int) output);
+
+    previousDragY = y;
+}
+
+void InfoPaneDropdown::completeDragDown() {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+
+    if (QCursor::pos().y() - screenGeometry.top() < previousDragY) {
+        this->close();
+    } else {
+        tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
+        a->setStartValue(this->geometry());
+        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), screenGeometry.height()));
+        a->setEasingCurve(QEasingCurve::OutCubic);
+        a->setDuration(500);
+        connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
+        a->start();
+    }
 }

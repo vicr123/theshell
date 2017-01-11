@@ -7,10 +7,18 @@ ClickableLabel::ClickableLabel(QWidget* parent) :
 }
 
 void ClickableLabel::mousePressEvent(QMouseEvent *event) {
-    emit clicked();
+    isClicked = true;
 }
 
 void ClickableLabel::mouseReleaseEvent(QMouseEvent *event) {
+    if (didDrag) {
+        emit mouseReleased();
+        didDrag = false;
+    }
+    if (event->x() < this->width() && event->y() < this->height()) {
+        emit clicked();
+    }
+    isClicked = false;
     event->accept();
 }
 
@@ -32,4 +40,11 @@ void ClickableLabel::setShowDisabled(bool showDisabled) {
     }
     this->setPalette(thisPal);
     delete tempLabel;
+}
+
+void ClickableLabel::mouseMoveEvent(QMouseEvent *event) {
+    if (isClicked) {
+        emit dragging(event->x(), event->y());
+        didDrag = true;
+    }
 }

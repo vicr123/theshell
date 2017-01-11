@@ -45,15 +45,15 @@ void NewMedia::show() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     this->setGeometry(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height());
 
-    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+    tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
     anim->setStartValue(this->geometry());
     anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), this->height()));
     anim->setDuration(100);
     anim->setEasingCurve(QEasingCurve::OutCubic);
-    anim->start();
-    connect(anim, &QPropertyAnimation::finished, [=](){
+    connect(anim, &tPropertyAnimation::finished, [=](){
         this->repaint();
     });
+    anim->start();
 
     XEvent event;
 
@@ -71,12 +71,12 @@ void NewMedia::show() {
 void NewMedia::close() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+    tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
     anim->setStartValue(this->geometry());
     anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height()));
     anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::InCubic);
-    connect(anim, &QPropertyAnimation::finished, [=]() {
+    connect(anim, &tPropertyAnimation::finished, [=]() {
         QDialog::close();
         this->deleteLater();
     });

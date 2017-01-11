@@ -91,9 +91,10 @@ void Switch::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void Switch::checkChanging(bool checked) {
-    QVariantAnimation* animation = new QVariantAnimation();
+    tVariantAnimation* animation = new tVariantAnimation();
     animation->setStartValue(innerRect);
     animation->setDuration(250);
+    animation->setForceAnimation(true);
 
     if (checked) {
         animation->setEndValue(QRect(this->width() - this->height(), 0, this->height(), this->height()));
@@ -102,7 +103,7 @@ void Switch::checkChanging(bool checked) {
     }
 
     animation->setEasingCurve(QEasingCurve::OutCubic);
-    connect(animation, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(animation, &tVariantAnimation::valueChanged, [=](QVariant value) {
         innerRect = value.toRect();
         this->repaint();
     });

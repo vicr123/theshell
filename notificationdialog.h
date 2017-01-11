@@ -52,6 +52,7 @@ private:
     int id;
     int timeout;
     QVariantMap hints;
+    bool closed = true;
 
     void paintEvent(QPaintEvent* event);
 };

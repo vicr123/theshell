@@ -87,7 +87,21 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
 
         d->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
         if (showDialog) {
-            d->show();
+            if (currentDialog != NULL) {
+                currentDialog->close(1);
+                QTimer::singleShot(600, [=]() {
+                   d->show();
+                   currentDialog = d;
+                });
+            } else {
+                d->show();
+                currentDialog = d;
+            }
+            connect(currentDialog, &NotificationDialog::closing, [=](int id, int reason) {
+                if (currentDialog == d) {
+                    currentDialog = NULL;
+                }
+            });
         }
         dialogs.append(d);
 

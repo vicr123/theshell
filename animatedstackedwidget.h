@@ -2,7 +2,7 @@
 #define ANIMATEDSTACKEDWIDGET_H
 
 #include <QStackedWidget>
-#include <QPropertyAnimation>
+#include <tpropertyanimation.h>
 #include <QSequentialAnimationGroup>
 #include <QParallelAnimationGroup>
 #include <QSettings>
@@ -20,8 +20,8 @@ signals:
     void switchingFrame(int switchTo);
 
 public slots:
-    void setCurrentIndex(int index);
-    void setCurrentWidget(QWidget* w);
+    void setCurrentIndex(int index, bool doAnimation = true);
+    void setCurrentWidget(QWidget* w, bool doAnimation = true);
 
 private:
     void doSetCurrentIndex(int index);

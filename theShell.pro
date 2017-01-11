@@ -4,9 +4,11 @@
 #
 #-------------------------------------------------
 
-QT       += core gui gui-private x11extras dbus multimedia xml network positioning svg charts
-CONFIG   += c++11
-LIBS     += -lX11 -lxcb -lxcb-keysyms -lcups -lsystemd -lKF5AkonadiCore -lXcursor
+QT       += core gui x11extras dbus multimedia xml network positioning svg charts thelib
+CONFIG   += c++14
+LIBS     += -lX11 -lxcb -lxcb-keysyms -lcups -lsystemd -lKF5AkonadiCore -lXcursor -lpulse -lpulse-mainloop-glib
+
+INCLUDEPATH += /usr/include/glib-2.0/ /usr/lib/glib-2.0/include/
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,6 +26,9 @@ QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
 #DBUS_ADAPTORS += notifications
 
 #DBUS_ADAPTORS += com.canonical.AppMenu.Registrar.xml
+
+power.files = org.thesuite.power.xml
+DBUS_ADAPTORS += power
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -60,7 +65,8 @@ SOURCES += main.cpp\
     newmedia.cpp \
     bthandsfree.cpp \
     tutorialwindow.cpp \
-    screenshotwindow.cpp
+    screenshotwindow.cpp \
+    audiomanager.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -97,7 +103,8 @@ HEADERS  += mainwindow.h \
     newmedia.h \
     bthandsfree.h \
     tutorialwindow.h \
-    screenshotwindow.h
+    screenshotwindow.h \
+    audiomanager.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

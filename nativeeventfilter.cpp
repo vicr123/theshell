@@ -3,6 +3,7 @@
 extern void EndSession(EndSessionWait::shutdownType type);
 extern DbusEvents* DBusEvents;
 extern MainWindow* MainWin;
+extern AudioManager* AudioMan;
 
 NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
 {
@@ -90,35 +91,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 delete backlight;
 
                 //Get Current Volume
-                QProcess* mixer = new QProcess(this);
-                mixer->start("amixer");
-                mixer->waitForFinished();
-                QString output(mixer->readAll());
-                delete mixer;
-
-                int volume;
-                int limit;
-                bool readLine = false;
-                for (QString line : output.split("\n")) {
-                    if (line.startsWith(" ") && readLine) {
-                        if (line.startsWith("  Front Left:")) {
-                            if (line.contains("[off]")) {
-                                volume = 0;
-                            } else {
-                                QString percent = line.mid(line.indexOf("\[") + 1, 3).remove("\%").remove("]");
-                                volume = percent.toInt();
-                            }
-                        } else if (line.startsWith("  Limits:")) {
-                            limit = line.split(" ").last().toInt();
-                        }
-                    } else {
-                        if (line.contains("'Master'")) {
-                            readLine = true;
-                        } else {
-                            readLine = false;
-                        }
-                    }
-                }
+                int volume = AudioMan->MasterVolume();
 
                 int kbdBrightness = -1, maxKbdBrightness = -1;
                 QDBusInterface keyboardInterface("org.freedesktop.UPower", "/org/freedesktop/UPower/KbdBacklight", "org.freedesktop.UPower.KbdBacklight", QDBusConnection::systemBus());
@@ -148,9 +121,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioRaiseVolume)) { //Increase Volume by 5%
                     volume = volume + 5;
                     if (volume > 100) volume = 100;
-                    QProcess* volumeAdj = new QProcess(this);
-                    volumeAdj->start("amixer set Master " + QString::number(limit * (volume / (float) 100)) + " on");
-                    connect(volumeAdj, SIGNAL(finished(int)), volumeAdj, SLOT(deleteLater()));
+                    AudioMan->changeVolume(5);
 
                     QSoundEffect* volumeSound = new QSoundEffect();
                     volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
@@ -161,9 +132,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume)) { //Decrease Volume by 5%
                     volume = volume - 5;
                     if (volume < 0) volume = 0;
-                    QProcess* volumeAdj = new QProcess(this);
-                    volumeAdj->start("amixer set Master " + QString::number(limit * (volume / (float) 100)) + " on");
-                    connect(volumeAdj, SIGNAL(finished(int)), volumeAdj, SLOT(deleteLater()));
+                    AudioMan->changeVolume(-5);
 
                     QSoundEffect* volumeSound = new QSoundEffect();
                     volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));

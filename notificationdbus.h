@@ -46,6 +46,7 @@ protected Q_SLOTS:
 
 private:
     QList<NotificationDialog*> dialogs;
+    NotificationDialog* currentDialog = NULL;
     int nextId = 1;
 
     InfoPaneDropdown* dropdownPane = NULL;

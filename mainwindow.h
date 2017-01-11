@@ -26,6 +26,7 @@
 #include "fadebutton.h"
 #include "FlowLayout/flowlayout.h"
 #include "tutorialwindow.h"
+#include "audiomanager.h"
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -80,7 +81,7 @@ private slots:
 
     void on_pushButton_2_clicked();
 
-    void internetLabelChanged(QString display);
+    void internetLabelChanged(QString display, int signalStrength);
 
     void on_networkLabel_clicked();
 
@@ -145,6 +146,26 @@ private slots:
     void on_mprisSelection_triggered(QAction *arg1);
 
     void updateMpris();
+
+    void on_time_dragging(int , int );
+
+    void on_time_mouseReleased();
+
+    void on_date_dragging(int , int );
+
+    void on_date_mouseReleased();
+
+    void on_batteryLabel_dragging(int , int );
+
+    void on_batteryLabel_mouseReleased();
+
+    void on_networkLabel_dragging(int , int );
+
+    void on_networkLabel_mouseReleased();
+
+    void on_notifications_dragging(int , int );
+
+    void on_notifications_mouseReleased();
 
 signals:
     void reloadBackgrounds();

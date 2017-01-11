@@ -33,6 +33,8 @@
 #include "upowerdbus.h"
 #include "endsessionwait.h"
 #include <sys/sysinfo.h>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 class UPowerDBus;
 
@@ -64,17 +66,20 @@ public:
     };
 
     void show(dropdownType showWith);
+    void dragDown(dropdownType showWith, int y);
     void close();
     bool isTimerRunning();
+    void completeDragDown();
 
 signals:
-    void networkLabelChanged(QString label);
+    void networkLabelChanged(QString label, int signalStrength);
     void closeNotification(int id);
     void numNotificationsChanged(int notifications);
     void timerChanged(QString timer);
     void timerVisibleChanged(bool timerVisible);
     void timerEnabledChanged(bool timerEnabled);
     void notificationsSilencedChanged(bool silenced);
+    void batteryStretchChanged(bool isOn);
 
 private slots:
     void on_pushButton_clicked();
@@ -231,6 +236,10 @@ private slots:
 
     void on_upArrow_clicked();
 
+    void on_PowerStretchSwitch_toggled(bool checked);
+
+    void doNetworkCheck();
+
 public slots:
     void getNetworks();
 
@@ -249,7 +258,7 @@ private:
 
     bool isRedshiftOn = false;
     dropdownType currentDropDown = Clock;
-    void changeDropDown(dropdownType changeTo);
+    void changeDropDown(dropdownType changeTo, bool doAnimation = true);
     int mouseClickPoint;
     int initialPoint;
     bool mouseMovedUp = false;
@@ -272,6 +281,9 @@ private:
     QTime startTime;
     void reject();
 
+    QTimer* networkCheckTimer;
+    bool networkOk = true;
+
     QTime stopwatchTime;
     int stopwatchTimeAdd = 0;
     bool stopwatchRunning = false;
@@ -285,6 +297,8 @@ private:
     QMediaPlayer* ringtone;
 
     QChart* batteryChart;
+
+    int previousDragY;
 };
 
 #endif // INFOPANEDROPDOWN_H

@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QPaintEvent>
 #include <QPainter>
+#include <tpropertyanimation.h>
 #include <QPropertyAnimation>
 #include <QPushButton>
 #include <QClipboard>

@@ -14,7 +14,7 @@
    <string>theShellStatusCenter</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="theshell" resource="../thePhoto/resources.qrc">
+   <iconset theme="theshell" resource="resources.qrc">
     <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -294,6 +294,27 @@
          </widget>
         </item>
         <item>
+         <widget class="Line" name="line_13">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_56">
+          <property name="text">
+           <string>Power Stretch</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Switch" name="PowerStretchSwitch">
+          <property name="text">
+           <string>PowerStretchSwitch</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer_11">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -546,14 +567,14 @@
              <second>0</second>
              <year>1969</year>
              <month>11</month>
-             <day>5</day>
+             <day>4</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>11</month>
-             <day>5</day>
+             <day>4</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -3200,6 +3221,8 @@
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

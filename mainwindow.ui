@@ -48,6 +48,9 @@
     </property>
     <item>
      <widget class="MouseScrollWidget" name="infoScrollArea">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
@@ -283,6 +286,13 @@
            <widget class="Line" name="line_2">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="networkStrength">
+            <property name="text">
+             <string>signalStrength</string>
             </property>
            </widget>
           </item>

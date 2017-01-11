@@ -6,6 +6,7 @@ extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0, long data2 = 0, long data3 = 0, long data4 = 0);
 extern DbusEvents* DBusEvents;
 extern TutorialWindow* TutorialWin;
+extern AudioManager* AudioMan;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -69,13 +70,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
     infoPane = new InfoPaneDropdown(ndbus, updbus);
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    connect(infoPane, SIGNAL(networkLabelChanged(QString)), this, SLOT(internetLabelChanged(QString)));
+    connect(infoPane, SIGNAL(networkLabelChanged(QString,int)), this, SLOT(internetLabelChanged(QString,int)));
     connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
     connect(infoPane, SIGNAL(timerChanged(QString)), this, SLOT(setTimer(QString)));
     connect(infoPane, SIGNAL(timerVisibleChanged(bool)), this, SLOT(setTimerVisible(bool)));
     connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
     connect(infoPane, &InfoPaneDropdown::notificationsSilencedChanged, [=](bool silenced) {
         ui->notifications->setShowDisabled(silenced);
+    });
+    connect(infoPane, &InfoPaneDropdown::batteryStretchChanged, [=](bool isOn) {
+        if (isOn) {
+            timer->setInterval(1000);
+        } else {
+            timer->setInterval(100);
+        }
     });
     infoPane->getNetworks();
 
@@ -90,7 +98,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->timer->setVisible(false);
     ui->timerIcon->setVisible(false);
     ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16, 16));
-    //ui->phonesFrame->setVisible(false);
+    ui->networkStrength->setVisible(false);
 
     if (QFile("/usr/bin/amixer").exists()) {
         ui->volumeSlider->setVisible(false);
@@ -127,7 +135,7 @@ void MainWindow::pullDownGesture() {
         on_notifications_clicked();
     } else {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
-        QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+        tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
 
         anim->setStartValue(this->geometry());
 
@@ -135,7 +143,7 @@ void MainWindow::pullDownGesture() {
         anim->setDuration(500);
         anim->setEasingCurve(QEasingCurve::OutCubic);
 
-        connect(anim, &QPropertyAnimation::finished, [=]() {
+        connect(anim, &tPropertyAnimation::finished, [=]() {
             hiding = false;
         });
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -203,7 +211,7 @@ void MainWindow::doUpdate() {
             if (nameList.count() <= currentDesktop) {
                 ui->desktopName->setText("Desktop " + QString::number(currentDesktop + 1));
             } else {
-                ui->desktopName->setText(QString(nameList.at(currentDesktop)));
+                ui->desktopName->setText(ui->desktopName->fontMetrics().elidedText(QString(nameList.at(currentDesktop)), Qt::ElideRight, 200));
             }
         }
         XFree(desktopNames);
@@ -534,12 +542,12 @@ void MainWindow::doUpdate() {
         }
         if (hideTop != this->hideTop || forceWindowMove) { //Check if we need to move out of the way
             this->hideTop = hideTop;
-            QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+            tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
             anim->setStartValue(this->geometry());
             anim->setEndValue(QRect(screenGeometry.x(), hideTop, screenGeometry.width() + 1, this->height()));
             anim->setDuration(500);
             anim->setEasingCurve(QEasingCurve::OutCubic);
-            connect(anim, &QPropertyAnimation::finished, [=]() {
+            connect(anim, &tPropertyAnimation::finished, [=]() {
                 int adjustLeft = 0;
                 adjustLeft = adjustLeft + ui->openMenu->width();
                 if (ui->desktopsFrame->isVisible()) {
@@ -569,14 +577,14 @@ void MainWindow::doUpdate() {
                         QCursor::pos().x() > screenGeometry.x() &&
                         QCursor::pos().x() < screenGeometry.x() + screenGeometry.width()) {
                     //Move away from the whole screen.
-                    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+                    tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
                     anim->setStartValue(this->geometry());
 
                     anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width() + 1, this->height()));
                     anim->setDuration(500);
                     anim->setEasingCurve(QEasingCurve::OutCubic);
 
-                    connect(anim, &QPropertyAnimation::finished, [=]() {
+                    connect(anim, &tPropertyAnimation::finished, [=]() {
                         int adjustLeft = 0;
                         adjustLeft = adjustLeft + ui->openMenu->width();
                         if (ui->desktopsFrame->isVisible()) {
@@ -596,7 +604,7 @@ void MainWindow::doUpdate() {
                         QCursor::pos().x() < screenGeometry.x() ||
                         QCursor::pos().x() > screenGeometry.x() + screenGeometry.width()) {
                     hiding = true;
-                    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+                    tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
                     anim->setStartValue(this->geometry());
 
                     anim->setEndValue(QRect(screenGeometry.x(), hideTop, screenGeometry.width() + 1, this->height()));
@@ -796,11 +804,40 @@ void MainWindow::on_pushButton_2_clicked()
     openMenu(true);
 }
 
-void MainWindow::internetLabelChanged(QString display) {
+void MainWindow::internetLabelChanged(QString display, int signalStrength) {
     if (display == "Flight Mode") {
         ui->networkLabel->setPixmap(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)).pixmap(16, 16));
+        ui->networkStrength->setVisible(false);
     } else {
         ui->networkLabel->setText(display);
+        if (signalStrength == -1) {
+            ui->networkStrength->setVisible(false);
+        } else {
+            QIcon icon;
+            switch (signalStrength) {
+                case -2:
+                    icon = QIcon::fromTheme("dialog-error");
+                    break;
+                case 0:
+                    icon = QIcon::fromTheme("network-wireless-connected-00");
+                    break;
+                case 1:
+                    icon = QIcon::fromTheme("network-wireless-connected-25");
+                    break;
+                case 2:
+                    icon = QIcon::fromTheme("network-wireless-connected-50");
+                    break;
+                case 3:
+                    icon = QIcon::fromTheme("network-wireless-connected-75");
+                    break;
+                case 4:
+                    icon = QIcon::fromTheme("network-wireless-connected-100");
+                    break;
+            }
+
+            ui->networkStrength->setVisible(true);
+            ui->networkStrength->setPixmap(icon.pixmap(16, 16));
+        }
     }
 }
 
@@ -823,8 +860,8 @@ void MainWindow::on_volumeFrame_MouseEnter()
 {
     ui->volumeSlider->setVisible(true);
 
-    QVariantAnimation* anim = new QVariantAnimation;
-    connect(anim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    tVariantAnimation* anim = new tVariantAnimation;
+    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         ui->volumeSlider->setFixedWidth(value.toInt());
     });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -834,55 +871,18 @@ void MainWindow::on_volumeFrame_MouseEnter()
     anim->setEasingCurve(QEasingCurve::OutCubic);
     anim->start();
 
-    /*
-    QPropertyAnimation* anim = new QPropertyAnimation(ui->volumeSlider, "geometry");
-    anim->setStartValue(ui->volumeSlider->geometry());
-    QRect endGeometry = ui->volumeSlider->geometry();
-    endGeometry.setWidth(220);
-    anim->setEndValue(endGeometry);
-    anim->setDuration(250);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    anim->start();*/
-
-
-    //Get Current Volume
-    QProcess* mixer = new QProcess(this);
-    mixer->start("amixer");
-    mixer->waitForFinished();
-    QString output(mixer->readAll());
-    delete mixer;
-
-    bool readLine = false;
-    for (QString line : output.split("\n")) {
-        if (line.startsWith(" ") && readLine) {
-            if (line.startsWith("  Front Left:")) {
-                if (line.contains("[off]")) {
-                    ui->volumeSlider->setValue(0);
-                } else {
-                    QString percent = line.mid(line.indexOf("\[") + 1, 3).remove("\%").remove("]");
-                    ui->volumeSlider->setValue(percent.toInt());
-                    ui->volumeSlider->setMaximum(100);
-                }
-            }
-        } else {
-            if (line.contains("'Master'")) {
-                readLine = true;
-            } else {
-                readLine = false;
-            }
-        }
-    }
+    //Set Current Volume Slider
+    ui->volumeSlider->setValue(AudioMan->MasterVolume());
+    ui->volumeSlider->setMaximum(100);
 }
 
 void MainWindow::on_volumeFrame_MouseExit()
 {
-
-    QVariantAnimation* anim = new QVariantAnimation;
-    connect(anim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    tVariantAnimation* anim = new tVariantAnimation;
+    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         ui->volumeSlider->setFixedWidth(value.toInt());
     });
-    connect(anim, &QVariantAnimation::finished, [=]() {
+    connect(anim, &tVariantAnimation::finished, [=]() {
         ui->volumeSlider->setVisible(false);
         anim->deleteLater();
     });
@@ -891,47 +891,11 @@ void MainWindow::on_volumeFrame_MouseExit()
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::InCubic);
     anim->start();
-    /*
-    QPropertyAnimation* anim = new QPropertyAnimation(ui->volumeSlider, "geometry");
-    anim->setStartValue(ui->volumeSlider->geometry());
-    QRect endGeometry = ui->volumeSlider->geometry();
-    endGeometry.setWidth(0);
-    anim->setEndValue(endGeometry);
-    anim->setDuration(250);
-    anim->setEasingCurve(QEasingCurve::InCubic);
-    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    anim->start();
-    connect(anim, &QPropertyAnimation::finished, [=]() {
-        ui->volumeSlider->setVisible(false);
-    });*/
 }
 
 void MainWindow::on_volumeSlider_sliderMoved(int position)
 {
-    //Get Current Limits
-    QProcess* mixer = new QProcess(this);
-    mixer->start("amixer");
-    mixer->waitForFinished();
-    QString output(mixer->readAll());
-
-    bool readLine = false;
-    int limit;
-    for (QString line : output.split("\n")) {
-        if (line.startsWith(" ") && readLine) {
-            if (line.startsWith("  Limits:")) {
-                limit = line.split(" ").last().toInt();
-            }
-        } else {
-            if (line.contains("'Master'")) {
-                readLine = true;
-            } else {
-                readLine = false;
-            }
-        }
-    }
-
-    mixer->start("amixer set Master " + QString::number(limit * (position / (float) 100)) + " on");
-    connect(mixer, SIGNAL(finished(int)), mixer, SLOT(deleteLater()));
+    AudioMan->setMasterVolume(position);
 }
 
 void MainWindow::on_volumeSlider_valueChanged(int value)
@@ -943,8 +907,8 @@ void MainWindow::on_volumeSlider_valueChanged(int value)
 void MainWindow::on_brightnessFrame_MouseEnter()
 {
     ui->brightnessSlider->setVisible(true);
-    QVariantAnimation* anim = new QVariantAnimation;
-    connect(anim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    tVariantAnimation* anim = new tVariantAnimation;
+    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         ui->brightnessSlider->setFixedWidth(value.toInt());
     });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -953,15 +917,6 @@ void MainWindow::on_brightnessFrame_MouseEnter()
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     anim->start();
-    /*QPropertyAnimation* anim = new QPropertyAnimation(ui->brightnessSlider, "geometry");
-    anim->setStartValue(ui->brightnessSlider->geometry());
-    QRect endGeometry = ui->brightnessSlider->geometry();
-    endGeometry.setWidth(220);
-    anim->setEndValue(endGeometry);
-    anim->setDuration(250);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    anim->start();*/
 
     //Get Current Brightness
     QProcess* backlight = new QProcess(this);
@@ -976,11 +931,11 @@ void MainWindow::on_brightnessFrame_MouseEnter()
 void MainWindow::on_brightnessFrame_MouseExit()
 {
 
-    QVariantAnimation* anim = new QVariantAnimation;
-    connect(anim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    tVariantAnimation* anim = new tVariantAnimation;
+    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         ui->brightnessSlider->setFixedWidth(value.toInt());
     });
-    connect(anim, &QVariantAnimation::finished, [=]() {
+    connect(anim, &tVariantAnimation::finished, [=]() {
         ui->brightnessSlider->setVisible(false);
         anim->deleteLater();
     });
@@ -989,21 +944,6 @@ void MainWindow::on_brightnessFrame_MouseExit()
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::InCubic);
     anim->start();
-
-    /*
-    QPropertyAnimation* anim = new QPropertyAnimation(ui->brightnessSlider, "geometry");
-    anim->setStartValue(ui->brightnessSlider->geometry());
-    QRect endGeometry = ui->brightnessSlider->geometry();
-    endGeometry.setWidth(0);
-    anim->setEndValue(endGeometry);
-    anim->setDuration(250);
-    anim->setEasingCurve(QEasingCurve::InCubic);
-    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    anim->start();
-    connect(anim, &QPropertyAnimation::finished, [=]() {
-        ui->brightnessSlider->setVisible(false);
-        anim->deleteLater();
-    });*/
 
 }
 
@@ -1029,32 +969,35 @@ void MainWindow::on_volumeSlider_sliderReleased()
 
 void MainWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    if (this->attentionDemandingWindows > 0) {
-        if (!warningAnimCreated) {
-            warningAnimCreated = true;
-            QVariantAnimation* anim = new QVariantAnimation(this);
-            anim->setStartValue(0);
-            anim->setEndValue(this->width());
-            anim->setEasingCurve(QEasingCurve::OutBounce);
-            anim->setDuration(1000);
-            connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-            connect(anim, &QVariantAnimation::valueChanged, [=](QVariant var) {
-                this->warningWidth = var.toInt();
-                this->repaint();
-            });
+    if (painter.isActive()) {
+        if (this->attentionDemandingWindows > 0) {
+            if (!warningAnimCreated) {
+                warningAnimCreated = true;
+                tVariantAnimation* anim = new tVariantAnimation(this);
+                anim->setStartValue(0);
+                anim->setEndValue(this->width());
+                anim->setEasingCurve(QEasingCurve::OutBounce);
+                anim->setDuration(1000);
+                anim->setForceAnimation(true);
+                connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                connect(anim, &tVariantAnimation::valueChanged, [=](QVariant var) {
+                    this->warningWidth = var.toInt();
+                    this->repaint();
+                });
 
-            anim->start();
+                anim->start();
+            }
+
+            painter.setPen(QColor::fromRgb(255, 0, 0));
+            int x1 = (this->width() / 2) - (this->warningWidth / 2);
+            int x2 = (this->width() / 2) + (this->warningWidth / 2);
+            painter.drawLine(x1, this->height() - 1, x2, this->height() - 1);
+            painter.drawLine(x1, this->height() - 2, x2, this->height() - 2);
+        } else {
+            painter.setPen(this->palette().color(QPalette::WindowText));
+            painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+            warningAnimCreated = false;
         }
-
-        painter.setPen(QColor::fromRgb(255, 0, 0));
-        int x1 = (this->width() / 2) - (this->warningWidth / 2);
-        int x2 = (this->width() / 2) + (this->warningWidth / 2);
-        painter.drawLine(x1, this->height() - 1, x2, this->height() - 1);
-        painter.drawLine(x1, this->height() - 2, x2, this->height() - 2);
-    } else {
-        painter.setPen(this->palette().color(QPalette::WindowText));
-        painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
-        warningAnimCreated = false;
     }
     event->accept();
 }
@@ -1263,4 +1206,59 @@ QString MainWindow::songAlbum() {
 void MainWindow::on_mprisSelection_triggered(QAction *arg1)
 {
     mprisCurrentAppName = arg1->data().toString();
+}
+
+void MainWindow::on_time_dragging(int x, int y)
+{
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    infoPane->dragDown(InfoPaneDropdown::Clock, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
+}
+
+void MainWindow::on_time_mouseReleased()
+{
+    infoPane->completeDragDown();
+}
+
+void MainWindow::on_date_dragging(int x, int y)
+{
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    infoPane->dragDown(InfoPaneDropdown::Clock, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
+}
+
+void MainWindow::on_date_mouseReleased()
+{
+    infoPane->completeDragDown();
+}
+
+void MainWindow::on_batteryLabel_dragging(int x, int y)
+{
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    infoPane->dragDown(InfoPaneDropdown::Battery, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
+}
+
+void MainWindow::on_batteryLabel_mouseReleased()
+{
+    infoPane->completeDragDown();
+}
+
+void MainWindow::on_networkLabel_dragging(int x, int y)
+{
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    infoPane->dragDown(InfoPaneDropdown::Network, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
+}
+
+void MainWindow::on_networkLabel_mouseReleased()
+{
+    infoPane->completeDragDown();
+}
+
+void MainWindow::on_notifications_dragging(int x, int y)
+{
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    infoPane->dragDown(InfoPaneDropdown::Notifications, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
+}
+
+void MainWindow::on_notifications_mouseReleased()
+{
+    infoPane->completeDragDown();
 }

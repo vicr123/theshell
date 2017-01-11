@@ -6,6 +6,7 @@
 #include "dbusevents.h"
 #include "onboarding.h"
 #include "tutorialwindow.h"
+#include "audiomanager.h"
 #include <iostream>
 //#include "dbusmenuregistrar.h"
 #include <nativeeventfilter.h>
@@ -27,6 +28,7 @@ MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
 DbusEvents* DBusEvents = NULL;
 TutorialWindow* TutorialWin = NULL;
+AudioManager* AudioMan = NULL;
 
 void raise_signal(QString message) {
     //Clean up required stuff
@@ -84,7 +86,7 @@ int main(int argc, char *argv[])
     signal(SIGABRT, *catch_signal); //Catch SIGABRT
     signal(SIGILL, *catch_signal); //Catch SIGILL
 
-    qInstallMessageHandler(QtHandler);
+    //qInstallMessageHandler(QtHandler);
 
     QApplication a(argc, argv);
 
@@ -197,6 +199,7 @@ int main(int argc, char *argv[])
     }
 
     TutorialWin = new TutorialWindow(tutorialDoSettings);
+    AudioMan = new AudioManager;
 
     if (!QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect") && QFile("/usr/lib/kdeconnectd").exists()) {
         //Start KDE Connect if it is not running and it is existant on the PC

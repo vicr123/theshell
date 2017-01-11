@@ -10,8 +10,13 @@ MouseScrollWidget::MouseScrollWidget(QWidget *parent) : QScrollArea(parent)
 
     shiftRight.setInterval(10);
     connect(&shiftRight, &QTimer::timeout, [=]() {
-       this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() + scrollSpeed);
+        this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() + scrollSpeed);
     });
+
+    connect(this->horizontalScrollBar(), &QScrollBar::valueChanged, [=]() {
+        vp->repaint();
+    });
+    //vp->installEventFilter(this);
 
     QTimer* eventFilterWait = new QTimer();
     eventFilterWait->setInterval(1000);
@@ -45,6 +50,9 @@ void MouseScrollWidget::wheelEvent(QWheelEvent *event) {
 
 void MouseScrollWidget::setWidget(QWidget *widget) {
     QScrollArea::setWidget(widget);
+    vp = widget;
+    widget->setAttribute(Qt::WA_PaintUnclipped);
+    this->installEventFilter(widget);
 }
 
 void MouseScrollWidget::setEventFilter(QWidget *widget) {
@@ -130,12 +138,73 @@ bool MouseScrollWidget::eventFilter(QObject *object, QEvent *event) {
         if (wheelEvent->orientation() == Qt::Vertical) {
             this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() + wheelEvent->delta() / 8 / 15);
         }*/
+    } else if ((event->type() == QEvent::Paint) && (object == vp)) {
+        QPainter painter(vp);
+
+        painter.setPen(QColor(0, 0, 0, 0));
+        int leftStart = this->horizontalScrollBar()->value();
+        /*
+        painter.setBrush(this->palette().brush(QPalette::WindowText));
+
+        //Check if we need to draw the left scroll indicator
+        if (this->horizontalScrollBar()->value() != 0) {
+            QPolygon pol;
+            pol.append(QPoint(leftStart + 5, 0));
+            pol.append(QPoint(leftStart + 5, 8));
+            pol.append(QPoint(leftStart + 1, 4));
+
+            painter.drawPolygon(pol);
+        }
+
+        //Check if we need to draw the right scroll indicator
+        if (this->horizontalScrollBar()->value() != this->horizontalScrollBar()->maximum()) {
+            QPolygon pol;
+            pol.append(QPoint(leftStart + this->width() - 6, 0));
+            pol.append(QPoint(leftStart + this->width() - 6, 8));
+            pol.append(QPoint(leftStart + this->width() - 2, 4));
+
+            painter.drawPolygon(pol);
+        }*/
+
+        if (this->horizontalScrollBar()->maximum() != 0) {
+            painter.setBrush(this->palette().brush(QPalette::Highlight));
+            int thisWidth = this->width() - 18;
+            int left, width;
+            qreal scaleFactor = (qreal) thisWidth / (qreal) (thisWidth + this->horizontalScrollBar()->maximum());
+            width = (qreal) thisWidth * scaleFactor;
+
+            qreal ratio = (qreal) this->horizontalScrollBar()->value() / (qreal) this->horizontalScrollBar()->maximum();
+            left = this->horizontalScrollBar()->value() * ratio;
+
+            painter.drawRect(leftStart + left, 0, width, 4);
+        }
+        return true;
     }
     return false;
 }
 
-QSize MouseScrollWidget::sizeHint() const {
+/*QSize MouseScrollWidget::sizeHint() const {
     QSize hint = QScrollArea::sizeHint();
     //hint.setHeight(hint.height() - QApplication::style()->pixelMetric(QStyle::PM_ScrollBarExtent));
     return hint;
+}*/
+
+void MouseScrollWidget::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    //painter.setBrush(this->palette().brush(QPalette::WindowText));
+    //Check if we need to draw the left scroll indicator
+    if (this->horizontalScrollBar()->value() != 0) {
+        QGradient grad;
+        grad.setColorAt(0, this->palette().color(QPalette::WindowText));
+        QColor end = this->palette().color(QPalette::WindowText);
+        end.setAlpha(0);
+        grad.setColorAt(20, QColor(end));
+        painter.setBrush(QBrush(grad));
+        painter.drawRect(event->rect().left(), event->rect().top(), 20, this->height());
+    }
+
+    //Check if we need to draw the right scroll indicator
+    if (this->horizontalScrollBar()->value() != this->horizontalScrollBar()->maximum()) {
+        painter.drawRect(event->rect().left() + this->width() - 20, event->rect().top(), 20, this->height());
+    }
 }

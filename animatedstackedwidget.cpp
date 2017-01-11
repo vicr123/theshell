@@ -5,10 +5,17 @@ AnimatedStackedWidget::AnimatedStackedWidget(QWidget *parent) : QStackedWidget(p
 
 }
 
-void AnimatedStackedWidget::setCurrentIndex(int index) {
-    //Do some checks before setting the current index.
-    if (currentIndex() != index && !doingNewAnimation) {
-        doSetCurrentIndex(index);
+void AnimatedStackedWidget::setCurrentIndex(int index, bool doAnimation) {
+    if (doAnimation) {
+        //Do some checks before setting the current index.
+        if (currentIndex() != index && !doingNewAnimation) {
+            doSetCurrentIndex(index);
+        }
+    } else {
+        QStackedWidget::setCurrentIndex(index);
+        doingNewAnimation = false;
+
+        emit switchingFrame(index);
     }
 }
 
@@ -30,7 +37,7 @@ void AnimatedStackedWidget::doSetCurrentIndex(int index) {
 
         QSequentialAnimationGroup* group = new QSequentialAnimationGroup;
 
-        QPropertyAnimation* animation = new QPropertyAnimation(nextWidget, "geometry");
+        tPropertyAnimation* animation = new tPropertyAnimation(nextWidget, "geometry");
         animation->setStartValue(nextWidget->geometry());
         animation->setEndValue(QRect(0, 0, this->width(), this->height()));
         animation->setEasingCurve(QEasingCurve::OutCubic);
@@ -46,6 +53,6 @@ void AnimatedStackedWidget::doSetCurrentIndex(int index) {
     emit switchingFrame(index);
 }
 
-void AnimatedStackedWidget::setCurrentWidget(QWidget *w) {
-    this->setCurrentIndex(indexOf(w));
+void AnimatedStackedWidget::setCurrentWidget(QWidget *w, bool doAnimation) {
+    this->setCurrentIndex(indexOf(w), doAnimation);
 }
