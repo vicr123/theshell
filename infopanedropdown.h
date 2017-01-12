@@ -32,6 +32,7 @@
 #include "notificationdbus.h"
 #include "upowerdbus.h"
 #include "endsessionwait.h"
+#include "audiomanager.h"
 #include <sys/sysinfo.h>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>

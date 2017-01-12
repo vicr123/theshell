@@ -109,7 +109,7 @@ void HotkeyHud::close() {
     anim->setStartValue(this->geometry());
     anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height()));
     anim->setDuration(500);
-    anim->setEasingCurve(QEasingCurve::InCubic);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
     connect(anim, &QPropertyAnimation::finished, [=]() {
         QDialog::close();
         isShowing = false;

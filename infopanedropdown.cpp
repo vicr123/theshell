@@ -5,6 +5,7 @@ extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern void EndSession(EndSessionWait::shutdownType type);
 extern QString calculateSize(quint64 size);
+extern AudioManager* AudioMan;
 
 InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, QWidget *parent) :
     QDialog(parent),
@@ -1042,6 +1043,8 @@ void InfoPaneDropdown::startTimer(QTime time) {
                 playlist->setPlaybackMode(QMediaPlaylist::Loop);
                 ringtone->setPlaylist(playlist);
                 ringtone->play();
+
+                AudioMan->quietStreams();
             }
             updateTimers();
         } else {
@@ -1077,6 +1080,7 @@ void InfoPaneDropdown::updateTimers() {
 void InfoPaneDropdown::notificationClosed(uint id, uint reason) {
     if (id == timerNotificationId) {
         ringtone->stop();
+        AudioMan->restoreStreams();
         timerNotificationId = 0;
     }
 }
