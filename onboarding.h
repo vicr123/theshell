@@ -18,6 +18,9 @@
     "- Added icon in bar for wireless reception\n"\
     "- theShell now uses the-libs for integration with other the-applications.\n"\
     "- Dragging down on an item in the bar to open the status center has been added\n"\
+    "- New notification animation\n"\
+    "- When a timer elapses, other audio is made quiter until the timer is dismissed\n"\
+    "- Redshift now works overnight\n"\
     "\n"\
     "New in theShell 5.2: \n"\
     "- New Onboarding experience. Every time theShell updates, you'll get a changelog.\n" \

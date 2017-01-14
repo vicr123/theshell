@@ -80,7 +80,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         }
 
 
-        NotificationDialog *d = new NotificationDialog(summary, body, actions, replaces_id, hints, expire_timeout, type);
+        NotificationDialog *d = new NotificationDialog(app_name, summary, body, actions, replaces_id, hints, expire_timeout, type);
         d->dbusParent = this;
 
         connect(d, SIGNAL(closing(int, int)), this, SLOT(sendCloseNotification(int, int)));
@@ -131,7 +131,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
             }
         }
     } else {
-        dialogs.at(replaces_id - 1)->setParams(summary, body);
+        dialogs.at(replaces_id - 1)->setParams(app_name, summary, body);
         dialogs.at(replaces_id - 1)->show();
     }
 

@@ -71,10 +71,10 @@ void QtHandler(QtMsgType type, const QMessageLogContext &context, const QString 
     case QtInfoMsg:
     case QtWarningMsg:
     case QtCriticalMsg:
-        std::cout << msg.toStdString() + "\n";
+        std::cerr << msg.toStdString() + "\n";
         break;
     case QtFatalMsg:
-        std::cout << msg.toStdString() + "\n";
+        std::cerr << msg.toStdString() + "\n";
         raise_signal(msg);
     }
 }
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     signal(SIGABRT, *catch_signal); //Catch SIGABRT
     signal(SIGILL, *catch_signal); //Catch SIGILL
 
-    //qInstallMessageHandler(QtHandler);
+    qInstallMessageHandler(QtHandler);
 
     QApplication a(argc, argv);
 

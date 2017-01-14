@@ -3,7 +3,7 @@
 
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 
-NotificationDialog::NotificationDialog(QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type, QWidget *parent) :
+NotificationDialog::NotificationDialog(QString appName, QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NotificationDialog)
 {
@@ -11,7 +11,6 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
 
     this->hints = hints;
     this->setAttribute(Qt::WA_X11NetWmWindowTypeNotification, true);
-
 
     /*QBrush background = this->palette().background();
     QPalette pal = this->palette();
@@ -23,7 +22,7 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
     //pal().foreground().setColor(background);
     this->setPalette(pal);*/
 
-
+    ui->appName->setText(appName);
     switch (type) {
     case normalType:
         ui->notificationType->setCurrentIndex(0);
@@ -64,48 +63,98 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
 
     QColor color = this->palette().color(QPalette::Window);
 
+    QIcon appIcon;
+    bool foundAppIcon = false;
+    QString filename = hints.value("desktop-entry", "").toString() + ".desktop";
+
+    QDir appFolder("/usr/share/applications/");
+    QDirIterator* iterator = new QDirIterator(appFolder, QDirIterator::Subdirectories);
+
+    while (iterator->hasNext()) {
+        iterator->next();
+        QFileInfo info = iterator->fileInfo();
+        if (info.fileName() == filename || info.baseName().toLower() == appName.toLower()) {
+            QFile file(info.filePath());
+            file.open(QFile::ReadOnly);
+            QString appinfo(file.readAll());
+
+            QStringList desktopLines;
+            QString currentDesktopLine;
+            for (QString desktopLine : appinfo.split("\n")) {
+                if (desktopLine.startsWith("[") && currentDesktopLine != "") {
+                    desktopLines.append(currentDesktopLine);
+                    currentDesktopLine = "";
+                }
+                currentDesktopLine.append(desktopLine + "\n");
+            }
+            desktopLines.append(currentDesktopLine);
+
+            for (QString desktopPart : desktopLines) {
+                for (QString line : desktopPart.split("\n")) {
+                    if (line.startsWith("icon=", Qt::CaseInsensitive)) {
+                        QString iconname = line.split("=")[1];
+                        if (QFile(iconname).exists()) {
+                            appIcon = QIcon(iconname);
+                        } else {
+                            appIcon = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
+                        }
+                        foundAppIcon = true;
+                    }
+                }
+            }
+        }
+    }
+
+    delete iterator;
+
+    if (foundAppIcon) {
+        ui->appIcon->setPixmap(appIcon.pixmap(16, 16));
+    } else {
+        ui->appIcon->setVisible(false);
+    }
 
     // Don't forget to add extra categories to the notificationdbus class too!
 
+    QSize iconSize(24, 24);
     if (hints.keys().contains("category")) {
         QString category = hints.value("category").toString();
         if (category == "network.connected") {
-            ui->label->setPixmap(QIcon::fromTheme("network-connect").pixmap(24, 24));
+            ui->label->setPixmap(QIcon::fromTheme("network-connect").pixmap(iconSize));
         } else if (category == "network.disconnected") {
-            ui->label->setPixmap(QIcon::fromTheme("network-disconnect").pixmap(24, 24));
+            ui->label->setPixmap(QIcon::fromTheme("network-disconnect").pixmap(iconSize));
         } else if (category == "email.arrived") {
-            ui->label->setPixmap(QIcon::fromTheme("mail-receive").pixmap(24, 24));
+            ui->label->setPixmap(QIcon::fromTheme("mail-receive").pixmap(iconSize));
         } else if (category == "battery.charging") {
-            ui->label->setPixmap(getIconFromTheme("battery-charging.svg", color).pixmap(24, 24));
+            ui->label->setPixmap(getIconFromTheme("battery-charging.svg", color).pixmap(iconSize));
         } else if (category == "battery.charged") {
-            ui->label->setPixmap(getIconFromTheme("battery-charged.svg", color).pixmap(24, 24));
+            ui->label->setPixmap(getIconFromTheme("battery-charged.svg", color).pixmap(iconSize));
         } else if (category == "battery.discharging") {
-            ui->label->setPixmap(getIconFromTheme("battery-not-charging.svg", color).pixmap(24, 24));
+            ui->label->setPixmap(getIconFromTheme("battery-not-charging.svg", color).pixmap(iconSize));
         } else if (category == "battery.low") {
-            ui->label->setPixmap(getIconFromTheme("battery-low.svg", color).pixmap(24, 24));
+            ui->label->setPixmap(getIconFromTheme("battery-low.svg", color).pixmap(iconSize));
         } else if (category == "battery.critical") {
-            ui->label->setPixmap(getIconFromTheme("battery-critical.svg", color).pixmap(24, 24));
+            ui->label->setPixmap(getIconFromTheme("battery-critical.svg", color).pixmap(iconSize));
         } else if (category == "device.added") {
-            ui->label->setPixmap(getIconFromTheme("connect.svg", color).pixmap(24, 24));
+            ui->label->setPixmap(getIconFromTheme("connect.svg", color).pixmap(iconSize));
         } else if (category == "device.removed") {
-            ui->label->setPixmap(getIconFromTheme("disconnect.svg", color).pixmap(24, 24));
+            ui->label->setPixmap(getIconFromTheme("disconnect.svg", color).pixmap(iconSize));
         } else if (category == "call.incoming") {
-            ui->label->setPixmap(QIcon::fromTheme("call-start").pixmap(24, 24));
+            ui->label->setPixmap(QIcon::fromTheme("call-start").pixmap(iconSize));
         } else {
-            ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(24, 24));
+            ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(iconSize));
         }
     } else {
         if (hints.keys().contains("urgency")) {
             QChar urgency = hints.value("urgency").toChar();
             if (urgency == 0) {
-                ui->label->setPixmap(QIcon::fromTheme("dialog-information").pixmap(24, 24));
+                ui->label->setPixmap(QIcon::fromTheme("dialog-information").pixmap(iconSize));
             } else if (urgency == 1) {
-                ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(24, 24));
+                ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(iconSize));
             } else if (urgency == 2) {
-                ui->label->setPixmap(QIcon::fromTheme("dialog-error").pixmap(24, 24));
+                ui->label->setPixmap(QIcon::fromTheme("dialog-error").pixmap(iconSize));
             }
         } else {
-            ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(24, 24));
+            ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(iconSize));
         }
     }
     if (timeout == -1) { //Timeout default
@@ -117,7 +166,8 @@ NotificationDialog::NotificationDialog(QString title, QString body, QStringList 
     }
 }
 
-void NotificationDialog::setParams(QString title, QString body) {
+void NotificationDialog::setParams(QString appName, QString title, QString body) {
+    ui->appName->setText(appName);
     ui->title->setText(title);
     ui->body->setText(body);
 }

@@ -28,13 +28,13 @@ public:
         callType,
     };
 
-    explicit NotificationDialog(QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type = normalType, QWidget *parent = 0);
+    explicit NotificationDialog(QString appName, QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type = normalType, QWidget *parent = 0);
     ~NotificationDialog();
 
     void show();
     void close(int reason);
 
-    void setParams(QString title, QString body);
+    void setParams(QString appName, QString title, QString body);
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
 

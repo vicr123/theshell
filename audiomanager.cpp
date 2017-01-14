@@ -25,13 +25,28 @@ AudioManager::AudioManager(QObject *parent) : QObject(parent)
 void AudioManager::changeVolume(int volume) {
     pa_volume_t avgVol = pa_cvolume_avg(&defaultSinkVolume);
     int onePercent = (PA_VOLUME_NORM - PA_VOLUME_MUTED) / 100;
-    avgVol += onePercent * volume;
+    pa_volume_t newVol = avgVol + (onePercent * volume);
+    if (newVol < PA_VOLUME_MUTED) newVol = PA_VOLUME_MUTED;
+    if (newVol > PA_VOLUME_MAX) newVol = PA_VOLUME_MAX;
 
-    pa_cvolume newVol = defaultSinkVolume;
-    for (int i = 0; i < newVol.channels; i++) {
-        newVol.values[i] = avgVol;
+    if (volume < 0) {
+        if (newVol > avgVol) {
+            newVol = PA_VOLUME_MUTED;
+        }
     }
-    pa_context_set_sink_volume_by_index(pulseContext, defaultSinkIndex, &newVol, NULL, NULL);
+    if (avgVol < PA_VOLUME_NORM) {
+        if (newVol > PA_VOLUME_NORM) {
+            newVol = PA_VOLUME_NORM;
+        }
+    }
+
+
+    pa_cvolume newCVol = defaultSinkVolume;
+    for (int i = 0; i < newCVol.channels; i++) {
+        newCVol.values[i] = newVol;
+    }
+    pa_context_set_sink_mute_by_index(pulseContext, defaultSinkIndex, false, NULL, NULL);
+    pa_context_set_sink_volume_by_index(pulseContext, defaultSinkIndex, &newCVol, NULL, NULL);
 }
 
 void AudioManager::setMasterVolume(int volume) {
@@ -164,24 +179,45 @@ void AudioManager::pulseGetSources(pa_context *c, const pa_source_info *i, int e
 }
 
 void AudioManager::quietStreams() {
-    for (int source : originalStreamVolumes.keys()) {
-        //Set volume to 50% of original
-        pa_cvolume originalVolume = originalStreamVolumes.value(source);
-        for (int i = 0; i < originalVolume.channels; i++) {
-            originalVolume.values[i] /= 2;
+    if (pulseAvailable) {
+        for (int source : originalStreamVolumes.keys()) {
+            //Set volume to 50% of original
+            pa_cvolume originalVolume = originalStreamVolumes.value(source);
+            for (int i = 0; i < originalVolume.channels; i++) {
+                originalVolume.values[i] /= 2;
+            }
+            pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
         }
-        pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
+        quietMode = true;
     }
 }
 
 void AudioManager::restoreStreams() {
-    for (int source : originalStreamVolumes.keys()) {
-        //Restore volume of each stream
-        pa_cvolume originalVolume = originalStreamVolumes.value(source);
-        for (int i = 0; i < originalVolume.channels; i++) {
-            originalVolume.values[i] *= 2;
-        }
-        pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
+    if (pulseAvailable) {
+        //Sounds much better if we delay by a second
+        QTimer::singleShot(1000, [=]() {
+            for (int source : originalStreamVolumes.keys()) {
+                //Restore volume of each stream
+                pa_cvolume originalVolume = originalStreamVolumes.value(source);
+                if (originalVolume.channels > 0) {
+                    tVariantAnimation* anim = new tVariantAnimation;
+                    anim->setStartValue(originalVolume.values[0] / 2);
+                    anim->setEndValue(originalVolume.values[0]);
+                    anim->setDuration(500);
+                    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                        pa_cvolume originalVolume = originalStreamVolumes.value(source);
+                        for (int i = 0; i < originalVolume.channels; i++) {
+                            originalVolume.values[i] = value.toUInt();
+                        }
+                        pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
+                    });
+                    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                    anim->start();
+                }
+
+            }
+            quietMode = false;
+        });
     }
 }
 

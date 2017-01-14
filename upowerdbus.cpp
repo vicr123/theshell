@@ -49,11 +49,7 @@ void UPowerDBus::devicesChanged() {
                 batteryPath = device;
             }
         }
-        if (allDevices.length() == 0) {
-            hasBat = false;
-        } else {
-            hasBat = true;
-        }
+        DeviceChanged();
     } else {
         emit updateDisplay("Can't get battery information.");
     }
@@ -171,7 +167,11 @@ void UPowerDBus::DeviceChanged() {
                             tenMinuteBatteryWarning = true;
                             halfHourBatteryWarning = true;
                             hourBatteryWarning = true;
-                            showRed = true;
+
+                            QSoundEffect* chargingSound = new QSoundEffect();
+                            chargingSound->setSource(QUrl("qrc:/sounds/powerlow.wav"));
+                            chargingSound->play();
+                            connect(chargingSound, SIGNAL(playingChanged()), chargingSound, SLOT(deleteLater()));
                         } else if (timeToEmpty <= 1800 && halfHourBatteryWarning == false) { //Half hour left! Low!
                             QVariantMap hints;
                             hints.insert("urgency", 2);
@@ -189,7 +189,11 @@ void UPowerDBus::DeviceChanged() {
 
                             halfHourBatteryWarning = true;
                             hourBatteryWarning = true;
-                            showRed = true;
+
+                            QSoundEffect* chargingSound = new QSoundEffect();
+                            chargingSound->setSource(QUrl("qrc:/sounds/powerlow.wav"));
+                            chargingSound->play();
+                            connect(chargingSound, SIGNAL(playingChanged()), chargingSound, SLOT(deleteLater()));
                         } else if (timeToEmpty <= 3600 && hourBatteryWarning == false) { //One hour left! Warning!
                             QVariantMap hints;
                             hints.insert("urgency", 2);
@@ -204,6 +208,15 @@ void UPowerDBus::DeviceChanged() {
                                                            "You have about an hour of battery remaining."
                                                             " You may want to plug in your PC now.", actions, hints, 10000);
                             hourBatteryWarning = true;
+
+                            QSoundEffect* chargingSound = new QSoundEffect();
+                            chargingSound->setSource(QUrl("qrc:/sounds/powerlow.wav"));
+                            chargingSound->play();
+                            connect(chargingSound, SIGNAL(playingChanged()), chargingSound, SLOT(deleteLater()));
+                        }
+
+                        if (halfHourBatteryWarning || tenMinuteBatteryWarning) {
+                            showRed = true;
                         }
                     } else {
                         timeRemain = QDateTime(QDate(0, 0, 0));
@@ -325,7 +338,13 @@ void UPowerDBus::DeviceChanged() {
         }
     }
 
-    emit updateDisplay(displayOutput.join(" · "));
+    if (displayOutput.count() == 0) {
+        hasBat = false;
+        emit updateDisplay("");
+    } else {
+        hasBat = true;
+        emit updateDisplay(displayOutput.join(" · "));
+    }
 }
 
 bool UPowerDBus::hasBattery() {

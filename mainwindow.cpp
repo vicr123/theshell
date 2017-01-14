@@ -56,15 +56,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     UPowerDBus* updbus = new UPowerDBus(ndbus, this);
     connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
-        ui->batteryLabel->setText(display);
+        if (updbus->hasBattery()) {
+            ui->batteryFrame->setVisible(true);
+            ui->batteryLabel->setText(display);
+        } else {
+            ui->batteryFrame->setVisible(false);
+        }
     });
     updbus->DeviceChanged();
-
-    if (updbus->hasBattery()) {
-        ui->batteryFrame->setVisible(true);
-    } else {
-        ui->batteryFrame->setVisible(false);
-    }
 
     DBusEvents = new DbusEvents(ndbus);
 
@@ -420,7 +419,7 @@ void MainWindow::doUpdate() {
                         }
                     }
 
-                    delete[] atoms;
+                    XFree(atoms);
                 }
 
                 if (!skipTaskbar) {

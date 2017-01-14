@@ -120,7 +120,9 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     Hotkeys->show(QIcon::fromTheme("video-display"), "Brightness", (int) currentBrightness);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioRaiseVolume)) { //Increase Volume by 5%
                     volume = volume + 5;
-                    if (volume > 100) volume = 100;
+                    if (volume - 5 < 100 && volume > 100) {
+                        volume = 100;
+                    }
                     AudioMan->changeVolume(5);
 
                     QSoundEffect* volumeSound = new QSoundEffect();

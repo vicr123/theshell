@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QProcess>
 #include <QMap>
+#include <QTimer>
+#include <tvariantanimation.h>
 #include <pulse/context.h>
 #include <pulse/glib-mainloop.h>
 #include <pulse/volume.h>

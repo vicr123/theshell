@@ -52,6 +52,11 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->resetButton->setProperty("type", "destructive");
     ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16, 16));
 
+    QPalette powerStretchPalette = ui->PowerStretchSwitch->palette();
+    powerStretchPalette.setColor(QPalette::Highlight, QColor(255, 100, 0));
+    powerStretchPalette.setColor(QPalette::WindowText, Qt::white);
+    ui->PowerStretchSwitch->setPalette(powerStretchPalette);
+
     //Set up battery chart
     batteryChart = new QChart();
     batteryChart->setBackgroundVisible(false);
@@ -237,6 +242,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("emblem-warning"), "Danger"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), "About"));
     ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
+    ui->settingsTabs->setCurrentIndex(ui->settingsTabs->count() - 1);
 
     //Set up timer ringtones
     ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
@@ -288,15 +294,57 @@ void InfoPaneDropdown::on_WifiSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::processTimer() {
     QTime time = QTime::currentTime();
-    if (ui->redshiftPause->isChecked() && time.secsTo(ui->startRedshift->time()) <= 0 && time.secsTo(ui->endRedshift->time()) >= 0) {
-        if (!isRedshiftOn) {
+    {
+        int currentMsecs = time.msecsSinceStartOfDay();
+        int startMsecs = ui->startRedshift->time().msecsSinceStartOfDay();
+        int endMsecs = ui->endRedshift->time().msecsSinceStartOfDay();
+        int endIntensity = ui->redshiftIntensity->value();
+        const int oneHour = 3600000;
+        QProcess* redshiftAdjust = new QProcess;
+        connect(redshiftAdjust, SIGNAL(finished(int)), redshiftAdjust, SLOT(deleteLater()));
+        if (ui->redshiftPause->isChecked()) {
+            //Calculate redshift value
+            //Transition to redshift is 1 hour from the start.
+
+            int intensity;
+            if (startMsecs > endMsecs) { //Start time is later then end time
+                if (currentMsecs < endMsecs || currentMsecs > startMsecs) {
+                    intensity = endIntensity;
+                } else if (currentMsecs < startMsecs && currentMsecs > startMsecs - oneHour) {
+                    int timeFrom = currentMsecs - (startMsecs - oneHour);
+                    float percentage = ((float) timeFrom / (float) oneHour);
+                    int progress = (6500 - endIntensity) * percentage;
+                    intensity = 6500 - progress;
+                } else if (currentMsecs > endMsecs && currentMsecs < endMsecs + oneHour) {
+                    int timeFrom = endMsecs - (currentMsecs - oneHour);
+                    float percentage = ((float) timeFrom / (float) oneHour);
+                    int progress = (6500 - endIntensity) * percentage;
+                    intensity = 6500 - progress;
+                } else {
+                    intensity = 6500;
+                }
+            } else { //Start time is earlier then end time
+                if (currentMsecs < endMsecs && currentMsecs > startMsecs) {
+                    intensity = endIntensity;
+                } else if (currentMsecs < startMsecs && currentMsecs > startMsecs - oneHour) {
+                    int timeFrom = currentMsecs - (startMsecs - oneHour);
+                    float percentage = ((float) timeFrom / (float) oneHour);
+                    int progress = (6500 - endIntensity) * percentage;
+                    intensity = 6500 - progress;
+                } else if (currentMsecs > endMsecs && currentMsecs < endMsecs + oneHour) {
+                    int timeFrom = endMsecs - (currentMsecs - oneHour);
+                    float percentage = ((float) timeFrom / (float) oneHour);
+                    int progress = (6500 - endIntensity) * percentage;
+                    intensity = 6500 - progress;
+                } else {
+                    intensity = 6500;
+                }
+            }
+            redshiftAdjust->start("redshift -O " + QString::number(intensity));
             isRedshiftOn = true;
-            QProcess::startDetached("redshift -O " + QString::number(ui->redshiftIntensity->value()));
-        }
-    } else {
-        if (isRedshiftOn) {
+        } else {
+            redshiftAdjust->start("redshift -O 6500");
             isRedshiftOn = false;
-            QProcess::startDetached("redshift -O 6500");
         }
     }
 
@@ -413,7 +461,7 @@ void InfoPaneDropdown::show(dropdownType showWith) {
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
     QDialog::show();
-
+    this->setFocusPolicy(Qt::StrongFocus);
     this->setFixedWidth(screenGeometry.width());
     this->setFixedHeight(screenGeometry.height());
 

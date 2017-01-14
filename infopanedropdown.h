@@ -36,6 +36,7 @@
 #include <sys/sysinfo.h>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QTimeEdit>
 
 class UPowerDBus;
 

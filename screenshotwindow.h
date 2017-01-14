@@ -15,6 +15,9 @@
 #include <QSoundEffect>
 #include <QParallelAnimationGroup>
 #include <QGraphicsOpacityEffect>
+#include <QDir>
+#include <QFileDialog>
+#include <QDateTime>
 
 namespace Ui {
 class screenshotWindow;

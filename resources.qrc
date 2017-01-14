@@ -10,6 +10,7 @@
         <file>media-remove.wav</file>
         <file>media-insert.wav</file>
         <file>screenshot.wav</file>
+        <file>powerlow.wav</file>
     </qresource>
     <qresource prefix="/icons/dark">
         <file>images/dark/flight.svg</file>
