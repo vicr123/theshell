@@ -2,6 +2,7 @@
 
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern TutorialWindow* TutorialWin;
+extern AudioManager* AudioMan;
 
 NotificationDBus::NotificationDBus(QObject *parent) : QObject(parent)
 {
@@ -12,7 +13,7 @@ NotificationDBus::NotificationDBus(QObject *parent) : QObject(parent)
 }
 
 QStringList NotificationDBus::GetCapabilities() {
-    return QStringList() << "body" << "body-markup" << "icon-static" << "persistence" << "actions";
+    return QStringList() << "body" << "body-markup" << "icon-static" << "persistence" << "actions" << "sound";
 }
 
 uint NotificationDBus::Notify(QString app_name, uint replaces_id,
@@ -32,6 +33,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         }
     } else if (app_name == "KDE Connect") { //Do special notifications for KDE Connect
         QString kdeEventId = hints.value("x-kde-eventId").toString();
+        app_icon = "kdeconnect";
         if (kdeEventId == "pingReceived") {
             body = "Ping received from " + summary;
             summary = "KDE Connect";
@@ -80,7 +82,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         }
 
 
-        NotificationDialog *d = new NotificationDialog(app_name, summary, body, actions, replaces_id, hints, expire_timeout, type);
+        NotificationDialog *d = new NotificationDialog(app_name, app_icon, summary, body, actions, replaces_id, hints, expire_timeout, type);
         d->dbusParent = this;
 
         connect(d, SIGNAL(closing(int, int)), this, SLOT(sendCloseNotification(int, int)));
@@ -97,7 +99,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
                 d->show();
                 currentDialog = d;
             }
-            connect(currentDialog, &NotificationDialog::closing, [=](int id, int reason) {
+            connect(currentDialog, &NotificationDialog::closing, [=]() {
                 if (currentDialog == d) {
                     currentDialog = NULL;
                 }
@@ -171,6 +173,36 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
             }
         }
         emit newNotification(replaces_id, summary, body, icon);
+    }
+
+    if (!hints.value("suppress-sound", false).toBool() && !dropdownPane->isQuietOn()) {
+        if (hints.contains("sound-file")) {
+            AudioMan->quietStreams();
+            QMediaPlayer* player = new QMediaPlayer();
+            player->setMedia(QMediaContent(QUrl(hints.value("sound-file").toString())));
+            player->play();
+            connect(player, &QMediaPlayer::stateChanged, [=](QMediaPlayer::State state) {
+                if (state == QMediaPlayer::StoppedState) {
+                    player->deleteLater();
+                    AudioMan->restoreStreams();
+                }
+            });
+        } else {
+            AudioMan->quietStreams();
+            QSoundEffect* sound = new QSoundEffect();
+
+            QString notificationSound = settings.value("notifications/sound", "tripleping").toString();
+            if (notificationSound == "tripleping") {
+                sound->setSource(QUrl("qrc:/sounds/notifications/tripleping.wav"));
+            } else if (notificationSound == "upsidedown") {
+                sound->setSource(QUrl("qrc:/sounds/notifications/upsidedown.wav"));
+            }
+            sound->play();
+            connect(sound, SIGNAL(playingChanged()), sound, SLOT(deleteLater()));
+            connect(sound, &QSoundEffect::playingChanged, [=]() {
+                AudioMan->restoreStreams();
+            });
+        }
     }
     return replaces_id;
 }

@@ -78,14 +78,9 @@ void DbusEvents::NewUdisksInterface(QDBusObjectPath path) {
             QVariantMap hints;
             hints.insert("transient", true);
             hints.insert("category", "device.added");
+            hints.insert("sound-file", "qrc:/sounds/media-insert.wav");
             uint id = notificationEngine->Notify("theShell", 0, "", deviceName + " Connected", deviceName + " has been connected to this PC.", actions, hints, -1);
-            notificationIds.insert(id, path);
-
-            QSoundEffect* mediaSound = new QSoundEffect();
-            mediaSound->setSource(QUrl("qrc:/sounds/media-insert.wav"));
-            mediaSound->play();
-            connect(mediaSound, SIGNAL(playingChanged()), mediaSound, SLOT(deleteLater()));
-        }
+            notificationIds.insert(id, path);        }
     }
 }
 
@@ -145,13 +140,9 @@ void DbusEvents::DetectNewDevices() {
                     QVariantMap hints;
                     hints.insert("transient", true);
                     hints.insert("category", "device.added");
+                    hints.insert("sound-file", "qrc:/sounds/media-insert.wav");
                     notificationEngine->Notify("theShell", 0, "", deviceName + " Connected", deviceName + " has been connected to this PC.", QStringList(), hints, -1);
                     connectediOSDevices.append(device);
-
-                    QSoundEffect* mediaSound = new QSoundEffect();
-                    mediaSound->setSource(QUrl("qrc:/sounds/media-insert.wav"));
-                    mediaSound->play();
-                    connect(mediaSound, SIGNAL(playingChanged()), mediaSound, SLOT(deleteLater()));
                 }
             }
         }

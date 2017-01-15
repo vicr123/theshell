@@ -242,6 +242,8 @@ private slots:
 
     void doNetworkCheck();
 
+    void on_notificationSoundBox_currentIndexChanged(int index);
+
 public slots:
     void getNetworks();
 

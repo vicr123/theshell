@@ -27,7 +27,8 @@ public slots:
     void setMasterVolume(int volume);
     void changeVolume(int volume);
     void quietStreams();
-    void restoreStreams();
+    void silenceStreams();
+    void restoreStreams(bool immediate = false);
 
 private:
     pa_context* pulseContext = NULL;

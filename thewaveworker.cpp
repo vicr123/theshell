@@ -1,6 +1,7 @@
 #include "thewaveworker.h"
 
 extern MainWindow* MainWin;
+extern AudioManager* AudioMan;
 
 theWaveWorker::theWaveWorker(QObject *parent) : QObject(parent)
 {
@@ -90,6 +91,9 @@ theWaveWorker::~theWaveWorker() {
 
 void theWaveWorker::begin() {
     if (!isRunning) {
+        //Quiet all audio on system
+        AudioMan->quietStreams();
+
         isRunning = true;
         if (resetOnNextBegin) { //Check if we need to reset frames
             resetOnNextBegin = false; //Reset Frame Reset bit
@@ -165,6 +169,9 @@ void theWaveWorker::endAndProcess() {
             stopListeningSound->play();
             emit loudnessChanged(-2);
             emit outputSpeech("");
+
+            //Restore all sounds on system
+            AudioMan->restoreStreams();
 
             if (this->state == Idle) {
                 emit hideBigListenFrame();
@@ -1154,17 +1161,21 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
         connect(sound, &QSoundEffect::playingChanged, [=]() {
             if (!sound->isPlaying()) {
                 sound->deleteLater();
+
+                //Restore all sounds on system
+                AudioMan->restoreStreams();
             }
         });
         connect(sound, &QSoundEffect::destroyed, [=]() {
-            bool success = QFile(QDir::homePath() + "/.thewavevoice.wav").remove();
-
             if (restartOnceComplete && !stopEverything) {
                 begin();
             }
             speechPlaying = false;
         });
     } else if (settings.value("thewave/ttsEngine").toString() == "espeak" && QFile("/usr/bin/espeak").exists()) {
+        //Quiet all sounds on system
+        AudioMan->quietStreams();
+
         QProcess *s = new QProcess(this);
         s->start("espeak \"" + speech + "\"");
 
@@ -1173,8 +1184,14 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
         }
         connect(s, static_cast<void(QProcess::*)(int)>(&QProcess::finished), [=]() {
             speechPlaying = false;
+
+            //Restore all sounds on system
+            AudioMan->restoreStreams();
         });
     } else if (settings.value("thewave/ttsEngine").toString() == "festival" && QFile("/usr/bin/festival").exists()) {
+        //Quiet all sounds on system
+        AudioMan->quietStreams();
+
         QProcess *s = new QProcess(this);
         s->start("festival --tts");
         s->write(speech.toUtf8());
@@ -1183,8 +1200,17 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
         if (restartOnceComplete && !stopEverything) {
             connect(s, SIGNAL(finished(int)), this, SLOT(begin()));
         }
+
+        connect(s, static_cast<void(QProcess::*)(int)>(&QProcess::finished), [=]() {
+            //Restore all sounds on system
+            AudioMan->restoreStreams();
+        });
+
         speechPlaying = false;
     } else {
+        //Restore all sounds on system
+        AudioMan->restoreStreams();
+
         QTimer* waitTimer = new QTimer(this);
         waitTimer->setInterval(5000);
         waitTimer->setSingleShot(true);

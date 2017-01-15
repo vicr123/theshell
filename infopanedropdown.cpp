@@ -230,6 +230,16 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
        }
     } while (allObjects.count() != 0);*/
 
+    ui->notificationSoundBox->addItem("Triple Ping");
+    ui->notificationSoundBox->addItem("Upside Down");
+
+    QString notificationSound = settings.value("notifications/sound", "tripleping").toString();
+    if (notificationSound == "tripleping") {
+        ui->notificationSoundBox->setCurrentIndex(0);
+    } else if (notificationSound == "upsidedown") {
+        ui->notificationSoundBox->setCurrentIndex(1);
+    }
+
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-login"), "Startup"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Bar"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Gateway"));
@@ -1068,6 +1078,7 @@ void InfoPaneDropdown::startTimer(QTime time) {
             if (!ui->QuietCheck->isChecked()) { //Check if we should show the notification so the user isn't stuck listening to the tone
                 QVariantMap hints;
                 hints.insert("x-thesuite-timercomplete", true);
+                hints.insert("suppress-sound", true);
                 timerNotificationId = notificationEngine->Notify("theShell", 0, "", "Timer Elapsed",
                                           "Your timer has completed.",
                                           QStringList(), hints, 0);
@@ -1091,6 +1102,7 @@ void InfoPaneDropdown::startTimer(QTime time) {
                 playlist->setPlaybackMode(QMediaPlaylist::Loop);
                 ringtone->setPlaylist(playlist);
                 ringtone->play();
+
 
                 AudioMan->quietStreams();
             }
@@ -1928,4 +1940,21 @@ void InfoPaneDropdown::completeDragDown() {
         connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
         a->start();
     }
+}
+
+void InfoPaneDropdown::on_notificationSoundBox_currentIndexChanged(int index)
+{
+    QSoundEffect* sound = new QSoundEffect();
+    switch (index) {
+        case 0:
+            settings.setValue("notifications/sound", "tripleping");
+            sound->setSource(QUrl("qrc:/sounds/notifications/tripleping.wav"));
+            break;
+        case 1:
+            settings.setValue("notifications/sound", "upsidedown");
+            sound->setSource(QUrl("qrc:/sounds/notifications/upsidedown.wav"));
+            break;
+    }
+    sound->play();
+    connect(sound, SIGNAL(playingChanged()), sound, SLOT(deleteLater()));
 }

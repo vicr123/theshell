@@ -28,7 +28,7 @@ public:
         callType,
     };
 
-    explicit NotificationDialog(QString appName, QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type = normalType, QWidget *parent = 0);
+    explicit NotificationDialog(QString appName, QString appIconStr, QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type = normalType, QWidget *parent = 0);
     ~NotificationDialog();
 
     void show();

@@ -566,15 +566,15 @@
              <minute>15</minute>
              <second>0</second>
              <year>1969</year>
-             <month>11</month>
-             <day>1</day>
+             <month>10</month>
+             <day>31</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
-             <month>11</month>
-             <day>1</day>
+             <month>10</month>
+             <day>31</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -1108,7 +1108,7 @@
           <item>
            <widget class="QLabel" name="label_47">
             <property name="text">
-             <string>This is measured by your device. Your ISP may count your data usage differently.</string>
+             <string>This is measured by your device and resets every time you boot your PC. Your ISP may count your data usage differently.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -1269,8 +1269,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>165</width>
-            <height>58</height>
+            <width>1164</width>
+            <height>599</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1609,7 +1609,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>10</number>
+            <number>5</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2569,6 +2569,16 @@
                 <string>MediaSwitch</string>
                </property>
               </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_58">
+               <property name="text">
+                <string>Notification Sound</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1" colspan="2">
+              <widget class="QComboBox" name="notificationSoundBox"/>
              </item>
             </layout>
            </widget>

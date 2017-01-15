@@ -3,7 +3,7 @@
 
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 
-NotificationDialog::NotificationDialog(QString appName, QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type, QWidget *parent) :
+NotificationDialog::NotificationDialog(QString appName, QString appIconStr, QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NotificationDialog)
 {
@@ -65,47 +65,57 @@ NotificationDialog::NotificationDialog(QString appName, QString title, QString b
 
     QIcon appIcon;
     bool foundAppIcon = false;
-    QString filename = hints.value("desktop-entry", "").toString() + ".desktop";
+    if (appIconStr != "" && QIcon::hasThemeIcon(appIconStr)) {
+        appIcon = QIcon::fromTheme(appIconStr);
+        foundAppIcon = true;
+    } else if (QIcon::hasThemeIcon(appName.toLower().replace(" ", "-"))) {
+        appIcon = QIcon::fromTheme(appName.toLower().replace(" ", "-"));
+        foundAppIcon = true;
+    } else if (QIcon::hasThemeIcon(appName.toLower().replace(" ", ""))) {
+        appIcon = QIcon::fromTheme(appName.toLower().replace(" ", ""));
+        foundAppIcon = true;
+    } else {
+        QString filename = hints.value("desktop-entry", "").toString() + ".desktop";
 
-    QDir appFolder("/usr/share/applications/");
-    QDirIterator* iterator = new QDirIterator(appFolder, QDirIterator::Subdirectories);
+        QDir appFolder("/usr/share/applications/");
+        QDirIterator* iterator = new QDirIterator(appFolder, QDirIterator::Subdirectories);
 
-    while (iterator->hasNext()) {
-        iterator->next();
-        QFileInfo info = iterator->fileInfo();
-        if (info.fileName() == filename || info.baseName().toLower() == appName.toLower()) {
-            QFile file(info.filePath());
-            file.open(QFile::ReadOnly);
-            QString appinfo(file.readAll());
+        while (iterator->hasNext()) {
+            iterator->next();
+            QFileInfo info = iterator->fileInfo();
+            if (info.fileName() == filename || info.baseName().toLower() == appName.toLower()) {
+                QFile file(info.filePath());
+                file.open(QFile::ReadOnly);
+                QString appinfo(file.readAll());
 
-            QStringList desktopLines;
-            QString currentDesktopLine;
-            for (QString desktopLine : appinfo.split("\n")) {
-                if (desktopLine.startsWith("[") && currentDesktopLine != "") {
-                    desktopLines.append(currentDesktopLine);
-                    currentDesktopLine = "";
+                QStringList desktopLines;
+                QString currentDesktopLine;
+                for (QString desktopLine : appinfo.split("\n")) {
+                    if (desktopLine.startsWith("[") && currentDesktopLine != "") {
+                        desktopLines.append(currentDesktopLine);
+                        currentDesktopLine = "";
+                    }
+                    currentDesktopLine.append(desktopLine + "\n");
                 }
-                currentDesktopLine.append(desktopLine + "\n");
-            }
-            desktopLines.append(currentDesktopLine);
+                desktopLines.append(currentDesktopLine);
 
-            for (QString desktopPart : desktopLines) {
-                for (QString line : desktopPart.split("\n")) {
-                    if (line.startsWith("icon=", Qt::CaseInsensitive)) {
-                        QString iconname = line.split("=")[1];
-                        if (QFile(iconname).exists()) {
-                            appIcon = QIcon(iconname);
-                        } else {
-                            appIcon = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
+                for (QString desktopPart : desktopLines) {
+                    for (QString line : desktopPart.split("\n")) {
+                        if (line.startsWith("icon=", Qt::CaseInsensitive)) {
+                            QString iconname = line.split("=")[1];
+                            if (QFile(iconname).exists()) {
+                                appIcon = QIcon(iconname);
+                            } else {
+                                appIcon = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
+                            }
+                            foundAppIcon = true;
                         }
-                        foundAppIcon = true;
                     }
                 }
             }
         }
+        delete iterator;
     }
-
-    delete iterator;
 
     if (foundAppIcon) {
         ui->appIcon->setPixmap(appIcon.pixmap(16, 16));

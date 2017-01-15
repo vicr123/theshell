@@ -192,10 +192,24 @@ void AudioManager::quietStreams() {
     }
 }
 
-void AudioManager::restoreStreams() {
+void AudioManager::silenceStreams() {
+    if (pulseAvailable) {
+        for (int source : originalStreamVolumes.keys()) {
+            //Set volume to 10% of original
+            pa_cvolume originalVolume = originalStreamVolumes.value(source);
+            for (int i = 0; i < originalVolume.channels; i++) {
+                originalVolume.values[i] /= 10;
+            }
+            pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
+        }
+        quietMode = true;
+    }
+}
+
+void AudioManager::restoreStreams(bool immediate) {
     if (pulseAvailable) {
         //Sounds much better if we delay by a second
-        QTimer::singleShot(1000, [=]() {
+        QTimer::singleShot(immediate ? 0 : 1000, [=]() {
             for (int source : originalStreamVolumes.keys()) {
                 //Restore volume of each stream
                 pa_cvolume originalVolume = originalStreamVolumes.value(source);
@@ -245,7 +259,7 @@ void AudioManager::pulseGetInputSinks(pa_context *c, const pa_sink_input_info *i
 void AudioManager::pulseGetClients(pa_context *c, const pa_client_info *i, int eol, void *userdata) {
     AudioManager* currentManager = (AudioManager*) userdata;
     if (eol == 0) {
-        if (QString::fromUtf8(i->name).toLower().contains("theshell")) {
+        if (QString::fromUtf8(i->name).toLower().contains("theshell") || QString::fromUtf8(i->name).toLower().contains("qtpulseaudio")) {
             currentManager->newTsClientIndices.append(i->index);
         }
     } else {

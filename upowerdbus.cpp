@@ -104,13 +104,9 @@ void UPowerDBus::DeviceChanged() {
                         QVariantMap hints;
                         hints.insert("category", "battery.charging");
                         hints.insert("transient", true);
+                        hints.insert("sound-file", "qrc:/sounds/charging.wav");
                         this->notificationDBus->Notify("theShell", 0, "", "Charging",
                                                        message, QStringList(), hints, 10000);
-
-                        QSoundEffect* chargingSound = new QSoundEffect();
-                        chargingSound->setSource(QUrl("qrc:/sounds/charging.wav"));
-                        chargingSound->play();
-                        connect(chargingSound, SIGNAL(playingChanged()), chargingSound, SLOT(deleteLater()));
                     }
 
                     isCharging = true;
@@ -153,6 +149,7 @@ void UPowerDBus::DeviceChanged() {
                             QVariantMap hints;
                             hints.insert("urgency", 2);
                             hints.insert("category", "battery.critical");
+                            hints.insert("sound-file", "qrc:/sounds/powerlow.wav");
 
                             QStringList actions;
                             if (!isPowerStretchOn) {
@@ -167,15 +164,11 @@ void UPowerDBus::DeviceChanged() {
                             tenMinuteBatteryWarning = true;
                             halfHourBatteryWarning = true;
                             hourBatteryWarning = true;
-
-                            QSoundEffect* chargingSound = new QSoundEffect();
-                            chargingSound->setSource(QUrl("qrc:/sounds/powerlow.wav"));
-                            chargingSound->play();
-                            connect(chargingSound, SIGNAL(playingChanged()), chargingSound, SLOT(deleteLater()));
                         } else if (timeToEmpty <= 1800 && halfHourBatteryWarning == false) { //Half hour left! Low!
                             QVariantMap hints;
                             hints.insert("urgency", 2);
                             hints.insert("category", "battery.low");
+                            hints.insert("sound-file", "qrc:/sounds/powerlow.wav");
 
                             QStringList actions;
                             if (!isPowerStretchOn) {
@@ -189,15 +182,11 @@ void UPowerDBus::DeviceChanged() {
 
                             halfHourBatteryWarning = true;
                             hourBatteryWarning = true;
-
-                            QSoundEffect* chargingSound = new QSoundEffect();
-                            chargingSound->setSource(QUrl("qrc:/sounds/powerlow.wav"));
-                            chargingSound->play();
-                            connect(chargingSound, SIGNAL(playingChanged()), chargingSound, SLOT(deleteLater()));
                         } else if (timeToEmpty <= 3600 && hourBatteryWarning == false) { //One hour left! Warning!
                             QVariantMap hints;
                             hints.insert("urgency", 2);
                             hints.insert("category", "battery.low");
+                            hints.insert("sound-file", "qrc:/sounds/powerlow.wav");
 
                             QStringList actions;
                             if (!isPowerStretchOn) {
@@ -208,11 +197,6 @@ void UPowerDBus::DeviceChanged() {
                                                            "You have about an hour of battery remaining."
                                                             " You may want to plug in your PC now.", actions, hints, 10000);
                             hourBatteryWarning = true;
-
-                            QSoundEffect* chargingSound = new QSoundEffect();
-                            chargingSound->setSource(QUrl("qrc:/sounds/powerlow.wav"));
-                            chargingSound->play();
-                            connect(chargingSound, SIGNAL(playingChanged()), chargingSound, SLOT(deleteLater()));
                         }
 
                         if (halfHourBatteryWarning || tenMinuteBatteryWarning) {
