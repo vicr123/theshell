@@ -50,6 +50,9 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->networkKey->setVisible(false);
     ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
+    ui->userSettingsDeleteUser->setProperty("type", "destructive");
+    ui->userSettingsDeleteUserAndData->setProperty("type", "destructive");
+    ui->userSettingsDeleteUserOnly->setProperty("type", "destructive");
     ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16, 16));
 
     QPalette powerStretchPalette = ui->PowerStretchSwitch->palette();
@@ -107,10 +110,6 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     });
 
     ui->FlightSwitch->setOnIcon(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)));
-
-    if (!QFile("/usr/bin/systemsettings5").exists()) {
-        ui->pushButton_8->setVisible(false);
-    }
 
     //Set up theme button combo box
     int themeAccentColorIndex = themeSettings->value("color/accent", 0).toInt();
@@ -232,14 +231,18 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     ui->notificationSoundBox->addItem("Triple Ping");
     ui->notificationSoundBox->addItem("Upside Down");
+    ui->notificationSoundBox->addItem("Echo");
 
     QString notificationSound = settings.value("notifications/sound", "tripleping").toString();
     if (notificationSound == "tripleping") {
         ui->notificationSoundBox->setCurrentIndex(0);
     } else if (notificationSound == "upsidedown") {
         ui->notificationSoundBox->setCurrentIndex(1);
+    } else if (notificationSound == "echo") {
+        ui->notificationSoundBox->setCurrentIndex(2);
     }
 
+    //Don't forget to change settings pane setup things
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-login"), "Startup"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Bar"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Gateway"));
@@ -249,6 +252,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("input-tablet"), "Input"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("system-lock-screen"), "Lock Screen"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("thewave", QIcon(":/icons/thewave.svg")), "theWave"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-user"), "Users"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("emblem-warning"), "Danger"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), "About"));
     ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
@@ -462,7 +466,7 @@ void InfoPaneDropdown::show(dropdownType showWith) {
     this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height());
 
     Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
     XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
                      XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
 
@@ -471,7 +475,6 @@ void InfoPaneDropdown::show(dropdownType showWith) {
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
     QDialog::show();
-    this->setFocusPolicy(Qt::StrongFocus);
     this->setFixedWidth(screenGeometry.width());
     this->setFixedHeight(screenGeometry.height());
 
@@ -1182,12 +1185,6 @@ void InfoPaneDropdown::on_pushButton_7_clicked()
     changeDropDown(Settings);
 }
 
-void InfoPaneDropdown::on_pushButton_8_clicked()
-{
-    QProcess::startDetached("systemsettings5");
-    this->close();
-}
-
 void InfoPaneDropdown::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
     QDialog::setGeometry(x, y, w, h);
     QProcess::execute("wmctrl -r " + this->windowTitle() + " -e 0," +
@@ -1343,24 +1340,6 @@ bool InfoPaneDropdown::isQuietOn() {
     return ui->QuietCheck->isChecked();
 }
 
-bool InfoPaneDropdown::eventFilter(QObject *object, QEvent *event) {
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent* keyEvent = (QKeyEvent*) event;
-        if (keyEvent->key() == Qt::Key_Left) {
-            if (ui->pushButton_5->isEnabled()) {
-                on_pushButton_5_clicked();
-            }
-            return true;
-        } else if (keyEvent->key() == Qt::Key_Right) {
-            if (ui->pushButton_6->isEnabled()) {
-                on_pushButton_6_clicked();
-            }
-            return true;
-        }
-    }
-    return false;
-}
-
 void InfoPaneDropdown::on_resetButton_clicked()
 {
     if (QMessageBox::warning(this, "Reset theShell",
@@ -1489,6 +1468,11 @@ void InfoPaneDropdown::on_brightnessSlider_valueChanged(int value)
 void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
 {
     ui->settingsTabs->setCurrentIndex(currentRow);
+
+    //Set up settings
+    if (currentRow == 9) { //Users
+        setupUsersSettingsPane();
+    }
 }
 
 void InfoPaneDropdown::on_settingsTabs_currentChanged(int arg1)
@@ -1954,7 +1938,167 @@ void InfoPaneDropdown::on_notificationSoundBox_currentIndexChanged(int index)
             settings.setValue("notifications/sound", "upsidedown");
             sound->setSource(QUrl("qrc:/sounds/notifications/upsidedown.wav"));
             break;
+        case 2:
+            settings.setValue("notifications/sound", "echo");
+            sound->setSource(QUrl("qrc:/sounds/notifications/echo.wav"));
+            break;
     }
     sound->play();
     connect(sound, SIGNAL(playingChanged()), sound, SLOT(deleteLater()));
+}
+
+void InfoPaneDropdown::setupUsersSettingsPane() {
+    ui->availableUsersWidget->clear();
+
+    QDBusMessage getUsersMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "ListCachedUsers");
+    QDBusReply<QList<QDBusObjectPath>> allUsers = QDBusConnection::systemBus().call(getUsersMessage);
+    if (allUsers.isValid()) {
+        for (QDBusObjectPath obj : allUsers.value()) {
+            QDBusInterface interface("org.freedesktop.Accounts", obj.path(), "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
+
+            QListWidgetItem* item = new QListWidgetItem();
+            QString name = interface.property("RealName").toString();
+            if (name == "") {
+                name = interface.property("UserName").toString();
+            }
+            item->setText(name);
+            item->setIcon(QIcon::fromTheme("user"));
+            item->setData(Qt::UserRole, obj.path());
+            ui->availableUsersWidget->addItem(item);
+        }
+
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setIcon(QIcon::fromTheme("list-add"));
+        item->setText("Add New User");
+        item->setData(Qt::UserRole, "new");
+        ui->availableUsersWidget->addItem(item);
+    }
+}
+
+void InfoPaneDropdown::on_userSettingsNextButton_clicked()
+{
+    if (ui->availableUsersWidget->selectedItems().count() != 0) {
+        editingUserPath = ui->availableUsersWidget->selectedItems().first()->data(Qt::UserRole).toString();
+        if (editingUserPath == "new") {
+            ui->userSettingsEditUserLabel->setText("New User");
+            ui->userSettingsFullName->setText("");
+            ui->userSettingsUserName->setText("");
+            ui->userSettingsPassword->setPlaceholderText("(none)");
+            ui->userSettingsPasswordCheck->setPlaceholderText("(none)");
+            ui->userSettingsDeleteUser->setVisible(false);
+        } else {
+            ui->userSettingsEditUserLabel->setText("Edit User");
+            QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
+            if (interface.property("PasswordMode").toInt() == 0) {
+                ui->userSettingsPassword->setPlaceholderText("(unchanged)");
+                ui->userSettingsPasswordCheck->setPlaceholderText("(unchanged)");
+            } else {
+                ui->userSettingsPassword->setPlaceholderText("(none)");
+                ui->userSettingsPasswordCheck->setPlaceholderText("(none)");
+            }
+            ui->userSettingsFullName->setText(interface.property("RealName").toString());
+            ui->userSettingsUserName->setText(interface.property("UserName").toString());
+            ui->userSettingsPasswordHint->setText(interface.property("PasswordHint").toString());
+            ui->userSettingsDeleteUser->setVisible(true);
+        }
+        ui->userSettingsPassword->setText("");
+        ui->userSettingsPasswordCheck->setText("");
+        ui->userSettingsStackedWidget->setCurrentIndex(1);
+    }
+}
+
+void InfoPaneDropdown::on_userSettingsCancelButton_clicked()
+{
+    ui->userSettingsStackedWidget->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
+{
+    if (ui->userSettingsPasswordCheck->text() != ui->userSettingsPassword->text()) {
+        QMessageBox::warning(this, "Password Check", "The passwords don't match.", QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+
+    if (ui->userSettingsUserName->text().contains(" ")) {
+        QMessageBox::warning(this, "Username", "The username must not contain spaces.", QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+
+    if (ui->userSettingsUserName->text().toLower() != ui->userSettingsUserName->text()) {
+        QMessageBox::warning(this, "Username", "The username must not contain capital letters.", QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+
+    ui->userSettingsStackedWidget->setCurrentIndex(0);
+    if (editingUserPath == "new") {
+        QDBusMessage createMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "CreateUser");
+        QVariantList args;
+        args.append(ui->userSettingsUserName->text());
+        args.append(ui->userSettingsFullName->text());
+        args.append(0);
+        createMessage.setArguments(args);
+
+        QDBusReply<QDBusObjectPath> newUser = QDBusConnection::systemBus().call(createMessage);
+        if (!newUser.isValid()) return;
+        editingUserPath = newUser.value().path();
+    }
+
+    QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
+    interface.call("SetUserName", ui->userSettingsUserName->text());
+    interface.call("SetRealName", ui->userSettingsFullName->text());
+
+    if (ui->userSettingsPassword->text() != "") {
+        interface.call("SetPassword", ui->userSettingsPassword->text(), ui->userSettingsPasswordHint->text());
+    } else {
+        interface.call("SetPasswordHint", ui->userSettingsPasswordHint->text());
+    }
+
+    setupUsersSettingsPane();
+}
+
+void InfoPaneDropdown::on_userSettingsFullName_textEdited(const QString &arg1)
+{
+    ui->userSettingsUserName->setText(arg1.toLower().split(" ").first());
+}
+
+void InfoPaneDropdown::on_userSettingsDeleteUser_clicked()
+{
+    ui->userSettingsStackedWidget->setCurrentIndex(2);
+}
+
+void InfoPaneDropdown::on_userSettingsCancelDeleteUser_clicked()
+{
+    ui->userSettingsStackedWidget->setCurrentIndex(1);
+}
+
+void InfoPaneDropdown::on_userSettingsDeleteUserOnly_clicked()
+{
+    QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
+    qlonglong uid = interface.property("Uid").toLongLong();
+
+    QDBusMessage deleteMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "DeleteUser");
+    QVariantList args;
+    args.append(uid);
+    args.append(false);
+    deleteMessage.setArguments(args);
+    QDBusConnection::systemBus().call(deleteMessage);
+
+    setupUsersSettingsPane();
+    ui->userSettingsStackedWidget->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::on_userSettingsDeleteUserAndData_clicked()
+{
+    QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
+    qlonglong uid = interface.property("Uid").toLongLong();
+
+    QDBusMessage deleteMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "DeleteUser");
+    QVariantList args;
+    args.append(uid);
+    args.append(true);
+    deleteMessage.setArguments(args);
+    QDBusConnection::systemBus().call(deleteMessage);
+
+    setupUsersSettingsPane();
+    ui->userSettingsStackedWidget->setCurrentIndex(0);
 }

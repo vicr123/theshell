@@ -1173,8 +1173,6 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
             speechPlaying = false;
         });
     } else if (settings.value("thewave/ttsEngine").toString() == "espeak" && QFile("/usr/bin/espeak").exists()) {
-        //Quiet all sounds on system
-        AudioMan->quietStreams();
 
         QProcess *s = new QProcess(this);
         s->start("espeak \"" + speech + "\"");
@@ -1189,9 +1187,6 @@ void theWaveWorker::speak(QString speech, bool restartOnceComplete) {
             AudioMan->restoreStreams();
         });
     } else if (settings.value("thewave/ttsEngine").toString() == "festival" && QFile("/usr/bin/festival").exists()) {
-        //Quiet all sounds on system
-        AudioMan->quietStreams();
-
         QProcess *s = new QProcess(this);
         s->start("festival --tts");
         s->write(speech.toUtf8());

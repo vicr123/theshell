@@ -196,6 +196,8 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
                 sound->setSource(QUrl("qrc:/sounds/notifications/tripleping.wav"));
             } else if (notificationSound == "upsidedown") {
                 sound->setSource(QUrl("qrc:/sounds/notifications/upsidedown.wav"));
+            } else if (notificationSound == "echo") {
+                sound->setSource(QUrl("qrc:/sounds/notifications/echo.wav"));
             }
             sound->play();
             connect(sound, SIGNAL(playingChanged()), sound, SLOT(deleteLater()));

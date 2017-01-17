@@ -7,7 +7,7 @@
 #include <QSettings>
 #include <QLabel>
 
-#define ChangelogOnbording "New in theShell 5.3:\n"\
+#define ChangelogOnbording "New in theShell 6.0:\n"\
     "- Default system font can be set in theme settings."\
     "- Battery indicator now shows battery for devices connected over KDE Connect\n"\
     "- Added some KDE Connect actions in the status center\n"\
@@ -21,6 +21,8 @@
     "- New notification animation\n"\
     "- When a timer elapses, other audio is made quiter until the timer is dismissed\n"\
     "- Redshift now works overnight\n"\
+    "- Notifications can now send sounds through theShell\n"\
+    "- theWave now quitens background music while listening\n"\
     "\n"\
     "New in theShell 5.2: \n"\
     "- New Onboarding experience. Every time theShell updates, you'll get a changelog.\n" \

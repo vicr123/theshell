@@ -44,6 +44,7 @@ private:
     static void pulseGetClients(pa_context *c, const pa_client_info*i, int eol, void *userdata);
 
     QMap<int, pa_cvolume> originalStreamVolumes;
+    int quietRequests = 0;
 
     bool pulseAvailable = false;
     bool quietMode = false;

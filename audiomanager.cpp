@@ -180,15 +180,18 @@ void AudioManager::pulseGetSources(pa_context *c, const pa_source_info *i, int e
 
 void AudioManager::quietStreams() {
     if (pulseAvailable) {
-        for (int source : originalStreamVolumes.keys()) {
-            //Set volume to 50% of original
-            pa_cvolume originalVolume = originalStreamVolumes.value(source);
-            for (int i = 0; i < originalVolume.channels; i++) {
-                originalVolume.values[i] /= 2;
+        if (quietRequests == 0) {
+            for (int source : originalStreamVolumes.keys()) {
+                //Set volume to 50% of original
+                pa_cvolume originalVolume = originalStreamVolumes.value(source);
+                for (int i = 0; i < originalVolume.channels; i++) {
+                    originalVolume.values[i] /= 2;
+                }
+                pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
             }
-            pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
+            quietMode = true;
         }
-        quietMode = true;
+        quietRequests++;
     }
 }
 
@@ -208,30 +211,37 @@ void AudioManager::silenceStreams() {
 
 void AudioManager::restoreStreams(bool immediate) {
     if (pulseAvailable) {
-        //Sounds much better if we delay by a second
-        QTimer::singleShot(immediate ? 0 : 1000, [=]() {
-            for (int source : originalStreamVolumes.keys()) {
-                //Restore volume of each stream
-                pa_cvolume originalVolume = originalStreamVolumes.value(source);
-                if (originalVolume.channels > 0) {
-                    tVariantAnimation* anim = new tVariantAnimation;
-                    anim->setStartValue(originalVolume.values[0] / 2);
-                    anim->setEndValue(originalVolume.values[0]);
-                    anim->setDuration(500);
-                    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
-                        pa_cvolume originalVolume = originalStreamVolumes.value(source);
-                        for (int i = 0; i < originalVolume.channels; i++) {
-                            originalVolume.values[i] = value.toUInt();
-                        }
-                        pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
-                    });
-                    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-                    anim->start();
-                }
+        quietRequests--;
+        if (quietRequests == 0) {
+            //Sounds much better if we delay by a second
+            QTimer::singleShot(immediate ? 0 : 1000, [=]() {
+                for (int source : originalStreamVolumes.keys()) {
+                    //Restore volume of each stream
+                    pa_cvolume originalVolume = originalStreamVolumes.value(source);
+                    if (originalVolume.channels > 0) {
+                        tVariantAnimation* anim = new tVariantAnimation;
+                        anim->setStartValue(originalVolume.values[0] / 2);
+                        anim->setEndValue(originalVolume.values[0]);
+                        anim->setDuration(500);
+                        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                            pa_cvolume originalVolume = originalStreamVolumes.value(source);
+                            for (int i = 0; i < originalVolume.channels; i++) {
+                                originalVolume.values[i] = value.toUInt();
+                            }
+                            pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
+                        });
+                        connect(anim, &tVariantAnimation::finished, [=]() {
+                            quietMode = false;
+                        });
+                        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                        anim->start();
+                    }
 
-            }
-            quietMode = false;
-        });
+                }
+            });
+        } else if (quietRequests == -1) {
+            quietRequests = 0;
+        }
     }
 }
 

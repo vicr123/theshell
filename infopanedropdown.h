@@ -106,8 +106,6 @@ private slots:
 
     void on_pushButton_7_clicked();
 
-    void on_pushButton_8_clicked();
-
     void on_lineEdit_2_editingFinished();
 
     void on_resolutionButton_clicked();
@@ -244,6 +242,24 @@ private slots:
 
     void on_notificationSoundBox_currentIndexChanged(int index);
 
+    void setupUsersSettingsPane();
+
+    void on_userSettingsNextButton_clicked();
+
+    void on_userSettingsCancelButton_clicked();
+
+    void on_userSettingsApplyButton_clicked();
+
+    void on_userSettingsFullName_textEdited(const QString &arg1);
+
+    void on_userSettingsDeleteUser_clicked();
+
+    void on_userSettingsCancelDeleteUser_clicked();
+
+    void on_userSettingsDeleteUserOnly_clicked();
+
+    void on_userSettingsDeleteUserAndData_clicked();
+
 public slots:
     void getNetworks();
 
@@ -277,7 +293,6 @@ private:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
-    bool eventFilter(QObject *object, QEvent *event);
     QTimer* timer = NULL;
     int timerNotificationId = 0;
     QTimer* eventTimer;
@@ -295,6 +310,8 @@ private:
     QSettings settings;
     QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);
     QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
+
+    QString editingUserPath;
 
     bool networkListUpdating = false;
 

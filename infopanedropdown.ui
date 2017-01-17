@@ -567,14 +567,14 @@
              <second>0</second>
              <year>1969</year>
              <month>10</month>
-             <day>31</day>
+             <day>30</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>10</month>
-             <day>31</day>
+             <day>30</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -1269,8 +1269,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1164</width>
-            <height>599</height>
+            <width>165</width>
+            <height>58</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1609,7 +1609,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>5</number>
+            <number>9</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2205,7 +2205,7 @@
              <item row="6" column="1">
               <widget class="QLabel" name="label_57">
                <property name="text">
-                <string>If the start time is later than the end time, Redshift will be activated at the end time on the next day.</string>
+                <string>If the start time is later than the end time, Redshift will be activated until the end time on the next day.</string>
                </property>
               </widget>
              </item>
@@ -2985,6 +2985,327 @@
              </item>
             </layout>
            </widget>
+           <widget class="QWidget" name="page_4">
+            <layout class="QGridLayout" name="gridLayout_12">
+             <item row="0" column="0">
+              <widget class="QLabel" name="displayLabel_9">
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Users</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="Line" name="displayLine_9">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="AnimatedStackedWidget" name="userSettingsStackedWidget">
+               <property name="autoFillBackground">
+                <bool>true</bool>
+               </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <widget class="QWidget" name="page_5">
+                <property name="autoFillBackground">
+                 <bool>true</bool>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_22">
+                 <item>
+                  <widget class="QLabel" name="label_59">
+                   <property name="font">
+                    <font>
+                     <pointsize>20</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Select a user</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QListWidget" name="availableUsersWidget"/>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_34">
+                   <item>
+                    <spacer name="horizontalSpacer_6">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="userSettingsNextButton">
+                     <property name="text">
+                      <string>Next</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="go-next"/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page_6">
+                <property name="autoFillBackground">
+                 <bool>true</bool>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_23">
+                 <item>
+                  <widget class="QLabel" name="userSettingsEditUserLabel">
+                   <property name="font">
+                    <font>
+                     <pointsize>20</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Edit User</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QGridLayout" name="gridLayout_13">
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_60">
+                     <property name="text">
+                      <string>Retype Password</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_61">
+                     <property name="text">
+                      <string>Full Name</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QLineEdit" name="userSettingsPasswordCheck">
+                     <property name="echoMode">
+                      <enum>QLineEdit::Password</enum>
+                     </property>
+                     <property name="placeholderText">
+                      <string>(unchanged)</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_62">
+                     <property name="text">
+                      <string>Username</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="userSettingsFullName"/>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QLineEdit" name="userSettingsUserName"/>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QLineEdit" name="userSettingsPassword">
+                     <property name="echoMode">
+                      <enum>QLineEdit::Password</enum>
+                     </property>
+                     <property name="placeholderText">
+                      <string>(unchanged)</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_63">
+                     <property name="text">
+                      <string>Password</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="0">
+                    <widget class="QLabel" name="label_64">
+                     <property name="text">
+                      <string>Password Hint</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="1">
+                    <widget class="QLineEdit" name="userSettingsPasswordHint"/>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_5">
+                   <item>
+                    <spacer name="horizontalSpacer_23">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="userSettingsDeleteUser">
+                     <property name="text">
+                      <string>Delete User</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="edit-delete"/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="userSettingsCancelButton">
+                     <property name="text">
+                      <string>Cancel</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="dialog-cancel"/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="userSettingsApplyButton">
+                     <property name="text">
+                      <string>Apply Changes</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="dialog-ok"/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page_7">
+                <property name="autoFillBackground">
+                 <bool>true</bool>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_24">
+                 <item>
+                  <widget class="QLabel" name="label_65">
+                   <property name="font">
+                    <font>
+                     <pointsize>20</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Delete User</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_66">
+                   <property name="text">
+                    <string>You're about to delete this user. Are you sure?</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_21">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_35">
+                   <item>
+                    <widget class="QPushButton" name="userSettingsCancelDeleteUser">
+                     <property name="text">
+                      <string>Cancel</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="dialog-cancel"/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_24">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="userSettingsDeleteUserOnly">
+                     <property name="text">
+                      <string>Delete user only</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="edit-delete"/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="userSettingsDeleteUserAndData">
+                     <property name="text">
+                      <string>Delete user and all files</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="edit-delete"/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </widget>
            <widget class="QWidget" name="DangerSettings">
             <layout class="QGridLayout" name="gridLayout_5">
              <item row="5" column="0">
@@ -3123,7 +3444,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>theShell 5.3</string>
+                   <string>theShell 6.0</string>
                   </property>
                  </widget>
                 </item>
@@ -3172,34 +3493,6 @@
           <string>Your settings are saved automatically.</string>
          </property>
         </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <spacer name="horizontalSpacer_6">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_8">
-           <property name="text">
-            <string>Open System Settings</string>
-           </property>
-           <property name="icon">
-            <iconset theme="systemsettings">
-             <normaloff>.</normaloff>.</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </item>
       </layout>
      </widget>
