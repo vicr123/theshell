@@ -260,6 +260,14 @@ private slots:
 
     void on_userSettingsDeleteUserAndData_clicked();
 
+    void setupDateTimeSettingsPane();
+
+    void launchDateTimeService();
+
+    void on_dateTimeSetDateTimeButton_clicked();
+
+    void on_DateTimeNTPSwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 

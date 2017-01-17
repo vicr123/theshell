@@ -253,6 +253,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("system-lock-screen"), "Lock Screen"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("thewave", QIcon(":/icons/thewave.svg")), "theWave"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-user"), "Users"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-time"), "Date and Time"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("emblem-warning"), "Danger"));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), "About"));
     ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
@@ -1472,6 +1473,8 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     //Set up settings
     if (currentRow == 9) { //Users
         setupUsersSettingsPane();
+    } else if (currentRow == 10) { //Date and Time
+        setupDateTimeSettingsPane();
     }
 }
 
@@ -2101,4 +2104,78 @@ void InfoPaneDropdown::on_userSettingsDeleteUserAndData_clicked()
 
     setupUsersSettingsPane();
     ui->userSettingsStackedWidget->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::setupDateTimeSettingsPane() {
+    launchDateTimeService();
+
+    QDateTime current = QDateTime::currentDateTime();
+    ui->dateTimeSetDate->setSelectedDate(current.date());
+    ui->dateTimeSetTime->setTime(current.time());
+
+    QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
+    bool isNTPEnabled = dateTimeInterface.property("NTP").toBool();
+    ui->DateTimeNTPSwitch->setChecked(isNTPEnabled);
+}
+
+void InfoPaneDropdown::launchDateTimeService() {
+    QDBusMessage getMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "ListActivatableNames");
+    QDBusReply<QStringList> reply = QDBusConnection::systemBus().call(getMessage);
+    if (!reply.value().contains("org.freedesktop.timedate1")) {
+        qDebug() << "Can't set date and time";
+        return;
+    }
+
+    QDBusMessage launchMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "StartServiceByName");
+    QVariantList args;
+    args.append("org.freedesktop.timedate1");
+    args.append((uint) 0);
+    launchMessage.setArguments(args);
+
+    QDBusConnection::systemBus().call(launchMessage);
+}
+
+void InfoPaneDropdown::on_dateTimeSetDateTimeButton_clicked()
+{
+    QDateTime newTime;
+    newTime.setDate(ui->dateTimeSetDate->selectedDate());
+    newTime.setTime(ui->dateTimeSetTime->time());
+
+    qlonglong time = newTime.toMSecsSinceEpoch() * 1000;
+
+    launchDateTimeService();
+
+    QDBusMessage setMessage = QDBusMessage::createMethodCall("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", "SetTime");
+    QVariantList args;
+    args.append(time);
+    args.append(false);
+    args.append(true);
+    setMessage.setArguments(args);
+    QDBusConnection::systemBus().call(setMessage);
+
+    setupDateTimeSettingsPane();
+}
+
+void InfoPaneDropdown::on_DateTimeNTPSwitch_toggled(bool checked)
+{
+    if (checked) {
+        ui->dateTimeSetDate->setEnabled(false);
+        ui->dateTimeSetTime->setEnabled(false);
+        ui->dateTimeSetDateTimeButton->setEnabled(false);
+    } else {
+        ui->dateTimeSetDate->setEnabled(true);
+        ui->dateTimeSetTime->setEnabled(true);
+        ui->dateTimeSetDateTimeButton->setEnabled(false);
+    }
+
+    launchDateTimeService();
+
+    QDBusMessage setMessage = QDBusMessage::createMethodCall("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", "SetNTP");
+    QVariantList args;
+    args.append(checked);
+    args.append(true);
+    setMessage.setArguments(args);
+    QDBusConnection::systemBus().call(setMessage);
+
+    setupDateTimeSettingsPane();
 }
