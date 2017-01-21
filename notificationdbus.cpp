@@ -179,7 +179,11 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         if (hints.contains("sound-file")) {
             AudioMan->quietStreams();
             QMediaPlayer* player = new QMediaPlayer();
-            player->setMedia(QMediaContent(QUrl(hints.value("sound-file").toString())));
+            if (hints.value("sound-file").toString().startsWith("qrc:")) {
+                player->setMedia(QMediaContent(QUrl(hints.value("sound-file").toString())));
+            } else {
+                player->setMedia(QMediaContent(QUrl::fromLocalFile(hints.value("sound-file").toString())));
+            }
             player->play();
             connect(player, &QMediaPlayer::stateChanged, [=](QMediaPlayer::State state) {
                 if (state == QMediaPlayer::StoppedState) {

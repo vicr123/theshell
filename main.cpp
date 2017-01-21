@@ -86,9 +86,38 @@ int main(int argc, char *argv[])
     signal(SIGABRT, *catch_signal); //Catch SIGABRT
     signal(SIGILL, *catch_signal); //Catch SIGILL
 
+    QSettings settings("theSuite", "theShell");
+
+    QString localeName = settings.value("locale/language", "en_US").toString();
+    qputenv("LANG", localeName.toUtf8());
+
     qInstallMessageHandler(QtHandler);
 
     QApplication a(argc, argv);
+
+    a.setOrganizationName("theSuite");
+    a.setOrganizationDomain("");
+    a.setApplicationName("theShell");
+
+    QLocale defaultLocale(localeName);
+    QLocale::setDefault(defaultLocale);
+
+    if (defaultLocale.language() == QLocale::Arabic || defaultLocale.language() == QLocale::Hebrew) {
+        //Reverse the layout direction
+        a.setLayoutDirection(Qt::RightToLeft);
+    }
+
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(&qtTranslator);
+
+    QTranslator tsTranslator;
+    tsTranslator.load(QLocale().name(), "/usr/share/theshell/translations");
+    a.installTranslator(&tsTranslator);
+
+    /*QTranslator tsVnTranslator;
+    tsTranslator.load(QLocale("vi_VN").name(), "/home/victor/Documents/theOSPack/theShell/translations/");
+    a.installTranslator(&tsVnTranslator);*/
 
     bool showSplash = true;
     bool autoStart = true;
@@ -127,9 +156,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    a.setOrganizationName("theSuite");
-    a.setOrganizationDomain("");
-    a.setApplicationName("theShell");
 
     if (showSplash) {
         LoginSplash* splash = new LoginSplash();
@@ -137,11 +163,9 @@ int main(int argc, char *argv[])
         splash->showFullScreen();
     }
 
-    QSettings settings;
-
     if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.thesuite.theshell")) {
-        if (QMessageBox::warning(0, "theShell already running", "theShell seems to already be running. "
-                                                               "Do you wish to start theShell anyway?",
+        if (QMessageBox::warning(0, a.tr("theShell already running"), a.tr("theShell seems to already be running. "
+                                                               "Do you wish to start theShell anyway?"),
                              QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
             return 0;
         }
@@ -188,10 +212,10 @@ int main(int argc, char *argv[])
 
     if (startWm) {
         while (!QProcess::startDetached(windowManager)) {
-            windowManager = QInputDialog::getText(0, "Window Manager couldn't start",
-                                  "The window manager \"" + windowManager + "\" could not start. \n\n"
+            windowManager = QInputDialog::getText(0, a.tr("Window Manager couldn't start"),
+                                  a.tr("The window manager \"%1\" could not start. \n\n"
                                   "Enter the name or path of a window manager to attempt to start a different window"
-                                  "manager, or hit 'Cancel' to start theShell without a window manager.");
+                                  "manager, or hit 'Cancel' to start theShell without a window manager.").arg(windowManager));
             if (windowManager == "") {
                 break;
             }

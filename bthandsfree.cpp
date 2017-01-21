@@ -65,11 +65,11 @@ void BTHandsfree::detectDevices() {
                 QString callState = interface->property("CallState").toString();
                 if (callState == "InCall") {
                     labelOverride = interface->property("DeviceName").toString();
-                    labelOverride.append(" (In call)");
+                    labelOverride.append(" (" + tr("In call") + ")");
                     hangUpButtonInterface = interface;
                 } else if (callState == "Dialling") {
                     labelOverride = interface->property("DeviceName").toString();
-                    labelOverride.append(" (Dialling...)");
+                    labelOverride.append(" (" + tr("Dialling...") + ")");
                     hangUpButtonInterface = interface;
                 } else {
                     QString description;

@@ -49,9 +49,9 @@ void Background::show() {
 void Background::on_graphicsView_customContextMenuRequested(const QPoint &pos)
 {
     QMenu *menu = new QMenu(this);
-    menu->addSection("For desktop");
+    menu->addSection(tr("For desktop"));
     menu->addAction(ui->actionChange_Background);
-    menu->addSection("For system");
+    menu->addSection(tr("For system"));
     menu->addAction(ui->actionOpen_theShell_Settings);
     if (QFile("/usr/bin/systemsettings5").exists()) {
         menu->addAction(ui->actionOpen_System_Settings);

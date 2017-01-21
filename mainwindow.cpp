@@ -208,7 +208,7 @@ void MainWindow::doUpdate() {
             QByteArray characterBytes = QByteArray::fromRawData((char *) desktopNames, items);
             QList<QByteArray> nameList = characterBytes.split(0x0);
             if (nameList.count() <= currentDesktop) {
-                ui->desktopName->setText("Desktop " + QString::number(currentDesktop + 1));
+                ui->desktopName->setText(tr("Desktop %1").arg(QString::number(currentDesktop + 1)));
             } else {
                 ui->desktopName->setText(ui->desktopName->fontMetrics().elidedText(QString(nameList.at(currentDesktop)), Qt::ElideRight, 200));
             }
@@ -473,8 +473,8 @@ void MainWindow::doUpdate() {
             connect(button, &QPushButton::customContextMenuRequested, [=](const QPoint &pos) {
                 QMenu* menu = new QMenu();
 
-                menu->addSection(w.icon(), "For " + w.title());
-                menu->addAction(QIcon::fromTheme("window-close"), "Close", [=]() {
+                menu->addSection(w.icon(), tr("For %1").arg(w.title()));
+                menu->addAction(QIcon::fromTheme("window-close"), tr("Close"), [=]() {
                     sendMessageToRootWindow("_NET_CLOSE_WINDOW", w.WID());
                 });
 
@@ -618,7 +618,7 @@ void MainWindow::doUpdate() {
     forceWindowMove = false;
 
     //Update date and time
-    ui->date->setText(QDateTime::currentDateTime().toString("ddd dd MMM yyyy"));
+    ui->date->setText(QLocale().toString(QDateTime::currentDateTime(), "ddd dd MMM yyyy"));
     ui->time->setText(QDateTime::currentDateTime().time().toString(Qt::TextDate));
 
     mprisDetectedApps.clear();
@@ -804,7 +804,7 @@ void MainWindow::on_pushButton_2_clicked()
 }
 
 void MainWindow::internetLabelChanged(QString display, int signalStrength) {
-    if (display == "Flight Mode") {
+    if (display == tr("Flight Mode")) {
         ui->networkLabel->setPixmap(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)).pixmap(16, 16));
         ui->networkStrength->setVisible(false);
     } else {
@@ -1005,13 +1005,13 @@ void MainWindow::numNotificationsChanged(int notifications) {
     QFont font = ui->notifications->font();
     if (notifications == 0) {
         font.setBold(false);
-        ui->notifications->setText("No notifications");
+        ui->notifications->setText(tr("No notifications"));
     } else {
         font.setBold(true);
         if (notifications == 1) {
-            ui->notifications->setText("1 notification");
+            ui->notifications->setText(tr("1 notification"));
         } else {
-            ui->notifications->setText(QString::number(notifications) + " notifications");
+            ui->notifications->setText(tr("%1 notifications", NULL, notifications).arg(QString::number(notifications)));
         }
     }
     ui->notifications->setFont(font);

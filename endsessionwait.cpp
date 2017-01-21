@@ -15,12 +15,12 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
     powerOffTimer->setDuration(30000);
     connect(powerOffTimer, &QVariantAnimation::valueChanged, [=](QVariant value) {
         ui->idleProgressBar->setValue(value.toInt());
-        ui->idleWarning->setText("If you don't do anything, we'll power off for you in " + QString::number(30 - (value.toInt() / 10)) + " seconds.");
+        ui->idleWarning->setText(tr("If you don't do anything, we'll power off for you in %1 seconds.").arg(QString::number(30 - (value.toInt() / 10))));
     });
     connect(powerOffTimer, &QVariantAnimation::finished, [=]() {
         //Power off the device
         this->type = powerOff;
-        ui->label->setText("Power Off");
+        ui->label->setText(tr("Power Off"));
 
         //We need to use a QTimer to run the function on the event loop because we do something strange in this->showFullScreen()
         QTimer* invokeTimer = new QTimer();
@@ -39,19 +39,19 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
 
     switch (type) {
     case powerOff:
-        ui->label->setText("Power Off");
+        ui->label->setText(tr("Power Off"));
         ui->askWhatToDo->setVisible(false);
         break;
     case reboot:
-        ui->label->setText("Reboot");
+        ui->label->setText(tr("Reboot"));
         ui->askWhatToDo->setVisible(false);
         break;
     case logout:
-        ui->label->setText("Log out");
+        ui->label->setText(tr("Log out"));
         ui->askWhatToDo->setVisible(false);
         break;
     case dummy:
-        ui->label->setText("Dummy");
+        ui->label->setText(tr("Dummy"));
         ui->askWhatToDo->setVisible(false);
         break;
     case ask:
@@ -406,21 +406,21 @@ void EndSessionWait::on_CancelAsk_clicked()
 void EndSessionWait::on_PowerOff_clicked()
 {
     this->type = powerOff;
-    ui->label->setText("Power Off");
+    ui->label->setText(tr("Power Off"));
     this->showFullScreen();
 }
 
 void EndSessionWait::on_Reboot_clicked()
 {
     this->type = reboot;
-    ui->label->setText("Reboot");
+    ui->label->setText(tr("Reboot"));
     this->showFullScreen();
 }
 
 void EndSessionWait::on_LogOut_clicked()
 {
     this->type = logout;
-    ui->label->setText("Log Out");
+    ui->label->setText(tr("Log Out"));
     this->showFullScreen();
 }
 
@@ -713,7 +713,7 @@ void EndSessionWait::on_DummyExit_clicked()
 {
     //Fake Exit
     this->type = dummy;
-    ui->label->setText("Dummy");
+    ui->label->setText(tr("Dummy"));
     this->showFullScreen();
 }
 

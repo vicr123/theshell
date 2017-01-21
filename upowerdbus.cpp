@@ -51,14 +51,14 @@ void UPowerDBus::devicesChanged() {
         }
         DeviceChanged();
     } else {
-        emit updateDisplay("Can't get battery information.");
+        emit updateDisplay(tr("Can't get battery information."));
     }
 }
 
 void UPowerDBus::DeviceChanged() {
     QStringList displayOutput;
     if (isPowerStretchOn) {
-        displayOutput.append("<span style=\"background-color: orange; color: black;\">Power Stretch on</span>");
+        displayOutput.append("<span style=\"background-color: orange; color: black;\">" + tr("Power Stretch on") + "</span>");
     }
 
     for (QDBusInterface *i : allDevices) {
@@ -89,23 +89,23 @@ void UPowerDBus::DeviceChanged() {
                 QString state;
                 switch (i->property("State").toUInt()) {
                 case 1: //Charging
-                    state = " (Charging";
+                    state = " (" + tr("Charging");
 
                     if (!isCharging) {
                         QString message;
 
                         if (isPowerStretchOn) {
                             setPowerStretch(false);
-                            message = "The power cable has been plugged in and the battery is now being charged. Power Stretch has been turned off.";
+                            message = tr("The power cable has been plugged in and the battery is now being charged. Power Stretch has been turned off.");
                         } else {
-                            message = "The power cable has been plugged in and the battery is now being charged.";
+                            message = tr("The power cable has been plugged in and the battery is now being charged.");
                         }
 
                         QVariantMap hints;
                         hints.insert("category", "battery.charging");
                         hints.insert("transient", true);
                         hints.insert("sound-file", "qrc:/sounds/charging.wav");
-                        this->notificationDBus->Notify("theShell", 0, "", "Charging",
+                        this->notificationDBus->Notify("theShell", 0, "", tr("Charging"),
                                                        message, QStringList(), hints, 10000);
                     }
 
@@ -129,13 +129,13 @@ void UPowerDBus::DeviceChanged() {
                     state += ")";
                     break;
                 case 2: //Discharging
-                    state = " (Discharging";
+                    state = " (" + tr("Discharging");
                     if (isConnectedToPower) {
                         QVariantMap hints;
                         hints.insert("category", "battery.discharging");
                         hints.insert("transient", true);
-                        this->notificationDBus->Notify("theShell", 0, "", "Discharging",
-                                                       "The power cable has been removed, and your PC is now running on battery power.",
+                        this->notificationDBus->Notify("theShell", 0, "", tr("Discharging"),
+                                                       tr("The power cable has been removed, and your PC is now running on battery power."),
                                                        QStringList(), hints, 10000);
                     }
                     isConnectedToPower = false;
@@ -154,12 +154,12 @@ void UPowerDBus::DeviceChanged() {
                             QStringList actions;
                             if (!isPowerStretchOn) {
                                 actions.append("power-stretch-on");
-                                actions.append("Turn on Power Stretch");
+                                actions.append(tr("Turn on Power Stretch"));
                             }
-                            batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Critically Low",
-                                                           "You have about 10 minutes of battery remaining."
+                            batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Critically Low"),
+                                                           tr("You have about 10 minutes of battery remaining."
                                                            " Either plug in your PC or save your work"
-                                                           " and power off the PC and change the battery.", actions, hints, 0);
+                                                           " and power off the PC and change the battery."), actions, hints, 0);
 
                             tenMinuteBatteryWarning = true;
                             halfHourBatteryWarning = true;
@@ -173,11 +173,11 @@ void UPowerDBus::DeviceChanged() {
                             QStringList actions;
                             if (!isPowerStretchOn) {
                                 actions.append("power-stretch-on");
-                                actions.append("Turn on Power Stretch");
+                                actions.append(tr("Turn on Power Stretch"));
                             }
-                            batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Low",
-                                                           "You have about half an hour of battery remaining."
-                                                           " You should plug in your PC now.", actions, hints, 10000);
+                            batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Low"),
+                                                           tr("You have about half an hour of battery remaining."
+                                                           " You should plug in your PC now."), actions, hints, 10000);
 
 
                             halfHourBatteryWarning = true;
@@ -191,11 +191,11 @@ void UPowerDBus::DeviceChanged() {
                             QStringList actions;
                             if (!isPowerStretchOn) {
                                 actions.append("power-stretch-on");
-                                actions.append("Turn on Power Stretch");
+                                actions.append(tr("Turn on Power Stretch"));
                             }
-                            batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", "Battery Warning",
-                                                           "You have about an hour of battery remaining."
-                                                            " You may want to plug in your PC now.", actions, hints, 10000);
+                            batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Warning"),
+                                                           tr("You have about an hour of battery remaining."
+                                                            " You may want to plug in your PC now."), actions, hints, 10000);
                             hourBatteryWarning = true;
                         }
 
@@ -208,11 +208,11 @@ void UPowerDBus::DeviceChanged() {
                     state += ")";
                     break;
                 case 3: //Empty
-                    state = " (Empty)";
+                    state = " (" + tr("Empty") + ")";
                     break;
                 case 4: //Charged
                 case 6: //Pending Discharge
-                    state = " (Full)";
+                    state = " (" + tr("Full") + ")";
                     if (isCharging) {
                         QVariantMap hints;
                         hints.insert("category", "battery.charged");
@@ -226,18 +226,18 @@ void UPowerDBus::DeviceChanged() {
                     timeRemain = QDateTime(QDate(0, 0, 0));
                     break;
                 case 5: //Pending Charge
-                    state = " (Not Charging)";
+                    state = " (" + tr("Not Charging") + ")";
                     break;
                 }
 
                 if (showRed) {
-                    displayOutput.append("<span style=\"background-color: red; color: black;\">" + QString::number(percentage) + "% PC Battery" + state + "</span>");
+                    displayOutput.append("<span style=\"background-color: red; color: black;\">" + tr("%1% PC Battery%2").arg(QString::number(percentage), state) + "</span>");
                 } else {
-                    displayOutput.append(QString::number(percentage) + "% PC Battery" + state);
+                    displayOutput.append(tr("%1% PC Battery%2").arg(QString::number(percentage), state));
                 }
                 batLevel = percentage;
             } else {
-                displayOutput.append("No Battery Inserted");
+                displayOutput.append(tr("No Battery Inserted"));
             }
         } else if (i->path().contains("media_player") || i->path().contains("computer") || i->path().contains("phone")) {
             //This is an external media player (or tablet)
@@ -259,29 +259,29 @@ void UPowerDBus::DeviceChanged() {
             }
             if (i->property("State").toUInt() == 0) {
                 if (QFile("/usr/bin/thefile").exists()) {
-                    displayOutput.append("Pair " + model + " using theFile to see battery status.");
+                    displayOutput.append(tr("Pair %1 using theFile to see battery status.").arg(model));
                 } else {
-                    displayOutput.append(model + " battery unavailable. Device trusted?");
+                    displayOutput.append(tr("%1 battery unavailable. Device trusted?").arg(model));
                 }
             } else {
                 QString batteryText;
-                batteryText.append(QString::number(percentage) + "% battery on " + model);
+                batteryText.append(tr("%1% battery on %2").arg(QString::number(percentage), model));
                 switch (i->property("State").toUInt()) {
                 case 1:
-                    batteryText.append(" (Charging)");
+                    batteryText.append(" (" + tr("Charging") + ")");
                     break;
                 case 2:
-                    batteryText.append(" (Discharging)");
+                    batteryText.append(" (" + tr("Discharging") + ")");
                     break;
                 case 3:
-                    batteryText.append(" (Empty)");
+                    batteryText.append(" (" + tr("Empty") + ")");
                     break;
                 case 4:
                 case 6:
-                    batteryText.append(" (Full)");
+                    batteryText.append(" (" + tr("Full") + ")");
                     break;
                 case 5:
-                    batteryText.append(" (Not Charging)");
+                    batteryText.append(" (" + tr("Not Charging") + ")");
                     break;
                 }
                 displayOutput.append(batteryText);
@@ -308,12 +308,12 @@ void UPowerDBus::DeviceChanged() {
                         QString batteryText;
                         if (charging) {
                             if (currentCharge == 100) {
-                                batteryText = QString::number(currentCharge) + "% battery on " + name + " (Full)";
+                                batteryText = tr("%1% battery on %2 (Full)").arg(QString::number(currentCharge), name);
                             } else {
-                                batteryText = QString::number(currentCharge) + "% battery on " + name + " (Charging)";
+                                batteryText = tr("%1% battery on %2 (Charging)").arg(QString::number(currentCharge), name);
                             }
                         } else {
-                            batteryText = QString::number(currentCharge) + "% battery on " + name + " (Discharging)";
+                            batteryText = tr("%1% battery on %2 (Discharging)").arg(QString::number(currentCharge), name);
                         }
                         displayOutput.append(batteryText);
                     }

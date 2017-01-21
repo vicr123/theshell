@@ -185,7 +185,11 @@ void AudioManager::quietStreams() {
                 //Set volume to 50% of original
                 pa_cvolume originalVolume = originalStreamVolumes.value(source);
                 for (int i = 0; i < originalVolume.channels; i++) {
-                    originalVolume.values[i] /= 2;
+                    if (originalVolume.values[i] > PA_VOLUME_NORM) {
+                        originalVolume.values[i] = PA_VOLUME_NORM / 2;
+                    } else {
+                        originalVolume.values[i] /= 2;
+                    }
                 }
                 pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
             }
@@ -221,7 +225,11 @@ void AudioManager::restoreStreams(bool immediate) {
                     if (originalVolume.channels > 0) {
                         tVariantAnimation* anim = new tVariantAnimation;
                         anim->setStartValue(originalVolume.values[0] / 2);
-                        anim->setEndValue(originalVolume.values[0]);
+                        pa_volume_t endValue = originalVolume.values[0];
+                        if (endValue > PA_VOLUME_NORM) {
+                            endValue = PA_VOLUME_NORM;
+                        }
+                        anim->setEndValue(endValue);
                         anim->setDuration(500);
                         connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
                             pa_cvolume originalVolume = originalStreamVolumes.value(source);

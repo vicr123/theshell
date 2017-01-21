@@ -108,7 +108,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     backlightAdj->start("xbacklight -set " + QString::number(currentBrightness));
                     connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
 
-                    Hotkeys->show(QIcon::fromTheme("video-display"), "Brightness", (int) currentBrightness);
+                    Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessDown)) { //Decrease brightness by 10%
                     currentBrightness = currentBrightness - 10;
                     if (currentBrightness < 0) currentBrightness = 0;
@@ -117,7 +117,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     backlightAdj->start("xbacklight -set " + QString::number(currentBrightness));
                     connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
 
-                    Hotkeys->show(QIcon::fromTheme("video-display"), "Brightness", (int) currentBrightness);
+                    Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioRaiseVolume)) { //Increase Volume by 5%
                     volume = volume + 5;
                     if (volume - 5 < 100 && volume > 100) {
@@ -130,7 +130,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     volumeSound->play();
                     connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
 
-                    Hotkeys->show(QIcon::fromTheme("audio-volume-high"), "Volume", volume);
+                    Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume)) { //Decrease Volume by 5%
                     volume = volume - 5;
                     if (volume < 0) volume = 0;
@@ -141,26 +141,26 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     volumeSound->play();
                     connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
 
-                    Hotkeys->show(QIcon::fromTheme("audio-volume-high"), "Volume", volume);
+                    Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioMute)) { //Set Volume to 0%
                     volume = 0;
                     QProcess* volumeAdj = new QProcess(this);
                     volumeAdj->start("amixer set Master off");
                     connect(volumeAdj, SIGNAL(finished(int)), volumeAdj, SLOT(deleteLater()));
 
-                    Hotkeys->show(QIcon::fromTheme("audio-volume-high"), "Volume", volume);
+                    Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessUp)) { //Increase keyboard brightness by 5%
                     kbdBrightness += (((float) maxKbdBrightness / 100) * 5);
                     if (kbdBrightness > maxKbdBrightness) kbdBrightness = maxKbdBrightness;
                     keyboardInterface.call("SetBrightness", kbdBrightness);
 
-                    Hotkeys->show(QIcon::fromTheme("input-keyboard"), "Keyboard Brightness", ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
+                    Hotkeys->show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessDown)) { //Decrease keyboard brightness by 5%
                     kbdBrightness -= (((float) maxKbdBrightness / 100) * 5);
                     if (kbdBrightness < 0) kbdBrightness = 0;
                     keyboardInterface.call("SetBrightness", kbdBrightness);
 
-                    Hotkeys->show(QIcon::fromTheme("input-keyboard"), "Keyboard Brightness", ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
+                    Hotkeys->show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
                 }
             }
         } else if (event->response_type == XCB_KEY_RELEASE) {
@@ -171,7 +171,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 eject->start("eject");
                 connect(eject, SIGNAL(finished(int)), eject, SLOT(deleteLater()));
 
-                Hotkeys->show(QIcon::fromTheme("media-eject"), "Eject", "Attempting to eject disc...");
+                Hotkeys->show(QIcon::fromTheme("media-eject"), tr("Eject"), tr("Attempting to eject disc..."));
             } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) ||
                        button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == (ControlMask | Mod1Mask))) { //Power Off
                 if (!isEndSessionBoxShowing) {

@@ -268,6 +268,8 @@ private slots:
 
     void on_DateTimeNTPSwitch_toggled(bool checked);
 
+    void on_localeList_currentRowChanged(int currentRow);
+
 public slots:
     void getNetworks();
 

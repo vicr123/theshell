@@ -113,11 +113,11 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     //Set up theme button combo box
     int themeAccentColorIndex = themeSettings->value("color/accent", 0).toInt();
-    ui->themeButtonColor->addItem("Blue");
-    ui->themeButtonColor->addItem("Green");
-    ui->themeButtonColor->addItem("Orange");
-    ui->themeButtonColor->addItem("Pink");
-    ui->themeButtonColor->addItem("Turquoise");
+    ui->themeButtonColor->addItem(tr("Blue"));
+    ui->themeButtonColor->addItem(tr("Green"));
+    ui->themeButtonColor->addItem(tr("Orange"));
+    ui->themeButtonColor->addItem(tr("Pink"));
+    ui->themeButtonColor->addItem(tr("Turquoise"));
 
     QString redshiftStart = settings.value("display/redshiftStart", "").toString();
     if (redshiftStart == "") {
@@ -176,6 +176,17 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
         ui->lightColorThemeRadio->setChecked(true);
     } else {
         ui->darkColorThemeRadio->setChecked(true);
+    }
+
+    //For the time being, we'll just have hardcoded locales. This should change soon (hopefully)
+    ui->localeList->addItem(tr("English") + " (English)"); //en_US
+    ui->localeList->addItem(tr("Vietnamese") + " (Tiếng Việt)"); //vi_VN
+
+    QString currentLocale = settings.value("locale/language", "en_US").toString();
+    if (currentLocale == "en_US") {
+        ui->localeList->setCurrentRow(0);
+    } else if (currentLocale == "vi_VN") {
+        ui->localeList->setCurrentRow(1);
     }
 
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
@@ -243,29 +254,30 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     }
 
     //Don't forget to change settings pane setup things
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-login"), "Startup"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Bar"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), "Gateway"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-display"), "Display"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-theme"), "Theme"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("dialog-warning"), "Notifications"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("input-tablet"), "Input"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("system-lock-screen"), "Lock Screen"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("thewave", QIcon(":/icons/thewave.svg")), "theWave"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-user"), "Users"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-time"), "Date and Time"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("emblem-warning"), "Danger"));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), "About"));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-login"), tr("Startup")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), tr("Bar")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), tr("Gateway")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-display"), tr("Display")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-theme"), tr("Theme")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("dialog-warning"), tr("Notifications")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("input-tablet"), tr("Input")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("system-lock-screen"), tr("Lock Screen")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("thewave", QIcon(":/icons/thewave.svg")), tr("theWave")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-user"), tr("Users")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-time"), tr("Date and Time")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-locale"), tr("Language")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("emblem-warning"), tr("Danger")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), tr("About")));
     ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
     ui->settingsTabs->setCurrentIndex(ui->settingsTabs->count() - 1);
 
     //Set up timer ringtones
     ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
-    ui->timerToneSelect->addItem("Happy Bee");
-    ui->timerToneSelect->addItem("Playing in the Dark");
-    ui->timerToneSelect->addItem("Ice Cream Truck");
-    ui->timerToneSelect->addItem("Party Complex");
-    ui->timerToneSelect->addItem("Salty Ditty");
+    ui->timerToneSelect->addItem(tr("Happy Bee"));
+    ui->timerToneSelect->addItem(tr("Playing in the Dark"));
+    ui->timerToneSelect->addItem(tr("Ice Cream Truck"));
+    ui->timerToneSelect->addItem(tr("Party Complex"));
+    ui->timerToneSelect->addItem(tr("Salty Ditty"));
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -401,7 +413,7 @@ void InfoPaneDropdown::processTimer() {
                 statLayout->addWidget(nameLabel);
 
                 QLabel* statLabel = new QLabel();
-                statLabel->setText("Idle");
+                statLabel->setText(tr("Idle"));
                 statLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
                 statLayout->addWidget(statLabel);
 
@@ -425,13 +437,13 @@ void InfoPaneDropdown::processTimer() {
 
                 if (strncmp(currentOption.name, "printer-state", strlen(currentOption.name)) == 0) {
                     if (strncmp(currentOption.value, "3", 1) == 0) {
-                        state = "Idle";
+                        state = tr("Idle");
                         printersStatFrames.value(currentDestination.name)->setEnabled(true);
                     } else if (strncmp(currentOption.value, "4", 1) == 0) {
-                        state = "Printing";
+                        state = tr("Printing");
                         printersStatFrames.value(currentDestination.name)->setEnabled(true);
                     } else if (strncmp(currentOption.value, "5", 1) == 0) {
-                        state = "Stopped";
+                        state = tr("Stopped");
                         printersStatFrames.value(currentDestination.name)->setEnabled(false);
                     }
                 } else if (strncmp(currentOption.name, "printer-state-reasons", strlen(currentOption.name)) == 0) {
@@ -447,7 +459,7 @@ void InfoPaneDropdown::processTimer() {
 }
 
 void InfoPaneDropdown::timerTick() {
-    ui->date->setText(QDateTime::currentDateTime().toString("ddd dd MMM yyyy"));
+    ui->date->setText(QLocale().toString(QDateTime::currentDateTime(), "ddd dd MMM yyyy"));
     ui->time->setText(QDateTime::currentDateTime().toString("hh:mm:ss"));
 
     //Also update the stopwatch
@@ -566,7 +578,7 @@ void InfoPaneDropdown::getNetworks() {
     QDBusReply<QList<QDBusObjectPath>> reply = i->call("GetDevices");
 
     //Create a variable to store text on main window
-    QString NetworkLabel = "Disconnected from the Internet";
+    QString NetworkLabel = tr("Disconnected from the Internet");
     int signalStrength = -1;
 
     //Check if we are in flight mode
@@ -618,12 +630,12 @@ void InfoPaneDropdown::getNetworks() {
                             QVariantMap hints;
                             hints.insert("category", "network.disconnected");
                             hints.insert("transient", true);
-                            notificationEngine->Notify("theShell", 0, "", "Wired Connection",
-                                                       "You've been disconnected from the internet over a wired connection",
+                            notificationEngine->Notify("theShell", 0, "", tr("Wired Connection"),
+                                                       tr("You've been disconnected from the internet over a wired connection"),
                                                        QStringList(), hints, -1);
                         }
                     }
-                    NetworkLabel = "Connected over a wired connection";
+                    NetworkLabel = tr("Connected over a wired connection");
                     NetworkLabelType = NetworkType::Wired;
                     allowAppendNoNetworkMessage = true;
                 } else {
@@ -635,8 +647,8 @@ void InfoPaneDropdown::getNetworks() {
                             QVariantMap hints;
                             hints.insert("category", "network.connected");
                             hints.insert("transient", true);
-                            notificationEngine->Notify("theShell", 0, "", "Wired Connection",
-                                                       "You're now connected to the internet over a wired connection",
+                            notificationEngine->Notify("theShell", 0, "", tr("Wired Connection"),
+                                                       tr("You're now connected to the internet over a wired connection"),
                                                        QStringList(), hints, -1);
                             doNetworkCheck();
                         }
@@ -662,8 +674,8 @@ void InfoPaneDropdown::getNetworks() {
                                     QVariantMap hints;
                                     hints.insert("category", "network.disconnected");
                                     hints.insert("transient", true);
-                                    notificationEngine->Notify("theShell", 0, "", "Wireless Connection",
-                                                               "You've been disconnected from the internet over a wireless connection",
+                                    notificationEngine->Notify("theShell", 0, "", tr("Wireless Connection"),
+                                                               tr("You've been disconnected from the internet over a wireless connection"),
                                                                QStringList(), hints, -1);
                                 }
                             }
@@ -672,22 +684,22 @@ void InfoPaneDropdown::getNetworks() {
                         case 50:
                         case 60:
                             connectedSsid = ap->property("Ssid").toString();
-                            NetworkLabel = "Connecting to " + connectedSsid + "...";
+                            NetworkLabel = tr("Connecting to %1...").arg(connectedSsid);
                             NetworkLabelType = NetworkType::Wireless;
                             break;
                         case 70:
                             connectedSsid = ap->property("Ssid").toString();
-                            NetworkLabel = "Getting IP Address from " + connectedSsid + "...";
+                            NetworkLabel = tr("Getting IP address from %1...").arg(connectedSsid);
                             NetworkLabelType = NetworkType::Wireless;
                             break;
                         case 80:
                             connectedSsid = ap->property("Ssid").toString();
-                            NetworkLabel = "Doing some checks...";
+                            NetworkLabel = tr("Doing some checks...");
                             NetworkLabelType = NetworkType::Wireless;
                             break;
                         case 90:
                             connectedSsid = ap->property("Ssid").toString();
-                            NetworkLabel = "Connecting to a secondary connection...";
+                            NetworkLabel = tr("Connecting to a secondary connection...");
                             NetworkLabelType = NetworkType::Wireless;
                             break;
                         case 100: {
@@ -706,7 +718,7 @@ void InfoPaneDropdown::getNetworks() {
                                 signalStrength = 4;
                             }
 
-                            NetworkLabel = "Connected to " + connectedSsid;
+                            NetworkLabel = tr("Connected to %1").arg(connectedSsid);
                             NetworkLabelType = NetworkType::Wireless;
                             ui->networkMac->setText("MAC Address: " + wifi->property("PermHwAddress").toString());
                             if (!connectedNetworks.keys().contains(interface)) {
@@ -717,8 +729,8 @@ void InfoPaneDropdown::getNetworks() {
                                     QVariantMap hints;
                                     hints.insert("category", "network.connected");
                                     hints.insert("transient", true);
-                                    notificationEngine->Notify("theShell", 0, "", "Wireless Connection",
-                                                               "You're now connected to the network \"" + connectedSsid + "\"",
+                                    notificationEngine->Notify("theShell", 0, "", tr("Wireless Connection"),
+                                                               tr("You're now connected to the network \"%1\"").arg(connectedSsid),
                                                                QStringList(), hints, -1);
                                     doNetworkCheck();
                                 }
@@ -729,7 +741,7 @@ void InfoPaneDropdown::getNetworks() {
                         case 110:
                         case 120:
                             connectedSsid = ap->property("Ssid").toString();
-                            NetworkLabel = "Disconnecting from " + connectedSsid + "...";
+                            NetworkLabel = tr("Disconnecting from %1...").arg(connectedSsid);
                             NetworkLabelType = NetworkType::Wireless;
                             break;
                         }
@@ -795,13 +807,13 @@ void InfoPaneDropdown::getNetworks() {
                                 QVariantMap hints;
                                 hints.insert("category", "network.connected");
                                 hints.insert("transient", true);
-                                notificationEngine->Notify("theShell", 0, "", "Bluetooth Connection",
-                                                           "You're now connected to the internet over a bluetooth connection",
+                                notificationEngine->Notify("theShell", 0, "", tr("Bluetooth Connection"),
+                                                           tr("You're now connected to the internet over a bluetooth connection"),
                                                            QStringList(), hints, -1);
                             }
                         }
 
-                        NetworkLabel = "Connected to " + bt->property("Name").toString() + " over Bluetooth";
+                        NetworkLabel = tr("Connected to %1 over Bluetooth").arg(bt->property("Name").toString());
                         NetworkLabelType = NetworkType::Bluetooth;
                         allowAppendNoNetworkMessage = true;
                         break;
@@ -814,8 +826,8 @@ void InfoPaneDropdown::getNetworks() {
                                 QVariantMap hints;
                                 hints.insert("category", "network.disconnected");
                                 hints.insert("transient", true);
-                                notificationEngine->Notify("theShell", 0, "", "Bluetooth Connection",
-                                                           "You've been disconnected from the internet over a bluetooth connection",
+                                notificationEngine->Notify("theShell", 0, "", tr("Bluetooth Connection"),
+                                                           tr("You've been disconnected from the internet over a bluetooth connection"),
                                                            QStringList(), hints, -1);
                             }
                         }
@@ -829,7 +841,7 @@ void InfoPaneDropdown::getNetworks() {
 
         if (allowAppendNoNetworkMessage && !networkOk) {
             signalStrength = -2;
-            NetworkLabel.prepend("Can't get to the internet · ");
+            NetworkLabel.prepend(tr("Can't get to the internet") + " · ");
         }
 
         //If possible, restore the current selection
@@ -838,7 +850,7 @@ void InfoPaneDropdown::getNetworks() {
         }
 
     } else {
-        NetworkLabel = "NetworkManager Error";
+        NetworkLabel = tr("NetworkManager Error");
     }
 
     //Populate current connection area
@@ -876,8 +888,8 @@ void InfoPaneDropdown::getNetworks() {
                 rxBytes += statsInterface->property("RxBytes").toULongLong();
                 statsInterface->deleteLater();
             }
-            ui->networkSent->setText("Data Sent: " + calculateSize(txBytes));
-            ui->networkReceived->setText("Data Received: " + calculateSize(rxBytes));
+            ui->networkSent->setText(tr("Data Sent: %1").arg(calculateSize(txBytes)));
+            ui->networkReceived->setText(tr("Data Received: %1").arg(calculateSize(rxBytes)));
 
             //Hide individual frames
             ui->networkInfoWirelessFrame->setVisible(false);
@@ -890,8 +902,8 @@ void InfoPaneDropdown::getNetworks() {
                     QDBusInterface* firstDeviceInterface = new QDBusInterface("org.freedesktop.NetworkManager", devices.first().path(), "org.freedesktop.NetworkManager.Device.Wireless", QDBusConnection::systemBus());
                     QDBusObjectPath activeAccessPoint = firstDeviceInterface->property("ActiveAccessPoint").value<QDBusObjectPath>();
                     QDBusInterface* activeAccessPointInterface = new QDBusInterface("org.freedesktop.NetworkManager", activeAccessPoint.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus());
-                    ui->networkWirelessStrength->setText("Signal Strength: " + QString::number(activeAccessPointInterface->property("Strength").toInt()) + "%");
-                    ui->networkWirelessFrequency->setText("Frequency: " + QString::number(activeAccessPointInterface->property("Frequency").toFloat() / 1e3f, 'f', 1) + " GHz");
+                    ui->networkWirelessStrength->setText(tr("Signal Strength: %1").arg(QString::number(activeAccessPointInterface->property("Strength").toInt()) + "%"));
+                    ui->networkWirelessFrequency->setText(tr("Frequency: %1").arg(QString::number(activeAccessPointInterface->property("Frequency").toFloat() / 1e3f, 'f', 1) + " GHz"));
                     activeAccessPointInterface->deleteLater();
                     firstDeviceInterface->deleteLater();
                     ui->networkInfoWirelessFrame->setVisible(true);
@@ -925,7 +937,7 @@ void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *curren
         } else {
             if (current->data(Qt::UserRole + 2).toBool()) { //Connected to this network
                 ui->networkKey->setVisible(false);
-                ui->networkConnect->setText("Disconnect");
+                ui->networkConnect->setText(tr("Disconnect"));
                 ui->networkConnect->setIcon(QIcon::fromTheme("network-disconnect"));
                 ui->networkConnect->setVisible(true);
             } else { //Not connected to this network
@@ -951,7 +963,7 @@ void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *curren
                 } else {
                     ui->networkKey->setVisible(false);
                 }
-                ui->networkConnect->setText("Connect");
+                ui->networkConnect->setText(tr("Connect"));
                 ui->networkConnect->setIcon(QIcon::fromTheme("network-connect"));
                 ui->networkConnect->setVisible(true);
                 delete ap;
@@ -1056,12 +1068,12 @@ void InfoPaneDropdown::startTimer(QTime time) {
         ui->timeEdit->setVisible(true);
         ui->label_7->setVisible(false);
         ui->label_7->setEnabled(true);
-        ui->pushButton_2->setText("Start");
+        ui->pushButton_2->setText(tr("Start"));
         ui->pushButton_3->setVisible(false);
         emit timerVisibleChanged(false);
         emit timerEnabledChanged(true);
     }
-    ui->pushButton_2->setText("Pause");
+    ui->pushButton_2->setText(tr("Pause"));
     timeUntilTimeout = time;
     ui->label_7->setText(ui->timeEdit->text());
     ui->timeEdit->setVisible(false);
@@ -1083,8 +1095,8 @@ void InfoPaneDropdown::startTimer(QTime time) {
                 QVariantMap hints;
                 hints.insert("x-thesuite-timercomplete", true);
                 hints.insert("suppress-sound", true);
-                timerNotificationId = notificationEngine->Notify("theShell", 0, "", "Timer Elapsed",
-                                          "Your timer has completed.",
+                timerNotificationId = notificationEngine->Notify("theShell", 0, "", tr("Timer Elapsed"),
+                                          tr("Your timer has completed."),
                                           QStringList(), hints, 0);
                 ui->timeEdit->setVisible(true);
                 ui->label_7->setVisible(false);
@@ -1092,15 +1104,15 @@ void InfoPaneDropdown::startTimer(QTime time) {
 
                 QMediaPlaylist* playlist = new QMediaPlaylist();
 
-                if (ui->timerToneSelect->currentText() == "Happy Bee") {
+                if (ui->timerToneSelect->currentText() == tr("Happy Bee")) {
                     playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/happybee")));
-                } else if (ui->timerToneSelect->currentText() == "Playing in the Dark") {
+                } else if (ui->timerToneSelect->currentText() == tr("Playing in the Dark")) {
                     playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/playinginthedark")));
-                } else if (ui->timerToneSelect->currentText() == "Ice Cream Truck") {
+                } else if (ui->timerToneSelect->currentText() == tr("Ice Cream Truck")) {
                     playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/icecream")));
-                } else if (ui->timerToneSelect->currentText() == "Party Complex") {
+                } else if (ui->timerToneSelect->currentText() == tr("Party Complex")) {
                     playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/party")));
-                } else if (ui->timerToneSelect->currentText() == "Salty Ditty") {
+                } else if (ui->timerToneSelect->currentText() == tr("Salty Ditty")) {
                     playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/saltyditty")));
                 }
                 playlist->setPlaybackMode(QMediaPlaylist::Loop);
@@ -1158,12 +1170,12 @@ void InfoPaneDropdown::on_pushButton_2_clicked()
             timer->stop();
             ui->pushButton_3->setVisible(true);
             ui->label_7->setEnabled(false);
-            ui->pushButton_2->setText("Resume");
+            ui->pushButton_2->setText(tr("Resume"));
         } else {
             timer->start();
             ui->pushButton_3->setVisible(false);
             ui->label_7->setEnabled(true);
-            ui->pushButton_2->setText("Pause");
+            ui->pushButton_2->setText(tr("Pause"));
         }
     }
 }
@@ -1175,7 +1187,7 @@ void InfoPaneDropdown::on_pushButton_3_clicked()
     ui->timeEdit->setVisible(true);
     ui->label_7->setVisible(false);
     ui->label_7->setEnabled(true);
-    ui->pushButton_2->setText("Start");
+    ui->pushButton_2->setText(tr("Start"));
     ui->pushButton_3->setVisible(false);
     emit timerVisibleChanged(false);
     emit timerEnabledChanged(true);
@@ -1316,19 +1328,19 @@ void InfoPaneDropdown::on_redshiftPause_toggled(bool checked)
 }
 
 void InfoPaneDropdown::updateSysInfo() {
-    ui->currentBattery->setText("Current Battery Percentage: " + QString::number(powerEngine->currentBattery()).append("%"));
+    ui->currentBattery->setText(tr("Current Battery Percentage: %1").arg(QString::number(powerEngine->currentBattery()).append("%")));
 
     QTime uptime(0, 0);
     uptime = uptime.addMSecs(startTime.elapsed());
-    ui->theshellUptime->setText("theShell Uptime: " + uptime.toString("hh:mm:ss"));
+    ui->theshellUptime->setText(tr("theShell Uptime: %1").arg(uptime.toString("hh:mm:ss")));
 
     struct sysinfo* info = new struct sysinfo;
     if (sysinfo(info) == 0) {
         QTime sysUptime(0, 0);
         sysUptime = sysUptime.addSecs(info->uptime);
-        ui->systemUptime->setText("System Uptime: " + sysUptime.toString("hh:mm:ss"));
+        ui->systemUptime->setText(tr("System Uptime: %1").arg(sysUptime.toString("hh:mm:ss")));
     } else {
-        ui->systemUptime->setText("Couldn't get system uptime");
+        ui->systemUptime->setText(tr("Couldn't get system uptime"));
     }
 }
 
@@ -1338,14 +1350,18 @@ void InfoPaneDropdown::on_printLabel_clicked()
 }
 
 bool InfoPaneDropdown::isQuietOn() {
-    return ui->QuietCheck->isChecked();
+    if (this == NULL) {
+        return false;
+    } else {
+        return ui->QuietCheck->isChecked();
+    }
 }
 
 void InfoPaneDropdown::on_resetButton_clicked()
 {
-    if (QMessageBox::warning(this, "Reset theShell",
-                             "All settings will be reset to default, and you will be logged out. "
-                             "Are you sure you want to do this?", QMessageBox::Yes | QMessageBox::No,
+    if (QMessageBox::warning(this, tr("Reset theShell"),
+                             tr("All settings will be reset to default, and you will be logged out. "
+                             "Are you sure you want to do this?"), QMessageBox::Yes | QMessageBox::No,
                              QMessageBox::No) == QMessageBox::Yes) {
         settings.clear();
         EndSession(EndSessionWait::logout);
@@ -1652,14 +1668,14 @@ void InfoPaneDropdown::on_stopwatchStart_clicked()
         stopwatchTimeAdd += stopwatchTime.elapsed();
 
         ui->stopwatchReset->setVisible(true);
-        ui->stopwatchStart->setText("Start");
+        ui->stopwatchStart->setText(tr("Start"));
         ui->stopwatchStart->setIcon(QIcon::fromTheme("media-playback-start"));
     } else {
         stopwatchTime.restart();
         stopwatchRunning = true;
 
         ui->stopwatchReset->setVisible(false);
-        ui->stopwatchStart->setText("Stop");
+        ui->stopwatchStart->setText(tr("Stop"));
         ui->stopwatchStart->setIcon(QIcon::fromTheme("media-playback-stop"));
     }
 }
@@ -1708,7 +1724,7 @@ void InfoPaneDropdown::on_systemFont_currentFontChanged(const QFont &f)
 void InfoPaneDropdown::on_locateDeviceButton_clicked()
 {
     if (ui->kdeconnectDevices->selectedItems().count() != 0) {
-        if (QMessageBox::question(this, "Locate Device", "Your device will ring at full volume. Tap the button on the screen of the device to silence it.", QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok) == QMessageBox::Ok) {
+        if (QMessageBox::question(this, tr("Locate Device"), tr("Your device will ring at full volume. Tap the button on the screen of the device to silence it."), QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok) == QMessageBox::Ok) {
             QString device = ui->kdeconnectDevices->selectedItems().first()->data(Qt::UserRole).toString();
             QDBusInterface findPhone("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device + "/findmyphone", "org.kde.kdeconnect.device.findmyphone");
             findPhone.call("ring");
@@ -1837,7 +1853,7 @@ void InfoPaneDropdown::updateBatteryChart() {
     batteryChartData->attachAxis(yAxis);
     batteryChartTimeRemainingData->attachAxis(yAxis);
 
-    ui->batteryChartLastUpdate->setText("Last updated " + QDateTime::currentDateTime().toString("hh:mm:ss"));
+    ui->batteryChartLastUpdate->setText(tr("Last updated %1").arg(QDateTime::currentDateTime().toString("hh:mm:ss")));
 }
 
 void InfoPaneDropdown::on_batteryChartShowProjected_toggled(bool checked)
@@ -1972,7 +1988,7 @@ void InfoPaneDropdown::setupUsersSettingsPane() {
 
         QListWidgetItem* item = new QListWidgetItem();
         item->setIcon(QIcon::fromTheme("list-add"));
-        item->setText("Add New User");
+        item->setText(tr("Add New User"));
         item->setData(Qt::UserRole, "new");
         ui->availableUsersWidget->addItem(item);
     }
@@ -1983,21 +1999,21 @@ void InfoPaneDropdown::on_userSettingsNextButton_clicked()
     if (ui->availableUsersWidget->selectedItems().count() != 0) {
         editingUserPath = ui->availableUsersWidget->selectedItems().first()->data(Qt::UserRole).toString();
         if (editingUserPath == "new") {
-            ui->userSettingsEditUserLabel->setText("New User");
+            ui->userSettingsEditUserLabel->setText(tr("New User"));
             ui->userSettingsFullName->setText("");
             ui->userSettingsUserName->setText("");
-            ui->userSettingsPassword->setPlaceholderText("(none)");
-            ui->userSettingsPasswordCheck->setPlaceholderText("(none)");
+            ui->userSettingsPassword->setPlaceholderText(tr("(none)"));
+            ui->userSettingsPasswordCheck->setPlaceholderText(tr("(none)"));
             ui->userSettingsDeleteUser->setVisible(false);
         } else {
-            ui->userSettingsEditUserLabel->setText("Edit User");
+            ui->userSettingsEditUserLabel->setText(tr("Edit User"));
             QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
             if (interface.property("PasswordMode").toInt() == 0) {
-                ui->userSettingsPassword->setPlaceholderText("(unchanged)");
-                ui->userSettingsPasswordCheck->setPlaceholderText("(unchanged)");
+                ui->userSettingsPassword->setPlaceholderText(tr("(unchanged)"));
+                ui->userSettingsPasswordCheck->setPlaceholderText(tr("(unchanged)"));
             } else {
-                ui->userSettingsPassword->setPlaceholderText("(none)");
-                ui->userSettingsPasswordCheck->setPlaceholderText("(none)");
+                ui->userSettingsPassword->setPlaceholderText(tr("(none)"));
+                ui->userSettingsPasswordCheck->setPlaceholderText(tr("(none)"));
             }
             ui->userSettingsFullName->setText(interface.property("RealName").toString());
             ui->userSettingsUserName->setText(interface.property("UserName").toString());
@@ -2018,17 +2034,17 @@ void InfoPaneDropdown::on_userSettingsCancelButton_clicked()
 void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
 {
     if (ui->userSettingsPasswordCheck->text() != ui->userSettingsPassword->text()) {
-        QMessageBox::warning(this, "Password Check", "The passwords don't match.", QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Password Check"), tr("The passwords don't match."), QMessageBox::Ok, QMessageBox::Ok);
         return;
     }
 
     if (ui->userSettingsUserName->text().contains(" ")) {
-        QMessageBox::warning(this, "Username", "The username must not contain spaces.", QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Username"), tr("The username must not contain spaces."), QMessageBox::Ok, QMessageBox::Ok);
         return;
     }
 
     if (ui->userSettingsUserName->text().toLower() != ui->userSettingsUserName->text()) {
-        QMessageBox::warning(this, "Username", "The username must not contain capital letters.", QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Username"), tr("The username must not contain capital letters."), QMessageBox::Ok, QMessageBox::Ok);
         return;
     }
 
@@ -2165,7 +2181,7 @@ void InfoPaneDropdown::on_DateTimeNTPSwitch_toggled(bool checked)
     } else {
         ui->dateTimeSetDate->setEnabled(true);
         ui->dateTimeSetTime->setEnabled(true);
-        ui->dateTimeSetDateTimeButton->setEnabled(false);
+        ui->dateTimeSetDateTimeButton->setEnabled(true);
     }
 
     launchDateTimeService();
@@ -2178,4 +2194,16 @@ void InfoPaneDropdown::on_DateTimeNTPSwitch_toggled(bool checked)
     QDBusConnection::systemBus().call(setMessage);
 
     setupDateTimeSettingsPane();
+}
+
+void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
+{
+    switch (currentRow) {
+        case 0:
+            settings.setValue("locale/language", "en_US");
+            break;
+        case 1:
+            settings.setValue("locale/language", "vi_VN");
+            break;
+    }
 }

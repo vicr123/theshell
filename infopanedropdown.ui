@@ -223,7 +223,7 @@
            <bool>false</bool>
           </property>
           <property name="text">
-           <string>FlightSwitch</string>
+           <string notr="true">FlightSwitch</string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -256,7 +256,7 @@
            <bool>true</bool>
           </property>
           <property name="text">
-           <string>WifiSwitch</string>
+           <string notr="true">WifiSwitch</string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -289,7 +289,7 @@
            <bool>true</bool>
           </property>
           <property name="text">
-           <string>BluetoothSwitch</string>
+           <string notr="true">BluetoothSwitch</string>
           </property>
          </widget>
         </item>
@@ -310,7 +310,7 @@
         <item>
          <widget class="Switch" name="PowerStretchSwitch">
           <property name="text">
-           <string>PowerStretchSwitch</string>
+           <string notr="true">PowerStretchSwitch</string>
           </property>
          </widget>
         </item>
@@ -342,7 +342,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -567,18 +567,18 @@
              <second>0</second>
              <year>1969</year>
              <month>10</month>
-             <day>30</day>
+             <day>28</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>10</month>
-             <day>30</day>
+             <day>28</day>
             </date>
            </property>
            <property name="displayFormat">
-            <string>HH:mm:ss</string>
+            <string notr="true">HH:mm:ss</string>
            </property>
            <property name="timeSpec">
             <enum>Qt::UTC</enum>
@@ -1609,7 +1609,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>11</number>
+            <number>13</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -3061,7 +3061,8 @@
                       <string>Next</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="go-next"/>
+                      <iconset theme="go-next">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </widget>
                    </item>
@@ -3188,7 +3189,8 @@
                       <string>Delete User</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="edit-delete"/>
+                      <iconset theme="edit-delete">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </widget>
                    </item>
@@ -3198,7 +3200,8 @@
                       <string>Cancel</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="dialog-cancel"/>
+                      <iconset theme="dialog-cancel">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </widget>
                    </item>
@@ -3208,7 +3211,8 @@
                       <string>Apply Changes</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="dialog-ok"/>
+                      <iconset theme="dialog-ok">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </widget>
                    </item>
@@ -3261,7 +3265,8 @@
                       <string>Cancel</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="dialog-cancel"/>
+                      <iconset theme="dialog-cancel">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </widget>
                    </item>
@@ -3284,7 +3289,8 @@
                       <string>Delete user only</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="edit-delete"/>
+                      <iconset theme="edit-delete">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </widget>
                    </item>
@@ -3294,7 +3300,8 @@
                       <string>Delete user and all files</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="edit-delete"/>
+                      <iconset theme="edit-delete">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </widget>
                    </item>
@@ -3369,7 +3376,8 @@
                     <string>Set</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="dialog-ok"/>
+                    <iconset theme="dialog-ok">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                   </widget>
                  </item>
@@ -3433,6 +3441,45 @@
                 </layout>
                </item>
               </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="page_9">
+            <layout class="QGridLayout" name="gridLayout_16">
+             <item row="0" column="0">
+              <widget class="QLabel" name="displayLabel_11">
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Language</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="Line" name="displayLine_11">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="QListWidget" name="localeList"/>
+             </item>
+             <item row="2" column="0" colspan="2">
+              <widget class="QLabel" name="label_68">
+               <property name="text">
+                <string>Changing this setting requires you to log in and then log out.</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -3604,7 +3651,7 @@
              <item row="3" column="0">
               <widget class="QLabel" name="label_21">
                <property name="text">
-                <string>Copyright (c) Victor Tran 2016. Licensed under the terms of the GNU General Public License, version 3 or later.</string>
+                <string>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</string>
                </property>
                <property name="wordWrap">
                 <bool>true</bool>
@@ -3642,6 +3689,14 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>clickablelabel.h</header>
+   <slots>
+    <signal>clicked()</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
    <class>Switch</class>
    <extends>QPushButton</extends>
    <header>switch.h</header>
@@ -3651,14 +3706,6 @@
    <extends>QStackedWidget</extends>
    <header>animatedstackedwidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>clickablelabel.h</header>
-   <slots>
-    <signal>clicked()</signal>
-   </slots>
   </customwidget>
  </customwidgets>
  <resources>

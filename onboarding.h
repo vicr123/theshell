@@ -8,11 +8,11 @@
 #include <QLabel>
 
 #define ChangelogOnbording "New in theShell 6.0:\n"\
-    "- Default system font can be set in theme settings."\
+    "- Default system font can be set in theme settings.\n"\
     "- Battery indicator now shows battery for devices connected over KDE Connect\n"\
     "- Added some KDE Connect actions in the status center\n"\
-    "- The stopwatch is now shown on the bar when being used."\
-    "- New Charge History in the Status Center. Go to the System Status pane in the Status Center to take a look."\
+    "- The stopwatch is now shown on the bar when being used.\n"\
+    "- New Charge History in the Status Center. Go to the System Status pane in the Status Center to take a look.\n"\
     "- Add scrollbar on the bar when content runs off the bar\n"\
     "- Added Power Stretch.\n"\
     "- Added icon in bar for wireless reception\n"\
@@ -25,6 +25,8 @@
     "- theWave now quitens background music while listening\n"\
     "- Time and date can now be set within theShell\n"\
     "- System Users can now be configured within theShell\n"\
+    "- theShell now supports localisations! Try the inbuilt Vietnamese translation by changing the settings in theShell\n"\
+    "- theShell's settings now apply to the whole system, so there is no need for a seperate system settings application.\n"\
     "\n"\
     "New in theShell 5.2: \n"\
     "- New Onboarding experience. Every time theShell updates, you'll get a changelog.\n" \

@@ -20,14 +20,14 @@ SysTrayIcons::SysTrayIcons(QWidget *parent) : QFrame(parent)
     selection = XInternAtom(QX11Info::display(), atomName.toLocal8Bit(), False);
     if (selection == None) { //Manager selection wasn't found
         QLabel* errorLabel = new QLabel();
-        errorLabel->setText("System Tray Unavailable.");
+        errorLabel->setText(tr("System Tray Unavailable."));
         this->layout()->addWidget(errorLabel);
     } else {
         if (XGetSelectionOwner(QX11Info::display(), selection) == None) {
             XSetSelectionOwner(QX11Info::display(), selection, this->winId(), CurrentTime);
             if (XGetSelectionOwner(QX11Info::display(), selection) != this->winId()) {
                 QLabel* errorLabel = new QLabel();
-                errorLabel->setText("System Tray Unavailable.");
+                errorLabel->setText(tr("System Tray Unavailable."));
                 this->layout()->addWidget(errorLabel);
             } else { //System tray available. Send a ClientMessage event to tell everyone that a system tray is available.
                 XEvent event;
@@ -44,7 +44,7 @@ SysTrayIcons::SysTrayIcons(QWidget *parent) : QFrame(parent)
             }
         } else { //Systray is already handled.
             QLabel* errorLabel = new QLabel();
-            errorLabel->setText("System Tray Unavailable.");
+            errorLabel->setText(tr("System Tray Unavailable."));
             this->layout()->addWidget(errorLabel);
         }
     }

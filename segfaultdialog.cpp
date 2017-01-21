@@ -8,7 +8,7 @@ SegfaultDialog::SegfaultDialog(QString signal, QWidget *parent) :
     ui->setupUi(this);
 
     this->setFixedSize(this->size());
-    ui->label_3->setText("To debug, attach a debugger to PID " + QString::number(QApplication::applicationPid()));
+    ui->label_3->setText(tr("To debug, attach a debugger to PID %1").arg(QString::number(QApplication::applicationPid())));
     ui->pushButton_3->setProperty("type", "destructive");
     ui->signal->setText(signal);
 }
@@ -37,7 +37,7 @@ void SegfaultDialog::on_pushButton_2_clicked()
 
 void SegfaultDialog::on_pushButton_3_clicked()
 {
-    if (QMessageBox::warning(this, "Reset theShell?", "You're about to reset theShell. Are you sure?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+    if (QMessageBox::warning(this, tr("Reset theShell?"), tr("You're about to reset theShell. Are you sure?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
         QSettings().clear();
         this->close();
     }

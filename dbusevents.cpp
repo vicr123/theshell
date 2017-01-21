@@ -74,13 +74,14 @@ void DbusEvents::NewUdisksInterface(QDBusObjectPath path) {
             QString deviceName = interface.property("Model").toString();
             QStringList actions;
             actions.append("action");
-            actions.append("Perform Action...");
+            actions.append(tr("Perform Action..."));
             QVariantMap hints;
             hints.insert("transient", true);
             hints.insert("category", "device.added");
             hints.insert("sound-file", "qrc:/sounds/media-insert.wav");
-            uint id = notificationEngine->Notify("theShell", 0, "", deviceName + " Connected", deviceName + " has been connected to this PC.", actions, hints, -1);
-            notificationIds.insert(id, path);        }
+            uint id = notificationEngine->Notify("theShell", 0, "", tr("%1 Connected").arg(deviceName), tr("%1 has been connected to this PC.").arg(deviceName), actions, hints, -1);
+            notificationIds.insert(id, path);
+        }
     }
 }
 
@@ -98,7 +99,7 @@ void DbusEvents::NotificationAction(uint id, QString key) {
         if (key == "action") {
             QDBusInterface interface("org.freedesktop.UDisks2", notificationIds.value(id).path(), "org.freedesktop.UDisks2.Drive", QDBusConnection::systemBus());
 
-            QString description = interface.property("Model").toString() + " was just connected. What do you want to do?";
+            QString description = tr("%1 was just connected. What do you want to do?").arg(interface.property("Model").toString());
             NewMedia* mediaWindow = new NewMedia(description);
             mediaWindow->show();
         }
@@ -134,14 +135,14 @@ void DbusEvents::DetectNewDevices() {
 
                     QString deviceName = deviceNameProc.readAll().trimmed();
                     if (deviceName == "") {
-                        deviceName = "iOS Device";
+                        deviceName = tr("iOS Device");
                     }
 
                     QVariantMap hints;
                     hints.insert("transient", true);
                     hints.insert("category", "device.added");
                     hints.insert("sound-file", "qrc:/sounds/media-insert.wav");
-                    notificationEngine->Notify("theShell", 0, "", deviceName + " Connected", deviceName + " has been connected to this PC.", QStringList(), hints, -1);
+                    notificationEngine->Notify("theShell", 0, "", tr("%1 Connected").arg(deviceName), tr("%1 has been connected to this PC.").arg(deviceName), QStringList(), hints, -1);
                     connectediOSDevices.append(device);
                 }
             }

@@ -53,11 +53,9 @@ Menu::Menu(QWidget *parent) :
     delete fullNameProc;
     QString fullname = parseName.split(",").at(0).split(":").last();
     if (fullname == "") {
-        ui->label_2->setText("Hey, " + name + "!");
-        //ui->label_4->setText(name + ", what do you want to do now?");
+        ui->label_2->setText(tr("Hey, %1!").arg(name));
     } else {
-        ui->label_2->setText("Hey, " + fullname + "!");
-        //ui->label_4->setText(fullname + ", what do you want to do now?");
+        ui->label_2->setText(tr("Hey, %1!").arg(fullname));
     }
 
     ui->listWidget->installEventFilter(this);
@@ -235,8 +233,8 @@ void Menu::show(bool openTotheWave, bool startListening) {
         App waveApp;
         waveApp.setCommand("thewave");
         waveApp.setIcon(QIcon(":/icons/thewave.svg"));
-        waveApp.setName("theWave");
-        waveApp.setDescription("Personal Assistant");
+        waveApp.setName(tr("theWave"));
+        waveApp.setDescription(tr("Personal Assistant"));
         apps.append(waveApp);
 
         int index = 0;
@@ -401,10 +399,10 @@ void Menu::on_pushButton_clicked()
         }
 
         if (showWarningPane) {
-            ui->shutdownText->setText("Before you power off your PC, you may want to check this.");
+            ui->shutdownText->setText(tr("Before you power off your PC, you may want to check this."));
             ui->shutdownWarnings->setVisible(true);
         } else {
-            ui->shutdownText->setText("You're about to power off your PC. Are you sure?");
+            ui->shutdownText->setText(tr("You're about to power off your PC. Are you sure?"));
             ui->shutdownWarnings->setVisible(false);
         }
 
@@ -539,13 +537,13 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
         if (settings.value("thewave/enabled", true).toBool()) {
             if (arg1.toLower() == "emergency call") {
                 QListWidgetItem *callItem = new QListWidgetItem();
-                callItem->setText("Place a call");
+                callItem->setText(tr("Place a call"));
                 callItem->setIcon(QIcon::fromTheme("call-start"));
                 callItem->setData(Qt::UserRole, "thewave:emergency call");
                 ui->listWidget->addItem(callItem);
 
                 QListWidgetItem *call = new QListWidgetItem();
-                call->setText("Emergency Call");
+                call->setText(tr("Emergency Call"));
                 call->setData(Qt::UserRole, "thewave:emergency call");
                 call->setIcon(QIcon(":/icons/blank.svg"));
                 QFont font = call->font();
@@ -557,13 +555,13 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                 QListWidgetItem *call = new QListWidgetItem();
                 QString parse = arg1;
                 if (arg1.count() == 4 || arg1.count() == 5) {
-                    call->setText("Place a call");
+                    call->setText(tr("Place a call"));
                     call->setData(Qt::UserRole, "thewave:call");
                     call->setIcon(QIcon::fromTheme("call-start"));
                 } else {
                     parse.remove(0, 5);
                     QListWidgetItem *callItem = new QListWidgetItem();
-                    callItem->setText("Place a call");
+                    callItem->setText(tr("Place a call"));
                     callItem->setIcon(QIcon::fromTheme("call-start"));
                     callItem->setData(Qt::UserRole, "thewave:call " + parse);
                     ui->listWidget->addItem(callItem);
@@ -582,12 +580,12 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                 QListWidgetItem *weather = new QListWidgetItem();
 
                 QListWidgetItem *weatherItem = new QListWidgetItem();
-                weatherItem->setText("Weather");
+                weatherItem->setText(tr("Weather"));
                 weatherItem->setIcon(QIcon::fromTheme("weather-clear"));
                 weatherItem->setData(Qt::UserRole, "thewave:weather");
                 ui->listWidget->addItem(weatherItem);
 
-                weather->setText("Unknown");
+                weather->setText(tr("Unknown"));
                 weather->setData(Qt::UserRole, "thewave:weather");
                 weather->setIcon(QIcon::fromTheme("dialog-error"));
 
@@ -599,28 +597,28 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                 showtheWaveOption = false;
             }  else if (arg1.startsWith("play") && MainWin->isMprisAvailable()) {
                 QListWidgetItem *i = new QListWidgetItem();
-                i->setText("Play");
+                i->setText(tr("Play"));
                 i->setIcon(QIcon::fromTheme("media-playback-start"));
                 i->setData(Qt::UserRole, "media:play");
                 ui->listWidget->addItem(i);
                 showtheWaveOption = false;
             } else if (arg1.startsWith("pause") && MainWin->isMprisAvailable()) {
                 QListWidgetItem *i = new QListWidgetItem();
-                i->setText("Pause");
+                i->setText(tr("Pause"));
                 i->setIcon(QIcon::fromTheme("media-playback-pause"));
                 i->setData(Qt::UserRole, "media:pause");
                 ui->listWidget->addItem(i);
                 showtheWaveOption = false;
             } else if (arg1.startsWith("next") && MainWin->isMprisAvailable()) {
                 QListWidgetItem *i = new QListWidgetItem();
-                i->setText("Next Track");
+                i->setText(tr("Next Track"));
                 i->setIcon(QIcon::fromTheme("media-skip-forward"));
                 i->setData(Qt::UserRole, "media:next");
                 ui->listWidget->addItem(i);
                 showtheWaveOption = false;
             } else if ((arg1.startsWith("previous") || arg1.startsWith("back")) && MainWin->isMprisAvailable()) {
                 QListWidgetItem *i = new QListWidgetItem();
-                i->setText("Previous Track");
+                i->setText(tr("Previous Track"));
                 i->setIcon(QIcon::fromTheme("media-skip-backward"));
                 i->setData(Qt::UserRole, "media:previous");
                 ui->listWidget->addItem(i);
@@ -628,7 +626,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
             } else if ((arg1.contains("current") || arg1.contains("what") || arg1.contains("now")) &&
                        (arg1.contains("track") || arg1.contains("song") || arg1.contains("playing")) && MainWin->isMprisAvailable()) { //Get current song info
                 QListWidgetItem *nowPlaying = new QListWidgetItem();
-                nowPlaying->setText("Now Playing");
+                nowPlaying->setText(tr("Now Playing"));
                 nowPlaying->setIcon(QIcon::fromTheme("media-playback-start"));
                 nowPlaying->setData(Qt::UserRole, "thewave:current track");
                 ui->listWidget->addItem(nowPlaying);
@@ -660,25 +658,25 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                 ui->listWidget->addItem(space);
 
                 QListWidgetItem *play = new QListWidgetItem();
-                play->setText("Play");
+                play->setText(tr("Play"));
                 play->setIcon(QIcon::fromTheme("media-playback-start"));
                 play->setData(Qt::UserRole, "media:play");
                 ui->listWidget->addItem(play);
 
                 QListWidgetItem *pause = new QListWidgetItem();
-                pause->setText("Pause");
+                pause->setText(tr("Pause"));
                 pause->setIcon(QIcon::fromTheme("media-playback-pause"));
                 pause->setData(Qt::UserRole, "media:pause");
                 ui->listWidget->addItem(pause);
 
                 QListWidgetItem *next = new QListWidgetItem();
-                next->setText("Next Track");
+                next->setText(tr("Next Track"));
                 next->setIcon(QIcon::fromTheme("media-skip-forward"));
                 next->setData(Qt::UserRole, "media:next");
                 ui->listWidget->addItem(next);
 
                 QListWidgetItem *prev = new QListWidgetItem();
-                prev->setText("Previous Track");
+                prev->setText(tr("Previous Track"));
                 prev->setIcon(QIcon::fromTheme("media-skip-backward"));
                 prev->setData(Qt::UserRole, "media:previous");
                 ui->listWidget->addItem(prev);
@@ -709,19 +707,19 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
 
         if (QString("shutdown").contains(arg1, Qt::CaseInsensitive) || QString("power off").contains(arg1, Qt::CaseInsensitive)) {
             QListWidgetItem *i = new QListWidgetItem();
-            i->setText("Power Off");
+            i->setText(tr("Power Off"));
             i->setIcon(QIcon::fromTheme("system-shutdown"));
             i->setData(Qt::UserRole, "power:off");
             ui->listWidget->addItem(i);
         } else if (QString("restart").contains(arg1, Qt::CaseInsensitive) || QString("reboot").contains(arg1, Qt::CaseInsensitive)) {
             QListWidgetItem *i = new QListWidgetItem();
-            i->setText("Reboot");
+            i->setText(tr("Reboot"));
             i->setIcon(QIcon::fromTheme("system-reboot"));
             i->setData(Qt::UserRole, "power:reboot");
             ui->listWidget->addItem(i);
         } else if (QString("logout").contains(arg1, Qt::CaseInsensitive) || QString("logoff").contains(arg1, Qt::CaseInsensitive)) {
             QListWidgetItem *i = new QListWidgetItem();
-            i->setText("Log Out");
+            i->setText(tr("Log Out"));
             i->setIcon(QIcon::fromTheme("system-log-out"));
             i->setData(Qt::UserRole, "power:logout");
             ui->listWidget->addItem(i);
@@ -748,7 +746,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
         QUrl uri = QUrl::fromUserInput(arg1);
         if (uri.scheme() == "http" || uri.scheme() == "https") {
             App app;
-            app.setName("Go to " + uri.toDisplayString());
+            app.setName(tr("Go to %1").arg(uri.toDisplayString()));
             app.setCommand("xdg-open \"" + uri.toString() + "\"");
             app.setIcon(QIcon::fromTheme("text-html"));
             appsShown.append(app);
@@ -761,7 +759,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
         } else if (uri.scheme() == "file") {
             if (QDir(uri.path() + "/").exists()) {
                 App app;
-                app.setName("Open " + uri.path());
+                app.setName(tr("Open %1").arg(uri.path()));
                 app.setCommand("xdg-open \"" + uri.toString() + "\"");
                 app.setIcon(QIcon::fromTheme("system-file-manager"));
                 appsShown.append(app);
@@ -773,7 +771,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
                 ui->listWidget->addItem(i);
             } else if (QFile(uri.path()).exists()) {
                 App app;
-                app.setName("Open " + uri.path());
+                app.setName(tr("Open %1").arg(uri.path()));
                 app.setCommand("xdg-open \"" + uri.toString() + "\"");
                 QFile f(uri.toString());
                 QFileInfo info(f);
@@ -791,7 +789,7 @@ void Menu::on_lineEdit_textEdited(const QString &arg1)
 
         if (showtheWaveOption && settings.value("thewave/enabled", true).toBool()) {
             QListWidgetItem *wave = new QListWidgetItem();
-            wave->setText("Ask theWave about \"" + arg1 + "\"");
+            wave->setText(tr("Ask theWave about \"%1\"").arg(arg1));
             wave->setIcon(QIcon(":/icons/thewave.svg"));
             wave->setData(Qt::UserRole, "thewave:" + arg1);
             ui->listWidget->addItem(wave);
@@ -1127,7 +1125,7 @@ void Menu::on_closetheWaveButton_clicked()
 
     this->istheWaveReady = false;
     this->resetFrames();
-    ui->thewave_response->setText("Hit \"Speak\" to start speaking.");
+    ui->thewave_response->setText(tr("Hit \"Speak\" to start speaking."));
     ui->thewave_line->setText("");
 
     tPropertyAnimation* anim = new tPropertyAnimation(ui->thewaveFrame, "geometry");
@@ -1151,17 +1149,17 @@ void Menu::on_closetheWaveButton_clicked()
 
 void Menu::showCallFrame(bool emergency) {
     ui->thewave_callFrame->setVisible(true);
-    ui->thewave_callFrame->setBackupText("Can't place a call from this device.");
+    ui->thewave_callFrame->setBackupText(tr("Can't place a call from this device."));
 }
 
 void Menu::showMessageFrame() {
     ui->thewave_messageframe->setVisible(true);
-    ui->thewave_messageframe->setBackupText("Can't send messages from this device.");
+    ui->thewave_messageframe->setBackupText(tr("Can't send messages from this device."));
 }
 
 void Menu::showHelpFrame() {
     ui->thewave_helpFrame->setVisible(true);
-    ui->thewave_helpFrame->setBackupText("theWave Help.");
+    ui->thewave_helpFrame->setBackupText(tr("theWave Help."));
 }
 
 void Menu::resetFrames() {
