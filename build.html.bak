@@ -42,7 +42,7 @@
     <div  class="sectionHeader">Information</div>
     <div  class="pageContent">
       <ul>
-        <li>Currently, the latest version of theShell is theShell 2.0</li>
+        <li>Currently, the latest version of theShell is theShell 5.0</li>
         <li>theShell has only been tested on Arch Linux. Some users have
           reported success with Gentoo.</li>
       </ul>
@@ -62,8 +62,8 @@
             <li>alsa-utils (optional, for volume controls)</li>
             <li>pocketsphinx (optional, for theWave)</li>
             <li>festival (optional, for theWave)</li>
-            <li>kwin 5+ (default window manager. If you want to use something
-              else, theShell will ask you if it can't start KWin.)</li>
+            <li>an EWMH compatible window manager</li>
+            <li>A few more. Check out the GitHub README file for more info.</li>
           </ul>
         </li>
         <li>Download the sources.<br>

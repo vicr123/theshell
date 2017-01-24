@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="css.css">
     <link rel="stylesheet" href="index.css">
     <link rel="icon" href="/theshell/icon.png">
+    <script src="index.js">
+    </script>
     <meta content="Victor Tran" name="author">
     <meta name="viewport" content="width=device-width">
     <meta content="BlueGriffon wysiwyg editor" name="generator">
@@ -15,8 +17,8 @@
         <div>&lt; Victor Tran</div>
       </a>
       <div class="navbarContent"> <a href="index.html" class="navbarHome">
-          <div class="navbarImage"><img alt="theShell" src="images/icon.svg" width="40"
-              height="40">&nbsp; <span class="navbarHeader">theShell</span> </div>
+          <div class="navbarImage"><img alt="theShell" src="images/icon.svg" height="40"
+              width="40">&nbsp; <span class="navbarHeader">theShell</span> </div>
         </a>
         <ul class="navbarItems">
           <li class="backToVictorTran"> <a href="/index.html"> &lt; Victor Tran
@@ -33,7 +35,18 @@
       <h1>theShell</h1>
       <h2>The desktop environment that gets out of your way</h2>
       <div> <a href="build.html" class="button"> Download &gt; </a><a href="http://www.github.com/vicr123/theshell"
-          class="button"> GitHub &gt; </a> </div>
+          class="button"> GitHub &gt; </a>
+        <div class="button" onclick="promoVideo();">Promotional Video &gt; </div>
+      </div>
+    </div>
+    <div class="video" id="theshellPromo"> <iframe src="https://www.youtube.com/embed/oHtIe7MS9ig"
+        allowfullscreen="" frameborder="0" height="100%" width="100%"></iframe>
+    </div>
+    <div class="blockLanding" id="break">
+      <h1>On a break!</h1>
+      Currently, I'm on a break. I should be back at the end of 2017.<br>
+      <br>
+      <div> <a href="/break.html" class="button">Read More &gt;</a></div>
     </div>
     <div class="blockTitle" id="bar">
       <h1>The Bar</h1>

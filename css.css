@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Rubik");
 
+@font-face {
+  font-family: 'Contemporary';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Contemporary'), local('Contemporary-Regular'), url(/typeface/Contemporary-Refular.ttf) format('ttf');
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -11,7 +18,7 @@
 }
 
 * {
-    font-family: 'Rubik', 'Noto Sans', sans-serif;
+    font-family: 'Contemporary', 'Rubik', 'Noto Sans', sans-serif;
 }
 
 body {
@@ -327,6 +334,14 @@ div.blockLanding#theshell {
     color: white;
 }
 
+div.blockLanding#contemporary {
+    background-color: green;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("images/splash.svg") no-repeat center center/cover;
+    background-size: 100% cover;
+    color: white;
+}
+
 div.blockLanding#thewave {
     background-color: green;
     background: url("images/wavebar.png") no-repeat center center;
@@ -401,6 +416,12 @@ div.blockLanding {
     -webkit-transition:=1s ease-out;
     -moz-transition:=1s ease-out;
     transition:=1s ease-out;
+}
+
+div.video {
+    -webkit-transition: height 1s;
+    transition: height 1s;
+    height: 0px;
 }
 
 @media (max-width: 1050px) {
