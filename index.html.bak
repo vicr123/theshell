@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="css.css">
     <link rel="stylesheet" href="index.css">
     <link rel="icon" href="/theshell/icon.png">
-    <script src="index.js">
-    </script>
+    <script src="index.js"></script>
+    
     <meta content="Victor Tran" name="author">
     <meta name="viewport" content="width=device-width">
     <meta content="BlueGriffon wysiwyg editor" name="generator">
@@ -36,11 +36,13 @@
       <h2>The desktop environment that gets out of your way</h2>
       <div> <a href="build.html" class="button"> Download &gt; </a><a href="http://www.github.com/vicr123/theshell"
           class="button"> GitHub &gt; </a>
-        <div class="button" onclick="promoVideo();">Promotional Video &gt; </div>
+        <span class="button" onclick="promoVideo();">Promotional Video &gt; </span>
       </div>
     </div>
-    <div class="video" id="theshellPromo"> <iframe src="https://www.youtube.com/embed/oHtIe7MS9ig"
-        allowfullscreen="" frameborder="0" height="100%" width="100%"></iframe>
+    <div class="video" id="theshellPromo"> <!--<iframe src="https://www.youtube.com/embed/oHtIe7MS9ig"
+        allowfullscreen="" frameborder="0" height="100%" width="100%"></iframe>-->
+      <div id="theShellPromoVideo"></div>
+      <script src="indexvideo.js"></script>
     </div>
     <div class="blockLanding" id="break">
       <h1>On a break!</h1>
