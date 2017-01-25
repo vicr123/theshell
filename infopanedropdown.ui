@@ -342,7 +342,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -567,14 +567,14 @@
              <second>0</second>
              <year>1969</year>
              <month>10</month>
-             <day>28</day>
+             <day>26</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>10</month>
-             <day>28</day>
+             <day>26</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -600,7 +600,7 @@
             </font>
            </property>
            <property name="text">
-            <string>00:00:00</string>
+            <string notr="true">00:00:00</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -694,7 +694,7 @@
             </font>
            </property>
            <property name="text">
-            <string>00:00:00</string>
+            <string notr="true">00:00:00</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -780,21 +780,21 @@
        <item>
         <widget class="QLabel" name="currentBattery">
          <property name="text">
-          <string>Current Battery Power:</string>
+          <string notr="true">Current Battery Power:</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="theshellUptime">
          <property name="text">
-          <string>theShell Uptime:</string>
+          <string notr="true">theShell Uptime:</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="systemUptime">
          <property name="text">
-          <string>System Uptime: </string>
+          <string notr="true">System Uptime: </string>
          </property>
         </widget>
        </item>
@@ -852,7 +852,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Last updated 11:30:42</string>
+               <string notr="true">Last updated 11:30:42</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1001,7 +1001,7 @@
           <item>
            <widget class="QLabel" name="networkMac">
             <property name="text">
-             <string>MAC Address:</string>
+             <string notr="true">MAC Address:</string>
             </property>
            </widget>
           </item>
@@ -1094,14 +1094,14 @@
           <item>
            <widget class="QLabel" name="networkSent">
             <property name="text">
-             <string>Data Sent:</string>
+             <string notr="true">Data Sent:</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="networkReceived">
             <property name="text">
-             <string>Data Received:</string>
+             <string notr="true">Data Received:</string>
             </property>
            </widget>
           </item>
@@ -1152,14 +1152,14 @@
              <item>
               <widget class="QLabel" name="networkWirelessStrength">
                <property name="text">
-                <string>Signal Strength:</string>
+                <string notr="true">Signal Strength:</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QLabel" name="networkWirelessFrequency">
                <property name="text">
-                <string>Frequency:</string>
+                <string notr="true">Frequency:</string>
                </property>
               </widget>
              </item>
@@ -1216,7 +1216,7 @@
          <item>
           <widget class="Switch" name="QuietCheck">
            <property name="text">
-            <string>QuietCheck</string>
+            <string notr="true">QuietCheck</string>
            </property>
           </widget>
          </item>
@@ -1269,8 +1269,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>165</width>
-            <height>58</height>
+            <width>1164</width>
+            <height>599</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1765,7 +1765,7 @@
              <item row="1" column="1">
               <widget class="Switch" name="TextSwitch">
                <property name="text">
-                <string>TextSwitch</string>
+                <string notr="true">TextSwitch</string>
                </property>
               </widget>
              </item>
@@ -1799,7 +1799,7 @@
              <item row="2" column="1">
               <widget class="Switch" name="barDesktopsSwitch">
                <property name="text">
-                <string>barDesktopsSwitch</string>
+                <string notr="true">barDesktopsSwitch</string>
                </property>
               </widget>
              </item>
@@ -2614,7 +2614,7 @@
              <item row="1" column="1">
               <widget class="Switch" name="TouchFeedbackSwitch">
                <property name="text">
-                <string>TouchFeedbackSwitch</string>
+                <string notr="true">TouchFeedbackSwitch</string>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -2689,7 +2689,7 @@
              <item row="2" column="1">
               <widget class="Switch" name="SuperkeyGatewaySwitch">
                <property name="text">
-                <string>SuperkeyGatewaySwitch</string>
+                <string notr="true">SuperkeyGatewaySwitch</string>
                </property>
               </widget>
              </item>
@@ -3421,7 +3421,7 @@
                  <item>
                   <widget class="Switch" name="DateTimeNTPSwitch">
                    <property name="text">
-                    <string>DateTimeNTPSwitch</string>
+                    <string notr="true">DateTimeNTPSwitch</string>
                    </property>
                   </widget>
                  </item>
@@ -3678,7 +3678,7 @@
    <item>
     <widget class="ClickableLabel" name="upArrow">
      <property name="text">
-      <string>UpArrow</string>
+      <string notr="true">UpArrow</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

@@ -26,7 +26,7 @@
     "- Time and date can now be set within theShell\n"\
     "- System Users can now be configured within theShell\n"\
     "- theShell now supports localisations! Try the inbuilt Vietnamese translation by changing the settings in theShell\n"\
-    "- theShell's settings now apply to the whole system, so there is no need for a seperate system settings application.\n"\
+    "- theShell's settings now apply to the whole system, so there is no need for a seperate system settings application. More settings panes will be coming soon.\n"\
     "\n"\
     "New in theShell 5.2: \n"\
     "- New Onboarding experience. Every time theShell updates, you'll get a changelog.\n" \

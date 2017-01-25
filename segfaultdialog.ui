@@ -97,14 +97,14 @@
    <item>
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>To debug theShell, attach a debugger to PID</string>
+      <string notr="true">To debug theShell, attach a debugger to PID</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLabel" name="signal">
      <property name="text">
-      <string>Signal: SIGSEGV</string>
+      <string notr="true">Signal: SIGSEGV</string>
      </property>
     </widget>
    </item>
@@ -140,7 +140,8 @@
         <string>Reset theShell and Log Out</string>
        </property>
        <property name="icon">
-        <iconset theme="view-refresh"/>
+        <iconset theme="view-refresh">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>

@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
     }
 
     if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.thesuite.theshell")) {
-        if (QMessageBox::warning(0, a.tr("theShell already running"), a.tr("theShell seems to already be running. "
+        if (QMessageBox::warning(0, a.translate("main", "theShell already running"), a.translate("main", "theShell seems to already be running. "
                                                                "Do you wish to start theShell anyway?"),
                              QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
             return 0;
@@ -212,8 +212,8 @@ int main(int argc, char *argv[])
 
     if (startWm) {
         while (!QProcess::startDetached(windowManager)) {
-            windowManager = QInputDialog::getText(0, a.tr("Window Manager couldn't start"),
-                                  a.tr("The window manager \"%1\" could not start. \n\n"
+            windowManager = QInputDialog::getText(0, a.translate("main", "Window Manager couldn't start"),
+                                  a.translate("main", "The window manager \"%1\" could not start. \n\n"
                                   "Enter the name or path of a window manager to attempt to start a different window"
                                   "manager, or hit 'Cancel' to start theShell without a window manager.").arg(windowManager));
             if (windowManager == "") {

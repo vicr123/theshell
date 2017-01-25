@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>TextLabel</string>
+      <string notr="true">TextLabel</string>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -58,7 +58,8 @@
          <string>Discard</string>
         </property>
         <property name="icon">
-         <iconset theme="dialog-cancel"/>
+         <iconset theme="dialog-cancel">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>
@@ -68,7 +69,8 @@
          <string>Copy</string>
         </property>
         <property name="icon">
-         <iconset theme="edit-copy"/>
+         <iconset theme="edit-copy">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>
@@ -78,7 +80,8 @@
          <string>Save</string>
         </property>
         <property name="icon">
-         <iconset theme="document-save"/>
+         <iconset theme="document-save">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>

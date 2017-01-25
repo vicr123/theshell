@@ -112,7 +112,7 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Power Off</string>
+            <string notr="true">Power Off</string>
            </property>
           </widget>
          </item>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>786</width>
-    <height>105</height>
+    <height>114</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,7 +44,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Icon</string>
+        <string notr="true">Icon</string>
        </property>
       </widget>
      </item>
@@ -57,7 +57,7 @@
         </font>
        </property>
        <property name="text">
-        <string>System</string>
+        <string notr="true">System</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -92,7 +92,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Your battery is running low. You might want to plug in your PC.</string>
+            <string notr="true">Your battery is running low. You might want to plug in your PC.</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>
@@ -188,7 +188,7 @@
      <item>
       <widget class="QLabel" name="appIcon">
        <property name="text">
-        <string>appIcon</string>
+        <string notr="true">appIcon</string>
        </property>
       </widget>
      </item>
@@ -201,7 +201,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Application Name</string>
+        <string notr="true">Application Name</string>
        </property>
       </widget>
      </item>

@@ -97,7 +97,7 @@
              </font>
             </property>
             <property name="text">
-             <string>&amp;16:20:00</string>
+             <string notr="true">&amp;16:20:00</string>
             </property>
            </widget>
           </item>
@@ -109,21 +109,21 @@
              </font>
             </property>
             <property name="text">
-             <string>Sunday 1st &amp;Jan 1111</string>
+             <string notr="true">Sunday 1st &amp;Jan 1111</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="ClickableLabel" name="timerIcon">
             <property name="text">
-             <string>timerIcon</string>
+             <string notr="true">timerIcon</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="ClickableLabel" name="timer">
             <property name="text">
-             <string>&amp;00:00:59</string>
+             <string notr="true">&amp;00:00:59</string>
             </property>
            </widget>
           </item>
@@ -188,7 +188,7 @@
              <item>
               <widget class="ClickableLabel" name="batteryLabel">
                <property name="text">
-                <string>&amp;90% Battery remaining</string>
+                <string notr="true">&amp;90% Battery remaining</string>
                </property>
               </widget>
              </item>
@@ -292,14 +292,14 @@
           <item>
            <widget class="QLabel" name="networkStrength">
             <property name="text">
-             <string>signalStrength</string>
+             <string notr="true">signalStrength</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="ClickableLabel" name="networkLabel">
             <property name="text">
-             <string>Connected to SSID</string>
+             <string notr="true">Connected to SSID</string>
             </property>
            </widget>
           </item>
@@ -442,7 +442,7 @@
              <item>
               <widget class="ClickableLabel" name="mprisSongName">
                <property name="text">
-                <string>&amp;mprisSongName</string>
+                <string notr="true">&amp;mprisSongName</string>
                </property>
               </widget>
              </item>
@@ -639,7 +639,7 @@
          <item>
           <widget class="QLabel" name="desktopName">
            <property name="text">
-            <string>Desktop 1</string>
+            <string notr="true">Desktop 1</string>
            </property>
           </widget>
          </item>

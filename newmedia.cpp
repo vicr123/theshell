@@ -11,6 +11,7 @@ NewMedia::NewMedia(QString description, QWidget *parent) :
     if (!QFile("/usr/bin/thefile").exists()) {
         ui->openFiles->setVisible(false);
     }
+    ui->openFiles->setVisible(false);
 }
 
 NewMedia::~NewMedia()
