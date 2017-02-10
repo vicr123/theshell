@@ -764,6 +764,20 @@
          </property>
         </spacer>
        </item>
+       <item>
+        <widget class="QLabel" name="StatusBarMprisIcon">
+         <property name="text">
+          <string>Icon</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="StatusBarMpris">
+         <property name="text">
+          <string>Song Name</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>

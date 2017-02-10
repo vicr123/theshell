@@ -6,10 +6,6 @@ HotkeyHud::HotkeyHud(QWidget *parent) :
     ui(new Ui::HotkeyHud)
 {
     ui->setupUi(this);
-
-    QPalette pal = this->palette();
-    pal.setColor(QPalette::Inactive, QPalette::Highlight, pal.color(QPalette::Active, QPalette::Highlight));
-    this->setPalette(pal);
 }
 
 HotkeyHud::~HotkeyHud()

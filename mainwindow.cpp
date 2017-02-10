@@ -113,6 +113,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->networkStrength->setVisible(false);
     ui->StatusBarNotifications->setVisible(false);
     ui->StatusBarNotificationsIcon->setVisible(false);
+    ui->StatusBarMpris->setVisible(false);
+    ui->StatusBarMprisIcon->setVisible(false);
 
     if (QFile("/usr/bin/amixer").exists()) {
         ui->volumeSlider->setVisible(false);
@@ -686,13 +688,19 @@ void MainWindow::doUpdate() {
             if (mprisDetectedApps.count() > 0) { //Set to next app
                 mprisCurrentAppName = mprisDetectedApps.first();
                 ui->mprisFrame->setVisible(true);
+                ui->StatusBarMpris->setVisible(true);
+                ui->StatusBarMprisIcon->setVisible(true);
             } else { //Set to no app. Make mpris controller invisible.
                 mprisCurrentAppName = "";
                 ui->mprisFrame->setVisible(false);
+                ui->StatusBarMpris->setVisible(false);
+                ui->StatusBarMprisIcon->setVisible(false);
             }
         }
     } else { //Make mpris controller invisible
         ui->mprisFrame->setVisible(false);
+        ui->StatusBarMpris->setVisible(false);
+        ui->StatusBarMprisIcon->setVisible(false);
     }
 }
 
@@ -762,10 +770,15 @@ void MainWindow::updateMpris() {
         } else {
             if (artist == "") {
                 ui->mprisSongName->setText(title);
+
             } else {
                 ui->mprisSongName->setText(artist + " · " + title);
             }
         }
+        ui->StatusBarMpris->setText(ui->mprisSongName->text());
+        ui->StatusBarMpris->setVisible(true);
+        ui->StatusBarMprisIcon->setVisible(true);
+        ui->StatusBarFrame->setFixedWidth(this->width());
 
         //Get Playback Status
         QDBusMessage PlayStatRequest = QDBusMessage::createMethodCall(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
@@ -773,9 +786,11 @@ void MainWindow::updateMpris() {
         QDBusReply<QVariant> PlayStat = QDBusConnection::sessionBus().call(PlayStatRequest);
         if (PlayStat.value().toString() == "Playing") {
             ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-pause"));
+            ui->StatusBarMprisIcon->setPixmap(QIcon::fromTheme("media-playback-start").pixmap(16, 16));
             mprisPlaying = true;
         } else {
             ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-start"));
+            ui->StatusBarMprisIcon->setPixmap(QIcon::fromTheme("media-playback-pause").pixmap(16, 16));
             mprisPlaying = false;
         }
 
