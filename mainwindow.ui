@@ -69,7 +69,7 @@
          <x>0</x>
          <y>0</y>
          <width>1826</width>
-         <height>77</height>
+         <height>51</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -698,6 +698,74 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QFrame" name="StatusBarFrame">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="StatusBarClock">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>16:20</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="StatusBarNetwork">
+         <property name="text">
+          <string>Network</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="StatusBarNotifications">
+         <property name="text">
+          <string>Notifications</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="StatusBarNotificationsIcon">
+         <property name="text">
+          <string>Icon</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>

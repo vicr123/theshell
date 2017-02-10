@@ -7,13 +7,15 @@ extern void EndSession(EndSessionWait::shutdownType type);
 extern QString calculateSize(quint64 size);
 extern AudioManager* AudioMan;
 
-InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, QWidget *parent) :
+InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, WId MainWindowId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoPaneDropdown)
 {
     ui->setupUi(this);
 
     startTime.start();
+
+    this->MainWindowId = MainWindowId;
 
     this->notificationEngine = notificationEngine;
     this->powerEngine = powerEngine;
@@ -202,6 +204,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->windowManager->setText(settings.value("startup/WindowManagerCommand", "kwin_x11").toString());
     ui->barDesktopsSwitch->setChecked(settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
     ui->MediaSwitch->setChecked(settings.value("notifications/mediaInsert", true).toBool());
+    ui->StatusBarSwitch->setChecked(settings.value("bar/statusBar", false).toBool());
     ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
 
     QString defaultFont;
@@ -625,7 +628,7 @@ void InfoPaneDropdown::getNetworks() {
                     if (!connectedNetworks.keys().contains(interface)) {
                         connectedNetworks.insert(interface, "true");
                     } else {
-                        if (connectedNetworks.value(interface) == "false") {
+                        if (connectedNetworks.value(interface) != "false") {
                             connectedNetworks.insert(interface, "false");
                             QVariantMap hints;
                             hints.insert("category", "network.disconnected");
@@ -637,6 +640,7 @@ void InfoPaneDropdown::getNetworks() {
                     }
                     NetworkLabel = tr("Connected over a wired connection");
                     NetworkLabelType = NetworkType::Wired;
+                    signalStrength = 5;
                     allowAppendNoNetworkMessage = true;
                 } else {
                     if (!connectedNetworks.keys().contains(interface)) {
@@ -653,6 +657,7 @@ void InfoPaneDropdown::getNetworks() {
                             doNetworkCheck();
                         }
                     }
+                    signalStrength = -4;
                 }
                 delete wire;
             }
@@ -679,6 +684,7 @@ void InfoPaneDropdown::getNetworks() {
                                                                QStringList(), hints, -1);
                                 }
                             }
+                            signalStrength = -3;
                             break;
                         case 40:
                         case 50:
@@ -815,6 +821,7 @@ void InfoPaneDropdown::getNetworks() {
 
                         NetworkLabel = tr("Connected to %1 over Bluetooth").arg(bt->property("Name").toString());
                         NetworkLabelType = NetworkType::Bluetooth;
+                        signalStrength = 6;
                         allowAppendNoNetworkMessage = true;
                         break;
                     default:
@@ -2206,4 +2213,10 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
             settings.setValue("locale/language", "vi_VN");
             break;
     }
+}
+
+void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
+{
+    settings.setValue("bar/statusBar", checked);
+    updateStruts();
 }

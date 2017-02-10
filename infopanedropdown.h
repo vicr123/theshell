@@ -52,7 +52,7 @@ class InfoPaneDropdown : public QDialog
     Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
 public:
-    explicit InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, QWidget *parent = 0);
+    explicit InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, WId MainWindowId, QWidget *parent = 0);
     ~InfoPaneDropdown();
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
@@ -82,6 +82,7 @@ signals:
     void timerEnabledChanged(bool timerEnabled);
     void notificationsSilencedChanged(bool silenced);
     void batteryStretchChanged(bool isOn);
+    void updateStruts();
 
 private slots:
     void on_pushButton_clicked();
@@ -270,6 +271,8 @@ private slots:
 
     void on_localeList_currentRowChanged(int currentRow);
 
+    void on_StatusBarSwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 
@@ -330,6 +333,7 @@ private:
     QChart* batteryChart;
 
     int previousDragY;
+    WId MainWindowId;
 };
 
 #endif // INFOPANEDROPDOWN_H

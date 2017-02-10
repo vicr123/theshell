@@ -567,14 +567,14 @@
              <second>0</second>
              <year>1969</year>
              <month>10</month>
-             <day>26</day>
+             <day>24</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>10</month>
-             <day>26</day>
+             <day>24</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -1269,8 +1269,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1164</width>
-            <height>599</height>
+            <width>165</width>
+            <height>58</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1776,7 +1776,14 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_35">
+               <property name="text">
+                <string>Show windows from other desktops</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
               <spacer name="verticalSpacer_17">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -1789,17 +1796,24 @@
                </property>
               </spacer>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_35">
-               <property name="text">
-                <string>Show windows from other desktops</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="1">
               <widget class="Switch" name="barDesktopsSwitch">
                <property name="text">
                 <string notr="true">barDesktopsSwitch</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_69">
+               <property name="text">
+                <string>Use Status Bar</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="Switch" name="StatusBarSwitch">
+               <property name="text">
+                <string notr="true">StatusBarSwitch</string>
                </property>
               </widget>
              </item>
@@ -3621,7 +3635,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>theShell 6.0</string>
+                   <string>theShell 6.1</string>
                   </property>
                  </widget>
                 </item>

@@ -14,6 +14,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //Prepare status bar
+    ui->StatusBarFrame->setParent(this);
+    ui->StatusBarFrame->setFixedWidth(this->width());
+    ui->StatusBarFrame->setFixedHeight(24);
+
+    statusBarOpacityEffect = new QGraphicsOpacityEffect();
+    statusBarOpacityEffect->setOpacity(0);
+    ui->StatusBarFrame->setGraphicsEffect(statusBarOpacityEffect);
+
     //Set the menu of the MPRIS Media Player selection to a new menu.
     //Items will be populated during the update event.
     QMenu* mprisSelectionMenu = new QMenu();
@@ -62,12 +71,14 @@ MainWindow::MainWindow(QWidget *parent) :
         } else {
             ui->batteryFrame->setVisible(false);
         }
+
+        updbus->currentBattery();
     });
     updbus->DeviceChanged();
 
     DBusEvents = new DbusEvents(ndbus);
 
-    infoPane = new InfoPaneDropdown(ndbus, updbus);
+    infoPane = new InfoPaneDropdown(ndbus, updbus, this->winId());
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(infoPane, SIGNAL(networkLabelChanged(QString,int)), this, SLOT(internetLabelChanged(QString,int)));
     connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
@@ -84,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent) :
             timer->setInterval(100);
         }
     });
+    connect(infoPane, SIGNAL(updateStruts()), this, SLOT(updateStruts()));
     infoPane->getNetworks();
 
     QString loginSoundPath = settings.value("sounds/login", "").toString();
@@ -97,7 +109,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->timer->setVisible(false);
     ui->timerIcon->setVisible(false);
     ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16, 16));
+    ui->StatusBarNotificationsIcon->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(16, 16));
     ui->networkStrength->setVisible(false);
+    ui->StatusBarNotifications->setVisible(false);
+    ui->StatusBarNotificationsIcon->setVisible(false);
 
     if (QFile("/usr/bin/amixer").exists()) {
         ui->volumeSlider->setVisible(false);
@@ -533,12 +548,22 @@ void MainWindow::doUpdate() {
     oldDesktop = currentDesktop; //Keep the current desktop for tracking purposes
     oldActiveWindow = active;
 
+    int dockTop;
+    if (settings.value("bar/statusBar", false).toBool()) {
+        dockTop = screenGeometry.y() + 24;
+    } else {
+        dockTop = screenGeometry.y();
+    }
+
     if (!lockHide) { //Check for move lock
-        if (hideTop < screenGeometry.y()) {
+        if (hideTop < dockTop) {
             if (attentionDemandingWindows > 0) {
-                hideTop = screenGeometry.y() - this->height() + 2;
+                hideTop = dockTop - this->height() + 2;
+            } else {
+                hideTop = dockTop - this->height();
             }
         }
+
         if (hideTop != this->hideTop || forceWindowMove) { //Check if we need to move out of the way
             this->hideTop = hideTop;
             tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
@@ -552,7 +577,6 @@ void MainWindow::doUpdate() {
                 if (ui->desktopsFrame->isVisible()) {
                     adjustLeft = adjustLeft + ui->openMenu->width();
                 }
-                //ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(adjustLeft, 0, 0, 0));
             });
             connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
             anim->start();
@@ -589,7 +613,6 @@ void MainWindow::doUpdate() {
                         if (ui->desktopsFrame->isVisible()) {
                             adjustLeft = adjustLeft + ui->openMenu->width();
                         }
-                        //ui->windowList->layout()->setGeometry(ui->horizontalLayout_4->geometry().adjusted(adjustLeft, 0, 0, 0));
                         hiding = false;
                     });
                     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -617,9 +640,40 @@ void MainWindow::doUpdate() {
     }
     forceWindowMove = false;
 
+    if (settings.value("bar/statusBar", false).toBool()) {
+        if (this->y() == dockTop - this->height()) {
+            if (!statusBarVisible) {
+                ui->StatusBarFrame->setVisible(true);
+                tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
+                statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
+                statAnim->setEndValue((float) 1);
+                statAnim->setDuration(250);
+                connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
+                statAnim->start();
+                statusBarVisible = true;
+            }
+        } else {
+            if (statusBarVisible) {
+                tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
+                statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
+                statAnim->setEndValue((float) 0);
+                statAnim->setDuration(250);
+                connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
+                connect(statAnim, &tPropertyAnimation::finished, [=]() {
+                    ui->StatusBarFrame->setVisible(false);
+                });
+                statAnim->start();
+                statusBarVisible = false;
+            }
+        }
+    } else {
+        ui->StatusBarFrame->setVisible(false);
+    }
+
     //Update date and time
     ui->date->setText(QLocale().toString(QDateTime::currentDateTime(), "ddd dd MMM yyyy"));
     ui->time->setText(QDateTime::currentDateTime().time().toString(Qt::TextDate));
+    ui->StatusBarClock->setText(ui->time->text());
 
     mprisDetectedApps.clear();
     for (QString service : QDBusConnection::sessionBus().interface()->registeredServiceNames().value()) {
@@ -772,6 +826,7 @@ void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command 
                       QString::number(w) + "," + QString::number(this->sizeHint().height()));
     this->setFixedSize(w, this->sizeHint().height());
     ui->infoScrollArea->setFixedWidth(w - this->centralWidget()->layout()->margin());
+    ui->StatusBarFrame->move(0, this->height() - 25);
 }
 
 void MainWindow::setGeometry(QRect geometry) {
@@ -785,21 +840,6 @@ void MainWindow::on_date_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    /*this->setFocus();
-    Menu* m = new Menu(this);
-    m->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    //m->setGeometry(this->x(), this->y() + this->height() - 1, m->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
-    m->setGeometry(this->x() - m->width(), this->y() + this->height() - 1, m->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
-    m->show(true);
-    m->setFocus();
-
-    lockHide = true;
-    connect(m, SIGNAL(appOpening(QString,QIcon)), this, SLOT(openingApp(QString,QIcon)));
-    connect(m, &Menu::menuClosing, [=]() {
-        lockHide = false;
-    });*/
-
     openMenu(true);
 }
 
@@ -814,6 +854,12 @@ void MainWindow::internetLabelChanged(QString display, int signalStrength) {
         } else {
             QIcon icon;
             switch (signalStrength) {
+                case -4:
+                    icon = QIcon::fromTheme("network-wired-unavailable");
+                    break;
+                case -3:
+                    icon = QIcon::fromTheme("network-wireless-disconnected");
+                    break;
                 case -2:
                     icon = QIcon::fromTheme("dialog-error");
                     break;
@@ -832,10 +878,17 @@ void MainWindow::internetLabelChanged(QString display, int signalStrength) {
                 case 4:
                     icon = QIcon::fromTheme("network-wireless-connected-100");
                     break;
+                case 5:
+                    icon = QIcon::fromTheme("network-wired-activated");
+                    break;
+                case 6:
+                    icon = QIcon::fromTheme("bluetooth-connected");
+                    break;
             }
 
             ui->networkStrength->setVisible(true);
             ui->networkStrength->setPixmap(icon.pixmap(16, 16));
+            ui->StatusBarNetwork->setPixmap(icon.pixmap(16, 16));
         }
     }
 }
@@ -1006,6 +1059,8 @@ void MainWindow::numNotificationsChanged(int notifications) {
     if (notifications == 0) {
         font.setBold(false);
         ui->notifications->setText(tr("No notifications"));
+        ui->StatusBarNotifications->setVisible(false);
+        ui->StatusBarNotificationsIcon->setVisible(false);
     } else {
         font.setBold(true);
         if (notifications == 1) {
@@ -1013,6 +1068,9 @@ void MainWindow::numNotificationsChanged(int notifications) {
         } else {
             ui->notifications->setText(tr("%1 notifications", NULL, notifications).arg(QString::number(notifications)));
         }
+        ui->StatusBarNotifications->setText(QString::number(notifications));
+        ui->StatusBarNotifications->setVisible(true);
+        ui->StatusBarNotificationsIcon->setVisible(true);
     }
     ui->notifications->setFont(font);
 }
@@ -1078,6 +1136,7 @@ void MainWindow::on_mprisSongName_clicked()
 
 void MainWindow::reloadScreens() {
     forceWindowMove = true;
+    updateStruts();
 }
 
 void MainWindow::show() {
@@ -1091,6 +1150,8 @@ void MainWindow::show() {
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
     QMainWindow::show();
+
+    updateStruts();
 
     //Show Gateway tutorial
     TutorialWin->showScreen(TutorialWindow::Gateway);
@@ -1260,4 +1321,40 @@ void MainWindow::on_notifications_dragging(int x, int y)
 void MainWindow::on_notifications_mouseReleased()
 {
     infoPane->completeDragDown();
+}
+
+void MainWindow::updateStruts() {
+    long* struts = (long*) malloc(sizeof(long) * 12);
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    if (settings.value("bar/statusBar", false).toBool()) {
+        struts[0] = 0;
+        struts[1] = 0;
+        struts[2] = screenGeometry.top() + 24;
+        struts[3] = 0;
+        struts[4] = 0;
+        struts[5] = 0;
+        struts[6] = 0;
+        struts[7] = 0;
+        struts[8] = screenGeometry.left();
+        struts[9] = screenGeometry.right();
+        struts[10] = 0;
+        struts[11] = 0;
+    } else {
+        struts[0] = 0;
+        struts[1] = 0;
+        struts[2] = 0;
+        struts[3] = 0;
+        struts[4] = 0;
+        struts[5] = 0;
+        struts[6] = 0;
+        struts[7] = 0;
+        struts[8] = 0;
+        struts[9] = 0;
+        struts[10] = 0;
+        struts[11] = 0;
+    }
+    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_STRUT_PARTIAL", False),
+                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) struts, 12);
+
+    free(struts);
 }

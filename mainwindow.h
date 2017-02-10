@@ -73,6 +73,9 @@ public slots:
     void openMenu(bool openTotheWave = false, bool startListening = false);
 
     void doUpdate();
+
+    void updateStruts();
+
 private slots:
 
     void on_time_clicked();
@@ -200,6 +203,9 @@ private:
     void paintEvent(QPaintEvent *event);
 
     InfoPaneDropdown *infoPane;
+
+    QGraphicsOpacityEffect* statusBarOpacityEffect;
+    bool statusBarVisible = false;
 };
 
 #endif // MAINWINDOW_H

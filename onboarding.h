@@ -7,7 +7,10 @@
 #include <QSettings>
 #include <QLabel>
 
-#define ChangelogOnbording "New in theShell 6.0:\n"\
+#define ChangelogOnbording "New in theShell 6.1:"\
+    "- New Status Bar. Go to Settings > Bar to activate it.\n"\
+    "\n"\
+    "New in theShell 6.0:\n"\
     "- Default system font can be set in theme settings.\n"\
     "- Battery indicator now shows battery for devices connected over KDE Connect\n"\
     "- Added some KDE Connect actions in the status center\n"\
