@@ -32,6 +32,24 @@ void HotkeyHud::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setPen(this->palette().color(QPalette::WindowText));
     painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+
+    QPalette pal = this->palette();
+
+    QColor highlightCol = pal.color(QPalette::Window);
+    int average = (highlightCol.red() + highlightCol.green() + highlightCol.blue()) / 3;
+    int value = this->value;
+    while (value > 0) {
+        if (average < 127) { //Dark color
+            highlightCol = highlightCol.light(150);
+        } else {
+            highlightCol = highlightCol.dark(150);
+        }
+        painter.setBrush(highlightCol);
+        painter.setPen(Qt::transparent);
+        painter.drawRect(0, 0, ((float) value / (float) 100) * this->width(), this->height() - 1);
+        value -= 100;
+    }
+
     event->accept();
 }
 
@@ -78,22 +96,23 @@ void HotkeyHud::show() {
 void HotkeyHud::show(QIcon icon, QString control, int value) {
     ui->icon->setPixmap(icon.pixmap(32));
     ui->control->setText(control);
-    ui->slider->setValue(value);
     ui->value->setText(QString::number(value) + "%");
-    ui->explanation->setVisible(false);
-    ui->slider->setVisible(true);
+    ui->explanation->setText("");
     ui->value->setVisible(true);
+    this->value = value;
     this->show();
+    this->repaint();
 }
 
 void HotkeyHud::show(QIcon icon, QString control, QString explanation) {
     ui->icon->setPixmap(icon.pixmap(32));
     ui->control->setText(control);
     ui->explanation->setText(explanation);
-    ui->slider->setVisible(false);
     ui->value->setVisible(false);
     ui->explanation->setVisible(true);
+    this->value = 0;
     this->show();
+    this->repaint();
 }
 
 void HotkeyHud::Timeout() {

@@ -56,6 +56,8 @@ private:
     void show();
     bool isShowing = false;
 
+    int value;
+
     QTimer* timeout = NULL;
 };
 
