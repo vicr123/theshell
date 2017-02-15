@@ -48,6 +48,9 @@ theShell is available in Arch Linux on the AUR under the name "[theshell](https:
 - Report any bugs using the "Issues" tab up there. Alternatively, click [here](https://github.com/vicr123/theshell/issues) to jump straight there. (Thanks!)
 - If you want to request a feature, you can also use the "Issues" tab.
 
+## Translators
+See ```TRANSLATORS.md``` for all the translators that helped make theShell available for all.
+
 ## Blueprint
 - theShell has a super unstable untested version called "blueprint." Check out the [blueprint](https://github.com/vicr123/theshell/tree/blueprint) branch for more information.
   - The Blueprint branch has been untested. This is only recommended for early adopters and systems that aren't mission-critical. Don't use theShell Blueprint as your daily driver!

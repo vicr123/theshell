@@ -183,12 +183,15 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     //For the time being, we'll just have hardcoded locales. This should change soon (hopefully)
     ui->localeList->addItem(tr("English") + " (English)"); //en_US
     ui->localeList->addItem(tr("Vietnamese") + " (Tiếng Việt)"); //vi_VN
+    ui->localeList->addItem(tr("Danish") + " (Dansk) "); //da_DK
 
     QString currentLocale = settings.value("locale/language", "en_US").toString();
     if (currentLocale == "en_US") {
         ui->localeList->setCurrentRow(0);
     } else if (currentLocale == "vi_VN") {
         ui->localeList->setCurrentRow(1);
+    } else if (currentLocale == "da_DK") {
+        ui->localeList->setCurrentRow(2);
     }
 
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
@@ -2211,6 +2214,9 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
             break;
         case 1:
             settings.setValue("locale/language", "vi_VN");
+            break;
+        case 2:
+            settings.setValue("locale/language", "da_DK");
             break;
     }
 }

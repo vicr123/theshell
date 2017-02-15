@@ -111,6 +111,8 @@ int main(int argc, char *argv[])
     qtTranslator.load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     a.installTranslator(&qtTranslator);
 
+    qDebug() << QLocale().name();
+
     QTranslator tsTranslator;
     tsTranslator.load(QLocale().name(), "/usr/share/theshell/translations");
     a.installTranslator(&tsTranslator);
