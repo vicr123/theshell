@@ -339,7 +339,7 @@
         <location filename="../infopanedropdown.ui" line="645"/>
         <location filename="../infopanedropdown.ui" line="722"/>
         <source>Reset</source>
-        <translation>Genstil</translation>
+        <translation>Nulstil</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="656"/>
@@ -454,7 +454,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1476"/>
         <source>Ping</source>
-        <translation>Ping forespørgelser</translation>
+        <translation type="unfinished">Forespørg Ping</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1487"/>
@@ -502,11 +502,6 @@
         <location filename="../infopanedropdown.ui" line="1795"/>
         <source>Show windows from other desktops</source>
         <translation>Vis vinduer fra andre skriveborde</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1809"/>
-        <source>Use Status Bar</source>
-        <translation>Brug Status Bar</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1834"/>
@@ -925,11 +920,6 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3638"/>
-        <source>theShell 6.1</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="3647"/>
         <source>Desktop Environment</source>
         <translation>Skrivebords Miljø</translation>
@@ -978,11 +968,6 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <location filename="../infopanedropdown.cpp" line="183"/>
         <source>Vietnamese</source>
         <translation>Vietnamesisk</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.cpp" line="186"/>
-        <source>Danish</source>
-        <translation>Dansk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="270"/>
@@ -1322,32 +1307,6 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <location filename="../mainwindow.ui" line="649"/>
         <source>Next Desktop</source>
         <translation>Næste Skrivebord</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="729"/>
-        <source>16:20</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="736"/>
-        <source>Network</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="743"/>
-        <source>Notifications</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="750"/>
-        <location filename="../mainwindow.ui" line="770"/>
-        <source>Icon</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="777"/>
-        <source>Song Name</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="211"/>
@@ -1940,11 +1899,6 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="73"/>
-        <source>Welcome to theShell 6.1!</source>
-        <translation>Velkommen til theShell 6.1!</translation>
-    </message>
-    <message>
-        <location filename="../onboarding.ui" line="73"/>
         <source>Welcome to theShell 6.0!</source>
         <translation>Velkommen til theShell 6.0!</translation>
     </message>
@@ -2060,7 +2014,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../segfaultdialog.ui" line="140"/>
         <source>Reset theShell and Log Out</source>
-        <translation>Genstart theShell og Log ud</translation>
+        <translation type="unfinished">Nulstil theShell og Log ud</translation>
     </message>
     <message>
         <location filename="../segfaultdialog.ui" line="151"/>
