@@ -56,6 +56,9 @@
         <file alias="slice">backgrounds/slice</file>
         <file alias="nav">backgrounds/nav</file>
         <file alias="leftwaves">backgrounds/leftwaves</file>
+        <file alias="arrows">backgrounds/arrows.svg</file>
+        <file alias="beach">backgrounds/beach.svg</file>
+        <file alias="waves">backgrounds/waves.svg</file>
     </qresource>
     <qresource prefix="/sounds/notifications">
         <file alias="tripleping.wav">notifications/tripleping.wav</file>

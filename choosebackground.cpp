@@ -16,6 +16,9 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/slice"), ""));
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/nav"), ""));
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/leftwaves"), ""));
+    ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/beach"), ""));
+    ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/arrows"), ""));
+    ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/waves"), ""));
 
     if (backPath.startsWith("inbuilt:")) { //Inbuilt background
         ui->radioButton->setChecked(true);
@@ -34,6 +37,12 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
             ui->listWidget->item(5)->setSelected(true);
         } else if (selection == "leftwaves") {
             ui->listWidget->item(6)->setSelected(true);
+        } else if (selection == "beach") {
+            ui->listWidget->item(7)->setSelected(true);
+        } else if (selection == "arrows") {
+            ui->listWidget->item(8)->setSelected(true);
+        } else if (selection == "waves") {
+            ui->listWidget->item(9)->setSelected(true);
         }
         ui->lineEdit->setEnabled(false);
         ui->pushButton_2->setEnabled(false);
@@ -88,35 +97,38 @@ void ChooseBackground::on_radioButton_toggled(bool checked)
 void ChooseBackground::on_listWidget_currentRowChanged(int currentRow)
 {
     switch (currentRow) {
-    case 0:
-        settings.setValue("desktop/background", "inbuilt:triangles");
-        emit reloadBackgrounds();
-        break;
-    case 1:
-        settings.setValue("desktop/background", "inbuilt:blueprint");
-        emit reloadBackgrounds();
-        break;
-    case 2:
-        settings.setValue("desktop/background", "inbuilt:triplecircle");
-        emit reloadBackgrounds();
-        break;
-    case 3:
-        settings.setValue("desktop/background", "inbuilt:shatter");
-        emit reloadBackgrounds();
-        break;
-    case 4:
-        settings.setValue("desktop/background", "inbuilt:slice");
-        emit reloadBackgrounds();
-        break;
-    case 5:
-        settings.setValue("desktop/background", "inbuilt:nav");
-        emit reloadBackgrounds();
-        break;
-    case 6:
-        settings.setValue("desktop/background", "inbuilt:leftwaves");
-        emit reloadBackgrounds();
-        break;
+        case 0:
+            settings.setValue("desktop/background", "inbuilt:triangles");
+            break;
+        case 1:
+            settings.setValue("desktop/background", "inbuilt:blueprint");
+            break;
+        case 2:
+            settings.setValue("desktop/background", "inbuilt:triplecircle");
+            break;
+        case 3:
+            settings.setValue("desktop/background", "inbuilt:shatter");
+            break;
+        case 4:
+            settings.setValue("desktop/background", "inbuilt:slice");
+            break;
+        case 5:
+            settings.setValue("desktop/background", "inbuilt:nav");
+            break;
+        case 6:
+            settings.setValue("desktop/background", "inbuilt:leftwaves");
+            break;
+        case 7:
+            settings.setValue("desktop/background", "inbuilt:beach");
+            break;
+        case 8:
+            settings.setValue("desktop/background", "inbuilt:arrows");
+            break;
+        case 9:
+            settings.setValue("desktop/background", "inbuilt:waves");
+            break;
     }
+    emit reloadBackgrounds();
     this->setFocus();
 }
 

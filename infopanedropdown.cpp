@@ -7,6 +7,21 @@ extern void EndSession(EndSessionWait::shutdownType type);
 extern QString calculateSize(quint64 size);
 extern AudioManager* AudioMan;
 
+enum languageOrder {
+    enUS = 0,
+    enGB,
+    enAU,
+    enNZ,
+    viVN,
+    daDK,
+    ptBR,
+    arSA,
+    zhCN,
+    nlNL,
+    miNZ,
+    maxLanguage
+};
+
 InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, WId MainWindowId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoPaneDropdown)
@@ -181,17 +196,67 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     }
 
     //For the time being, we'll just have hardcoded locales. This should change soon (hopefully)
-    ui->localeList->addItem(tr("English") + " (English)"); //en_US
-    ui->localeList->addItem(tr("Vietnamese") + " (Tiếng Việt)"); //vi_VN
-    ui->localeList->addItem(tr("Danish") + " (Dansk) "); //da_DK
+    for (int i = 0; i < maxLanguage; i++) {
+        switch (i) {
+            case enUS:
+                ui->localeList->addItem("[US] " + tr("English") + " (English)");
+                break;
+            case enGB:
+                ui->localeList->addItem("[GB] " + tr("English") + " (English)");
+                break;
+            case enAU:
+                ui->localeList->addItem("[AU] " + tr("English") + " (English)");
+                break;
+            case enNZ:
+                ui->localeList->addItem("[NZ] " + tr("English") + " (English)");
+                break;
+            case viVN:
+                ui->localeList->addItem("[VN] " + tr("Vietnamese") + " (Tiếng Việt)");
+                break;
+            case daDK:
+                ui->localeList->addItem("[DK] " + tr("Danish") + " (Dansk) ");
+                break;
+            case ptBR:
+                ui->localeList->addItem("[BR] " + tr("Portuguese") + " (Português) ");
+                break;
+            case arSA:
+                ui->localeList->addItem("[SA] " + tr("Arabic") + " (العربية) ");
+                break;
+            case zhCN:
+                ui->localeList->addItem("[CN] " + tr("Chinese") + " (中文) ");
+                break;
+            case nlNL:
+                ui->localeList->addItem("[NL] " + tr("Dutch") + " (Nederlands) ");
+                break;
+            case miNZ:
+                ui->localeList->addItem("[NZ] " + tr("Māori") + " (Māori) ");
+                break;
+        }
+    }
 
     QString currentLocale = settings.value("locale/language", "en_US").toString();
     if (currentLocale == "en_US") {
-        ui->localeList->setCurrentRow(0);
+        ui->localeList->setCurrentRow(enUS);
+    } else if (currentLocale == "en_GB") {
+        ui->localeList->setCurrentRow(enGB);
+    } else if (currentLocale == "en_AU") {
+        ui->localeList->setCurrentRow(enAU);
+    } else if (currentLocale == "en_NZ") {
+        ui->localeList->setCurrentRow(enNZ);
     } else if (currentLocale == "vi_VN") {
-        ui->localeList->setCurrentRow(1);
+        ui->localeList->setCurrentRow(viVN);
     } else if (currentLocale == "da_DK") {
-        ui->localeList->setCurrentRow(2);
+        ui->localeList->setCurrentRow(daDK);
+    } else if (currentLocale == "pt_BR") {
+        ui->localeList->setCurrentRow(ptBR);
+    } else if (currentLocale == "ar_SA") {
+        ui->localeList->setCurrentRow(arSA);
+    } else if (currentLocale == "zh_CN") {
+        ui->localeList->setCurrentRow(zhCN);
+    } else if (currentLocale == "nl_NL") {
+        ui->localeList->setCurrentRow(nlNL);
+    } else if (currentLocale == "mi_NZ") {
+        ui->localeList->setCurrentRow(miNZ);
     }
 
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
@@ -1348,7 +1413,14 @@ void InfoPaneDropdown::updateSysInfo() {
     if (sysinfo(info) == 0) {
         QTime sysUptime(0, 0);
         sysUptime = sysUptime.addSecs(info->uptime);
-        ui->systemUptime->setText(tr("System Uptime: %1").arg(sysUptime.toString("hh:mm:ss")));
+        QString uptimeString;
+        if (info->uptime > 86400) {
+            int days = info->uptime / 86400;
+            uptimeString = tr("%1 days", NULL, days).arg(days) + " " + sysUptime.toString("hh:mm:ss");
+        } else {
+            uptimeString = sysUptime.toString("hh:mm:ss");
+        }
+        ui->systemUptime->setText(tr("System Uptime: %1").arg(uptimeString));
     } else {
         ui->systemUptime->setText(tr("Couldn't get system uptime"));
     }
@@ -2209,14 +2281,38 @@ void InfoPaneDropdown::on_DateTimeNTPSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
 {
     switch (currentRow) {
-        case 0:
+        case enUS:
             settings.setValue("locale/language", "en_US");
             break;
-        case 1:
+        case enGB:
+            settings.setValue("locale/language", "en_GB");
+            break;
+        case enAU:
+            settings.setValue("locale/language", "en_AU");
+            break;
+        case enNZ:
+            settings.setValue("locale/language", "en_NZ");
+            break;
+        case viVN:
             settings.setValue("locale/language", "vi_VN");
             break;
-        case 2:
+        case daDK:
             settings.setValue("locale/language", "da_DK");
+            break;
+        case ptBR:
+            settings.setValue("locale/language", "pt_BR");
+            break;
+        case arSA:
+            settings.setValue("locale/language", "ar_SA");
+            break;
+        case zhCN:
+            settings.setValue("locale/language", "zh_CN");
+            break;
+        case nlNL:
+            settings.setValue("locale/language", "nl_NL");
+            break;
+        case miNZ:
+            settings.setValue("locale/language", "mi_NZ");
             break;
     }
 }
