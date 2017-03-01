@@ -454,7 +454,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1476"/>
         <source>Ping</source>
-        <translation type="unfinished">Forespørg Ping</translation>
+        <translation>Forespørg Ping</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1487"/>
@@ -2014,7 +2014,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../segfaultdialog.ui" line="140"/>
         <source>Reset theShell and Log Out</source>
-        <translation type="unfinished">Nulstil theShell og Log ud</translation>
+        <translation>Nulstil theShell og Log ud</translation>
     </message>
     <message>
         <location filename="../segfaultdialog.ui" line="151"/>

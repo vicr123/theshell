@@ -1416,7 +1416,11 @@ void InfoPaneDropdown::updateSysInfo() {
         QString uptimeString;
         if (info->uptime > 86400) {
             int days = info->uptime / 86400;
-            uptimeString = tr("%1 days", NULL, days).arg(days) + " " + sysUptime.toString("hh:mm:ss");
+            if (days == 1) {
+                uptimeString = tr("1 day") + " " + sysUptime.toString("hh:mm:ss");
+            } else {
+                uptimeString = tr("%1 days", NULL, days).arg(days) + " " + sysUptime.toString("hh:mm:ss");
+            }
         } else {
             uptimeString = sysUptime.toString("hh:mm:ss");
         }

@@ -14,6 +14,10 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
 
     ui->label->setParent(this);
     ui->label->raise();
+    ui->label->installEventFilter(this);
+    band = new QRubberBand(QRubberBand::Rectangle, ui->label);
+    bandOrigin = QPoint(0, 0);
+    band->setGeometry(QRect(bandOrigin, ui->label->size()));
 
     QScreen* currentScreen = NULL;
     for (QScreen* screen : QApplication::screens()) {
@@ -25,6 +29,7 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
     if (currentScreen != NULL) {
         screenshotPixmap = currentScreen->grabWindow(0, currentScreen->geometry().x(), currentScreen->geometry().y(), currentScreen->geometry().width(), currentScreen->geometry().height());
         ui->label->setPixmap(screenshotPixmap);
+        savePixmap = screenshotPixmap;
 
         QSoundEffect* takeScreenshot = new QSoundEffect();
         takeScreenshot->setSource(QUrl("qrc:/sounds/screenshot.wav"));
@@ -37,6 +42,12 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
     } else {
 
     }
+
+    Atom DesktopWindowTypeAtom;
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
+
 }
 
 screenshotWindow::~screenshotWindow()
@@ -56,6 +67,7 @@ void screenshotWindow::show() {
 
     ui->label->setGeometry(0, 0, this->width(), this->height());
 
+    originalGeometry = ui->label->geometry();
     QRectF endGeometry = ui->label->geometry();
     //qreal scaleFactor = endGeometry.width() - (endGeometry.width() - 50);
     //endGeometry.adjust(50, endGeometry.height() * scaleFactor, -50, -endGeometry.height() * scaleFactor);
@@ -103,7 +115,7 @@ void screenshotWindow::on_discardButton_clicked()
 void screenshotWindow::on_copyButton_clicked()
 {
     QClipboard* clipboard = QApplication::clipboard();
-    clipboard->setPixmap(screenshotPixmap);
+    clipboard->setPixmap(savePixmap);
 
     QRect newGeometry = ui->label->geometry();
     newGeometry.moveTop(-this->height() / 2);
@@ -132,7 +144,7 @@ void screenshotWindow::on_copyButton_clicked()
 void screenshotWindow::on_saveButton_clicked()
 {
     QFile screenshotFile(QDir::homePath() + "/screenshot" + QDateTime::currentDateTime().toString("hh-mm-ss-yyyy-MM-dd") + ".png");
-    screenshotPixmap.save(&screenshotFile, "PNG");
+    savePixmap.save(&screenshotFile, "PNG");
 
     QRect newGeometry = ui->label->geometry();
     newGeometry.moveTop(-this->height() / 2);
@@ -156,6 +168,37 @@ void screenshotWindow::on_saveButton_clicked()
     connect(animGroup, SIGNAL(finished()), animGroup, SLOT(deleteLater()));
     connect(animGroup, SIGNAL(finished()), this, SLOT(close()));
     animGroup->start();
+}
+
+bool screenshotWindow::eventFilter(QObject *object, QEvent *event) {
+    if (object == ui->label) {
+        if (event->type() == QEvent::MouseButtonPress) {
+            QMouseEvent* mouseEvent = (QMouseEvent*) event;
+            if (mouseEvent->button() == Qt::RightButton) {
+                bandOrigin = QPoint(0, 0);
+                band->setGeometry(QRect(bandOrigin, ui->label->size()));
+                band->hide();
+            } else {
+                bandOrigin = mouseEvent->pos();
+                band->setGeometry(QRect(bandOrigin, mouseEvent->pos()).normalized());
+                band->show();
+            }
+        } else if (event->type() == QEvent::MouseMove) {
+            QMouseEvent* mouseEvent = (QMouseEvent*) event;
+            if (mouseEvent->button() != Qt::RightButton) {
+                band->setGeometry(QRect(bandOrigin, mouseEvent->pos()).normalized());
+            }
+        } else if (event->type() == QEvent::MouseButtonRelease) {
+            QRect copyReigon;
+            qreal scaleFactor = ((originalGeometry.width() - 100) / originalGeometry.width());
+            copyReigon.setLeft(band->geometry().left() / scaleFactor);
+            copyReigon.setTop(band->geometry().top() / scaleFactor);
+            copyReigon.setRight(band->geometry().right() / scaleFactor);
+            copyReigon.setBottom(band->geometry().bottom() / scaleFactor);
+            savePixmap = screenshotPixmap.copy(copyReigon);
+        }
+    }
+    return false;
 }
 
 void screenshotWindow::close() {

@@ -18,6 +18,13 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QDateTime>
+#include <QRubberBand>
+#include <QX11Info>
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+
+#undef None
+
 
 namespace Ui {
 class screenshotWindow;
@@ -47,8 +54,13 @@ private:
     Ui::screenshotWindow *ui;
 
     QPixmap screenshotPixmap;
+    QPixmap savePixmap;
+    QRubberBand* band;
+    QPoint bandOrigin;
+    QRectF originalGeometry;
 
     void paintEvent(QPaintEvent* event);
+    bool eventFilter(QObject *object, QEvent *event);
 };
 
 #endif // SCREENSHOTWINDOW_H
