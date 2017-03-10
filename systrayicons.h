@@ -53,6 +53,7 @@ private slots:
 
 private:
     QString service;
+    QString title;
     QDBusInterface* interface;
 
     void mouseReleaseEvent(QMouseEvent* event);

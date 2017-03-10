@@ -72,10 +72,10 @@ void screenshotWindow::show() {
     //qreal scaleFactor = endGeometry.width() - (endGeometry.width() - 50);
     //endGeometry.adjust(50, endGeometry.height() * scaleFactor, -50, -endGeometry.height() * scaleFactor);
     //endGeometry.adjust(75, 75, -75, -75);
-    qreal newHeight = ((endGeometry.width() - 100) / endGeometry.width()) * endGeometry.height();
+    qreal newHeight = ((endGeometry.width() - 125) / endGeometry.width()) * endGeometry.height();
     endGeometry.setHeight(newHeight);
-    endGeometry.setWidth(endGeometry.width() - 100);
-    endGeometry.moveTo(100 / 2, ((ui->label->height() - newHeight) / 2) - 25);
+    endGeometry.setWidth(endGeometry.width() - 125);
+    endGeometry.moveTo(100 / 2, ((ui->label->height() - newHeight) / 2) - 35);
 
     QPropertyAnimation* anim = new QPropertyAnimation(ui->label, "geometry");
     anim->setStartValue(ui->label->geometry());
@@ -146,6 +146,8 @@ void screenshotWindow::on_saveButton_clicked()
     QFile screenshotFile(QDir::homePath() + "/screenshot" + QDateTime::currentDateTime().toString("hh-mm-ss-yyyy-MM-dd") + ".png");
     savePixmap.save(&screenshotFile, "PNG");
 
+
+
     QRect newGeometry = ui->label->geometry();
     newGeometry.moveTop(-this->height() / 2);
 
@@ -190,7 +192,7 @@ bool screenshotWindow::eventFilter(QObject *object, QEvent *event) {
             }
         } else if (event->type() == QEvent::MouseButtonRelease) {
             QRect copyReigon;
-            qreal scaleFactor = ((originalGeometry.width() - 100) / originalGeometry.width());
+            qreal scaleFactor = ((originalGeometry.width() - 125) / originalGeometry.width());
             copyReigon.setLeft(band->geometry().left() / scaleFactor);
             copyReigon.setTop(band->geometry().top() / scaleFactor);
             copyReigon.setRight(band->geometry().right() / scaleFactor);

@@ -113,6 +113,7 @@ SniIcon::SniIcon(QString service, QWidget *parent) : QLabel(parent) {
     QString path = pathParts.join("/");
     path.insert(0, "/");
     interface = new QDBusInterface(service, path, "org.kde.StatusNotifierItem");
+    this->title = interface->property("Title").toString();
     QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewTitle", this, SLOT(ReloadIcon()));
     QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewIcon", this, SLOT(ReloadIcon()));
     QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewAttentionIcon", this, SLOT(ReloadIcon()));
@@ -131,58 +132,60 @@ void SniIcon::SniItemUnregistered(QString service) {
 }
 
 void SniIcon::ReloadIcon() {
-    if (interface->property("IconName").toString() != "") {
-        this->setPixmap(QIcon::fromTheme(interface->property("IconName").toString()).pixmap(24, 24));
-    } else {
-        //TODO: Load other image data
-        QDBusMessage message = QDBusMessage::createMethodCall(interface->service(), interface->path(), "org.freedesktop.DBus.Properties", "Get");
-        QList<QVariant> messageArguments;
-        messageArguments.append("org.kde.StatusNotifierItem");
-        messageArguments.append("IconPixmap");
-        message.setArguments(messageArguments);
+    if (this->title != "discord") {
+        if (interface->property("IconName").toString() != "") {
+            this->setPixmap(QIcon::fromTheme(interface->property("IconName").toString(), QIcon::fromTheme("dialog-warning")).pixmap(24, 24));
+        } else {
+            //TODO: Load other image data
+            QDBusMessage message = QDBusMessage::createMethodCall(interface->service(), interface->path(), "org.freedesktop.DBus.Properties", "Get");
+            QList<QVariant> messageArguments;
+            messageArguments.append("org.kde.StatusNotifierItem");
+            messageArguments.append("IconPixmap");
+            message.setArguments(messageArguments);
 
-        QDBusReply<QDBusVariant> reply = QDBusConnection::sessionBus().call(message);
-        QDBusVariant pixmapsVar = reply.value();
+            QDBusReply<QDBusVariant> reply = QDBusConnection::sessionBus().call(message);
+            QDBusVariant pixmapsVar = reply.value();
 
-        QDBusArgument pixmaps = pixmapsVar.variant().value<QDBusArgument>();
+            QDBusArgument pixmaps = pixmapsVar.variant().value<QDBusArgument>();
 
-        QDBusVariant firstPixmapVar;
-        pixmaps >> firstPixmapVar;
-        pixmaps.endArray();
+            QDBusVariant firstPixmapVar;
+            pixmaps >> firstPixmapVar;
+            pixmaps.endArray();
 
-        QDBusArgument firstPixmap = firstPixmapVar.variant().value<QDBusArgument>();
+            QDBusArgument firstPixmap = firstPixmapVar.variant().value<QDBusArgument>();
 
-        firstPixmap.beginArray();
+            firstPixmap.beginArray();
 
-        int width, height;
-        QByteArray data;
+            int width, height;
+            QByteArray data;
 
-        firstPixmap >> width >> height >> data;
-        firstPixmap.endArray();
+            firstPixmap >> width >> height >> data;
+            firstPixmap.endArray();
 
-        QImage image(width, height, QImage::Format_ARGB32);
+            QImage image(width, height, QImage::Format_ARGB32);
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width * 4; x = x + 4) {
-                //char dat = data.at(y * width + x);
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width * 4; x = x + 4) {
+                    //char dat = data.at(y * width + x);
 
-                unsigned char a, r, g, b;
+                    unsigned char a, r, g, b;
 
-                b = data.at(y * width * 4 + x + 3);
-                g = data.at(y * width * 4 + x + 2);
-                r = data.at(y * width * 4 + x + 1);
-                a = data.at(y * width * 4 + x);
+                    b = data.at(y * width * 4 + x + 3);
+                    g = data.at(y * width * 4 + x + 2);
+                    r = data.at(y * width * 4 + x + 1);
+                    a = data.at(y * width * 4 + x);
 
-                QColor col = QColor(r, g, b, a);
+                    QColor col = QColor(r, g, b, a);
 
-                image.setPixelColor(x / 4, y, col);
+                    image.setPixelColor(x / 4, y, col);
+                }
             }
+
+            this->setPixmap(QPixmap::fromImage(image.scaledToHeight(24, Qt::SmoothTransformation)));
         }
 
-        this->setPixmap(QPixmap::fromImage(image.scaledToHeight(24, Qt::SmoothTransformation)));
+        this->setToolTip(interface->property("Title").toString());
     }
-
-    this->setToolTip(interface->property("Title").toString());
 }
 
 void SniIcon::mouseReleaseEvent(QMouseEvent *event) {

@@ -558,8 +558,8 @@ void MainWindow::doUpdate() {
     }
 
     if (!lockHide) { //Check for move lock
-        if (hideTop < dockTop) {
-            if (attentionDemandingWindows > 0) {
+        if (hideTop < dockTop - this->height()) {
+            if (attentionDemandingWindows > 0 && !settings.value("bar/statusBar", false).toBool()) {
                 hideTop = dockTop - this->height() + 2;
             } else {
                 hideTop = dockTop - this->height();
