@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" language="da_DK" sourcelanguage="en_US">
 <context>
     <name>BTHandsfree</name>
     <message>
@@ -219,12 +219,12 @@
     <message>
         <location filename="../endsessionwait.ui" line="731"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Op</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="756"/>
         <source>All apps will be closed and your device will turn off completely.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle applikationer vil blive lukket og din enhed vil slukke.</translation>
     </message>
     <message>
         <location filename="../endsessionwait.cpp" line="18"/>
@@ -516,7 +516,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1809"/>
         <source>Use Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Bug Status Bar</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1834"/>
@@ -706,7 +706,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2723"/>
         <source>Optimise for touch input</source>
-        <translation type="unfinished"></translation>
+        <translation>Optimér til berørings-input</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2716"/>
@@ -942,7 +942,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../infopanedropdown.ui" line="3655"/>
         <source>theShell 6.1</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell 6.1</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3647"/>
@@ -997,42 +997,47 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../infopanedropdown.cpp" line="217"/>
         <source>Danish</source>
-        <translation type="unfinished"></translation>
+        <translation>Dansk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="220"/>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugesisk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="223"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabisk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="226"/>
         <source>Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation>Kinesisk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="229"/>
         <source>Dutch</source>
-        <translation type="unfinished"></translation>
+        <translation>Hollandsk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="232"/>
         <source>Māori</source>
-        <translation type="unfinished"></translation>
+        <translation>Māori</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="239"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japansk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="242"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Tysk</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="246"/>
+        <source>Spanish</source>
+        <translation>Spansk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="270"/>
@@ -1247,12 +1252,13 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../infopanedropdown.cpp" line="1421"/>
         <source>1 day</source>
-        <translation type="unfinished"></translation>
+        <translation>1 dag</translation>
     </message>
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="1423"/>
         <source>%1 days</source>
-        <translation type="unfinished">
+        <translation>
+            <numerusform>%1 dage</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -1388,28 +1394,28 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../mainwindow.ui" line="729"/>
         <source>16:20</source>
-        <translation type="unfinished"></translation>
+        <translation>16:20</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="736"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Netværk</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="743"/>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Notifikationer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="750"/>
         <location filename="../mainwindow.ui" line="770"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikon</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="777"/>
         <source>Song Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Sang Navn</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="211"/>
@@ -1446,6 +1452,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <source>%1 notifications</source>
         <translation>
             <numerusform>%1 notifikationer</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -2002,7 +2009,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../onboarding.ui" line="35"/>
         <source>Select Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg Sprog</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="73"/>
@@ -2012,7 +2019,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../onboarding.ui" line="92"/>
         <source>Welcome to theShell 6.1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Velkommen til theShell 6.1!</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="95"/>
@@ -2076,52 +2083,57 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <location filename="../onboarding.cpp" line="173"/>
         <location filename="../onboarding.cpp" line="176"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Engelsk</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="179"/>
         <source>Vietnamese</source>
-        <translation type="unfinished"></translation>
+        <translation>Vietnamesisk</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="182"/>
         <source>Danish</source>
-        <translation type="unfinished"></translation>
+        <translation>Dansk</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="185"/>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugesisk</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="188"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabisk</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="191"/>
         <source>Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation>Kinesisk</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="194"/>
         <source>Dutch</source>
-        <translation type="unfinished"></translation>
+        <translation>Hollandsk</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="197"/>
         <source>Māori</source>
-        <translation type="unfinished"></translation>
+        <translation>Māori</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="215"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japansk</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="218"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Tysk</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="222"/>
+        <source>Spanish</source>
+        <translation>Spansk</translation>
     </message>
 </context>
 <context>
@@ -2380,7 +2392,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../tutorialwindow.ui" line="89"/>
         <source>The gateway is the portal to everything on your PC. To open it, click the theShell icon, or hit the Super key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gatewayen er portalen til alt på din PC. For at åbne den, tryk på theShell ikonet eller tryk på Super tasten.</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="89"/>
@@ -2607,7 +2619,7 @@ Skriv navnet eller stien til en vindues håndtering for at prøve at starte en a
     <message>
         <location filename="../screenshotwindow.ui" line="33"/>
         <source>Select a region using the mouse. To clear the region, right click.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg en region ved hjælp af musen. For at afvælge regionen, brug højreklik. </translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="58"/>

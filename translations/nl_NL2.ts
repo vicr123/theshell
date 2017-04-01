@@ -1022,6 +1022,16 @@
         <translation>Māori</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="239"/>
+        <source>Japanese</source>
+        <translation>Japans</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="242"/>
+        <source>German</source>
+        <translation>Duits</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.cpp" line="341"/>
         <source>About</source>
         <translation>Over</translation>
@@ -2097,6 +2107,16 @@
         <location filename="../onboarding.cpp" line="197"/>
         <source>Māori</source>
         <translation>Maori</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="215"/>
+        <source>Japanese</source>
+        <translation>Japans</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="218"/>
+        <source>German</source>
+        <translation>Duits</translation>
     </message>
 </context>
 <context>

@@ -16,6 +16,7 @@ enum languageOrder {
     enNZ,
     viVN,
     daDK,
+    esES,
     ptBR,
     jaJP,
     arSA,
@@ -241,6 +242,9 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
             case deDE:
                 ui->localeList->addItem("[DE] " + tr("German") + " (Deutsch) ");
                 break;
+            case esES:
+                ui->localeList->addItem("[ES] " + tr("Spanish") + " (Español) ");
+                break;
         }
     }
 
@@ -271,6 +275,8 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
         ui->localeList->setCurrentRow(jaJP);
     } else if (currentLocale == "de_DE") {
         ui->localeList->setCurrentRow(deDE);
+    } else if (currentLocale == "es_ES") {
+        ui->localeList->setCurrentRow(esES);
     }
 
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
@@ -2342,6 +2348,9 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
             break;
         case deDE:
             settings.setValue("locale/language", "de_DE");
+            break;
+        case esES:
+            settings.setValue("locale/language", "es_ES");
             break;
     }
 

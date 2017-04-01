@@ -47,6 +47,7 @@ enum languageOrder {
     enNZ,
     viVN,
     daDK,
+    esES,
     ptBR,
     jaJP,
     arSA,
@@ -217,6 +218,9 @@ void Onboarding::on_changeLanguageButton_clicked()
             case deDE:
                 ui->localeList->addItem("[DE] " + tr("German") + " (Deutsch) ");
                 break;
+            case esES:
+                ui->localeList->addItem("[ES] " + tr("Spanish") + " (Español) ");
+                break;
         }
     }
 
@@ -247,6 +251,8 @@ void Onboarding::on_changeLanguageButton_clicked()
         ui->localeList->setCurrentRow(jaJP);
     } else if (currentLocale == "de_DE") {
         ui->localeList->setCurrentRow(deDE);
+    } else if (currentLocale == "es_ES") {
+        ui->localeList->setCurrentRow(esES);
     }
 }
 
@@ -291,6 +297,9 @@ void Onboarding::on_localeList_currentRowChanged(int currentRow)
             break;
         case deDE:
             settings.setValue("locale/language", "de_DE");
+            break;
+        case esES:
+            settings.setValue("locale/language", "es_ES");
             break;
     }
 

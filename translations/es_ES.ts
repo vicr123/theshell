@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es_ES" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US">
 <context>
     <name>BTHandsfree</name>
     <message>
@@ -218,6 +218,16 @@
         <location filename="../endsessionwait.ui" line="576"/>
         <source>Done</source>
         <translation>Hecho</translation>
+    </message>
+    <message>
+        <location filename="../endsessionwait.ui" line="731"/>
+        <source>Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../endsessionwait.ui" line="756"/>
+        <source>All apps will be closed and your device will turn off completely.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../endsessionwait.cpp" line="18"/>
@@ -697,6 +707,11 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si te gustaría usar la Tecla Super para otra combinacion de teclas, desactiva esto para que theShell no tome control de ello. &lt;span style=&quot; font-weight:600;&quot;&gt;Cambiar esta opcion requiere que cierres sesion y que volver a iniciar sesion.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="2723"/>
+        <source>Optimise for touch input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="2730"/>
         <source>Background</source>
         <translation>Fondo de Pantalla</translation>
@@ -1010,6 +1025,21 @@
         <translation>Maorí</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="240"/>
+        <source>Japanese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="243"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="246"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.cpp" line="341"/>
         <source>About</source>
         <translation>Acerca de</translation>
@@ -1229,7 +1259,6 @@
         <source>%1 days</source>
         <translation>
             <numerusform>%1 días</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -1422,7 +1451,6 @@
         <source>%1 notifications</source>
         <translation>
             <numerusform>%1 notificaciones</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -1977,6 +2005,11 @@
         <translation>Dialogo</translation>
     </message>
     <message>
+        <location filename="../onboarding.ui" line="35"/>
+        <source>Select Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../onboarding.ui" line="73"/>
         <source>Welcome to theShell 6.1!</source>
         <translation>Bienvenido a theShell 6.1!</translation>
@@ -2036,6 +2069,64 @@
         <location filename="../onboarding.ui" line="426"/>
         <source>Back</source>
         <translation>Atras</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="183"/>
+        <location filename="../onboarding.cpp" line="186"/>
+        <location filename="../onboarding.cpp" line="189"/>
+        <location filename="../onboarding.cpp" line="192"/>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="195"/>
+        <source>Vietnamese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="198"/>
+        <source>Danish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="201"/>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="204"/>
+        <source>Arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="207"/>
+        <source>Chinese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="210"/>
+        <source>Dutch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="213"/>
+        <source>Māori</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="216"/>
+        <source>Japanese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="219"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="222"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2290,6 +2381,11 @@
         <location filename="../tutorialwindow.ui" line="82"/>
         <source>Ready to begin?</source>
         <translation>Listo para empezar?</translation>
+    </message>
+    <message>
+        <location filename="../tutorialwindow.ui" line="89"/>
+        <source>The gateway is the portal to everything on your PC. To open it, click the theShell icon, or hit the Super key.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="89"/>

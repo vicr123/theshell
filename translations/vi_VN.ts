@@ -819,6 +819,11 @@
         <translation>Tiếng Đức</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="246"/>
+        <source>Spanish</source>
+        <translation>Tiếng Tây Ban Nha</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>Giới thiệu</translation>
     </message>
@@ -1896,6 +1901,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../onboarding.cpp" line="218"/>
         <source>German</source>
         <translation>Tiếng Đức</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="222"/>
+        <source>Spanish</source>
+        <translation>Tiếng Tây Ban Nha</translation>
     </message>
     <message>
         <source>theWave Logo</source>

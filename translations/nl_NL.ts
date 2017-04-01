@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nl_NL" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US">
 <context>
     <name>BTHandsfree</name>
     <message>
@@ -1032,6 +1032,11 @@
         <translation>Duits</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="246"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.cpp" line="341"/>
         <source>About</source>
         <translation>Over</translation>
@@ -1251,7 +1256,6 @@
         <source>%1 days</source>
         <translation>
             <numerusform>%1 dag</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -1445,7 +1449,6 @@
         <translatorcomment>%1 notifications</translatorcomment>
         <translation>
             <numerusform>%1 notificatie</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -2117,6 +2120,11 @@
         <location filename="../onboarding.cpp" line="218"/>
         <source>German</source>
         <translation>Duits</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="222"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

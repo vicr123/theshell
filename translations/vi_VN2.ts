@@ -809,6 +809,16 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="239"/>
+        <source>Japanese</source>
+        <translation>Tiếng Nhật</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="242"/>
+        <source>German</source>
+        <translation>Tiếng Đức</translation>
+    </message>
+    <message>
         <source>About</source>
         <translation>Giới thiệu</translation>
     </message>
@@ -1811,10 +1821,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>theWave Logo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You can find theWave inside the Gateway or on the bar.</source>
         <translation>Tìm theWave ở trong cửa và bar.</translation>
     </message>
@@ -1880,6 +1886,20 @@ p, li { white-space: pre-wrap; }
         <location filename="../onboarding.cpp" line="197"/>
         <source>Māori</source>
         <translation>Tiếng Maori</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="215"/>
+        <source>Japanese</source>
+        <translation>Tiếng Nhật</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="218"/>
+        <source>German</source>
+        <translation>Tiếng Đức</translation>
+    </message>
+    <message>
+        <source>theWave Logo</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Welcome to theShell 6.0!</source>
