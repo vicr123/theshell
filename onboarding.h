@@ -6,38 +6,10 @@
 #include <QPushButton>
 #include <QSettings>
 #include <QLabel>
-
-#define ChangelogOnbording "New in theShell 6.1:"\
-    "- New Status Bar. Go to Settings > Bar to activate it.\n"\
-    "\n"\
-    "New in theShell 6.0:\n"\
-    "- Default system font can be set in theme settings.\n"\
-    "- Battery indicator now shows battery for devices connected over KDE Connect\n"\
-    "- Added some KDE Connect actions in the status center\n"\
-    "- The stopwatch is now shown on the bar when being used.\n"\
-    "- New Charge History in the Status Center. Go to the System Status pane in the Status Center to take a look.\n"\
-    "- Add scrollbar on the bar when content runs off the bar\n"\
-    "- Added Power Stretch.\n"\
-    "- Added icon in bar for wireless reception\n"\
-    "- theShell now uses the-libs for integration with other the-applications.\n"\
-    "- Dragging down on an item in the bar to open the status center has been added\n"\
-    "- New notification animation\n"\
-    "- When a timer elapses, other audio is made quiter until the timer is dismissed\n"\
-    "- Redshift now works overnight\n"\
-    "- Notifications can now send sounds through theShell\n"\
-    "- theWave now quitens background music while listening\n"\
-    "- Time and date can now be set within theShell\n"\
-    "- System Users can now be configured within theShell\n"\
-    "- theShell now supports localisations! Try the inbuilt Vietnamese translation by changing the settings in theShell\n"\
-    "- theShell's settings now apply to the whole system, so there is no need for a seperate system settings application. More settings panes will be coming soon.\n"\
-    "\n"\
-    "New in theShell 5.2: \n"\
-    "- New Onboarding experience. Every time theShell updates, you'll get a changelog.\n" \
-    "- theWave now uses theCalculator to process calculations.\n" \
-    "- theShell now uses its own platform abstraction module to theme your system. Change the theming in theShell Settings.\n" \
-    "- theShell now uses the Contemporary theme to display widgets.\n"\
-    "- theShell now displays notifications when it detects a connected device\n" \
-    ""
+#include <QLibraryInfo>
+#include <QTranslator>
+#include <QTimer>
+#include "nativeeventfilter.h"
 
 namespace Ui {
 class Onboarding;
@@ -68,9 +40,14 @@ private slots:
 
     void on_disabletheWaveButton_clicked();
 
+    void on_changeLanguageButton_clicked();
+
+    void on_localeList_currentRowChanged(int currentRow);
+
 private:
     Ui::Onboarding *ui;
 
+    int buttonCurrentLanguage = 0;
     QSettings settings;
 };
 

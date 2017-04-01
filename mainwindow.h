@@ -40,6 +40,8 @@
 
 class Menu;
 
+class InfoPaneDropdown;
+
 namespace Ui {
 class MainWindow;
 }

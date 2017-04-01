@@ -33,6 +33,7 @@
 #include "upowerdbus.h"
 #include "endsessionwait.h"
 #include "audiomanager.h"
+#include "nativeeventfilter.h"
 #include <sys/sysinfo.h>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -272,6 +273,8 @@ private slots:
     void on_localeList_currentRowChanged(int currentRow);
 
     void on_StatusBarSwitch_toggled(bool checked);
+
+    void on_TouchInputSwitch_toggled(bool checked);
 
 public slots:
     void getNetworks();

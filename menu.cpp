@@ -5,6 +5,7 @@ extern void EndSession(EndSessionWait::shutdownType type);
 extern MainWindow* MainWin;
 extern DbusEvents* DBusEvents;
 extern TutorialWindow* TutorialWin;
+extern NativeEventFilter* NativeFilter;
 
 Menu::Menu(QWidget *parent) :
     QDialog(parent),
@@ -284,6 +285,10 @@ void Menu::show(bool openTotheWave, bool startListening) {
     if (startListening && openTotheWave) {
         ui->listentheWave->click();
     }
+
+    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
+        ui->retranslateUi(this);
+    });
 }
 
 void Menu::changeEvent(QEvent *event) {

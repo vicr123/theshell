@@ -33,6 +33,9 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
         invokeTimer->start();
     });
 
+    ui->slideOffFrame->installEventFilter(this);
+    ui->ArrowUp->setPixmap(QIcon::fromTheme("go-up").pixmap(16, 16));
+
     if (!QApplication::arguments().contains("--debug")) {
         ui->DummyExit->setVisible(false);
     }
@@ -67,230 +70,270 @@ EndSessionWait::~EndSessionWait()
 }
 
 void EndSessionWait::close() {
-    this->reject();
+    if (this->type == slideOff) {
+        tPropertyAnimation* anim = new tPropertyAnimation(ui->slideOffFrame, "geometry");
+        anim->setStartValue(ui->slideOffFrame->geometry());
+        anim->setEndValue(QRect(0, this->height(), this->width(), ui->slideOffFrame->height()));
+        anim->setDuration(250);
+        anim->setEasingCurve(QEasingCurve::InCubic);
+        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+        connect(anim, &tPropertyAnimation::finished, [=] {
+            this->reject();
+        });
+        anim->start();
+    } else {
+        this->reject();
+    }
 }
 
 void EndSessionWait::showFullScreen() {
-    QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
-    anim->setDuration(250);
-    anim->setStartValue(this->windowOpacity());
-    if (this->type == ask) {
-        anim->setEndValue(1.0);
-    } else {
-        anim->setEndValue(0.8);
-    }
-
-    if (!alreadyShowing) {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    if (this->type == slideOff) {
         alreadyShowing = true;
-        this->setWindowOpacity(0.0);
+        this->setAttribute(Qt::WA_TranslucentBackground);
+
+        this->setGeometry(screenGeometry);
         QDialog::showFullScreen();
-        //ui->terminateAppFrame->resize(ui->terminateAppFrame->width(), 0);
-        ui->terminateAppFrame->setGeometry(ui->terminateAppFrame->x(), ui->terminateAppFrame->y(), ui->terminateAppFrame->width(), 0);
-        ui->terminateAppFrame->setVisible(false);
-        ui->ExitFrameTop->resize(ui->ExitFrameTop->sizeHint());
-        ui->ExitFrameBottom->resize(ui->ExitFrameBottom->sizeHint());
-        anim->start(QAbstractAnimation::DeleteWhenStopped);
-        powerOffTimer->start();
+        QApplication::processEvents();
+
+        this->layout()->removeWidget(ui->slideOffFrame);
+        ui->slideOffFrame->setGeometry(0, this->height(), this->width(), ui->slideOffFrame->sizeHint().height());
+        ui->slideOffFrame->setFixedHeight(ui->slideOffFrame->sizeHint().height());
+        ui->slideOffFrame->setFixedWidth(this->width());
+
+        tPropertyAnimation* anim = new tPropertyAnimation(ui->slideOffFrame, "geometry");
+        anim->setStartValue(ui->slideOffFrame->geometry());
+        anim->setEndValue(QRect(0, this->height() - ui->slideOffFrame->height(), this->width(), ui->slideOffFrame->height()));
+        anim->setDuration(250);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+        anim->start();
+
+        ui->MainFrame->setVisible(false);
+        this->setWindowOpacity(1.0);
     } else {
-        QParallelAnimationGroup* parallelAnimGroup = new QParallelAnimationGroup;
-        QSequentialAnimationGroup* animGroup = new QSequentialAnimationGroup;
-
-        {
-            //Animate the "End Session" dialog out
-            QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
-            ui->askWhatToDo->setGraphicsEffect(fadeEffect);
-            QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
-            a->setDuration(250);
-            a->setStartValue(1);
-            a->setEndValue(0);
-            animGroup->addAnimation(a);
+        ui->slideOffFrame->setVisible(false);
+        QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
+        anim->setDuration(250);
+        anim->setStartValue(this->windowOpacity());
+        if (this->type == ask) {
+            anim->setEndValue(1.0);
+        } else {
+            anim->setEndValue(0.8);
         }
 
-        {
-            //Animate the "Ending Session" dialog in
-            QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
-            ui->poweringOff->setGraphicsEffect(fadeEffect);
-            QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
-            a->setDuration(250);
-            a->setStartValue(0);
-            a->setEndValue(1);
-            animGroup->addAnimation(a);
-        }
+        if (!alreadyShowing) {
+            alreadyShowing = true;
+            this->setWindowOpacity(0.0);
+            QDialog::showFullScreen();
+            //ui->terminateAppFrame->resize(ui->terminateAppFrame->width(), 0);
+            ui->terminateAppFrame->setGeometry(ui->terminateAppFrame->x(), ui->terminateAppFrame->y(), ui->terminateAppFrame->width(), 0);
+            ui->terminateAppFrame->setVisible(false);
+            ui->ExitFrameTop->resize(ui->ExitFrameTop->sizeHint());
+            ui->ExitFrameBottom->resize(ui->ExitFrameBottom->sizeHint());
+            anim->start(QAbstractAnimation::DeleteWhenStopped);
+            powerOffTimer->start();
+        } else {
+            QParallelAnimationGroup* parallelAnimGroup = new QParallelAnimationGroup;
+            QSequentialAnimationGroup* animGroup = new QSequentialAnimationGroup;
 
-        connect(animGroup, &QSequentialAnimationGroup::currentAnimationChanged, [=](QAbstractAnimation* current) {
-            if (animGroup->indexOfAnimation(current) == 1) {
-                ui->askWhatToDo->setVisible(false);
-                ui->poweringOff->setVisible(true);
+            {
+                //Animate the "End Session" dialog out
+                QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
+                ui->askWhatToDo->setGraphicsEffect(fadeEffect);
+                QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
+                a->setDuration(250);
+                a->setStartValue(1);
+                a->setEndValue(0);
+                animGroup->addAnimation(a);
             }
-        });
-        parallelAnimGroup->addAnimation(animGroup);
-        parallelAnimGroup->addAnimation(anim);
 
-        connect(parallelAnimGroup, SIGNAL(finished()), parallelAnimGroup, SLOT(deleteLater()));
-        parallelAnimGroup->start();
-
-        while (parallelAnimGroup->state() == QSequentialAnimationGroup::Running) {
-            QApplication::processEvents();
-        }
-    }
-
-
-    if (this->type != dummy && this->type != ask) {
-        powerOffTimer->stop();
-        powerOffTimer->setCurrentTime(0);
-        /*QProcess p;
-        p.start("wmctrl -lp");
-        p.waitForStarted();
-        while (p.state() != 0) {
-            QApplication::processEvents();
-        }
-
-        QList<WmWindow*> *wlist = new QList<WmWindow*>();
-
-        QString output(p.readAllStandardOutput());
-        for (QString window : output.split("\n")) {
-            QStringList parts = window.split(" ");
-            parts.removeAll("");
-            if (parts.length() >= 4) {
-                if (parts[2].toInt() != QCoreApplication::applicationPid()) {
-                    WmWindow *w = new WmWindow();
-                    w->setPID(parts[2].toInt());
-                    QString title;
-                    for (int i = 4; i != parts.length(); i++) {
-                        title = title.append(" " + parts[i]);
-                    }
-                    title = title.remove(0, 1);
-
-                    w->setTitle(title);
-                    wlist->append(w);
-                }
+            {
+                //Animate the "Ending Session" dialog in
+                QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
+                ui->poweringOff->setGraphicsEffect(fadeEffect);
+                QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
+                a->setDuration(250);
+                a->setStartValue(0);
+                a->setEndValue(1);
+                animGroup->addAnimation(a);
             }
-        }*/
 
-        //Prepare a window list
-        QList<WmWindow> wlist;
-
-        //Get the current display
-        Display* d = QX11Info::display();
-
-        //Create list of all top windows and populate it
-        QList<Window> TopWindows;
-
-        Atom WindowListType;
-        int format;
-        unsigned long items, bytes;
-        unsigned char *data;
-        XGetWindowProperty(d, RootWindow(d, 0), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
-                                        False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
-
-        quint64 *windows = (quint64*) data;
-        for (unsigned long i = 0; i < items; i++) {
-            TopWindows.append((Window) windows[i]);
-
-        }
-        XFree(data);
-
-        for (Window win : TopWindows) {
-            XWindowAttributes attributes;
-
-            int retval = XGetWindowAttributes(d, win, &attributes);
-            unsigned long items, bytes;
-            unsigned char *netWmName;
-            XTextProperty wmName;
-            int format;
-            Atom ReturnType;
-            retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_VISIBLE_NAME", False), 0, 1024, False,
-                               XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &netWmName);
-            if (retval != 0 || netWmName == 0x0) {
-                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_NAME", False), 0, 1024, False,
-                                   AnyPropertyType, &ReturnType, &format, &items, &bytes, &netWmName);
-                if (retval != 0) {
-                    retval = XGetWMName(d, win, &wmName);
-                    if (retval == 1) {
-                        retval = 0;
-                    } else {
-                        retval = 1;
-                    }
+            connect(animGroup, &QSequentialAnimationGroup::currentAnimationChanged, [=](QAbstractAnimation* current) {
+                if (animGroup->indexOfAnimation(current) == 1) {
+                    ui->askWhatToDo->setVisible(false);
+                    ui->poweringOff->setVisible(true);
                 }
-            }
-            if (retval == 0) {
-                WmWindow w;
-                w.setWID(win);
+            });
+            parallelAnimGroup->addAnimation(animGroup);
+            parallelAnimGroup->addAnimation(anim);
 
-                QString title;
-                if (netWmName) {
-                    title = QString::fromLocal8Bit((char *) netWmName);
-                    XFree(netWmName);
-                } else if (wmName.value) {
-                    title = QString::fromLatin1((char *) wmName.value);
-                    //XFree(wmName);
-                }
+            connect(parallelAnimGroup, SIGNAL(finished()), parallelAnimGroup, SLOT(deleteLater()));
+            parallelAnimGroup->start();
 
-                unsigned long *pidPointer;
-                unsigned long pitems, pbytes;
-                int pformat;
-                Atom pReturnType;
-                int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_PID", False), 0, 1024, False,
-                                                XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
-                if (retval == 0) {
-                    if (pidPointer != 0) {
-                        unsigned long pid = *pidPointer;
-                        w.setPID(pid);
-                    }
-                }
-
-                XFree(pidPointer);
-
-                //Set the title of the window
-                w.setTitle(title);
-
-                //Make sure PID is not current application PID
-                if (w.PID() != QCoreApplication::applicationPid()) {
-                    wlist.append(w);
-                }
-            }
-        }
-
-        for (WmWindow window : wlist) {
-
-            if (QApplication::arguments().contains("--debug")) {
-                if (!window.title().toLower().contains("theterminal") && !window.title().toLower().contains("qt creator")) {
-                    sendMessageToRootWindow("_NET_CLOSE_WINDOW", window.WID());
-                }
-            } else {
-                sendMessageToRootWindow("_NET_CLOSE_WINDOW", window.WID());
-            }
-            /*p.start("wmctrl -c " + window.title());
-            p.waitForStarted();
-            while (p.state() != 0) {
+            while (parallelAnimGroup->state() == QSequentialAnimationGroup::Running) {
                 QApplication::processEvents();
-            }*/
+            }
         }
 
-        bool appsOpen = true;
 
-        QProcess p;
-        while (appsOpen) {
-            appsOpen = false;
+        if (this->type != dummy && this->type != ask) {
+            powerOffTimer->stop();
+            powerOffTimer->setCurrentTime(0);
+            /*QProcess p;
             p.start("wmctrl -lp");
             p.waitForStarted();
             while (p.state() != 0) {
                 QApplication::processEvents();
             }
+
+            QList<WmWindow*> *wlist = new QList<WmWindow*>();
+
             QString output(p.readAllStandardOutput());
             for (QString window : output.split("\n")) {
                 QStringList parts = window.split(" ");
                 parts.removeAll("");
                 if (parts.length() >= 4) {
                     if (parts[2].toInt() != QCoreApplication::applicationPid()) {
-                        appsOpen = true;
+                        WmWindow *w = new WmWindow();
+                        w->setPID(parts[2].toInt());
+                        QString title;
+                        for (int i = 4; i != parts.length(); i++) {
+                            title = title.append(" " + parts[i]);
+                        }
+                        title = title.remove(0, 1);
+
+                        w->setTitle(title);
+                        wlist->append(w);
+                    }
+                }
+            }*/
+
+            //Prepare a window list
+            QList<WmWindow> wlist;
+
+            //Get the current display
+            Display* d = QX11Info::display();
+
+            //Create list of all top windows and populate it
+            QList<Window> TopWindows;
+
+            Atom WindowListType;
+            int format;
+            unsigned long items, bytes;
+            unsigned char *data;
+            XGetWindowProperty(d, RootWindow(d, 0), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
+                                            False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
+
+            quint64 *windows = (quint64*) data;
+            for (unsigned long i = 0; i < items; i++) {
+                TopWindows.append((Window) windows[i]);
+
+            }
+            XFree(data);
+
+            for (Window win : TopWindows) {
+                XWindowAttributes attributes;
+
+                int retval = XGetWindowAttributes(d, win, &attributes);
+                unsigned long items, bytes;
+                unsigned char *netWmName;
+                XTextProperty wmName;
+                int format;
+                Atom ReturnType;
+                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_VISIBLE_NAME", False), 0, 1024, False,
+                                   XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &netWmName);
+                if (retval != 0 || netWmName == 0x0) {
+                    retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_NAME", False), 0, 1024, False,
+                                       AnyPropertyType, &ReturnType, &format, &items, &bytes, &netWmName);
+                    if (retval != 0) {
+                        retval = XGetWMName(d, win, &wmName);
+                        if (retval == 1) {
+                            retval = 0;
+                        } else {
+                            retval = 1;
+                        }
+                    }
+                }
+                if (retval == 0) {
+                    WmWindow w;
+                    w.setWID(win);
+
+                    QString title;
+                    if (netWmName) {
+                        title = QString::fromLocal8Bit((char *) netWmName);
+                        XFree(netWmName);
+                    } else if (wmName.value) {
+                        title = QString::fromLatin1((char *) wmName.value);
+                        //XFree(wmName);
+                    }
+
+                    unsigned long *pidPointer;
+                    unsigned long pitems, pbytes;
+                    int pformat;
+                    Atom pReturnType;
+                    int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_PID", False), 0, 1024, False,
+                                                    XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
+                    if (retval == 0) {
+                        if (pidPointer != 0) {
+                            unsigned long pid = *pidPointer;
+                            w.setPID(pid);
+                        }
+                    }
+
+                    XFree(pidPointer);
+
+                    //Set the title of the window
+                    w.setTitle(title);
+
+                    //Make sure PID is not current application PID
+                    if (w.PID() != QCoreApplication::applicationPid()) {
+                        wlist.append(w);
                     }
                 }
             }
-            QApplication::processEvents();
-        }
 
-        performEndSession();
+            for (WmWindow window : wlist) {
+
+                if (QApplication::arguments().contains("--debug")) {
+                    if (!window.title().toLower().contains("theterminal") && !window.title().toLower().contains("qt creator")) {
+                        sendMessageToRootWindow("_NET_CLOSE_WINDOW", window.WID());
+                    }
+                } else {
+                    sendMessageToRootWindow("_NET_CLOSE_WINDOW", window.WID());
+                }
+                /*p.start("wmctrl -c " + window.title());
+                p.waitForStarted();
+                while (p.state() != 0) {
+                    QApplication::processEvents();
+                }*/
+            }
+
+            bool appsOpen = true;
+
+            QProcess p;
+            while (appsOpen) {
+                appsOpen = false;
+                p.start("wmctrl -lp");
+                p.waitForStarted();
+                while (p.state() != 0) {
+                    QApplication::processEvents();
+                }
+                QString output(p.readAllStandardOutput());
+                for (QString window : output.split("\n")) {
+                    QStringList parts = window.split(" ");
+                    parts.removeAll("");
+                    if (parts.length() >= 4) {
+                        if (parts[2].toInt() != QCoreApplication::applicationPid()) {
+                            appsOpen = true;
+                        }
+                    }
+                }
+                QApplication::processEvents();
+            }
+
+            performEndSession();
+        }
     }
 }
 
@@ -730,4 +773,87 @@ void EndSessionWait::reject() {
         anim->deleteLater();
     });
     anim->start();
+}
+
+void EndSessionWait::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    if (this->type == slideOff) {
+        int alpha;
+        alpha = ((float) ui->slideOffFrame->y() / (float) (this->height() - ui->slideOffFrame->height())) * 105;
+        painter.setBrush(QColor(0, 0, 0, 105 - alpha + 150));
+        painter.setPen(QColor(0, 0, 0, 0));
+        painter.drawRect(0, 0, this->width(), ui->slideOffFrame->y());
+        painter.setBrush(this->palette().brush(QPalette::Window));
+        painter.drawRect(0, ui->slideOffFrame->y(), this->width(), ui->slideOffFrame->height() + this->height());
+    } else {
+        painter.setBrush(this->palette().brush(QPalette::Window));
+        painter.setPen(Qt::transparent);
+        painter.drawRect(event->rect());
+    }
+}
+
+void EndSessionWait::mousePressEvent(QMouseEvent *event) {
+    if (this->type == slideOff) {
+        this->close();
+    }
+}
+
+bool EndSessionWait::eventFilter(QObject *obj, QEvent *eve) {
+    if (obj == ui->slideOffFrame) {
+        if (eve->type() == QEvent::MouseButtonPress) {
+            QMouseEvent* event = (QMouseEvent*) eve;
+            pressLocation = event->y();
+            return true;
+        } else if (eve->type() == QEvent::MouseMove) {
+            int top = QCursor::pos().y() - this->y() - pressLocation;
+            //if (top < 0) top = 0;
+            ui->slideOffFrame->move(0, top);
+            this->update();
+            return true;
+        } else if (eve->type() == QEvent::MouseButtonRelease) {
+            if (ui->slideOffFrame->y() < 50) {
+
+                tPropertyAnimation* anim = new tPropertyAnimation(ui->slideOffFrame, "geometry");
+                anim->setStartValue(ui->slideOffFrame->geometry());
+                anim->setEndValue(QRect(0, -ui->slideOffFrame->height(), this->width(), ui->slideOffFrame->height()));
+                anim->setDuration(250);
+                anim->setEasingCurve(QEasingCurve::InCubic);
+                connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                connect(anim, SIGNAL(finished()), this, SLOT(update()));
+                connect(anim, &tPropertyAnimation::finished, [=] {
+                    this->type = powerOff;
+
+                    this->setAttribute(Qt::WA_TranslucentBackground, false);
+                    this->update();
+                    ui->label->setText(tr("Power Off"));
+                    ui->MainFrame->setVisible(true);
+                    ui->askWhatToDo->setVisible(false);
+                    this->showFullScreen();
+                });
+                anim->start();
+
+            } else if (ui->slideOffFrame->y() > this->height() - ui->slideOffFrame->height()) {
+                this->close();
+            } else {
+                tPropertyAnimation* anim = new tPropertyAnimation(ui->slideOffFrame, "geometry");
+                anim->setStartValue(ui->slideOffFrame->geometry());
+                anim->setEndValue(QRect(0, this->height() - ui->slideOffFrame->height(), this->width(), ui->slideOffFrame->height()));
+                anim->setDuration(500);
+                anim->setEasingCurve(QEasingCurve::OutBounce);
+                connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                connect(anim, SIGNAL(valueChanged(QVariant)), this, SLOT(update()));
+                anim->start();
+            }
+            return true;
+        } else if (eve->type() == QEvent::Paint) {
+            QPaintEvent* event = (QPaintEvent*) eve;
+            QPainter painter(ui->slideOffFrame);
+            painter.setBrush(ui->slideOffFrame->palette().brush(QPalette::Window));
+            painter.setPen(Qt::transparent);
+            painter.drawRect(event->rect());
+            painter.setPen(ui->slideOffFrame->palette().color(QPalette::WindowText));
+            painter.drawLine(0, 0, ui->slideOffFrame->width(), 0);
+        }
+    }
+    return false;
 }

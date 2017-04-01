@@ -29,6 +29,7 @@ NativeEventFilter* NativeFilter = NULL;
 DbusEvents* DBusEvents = NULL;
 TutorialWindow* TutorialWin = NULL;
 AudioManager* AudioMan = NULL;
+QTranslator *qtTranslator, *tsTranslator;
 
 void raise_signal(QString message) {
     //Clean up required stuff
@@ -105,17 +106,20 @@ int main(int argc, char *argv[])
     if (defaultLocale.language() == QLocale::Arabic || defaultLocale.language() == QLocale::Hebrew) {
         //Reverse the layout direction
         a.setLayoutDirection(Qt::RightToLeft);
+    } else {
+        //Set normal layout direction
+        a.setLayoutDirection(Qt::LeftToRight);
     }
 
-    QTranslator qtTranslator;
-    qtTranslator.load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    a.installTranslator(&qtTranslator);
+    qtTranslator = new QTranslator;
+    qtTranslator->load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(qtTranslator);
 
     qDebug() << QLocale().name();
 
-    QTranslator tsTranslator;
-    tsTranslator.load(QLocale().name(), "/usr/share/theshell/translations");
-    a.installTranslator(&tsTranslator);
+    tsTranslator = new QTranslator;
+    tsTranslator->load(QLocale().name(), "/usr/share/theshell/translations");
+    a.installTranslator(tsTranslator);
 
     /*QTranslator tsVnTranslator;
     tsTranslator.load(QLocale("vi_VN").name(), "/home/victor/Documents/theOSPack/theShell/translations/");
@@ -256,7 +260,6 @@ int main(int argc, char *argv[])
 
     qDBusRegisterMetaType<QList<QVariantMap>>();
     qDBusRegisterMetaType<QMap<QString, QVariantMap>>();
-
 
     if (autoStart) {
         QStringList autostartApps = settings.value("startup/autostart", "").toString().split(",");

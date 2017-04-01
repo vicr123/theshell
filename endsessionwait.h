@@ -38,7 +38,13 @@
 #include <QProgressBar>
 #include <QLabel>
 #include <QTimer>
+#include <QDesktopWidget>
+#include <QPaintEvent>
+#include <QPainter>
+#include <QLayout>
+#include <QMouseEvent>
 #include "window.h"
+#include "tpropertyanimation.h"
 
 #include <signal.h>
 
@@ -56,6 +62,8 @@ public:
         powerOff,
         reboot,
         logout,
+
+        slideOff, //For tablet mode
 
         //These should not be shown.
         suspend,
@@ -111,6 +119,12 @@ private:
     bool alreadyShowing = false;
 
     QVariantAnimation* powerOffTimer;
+
+    int pressLocation;
+
+    void paintEvent(QPaintEvent* event);
+    void mousePressEvent(QMouseEvent* event);
+    bool eventFilter(QObject *obj, QEvent *eve);
 };
 
 #endif // ENDSESSIONWAIT_H

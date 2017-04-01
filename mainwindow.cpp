@@ -7,6 +7,7 @@ extern void sendMessageToRootWindow(const char* message, Window window, long dat
 extern DbusEvents* DBusEvents;
 extern TutorialWindow* TutorialWin;
 extern AudioManager* AudioMan;
+extern NativeEventFilter* NativeFilter;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -126,6 +127,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mprisFrame->setVisible(false);
 
     this->setFocusPolicy(Qt::NoFocus);
+
+    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
+        ui->retranslateUi(this);
+    });
 }
 
 MainWindow::~MainWindow()

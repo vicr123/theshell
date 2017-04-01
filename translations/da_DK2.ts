@@ -1025,16 +1025,6 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="239"/>
-        <source>Japanese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.cpp" line="242"/>
-        <source>German</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.cpp" line="270"/>
         <source>About</source>
         <translation>Om</translation>
@@ -2111,16 +2101,6 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../onboarding.cpp" line="197"/>
         <source>Māori</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../onboarding.cpp" line="215"/>
-        <source>Japanese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../onboarding.cpp" line="218"/>
-        <source>German</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

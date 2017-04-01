@@ -6,6 +6,8 @@ extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern void EndSession(EndSessionWait::shutdownType type);
 extern QString calculateSize(quint64 size);
 extern AudioManager* AudioMan;
+extern NativeEventFilter* NativeFilter;
+extern QTranslator *qtTranslator, *tsTranslator;
 
 enum languageOrder {
     enUS = 0,
@@ -15,9 +17,11 @@ enum languageOrder {
     viVN,
     daDK,
     ptBR,
+    jaJP,
     arSA,
     zhCN,
     nlNL,
+    deDE,
     miNZ,
     maxLanguage
 };
@@ -231,6 +235,12 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
             case miNZ:
                 ui->localeList->addItem("[NZ] " + tr("Māori") + " (Māori) ");
                 break;
+            case jaJP:
+                ui->localeList->addItem("[JP] " + tr("Japanese") + " (日本語) ");
+                break;
+            case deDE:
+                ui->localeList->addItem("[DE] " + tr("German") + " (Deutsch) ");
+                break;
         }
     }
 
@@ -257,6 +267,10 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
         ui->localeList->setCurrentRow(nlNL);
     } else if (currentLocale == "mi_NZ") {
         ui->localeList->setCurrentRow(miNZ);
+    } else if (currentLocale == "ja_JP") {
+        ui->localeList->setCurrentRow(jaJP);
+    } else if (currentLocale == "de_DE") {
+        ui->localeList->setCurrentRow(deDE);
     }
 
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
@@ -273,6 +287,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->barDesktopsSwitch->setChecked(settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
     ui->MediaSwitch->setChecked(settings.value("notifications/mediaInsert", true).toBool());
     ui->StatusBarSwitch->setChecked(settings.value("bar/statusBar", false).toBool());
+    ui->TouchInputSwitch->setChecked(settings.value("input/touch", false).toBool());
     ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
 
     QString defaultFont;
@@ -349,6 +364,10 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->timerToneSelect->addItem(tr("Ice Cream Truck"));
     ui->timerToneSelect->addItem(tr("Party Complex"));
     ui->timerToneSelect->addItem(tr("Salty Ditty"));
+
+    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
+        ui->retranslateUi(this);
+    });
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -2318,11 +2337,46 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
         case miNZ:
             settings.setValue("locale/language", "mi_NZ");
             break;
+        case jaJP:
+            settings.setValue("locale/language", "ja_JP");
+            break;
+        case deDE:
+            settings.setValue("locale/language", "de_DE");
+            break;
     }
+
+    QString localeName = settings.value("locale/language", "en_US").toString();
+    qputenv("LANG", localeName.toUtf8());
+
+    QLocale defaultLocale(localeName);
+    QLocale::setDefault(defaultLocale);
+
+    if (defaultLocale.language() == QLocale::Arabic || defaultLocale.language() == QLocale::Hebrew) {
+        //Reverse the layout direction
+        QApplication::setLayoutDirection(Qt::RightToLeft);
+    } else {
+        //Set normal layout direction
+        QApplication::setLayoutDirection(Qt::LeftToRight);
+    }
+
+    qtTranslator->load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    QApplication::installTranslator(qtTranslator);
+
+    qDebug() << QLocale().name();
+
+    tsTranslator->load(QLocale().name(), "/usr/share/theshell/translations");
+    QApplication::installTranslator(tsTranslator);
+
+    emit NativeFilter->DoRetranslation();
 }
 
 void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
 {
     settings.setValue("bar/statusBar", checked);
     updateStruts();
+}
+
+void InfoPaneDropdown::on_TouchInputSwitch_toggled(bool checked)
+{
+    settings.setValue("input/touch", checked);
 }

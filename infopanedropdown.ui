@@ -567,14 +567,14 @@
              <second>0</second>
              <year>1969</year>
              <month>10</month>
-             <day>24</day>
+             <day>23</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>10</month>
-             <day>24</day>
+             <day>23</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -1609,7 +1609,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>13</number>
+            <number>6</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2605,7 +2605,7 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
+             <item row="5" column="1">
               <spacer name="verticalSpacer_13">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -2713,6 +2713,23 @@
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you'd like to use the Super Key for another key combination, turn this off so that theShell won't take control of it. &lt;span style=&quot; font-weight:600;&quot;&gt;Changing t&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;his setting requires you to log out and then log back in.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_70">
+               <property name="text">
+                <string>Optimise for touch input</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="Switch" name="TouchInputSwitch">
+               <property name="text">
+                <string notr="true">TouchInputSwitch</string>
+               </property>
+               <property name="checkable">
                 <bool>true</bool>
                </property>
               </widget>

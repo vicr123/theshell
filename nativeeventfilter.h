@@ -28,6 +28,8 @@
 #include <X11/keysym.h>
 #include <X11/Xlib.h>
 
+class MainWindow;
+
 class NativeEventFilter : public QObject, public QAbstractNativeEventFilter
 {
     Q_OBJECT
@@ -37,6 +39,8 @@ public:
 
 signals:
     void SysTrayEvent(long opcode, long data2, long data3, long data4);
+    void DoRetranslation();
+
 public slots:
 
 private:

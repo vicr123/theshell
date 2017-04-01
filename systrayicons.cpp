@@ -132,7 +132,7 @@ void SniIcon::SniItemUnregistered(QString service) {
 }
 
 void SniIcon::ReloadIcon() {
-    if (this->title != "discord") {
+    if (this->title != "discord" && this->title != "discord-canary") {
         if (interface->property("IconName").toString() != "") {
             this->setPixmap(QIcon::fromTheme(interface->property("IconName").toString(), QIcon::fromTheme("dialog-warning")).pixmap(24, 24));
         } else {

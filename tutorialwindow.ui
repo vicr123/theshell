@@ -29,7 +29,7 @@
    <item>
     <widget class="QStackedWidget" name="stack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="gatewayPage">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -86,7 +86,7 @@
           <item>
            <widget class="QLabel" name="label_7">
             <property name="text">
-             <string>The gateway is the portal to everything on your PC. To open it, clck the theShell icon, or hit the Super key.</string>
+             <string>The gateway is the portal to everything on your PC. To open it, click the theShell icon, or hit the Super key.</string>
             </property>
            </widget>
           </item>
@@ -318,7 +318,8 @@
                <string>OK</string>
               </property>
               <property name="icon">
-               <iconset theme="dialog-ok"/>
+               <iconset theme="dialog-ok">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>

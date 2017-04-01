@@ -72,7 +72,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         if (dropdownPane != NULL) {
             if (dropdownPane->isQuietOn()) {
                 if (hints.keys().contains("urgency")) {
-                    if (hints.value("urgency").toChar() != 2) {
+                    if (hints.value("urgency").toChar().unicode() != 2) {
                         showDialog = false;
                     }
                 } else {
@@ -166,9 +166,9 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
             }
         } else if (hints.keys().contains("urgency")) {
             QChar urgency = hints.value("urgency").toChar();
-            if (urgency == 0) {
+            if (urgency.unicode() == 0) {
                 icon = QIcon::fromTheme("dialog-information");
-            } else if (urgency == 2) {
+            } else if (urgency.unicode() == 2) {
                 icon = QIcon::fromTheme("dialog-error");
             }
         }

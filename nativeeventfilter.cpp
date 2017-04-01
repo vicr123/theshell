@@ -175,7 +175,13 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
             } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) ||
                        button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == (ControlMask | Mod1Mask))) { //Power Off
                 if (!isEndSessionBoxShowing) {
-                    EndSessionWait* endSession = new EndSessionWait(EndSessionWait::ask);
+                    isEndSessionBoxShowing = true;
+                    EndSessionWait* endSession;
+                    if (settings.value("input/touch", false).toBool()) {
+                        endSession = new EndSessionWait(EndSessionWait::slideOff);
+                    } else {
+                        endSession = new EndSessionWait(EndSessionWait::ask);
+                    }
                     endSession->showFullScreen();
                     endSession->exec();
                     isEndSessionBoxShowing = false;

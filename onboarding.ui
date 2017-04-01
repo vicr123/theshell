@@ -20,8 +20,27 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
+     <widget class="QWidget" name="page_5">
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Select Language</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="localeList"/>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="page">
       <property name="autoFillBackground">
        <bool>true</bool>
@@ -76,6 +95,16 @@
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QPushButton" name="changeLanguageButton">
+              <property name="text">
+               <string notr="true">Language</string>
+              </property>
+              <property name="icon">
+               <iconset theme="flag"/>
+              </property>
+             </widget>
+            </item>
             <item>
              <spacer name="horizontalSpacer_4">
               <property name="orientation">
@@ -203,7 +232,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QLabel" name="thewaveLogo">
          <property name="text">
-          <string>theWave Logo</string>
+          <string notr="true">theWave Logo</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -407,6 +436,9 @@ p, li { white-space: pre-wrap; }
    <item>
     <widget class="QFrame" name="buttonBox">
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">

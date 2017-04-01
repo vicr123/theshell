@@ -21,7 +21,19 @@
    <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="1">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="4" column="1">
     <spacer name="verticalSpacer">
      <property name="styleSheet">
       <string notr="true"/>
@@ -37,7 +49,7 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="1">
+   <item row="1" column="1">
     <spacer name="verticalSpacer_2">
      <property name="styleSheet">
       <string notr="true"/>
@@ -53,7 +65,7 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="1" rowspan="2">
+   <item row="2" column="1" rowspan="2">
     <widget class="QFrame" name="MainFrame">
      <property name="styleSheet">
       <string notr="true"/>
@@ -666,7 +678,7 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0" rowspan="2">
+   <item row="2" column="0" rowspan="2">
     <spacer name="horizontalSpacer">
      <property name="styleSheet">
       <string notr="true"/>
@@ -682,7 +694,7 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="2" rowspan="2">
+   <item row="2" column="2" rowspan="2">
     <spacer name="horizontalSpacer_2">
      <property name="styleSheet">
       <string notr="true"/>
@@ -697,6 +709,59 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QFrame" name="slideOffFrame">
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <property name="bottomMargin">
+       <number>12</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="ArrowUp">
+        <property name="text">
+         <string>Up</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="slideOffLabel">
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Power Off</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>All apps will be closed and your device will turn off completely.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>
