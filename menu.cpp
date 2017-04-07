@@ -412,14 +412,75 @@ void Menu::on_pushButton_clicked()
         }
 
         ui->offFrame->setVisible(true);
-        tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
-        anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
+
+        /*tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
+        //anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
+        anim->setStartValue(ui->pushButton->geometry());
         anim->setEndValue(QRect(10, 10, this->width() - 20, this->height() - 20));
         anim->setDuration(500);
 
         anim->setEasingCurve(QEasingCurve::OutCubic);
 
-        anim->start();
+        anim->start();*/
+/*
+        ui->offFrame->setMask(QRegion(0, 0, 0, 0));
+        ui->offFrame->setGeometry(10, 10, this->width() - 20, this->height() - 20);*/
+
+        tVariantAnimation* horiz = new tVariantAnimation(this);
+        horiz->setStartValue((float) 0);
+        horiz->setEndValue((float) 1);
+        horiz->setDuration(100);
+        horiz->setEasingCurve(QEasingCurve::OutCubic);
+        connect(horiz, &tVariantAnimation::valueChanged, [=](QVariant percentage) {
+            QRect subtraction;
+            subtraction.setTop(ui->pushButton->mapTo(this, QPoint(0, 0)).y());
+            subtraction.setHeight(ui->pushButton->height());
+            int leftButton = ui->pushButton->mapTo(this, QPoint(0, 0)).x();
+            int middleButton = leftButton + ui->pushButton->width() / 2;
+
+            //Calculate left area
+            int leftArea = ((float) (middleButton - 10) * percentage.toFloat());
+
+            //Calculate right area
+            int rightArea = ((float) (this->width() - middleButton - 10) * percentage.toFloat());
+
+            subtraction.setLeft(middleButton - leftArea);
+            subtraction.setRight(middleButton + rightArea);
+
+            ui->offFrame->setGeometry(subtraction);
+            ui->offFrame->repaint();
+        });
+        connect(horiz, &tVariantAnimation::finished, [=] {
+            horiz->deleteLater();
+
+            tVariantAnimation* vert = new tVariantAnimation(this);
+            vert->setStartValue((float) 0);
+            vert->setEndValue((float) 1);
+            vert->setDuration(100);
+            vert->setEasingCurve(QEasingCurve::InCubic);
+            connect(vert, &tVariantAnimation::valueChanged, [=](QVariant percentage) {
+                QRect subtraction;
+                subtraction.setLeft(10);
+                subtraction.setWidth(this->width() - 20);
+
+                int topButton = ui->pushButton->mapTo(this, QPoint(0, 0)).y();
+
+                //Calculate top area
+                int topArea = (float) (topButton - (this->height() - ui->pushButton->geometry().bottom())) * percentage.toFloat();
+
+                //Calculate bottom area
+                int bottomArea = (float) (this->height() - (topButton + ui->pushButton->height()) - (this->height() - ui->pushButton->geometry().bottom())) * percentage.toFloat();
+
+                subtraction.setTop(topButton - topArea);
+                subtraction.setBottom(topButton + ui->pushButton->height() + bottomArea);
+
+                ui->offFrame->setGeometry(subtraction);
+            });
+            connect(vert, SIGNAL(finished()), vert, SLOT(deleteLater()));
+            vert->start();
+        });
+        connect(horiz, SIGNAL(finished()), horiz, SLOT(deleteLater()));
+        horiz->start();
     }
 }
 
@@ -427,9 +488,10 @@ void Menu::on_pushButton_2_clicked()
 {
     tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
     anim->setStartValue(QRect(10, 10, this->width() - 20, this->height() - 20));
-    anim->setEndValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
-    anim->setDuration(500);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
+    //anim->setEndValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
+    anim->setEndValue(QRect(10, ui->pushButton->geometry().bottom(), this->width() - 20, 0));
+    anim->setDuration(250);
+    anim->setEasingCurve(QEasingCurve::InCubic);
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     connect(anim, &tPropertyAnimation::finished, [=]() {
         ui->offFrame->setVisible(false);

@@ -1990,6 +1990,13 @@ void InfoPaneDropdown::doNetworkCheck() {
     } else {
         //Do some network checks to see if network is working
 
+        QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
+        int state = i.call("state").arguments().first().toInt();
+        if (state == 60 || state == 50) {
+            networkOk = false;
+            return;
+        }
+
         QNetworkAccessManager* manager = new QNetworkAccessManager;
         if (manager->networkAccessible() == QNetworkAccessManager::NotAccessible) {
             networkOk = false;

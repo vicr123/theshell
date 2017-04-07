@@ -89,7 +89,6 @@ void EndSessionWait::close() {
 void EndSessionWait::showFullScreen() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     if (this->type == slideOff) {
-        alreadyShowing = true;
         this->setAttribute(Qt::WA_TranslucentBackground);
 
         this->setGeometry(screenGeometry);

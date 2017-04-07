@@ -126,45 +126,49 @@ NotificationDialog::NotificationDialog(QString appName, QString appIconStr, QStr
     // Don't forget to add extra categories to the notificationdbus class too!
 
     QSize iconSize(24, 24);
-    if (hints.keys().contains("category")) {
-        QString category = hints.value("category").toString();
-        if (category == "network.connected") {
-            ui->label->setPixmap(QIcon::fromTheme("network-connect").pixmap(iconSize));
-        } else if (category == "network.disconnected") {
-            ui->label->setPixmap(QIcon::fromTheme("network-disconnect").pixmap(iconSize));
-        } else if (category == "email.arrived") {
-            ui->label->setPixmap(QIcon::fromTheme("mail-receive").pixmap(iconSize));
-        } else if (category == "battery.charging") {
-            ui->label->setPixmap(getIconFromTheme("battery-charging.svg", color).pixmap(iconSize));
-        } else if (category == "battery.charged") {
-            ui->label->setPixmap(getIconFromTheme("battery-charged.svg", color).pixmap(iconSize));
-        } else if (category == "battery.discharging") {
-            ui->label->setPixmap(getIconFromTheme("battery-not-charging.svg", color).pixmap(iconSize));
-        } else if (category == "battery.low") {
-            ui->label->setPixmap(getIconFromTheme("battery-low.svg", color).pixmap(iconSize));
-        } else if (category == "battery.critical") {
-            ui->label->setPixmap(getIconFromTheme("battery-critical.svg", color).pixmap(iconSize));
-        } else if (category == "device.added") {
-            ui->label->setPixmap(getIconFromTheme("connect.svg", color).pixmap(iconSize));
-        } else if (category == "device.removed") {
-            ui->label->setPixmap(getIconFromTheme("disconnect.svg", color).pixmap(iconSize));
-        } else if (category == "call.incoming") {
-            ui->label->setPixmap(QIcon::fromTheme("call-start").pixmap(iconSize));
-        } else {
-            ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(iconSize));
-        }
+    if (hints.value("x-thesuite-timercomplete", false).toBool()) {
+        ui->label->setPixmap(QIcon::fromTheme("chronometer").pixmap(iconSize));
     } else {
-        if (hints.keys().contains("urgency")) {
-            QChar urgency = hints.value("urgency").toChar();
-            if (urgency == 0) {
-                ui->label->setPixmap(QIcon::fromTheme("dialog-information").pixmap(iconSize));
-            } else if (urgency == 1) {
+        if (hints.keys().contains("category")) {
+            QString category = hints.value("category").toString();
+            if (category == "network.connected") {
+                ui->label->setPixmap(QIcon::fromTheme("network-connect").pixmap(iconSize));
+            } else if (category == "network.disconnected") {
+                ui->label->setPixmap(QIcon::fromTheme("network-disconnect").pixmap(iconSize));
+            } else if (category == "email.arrived") {
+                ui->label->setPixmap(QIcon::fromTheme("mail-receive").pixmap(iconSize));
+            } else if (category == "battery.charging") {
+                ui->label->setPixmap(getIconFromTheme("battery-charging.svg", color).pixmap(iconSize));
+            } else if (category == "battery.charged") {
+                ui->label->setPixmap(getIconFromTheme("battery-charged.svg", color).pixmap(iconSize));
+            } else if (category == "battery.discharging") {
+                ui->label->setPixmap(getIconFromTheme("battery-not-charging.svg", color).pixmap(iconSize));
+            } else if (category == "battery.low") {
+                ui->label->setPixmap(getIconFromTheme("battery-low.svg", color).pixmap(iconSize));
+            } else if (category == "battery.critical") {
+                ui->label->setPixmap(getIconFromTheme("battery-critical.svg", color).pixmap(iconSize));
+            } else if (category == "device.added") {
+                ui->label->setPixmap(getIconFromTheme("connect.svg", color).pixmap(iconSize));
+            } else if (category == "device.removed") {
+                ui->label->setPixmap(getIconFromTheme("disconnect.svg", color).pixmap(iconSize));
+            } else if (category == "call.incoming") {
+                ui->label->setPixmap(QIcon::fromTheme("call-start").pixmap(iconSize));
+            } else {
                 ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(iconSize));
-            } else if (urgency == 2) {
-                ui->label->setPixmap(QIcon::fromTheme("dialog-error").pixmap(iconSize));
             }
         } else {
-            ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(iconSize));
+            if (hints.keys().contains("urgency")) {
+                QChar urgency = hints.value("urgency").toChar();
+                if (urgency == 0) {
+                    ui->label->setPixmap(QIcon::fromTheme("dialog-information").pixmap(iconSize));
+                } else if (urgency == 1) {
+                    ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(iconSize));
+                } else if (urgency == 2) {
+                    ui->label->setPixmap(QIcon::fromTheme("dialog-error").pixmap(iconSize));
+                }
+            } else {
+                ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(iconSize));
+            }
         }
     }
     if (timeout == -1) { //Timeout default
