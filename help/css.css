@@ -65,9 +65,26 @@ a.pageLink:hover {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-a.pageLink:hover:after {
+a.pageLink:active {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+a.pageLink:hover:after, a.pageLink:active:after {
     float: right;
     content: url("images/go-next.svg");
+}
+
+a.helpDisclaimer {
+    padding: 14px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    color: white;
+    text-decoration: none;
 }
 
 span.warning:before {
