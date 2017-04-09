@@ -1,5 +1,6 @@
 ---
 title: Status Center
+tsVersion: 6.1
 ---
 
 The Status Center allows you to see what your device is doing and allows you to configure it.
@@ -7,6 +8,23 @@ The Status Center allows you to see what your device is doing and allows you to 
 # Opening
 
 To open the Status center, click on any of the top elements on the Bar.
+
+# Quick Toggles
+
+Along the top of the Status Center, there are quick toggles where you can quickly change some settings.
+
+- Flight Mode
+
+  Use this to turn [Flight Mode] on or off. (coming soon)
+- Wi-Fi
+
+  Use this to turn the Wireless radio on or off.
+- Bluetooth
+
+  Use this to turn the Bluetooth radio on or off.
+- Power Stretch
+
+  Use this to turn [Power Stretch] on or off.
 
 # Panels
 
@@ -62,6 +80,8 @@ This pane allows you to view the status of printers connected to this PC.
 ## System Settings
 For information about this pane, visit [Settings]
 
+[Flight Mode]: flightmode
+[Power Stretch]: powerstretch
 [Timer]: timer
 [Stopwatch]: stopwatch
 [Settings]: settings

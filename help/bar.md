@@ -1,5 +1,6 @@
 ---
 title: Bar
+tsVersion: 6.1
 ---
 
 The Bar encompasses a simple view of your PC at any given moment.
@@ -15,3 +16,7 @@ The status of your PC is shown at the top of the bar. Visible items include
 - Networking information
 - Notifications
 - System Tray icons
+
+Clicking on any one of these icons will take you to the [Status Center].
+
+[Status Center]: statuscenter

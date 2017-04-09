@@ -316,8 +316,6 @@ div.blockTitle {
     transition:=1s ease-out;
 }
 
-
-
 div.blockTitle#theshell {
     background-color: green;
     background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -354,6 +352,32 @@ div.blockLanding#whoami {
     background: linear-gradient(to top right, rgb(0, 100, 0), rgb(0, 200, 0));
     color: white;
 }
+
+
+div.blockFull {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    
+    background-color: black;
+    height: 100vh;
+    background-attachment: fixed;
+    
+    -webkit-transition:=1s ease-out;
+    -moz-transition:=1s ease-out;
+    transition:=1s ease-out;
+}
+
+div.blockFull#theshell {
+    background-color: green;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("images/triangles.png") no-repeat center center/cover;
+    background-size: 100% cover;
+    color: white;
+}
+
 
 div.blockTitle#bar {
     background-color: green;

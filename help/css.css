@@ -3,6 +3,17 @@ div.helpContent p {
     padding-right: 100px;
 }
 
+div.helpContent li p {
+    padding-left: initial;
+    padding-right: inital;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+div.helpContent li p:first-child {
+    font-weight: bold;
+}
+
 div.helpContent pre {
     padding-left: 100px;
     padding-right: 100px;
@@ -14,9 +25,15 @@ div.helpContent ul, div.helpContent ol {
     padding-top: 0px;
 }
 
-div.helpContent p + ul , div.helpContent p + ol{
+div.helpContent p + ul,  div.helpContent p + ol {
     margin-top: -10px;
     padding-left: 120px;
+}
+
+div.helpContent ul ul,  div.helpContent ol ol {
+    margin-top: 0px;
+    padding-left: 30px;
+    padding-right: 0px;
 }
 
 div.helpContent h1 {
@@ -31,6 +48,37 @@ div.helpContent h2 {
     background-color: rgb(100, 100, 100);
     color: white;
     font-size: 16pt;
+}
+
+a.pageLink {
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    background-color: transparent;
+    color: white;
+    text-decoration: none;
+    transition: 0.25s;
+}
+
+a.pageLink:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+a.pageLink:hover:after {
+    float: right;
+    content: url("images/go-next.svg");
+}
+
+span.warning:before {
+    content: "HEADS UP! "
+}
+
+span.warning {
+    display: block;
+    border-radius: 4px;
+    background-color: rgb(255, 100, 0);
+    padding: 4px;
 }
 
 img:only-child {

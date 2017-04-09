@@ -1,5 +1,6 @@
 ---
 title: Power Stretch
+tsVersion: 6.1
 ---
 
 Power Stretch tries to save power so your device lasts longer. This is useful when your device is running out of power, and you aren't near a power source.
@@ -29,5 +30,7 @@ When your device runs low on battery, a notification like the following will app
 ![Low Battery Notification](images/lowBatteryNotification.png)
 
 Simply click on "Turn On Power Stretch" to switch on Power Strech.
+
+When your device is connected to a power source, Power Stretch automatically turns off.
 
 [Status Center]: statuscenter
