@@ -329,7 +329,7 @@ div.blockTitle#theshell {
 div.blockLanding#theshell {
     background-color: green;
     background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-                url("images/triangles.png") no-repeat center center;
+                url("images/triangles.png") no-repeat center center/cover;
     background-size: 100% cover;
     color: white;
 }

@@ -1,0 +1,38 @@
+div.helpContent p {
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+div.helpContent pre {
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+div.helpContent ul, div.helpContent ol {
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 0px;
+}
+
+div.helpContent p + ul , div.helpContent p + ol{
+    margin-top: -10px;
+    padding-left: 120px;
+}
+
+div.helpContent h1 {
+    padding-left: 100px;
+    background-color: rgb(100, 100, 100);
+    color: white;
+    font-size: 20pt;
+}
+
+div.helpContent h2 {
+    padding-left: 100px;
+    background-color: rgb(100, 100, 100);
+    color: white;
+    font-size: 16pt;
+}
+
+img:only-child {
+    width: 100%;
+}

@@ -1,0 +1,8 @@
+include: [help]
+
+defaults:
+  -
+    scope:
+      path: "help"
+    values:
+      layout: "helpPage"
