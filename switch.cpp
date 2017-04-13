@@ -1,5 +1,7 @@
 #include "switch.h"
 
+extern float getDPIScaling();
+
 Switch::Switch(QWidget *parent) : QPushButton(parent)
 {
     this->setCheckable(true);
@@ -113,15 +115,15 @@ void Switch::checkChanging(bool checked) {
 
 QSize Switch::sizeHint() const {
     QFontMetrics metrics(this->font());
-    int width = 33;
+    int width = 33 * getDPIScaling();
     if (iText == "") {
-        width += 8;
+        width += 8 * getDPIScaling();
     } else {
         width += metrics.width(iText);
     }
 
     width += metrics.width(oText);
-    return QSize(width, 22);
+    return QSize(width, 22 * getDPIScaling());
 }
 
 QString Switch::OnText() {

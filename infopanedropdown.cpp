@@ -8,6 +8,7 @@ extern QString calculateSize(quint64 size);
 extern AudioManager* AudioMan;
 extern NativeEventFilter* NativeFilter;
 extern QTranslator *qtTranslator, *tsTranslator;
+extern float getDPIScaling();
 
 enum languageOrder {
     enUS = 0,
@@ -32,6 +33,8 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui(new Ui::InfoPaneDropdown)
 {
     ui->setupUi(this);
+
+    ui->settingsList->setIconSize(QSize(16 * getDPIScaling(), 16 * getDPIScaling()));
 
     startTime.start();
 
@@ -75,7 +78,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->userSettingsDeleteUser->setProperty("type", "destructive");
     ui->userSettingsDeleteUserAndData->setProperty("type", "destructive");
     ui->userSettingsDeleteUserOnly->setProperty("type", "destructive");
-    ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16, 16));
+    ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
 
     QPalette powerStretchPalette = ui->PowerStretchSwitch->palette();
     powerStretchPalette.setColor(QPalette::Highlight, QColor(255, 100, 0));
@@ -491,11 +494,11 @@ void InfoPaneDropdown::processTimer() {
                 layout->addWidget(statFrame);
 
                 QLabel* iconLabel = new QLabel();
-                QPixmap icon = QIcon::fromTheme("printer").pixmap(22, 22);
+                QPixmap icon = QIcon::fromTheme("printer").pixmap(22 * getDPIScaling(), 22 * getDPIScaling());
                 if (currentDestination.is_default) {
                     QPainter *p = new QPainter();
                     p->begin(&icon);
-                    p->drawPixmap(10, 10, 12, 12, QIcon::fromTheme("emblem-checked").pixmap(12, 12));
+                    p->drawPixmap(10 * getDPIScaling(), 10 * getDPIScaling(), 12 * getDPIScaling(), 12 * getDPIScaling(), QIcon::fromTheme("emblem-checked").pixmap(12 * getDPIScaling(), 12 * getDPIScaling()));
                     p->end();
                 }
                 iconLabel->setPixmap(icon);
@@ -570,25 +573,27 @@ void InfoPaneDropdown::timerTick() {
 
 void InfoPaneDropdown::show(dropdownType showWith) {
     changeDropDown(showWith, false);
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    if (!this->isVisible()) {
+        QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height());
+        this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height());
 
-    Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
-                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
+        Atom DesktopWindowTypeAtom;
+        DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
+        XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+                         XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
 
-    unsigned long desktop = 0xFFFFFFFF;
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
-                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+        unsigned long desktop = 0xFFFFFFFF;
+        XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
+                         XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
-    QDialog::show();
-    this->setFixedWidth(screenGeometry.width());
-    this->setFixedHeight(screenGeometry.height());
+        QDialog::show();
+        this->setFixedWidth(screenGeometry.width());
+        this->setFixedHeight(screenGeometry.height());
 
-    previousDragY = -1;
-    completeDragDown();
+        previousDragY = -1;
+        completeDragDown();
+    }
 
     //Get Current Brightness
     QProcess* backlight = new QProcess(this);
@@ -1361,7 +1366,7 @@ void InfoPaneDropdown::newNotificationReceived(int id, QString summary, QString 
         frame->setLayout(layout);
 
         QLabel* iconLabel = new QLabel();
-        iconLabel->setPixmap(icon.pixmap(22, 22));
+        iconLabel->setPixmap(icon.pixmap(22 * getDPIScaling(), 22 * getDPIScaling()));
         layout->addWidget(iconLabel);
 
         QLabel* sumLabel = new QLabel();

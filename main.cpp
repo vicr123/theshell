@@ -372,3 +372,8 @@ void sendMessageToRootWindow(const char* message, Window window, long data0, lon
 
     XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
 }
+
+float getDPIScaling() {
+    float currentDPI = QApplication::desktop()->logicalDpiX();
+    return currentDPI / (float) 96;
+}

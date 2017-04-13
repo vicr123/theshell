@@ -2,6 +2,7 @@
 #include "ui_menu.h"
 
 extern void EndSession(EndSessionWait::shutdownType type);
+extern float getDPIScaling();
 extern MainWindow* MainWin;
 extern DbusEvents* DBusEvents;
 extern TutorialWindow* TutorialWin;
@@ -12,6 +13,9 @@ Menu::Menu(QWidget *parent) :
     ui(new Ui::Menu)
 {
     ui->setupUi(this);
+
+    this->resize(this->width() * getDPIScaling(), this->height());
+    ui->listWidget->setIconSize(QSize(16 * getDPIScaling(), 16 * getDPIScaling()));
 
     ui->offFrame->setParent(this);
     ui->offFrame->setVisible(false);
@@ -1543,4 +1547,16 @@ void Menu::reject() {
 void Menu::on_fakeEndButton_clicked()
 {
     EndSession(EndSessionWait::dummy);
+}
+
+void Menu::on_helpButton_clicked()
+{
+    QProcess::startDetached("xdg-open https://vicr123.github.io/theshell/help");
+    this->close();
+}
+
+void Menu::on_reportBugButton_clicked()
+{
+    QProcess::startDetached("ts-bugreport");
+    this->close();
 }

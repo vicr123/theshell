@@ -2,6 +2,7 @@
 #include "ui_notificationdialog.h"
 
 extern QIcon getIconFromTheme(QString name, QColor textColor);
+extern float getDPIScaling();
 
 NotificationDialog::NotificationDialog(QString appName, QString appIconStr, QString title, QString body, QStringList actions, int id, QVariantMap hints, int timeout, notificationType type, QWidget *parent) :
     QDialog(parent),
@@ -118,14 +119,14 @@ NotificationDialog::NotificationDialog(QString appName, QString appIconStr, QStr
     }
 
     if (foundAppIcon) {
-        ui->appIcon->setPixmap(appIcon.pixmap(16, 16));
+        ui->appIcon->setPixmap(appIcon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     } else {
         ui->appIcon->setVisible(false);
     }
 
     // Don't forget to add extra categories to the notificationdbus class too!
 
-    QSize iconSize(24, 24);
+    QSize iconSize(24 * getDPIScaling(), 24 * getDPIScaling());
     if (hints.value("x-thesuite-timercomplete", false).toBool()) {
         ui->label->setPixmap(QIcon::fromTheme("chronometer").pixmap(iconSize));
     } else {

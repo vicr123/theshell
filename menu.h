@@ -171,6 +171,10 @@ private slots:
 
     void on_fakeEndButton_clicked();
 
+    void on_helpButton_clicked();
+
+    void on_reportBugButton_clicked();
+
 private:
     Ui::Menu *ui;
 

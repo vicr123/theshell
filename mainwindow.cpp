@@ -8,6 +8,7 @@ extern DbusEvents* DBusEvents;
 extern TutorialWindow* TutorialWin;
 extern AudioManager* AudioMan;
 extern NativeEventFilter* NativeFilter;
+extern float getDPIScaling();
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,10 +16,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->openMenu->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
+    QSize ic16(16 * getDPIScaling(), 16 * getDPIScaling());
+    ui->brightnessButton->setIconSize(ic16);
+    ui->volumeButton->setIconSize(ic16);
+
     //Prepare status bar
     ui->StatusBarFrame->setParent(this);
     ui->StatusBarFrame->setFixedWidth(this->width());
-    ui->StatusBarFrame->setFixedHeight(24);
+    ui->StatusBarFrame->setFixedHeight(24 * getDPIScaling());
 
     statusBarOpacityEffect = new QGraphicsOpacityEffect();
     statusBarOpacityEffect->setOpacity(0);
@@ -109,8 +115,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->timer->setVisible(false);
     ui->timerIcon->setVisible(false);
-    ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16, 16));
-    ui->StatusBarNotificationsIcon->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(16, 16));
+    ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->StatusBarNotificationsIcon->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     ui->networkStrength->setVisible(false);
     ui->StatusBarNotifications->setVisible(false);
     ui->StatusBarNotificationsIcon->setVisible(false);
@@ -557,7 +563,7 @@ void MainWindow::doUpdate() {
 
     int dockTop;
     if (settings.value("bar/statusBar", false).toBool()) {
-        dockTop = screenGeometry.y() + 24;
+        dockTop = screenGeometry.y() + 24 * getDPIScaling();
     } else {
         dockTop = screenGeometry.y();
     }
@@ -791,11 +797,11 @@ void MainWindow::updateMpris() {
         QDBusReply<QVariant> PlayStat = QDBusConnection::sessionBus().call(PlayStatRequest);
         if (PlayStat.value().toString() == "Playing") {
             ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-pause"));
-            ui->StatusBarMprisIcon->setPixmap(QIcon::fromTheme("media-playback-start").pixmap(16, 16));
+            ui->StatusBarMprisIcon->setPixmap(QIcon::fromTheme("media-playback-start").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
             mprisPlaying = true;
         } else {
             ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-start"));
-            ui->StatusBarMprisIcon->setPixmap(QIcon::fromTheme("media-playback-pause").pixmap(16, 16));
+            ui->StatusBarMprisIcon->setPixmap(QIcon::fromTheme("media-playback-pause").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
             mprisPlaying = false;
         }
 
@@ -846,7 +852,7 @@ void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command 
                       QString::number(w) + "," + QString::number(this->sizeHint().height()));
     this->setFixedSize(w, this->sizeHint().height());
     ui->infoScrollArea->setFixedWidth(w - this->centralWidget()->layout()->margin());
-    ui->StatusBarFrame->move(0, this->height() - 25);
+    ui->StatusBarFrame->move(0, this->height() - 25 * getDPIScaling());
 }
 
 void MainWindow::setGeometry(QRect geometry) {
@@ -865,7 +871,7 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::internetLabelChanged(QString display, int signalStrength) {
     if (display == tr("Flight Mode")) {
-        ui->networkLabel->setPixmap(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)).pixmap(16, 16));
+        ui->networkLabel->setPixmap(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
         ui->networkStrength->setVisible(false);
     } else {
         ui->networkLabel->setText(display);
@@ -907,8 +913,8 @@ void MainWindow::internetLabelChanged(QString display, int signalStrength) {
             }
 
             ui->networkStrength->setVisible(true);
-            ui->networkStrength->setPixmap(icon.pixmap(16, 16));
-            ui->StatusBarNetwork->setPixmap(icon.pixmap(16, 16));
+            ui->networkStrength->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+            ui->StatusBarNetwork->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
         }
     }
 }
@@ -938,7 +944,7 @@ void MainWindow::on_volumeFrame_MouseEnter()
     });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->setStartValue(ui->volumeSlider->width());
-    anim->setEndValue(150);
+    anim->setEndValue(150 * getDPIScaling());
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     anim->start();
@@ -985,7 +991,7 @@ void MainWindow::on_brightnessFrame_MouseEnter()
     });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->setStartValue(ui->brightnessSlider->width());
-    anim->setEndValue(150);
+    anim->setEndValue(150 * getDPIScaling());
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     anim->start();
@@ -1349,7 +1355,7 @@ void MainWindow::updateStruts() {
     if (settings.value("bar/statusBar", false).toBool()) {
         struts[0] = 0;
         struts[1] = 0;
-        struts[2] = screenGeometry.top() + 24;
+        struts[2] = screenGeometry.top() + 24 * getDPIScaling();
         struts[3] = 0;
         struts[4] = 0;
         struts[5] = 0;

@@ -5,8 +5,9 @@
     "- New Status Bar. Go to Settings > Bar to activate it.\n"\
     "- Preliminary touch support\n"\
     "- Region selection in screenshots\n"\
-    "- New Danish, Dutch and Portuguese translations\n"\
+    "- New translations\n"\
     "- Translations are hotswappable\n"\
+    "- New key combination! To bring down the status center, use SUPER+F1-F6!\n"\
     "\n"\
     "New in theShell 6.0:\n"\
     "- Default system font can be set in theme settings.\n"\

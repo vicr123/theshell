@@ -1,11 +1,15 @@
 #include "hotkeyhud.h"
 #include "ui_hotkeyhud.h"
 
+extern float getDPIScaling();
+
 HotkeyHud::HotkeyHud(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::HotkeyHud)
 {
     ui->setupUi(this);
+
+    this->resize(this->width() * getDPIScaling(), this->height() * getDPIScaling());
 }
 
 HotkeyHud::~HotkeyHud()
