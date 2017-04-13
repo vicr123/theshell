@@ -34,7 +34,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 {
     ui->setupUi(this);
 
-    ui->settingsList->setIconSize(QSize(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->settingsList->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
 
     startTime.start();
 
@@ -350,7 +350,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     //Don't forget to change settings pane setup things
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-login"), tr("Startup")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), tr("Bar")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-bar", QIcon::fromTheme("preferences-desktop")), tr("Bar")));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop"), tr("Gateway")));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-display"), tr("Display")));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-theme"), tr("Theme")));
@@ -945,7 +945,11 @@ void InfoPaneDropdown::getNetworks() {
         }
 
         if (allowAppendNoNetworkMessage && !networkOk) {
-            signalStrength = -2;
+            if (NetworkLabelType == Wired) {
+                signalStrength = -5;
+            } else {
+                signalStrength = -2;
+            }
             NetworkLabel.prepend(tr("Can't get to the internet") + " · ");
         }
 
@@ -1996,8 +2000,8 @@ void InfoPaneDropdown::doNetworkCheck() {
         //Do some network checks to see if network is working
 
         QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
-        int state = i.call("state").arguments().first().toInt();
-        if (state == 60 || state == 50) {
+        int connectivity = i.property("Connectivity").toUInt();
+        if (connectivity == 2 || connectivity == 3) {
             networkOk = false;
             return;
         }
@@ -2017,6 +2021,9 @@ void InfoPaneDropdown::doNetworkCheck() {
             manager->deleteLater();
         });
         manager->get(QNetworkRequest(QUrl("http://vicr123.github.io/")));
+
+        //Reload the connectivity status
+        i.asyncCall("CheckConnectivity");
     }
 }
 

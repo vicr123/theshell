@@ -880,6 +880,9 @@ void MainWindow::internetLabelChanged(QString display, int signalStrength) {
         } else {
             QIcon icon;
             switch (signalStrength) {
+                case -5:
+                    icon = QIcon::fromTheme("network-wired-error");
+                    break;
                 case -4:
                     icon = QIcon::fromTheme("network-wired-unavailable");
                     break;
@@ -887,7 +890,7 @@ void MainWindow::internetLabelChanged(QString display, int signalStrength) {
                     icon = QIcon::fromTheme("network-wireless-disconnected");
                     break;
                 case -2:
-                    icon = QIcon::fromTheme("dialog-error");
+                    icon = QIcon::fromTheme("network-wireless-error");
                     break;
                 case 0:
                     icon = QIcon::fromTheme("network-wireless-connected-00");

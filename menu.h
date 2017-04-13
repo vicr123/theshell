@@ -175,6 +175,8 @@ private slots:
 
     void on_reportBugButton_clicked();
 
+    void populateAppList();
+
 private:
     Ui::Menu *ui;
 
