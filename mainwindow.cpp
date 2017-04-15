@@ -75,8 +75,42 @@ MainWindow::MainWindow(QWidget *parent) :
         if (updbus->hasBattery()) {
             ui->batteryFrame->setVisible(true);
             ui->batteryLabel->setText(display);
+
+            QString iconName;
+            if (updbus->charging()) {
+                if (updbus->currentBattery() < 10) {
+                    iconName = "battery-charging-empty";
+                } else if (updbus->currentBattery() < 30) {
+                    iconName = "battery-charging-020";
+                } else if (updbus->currentBattery() < 50) {
+                    iconName = "battery-charging-040";
+                } else if (updbus->currentBattery() < 70) {
+                    iconName = "battery-charging-060";
+                } else if (updbus->currentBattery() < 90) {
+                    iconName = "battery-charging-080";
+                } else {
+                    iconName = "battery-charging-100";
+                }
+            } else {
+                if (updbus->currentBattery() < 10) {
+                    iconName = "battery-empty";
+                } else if (updbus->currentBattery() < 30) {
+                    iconName = "battery-020";
+                } else if (updbus->currentBattery() < 50) {
+                    iconName = "battery-040";
+                } else if (updbus->currentBattery() < 70) {
+                    iconName = "battery-060";
+                } else if (updbus->currentBattery() < 90) {
+                    iconName = "battery-080";
+                } else {
+                    iconName = "battery-100";
+                }
+            }
+
+            ui->StatusBarBattery->setPixmap(QIcon::fromTheme(iconName).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
         } else {
             ui->batteryFrame->setVisible(false);
+            ui->StatusBarBattery->setVisible(false);
         }
 
         updbus->currentBattery();
@@ -116,10 +150,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->timer->setVisible(false);
     ui->timerIcon->setVisible(false);
     ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-    ui->StatusBarNotificationsIcon->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     ui->networkStrength->setVisible(false);
     ui->StatusBarNotifications->setVisible(false);
-    ui->StatusBarNotificationsIcon->setVisible(false);
     ui->StatusBarMpris->setVisible(false);
     ui->StatusBarMprisIcon->setVisible(false);
 
@@ -941,13 +973,14 @@ void MainWindow::on_volumeFrame_MouseEnter()
 {
     ui->volumeSlider->setVisible(true);
 
+    //Animate the volume frame
     tVariantAnimation* anim = new tVariantAnimation;
     connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         ui->volumeSlider->setFixedWidth(value.toInt());
     });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->setStartValue(ui->volumeSlider->width());
-    anim->setEndValue(150 * getDPIScaling());
+    anim->setEndValue((int) (150 * getDPIScaling()));
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     anim->start();
@@ -959,6 +992,7 @@ void MainWindow::on_volumeFrame_MouseEnter()
 
 void MainWindow::on_volumeFrame_MouseExit()
 {
+    //Animate the volume frame
     tVariantAnimation* anim = new tVariantAnimation;
     connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         ui->volumeSlider->setFixedWidth(value.toInt());
@@ -982,11 +1016,11 @@ void MainWindow::on_volumeSlider_sliderMoved(int position)
 void MainWindow::on_volumeSlider_valueChanged(int value)
 {
     on_volumeSlider_sliderMoved(value);
-
 }
 
 void MainWindow::on_brightnessFrame_MouseEnter()
 {
+    //Animate the brightness frame
     ui->brightnessSlider->setVisible(true);
     tVariantAnimation* anim = new tVariantAnimation;
     connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
@@ -994,7 +1028,7 @@ void MainWindow::on_brightnessFrame_MouseEnter()
     });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->setStartValue(ui->brightnessSlider->width());
-    anim->setEndValue(150 * getDPIScaling());
+    anim->setEndValue((int) (150 * getDPIScaling()));
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     anim->start();
@@ -1089,7 +1123,6 @@ void MainWindow::numNotificationsChanged(int notifications) {
         font.setBold(false);
         ui->notifications->setText(tr("No notifications"));
         ui->StatusBarNotifications->setVisible(false);
-        ui->StatusBarNotificationsIcon->setVisible(false);
     } else {
         font.setBold(true);
         if (notifications == 1) {
@@ -1099,7 +1132,6 @@ void MainWindow::numNotificationsChanged(int notifications) {
         }
         ui->StatusBarNotifications->setText(QString::number(notifications));
         ui->StatusBarNotifications->setVisible(true);
-        ui->StatusBarNotificationsIcon->setVisible(true);
     }
     ui->notifications->setFont(font);
 }

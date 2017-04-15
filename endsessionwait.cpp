@@ -41,24 +41,24 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
     }
 
     switch (type) {
-    case powerOff:
-        ui->label->setText(tr("Power Off"));
-        ui->askWhatToDo->setVisible(false);
-        break;
-    case reboot:
-        ui->label->setText(tr("Reboot"));
-        ui->askWhatToDo->setVisible(false);
-        break;
-    case logout:
-        ui->label->setText(tr("Log out"));
-        ui->askWhatToDo->setVisible(false);
-        break;
-    case dummy:
-        ui->label->setText(tr("Dummy"));
-        ui->askWhatToDo->setVisible(false);
-        break;
-    case ask:
-        ui->poweringOff->setVisible(false);
+        case powerOff:
+            ui->label->setText(tr("Power Off"));
+            ui->askWhatToDo->setVisible(false);
+            break;
+        case reboot:
+            ui->label->setText(tr("Reboot"));
+            ui->askWhatToDo->setVisible(false);
+            break;
+        case logout:
+            ui->label->setText(tr("Log out"));
+            ui->askWhatToDo->setVisible(false);
+            break;
+        case dummy:
+            ui->label->setText(tr("Dummy"));
+            ui->askWhatToDo->setVisible(false);
+            break;
+        case ask:
+            ui->poweringOff->setVisible(false);
     }
 
     this->type = type;
@@ -125,7 +125,6 @@ void EndSessionWait::showFullScreen() {
             alreadyShowing = true;
             this->setWindowOpacity(0.0);
             QDialog::showFullScreen();
-            //ui->terminateAppFrame->resize(ui->terminateAppFrame->width(), 0);
             ui->terminateAppFrame->setGeometry(ui->terminateAppFrame->x(), ui->terminateAppFrame->y(), ui->terminateAppFrame->width(), 0);
             ui->terminateAppFrame->setVisible(false);
             ui->ExitFrameTop->resize(ui->ExitFrameTop->sizeHint());

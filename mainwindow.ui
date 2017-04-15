@@ -198,16 +198,10 @@
           <item>
            <widget class="HoverFrame" name="brightnessFrame">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>228</width>
-              <height>16777215</height>
-             </size>
             </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
@@ -256,12 +250,6 @@
              </item>
              <item>
               <widget class="QSlider" name="brightnessSlider">
-               <property name="maximumSize">
-                <size>
-                 <width>200</width>
-                 <height>16777215</height>
-                </size>
-               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -327,16 +315,10 @@
           <item>
            <widget class="HoverFrame" name="volumeFrame">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>228</width>
-              <height>16777215</height>
-             </size>
             </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
@@ -379,12 +361,6 @@
              </item>
              <item>
               <widget class="QSlider" name="volumeSlider">
-               <property name="maximumSize">
-                <size>
-                 <width>200</width>
-                 <height>16777215</height>
-                </size>
-               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -738,16 +714,22 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="StatusBarNotifications">
+        <widget class="QLabel" name="StatusBarBattery">
          <property name="text">
-          <string notr="true">Notifications</string>
+          <string>Battery</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="StatusBarNotificationsIcon">
+        <widget class="QLabel" name="StatusBarNotifications">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(200, 100, 0);
+color: white;
+padding-left: 3px;
+padding-right: 3px;</string>
+         </property>
          <property name="text">
-          <string notr="true">Icon</string>
+          <string notr="true">Notifications</string>
          </property>
         </widget>
        </item>
