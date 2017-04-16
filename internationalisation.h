@@ -22,10 +22,12 @@ public:
         daDK,
         esES,
         ptBR,
+        // Unfinished languages follow
         jaJP,
         arSA,
         zhCN,
         deDE,
+        frFR,
         miNZ,
         maxLanguage
     };
@@ -61,16 +63,22 @@ public:
                 case ptBR:
                     languageBox->addItem("[BR] " + tr("Portuguese") + " (Português) ");
                     break;
+                case nlNL:
+                    languageBox->addItem("[NL] " + tr("Dutch") + " (Nederlands) ");
+                    break;
+                case esES:
+                    languageBox->addItem("[ES] " + tr("Spanish") + " (Español) ");
+                    break;
                 /*case arSA:
                     languageBox->addItem("[SA] " + tr("Arabic") + " (العربية) ");
                     break;
                 case zhCN:
                     languageBox->addItem("[CN] " + tr("Chinese") + " (中文) ");
-                    break;*/
-                case nlNL:
-                    languageBox->addItem("[NL] " + tr("Dutch") + " (Nederlands) ");
                     break;
-                /*case miNZ:
+                case frFR:
+                    languageBox->addItem("[FR] " + tr("French") + " (Français) ");
+                    break;
+                case miNZ:
                     languageBox->addItem("[NZ] " + tr("Māori") + " (Māori) ");
                     break;
                 case jaJP:
@@ -78,9 +86,6 @@ public:
                     break;
                 case deDE:
                     languageBox->addItem("[DE] " + tr("German") + " (Deutsch) ");
-                    break;
-                case esES:
-                    languageBox->addItem("[ES] " + tr("Spanish") + " (Español) ");
                     break;*/
             }
         }
@@ -114,6 +119,8 @@ public:
             languageBox->setCurrentRow(jaJP);
         } else if (currentLocale == "de_DE") {
             languageBox->setCurrentRow(deDE);
+        } else if (currentLocale == "fr_FR") {
+            languageBox->setCurrentRow(frFR);
         } else if (currentLocale == "es_ES") {
             languageBox->setCurrentRow(esES);
         }
