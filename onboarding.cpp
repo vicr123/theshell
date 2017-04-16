@@ -1,5 +1,6 @@
 #include "onboarding.h"
 #include "ui_onboarding.h"
+#include "internationalisation.h"
 
 #define ChangelogOnbording "New in theShell 6.1:\n"\
     "- New Status Bar. Go to Settings > Bar to activate it.\n"\
@@ -40,25 +41,6 @@
 
 extern NativeEventFilter* NativeFilter;
 extern QTranslator *qtTranslator, *tsTranslator;
-
-enum languageOrder {
-    enUS = 0,
-    enGB,
-    enAU,
-    enNZ,
-    viVN,
-    daDK,
-    esES,
-    ptBR,
-    jaJP,
-    arSA,
-    zhCN,
-    nlNL,
-    deDE,
-    miNZ,
-    maxLanguage
-};
-
 
 Onboarding::Onboarding(QWidget *parent) :
     QDialog(parent),
@@ -176,130 +158,53 @@ void Onboarding::on_changeLanguageButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
 
-    ui->localeList->clear();
-    //For the time being, we'll just have hardcoded locales. This should change soon (hopefully)
-    for (int i = 0; i < maxLanguage; i++) {
-        switch (i) {
-            case enUS:
-                ui->localeList->addItem("[US] " + tr("English") + " (English)");
-                break;
-            case enGB:
-                ui->localeList->addItem("[GB] " + tr("English") + " (English)");
-                break;
-            case enAU:
-                ui->localeList->addItem("[AU] " + tr("English") + " (English)");
-                break;
-            case enNZ:
-                ui->localeList->addItem("[NZ] " + tr("English") + " (English)");
-                break;
-            case viVN:
-                ui->localeList->addItem("[VN] " + tr("Vietnamese") + " (Tiếng Việt)");
-                break;
-            case daDK:
-                ui->localeList->addItem("[DK] " + tr("Danish") + " (Dansk) ");
-                break;
-            case ptBR:
-                ui->localeList->addItem("[BR] " + tr("Portuguese") + " (Português) ");
-                break;
-            case arSA:
-                ui->localeList->addItem("[SA] " + tr("Arabic") + " (العربية) ");
-                break;
-            case zhCN:
-                ui->localeList->addItem("[CN] " + tr("Chinese") + " (中文) ");
-                break;
-            case nlNL:
-                ui->localeList->addItem("[NL] " + tr("Dutch") + " (Nederlands) ");
-                break;
-            case miNZ:
-                ui->localeList->addItem("[NZ] " + tr("Māori") + " (Māori) ");
-                break;
-            case jaJP:
-                ui->localeList->addItem("[JP] " + tr("Japanese") + " (日本語) ");
-                break;
-            case deDE:
-                ui->localeList->addItem("[DE] " + tr("German") + " (Deutsch) ");
-                break;
-            case esES:
-                ui->localeList->addItem("[ES] " + tr("Spanish") + " (Español) ");
-                break;
-        }
-    }
-
-    QString currentLocale = settings.value("locale/language", "en_US").toString();
-    if (currentLocale == "en_US") {
-        ui->localeList->setCurrentRow(enUS);
-    } else if (currentLocale == "en_GB") {
-        ui->localeList->setCurrentRow(enGB);
-    } else if (currentLocale == "en_AU") {
-        ui->localeList->setCurrentRow(enAU);
-    } else if (currentLocale == "en_NZ") {
-        ui->localeList->setCurrentRow(enNZ);
-    } else if (currentLocale == "vi_VN") {
-        ui->localeList->setCurrentRow(viVN);
-    } else if (currentLocale == "da_DK") {
-        ui->localeList->setCurrentRow(daDK);
-    } else if (currentLocale == "pt_BR") {
-        ui->localeList->setCurrentRow(ptBR);
-    } else if (currentLocale == "ar_SA") {
-        ui->localeList->setCurrentRow(arSA);
-    } else if (currentLocale == "zh_CN") {
-        ui->localeList->setCurrentRow(zhCN);
-    } else if (currentLocale == "nl_NL") {
-        ui->localeList->setCurrentRow(nlNL);
-    } else if (currentLocale == "mi_NZ") {
-        ui->localeList->setCurrentRow(miNZ);
-    } else if (currentLocale == "ja_JP") {
-        ui->localeList->setCurrentRow(jaJP);
-    } else if (currentLocale == "de_DE") {
-        ui->localeList->setCurrentRow(deDE);
-    } else if (currentLocale == "es_ES") {
-        ui->localeList->setCurrentRow(esES);
-    }
+    //Fill language box
+    Internationalisation::fillLanguageBox(ui->localeList);
 }
 
 void Onboarding::on_localeList_currentRowChanged(int currentRow)
 {
     switch (currentRow) {
-        case enUS:
+        case Internationalisation::enUS:
             settings.setValue("locale/language", "en_US");
             break;
-        case enGB:
+        case Internationalisation::enGB:
             settings.setValue("locale/language", "en_GB");
             break;
-        case enAU:
+        case Internationalisation::enAU:
             settings.setValue("locale/language", "en_AU");
             break;
-        case enNZ:
+        case Internationalisation::enNZ:
             settings.setValue("locale/language", "en_NZ");
             break;
-        case viVN:
+        case Internationalisation::viVN:
             settings.setValue("locale/language", "vi_VN");
             break;
-        case daDK:
+        case Internationalisation::daDK:
             settings.setValue("locale/language", "da_DK");
             break;
-        case ptBR:
+        case Internationalisation::ptBR:
             settings.setValue("locale/language", "pt_BR");
             break;
-        case arSA:
+        case Internationalisation::arSA:
             settings.setValue("locale/language", "ar_SA");
             break;
-        case zhCN:
+        case Internationalisation::zhCN:
             settings.setValue("locale/language", "zh_CN");
             break;
-        case nlNL:
+        case Internationalisation::nlNL:
             settings.setValue("locale/language", "nl_NL");
             break;
-        case miNZ:
+        case Internationalisation::miNZ:
             settings.setValue("locale/language", "mi_NZ");
             break;
-        case jaJP:
+        case Internationalisation::jaJP:
             settings.setValue("locale/language", "ja_JP");
             break;
-        case deDE:
+        case Internationalisation::deDE:
             settings.setValue("locale/language", "de_DE");
             break;
-        case esES:
+        case Internationalisation::esES:
             settings.setValue("locale/language", "es_ES");
             break;
     }
@@ -325,6 +230,9 @@ void Onboarding::on_localeList_currentRowChanged(int currentRow)
 
     tsTranslator->load(QLocale().name(), "/usr/share/theshell/translations");
     QApplication::installTranslator(tsTranslator);
+
+    //Fill locale box
+    Internationalisation::fillLanguageBox(ui->localeList);
 
     emit NativeFilter->DoRetranslation();
 }

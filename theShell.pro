@@ -104,7 +104,8 @@ HEADERS  += mainwindow.h \
     bthandsfree.h \
     tutorialwindow.h \
     screenshotwindow.h \
-    audiomanager.h
+    audiomanager.h \
+    internationalisation.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
