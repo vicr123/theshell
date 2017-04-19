@@ -9,6 +9,8 @@
     "- New translations\n"\
     "- Translations are hotswappable\n"\
     "- New key combination! To bring down the status center, use SUPER+F1-F6!\n"\
+    "- Gateway opens faster\n"\
+    "- Contemporary icon set has been released and is the default for theShell\n"\
     "\n"\
     "New in theShell 6.0:\n"\
     "- Default system font can be set in theme settings.\n"\
