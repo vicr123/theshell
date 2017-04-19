@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
+    <width>1201</width>
     <height>835</height>
    </rect>
   </property>
@@ -342,7 +342,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>6</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -567,14 +567,14 @@
              <second>0</second>
              <year>1969</year>
              <month>10</month>
-             <day>23</day>
+             <day>22</day>
             </datetime>
            </property>
            <property name="date">
             <date>
              <year>1969</year>
              <month>10</month>
-             <day>23</day>
+             <day>22</day>
             </date>
            </property>
            <property name="displayFormat">
@@ -1269,8 +1269,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>165</width>
-            <height>58</height>
+            <width>1165</width>
+            <height>599</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1281,7 +1281,7 @@
             <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>9</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
