@@ -80,9 +80,5 @@ This pane allows you to view the status of printers connected to this PC.
 ## System Settings
 For information about this pane, visit [Settings]
 
-[Flight Mode]: flightmode
-[Power Stretch]: powerstretch
-[Timer]: timer
-[Stopwatch]: stopwatch
-[Settings]: settings
+{% include links.md %}
 [KDE Connect website]: https://community.kde.org/KDEConnect

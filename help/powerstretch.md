@@ -33,4 +33,4 @@ Simply click on "Turn On Power Stretch" to switch on Power Strech.
 
 When your device is connected to a power source, Power Stretch automatically turns off.
 
-[Status Center]: statuscenter
+{% include links.md %}

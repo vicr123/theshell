@@ -63,6 +63,7 @@ a.pageLink {
 
 a.pageLink:hover {
     background-color: rgba(0, 0, 0, 0.2);
+    padding-left: 22px;
 }
 
 a.pageLink:active {

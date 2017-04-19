@@ -153,9 +153,4 @@ Change the language used throughout your device.
 
 Get information about the currently running version of theShell.
 
-
-
-[Bar]: bar
-[Status Bar]: bar#status-bar
-[Gateway]: gateway
-[User Configuration]: userconfig
+{% include links.md %}
