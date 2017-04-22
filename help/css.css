@@ -70,9 +70,15 @@ a.pageLink:active {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-a.pageLink:hover:after, a.pageLink:active:after {
+a.pageLink:after {
     float: right;
     content: url("images/go-next.svg");
+    opacity: 0;
+    transition: 0.25s;
+}
+
+a.pageLink:hover:after, a.pageLink:active:after {
+    opacity: 1;
 }
 
 a.helpDisclaimer {

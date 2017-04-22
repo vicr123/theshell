@@ -1,5 +1,6 @@
 ---
 title: Creating a Live USB
+tsVersion: OS 6.1 Apr.
 ---
 
 To try or install theShell OS, a live USB may be a viable option. Running theShell OS off a USB flash drive is much faster than running it off optical media, like a DVD.
@@ -18,7 +19,7 @@ Connect your USB flash drive to your computer, and then depending on the **curre
 
 ## Windows
 
-Use the [ImageWriter](https://sourceforge.net/projects/win32diskimager/) project to write the disc image to your USB flash drive.
+Use the [USBWriter](https://sourceforge.net/projects/usbwriter/) project to write the disc image to your USB flash drive.
 
 ## macOS / Mac OS X
 
