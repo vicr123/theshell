@@ -38,6 +38,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QTimeEdit>
+#include <QStyledItemDelegate>
 
 class UPowerDBus;
 
@@ -282,6 +283,12 @@ private slots:
 
     void on_quietModeMute_clicked();
 
+    void on_ReminderCancel_clicked();
+
+    void on_ReminderNew_clicked();
+
+    void on_ReminderCreate_clicked();
+
 public slots:
     void getNetworks();
 
@@ -341,6 +348,33 @@ private:
 
     int previousDragY;
     WId MainWindowId;
+};
+
+class RemindersListModel : public QAbstractListModel
+{
+    Q_OBJECT
+
+public:
+    RemindersListModel(QObject *parent = 0);
+    ~RemindersListModel();
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    void updateData();
+
+private:
+    QSettings* RemindersData;
+};
+
+class RemindersDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+
+public:
+    RemindersDelegate(QWidget *parent = 0);
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 #endif // INFOPANEDROPDOWN_H

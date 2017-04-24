@@ -154,6 +154,8 @@ NotificationDialog::NotificationDialog(QString appName, QString appIconStr, QStr
                 ui->label->setPixmap(getIconFromTheme("disconnect.svg", color).pixmap(iconSize));
             } else if (category == "call.incoming") {
                 ui->label->setPixmap(QIcon::fromTheme("call-start").pixmap(iconSize));
+            } else if (category == "reminder.activate") {
+                ui->label->setPixmap(QIcon::fromTheme("reminder").pixmap(iconSize));
             } else {
                 ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(iconSize));
             }

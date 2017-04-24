@@ -303,6 +303,9 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
             ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
         }
     });
+
+    ui->RemindersList->setModel(new RemindersListModel);
+    ui->RemindersList->setItemDelegate(new RemindersDelegate);
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -495,6 +498,54 @@ void InfoPaneDropdown::timerTick() {
     }
     ui->stopwatchLabel->setText(stopwatchTime.toString("hh:mm:ss.zzz"));
     updateTimers();
+
+    //Also check for reminders
+    {
+        QList<QPair<QString, QDateTime>> ReminderData;
+
+        QSettings reminders("theSuite/theShell.reminders");
+        reminders.beginGroup("reminders");
+        int count = reminders.beginReadArray("reminders");
+
+        for (int i = 0; i < count; i++) {
+            reminders.setArrayIndex(i);
+            QPair<QString, QDateTime> data;
+            data.first = reminders.value("title").toString();
+            data.second = reminders.value("date").toDateTime();
+            ReminderData.append(data);
+        }
+
+        reminders.endArray();
+
+        bool dataChanged = false;
+        for (int i = 0; i < ReminderData.count(); i++) {
+            QPair<QString, QDateTime> data = ReminderData.at(i);
+            if (data.second.msecsTo(QDateTime::currentDateTime()) > 0) {
+                QVariantMap hints;
+                hints.insert("category", "reminder.activate");
+                notificationEngine->Notify("theShell", 0, "theshell", "Reminder", data.first, QStringList(), hints, 30000);
+                ReminderData.removeAt(i);
+                i--;
+                dataChanged = true;
+            }
+        }
+
+
+        if (dataChanged) {
+            reminders.beginWriteArray("reminders");
+            int i = 0;
+            for (QPair<QString, QDateTime> data : ReminderData) {
+                reminders.setArrayIndex(i);
+                reminders.setValue("title", data.first);
+                reminders.setValue("date", data.second);
+                i++;
+            }
+            reminders.endArray();
+            reminders.endGroup();
+
+            ((RemindersListModel*) ui->RemindersList->model())->updateData();
+        }
+    }
 }
 
 void InfoPaneDropdown::show(dropdownType showWith) {
@@ -529,6 +580,9 @@ void InfoPaneDropdown::show(dropdownType showWith) {
     delete backlight;
 
     ui->brightnessSlider->setValue((int) output);
+
+    //Update the reminders list
+    ((RemindersListModel*) ui->RemindersList->model())->updateData();
 }
 
 void InfoPaneDropdown::close() {
@@ -2348,4 +2402,149 @@ void InfoPaneDropdown::on_quietModeNotification_clicked()
 void InfoPaneDropdown::on_quietModeMute_clicked()
 {
     AudioMan->setQuietMode(AudioManager::mute);
+}
+
+RemindersListModel::RemindersListModel(QObject *parent) : QAbstractListModel(parent) {
+    RemindersData = new QSettings("theSuite/theShell.reminders");
+    RemindersData->beginGroup("reminders");
+}
+
+RemindersListModel::~RemindersListModel() {
+    RemindersData->endGroup();
+    RemindersData->deleteLater();
+}
+
+int RemindersListModel::rowCount(const QModelIndex &parent) const {
+    Q_UNUSED(parent)
+    int count = RemindersData->beginReadArray("reminders");
+    RemindersData->endArray();
+    return count;
+}
+
+QVariant RemindersListModel::data(const QModelIndex &index, int role) const {
+    QVariant returnValue;
+
+    RemindersData->beginReadArray("reminders");
+    RemindersData->setArrayIndex(index.row());
+    if (role == Qt::DisplayRole) {
+        returnValue = RemindersData->value("title");
+    } else if (role == Qt::UserRole) {
+        QDateTime activation = RemindersData->value("date").toDateTime();
+        if (activation.daysTo(QDateTime::currentDateTime()) == 0) {
+            returnValue = activation.toString("hh:mm");
+        } else if (activation.daysTo(QDateTime::currentDateTime()) < 7) {
+            returnValue = activation.toString("dddd");
+        } else {
+            returnValue = activation.toString("ddd, dd MMM yyyy");
+        }
+    }
+
+    RemindersData->endArray();
+    return returnValue;
+}
+
+void RemindersListModel::updateData() {
+    emit dataChanged(index(0), index(rowCount()));
+}
+
+RemindersDelegate::RemindersDelegate(QWidget *parent) : QStyledItemDelegate(parent) {
+
+}
+
+void RemindersDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    painter->setFont(option.font);
+
+    QRect textRect;
+    textRect.setLeft(6 * getDPIScaling());
+    textRect.setTop(option.rect.top() + 6 * getDPIScaling());
+    textRect.setBottom(option.rect.top() + option.fontMetrics.height() + 6 * getDPIScaling());
+    textRect.setRight(option.rect.right());
+
+    QRect dateRect;
+    dateRect.setLeft(6 * getDPIScaling());
+    dateRect.setTop(option.rect.top() + option.fontMetrics.height() + 8 * getDPIScaling());
+    dateRect.setBottom(option.rect.top() + option.fontMetrics.height() * 2 + 6 * getDPIScaling());
+    dateRect.setRight(option.rect.right());
+
+    if (option.state & QStyle::State_Selected) {
+        painter->setPen(Qt::transparent);
+        painter->setBrush(option.palette.color(QPalette::Highlight));
+        painter->drawRect(option.rect);
+        painter->setBrush(Qt::transparent);
+        painter->setPen(option.palette.color(QPalette::HighlightedText));
+        painter->drawText(textRect, index.data().toString());
+        painter->drawText(dateRect, index.data(Qt::UserRole).toString());
+    } else if (option.state & QStyle::State_MouseOver) {
+        QColor col = option.palette.color(QPalette::Highlight);
+        col.setAlpha(127);
+        painter->setBrush(col);
+        painter->setPen(Qt::transparent);
+        painter->drawRect(option.rect);
+        painter->setBrush(Qt::transparent);
+        painter->setPen(option.palette.color(QPalette::WindowText));
+        painter->drawText(textRect, index.data().toString());
+        painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
+        painter->drawText(dateRect, index.data(Qt::UserRole).toString());
+    } else {
+        painter->setPen(option.palette.color(QPalette::WindowText));
+        painter->drawText(textRect, index.data().toString());
+        painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
+        painter->drawText(dateRect, index.data(Qt::UserRole).toString());
+    }
+}
+
+QSize RemindersDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    return QSize(option.fontMetrics.width(index.data().toString()), option.fontMetrics.height() * 2 + 14 * getDPIScaling());
+}
+void InfoPaneDropdown::on_ReminderCancel_clicked()
+{
+    ui->RemindersStackedWidget->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::on_ReminderNew_clicked()
+{
+    ui->ReminderTitle->setText("");
+    ui->ReminderDate->setDateTime(QDateTime::currentDateTime().addSecs(3600)); //Current date + 1 hour
+    ui->RemindersStackedWidget->setCurrentIndex(1);
+}
+
+void InfoPaneDropdown::on_ReminderCreate_clicked()
+{
+    if (ui->ReminderTitle->text() == "") {
+        return;
+    }
+
+    QList<QPair<QString, QDateTime>> ReminderData;
+
+    QSettings reminders("theSuite/theShell.reminders");
+    reminders.beginGroup("reminders");
+    int count = reminders.beginReadArray("reminders");
+
+    for (int i = 0; i < count; i++) {
+        reminders.setArrayIndex(i);
+        QPair<QString, QDateTime> data;
+        data.first = reminders.value("title").toString();
+        data.second = reminders.value("date").toDateTime();
+        ReminderData.append(data);
+    }
+
+    QPair<QString, QDateTime> newData;
+    newData.first = ui->ReminderTitle->text();
+    newData.second = ui->ReminderDate->dateTime().addSecs(-ui->ReminderDate->dateTime().time().second());
+    ReminderData.append(newData);
+
+    reminders.endArray();
+    reminders.beginWriteArray("reminders");
+    int i = 0;
+    for (QPair<QString, QDateTime> data : ReminderData) {
+        reminders.setArrayIndex(i);
+        reminders.setValue("title", data.first);
+        reminders.setValue("date", data.second);
+        i++;
+    }
+    reminders.endArray();
+    reminders.endGroup();
+
+    ((RemindersListModel*) ui->RemindersList->model())->updateData();
+    ui->RemindersStackedWidget->setCurrentIndex(0);
 }

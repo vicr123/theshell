@@ -724,6 +724,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="StatusBarQuietMode">
+         <property name="text">
+          <string notr="true">Quiet Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="StatusBarNotifications">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(200, 100, 0);
@@ -733,13 +740,6 @@ padding-right: 3px;</string>
          </property>
          <property name="text">
           <string notr="true">Notifications</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="StatusBarQuietMode">
-         <property name="text">
-          <string notr="true">Quiet Mode</string>
          </property>
         </widget>
        </item>

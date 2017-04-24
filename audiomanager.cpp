@@ -294,17 +294,15 @@ void AudioManager::setQuietMode(quietMode mode) {
     if (mode != currentQuietMode) {
         quietMode oldQuietMode = this->currentQuietMode;
         if (mode == mute) {
-            volumeBeforeMute = MasterVolume();
-            setMasterVolume(PA_VOLUME_MUTED);
+            pa_context_set_sink_mute_by_index(pulseContext, defaultSinkIndex, 1, NULL, NULL);
         }
 
         this->currentQuietMode = mode;
         emit QuietModeChanged(mode);
 
         if (oldQuietMode == mute) {
-            setMasterVolume(volumeBeforeMute);
+            pa_context_set_sink_mute_by_index(pulseContext, defaultSinkIndex, 0, NULL, NULL);
         }
-
     }
 }
 

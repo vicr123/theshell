@@ -64,7 +64,6 @@ private:
     QList<uint> newTsClientIndices;
     pa_cvolume defaultSinkVolume;
     quietMode currentQuietMode = none;
-    int volumeBeforeMute;
 };
 
 #endif // AUDIOMANAGER_H
