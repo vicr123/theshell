@@ -154,6 +154,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarNotifications->setVisible(false);
     ui->StatusBarMpris->setVisible(false);
     ui->StatusBarMprisIcon->setVisible(false);
+    ui->StatusBarQuietMode->setVisible(false);
 
     if (QFile("/usr/bin/amixer").exists()) {
         ui->volumeSlider->setVisible(false);
@@ -168,6 +169,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
         ui->retranslateUi(this);
+    });
+
+    QMenu* quietModeMenu = new QMenu();
+    quietModeMenu->addSection("Quiet Mode");
+    quietModeMenu->addAction(ui->actionNone);
+    quietModeMenu->addAction(ui->actionNotifications);
+    quietModeMenu->addAction(ui->actionMute);
+    ui->volumeButton->setMenu(quietModeMenu);
+
+    connect(AudioMan, &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
+        if (mode == AudioManager::none) {
+            ui->volumeButton->setIcon(QIcon::fromTheme("audio-volume-high"));
+            ui->StatusBarQuietMode->setVisible(false);
+        } else if (mode == AudioManager::notifications) {
+            ui->volumeButton->setIcon(QIcon::fromTheme("quiet-mode"));
+            ui->StatusBarQuietMode->setPixmap(QIcon::fromTheme("quiet-mode").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+            ui->StatusBarQuietMode->setVisible(true);
+        } else {
+            ui->volumeButton->setIcon(QIcon::fromTheme("audio-volume-muted"));
+            ui->StatusBarQuietMode->setPixmap(QIcon::fromTheme("audio-volume-muted").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+            ui->StatusBarQuietMode->setVisible(true);
+        }
     });
 }
 
@@ -971,41 +994,45 @@ void MainWindow::on_batteryLabel_clicked()
 
 void MainWindow::on_volumeFrame_MouseEnter()
 {
-    ui->volumeSlider->setVisible(true);
+    if (AudioMan->QuietMode() != AudioManager::mute) {
+        ui->volumeSlider->setVisible(true);
 
-    //Animate the volume frame
-    tVariantAnimation* anim = new tVariantAnimation;
-    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->volumeSlider->setFixedWidth(value.toInt());
-    });
-    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    anim->setStartValue(ui->volumeSlider->width());
-    anim->setEndValue((int) (150 * getDPIScaling()));
-    anim->setDuration(250);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    anim->start();
+        //Animate the volume frame
+        tVariantAnimation* anim = new tVariantAnimation;
+        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+            ui->volumeSlider->setFixedWidth(value.toInt());
+        });
+        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+        anim->setStartValue(ui->volumeSlider->width());
+        anim->setEndValue((int) (150 * getDPIScaling()));
+        anim->setDuration(250);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        anim->start();
 
-    //Set Current Volume Slider
-    ui->volumeSlider->setValue(AudioMan->MasterVolume());
-    ui->volumeSlider->setMaximum(100);
+        //Set Current Volume Slider
+        ui->volumeSlider->setValue(AudioMan->MasterVolume());
+        ui->volumeSlider->setMaximum(100);
+    }
 }
 
 void MainWindow::on_volumeFrame_MouseExit()
 {
-    //Animate the volume frame
-    tVariantAnimation* anim = new tVariantAnimation;
-    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->volumeSlider->setFixedWidth(value.toInt());
-    });
-    connect(anim, &tVariantAnimation::finished, [=]() {
-        ui->volumeSlider->setVisible(false);
-        anim->deleteLater();
-    });
-    anim->setStartValue(ui->volumeSlider->width());
-    anim->setEndValue(0);
-    anim->setDuration(250);
-    anim->setEasingCurve(QEasingCurve::InCubic);
-    anim->start();
+    if (AudioMan->QuietMode() != AudioManager::mute) {
+        //Animate the volume frame
+        tVariantAnimation* anim = new tVariantAnimation;
+        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+            ui->volumeSlider->setFixedWidth(value.toInt());
+        });
+        connect(anim, &tVariantAnimation::finished, [=]() {
+            ui->volumeSlider->setVisible(false);
+            anim->deleteLater();
+        });
+        anim->setStartValue(ui->volumeSlider->width());
+        anim->setEndValue(0);
+        anim->setDuration(250);
+        anim->setEasingCurve(QEasingCurve::InCubic);
+        anim->start();
+    }
 }
 
 void MainWindow::on_volumeSlider_sliderMoved(int position)
@@ -1418,4 +1445,19 @@ void MainWindow::updateStruts() {
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) struts, 12);
 
     free(struts);
+}
+
+void MainWindow::on_actionNone_triggered()
+{
+    AudioMan->setQuietMode(AudioManager::none);
+}
+
+void MainWindow::on_actionNotifications_triggered()
+{
+    AudioMan->setQuietMode(AudioManager::notifications);
+}
+
+void MainWindow::on_actionMute_triggered()
+{
+    AudioMan->setQuietMode(AudioManager::mute);
 }

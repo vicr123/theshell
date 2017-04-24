@@ -91,8 +91,8 @@ theWaveWorker::~theWaveWorker() {
 
 void theWaveWorker::begin() {
     if (!isRunning) {
-        //Quiet all audio on system
-        AudioMan->quietStreams();
+        //Attenuate all audio on system
+        AudioMan->attenuateStreams();
 
         isRunning = true;
         if (resetOnNextBegin) { //Check if we need to reset frames
@@ -185,7 +185,7 @@ void theWaveWorker::endAndProcess() {
             speechProc->setProcessChannelMode(QProcess::MergedChannels);
             connect(speechProc, SIGNAL(readyRead()), this, SLOT(outputAvailable()));
             connect(speechProc, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
-                [=](int exitCode, QProcess::ExitStatus exitStatus){
+                [=](){
                 if (noVoiceInput) {
                     processSpeech("");
                 }
@@ -1246,7 +1246,8 @@ void theWaveWorker::launchAppReply(QString app) {
     emit doLaunchApp(app);
 }
 
-void theWaveWorker::launchApp_disambiguation(QStringList apps) {\
+void theWaveWorker::launchApp_disambiguation(QStringList apps) {
+    Q_UNUSED(apps)
     emit outputResponse("There's more than one app. Select the one you'd like to open on your screen.");
     speak("There's more than one app. Select the one you'd to open on your screen.");
 }

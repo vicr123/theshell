@@ -160,11 +160,11 @@ NotificationDialog::NotificationDialog(QString appName, QString appIconStr, QStr
         } else {
             if (hints.keys().contains("urgency")) {
                 QChar urgency = hints.value("urgency").toChar();
-                if (urgency == 0) {
+                if (urgency.unicode() == 0) {
                     ui->label->setPixmap(QIcon::fromTheme("dialog-information").pixmap(iconSize));
-                } else if (urgency == 1) {
+                } else if (urgency.unicode() == 1) {
                     ui->label->setPixmap(QIcon::fromTheme("dialog-warning").pixmap(iconSize));
-                } else if (urgency == 2) {
+                } else if (urgency.unicode() == 2) {
                     ui->label->setPixmap(QIcon::fromTheme("dialog-error").pixmap(iconSize));
                 }
             } else {

@@ -23,65 +23,69 @@ AudioManager::AudioManager(QObject *parent) : QObject(parent)
 }
 
 void AudioManager::changeVolume(int volume) {
-    pa_volume_t avgVol = pa_cvolume_avg(&defaultSinkVolume);
-    int onePercent = (PA_VOLUME_NORM - PA_VOLUME_MUTED) / 100;
-    pa_volume_t newVol = avgVol + (onePercent * volume);
-    if (newVol < PA_VOLUME_MUTED) newVol = PA_VOLUME_MUTED;
-    if (newVol > PA_VOLUME_MAX) newVol = PA_VOLUME_MAX;
+    if (currentQuietMode != mute) {
+        pa_volume_t avgVol = pa_cvolume_avg(&defaultSinkVolume);
+        int onePercent = (PA_VOLUME_NORM - PA_VOLUME_MUTED) / 100;
+        pa_volume_t newVol = avgVol + (onePercent * volume);
+        if (newVol < PA_VOLUME_MUTED) newVol = PA_VOLUME_MUTED;
+        if (newVol > PA_VOLUME_MAX) newVol = PA_VOLUME_MAX;
 
-    if (volume < 0) {
-        if (newVol > avgVol) {
-            newVol = PA_VOLUME_MUTED;
+        if (volume < 0) {
+            if (newVol > avgVol) {
+                newVol = PA_VOLUME_MUTED;
+            }
         }
-    }
-    if (avgVol < PA_VOLUME_NORM) {
-        if (newVol > PA_VOLUME_NORM) {
-            newVol = PA_VOLUME_NORM;
-        }
-    }
-
-
-    pa_cvolume newCVol = defaultSinkVolume;
-    for (int i = 0; i < newCVol.channels; i++) {
-        newCVol.values[i] = newVol;
-    }
-    pa_context_set_sink_mute_by_index(pulseContext, defaultSinkIndex, false, NULL, NULL);
-    pa_context_set_sink_volume_by_index(pulseContext, defaultSinkIndex, &newCVol, NULL, NULL);
-}
-
-void AudioManager::setMasterVolume(int volume) {
-    if (pulseAvailable) {
-        pa_volume_t setVol = PA_VOLUME_MUTED + (((float) volume / 100) * (float) PA_VOLUME_NORM);
-        pa_cvolume newVol = defaultSinkVolume;
-        for (int i = 0; i < newVol.channels; i++) {
-            newVol.values[i] = setVol;
-        }
-        pa_context_set_sink_volume_by_index(pulseContext, defaultSinkIndex, &newVol, NULL, NULL);
-    } else {
-        //Get Current Limits
-        QProcess* mixer = new QProcess(this);
-        mixer->start("amixer");
-        mixer->waitForFinished();
-        QString output(mixer->readAll());
-
-        bool readLine = false;
-        int limit;
-        for (QString line : output.split("\n")) {
-            if (line.startsWith(" ") && readLine) {
-                if (line.startsWith("  Limits:")) {
-                    limit = line.split(" ").last().toInt();
-                }
-            } else {
-                if (line.contains("'Master'")) {
-                    readLine = true;
-                } else {
-                    readLine = false;
-                }
+        if (avgVol < PA_VOLUME_NORM) {
+            if (newVol > PA_VOLUME_NORM) {
+                newVol = PA_VOLUME_NORM;
             }
         }
 
-        mixer->start("amixer set Master " + QString::number(limit * (volume / (float) 100)) + " on");
-        connect(mixer, SIGNAL(finished(int)), mixer, SLOT(deleteLater()));
+
+        pa_cvolume newCVol = defaultSinkVolume;
+        for (int i = 0; i < newCVol.channels; i++) {
+            newCVol.values[i] = newVol;
+        }
+        pa_context_set_sink_mute_by_index(pulseContext, defaultSinkIndex, false, NULL, NULL);
+        pa_context_set_sink_volume_by_index(pulseContext, defaultSinkIndex, &newCVol, NULL, NULL);
+    }
+}
+
+void AudioManager::setMasterVolume(int volume) {
+    if (currentQuietMode != mute) {
+        if (pulseAvailable) {
+            pa_volume_t setVol = PA_VOLUME_MUTED + (((float) volume / 100) * (float) PA_VOLUME_NORM);
+            pa_cvolume newVol = defaultSinkVolume;
+            for (int i = 0; i < newVol.channels; i++) {
+                newVol.values[i] = setVol;
+            }
+            pa_context_set_sink_volume_by_index(pulseContext, defaultSinkIndex, &newVol, NULL, NULL);
+        } else {
+            //Get Current Limits
+            QProcess* mixer = new QProcess(this);
+            mixer->start("amixer");
+            mixer->waitForFinished();
+            QString output(mixer->readAll());
+
+            bool readLine = false;
+            int limit;
+            for (QString line : output.split("\n")) {
+                if (line.startsWith(" ") && readLine) {
+                    if (line.startsWith("  Limits:")) {
+                        limit = line.split(" ").last().toInt();
+                    }
+                } else {
+                    if (line.contains("'Master'")) {
+                        readLine = true;
+                    } else {
+                        readLine = false;
+                    }
+                }
+            }
+
+            mixer->start("amixer set Master " + QString::number(limit * (volume / (float) 100)) + " on");
+            connect(mixer, SIGNAL(finished(int)), mixer, SLOT(deleteLater()));
+        }
     }
 }
 
@@ -178,9 +182,9 @@ void AudioManager::pulseGetSources(pa_context *c, const pa_source_info *i, int e
     }
 }
 
-void AudioManager::quietStreams() {
+void AudioManager::attenuateStreams() {
     if (pulseAvailable) {
-        if (quietRequests == 0) {
+        if (attenuateRequests == 0) {
             for (int source : originalStreamVolumes.keys()) {
                 //Set volume to 50% of original
                 pa_cvolume originalVolume = originalStreamVolumes.value(source);
@@ -193,9 +197,9 @@ void AudioManager::quietStreams() {
                 }
                 pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
             }
-            quietMode = true;
+            attenuateMode = true;
         }
-        quietRequests++;
+        attenuateRequests++;
     }
 }
 
@@ -209,14 +213,14 @@ void AudioManager::silenceStreams() {
             }
             pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
         }
-        quietMode = true;
+        attenuateMode = true;
     }
 }
 
 void AudioManager::restoreStreams(bool immediate) {
     if (pulseAvailable) {
-        quietRequests--;
-        if (quietRequests == 0) {
+        attenuateRequests--;
+        if (attenuateRequests == 0) {
             //Sounds much better if we delay by a second
             QTimer::singleShot(immediate ? 0 : 1000, [=]() {
                 for (int source : originalStreamVolumes.keys()) {
@@ -239,7 +243,7 @@ void AudioManager::restoreStreams(bool immediate) {
                             pa_context_set_sink_input_volume(pulseContext, source, &originalVolume, NULL, NULL);
                         });
                         connect(anim, &tVariantAnimation::finished, [=]() {
-                            quietMode = false;
+                            attenuateMode = false;
                         });
                         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
                         anim->start();
@@ -247,8 +251,8 @@ void AudioManager::restoreStreams(bool immediate) {
 
                 }
             });
-        } else if (quietRequests == -1) {
-            quietRequests = 0;
+        } else if (attenuateRequests == -1) {
+            attenuateRequests = 0;
         }
     }
 }
@@ -257,7 +261,7 @@ void AudioManager::pulseGetInputSinks(pa_context *c, const pa_sink_input_info *i
     AudioManager* currentManager = (AudioManager*) userdata;
     if (eol == 0) {
         if (!currentManager->tsClientIndices.contains(i->client)) {
-            if (currentManager->quietMode) {
+            if (currentManager->attenuateMode) {
                 if (currentManager->originalStreamVolumes.contains(i->index)) {
                     pa_cvolume originalVolume = i->volume;
                     for (int i = 0; i < originalVolume.channels; i++) {
@@ -283,5 +287,38 @@ void AudioManager::pulseGetClients(pa_context *c, const pa_client_info *i, int e
     } else {
         currentManager->tsClientIndices = currentManager->newTsClientIndices;
         currentManager->newTsClientIndices.clear();
+    }
+}
+
+void AudioManager::setQuietMode(quietMode mode) {
+    if (mode != currentQuietMode) {
+        quietMode oldQuietMode = this->currentQuietMode;
+        if (mode == mute) {
+            volumeBeforeMute = MasterVolume();
+            setMasterVolume(PA_VOLUME_MUTED);
+        }
+
+        this->currentQuietMode = mode;
+        emit QuietModeChanged(mode);
+
+        if (oldQuietMode == mute) {
+            setMasterVolume(volumeBeforeMute);
+        }
+
+    }
+}
+
+AudioManager::quietMode AudioManager::QuietMode() {
+    return this->currentQuietMode;
+}
+
+QString AudioManager::getCurrentQuietModeDescription() {
+    switch (this->currentQuietMode) {
+        case none:
+            return "";
+        case notifications:
+            return tr("Ignores any notifications from all apps. Normal sounds will still be played.");
+        case mute:
+            return tr("Completely turns off all sounds and notifications from all apps. Not even timers or alarms will sound.");
     }
 }

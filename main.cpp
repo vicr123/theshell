@@ -31,6 +31,8 @@ TutorialWindow* TutorialWin = NULL;
 AudioManager* AudioMan = NULL;
 QTranslator *qtTranslator, *tsTranslator;
 
+#define ONBOARDING_VERSION 4
+
 void raise_signal(QString message) {
     //Clean up required stuff
 
@@ -247,11 +249,11 @@ int main(int argc, char *argv[])
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
 
-    if (settings.value("startup/lastOnboarding", 0) < 3 || startOnboarding) {
+    if (settings.value("startup/lastOnboarding", 0) < ONBOARDING_VERSION || startOnboarding) {
         Onboarding* onboardingWindow = new Onboarding();
         onboardingWindow->showFullScreen();
         onboardingWindow->exec();
-        settings.setValue("startup/lastOnboarding", 3);
+        settings.setValue("startup/lastOnboarding", ONBOARDING_VERSION);
     }
 
     MainWin = new MainWindow();

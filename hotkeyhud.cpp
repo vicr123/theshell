@@ -53,7 +53,7 @@ void HotkeyHud::paintEvent(QPaintEvent *event) {
     event->accept();
 }
 
-void HotkeyHud::show() {
+void HotkeyHud::show(int timeout) {
     Atom atoms[2];
     atoms[0] = XInternAtom(QX11Info::display(), "_KDE_NET_WM_WINDOW_TYPE_ON_SCREEN_DISPLAY", False);
     atoms[1] = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NOTIFICATION", False);
@@ -81,14 +81,14 @@ void HotkeyHud::show() {
         });
     }
 
-    if (timeout == NULL) {
-        timeout = new QTimer();
-        timeout->setSingleShot(true);
-        timeout->setInterval(1500);
-        connect(timeout, SIGNAL(timeout()), this, SLOT(Timeout()));
+    if (this->timeout == NULL) {
+        this->timeout = new QTimer();
+        this->timeout->setSingleShot(true);
+        this->timeout->setInterval(timeout);
+        connect(this->timeout, SIGNAL(timeout()), this, SLOT(Timeout()));
 
     }
-    timeout->start();
+    this->timeout->start();
 
     isShowing = true;
 }
@@ -104,14 +104,14 @@ void HotkeyHud::show(QIcon icon, QString control, int value) {
     this->repaint();
 }
 
-void HotkeyHud::show(QIcon icon, QString control, QString explanation) {
+void HotkeyHud::show(QIcon icon, QString control, QString explanation, int timeout) {
     ui->icon->setPixmap(icon.pixmap(32));
     ui->control->setText(control);
     ui->explanation->setText(explanation);
     ui->value->setVisible(false);
     ui->explanation->setVisible(true);
     this->value = 0;
-    this->show();
+    this->show(timeout);
     this->repaint();
 }
 

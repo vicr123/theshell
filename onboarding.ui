@@ -89,7 +89,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Welcome to theShell 6.1!</string>
+             <string>Welcome to theShell 6.2!</string>
             </property>
            </widget>
           </item>
@@ -101,7 +101,8 @@
                <string notr="true">Language</string>
               </property>
               <property name="icon">
-               <iconset theme="flag"/>
+               <iconset theme="flag">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>

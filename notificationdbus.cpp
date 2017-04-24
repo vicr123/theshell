@@ -69,15 +69,9 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         replaces_id = nextId;
         nextId++;
 
-        if (dropdownPane != NULL) {
-            if (dropdownPane->isQuietOn()) {
-                if (hints.keys().contains("urgency")) {
-                    if (hints.value("urgency").toChar().unicode() != 2) {
-                        showDialog = false;
-                    }
-                } else {
-                    showDialog = false;
-                }
+        if (AudioMan != NULL) {
+            if (AudioMan->QuietMode() == AudioManager::notifications || AudioMan->QuietMode() == AudioManager::mute) {
+                showDialog = false;
             }
         }
 
@@ -175,9 +169,9 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         emit newNotification(replaces_id, summary, body, icon);
     }
 
-    if (!hints.value("suppress-sound", false).toBool() && !dropdownPane->isQuietOn()) {
+    if (!hints.value("suppress-sound", false).toBool() && !(AudioMan->QuietMode() == AudioManager::notifications || AudioMan->QuietMode() == AudioManager::mute)) {
         if (hints.contains("sound-file")) {
-            AudioMan->quietStreams();
+            AudioMan->attenuateStreams();
             QMediaPlayer* player = new QMediaPlayer();
             if (hints.value("sound-file").toString().startsWith("qrc:")) {
                 player->setMedia(QMediaContent(QUrl(hints.value("sound-file").toString())));
@@ -192,7 +186,7 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
                 }
             });
         } else {
-            AudioMan->quietStreams();
+            AudioMan->attenuateStreams();
             QSoundEffect* sound = new QSoundEffect();
 
             QString notificationSound = settings.value("notifications/sound", "tripleping").toString();

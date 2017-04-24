@@ -172,6 +172,12 @@ private slots:
 
     void on_notifications_mouseReleased();
 
+    void on_actionNone_triggered();
+
+    void on_actionNotifications_triggered();
+
+    void on_actionMute_triggered();
+
 signals:
     void reloadBackgrounds();
 

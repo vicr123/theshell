@@ -53,9 +53,6 @@ void Background::on_graphicsView_customContextMenuRequested(const QPoint &pos)
     menu->addAction(ui->actionChange_Background);
     menu->addSection(tr("For system"));
     menu->addAction(ui->actionOpen_theShell_Settings);
-    if (QFile("/usr/bin/systemsettings5").exists()) {
-        menu->addAction(ui->actionOpen_System_Settings);
-    }
     menu->addAction(ui->actionOpen_Status_Center);
 
     menu->exec(ui->graphicsView->mapToGlobal(pos));

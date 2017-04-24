@@ -16,19 +16,30 @@
 class AudioManager : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(quietMode QuietMode READ QuietMode WRITE setQuietMode NOTIFY QuietModeChanged)
 public:
     explicit AudioManager(QObject *parent = 0);
 
+    enum quietMode {
+        none,
+        notifications,
+        mute
+    };
+
     int MasterVolume();
+    quietMode QuietMode();
+    QString getCurrentQuietModeDescription();
 
 signals:
+    void QuietModeChanged(quietMode mode);
 
 public slots:
     void setMasterVolume(int volume);
     void changeVolume(int volume);
-    void quietStreams();
+    void attenuateStreams();
     void silenceStreams();
     void restoreStreams(bool immediate = false);
+    void setQuietMode(quietMode mode);
 
 private:
     pa_context* pulseContext = NULL;
@@ -44,14 +55,16 @@ private:
     static void pulseGetClients(pa_context *c, const pa_client_info*i, int eol, void *userdata);
 
     QMap<int, pa_cvolume> originalStreamVolumes;
-    int quietRequests = 0;
+    int attenuateRequests = 0;
 
     bool pulseAvailable = false;
-    bool quietMode = false;
+    bool attenuateMode = false;
     int defaultSinkIndex = -1;
     QList<uint> tsClientIndices;
     QList<uint> newTsClientIndices;
     pa_cvolume defaultSinkVolume;
+    quietMode currentQuietMode = none;
+    int volumeBeforeMute;
 };
 
 #endif // AUDIOMANAGER_H

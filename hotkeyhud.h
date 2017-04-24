@@ -40,7 +40,7 @@ public:
     ~HotkeyHud();
 
     void show(QIcon icon, QString control, int value);
-    void show(QIcon icon, QString control, QString explanation);
+    void show(QIcon icon, QString control, QString explanation, int timeout = 1500);
     void close();
 
     void setGeometry(int x, int y, int w, int h);
@@ -53,7 +53,7 @@ private:
     Ui::HotkeyHud *ui;
 
     void paintEvent(QPaintEvent* event);
-    void show();
+    void show(int timeout = 1500);
     bool isShowing = false;
 
     int value;

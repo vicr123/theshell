@@ -68,15 +68,6 @@
     <string>Change Background</string>
    </property>
   </action>
-  <action name="actionOpen_System_Settings">
-   <property name="icon">
-    <iconset theme="systemsettings">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-   <property name="text">
-    <string>Open System Settings</string>
-   </property>
-  </action>
   <action name="actionOpen_Status_Center">
    <property name="icon">
     <iconset theme="dialog-information">
@@ -92,7 +83,7 @@
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Open theShell Settings</string>
+    <string>Open System Settings</string>
    </property>
   </action>
  </widget>

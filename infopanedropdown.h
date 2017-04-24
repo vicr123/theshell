@@ -276,12 +276,16 @@ private slots:
 
     void on_TouchInputSwitch_toggled(bool checked);
 
+    void on_quietModeSound_clicked();
+
+    void on_quietModeNotification_clicked();
+
+    void on_quietModeMute_clicked();
+
 public slots:
     void getNetworks();
 
     void startTimer(QTime time);
-
-    bool isQuietOn();
 
     //Switches for theWave
     void on_WifiSwitch_toggled(bool checked);

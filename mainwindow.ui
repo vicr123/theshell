@@ -340,7 +340,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="volumeButton">
+              <widget class="QToolButton" name="volumeButton">
                <property name="maximumSize">
                 <size>
                  <width>28</width>
@@ -354,7 +354,10 @@
                 <iconset theme="audio-volume-high">
                  <normaloff>.</normaloff>.</iconset>
                </property>
-               <property name="flat">
+               <property name="popupMode">
+                <enum>QToolButton::InstantPopup</enum>
+               </property>
+               <property name="autoRaise">
                 <bool>true</bool>
                </property>
               </widget>
@@ -734,6 +737,13 @@ padding-right: 3px;</string>
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="StatusBarQuietMode">
+         <property name="text">
+          <string notr="true">Quiet Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -765,6 +775,30 @@ padding-right: 3px;</string>
     </item>
    </layout>
   </widget>
+  <action name="actionNone">
+   <property name="icon">
+    <iconset theme="audio-volume-high"/>
+   </property>
+   <property name="text">
+    <string>Sound</string>
+   </property>
+  </action>
+  <action name="actionNotifications">
+   <property name="icon">
+    <iconset theme="quiet-mode"/>
+   </property>
+   <property name="text">
+    <string>No Notifications</string>
+   </property>
+  </action>
+  <action name="actionMute">
+   <property name="icon">
+    <iconset theme="audio-volume-muted"/>
+   </property>
+   <property name="text">
+    <string>Mute</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

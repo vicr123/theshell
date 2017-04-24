@@ -132,36 +132,52 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
 
                     Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioRaiseVolume)) { //Increase Volume by 5%
-                    volume = volume + 5;
-                    if (volume - 5 < 100 && volume > 100) {
-                        volume = 100;
+                    if (AudioMan->QuietMode() == AudioManager::mute) {
+                        Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
+                    } else {
+                        volume = volume + 5;
+                        if (volume - 5 < 100 && volume > 100) {
+                            volume = 100;
+                        }
+                        AudioMan->changeVolume(5);
+
+                        QSoundEffect* volumeSound = new QSoundEffect();
+                        volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
+                        volumeSound->play();
+                        connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
+
+                        Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
                     }
-                    AudioMan->changeVolume(5);
-
-                    QSoundEffect* volumeSound = new QSoundEffect();
-                    volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
-                    volumeSound->play();
-                    connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
-
-                    Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume)) { //Decrease Volume by 5%
-                    volume = volume - 5;
-                    if (volume < 0) volume = 0;
-                    AudioMan->changeVolume(-5);
+                    if (AudioMan->QuietMode() == AudioManager::mute) {
+                        Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
+                    } else {
+                        volume = volume - 5;
+                        if (volume < 0) volume = 0;
+                        AudioMan->changeVolume(-5);
 
-                    QSoundEffect* volumeSound = new QSoundEffect();
-                    volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
-                    volumeSound->play();
-                    connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
+                        QSoundEffect* volumeSound = new QSoundEffect();
+                        volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
+                        volumeSound->play();
+                        connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
 
-                    Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioMute)) { //Set Volume to 0%
-                    volume = 0;
-                    QProcess* volumeAdj = new QProcess(this);
-                    volumeAdj->start("amixer set Master off");
-                    connect(volumeAdj, SIGNAL(finished(int)), volumeAdj, SLOT(deleteLater()));
-
-                    Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
+                        Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
+                    }
+                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioMute)) { //Toggle Quiet Mode
+                    switch (AudioMan->QuietMode()) {
+                        case AudioManager::none:
+                            AudioMan->setQuietMode(AudioManager::notifications);
+                            Hotkeys->show(QIcon::fromTheme("quiet-mode"), tr("No Notifications"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                            break;
+                        case AudioManager::notifications:
+                            AudioMan->setQuietMode(AudioManager::mute);
+                            Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Mute"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                            break;
+                        case AudioManager::mute:
+                            AudioMan->setQuietMode(AudioManager::none);
+                            Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Sound"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                            break;
+                    }
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessUp)) { //Increase keyboard brightness by 5%
                     kbdBrightness += (((float) maxKbdBrightness / 100) * 5);
                     if (kbdBrightness > maxKbdBrightness) kbdBrightness = maxKbdBrightness;

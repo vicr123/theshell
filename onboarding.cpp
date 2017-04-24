@@ -2,7 +2,10 @@
 #include "ui_onboarding.h"
 #include "internationalisation.h"
 
-#define ChangelogOnbording "New in theShell 6.1:\n"\
+#define ChangelogOnbording "New in theShell 6.2:\n"\
+    "- Quiet Mode\n"\
+    "\n"\
+    "New in theShell 6.1:\n"\
     "- New Status Bar. Go to Settings > Bar to activate it.\n"\
     "- Preliminary touch support\n"\
     "- Region selection in screenshots\n"\

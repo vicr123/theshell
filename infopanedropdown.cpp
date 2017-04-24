@@ -284,6 +284,25 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
         ui->retranslateUi(this);
     });
+
+    connect(AudioMan, &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
+        ui->quietModeSound->setChecked(false);
+        ui->quietModeNotification->setChecked(false);
+        ui->quietModeMute->setChecked(false);
+
+        if (mode == AudioManager::none) {
+            ui->quietModeSound->setChecked(true);
+            ui->quietModeSettings->setVisible(false);
+        } else if (mode == AudioManager::notifications) {
+            ui->quietModeNotification->setChecked(true);
+            ui->quietModeSettings->setVisible(true);
+            ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
+        } else {
+            ui->quietModeMute->setChecked(true);
+            ui->quietModeSettings->setVisible(true);
+            ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
+        }
+    });
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -647,7 +666,7 @@ void InfoPaneDropdown::getNetworks() {
                     NetworkLabelType = NetworkType::Wired;
                     signalStrength = 5;
                     allowAppendNoNetworkMessage = true;
-                } else {
+                } else { //Not connected over Ethernet
                     if (!connectedNetworks.keys().contains(interface)) {
                         connectedNetworks.insert(interface, "false");
                     } else {
@@ -662,7 +681,10 @@ void InfoPaneDropdown::getNetworks() {
                             doNetworkCheck();
                         }
                     }
-                    signalStrength = -4;
+
+                    if (signalStrength < 0) {
+                        signalStrength = -4;
+                    }
                 }
                 delete wire;
             }
@@ -1107,7 +1129,7 @@ void InfoPaneDropdown::startTimer(QTime time) {
             delete timer;
             timer = NULL;
 
-            if (!ui->QuietCheck->isChecked()) { //Check if we should show the notification so the user isn't stuck listening to the tone
+            if (AudioMan->QuietMode() != AudioManager::notifications && AudioMan->QuietMode() != AudioManager::mute) { //Check if we should show the notification so the user isn't stuck listening to the tone
                 QVariantMap hints;
                 hints.insert("x-thesuite-timercomplete", true);
                 hints.insert("suppress-sound", true);
@@ -1136,7 +1158,7 @@ void InfoPaneDropdown::startTimer(QTime time) {
                 ringtone->play();
 
 
-                AudioMan->quietStreams();
+                AudioMan->attenuateStreams();
             }
             updateTimers();
         } else {
@@ -1170,6 +1192,7 @@ void InfoPaneDropdown::updateTimers() {
 }
 
 void InfoPaneDropdown::notificationClosed(uint id, uint reason) {
+    Q_UNUSED(reason)
     if (id == timerNotificationId) {
         ringtone->stop();
         AudioMan->restoreStreams();
@@ -1374,14 +1397,6 @@ void InfoPaneDropdown::updateSysInfo() {
 void InfoPaneDropdown::on_printLabel_clicked()
 {
     changeDropDown(Print);
-}
-
-bool InfoPaneDropdown::isQuietOn() {
-    if (this == NULL) {
-        return false;
-    } else {
-        return ui->QuietCheck->isChecked();
-    }
 }
 
 void InfoPaneDropdown::on_resetButton_clicked()
@@ -1885,6 +1900,7 @@ void InfoPaneDropdown::updateBatteryChart() {
 
 void InfoPaneDropdown::on_batteryChartShowProjected_toggled(bool checked)
 {
+    Q_UNUSED(checked)
     updateBatteryChart();
 }
 
@@ -2317,4 +2333,19 @@ void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_TouchInputSwitch_toggled(bool checked)
 {
     settings.setValue("input/touch", checked);
+}
+
+void InfoPaneDropdown::on_quietModeSound_clicked()
+{
+    AudioMan->setQuietMode(AudioManager::none);
+}
+
+void InfoPaneDropdown::on_quietModeNotification_clicked()
+{
+    AudioMan->setQuietMode(AudioManager::notifications);
+}
+
+void InfoPaneDropdown::on_quietModeMute_clicked()
+{
+    AudioMan->setQuietMode(AudioManager::mute);
 }

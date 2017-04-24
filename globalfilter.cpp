@@ -15,6 +15,7 @@ GlobalFilter::GlobalFilter(QApplication *application, QObject *parent) : QObject
 }
 
 bool GlobalFilter::eventFilter(QObject *object, QEvent *event) {
+    Q_UNUSED(object)
     if (event->type() == QEvent::MouseButtonRelease) {
         QSettings settings;
         if (settings.value("input/touchFeedbackSound", false).toBool()) {
