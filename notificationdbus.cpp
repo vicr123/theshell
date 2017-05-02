@@ -70,7 +70,15 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
         nextId++;
 
         if (AudioMan != NULL) {
-            if (AudioMan->QuietMode() == AudioManager::notifications || AudioMan->QuietMode() == AudioManager::mute) {
+            if (AudioMan->QuietMode() == AudioManager::notifications) {
+                QStringList allowedCategories;
+                allowedCategories.append("battery.low");
+                allowedCategories.append("battery.critical");
+                allowedCategories.append("reminder.activate");
+                if (!allowedCategories.contains(hints.value("category").toString()) && !hints.value("x-thesuite-timercomplete", false).toBool()) {
+                    showDialog = false;
+                }
+            } else if (AudioMan->QuietMode() == AudioManager::mute) {
                 showDialog = false;
             }
         }
@@ -132,7 +140,6 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
     }
 
     if (!hints.value("transient", false).toBool()) {
-
         QColor color = QApplication::palette("QLabel").color(QPalette::Window);
         QIcon icon = QIcon::fromTheme("dialog-warning");
         if (hints.keys().contains("category")) {
@@ -157,6 +164,10 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
                 icon = getIconFromTheme("connect.svg", color).pixmap(24, 24);
             } else if (category == "device.removed") {
                 icon = getIconFromTheme("disconnect.svg", color).pixmap(24, 24);
+            } else if (category == "device.removed") {
+                icon = getIconFromTheme("disconnect.svg", color).pixmap(24, 24);
+            } else if (category == "reminder.activate") {
+                icon = getIconFromTheme("reminder", color).pixmap(24, 24);
             }
         } else if (hints.keys().contains("urgency")) {
             QChar urgency = hints.value("urgency").toChar();

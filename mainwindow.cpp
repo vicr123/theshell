@@ -9,6 +9,7 @@ extern TutorialWindow* TutorialWin;
 extern AudioManager* AudioMan;
 extern NativeEventFilter* NativeFilter;
 extern float getDPIScaling();
+extern LocationServices* locationServices;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -155,6 +156,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarMpris->setVisible(false);
     ui->StatusBarMprisIcon->setVisible(false);
     ui->StatusBarQuietMode->setVisible(false);
+    ui->StatusBarLocation->setVisible(false);
+    ui->LocationIndication->setVisible(false);
+    ui->StatusBarLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->LocationIndication->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+
+    connect(locationServices, &LocationServices::locationUsingChanged, [=](bool location) {
+        ui->StatusBarLocation->setVisible(location);
+        ui->LocationIndication->setVisible(location);
+    });
 
     if (QFile("/usr/bin/amixer").exists()) {
         ui->volumeSlider->setVisible(false);

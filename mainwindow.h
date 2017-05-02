@@ -35,6 +35,7 @@
 #include <QX11Info>
 #include <systemd/sd-login.h>
 #include <systemd/sd-daemon.h>
+#include "locationservices.h"
 
 #undef Bool
 

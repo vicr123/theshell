@@ -523,6 +523,7 @@ void InfoPaneDropdown::timerTick() {
             if (data.second.msecsTo(QDateTime::currentDateTime()) > 0) {
                 QVariantMap hints;
                 hints.insert("category", "reminder.activate");
+                hints.insert("sound-file", "qrc:/sounds/notifications/reminder.wav");
                 notificationEngine->Notify("theShell", 0, "theshell", "Reminder", data.first, QStringList(), hints, 30000);
                 ReminderData.removeAt(i);
                 i--;

@@ -28,7 +28,12 @@ QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
 #DBUS_ADAPTORS += com.canonical.AppMenu.Registrar.xml
 
 power.files = org.thesuite.power.xml
-DBUS_ADAPTORS += power
+
+location.files = org.freedesktop.GeoClue2.Agent.xml
+location.header_flags = -l LocationServices -i locationservices.h
+location.source_flags = -l LocationServices -i locationservices.h
+
+DBUS_ADAPTORS += power location
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -66,7 +71,8 @@ SOURCES += main.cpp\
     bthandsfree.cpp \
     tutorialwindow.cpp \
     screenshotwindow.cpp \
-    audiomanager.cpp
+    audiomanager.cpp \
+    locationservices.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -105,7 +111,8 @@ HEADERS  += mainwindow.h \
     tutorialwindow.h \
     screenshotwindow.h \
     audiomanager.h \
-    internationalisation.h
+    internationalisation.h \
+    locationservices.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

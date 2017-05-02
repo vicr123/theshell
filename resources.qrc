@@ -64,5 +64,6 @@
         <file alias="tripleping.wav">notifications/tripleping.wav</file>
         <file alias="upsidedown.wav">notifications/upsidedown.wav</file>
         <file alias="echo.wav">notifications/echo.wav</file>
+        <file alias="reminder.wav">notifications/reminder.wav</file>
     </qresource>
 </RCC>

@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <X11/Xcursor/Xcursor.h>
 #include <X11/Xlib.h>
+#include "locationservices.h"
 
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
@@ -30,6 +31,7 @@ DbusEvents* DBusEvents = NULL;
 TutorialWindow* TutorialWin = NULL;
 AudioManager* AudioMan = NULL;
 QTranslator *qtTranslator, *tsTranslator;
+LocationServices* locationServices = NULL;
 
 #define ONBOARDING_VERSION 4
 
@@ -248,6 +250,8 @@ int main(int argc, char *argv[])
 
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
+
+    locationServices = new LocationServices();
 
     if (settings.value("startup/lastOnboarding", 0) < ONBOARDING_VERSION || startOnboarding) {
         Onboarding* onboardingWindow = new Onboarding();

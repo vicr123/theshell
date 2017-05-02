@@ -342,7 +342,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -1892,7 +1892,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>6</number>
+            <number>13</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -3935,7 +3935,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>theShell 6.1</string>
+                   <string>theShell 6.2</string>
                   </property>
                  </widget>
                 </item>

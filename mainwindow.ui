@@ -306,6 +306,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="LocationIndication">
+            <property name="text">
+             <string notr="true">Location</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="Line" name="line_5">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -744,6 +751,13 @@ padding-right: 3px;</string>
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="StatusBarLocation">
+         <property name="text">
+          <string notr="true">Location</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -777,7 +791,8 @@ padding-right: 3px;</string>
   </widget>
   <action name="actionNone">
    <property name="icon">
-    <iconset theme="audio-volume-high"/>
+    <iconset theme="audio-volume-high">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Sound</string>
@@ -785,7 +800,8 @@ padding-right: 3px;</string>
   </action>
   <action name="actionNotifications">
    <property name="icon">
-    <iconset theme="quiet-mode"/>
+    <iconset theme="quiet-mode">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>No Notifications</string>
@@ -793,7 +809,8 @@ padding-right: 3px;</string>
   </action>
   <action name="actionMute">
    <property name="icon">
-    <iconset theme="audio-volume-muted"/>
+    <iconset theme="audio-volume-muted">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Mute</string>
