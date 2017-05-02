@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDBusMessage>
 #include <QDBusInterface>
+#include <QDebug>
 
 class LocationServices : public QObject
 {

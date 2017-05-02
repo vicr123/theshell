@@ -29,11 +29,11 @@ QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
 
 power.files = org.thesuite.power.xml
 
-location.files = org.freedesktop.GeoClue2.Agent.xml
-location.header_flags = -l LocationServices -i locationservices.h
-location.source_flags = -l LocationServices -i locationservices.h
+#location.files = org.freedesktop.GeoClue2.Agent.xml
+#location.header_flags = -l LocationServices -i locationservices.h
+#location.source_flags = -l LocationServices -i locationservices.h
 
-DBUS_ADAPTORS += power location
+DBUS_ADAPTORS += power #location
 
 SOURCES += main.cpp\
         mainwindow.cpp \

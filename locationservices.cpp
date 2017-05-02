@@ -1,5 +1,5 @@
 #include "locationservices.h"
-#include "agent_adaptor.h"
+//#include "agent_adaptor.h"
 
 LocationServices::LocationServices(QObject *parent) : QObject(parent)
 {
