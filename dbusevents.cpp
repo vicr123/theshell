@@ -47,8 +47,8 @@ DbusEvents::DbusEvents(NotificationDBus* notifications, QObject *parent) : QObje
 void DbusEvents::LockScreen() {
     if (LockScreenProcess == NULL) {
         LockScreenProcess = new QProcess();
-        connect(LockScreenProcess, (void(QProcess::*)(int, QProcess::ExitStatus)) &QProcess::finished, [=]() {
-            delete LockScreenProcess;
+        connect(LockScreenProcess, (void(QProcess::*)(int, QProcess::ExitStatus)) &QProcess::finished, [=] {
+            LockScreenProcess->deleteLater();
             LockScreenProcess = NULL; //Delete Process
         });
         LockScreenProcess->start("/usr/lib/tsscreenlock"); //Lock Screen
