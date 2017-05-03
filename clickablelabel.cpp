@@ -32,10 +32,8 @@ void ClickableLabel::setShowDisabled(bool showDisabled) {
     QPalette applicationPal = QApplication::palette(tempLabel);
     QPalette thisPal = this->palette();
     if (isShowDisabled) {
-        //thisPal.setCurrentColorGroup(QPalette::Disabled);
         thisPal.setBrush(QPalette::WindowText, applicationPal.brush(QPalette::Disabled, QPalette::WindowText));
     } else {
-        //thisPal.setCurrentColorGroup(QPalette::Active);
         thisPal.setBrush(QPalette::WindowText, applicationPal.brush(QPalette::Normal, QPalette::WindowText));
     }
     this->setPalette(thisPal);

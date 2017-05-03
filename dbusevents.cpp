@@ -63,7 +63,9 @@ void DbusEvents::UnlockScreen() {
 }
 
 void DbusEvents::SleepingNow() {
-    LockScreen();
+    if (settings.value("lockScreen/showOnSuspend", true).toBool()) {
+        LockScreen();
+    }
 }
 
 void DbusEvents::NewUdisksInterface(QDBusObjectPath path) {

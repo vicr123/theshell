@@ -204,6 +204,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->MediaSwitch->setChecked(settings.value("notifications/mediaInsert", true).toBool());
     ui->StatusBarSwitch->setChecked(settings.value("bar/statusBar", false).toBool());
     ui->TouchInputSwitch->setChecked(settings.value("input/touch", false).toBool());
+    ui->SuspendLockScreen->setChecked(settings.value("lockScreen/showOnSuspend", true).toBool());
     ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
 
     QString defaultFont;
@@ -303,6 +304,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
             ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
         }
     });
+    ui->quietModeSettings->setVisible(false);
 
     ui->RemindersList->setModel(new RemindersListModel);
     ui->RemindersList->setItemDelegate(new RemindersDelegate);
@@ -2393,16 +2395,19 @@ void InfoPaneDropdown::on_TouchInputSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_quietModeSound_clicked()
 {
     AudioMan->setQuietMode(AudioManager::none);
+    ui->quietModeSound->setChecked(true);
 }
 
 void InfoPaneDropdown::on_quietModeNotification_clicked()
 {
     AudioMan->setQuietMode(AudioManager::notifications);
+    ui->quietModeNotification->setChecked(true);
 }
 
 void InfoPaneDropdown::on_quietModeMute_clicked()
 {
     AudioMan->setQuietMode(AudioManager::mute);
+    ui->quietModeMute->setChecked(true);
 }
 
 RemindersListModel::RemindersListModel(QObject *parent) : QAbstractListModel(parent) {
@@ -2548,4 +2553,9 @@ void InfoPaneDropdown::on_ReminderCreate_clicked()
 
     ((RemindersListModel*) ui->RemindersList->model())->updateData();
     ui->RemindersStackedWidget->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::on_SuspendLockScreen_toggled(bool checked)
+{
+    settings.setValue("lockScreen/showOnSuspend", checked);
 }

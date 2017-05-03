@@ -289,6 +289,8 @@ private slots:
 
     void on_ReminderCreate_clicked();
 
+    void on_SuspendLockScreen_toggled(bool checked);
+
 public slots:
     void getNetworks();
 

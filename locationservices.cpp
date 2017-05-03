@@ -16,12 +16,12 @@ LocationServices::LocationServices(QObject *parent) : QObject(parent)
     QDBusPendingCall message = QDBusConnection::systemBus().asyncCall(agentMessage);*/
     //qDebug() << message.errorMessage();
 
-    QDBusConnection::systemBus().connect("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(GeocluePropertiesChanged(QString,QVariantMap)));
+    //QDBusConnection::systemBus().connect("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(GeocluePropertiesChanged(QString,QVariantMap)));
 }
 
 bool LocationServices::AuthorizeApp(QString desktop_id, uint req_accuracy_level, uint &allowed_accuracy_level) {
-    qDebug() << desktop_id + " is accessing location";
-    allowed_accuracy_level = req_accuracy_level;
+    //qDebug() << desktop_id + " is accessing location";
+    //allowed_accuracy_level = req_accuracy_level;
     return true;
 }
 
@@ -30,9 +30,9 @@ uint LocationServices::MaxAccuracyLevel() {
 }
 
 void LocationServices::GeocluePropertiesChanged(QString interface, QVariantMap properties) {
-    if (interface == "org.freedesktop.GeoClue2.Manager") {
+    /*if (interface == "org.freedesktop.GeoClue2.Manager") {
         if (properties.keys().contains("InUse")) {
             emit locationUsingChanged(properties.value("InUse").toBool());
         }
-    }
+    }*/
 }

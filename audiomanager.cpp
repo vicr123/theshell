@@ -317,6 +317,6 @@ QString AudioManager::getCurrentQuietModeDescription() {
         case notifications:
             return tr("Ignores any notifications from all apps. Normal sounds will still be played, and timers and reminders will still notify you, however, they won't play sounds.");
         case mute:
-            return tr("Completely turns off all sounds and notifications from all apps. Not even timers or reminders will notify you..");
+            return tr("Completely turns off all sounds and notifications from all apps. Not even timers or reminders will notify you.");
     }
 }
