@@ -652,11 +652,13 @@ void InfoPaneDropdown::on_pushButton_clicked()
 }
 
 void InfoPaneDropdown::getNetworks() {
+
     //Set the updating flag
     networkListUpdating = true;
 
     //Get the NetworkManager interface
     QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
+
 
     //Get the devices
     QDBusReply<QList<QDBusObjectPath>> reply = i->call("GetDevices");
@@ -947,6 +949,7 @@ void InfoPaneDropdown::getNetworks() {
     } else {
         NetworkLabel = tr("NetworkManager Error");
     }
+
 
     //Populate current connection area
     {
@@ -1989,10 +1992,13 @@ void InfoPaneDropdown::doNetworkCheck() {
         QNetworkAccessManager* manager = new QNetworkAccessManager;
         if (manager->networkAccessible() == QNetworkAccessManager::NotAccessible) {
             networkOk = false;
+            manager->deleteLater();
             return;
         }
+        manager->deleteLater();
 
-        connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply* reply) {
+        //For some reason this crashes theShell so let's not do this (for now)
+        /*connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply* reply) {
             if (reply->error() != QNetworkReply::NoError) {
                 networkOk = false;
             } else {
@@ -2000,7 +2006,7 @@ void InfoPaneDropdown::doNetworkCheck() {
             }
             manager->deleteLater();
         });
-        manager->get(QNetworkRequest(QUrl("http://vicr123.github.io/")));
+        manager->get(QNetworkRequest(QUrl("http://vicr123.github.io/")));*/
 
         //Reload the connectivity status
         i.asyncCall("CheckConnectivity");
