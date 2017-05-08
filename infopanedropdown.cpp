@@ -75,7 +75,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     QChartView* batteryChartView = new QChartView(batteryChart);
     batteryChartView->setRenderHint(QPainter::Antialiasing);
-    ui->batteryChartArea->layout()->addWidget(batteryChartView);
+    ((QBoxLayout*) ui->batteryChartArea->layout())->insertWidget(1, batteryChartView);
 
     updateBatteryChart();
 
@@ -810,7 +810,7 @@ void InfoPaneDropdown::getNetworks() {
                                 signalStrength = 4;
                             }
 
-                            NetworkLabel = tr("Connected to %1").arg(connectedSsid);
+                            NetworkLabel = /*tr("Connected to %1").arg(connectedSsid);*/ connectedSsid;
                             NetworkLabelType = NetworkType::Wireless;
                             ui->networkMac->setText("MAC Address: " + wifi->property("PermHwAddress").toString());
                             if (!connectedNetworks.keys().contains(interface)) {
@@ -932,13 +932,18 @@ void InfoPaneDropdown::getNetworks() {
             delete deviceInterface;
         }
 
-        if (allowAppendNoNetworkMessage && !networkOk) {
+        if (allowAppendNoNetworkMessage && networkOk != Ok) {
             if (NetworkLabelType == Wired) {
                 signalStrength = -5;
             } else {
                 signalStrength = -2;
             }
-            NetworkLabel.prepend(tr("Can't get to the internet") + " · ");
+
+            if (networkOk == Unspecified) {
+                NetworkLabel.prepend(tr("Can't get to the internet") + " · ");
+            } else if (networkOk == BehindPortal) {
+                NetworkLabel.prepend(tr("Login required") + " · ");
+            }
         }
 
         //If possible, restore the current selection
@@ -1876,7 +1881,13 @@ void InfoPaneDropdown::updateBatteryChart() {
 
     QDBusMessage historyMessage = QDBusMessage::createMethodCall("org.freedesktop.UPower", powerEngine->defaultBattery().path(), "org.freedesktop.UPower.Device", "GetHistory");
     QVariantList historyMessageArguments;
-    historyMessageArguments.append("charge");
+
+    if (ui->chargeGraphButton->isChecked()) {
+        historyMessageArguments.append("charge");
+    } else {
+        historyMessageArguments.append("rate");
+    }
+
     historyMessageArguments.append((uint) 0); //Get surplus data so we can plot some data off the left of the graph
     historyMessageArguments.append((uint) 10000);
     historyMessage.setArguments(historyMessageArguments);
@@ -1898,6 +1909,7 @@ void InfoPaneDropdown::updateBatteryChart() {
 
     QDateTime remainingTime = powerEngine->batteryTimeRemaining();
 
+    int firstDateTime = QDateTime::currentSecsSinceEpoch() / 60;
     if (historyArgument.isValid()) {
         QDBusArgument arrayArgument = historyArgument.value();
         arrayArgument.beginArray();
@@ -1905,17 +1917,20 @@ void InfoPaneDropdown::updateBatteryChart() {
             BatteryInfo info;
             arrayArgument >> info;
 
-            qint64 mSecs = info.time;
-            mSecs = mSecs * 1000;
+            qint64 msecs = info.time;
+            msecs = msecs * 1000;
 
             if (info.value != 0 && info.state != 0) {
-                batteryChartData->append(mSecs, info.value);
+                batteryChartData->append(msecs, info.value);
+                if (firstDateTime > info.time / 60) {
+                    firstDateTime = info.time / 60;
+                }
             }
         }
         arrayArgument.endArray();
         batteryChartData->append(QDateTime::currentMSecsSinceEpoch(), batteryChartData->at(batteryChartData->count() - 1).y());
 
-        if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked()) {
+        if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked() && ui->chargeGraphButton->isChecked()) {
             QDateTime lastDateTime = QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x());
             batteryChartTimeRemainingData->append(batteryChartData->at(batteryChartData->count() - 1));
             QDateTime endDateTime = lastDateTime.addMSecs(remainingTime.toMSecsSinceEpoch());
@@ -1925,20 +1940,24 @@ void InfoPaneDropdown::updateBatteryChart() {
                 batteryChartTimeRemainingData->append(endDateTime.toMSecsSinceEpoch(), 0);
             }
         }
-
     }
 
     batteryChart->removeAllSeries();
     batteryChart->addSeries(batteryChartData);
     batteryChart->addSeries(batteryChartTimeRemainingData);
 
-    QDateTimeAxis* xAxis = new QDateTimeAxis;
-    if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked()) {
-        xAxis->setMax(QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x()).addMSecs(remainingTime.toMSecsSinceEpoch()));
+    xAxis = new QDateTimeAxis;
+    if (ui->chargeGraphButton->isChecked()) {
+        if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked()) {
+            xAxis->setMax(QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x()).addMSecs(remainingTime.toMSecsSinceEpoch()));
+        } else {
+            xAxis->setMax(QDateTime::currentDateTime());
+        }
+        xAxis->setMin(xAxis->max().addDays(-1));
     } else {
         xAxis->setMax(QDateTime::currentDateTime());
+        xAxis->setMin(xAxis->max().addSecs(-43200)); //Half a day
     }
-    xAxis->setMin(xAxis->max().addDays(-1));
     batteryChart->addAxis(xAxis, Qt::AlignBottom);
     xAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
     xAxis->setFormat("dd/MM/yy hh:mm");
@@ -1946,9 +1965,28 @@ void InfoPaneDropdown::updateBatteryChart() {
     batteryChartData->attachAxis(xAxis);
     batteryChartTimeRemainingData->attachAxis(xAxis);
 
+    /*connect(xAxis, &QDateTimeAxis::rangeChanged, [=](QDateTime min, QDateTime max) {
+        ui->BatteryChargeScrollBar->setMaximum(max.toMSecsSinceEpoch() - min.toMSecsSinceEpoch());
+    });*/
+
+    chartScrolling = true;
+    int currentSecsSinceEpoch = QDateTime::currentSecsSinceEpoch();
+    ui->BatteryChargeScrollBar->setMinimum(0);
+    ui->BatteryChargeScrollBar->setMaximum(currentSecsSinceEpoch / 60 - firstDateTime);
+    ui->BatteryChargeScrollBar->setValue(currentSecsSinceEpoch / 60 - firstDateTime);
+    startValue = currentSecsSinceEpoch / 60 - firstDateTime;
+    chartScrolling = false;
+
     QValueAxis* yAxis = new QValueAxis;
-    yAxis->setLabelFormat("%i%%");
-    yAxis->setMax(100);
+
+    if (ui->chargeGraphButton->isChecked()) {
+        yAxis->setLabelFormat("%i%%");
+        yAxis->setMax(100);
+    } else {
+        yAxis->setLabelFormat("%i W");
+        yAxis->setMax(40);
+    }
+
     yAxis->setMin(0);
     yAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
     batteryChart->addAxis(yAxis, Qt::AlignLeft);
@@ -1977,22 +2015,58 @@ void InfoPaneDropdown::on_PowerStretchSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::doNetworkCheck() {
     if (powerEngine->powerStretch()) {
-        //Always set networkOk to true because we don't update when power stretch is on
-        networkOk = true;
+        //Always set networkOk to ok because we don't update when power stretch is on
+        networkOk = Ok;
     } else {
         //Do some network checks to see if network is working
 
         QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
         int connectivity = i.property("Connectivity").toUInt();
-        if (connectivity == 2 || connectivity == 3) {
-            networkOk = false;
+        if (connectivity == 2) {
+            if (networkOk != BehindPortal) {
+                //Notify user that they are behind a portal.
+                //Wait 10 seconds for startup or for connection notification
+
+                QTimer::singleShot(10000, [=] {
+                    QStringList actions;
+                    actions.append("login");
+                    actions.append(tr("Log in to network"));
+
+                    QVariantMap hints;
+                    hints.insert("category", "network.connected");
+                    hints.insert("transient", true);
+
+                    uint notificationId = notificationEngine->Notify("theShell", 0, "", tr("Network Login"),
+                                               tr("Your connection to the internet is blocked by a login page."),
+                                               actions, hints, 30000);
+                    connect(notificationEngine, &NotificationDBus::ActionInvoked, [=](uint id, QString key) {
+                        if (notificationId == id && key == "login") {
+                            QProcess::startDetached("xdg-open http://nmcheck.gnome.org/");
+                        }
+                    });
+                });
+            }
+
+            networkOk = BehindPortal;
+
+            //Reload the connectivity status
+            i.asyncCall("CheckConnectivity");
+            return;
+        } else if (connectivity == 3) {
+            networkOk = Unspecified;
+
+            //Reload the connectivity status
+            i.asyncCall("CheckConnectivity");
             return;
         }
 
         QNetworkAccessManager* manager = new QNetworkAccessManager;
         if (manager->networkAccessible() == QNetworkAccessManager::NotAccessible) {
-            networkOk = false;
+            networkOk = Unspecified;
             manager->deleteLater();
+
+            //Reload the connectivity status
+            i.asyncCall("CheckConnectivity");
             return;
         }
         manager->deleteLater();
@@ -2564,4 +2638,28 @@ void InfoPaneDropdown::on_ReminderCreate_clicked()
 void InfoPaneDropdown::on_SuspendLockScreen_toggled(bool checked)
 {
     settings.setValue("lockScreen/showOnSuspend", checked);
+}
+
+void InfoPaneDropdown::on_BatteryChargeScrollBar_valueChanged(int value)
+{
+    if (!chartScrolling) {
+        chartScrolling = true;
+        batteryChart->scroll(value - startValue, 0);
+        startValue = value;
+        chartScrolling = false;
+    }
+}
+
+void InfoPaneDropdown::on_chargeGraphButton_clicked()
+{
+    ui->chargeGraphButton->setChecked(true);
+    ui->rateGraphButton->setChecked(false);
+    updateBatteryChart();
+}
+
+void InfoPaneDropdown::on_rateGraphButton_clicked()
+{
+    ui->chargeGraphButton->setChecked(false);
+    ui->rateGraphButton->setChecked(true);
+    updateBatteryChart();
 }

@@ -69,6 +69,12 @@ public:
         Print = 5
     };
 
+    enum networkAvailability {
+        Unspecified = 0,
+        Ok = 1,
+        BehindPortal = 2
+    };
+
     void show(dropdownType showWith);
     void dragDown(dropdownType showWith, int y);
     void close();
@@ -291,6 +297,12 @@ private slots:
 
     void on_SuspendLockScreen_toggled(bool checked);
 
+    void on_BatteryChargeScrollBar_valueChanged(int value);
+
+    void on_chargeGraphButton_clicked();
+
+    void on_rateGraphButton_clicked();
+
 public slots:
     void getNetworks();
 
@@ -330,7 +342,7 @@ private:
     void reject();
 
     QTimer* networkCheckTimer;
-    bool networkOk = true;
+    networkAvailability networkOk = Ok;
 
     QTime stopwatchTime;
     int stopwatchTimeAdd = 0;
@@ -347,6 +359,9 @@ private:
     QMediaPlayer* ringtone;
 
     QChart* batteryChart;
+    QDateTimeAxis* xAxis;
+    bool chartScrolling = false;
+    int startValue;
 
     int previousDragY;
     WId MainWindowId;

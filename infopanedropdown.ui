@@ -342,7 +342,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>6</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -597,14 +597,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>10</month>
-                 <day>19</day>
+                 <day>17</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>10</month>
-                 <day>19</day>
+                 <day>17</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1054,6 +1054,39 @@
              </widget>
             </item>
             <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_42">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="chargeGraphButton">
+                <property name="text">
+                 <string>Charge</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="rateGraphButton">
+                <property name="text">
+                 <string>Rate</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
              <widget class="QCheckBox" name="batteryChartShowProjected">
               <property name="text">
                <string>Show projected charge</string>
@@ -1091,6 +1124,13 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QScrollBar" name="BatteryChargeScrollBar">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1558,8 +1598,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1165</width>
-            <height>575</height>
+            <width>174</width>
+            <height>58</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
