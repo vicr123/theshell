@@ -1947,11 +1947,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Well, this is bad.</source>
-        <translation type="unfinished">Đây là một tin xấu.</translation>
+        <translation>Đây là một tin xấu.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;theShell seems to have done something it shouldn&apos;t have. Because theShell has crashed, you&apos;ll need to log out and then log back in to fix it.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save all open work and then click &amp;quot;Log Out&amp;quot; to log out. If you don&apos;t save your work, it will be lost. All other apps will be forcibly closed once you click &amp;quot;Log Out.&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;theShell seems to have done something it shouldn&apos;t have. Because theShell has crashed, you&apos;ll need to log out and then log back in to fix it.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save all open work and then click &amp;quot;Log Out&amp;quot; to log out. If you don&apos;t save your work, it will be lost. All other apps will be forcibly closed once you click &amp;quot;Log Out.&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Does this keep happening?</source>
@@ -1967,7 +1967,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Reset theShell and Log Out</source>
-        <translation>Đặt lại theShell và Đang xuất</translation>
+        <translation>Đặt lại và Đang xuất</translation>
     </message>
     <message>
         <source>Log Out</source>
@@ -2304,7 +2304,9 @@ p, li { white-space: pre-wrap; }
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>
-        <translation type="unfinished"></translation>
+        <translation>Quản lý cửa sổ &quot;%1&quot; không thể bắt đầu.
+
+Nhập lệnh cho ứng dụng quản lý cửa sổ để bắt đầu. Hoặc nhấn &quot;Hủy&quot; để bắt đầu theShell mà không có quản lý cửa sổ.</translation>
     </message>
 </context>
 <context>
