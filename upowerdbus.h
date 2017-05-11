@@ -22,6 +22,7 @@ public:
     explicit UPowerDBus(NotificationDBus* notificationDBus, QObject *parent = 0);
 
     bool hasBattery();
+    bool hasPCBattery();
     int currentBattery();
     QDBusObjectPath defaultBattery();
     QDateTime batteryTimeRemaining();
@@ -56,10 +57,11 @@ private:
 
     bool isPowerStretchOn = false;
 
-    int batteryLowNotificationNumber = 0;
+    uint batteryLowNotificationNumber = 0;
 
     NotificationDBus* notificationDBus;
     bool hasBat;
+    bool hasPCBat;
     int batLevel;
 
     QDBusUnixFileDescriptor powerInhibit;

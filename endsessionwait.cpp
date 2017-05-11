@@ -791,6 +791,8 @@ void EndSessionWait::paintEvent(QPaintEvent *event) {
 }
 
 void EndSessionWait::mousePressEvent(QMouseEvent *event) {
+    Q_UNUSED(event)
+
     if (this->type == slideOff) {
         this->close();
     }

@@ -76,6 +76,8 @@ NativeEventFilter::~NativeEventFilter() {
 
 
 bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *message, long *result) {
+    Q_UNUSED(result)
+
     if (eventType == "xcb_generic_event_t") {
         xcb_generic_event_t* event = static_cast<xcb_generic_event_t*>(message);
         if (event->response_type == XCB_CLIENT_MESSAGE || event->response_type == (XCB_CLIENT_MESSAGE | 128)) { //System Tray Event
@@ -202,7 +204,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
 
                 Hotkeys->show(QIcon::fromTheme("media-eject"), tr("Eject"), tr("Attempting to eject disc..."));
             } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) ||
-                       button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == (ControlMask | Mod1Mask))) { //Power Off
+                       (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == (ControlMask | Mod1Mask)))) { //Power Off
                 if (!isEndSessionBoxShowing) {
                     isEndSessionBoxShowing = true;
                     EndSessionWait* endSession;

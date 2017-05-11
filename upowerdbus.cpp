@@ -57,10 +57,9 @@ void UPowerDBus::devicesChanged() {
 
 void UPowerDBus::DeviceChanged() {
     QStringList displayOutput;
-    if (isPowerStretchOn) {
-        displayOutput.append("<span style=\"background-color: orange; color: black;\">" + tr("Power Stretch on") + "</span>");
-    }
 
+    bool powerStretchMessageNotPrinted = true;
+    hasPCBat = false;
     for (QDBusInterface *i : allDevices) {
         //Get the percentage of battery remaining.
         //We do the calculation ourselves because UPower can be inaccurate sometimes
@@ -81,6 +80,7 @@ void UPowerDBus::DeviceChanged() {
         if (i->path().contains("battery")) {
             //PC Battery
             if (i->property("IsPresent").toBool()) {
+                hasPCBat = true;
                 bool showRed = false;
                 qulonglong timeToFull = i->property("TimeToFull").toULongLong();
                 qulonglong timeToEmpty = i->property("TimeToEmpty").toULongLong();
@@ -129,7 +129,8 @@ void UPowerDBus::DeviceChanged() {
                     state += ")";
                     break;
                 case 2: //Discharging
-                    state = " (" + tr("Discharging");
+                    //state = " (" + tr("Discharging");
+                    state = " (";
                     if (isConnectedToPower) {
                         QVariantMap hints;
                         hints.insert("category", "battery.discharging");
@@ -143,7 +144,7 @@ void UPowerDBus::DeviceChanged() {
 
                     if (timeToEmpty != 0) {
                         timeRemain = QDateTime::fromTime_t(timeToEmpty).toUTC();
-                        state.append(" · " + timeRemain.toString("h:mm"));
+                        state.append(/*" · " + */timeRemain.toString("h:mm"));
 
                         if (timeToEmpty <= 600 && tenMinuteBatteryWarning == false) { //Ten minutes left! Critical!
                             QVariantMap hints;
@@ -235,6 +236,12 @@ void UPowerDBus::DeviceChanged() {
                 } else {
                     displayOutput.append(tr("%1% PC Battery%2").arg(QString::number(percentage), state));
                 }
+
+                if (isPowerStretchOn && powerStretchMessageNotPrinted) {
+                    powerStretchMessageNotPrinted = true;
+                    displayOutput.append("<span style=\"background-color: orange; color: black;\">" + tr("Power Stretch on") + "</span>");
+                }
+
                 batLevel = percentage;
             } else {
                 displayOutput.append(tr("No Battery Inserted"));
@@ -386,4 +393,8 @@ void UPowerDBus::ActionInvoked(uint id, QString action_key) {
             setPowerStretch(true);
         }
     }
+}
+
+bool UPowerDBus::hasPCBattery() {
+    return hasPCBat;
 }

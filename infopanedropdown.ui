@@ -342,7 +342,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>1</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -597,14 +597,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>10</month>
-                 <day>17</day>
+                 <day>16</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>10</month>
-                 <day>17</day>
+                 <day>16</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1036,7 +1036,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_33">
             <item>
-             <widget class="QLabel" name="label_54">
+             <widget class="QLabel" name="batteryChartHeader">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -1050,6 +1050,16 @@
               </property>
               <property name="text">
                <string>Charge History</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="batteryChartShowProjected">
+              <property name="text">
+               <string>Show projected charge</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -1084,17 +1094,17 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QPushButton" name="appsGraphButton">
+                <property name="text">
+                 <string>Apps</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
              </layout>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="batteryChartShowProjected">
-              <property name="text">
-               <string>Show projected charge</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
             </item>
             <item>
              <widget class="QLabel" name="batteryChartLastUpdate">
@@ -1126,10 +1136,28 @@
            </layout>
           </item>
           <item>
-           <widget class="QScrollBar" name="BatteryChargeScrollBar">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+           <widget class="QStackedWidget" name="batteryGraphStack">
+            <property name="currentIndex">
+             <number>0</number>
             </property>
+            <widget class="QWidget" name="batteryGraph">
+             <layout class="QVBoxLayout" name="verticalLayout_29">
+              <item>
+               <widget class="QScrollBar" name="BatteryChargeScrollBar">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="batteryApps">
+             <layout class="QVBoxLayout" name="verticalLayout_30">
+              <item>
+               <widget class="QListWidget" name="appsGraph"/>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
          </layout>
@@ -1598,8 +1626,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>174</width>
-            <height>58</height>
+            <width>1165</width>
+            <height>575</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1938,7 +1966,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>7</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">

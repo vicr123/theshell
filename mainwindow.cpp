@@ -74,6 +74,11 @@ MainWindow::MainWindow(QWidget *parent) :
     UPowerDBus* updbus = new UPowerDBus(ndbus, this);
     connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
         if (updbus->hasBattery()) {
+            if (updbus->hasPCBattery()) {
+                ui->batteryIcon->setVisible(true);
+            } else {
+                ui->batteryIcon->setVisible(false);
+            }
             ui->batteryFrame->setVisible(true);
             ui->batteryLabel->setText(display);
 
@@ -109,6 +114,7 @@ MainWindow::MainWindow(QWidget *parent) :
             }
 
             ui->StatusBarBattery->setPixmap(QIcon::fromTheme(iconName).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+            ui->batteryIcon->setPixmap(QIcon::fromTheme(iconName).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
         } else {
             ui->batteryFrame->setVisible(false);
             ui->StatusBarBattery->setVisible(false);
@@ -1451,7 +1457,7 @@ void MainWindow::updateStruts() {
         struts[10] = 0;
         struts[11] = 0;
     }
-    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_STRUT_PARTIAL", False),
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_STRUT_PARTIAL", False),
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) struts, 12);
 
     free(struts);

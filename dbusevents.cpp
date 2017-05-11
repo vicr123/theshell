@@ -88,6 +88,8 @@ void DbusEvents::NewUdisksInterface(QDBusObjectPath path) {
 }
 
 void DbusEvents::RemoveUdisksInterface(QDBusObjectPath path, QStringList interfaces) {
+    Q_UNUSED(path)
+
     if (interfaces.contains("org.freedesktop.UDisks2.Drive")) {
         QSoundEffect* mediaSound = new QSoundEffect();
         mediaSound->setSource(QUrl("qrc:/sounds/media-remove.wav"));

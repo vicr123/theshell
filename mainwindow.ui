@@ -186,6 +186,13 @@
               </widget>
              </item>
              <item>
+              <widget class="QLabel" name="batteryIcon">
+               <property name="text">
+                <string notr="true">Battery</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="ClickableLabel" name="batteryLabel">
                <property name="text">
                 <string notr="true">&amp;90% Battery remaining</string>

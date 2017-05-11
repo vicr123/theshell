@@ -72,6 +72,9 @@ SysTrayIcons::SysTrayIcons(QWidget *parent) : QFrame(parent)
 }
 
 void SysTrayIcons::SysTrayEvent(long opcode, long data2, long data3, long data4) {
+    Q_UNUSED(data3)
+    Q_UNUSED(data4)
+
     if (opcode == SYSTEM_TRAY_REQUEST_DOCK) { //Check that the system tray wants to be docked
         //Create a XEmbed window for the system tray and dock it in the layout
         QWindow* window = QWindow::fromWinId(data2);

@@ -303,6 +303,8 @@ private slots:
 
     void on_rateGraphButton_clicked();
 
+    void on_appsGraphButton_clicked();
+
 public slots:
     void getNetworks();
 
