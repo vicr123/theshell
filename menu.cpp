@@ -101,6 +101,11 @@ Menu::Menu(QWidget *parent) :
     //populateAppList();
     ui->appsListView->setModel(new AppsListModel);
     ui->appsListView->setItemDelegate(new AppsDelegate);
+
+    //ui->appsListView->setFlow(QListView::LeftToRight);
+    //ui->appsListView->setResizeMode(QListView::Adjust);
+    //ui->appsListView->setGridSize(QSize(128 * getDPIScaling(), 128 * getDPIScaling()));
+    //ui->appsListView->setViewMode(QListView::IconMode);
 }
 
 Menu::~Menu()
@@ -1377,7 +1382,7 @@ void AppsListModel::loadData() {
     int count = settings.beginReadArray("pinnedItems");
     for (int i = 0; i < count; i++) {
         settings.setArrayIndex(i);
-        appList.append(settings.value("desktopEntry").toString());
+        //appList.append(settings.value("desktopEntry").toString());
         pinnedAppsList.append(settings.value("desktopEntry").toString());
     }
     settings.endArray();
@@ -1402,7 +1407,7 @@ void AppsListModel::loadData() {
         delete iterator;
     }
 
-    for (QString appFile : appList) {
+    auto appReader = [=](QString appFile) -> App {
         QFile file(appFile);
         if (file.exists() & QFileInfo(file).suffix().contains("desktop")) {
             file.open(QFile::ReadOnly);
@@ -1477,10 +1482,19 @@ void AppsListModel::loadData() {
                         }
                     }
                 }
+
                 if (isApplication && display) {
-                    apps.append(app);
+                    return app;
                 }
             }
+        }
+        return App::invalidApp();
+    };
+
+    for (QString appFile : appList) {
+        App app = appReader(appFile);
+        if (!app.invalid()) {
+            apps.prepend(app);
         }
     }
 
@@ -1491,34 +1505,16 @@ void AppsListModel::loadData() {
     waveApp.setDescription(tr("Personal Assistant"));
     apps.append(waveApp);
 
+    std::sort(apps.begin(), apps.end());
+
+    for (int i = pinnedAppsList.count() - 1; i >= 0; i--) {
+        App app = appReader(pinnedAppsList.at(i));
+        if (!app.invalid()) {
+            apps.prepend(app);
+        }
+    }
+
     search("");
-
-    /*int index = 0;
-    for (App app : apps) {
-        if (index == pinnedAppsCount && pinnedAppsCount != 0) {
-            QListWidgetItem* sep = new QListWidgetItem();
-            sep->setSizeHint(QSize(50, 1));
-            sep->setFlags(Qt::NoItemFlags);
-            ui->listWidget->addItem(sep);
-
-            QFrame *sepLine = new QFrame();
-            sepLine->setFrameShape(QFrame::HLine);
-            ui->listWidget->setItemWidget(sep, sepLine);
-        }
-
-        QListWidgetItem *i = new QListWidgetItem();
-        if (app.description() == "") {
-            i->setText(app.name());
-        } else {
-            i->setText(app.description() + " | " + app.name());
-        }
-        i->setIcon(app.icon());
-        i->setData(Qt::UserRole, app.command());
-        i->setData(Qt::UserRole + 1, QVariant::fromValue(app));
-        appsShown.append(app);
-        ui->listWidget->addItem(i);
-        index++;
-    }*/
 }
 
 QList<App> AppsListModel::availableApps() {
@@ -1533,58 +1529,97 @@ void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     painter->setFont(option.font);
 
     QRect iconRect;
-    iconRect.setLeft(6 * getDPIScaling());
-    iconRect.setTop(option.rect.top() + 6 * getDPIScaling());
-    iconRect.setBottom(iconRect.top() + 32 * getDPIScaling());
-    iconRect.setRight(iconRect.left() + 32 * getDPIScaling());
+    if (((QListView*) option.widget)->viewMode() == QListView::IconMode) {
+        iconRect.setLeft(option.rect.left() + 32 * getDPIScaling());
+        iconRect.setTop(option.rect.top() + 6 * getDPIScaling());
+        iconRect.setHeight(32 * getDPIScaling());
+        iconRect.setWidth(32 * getDPIScaling());
 
-    QRect textRect;
-    textRect.setLeft(iconRect.right() + 6 * getDPIScaling());
-    textRect.setTop(option.rect.top() + 6 * getDPIScaling());
-    textRect.setBottom(option.rect.top() + option.fontMetrics.height() + 6 * getDPIScaling());
-    textRect.setRight(option.rect.right());
+        QRect textRect;
+        textRect.setLeft(option.rect.left() + 6 * getDPIScaling());
+        textRect.setTop(iconRect.bottom() + 6 * getDPIScaling());
+        textRect.setBottom(option.rect.bottom());
+        textRect.setRight(option.rect.right());
 
-    QRect descRect;
-    descRect.setLeft(iconRect.right() + 6 * getDPIScaling());
-    descRect.setTop(option.rect.top() + option.fontMetrics.height() + 8 * getDPIScaling());
-    descRect.setBottom(option.rect.top() + option.fontMetrics.height() * 2 + 6 * getDPIScaling());
-    descRect.setRight(option.rect.right());
-
-    if (option.state & QStyle::State_Selected) {
-        painter->setPen(Qt::transparent);
-        painter->setBrush(option.palette.color(QPalette::Highlight));
-        painter->drawRect(option.rect);
-        painter->setBrush(Qt::transparent);
-        painter->setPen(option.palette.color(QPalette::HighlightedText));
-        painter->drawText(textRect, index.data().toString());
-        painter->drawText(descRect, index.data(Qt::UserRole).toString());
-    } else if (option.state & QStyle::State_MouseOver) {
-        QColor col = option.palette.color(QPalette::Highlight);
-        col.setAlpha(127);
-        painter->setBrush(col);
-        painter->setPen(Qt::transparent);
-        painter->drawRect(option.rect);
-        painter->setBrush(Qt::transparent);
-        painter->setPen(option.palette.color(QPalette::WindowText));
-        painter->drawText(textRect, index.data().toString());
-        painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
-        painter->drawText(descRect, index.data(Qt::UserRole).toString());
+        if (option.state & QStyle::State_Selected) {
+            painter->setPen(Qt::transparent);
+            painter->setBrush(option.palette.color(QPalette::Highlight));
+            painter->drawRect(option.rect);
+            painter->setBrush(Qt::transparent);
+            painter->setPen(option.palette.color(QPalette::HighlightedText));
+            painter->drawText(textRect, index.data().toString());
+        } else if (option.state & QStyle::State_MouseOver) {
+            QColor col = option.palette.color(QPalette::Highlight);
+            col.setAlpha(127);
+            painter->setBrush(col);
+            painter->setPen(Qt::transparent);
+            painter->drawRect(option.rect);
+            painter->setBrush(Qt::transparent);
+            painter->setPen(option.palette.color(QPalette::WindowText));
+            painter->drawText(textRect, index.data().toString());
+        } else {
+            painter->setPen(option.palette.color(QPalette::WindowText));
+            painter->drawText(textRect, index.data().toString());
+        }
     } else {
-        painter->setPen(option.palette.color(QPalette::WindowText));
-        painter->drawText(textRect, index.data().toString());
-        painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
-        painter->drawText(descRect, index.data(Qt::UserRole).toString());
-    }
+        iconRect.setLeft(option.rect.left() + 6 * getDPIScaling());
+        iconRect.setTop(option.rect.top() + 6 * getDPIScaling());
+        iconRect.setBottom(iconRect.top() + 32 * getDPIScaling());
+        iconRect.setRight(iconRect.left() + 32 * getDPIScaling());
 
+        QRect textRect;
+        textRect.setLeft(iconRect.right() + 6 * getDPIScaling());
+        textRect.setTop(option.rect.top() + 6 * getDPIScaling());
+        textRect.setBottom(option.rect.top() + option.fontMetrics.height() + 6 * getDPIScaling());
+        textRect.setRight(option.rect.right());
+
+        QRect descRect;
+        descRect.setLeft(iconRect.right() + 6 * getDPIScaling());
+        descRect.setTop(option.rect.top() + option.fontMetrics.height() + 8 * getDPIScaling());
+        descRect.setBottom(option.rect.top() + option.fontMetrics.height() * 2 + 6 * getDPIScaling());
+        descRect.setRight(option.rect.right());
+
+        if (option.state & QStyle::State_Selected) {
+            painter->setPen(Qt::transparent);
+            painter->setBrush(option.palette.color(QPalette::Highlight));
+            painter->drawRect(option.rect);
+            painter->setBrush(Qt::transparent);
+            painter->setPen(option.palette.color(QPalette::HighlightedText));
+            painter->drawText(textRect, index.data().toString());
+            painter->drawText(descRect, index.data(Qt::UserRole).toString());
+        } else if (option.state & QStyle::State_MouseOver) {
+            QColor col = option.palette.color(QPalette::Highlight);
+            col.setAlpha(127);
+            painter->setBrush(col);
+            painter->setPen(Qt::transparent);
+            painter->drawRect(option.rect);
+            painter->setBrush(Qt::transparent);
+            painter->setPen(option.palette.color(QPalette::WindowText));
+            painter->drawText(textRect, index.data().toString());
+            painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
+            painter->drawText(descRect, index.data(Qt::UserRole).toString());
+        } else {
+            painter->setPen(option.palette.color(QPalette::WindowText));
+            painter->drawText(textRect, index.data().toString());
+            painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
+            painter->drawText(descRect, index.data(Qt::UserRole).toString());
+        }
+
+    }
     painter->drawPixmap(iconRect, index.data(Qt::DecorationRole).value<QPixmap>());
 }
 
 QSize AppsDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
     //int height;
-    int fontHeight = option.fontMetrics.height() * 2 + 14 * getDPIScaling();
-    int iconHeight = 46 * getDPIScaling();
 
-    return QSize(option.fontMetrics.width(index.data().toString()), qMax(fontHeight, iconHeight));
+    if (((QListView*) option.widget)->viewMode() == QListView::IconMode) {
+        return QSize(128 * getDPIScaling(), 128 * getDPIScaling());
+    } else {
+        int fontHeight = option.fontMetrics.height() * 2 + 14 * getDPIScaling();
+        int iconHeight = 46 * getDPIScaling();
+
+        return QSize(option.fontMetrics.width(index.data().toString()), qMax(fontHeight, iconHeight));
+    }
 }
 
 void AppsListModel::launchApp(QModelIndex index) {

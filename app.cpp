@@ -52,3 +52,13 @@ QString App::desktopEntry() const {
 void App::setDesktopEntry(QString entry) {
     appfile = entry;
 }
+
+bool App::invalid() {
+    return isInvalid;
+}
+
+App App::invalidApp() {
+    App app;
+    app.isInvalid = true;
+    return app;
+}

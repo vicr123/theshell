@@ -27,6 +27,23 @@ public:
 
     QString desktopEntry() const;
     void setDesktopEntry(QString entry);
+
+    bool invalid();
+
+    static App invalidApp();
+
+    bool operator <(const App& other) const {
+        int compare = name().localeAwareCompare(other.name());
+        if (compare < 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    bool operator >(const App& other) const {
+        return other < *this;
+    }
 signals:
 
 public slots:
@@ -38,7 +55,9 @@ private:
     QString appdesc = "";
     QString appfile = "";
     bool pin = false;
+    bool isInvalid = false;
 };
+
 
 Q_DECLARE_METATYPE(App)
 
