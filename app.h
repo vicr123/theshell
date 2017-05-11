@@ -10,22 +10,22 @@ class App
 public:
     explicit App();
 
-    QString name();
+    QString name() const;
     void setName(QString name);
 
-    QIcon icon();
+    QIcon icon() const;
     void setIcon(QIcon icon);
 
-    QString command();
+    QString command() const;
     void setCommand(QString command);
 
-    QString description();
+    QString description() const;
     void setDescription(QString desc);
 
-    bool isPinned();
+    bool isPinned() const;
     void setPinned(bool pinned);
 
-    QString desktopEntry();
+    QString desktopEntry() const;
     void setDesktopEntry(QString entry);
 signals:
 

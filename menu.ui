@@ -114,29 +114,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="listWidget">
-       <property name="contextMenuPolicy">
-        <enum>Qt::CustomContextMenu</enum>
-       </property>
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-       </property>
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="verticalScrollMode">
-        <enum>QAbstractItemView::ScrollPerPixel</enum>
-       </property>
-       <property name="horizontalScrollMode">
-        <enum>QAbstractItemView::ScrollPerPixel</enum>
-       </property>
-       <property name="movement">
-        <enum>QListView::Static</enum>
-       </property>
-       <property name="viewMode">
-        <enum>QListView::ListMode</enum>
-       </property>
-      </widget>
+      <widget class="QListView" name="appsListView"/>
      </item>
      <item>
       <widget class="QLineEdit" name="lineEdit">
@@ -182,7 +160,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset theme="tools-report-bug"/>
+          <iconset theme="tools-report-bug">
+           <normaloff>.</normaloff>.</iconset>
          </property>
          <property name="flat">
           <bool>true</bool>

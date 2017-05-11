@@ -15,6 +15,7 @@
 #include <QMimeDatabase>
 #include <QDrag>
 #include <QCommandLinkButton>
+#include <QStyledItemDelegate>
 #include <systemd/sd-login.h>
 #include "endsessionwait.h"
 #include "app.h"
@@ -99,8 +100,6 @@ private slots:
 
     void on_commandLinkButton_3_clicked();
 
-    void on_listWidget_itemClicked(QListWidgetItem *item);
-
     void on_lineEdit_textEdited(const QString &arg1);
 
     bool eventFilter(QObject *object, QEvent *event);
@@ -175,7 +174,7 @@ private slots:
 
     void on_reportBugButton_clicked();
 
-    void populateAppList();
+    void on_appsListView_clicked(const QModelIndex &index);
 
 private:
     Ui::Menu *ui;
@@ -183,8 +182,8 @@ private:
     bool checkFocus(QLayout *layout);
     QSettings settings;
 
-    QList<App> apps;
-    QList<App> appsShown;
+    //QList<App> apps;
+    //QList<App> appsShown;
     int pinnedAppsCount = 0;
 
     bool doCheckForClose = false;
@@ -199,6 +198,42 @@ private:
     theWaveWorker* waveWorker;
     bool isListening = false;
     bool istheWaveReady = false;
+};
+
+
+class AppsListModel : public QAbstractListModel
+{
+    Q_OBJECT
+
+public:
+    AppsListModel(QObject *parent = 0);
+    ~AppsListModel();
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    void updateData();
+    void loadData();
+    int pinnedAppsCount;
+    void launchApp(QModelIndex index);
+    void search(QString query);
+
+    QList<App> availableApps();
+
+private:
+    QSettings settings;
+    QList<App> apps;
+    QList<App> appsShown;
+};
+
+class AppsDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+
+public:
+    AppsDelegate(QWidget *parent = 0);
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 #endif // MENU_H

@@ -5,7 +5,7 @@ App::App()
 
 }
 
-QString App::name() {
+QString App::name() const {
     return appname;
 }
 
@@ -13,7 +13,7 @@ void App::setName(QString name) {
     appname = name;
 }
 
-QIcon App::icon() {
+QIcon App::icon() const {
     return appicon;
 }
 
@@ -21,7 +21,7 @@ void App::setIcon(QIcon icon) {
     appicon = icon;
 }
 
-QString App::command() {
+QString App::command() const {
     return appcommand;
 }
 
@@ -29,7 +29,7 @@ void App::setCommand(QString command) {
     appcommand = command;
 }
 
-QString App::description() {
+QString App::description() const {
     return appdesc;
 }
 
@@ -37,7 +37,7 @@ void App::setDescription(QString desc) {
     appdesc = desc;
 }
 
-bool App::isPinned() {
+bool App::isPinned() const {
     return pin;
 }
 
@@ -45,7 +45,7 @@ void App::setPinned(bool pinned) {
     pin = pinned;
 }
 
-QString App::desktopEntry() {
+QString App::desktopEntry() const {
     return appfile;
 }
 
