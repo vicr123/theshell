@@ -305,6 +305,12 @@ private slots:
 
     void on_appsGraphButton_clicked();
 
+    void on_LargeTextSwitch_toggled(bool checked);
+
+    void on_HighContrastSwitch_toggled(bool checked);
+
+    void on_systemAnimationsAccessibilitySwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 

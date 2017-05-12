@@ -215,7 +215,7 @@ public:
     void updateData();
     void loadData();
     int pinnedAppsCount;
-    void launchApp(QModelIndex index);
+    bool launchApp(QModelIndex index);
     void search(QString query);
 
     QList<App> availableApps();

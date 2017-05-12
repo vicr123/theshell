@@ -185,13 +185,13 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     if (kbdBrightness > maxKbdBrightness) kbdBrightness = maxKbdBrightness;
                     keyboardInterface.call("SetBrightness", kbdBrightness);
 
-                    Hotkeys->show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
+                    Hotkeys->show(QIcon::fromTheme("keyboard-brightness"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessDown)) { //Decrease keyboard brightness by 5%
                     kbdBrightness -= (((float) maxKbdBrightness / 100) * 5);
                     if (kbdBrightness < 0) kbdBrightness = 0;
                     keyboardInterface.call("SetBrightness", kbdBrightness);
 
-                    Hotkeys->show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
+                    Hotkeys->show(QIcon::fromTheme("keyboard-brightness"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
                 }
             }
         } else if (event->response_type == XCB_KEY_RELEASE) {

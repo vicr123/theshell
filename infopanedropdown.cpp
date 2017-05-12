@@ -205,6 +205,9 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->StatusBarSwitch->setChecked(settings.value("bar/statusBar", false).toBool());
     ui->TouchInputSwitch->setChecked(settings.value("input/touch", false).toBool());
     ui->SuspendLockScreen->setChecked(settings.value("lockScreen/showOnSuspend", true).toBool());
+    ui->LargeTextSwitch->setChecked(themeSettings->value("accessibility/largeText", false).toBool());
+    ui->HighContrastSwitch->setChecked(themeSettings->value("accessibility/highcontrast", false).toBool());
+    ui->systemAnimationsAccessibilitySwitch->setChecked(themeSettings->value("accessibility/systemAnimations", true).toBool());
     ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
 
     QString defaultFont;
@@ -269,7 +272,8 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-user"), tr("Users")));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-time"), tr("Date and Time")));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-locale"), tr("Language")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-danger", QIcon::fromTheme("emblem-warning")), tr("Danger")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-accessibility"), tr("Accessibility")));
+    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-danger", QIcon::fromTheme("emblem-warning")), tr("Advanced")));
     ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), tr("About")));
     ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
     ui->settingsTabs->setCurrentIndex(ui->settingsTabs->count() - 1);
@@ -2748,4 +2752,19 @@ void InfoPaneDropdown::on_appsGraphButton_clicked()
     ui->batteryChartHeader->setText(tr("Application Power Usage"));
     ui->batteryChartShowProjected->setVisible(false);
     updateBatteryChart();
+}
+
+void InfoPaneDropdown::on_LargeTextSwitch_toggled(bool checked)
+{
+    themeSettings->setValue("accessibility/largeText", checked);
+}
+
+void InfoPaneDropdown::on_HighContrastSwitch_toggled(bool checked)
+{
+    themeSettings->setValue("accessibility/highcontrast", checked);
+}
+
+void InfoPaneDropdown::on_systemAnimationsAccessibilitySwitch_toggled(bool checked)
+{
+    themeSettings->setValue("accessibility/systemAnimations", checked);
 }

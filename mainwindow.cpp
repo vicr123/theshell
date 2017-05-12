@@ -97,6 +97,20 @@ MainWindow::MainWindow(QWidget *parent) :
                 } else {
                     iconName = "battery-charging-100";
                 }
+            } else if (updbus->powerStretch()) {
+                if (updbus->currentBattery() < 10) {
+                    iconName = "battery-stretch-empty";
+                } else if (updbus->currentBattery() < 30) {
+                    iconName = "battery-stretch-020";
+                } else if (updbus->currentBattery() < 50) {
+                    iconName = "battery-stretch-040";
+                } else if (updbus->currentBattery() < 70) {
+                    iconName = "battery-stretch-060";
+                } else if (updbus->currentBattery() < 90) {
+                    iconName = "battery-stretch-080";
+                } else {
+                    iconName = "battery-stretch-100";
+                }
             } else {
                 if (updbus->currentBattery() < 10) {
                     iconName = "battery-empty";

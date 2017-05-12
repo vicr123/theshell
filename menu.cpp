@@ -117,6 +117,9 @@ void Menu::show(bool openTotheWave, bool startListening) {
     if (this->isVisible()) {
         this->uncollapse();
     } else {
+        //Reload menu
+        //((AppsListModel*) ui->appsListView->model())->loadData();
+
         unsigned long desktop = 0xFFFFFFFF;
         XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
                          XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
@@ -1115,12 +1118,18 @@ QVariant AppsListModel::data(const QModelIndex &index, int role) const {
         }
     }*/
 
-    if (role == Qt::DisplayRole) {
-        returnValue = appsShown.at(index.row()).name();
-    } else if (role == Qt::DecorationRole) {
-        returnValue = appsShown.at(index.row()).icon().pixmap(32 * getDPIScaling(), 32 * getDPIScaling());
-    } else if (role == Qt::UserRole) { //Description
-        returnValue = appsShown.at(index.row()).description();
+    if (appsShown.count() > index.row()) {
+        if (role == Qt::DisplayRole) {
+            returnValue = appsShown.at(index.row()).name();
+        } else if (role == Qt::DecorationRole) {
+            returnValue = appsShown.at(index.row()).icon().pixmap(32 * getDPIScaling(), 32 * getDPIScaling());
+        } else if (role == Qt::UserRole) { //Description
+            if (appsShown.at(index.row()).description() == "") {
+                returnValue = tr("Application");
+            } else {
+                returnValue = appsShown.at(index.row()).description();
+            }
+        }
     }
 
     //RemindersData->endArray();
@@ -1139,8 +1148,8 @@ void AppsListModel::search(QString query) {
         appsShown.append(apps);
         updateData();
     } else {
-        /*bool showtheWaveOption = true;
-        if (settings.value("thewave/enabled", true).toBool()) {
+        bool showtheWaveOption = true;
+        /*if (settings.value("thewave/enabled", true).toBool()) {
             if (arg1.toLower() == "emergency call") {
                 QListWidgetItem *callItem = new QListWidgetItem();
                 callItem->setText(tr("Place a call"));
@@ -1622,7 +1631,7 @@ QSize AppsDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
     }
 }
 
-void AppsListModel::launchApp(QModelIndex index) {
+bool AppsListModel::launchApp(QModelIndex index) {
 
     /*if (item->data(Qt::UserRole).toString().startsWith("thewave")) {
         ui->activateTheWave->click();
@@ -1670,13 +1679,14 @@ void AppsListModel::launchApp(QModelIndex index) {
         commandSpace.removeAll("");
         process->start(commandSpace.join(" "));
         connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
+        return true;
         //QProcess::startDetached(item->data(Qt::UserRole).toString().remove("%u"));
-        //this->close();
     //}
 }
 
 void Menu::on_appsListView_clicked(const QModelIndex &index)
 {
-    ((AppsListModel*) ui->appsListView->model())->launchApp(index);
-    this->close();
+    if (((AppsListModel*) ui->appsListView->model())->launchApp(index)) {
+        this->close();
+    }
 }
