@@ -186,6 +186,8 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->LocationIndication->setVisible(location);
     });
 
+    ui->volumeSlider->setVisible(false);
+
     ui->brightnessSlider->setVisible(false);
     ui->mprisFrame->setVisible(false);
 
