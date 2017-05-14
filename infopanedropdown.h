@@ -311,6 +311,8 @@ private slots:
 
     void on_systemAnimationsAccessibilitySwitch_toggled(bool checked);
 
+    void on_CapsNumLockBellSwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 

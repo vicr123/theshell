@@ -208,6 +208,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->LargeTextSwitch->setChecked(themeSettings->value("accessibility/largeText", false).toBool());
     ui->HighContrastSwitch->setChecked(themeSettings->value("accessibility/highcontrast", false).toBool());
     ui->systemAnimationsAccessibilitySwitch->setChecked(themeSettings->value("accessibility/systemAnimations", true).toBool());
+    ui->CapsNumLockBellSwitch->setChecked(themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool());
     ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
 
     QString defaultFont;
@@ -2767,4 +2768,9 @@ void InfoPaneDropdown::on_HighContrastSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_systemAnimationsAccessibilitySwitch_toggled(bool checked)
 {
     themeSettings->setValue("accessibility/systemAnimations", checked);
+}
+
+void InfoPaneDropdown::on_CapsNumLockBellSwitch_toggled(bool checked)
+{
+    themeSettings->setValue("accessibility/bellOnCapsNumLock", checked);
 }

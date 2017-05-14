@@ -53,6 +53,7 @@ private:
     bool ignoreSuper = false;
 
     QSettings settings;
+    QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
 };
 
 #endif // NATIVEEVENTFILTER_H
