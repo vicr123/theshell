@@ -186,12 +186,6 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->LocationIndication->setVisible(location);
     });
 
-    if (QFile("/usr/bin/amixer").exists()) {
-        ui->volumeSlider->setVisible(false);
-    } else {
-        ui->volumeFrame->setVisible(false);
-    }
-
     ui->brightnessSlider->setVisible(false);
     ui->mprisFrame->setVisible(false);
 
