@@ -22,6 +22,7 @@ public:
         daDK,
         esES,
         ptBR,
+        ruRU,
         // Unfinished languages follow
         jaJP,
         arSA,
@@ -68,6 +69,9 @@ public:
                     break;
                 case esES:
                     languageBox->addItem("[ES] " + tr("Spanish") + " (Español) ");
+                    break;
+                case ruRU:
+                    languageBox->addItem("[RU] " + tr("Russian") + " (русский) ");
                     break;
                 /*case arSA:
                     languageBox->addItem("[SA] " + tr("Arabic") + " (العربية) ");
@@ -123,6 +127,8 @@ public:
             languageBox->setCurrentRow(frFR);
         } else if (currentLocale == "es_ES") {
             languageBox->setCurrentRow(esES);
+        } else if (currentLocale == "ru_RU") {
+            languageBox->setCurrentRow(ruRU);
         }
 
         //Unblock signals
