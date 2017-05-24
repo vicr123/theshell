@@ -18,6 +18,8 @@ To start the process of creating a live USB for theShell OS, you'll need to down
 Connect your USB flash drive to your computer, and then follow the steps below.
 
 ## GUI (For Windows, MacOS/Mac OS X, and Linux)
+![Using Etcher Gif]
+(https://etcher.io/static/screenshot-1x.gif)
 
 Download and Install the latest version of Etcher from https://etcher.io/.
 
