@@ -15,13 +15,21 @@ You may need to jump into your BIOS to change the boot order so that your device
 
 To start the process of creating a live USB for theShell OS, you'll need to download a disc image of theShell OS from the download page. You'll also need to make sure that the USB flash drive is large enough to hold the disc image that you downloaded. **This drive will be erased, so make sure no important information is on there.**
 
-Connect your USB flash drive to your computer, and then depending on the **currently running** operating system, follow the steps below.
+Connect your USB flash drive to your computer, and then follow the steps below.
 
-## Windows
+## GUI (For Windows, MacOS/Mac OS X, and Linux)
 
-Use the [USBWriter](https://sourceforge.net/projects/usbwriter/) project to write the disc image to your USB flash drive.
+Download and Install the latest version of Etcher from https://etcher.io/.
 
-## macOS / Mac OS X
+After its done, drag the .iso file into the Select Image box or click Select Image, and using the file picker, choose the .iso file you downloaded.
+
+Now, insert your USB if you haven't already and make sure it is selected.
+(Note: On Windows if you used that USB as a LiveUSB before it might ask you to format it. Say No as Etcher does this for you)
+
+Finally click Flash!
+
+After it is finished, you should be able to restart and boot from your LiveUSB!
+## macOS / Mac OS X (Terminal)
 
 Open the Terminal app, and type the following command to list all your disks. Take note of the one that looks like your flash drive by comparing the reported size.
 
@@ -51,7 +59,7 @@ Then open the Finder and drag the disc image you downloaded to the terminal. Fin
 
 Once you're done with that, you should be able to remove your USB drive and boot theShell OS from it.
 
-## Linux
+## Linux (Terminal)
 
 Open a root terminal, and type the following command to list all your disks. Take note of the one that looks like your flash drive by comparing the reported size.
 
