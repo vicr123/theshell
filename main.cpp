@@ -11,6 +11,7 @@
 //#include "dbusmenuregistrar.h"
 #include <nativeeventfilter.h>
 #include <QApplication>
+#include <QDBusServiceWatcher>
 #include <QDesktopWidget>
 #include <QProcess>
 #include <QThread>
@@ -32,6 +33,8 @@ TutorialWindow* TutorialWin = NULL;
 AudioManager* AudioMan = NULL;
 QTranslator *qtTranslator, *tsTranslator;
 LocationServices* locationServices = NULL;
+QDBusServiceWatcher* dbusServiceWatcher = NULL;
+QDBusServiceWatcher* dbusServiceWatcherSystem = NULL;
 
 #define ONBOARDING_VERSION 4
 
@@ -125,6 +128,11 @@ int main(int argc, char *argv[])
     tsTranslator->load(QLocale().name(), "/usr/share/theshell/translations");
     a.installTranslator(tsTranslator);
 
+    dbusServiceWatcher = new QDBusServiceWatcher();
+    dbusServiceWatcher->setConnection(QDBusConnection::sessionBus());
+    dbusServiceWatcherSystem = new QDBusServiceWatcher();
+    dbusServiceWatcherSystem->setConnection(QDBusConnection::systemBus());
+
     /*QTranslator tsVnTranslator;
     tsTranslator.load(QLocale("vi_VN").name(), "/home/victor/Documents/theOSPack/theShell/translations/");
     a.installTranslator(&tsVnTranslator);*/
@@ -165,7 +173,6 @@ int main(int argc, char *argv[])
             tutorialDoSettings = true;
         }
     }
-
 
     if (showSplash) {
         LoginSplash* splash = new LoginSplash();

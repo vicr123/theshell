@@ -285,6 +285,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="flightIcon">
+            <property name="text">
+             <string>Flight</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLabel" name="networkStrength">
             <property name="text">
              <string notr="true">signalStrength</string>
@@ -720,6 +727,13 @@
          </property>
          <property name="text">
           <string>16:20</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="StatusBarFlight">
+         <property name="text">
+          <string>Flight</string>
          </property>
         </widget>
        </item>

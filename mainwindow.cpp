@@ -158,6 +158,10 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     });
     connect(infoPane, SIGNAL(updateStruts()), this, SLOT(updateStruts()));
+    connect(infoPane, &InfoPaneDropdown::flightModeChanged, [=](bool flight) {
+        ui->flightIcon->setVisible(flight);
+        ui->StatusBarFlight->setVisible(flight);
+    });
     infoPane->getNetworks();
 
     QString loginSoundPath = settings.value("sounds/login", "").toString();
@@ -180,6 +184,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->LocationIndication->setVisible(false);
     ui->StatusBarLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     ui->LocationIndication->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->flightIcon->setPixmap(QIcon::fromTheme("flight-mode").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->StatusBarFlight->setPixmap(QIcon::fromTheme("flight-mode").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->flightIcon->setVisible(settings.value("flightmode/on", false).toBool());
+    ui->StatusBarFlight->setVisible(settings.value("flightmode/on", false).toBool());
 
     connect(locationServices, &LocationServices::locationUsingChanged, [=](bool location) {
         ui->StatusBarLocation->setVisible(location);
@@ -445,40 +453,62 @@ void MainWindow::doUpdate() {
                 unsigned char *ret;
                 int width, height;
 
+                //Get all icon sizes
+                //QMap<int, QSize> iconSizes;
 
-                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1, False,
-                                   XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
-                if (ret == 0x0) {
-                    noIcon = true;
-                } else {
-                    width = *(int*) ret;
-                    XFree(ret);
-                }
+                //do {
+                    retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1, False,
+                                       XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
+                    if (ret == 0x0) {
+                        noIcon = true;
+                    } else {
+                        width = *(int*) ret;
+                        XFree(ret);
+                    }
 
-                retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 1, 1, False,
-                                   XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
+                    retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 1, 1, False,
+                                       XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
 
-                if (ret == 0x0) {
-                    noIcon = true;
-                } else {
-                    height = *(int*) ret;
-                    XFree(ret);
-                }
+                    if (ret == 0x0) {
+                        noIcon = true;
+                    } else {
+                        height = *(int*) ret;
+                        XFree(ret);
+                    }
+
+                    //iconSizes.insert(offset, QSize(width, height));
+                    //offset += width * height * 4 + 2;
+                //} while (!noIcon || icBytes == width * height * 4);
 
                 if (!noIcon) {
+                    /*QSize currentSize = QSize(0, 0);
+
+                    for (int offsets : iconSizes.keys()) {
+                        if (currentSize == QSize(0, 0) || (currentSize.width() > iconSizes.value(offsets).width() && currentSize.height() > iconSizes.value(offsets).height())) {
+                            currentSize = iconSizes.value(offsets);
+                            imageOffset = offsets;
+                        }
+                    }*/
+
+                    //width = currentSize.width();
+                    //height = currentSize.height();
+
                     retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 2, width * height * 4, False,
                                        XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
 
-                    QImage image(width, height, QImage::Format_ARGB32);
+                    QImage image(16, 16, QImage::Format_ARGB32);
 
-                    for (int y = 0; y < height; y++) {
-                        for (int x = 0; x < width * 8; x = x + 8) {
+                    float widthSpacing = (float) width / (float) 16;
+                    float heightSpacing = (float) height / (float) 16;
+
+                    for (int y = 0; y < 16; y++) {
+                        for (int x = 0; x < 16 * 8; x = x + 8) {
                             unsigned long a, r, g, b;
 
-                            b = (icon[y * width * 8 + x + 0]);
-                            g = (icon[y * width * 8 + x + 1]);
-                            r = (icon[y * width * 8 + x + 2]);
-                            a = (icon[y * width * 8 + x + 3]);
+                            b = (icon[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 0)]);
+                            g = (icon[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 1)]);
+                            r = (icon[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 2)]);
+                            a = (icon[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 3)]);
 
                             QColor col = QColor(r, g, b, a);
 

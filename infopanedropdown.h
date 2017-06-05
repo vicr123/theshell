@@ -90,6 +90,7 @@ signals:
     void timerEnabledChanged(bool timerEnabled);
     void notificationsSilencedChanged(bool silenced);
     void batteryStretchChanged(bool isOn);
+    void flightModeChanged(bool flight);
     void updateStruts();
 
 private slots:
@@ -312,6 +313,12 @@ private slots:
     void on_systemAnimationsAccessibilitySwitch_toggled(bool checked);
 
     void on_CapsNumLockBellSwitch_toggled(bool checked);
+
+    void DBusServiceRegistered(QString serviceName);
+
+    void DBusServiceUnregistered(QString serviceName);
+
+    void on_FlightSwitch_toggled(bool checked);
 
 public slots:
     void getNetworks();

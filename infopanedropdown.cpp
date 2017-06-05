@@ -10,6 +10,8 @@ extern AudioManager* AudioMan;
 extern NativeEventFilter* NativeFilter;
 extern QTranslator *qtTranslator, *tsTranslator;
 extern float getDPIScaling();
+extern QDBusServiceWatcher* dbusServiceWatcher;
+extern QDBusServiceWatcher* dbusServiceWatcherSystem;
 
 InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, WId MainWindowId, QWidget *parent) :
     QDialog(parent),
@@ -21,6 +23,10 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     startTime.start();
 
+    if (settings.value("flightmode/on", false).toBool()) {
+        ui->FlightSwitch->setChecked(true);
+    }
+
     this->MainWindowId = MainWindowId;
 
     this->notificationEngine = notificationEngine;
@@ -31,6 +37,11 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     connect(notificationEngine, SIGNAL(removeNotification(int)), this, SLOT(removeNotification(int)));
     connect(notificationEngine, SIGNAL(NotificationClosed(uint,uint)), this, SLOT(notificationClosed(uint,uint)));
     connect(this, SIGNAL(closeNotification(int)), notificationEngine, SLOT(CloseNotificationUserInitiated(int)));
+
+    connect(dbusServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(DBusServiceRegistered(QString)));
+    connect(dbusServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(DBusServiceUnregistered(QString)));
+    connect(dbusServiceWatcherSystem, SIGNAL(serviceRegistered(QString)), this, SLOT(DBusServiceRegistered(QString)));
+    connect(dbusServiceWatcherSystem, SIGNAL(serviceUnregistered(QString)), this, SLOT(DBusServiceUnregistered(QString)));
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
@@ -103,21 +114,22 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     {
         QDBusInterface interface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus());
+        QDBusConnection::sessionBus().connect("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", "BluetoothEnabledChanged", this, SLOT(bluetoothEnabledChanged()));
 
         if (interface.isValid()) {
-            ui->BluetoothSwitch->setEnabled(true);
-            ui->BluetoothSwitch->setChecked(interface.property("BluetoothEnabled").toBool());
-            QDBusConnection::sessionBus().connect("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", "BluetoothEnabledChanged", this, SLOT(bluetoothEnabledChanged()));
+            DBusServiceRegistered("org.thesuite.tsbt");
         } else {
-            ui->BluetoothSwitch->setEnabled(false);
+            DBusServiceUnregistered("org.thesuite.tsbt");
         }
+
+        dbusServiceWatcher->addWatchedService("org.thesuite.tsbt");
     }
 
     connect(this, &InfoPaneDropdown::networkLabelChanged, [=](QString label) {
         ui->networkStatus->setText(label);
     });
 
-    ui->FlightSwitch->setOnIcon(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)));
+    ui->FlightSwitch->setOnIcon(QIcon::fromTheme("flight-mode"));
 
     //Set up theme button combo box
     int themeAccentColorIndex = themeSettings->value("color/accent", 0).toInt();
@@ -318,6 +330,20 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 InfoPaneDropdown::~InfoPaneDropdown()
 {
     delete ui;
+}
+
+void InfoPaneDropdown::DBusServiceRegistered(QString serviceName) {
+    if (serviceName == "org.thesuite.tsbt") {
+        QDBusInterface interface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus());
+        ui->BluetoothSwitch->setEnabled(true);
+        ui->BluetoothSwitch->setChecked(interface.property("BluetoothEnabled").toBool());
+    }
+}
+
+void InfoPaneDropdown::DBusServiceUnregistered(QString serviceName) {
+    if (serviceName == "org.thesuite.tsbt") {
+        ui->BluetoothSwitch->setEnabled(false);
+    }
 }
 
 void InfoPaneDropdown::bluetoothEnabledChanged() {
@@ -2776,4 +2802,26 @@ void InfoPaneDropdown::on_systemAnimationsAccessibilitySwitch_toggled(bool check
 void InfoPaneDropdown::on_CapsNumLockBellSwitch_toggled(bool checked)
 {
     themeSettings->setValue("accessibility/bellOnCapsNumLock", checked);
+}
+
+void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
+{
+    //Set flags that persist between changes
+    settings.setValue("flightmode/on", checked);
+    if (checked) {
+        settings.setValue("flightmode/wifi", ui->WifiSwitch->isChecked());
+        settings.setValue("flightmode/bt", ui->BluetoothSwitch->isChecked());
+
+        //Disable bluetooth and WiFi.
+        ui->WifiSwitch->setChecked(false);
+        ui->BluetoothSwitch->setChecked(false);
+    } else {
+        //Enable bluetooth and WiFi.
+        ui->WifiSwitch->setChecked(settings.value("flightmode/wifi", true).toBool());
+        ui->BluetoothSwitch->setChecked(settings.value("flightmode/bt", true).toBool());
+    }
+
+    emit flightModeChanged(checked);
+
+    //Don't disable the switch as they may be switched on during flight
 }

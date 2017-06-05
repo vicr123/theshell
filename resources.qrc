@@ -14,7 +14,6 @@
         <file>keylocks.wav</file>
     </qresource>
     <qresource prefix="/icons/dark">
-        <file>images/dark/flight.svg</file>
         <file>images/dark/battery-charged.svg</file>
         <file>images/dark/battery-charging.svg</file>
         <file>images/dark/battery-not-charging.svg</file>
@@ -24,7 +23,6 @@
         <file>images/dark/disconnect.svg</file>
     </qresource>
     <qresource prefix="/icons/light">
-        <file>images/light/flight.svg</file>
         <file>images/light/battery-charged.svg</file>
         <file>images/light/battery-charging.svg</file>
         <file>images/light/battery-not-charging.svg</file>
