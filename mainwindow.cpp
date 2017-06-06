@@ -981,55 +981,51 @@ void MainWindow::on_pushButton_2_clicked()
 }
 
 void MainWindow::internetLabelChanged(QString display, int signalStrength) {
-    if (display == tr("Flight Mode")) {
-        ui->networkLabel->setPixmap(getIconFromTheme("flight.svg", this->palette().color(QPalette::Window)).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->networkLabel->setText(display);
+    if (signalStrength == -1) {
         ui->networkStrength->setVisible(false);
+        ui->StatusBarNetwork->setVisible(false);
     } else {
-        ui->networkLabel->setText(display);
-        if (signalStrength == -1) {
-            ui->networkStrength->setVisible(false);
-        } else {
-            QIcon icon;
-            switch (signalStrength) {
-                case -5:
-                    icon = QIcon::fromTheme("network-wired-error");
-                    break;
-                case -4:
-                    icon = QIcon::fromTheme("network-wired-unavailable");
-                    break;
-                case -3:
-                    icon = QIcon::fromTheme("network-wireless-disconnected");
-                    break;
-                case -2:
-                    icon = QIcon::fromTheme("network-wireless-error");
-                    break;
-                case 0:
-                    icon = QIcon::fromTheme("network-wireless-connected-00");
-                    break;
-                case 1:
-                    icon = QIcon::fromTheme("network-wireless-connected-25");
-                    break;
-                case 2:
-                    icon = QIcon::fromTheme("network-wireless-connected-50");
-                    break;
-                case 3:
-                    icon = QIcon::fromTheme("network-wireless-connected-75");
-                    break;
-                case 4:
-                    icon = QIcon::fromTheme("network-wireless-connected-100");
-                    break;
-                case 5:
-                    icon = QIcon::fromTheme("network-wired-activated");
-                    break;
-                case 6:
-                    icon = QIcon::fromTheme("bluetooth-connected");
-                    break;
-            }
-
-            ui->networkStrength->setVisible(true);
-            ui->networkStrength->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-            ui->StatusBarNetwork->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+        QIcon icon;
+        switch (signalStrength) {
+            case -5:
+                icon = QIcon::fromTheme("network-wired-error");
+                break;
+            case -4:
+                icon = QIcon::fromTheme("network-wired-unavailable");
+                break;
+            case -3:
+                icon = QIcon::fromTheme("network-wireless-disconnected");
+                break;
+            case -2:
+                icon = QIcon::fromTheme("network-wireless-error");
+                break;
+            case 0:
+                icon = QIcon::fromTheme("network-wireless-connected-00");
+                break;
+            case 1:
+                icon = QIcon::fromTheme("network-wireless-connected-25");
+                break;
+            case 2:
+                icon = QIcon::fromTheme("network-wireless-connected-50");
+                break;
+            case 3:
+                icon = QIcon::fromTheme("network-wireless-connected-75");
+                break;
+            case 4:
+                icon = QIcon::fromTheme("network-wireless-connected-100");
+                break;
+            case 5:
+                icon = QIcon::fromTheme("network-wired-activated");
+                break;
+            case 6:
+                icon = QIcon::fromTheme("bluetooth-connected");
+                break;
         }
+
+        ui->networkStrength->setVisible(true);
+        ui->networkStrength->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+        ui->StatusBarNetwork->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     }
 }
 

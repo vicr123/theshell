@@ -374,10 +374,14 @@ void InfoPaneDropdown::on_WifiSwitch_toggled(bool checked)
     if (i->property("WirelessEnabled").toBool() != checked) {
         i->setProperty("WirelessEnabled", checked);
     }
-    i->deleteLater();
-    if (!ui->WifiSwitch->isChecked()) {
-        ui->WifiSwitch->setChecked(checked);
+
+    if (i->property("WirelessEnabled").toBool()) {
+        ui->WifiSwitch->setChecked(true);
+    } else {
+        ui->WifiSwitch->setChecked(false);
     }
+
+    i->deleteLater();
 }
 
 void InfoPaneDropdown::processTimer() {
@@ -695,13 +699,13 @@ void InfoPaneDropdown::getNetworks() {
     QDBusReply<QList<QDBusObjectPath>> reply = i->call("GetDevices");
 
     //Create a variable to store text on main window
-    QString NetworkLabel = tr("Disconnected from the Internet");
+    QStringList NetworkLabel;
     int signalStrength = -1;
 
     //Check if we are in flight mode
     if (ui->FlightSwitch->isChecked()) {
         //Update text accordingly
-        NetworkLabel = "Flight Mode";
+        NetworkLabel.append(tr("Flight Mode"));
     }
 
     //Create an enum to store the type of network we're currently using.
@@ -752,7 +756,7 @@ void InfoPaneDropdown::getNetworks() {
                                                        QStringList(), hints, -1);
                         }
                     }
-                    NetworkLabel = tr("Connected over a wired connection");
+                    NetworkLabel.append(tr("Connected over a wired connection"));
                     NetworkLabelType = NetworkType::Wired;
                     signalStrength = 5;
                     allowAppendNoNetworkMessage = true;
@@ -773,7 +777,11 @@ void InfoPaneDropdown::getNetworks() {
                     }
 
                     if (signalStrength < 0) {
-                        signalStrength = -4;
+                        if (ui->FlightSwitch->isChecked()) {
+                            signalStrength = -1;
+                        } else {
+                            signalStrength = -4;
+                        }
                     }
                 }
                 delete wire;
@@ -807,22 +815,22 @@ void InfoPaneDropdown::getNetworks() {
                         case 50:
                         case 60:
                             connectedSsid = ap->property("Ssid").toString();
-                            NetworkLabel = tr("Connecting to %1...").arg(connectedSsid);
+                            NetworkLabel.append(tr("Connecting to %1...").arg(connectedSsid));
                             NetworkLabelType = NetworkType::Wireless;
                             break;
                         case 70:
                             connectedSsid = ap->property("Ssid").toString();
-                            NetworkLabel = tr("Getting IP address from %1...").arg(connectedSsid);
+                            NetworkLabel.append(tr("Getting IP address from %1...").arg(connectedSsid));
                             NetworkLabelType = NetworkType::Wireless;
                             break;
                         case 80:
                             connectedSsid = ap->property("Ssid").toString();
-                            NetworkLabel = tr("Doing some checks...");
+                            NetworkLabel.append(tr("Doing some checks..."));
                             NetworkLabelType = NetworkType::Wireless;
                             break;
                         case 90:
                             connectedSsid = ap->property("Ssid").toString();
-                            NetworkLabel = tr("Connecting to a secondary connection...");
+                            NetworkLabel.append(tr("Connecting to a secondary connection..."));
                             NetworkLabelType = NetworkType::Wireless;
                             break;
                         case 100: {
@@ -841,7 +849,7 @@ void InfoPaneDropdown::getNetworks() {
                                 signalStrength = 4;
                             }
 
-                            NetworkLabel = /*tr("Connected to %1").arg(connectedSsid);*/ connectedSsid;
+                            NetworkLabel.append(/*tr("Connected to %1").arg(connectedSsid);*/ connectedSsid);
                             NetworkLabelType = NetworkType::Wireless;
                             ui->networkMac->setText("MAC Address: " + wifi->property("PermHwAddress").toString());
                             if (!connectedNetworks.keys().contains(interface)) {
@@ -864,7 +872,7 @@ void InfoPaneDropdown::getNetworks() {
                         case 110:
                         case 120:
                             connectedSsid = ap->property("Ssid").toString();
-                            NetworkLabel = tr("Disconnecting from %1...").arg(connectedSsid);
+                            NetworkLabel.append(tr("Disconnecting from %1...").arg(connectedSsid));
                             NetworkLabelType = NetworkType::Wireless;
                             break;
                         }
@@ -936,7 +944,7 @@ void InfoPaneDropdown::getNetworks() {
                             }
                         }
 
-                        NetworkLabel = tr("Connected to %1 over Bluetooth").arg(bt->property("Name").toString());
+                        NetworkLabel.append(tr("Connected to %1 over Bluetooth").arg(bt->property("Name").toString()));
                         NetworkLabelType = NetworkType::Bluetooth;
                         signalStrength = 6;
                         allowAppendNoNetworkMessage = true;
@@ -971,9 +979,9 @@ void InfoPaneDropdown::getNetworks() {
             }
 
             if (networkOk == Unspecified) {
-                NetworkLabel.prepend(tr("Can't get to the internet") + " · ");
+                NetworkLabel.prepend(tr("Can't get to the internet"));
             } else if (networkOk == BehindPortal) {
-                NetworkLabel.prepend(tr("Login required") + " · ");
+                NetworkLabel.prepend(tr("Login required"));
             }
         }
 
@@ -983,7 +991,7 @@ void InfoPaneDropdown::getNetworks() {
         }
 
     } else {
-        NetworkLabel = tr("NetworkManager Error");
+        NetworkLabel.append(tr("NetworkManager Error"));
     }
 
 
@@ -1053,11 +1061,15 @@ void InfoPaneDropdown::getNetworks() {
 
     i->deleteLater();
 
+    if (NetworkLabel.count() == 0) {
+        NetworkLabel.append(tr("Disconnected from the Internet"));
+    }
+
     //Set the updating flag
     networkListUpdating = false;
 
     //Emit change signal
-    emit networkLabelChanged(NetworkLabel, signalStrength);
+    emit networkLabelChanged(NetworkLabel.join(" · "), signalStrength);
 }
 
 void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem*)
@@ -2530,6 +2542,9 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
             break;
         case Internationalisation::ruRU:
             settings.setValue("locale/language", "ru_RU");
+            break;
+        case Internationalisation::svSE:
+            settings.setValue("locale/language", "sv_SE");
             break;
     }
 
