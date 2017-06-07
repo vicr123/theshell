@@ -217,7 +217,6 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     void updateData();
-    void loadData();
     int pinnedAppsCount;
     bool launchApp(QModelIndex index);
     void search(QString query);
@@ -226,13 +225,23 @@ public:
 
     QString currentQuery = "";
 
+public slots:
+    void loadData();
+
 signals:
     void queryWave(QString query);
 
 private:
+    struct dataLoad {
+        QList<App> apps;
+        int pinnedAppsCount;
+    };
+
     QSettings settings;
     QList<App> apps;
     QList<App> appsShown;
+    QFuture<dataLoad> loadDataFuture;
+    bool queueLoadData = false;
     BTHandsfree* bt;
 };
 
