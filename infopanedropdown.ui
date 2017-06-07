@@ -597,14 +597,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>10</month>
-                 <day>12</day>
+                 <day>11</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>10</month>
-                 <day>12</day>
+                 <day>11</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1966,7 +1966,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>12</number>
+            <number>10</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -3767,7 +3767,7 @@
              </item>
              <item row="1" column="0" colspan="2">
               <layout class="QGridLayout" name="gridLayout_15">
-               <item row="4" column="0">
+               <item row="5" column="0">
                 <spacer name="verticalSpacer_22">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
@@ -3852,6 +3852,43 @@
                  </item>
                  <item>
                   <spacer name="horizontalSpacer_27">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_44">
+                 <item>
+                  <widget class="QLabel" name="label_78">
+                   <property name="text">
+                    <string>Use 24 hour time</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="Switch" name="TwentyFourHourSwitch">
+                   <property name="text">
+                    <string>TwentyFourHourSwitch</string>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_31">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -4241,17 +4278,17 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>Switch</class>
+   <extends>QPushButton</extends>
+   <header>switch.h</header>
+  </customwidget>
+  <customwidget>
    <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>clickablelabel.h</header>
    <slots>
     <signal>clicked()</signal>
    </slots>
-  </customwidget>
-  <customwidget>
-   <class>Switch</class>
-   <extends>QPushButton</extends>
-   <header>switch.h</header>
   </customwidget>
   <customwidget>
    <class>AnimatedStackedWidget</class>

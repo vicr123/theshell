@@ -23,6 +23,7 @@
 #include "thewaveworker.h"
 #include "dbusevents.h"
 #include "tutorialwindow.h"
+#include "bthandsfree.h"
 
 #undef KeyPress
 
@@ -57,7 +58,7 @@ class Menu : public QDialog
     Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
 public:
-    explicit Menu(QWidget *parent = 0);
+    explicit Menu(BTHandsfree* bt, QWidget *parent = 0);
     ~Menu();
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
@@ -196,6 +197,7 @@ private:
     void reject();
 
     theWaveWorker* waveWorker;
+    BTHandsfree* bt;
     bool isListening = false;
     bool istheWaveReady = false;
 };
@@ -206,7 +208,7 @@ class AppsListModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    AppsListModel(QObject *parent = 0);
+    AppsListModel(BTHandsfree* bt, QObject *parent = 0);
     ~AppsListModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -220,10 +222,14 @@ public:
 
     QList<App> availableApps();
 
+signals:
+    void queryWave(QString query);
+
 private:
     QSettings settings;
     QList<App> apps;
     QList<App> appsShown;
+    BTHandsfree* bt;
 };
 
 class AppsDelegate : public QStyledItemDelegate

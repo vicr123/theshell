@@ -221,6 +221,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     ui->HighContrastSwitch->setChecked(themeSettings->value("accessibility/highcontrast", false).toBool());
     ui->systemAnimationsAccessibilitySwitch->setChecked(themeSettings->value("accessibility/systemAnimations", true).toBool());
     ui->CapsNumLockBellSwitch->setChecked(themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool());
+    ui->TwentyFourHourSwitch->setChecked(settings.value("time/use24hour", true).toBool());
     ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
 
     QString defaultFont;
@@ -2839,4 +2840,9 @@ void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
     emit flightModeChanged(checked);
 
     //Don't disable the switch as they may be switched on during flight
+}
+
+void InfoPaneDropdown::on_TwentyFourHourSwitch_toggled(bool checked)
+{
+    settings.setValue("time/use24hour", checked);
 }

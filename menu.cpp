@@ -8,7 +8,7 @@ extern DbusEvents* DBusEvents;
 extern TutorialWindow* TutorialWin;
 extern NativeEventFilter* NativeFilter;
 
-Menu::Menu(QWidget *parent) :
+Menu::Menu(BTHandsfree* bt, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Menu)
 {
@@ -99,13 +99,24 @@ Menu::Menu(QWidget *parent) :
     this->theWaveFrame = ui->thewaveFrame;
 
     //populateAppList();
-    ui->appsListView->setModel(new AppsListModel);
+    AppsListModel* appsListModel = new AppsListModel(bt);
+    connect(appsListModel, &AppsListModel::queryWave, [=](QString query) {
+        ui->activateTheWave->click();
+        if (query != "") {
+            ui->thewave_line->setText(query);
+            on_thewave_line_returnPressed();
+        }
+    });
+
+    ui->appsListView->setModel(appsListModel);
     ui->appsListView->setItemDelegate(new AppsDelegate);
 
     //ui->appsListView->setFlow(QListView::LeftToRight);
     //ui->appsListView->setResizeMode(QListView::Adjust);
     //ui->appsListView->setGridSize(QSize(128 * getDPIScaling(), 128 * getDPIScaling()));
     //ui->appsListView->setViewMode(QListView::IconMode);
+
+    this->bt = bt;
 }
 
 Menu::~Menu()
@@ -1085,7 +1096,8 @@ void Menu::on_reportBugButton_clicked()
     this->close();
 }
 
-AppsListModel::AppsListModel(QObject *parent) : QAbstractListModel(parent) {
+AppsListModel::AppsListModel(BTHandsfree* bt, QObject *parent) : QAbstractListModel(parent) {
+    this->bt = bt;
     loadData();
 }
 
@@ -1148,6 +1160,21 @@ void AppsListModel::search(QString query) {
         appsShown.append(apps);
         updateData();
     } else {
+        if (query.toLower().startsWith("call")) {
+            QString number = query.mid(5);
+            if (number != "") {
+                QStringList devices = bt->getDevices();
+                for (int i = 0; i < devices.count(); i++) {
+                    App app;
+                    app.setName(number);
+                    app.setCommand("call:" + QString::number(i) + ":" + number);
+                    app.setDescription(tr("Place a call over ") + devices.at(i));
+                    app.setIcon(QIcon::fromTheme("call-start"));
+                    appsShown.append(app);
+                }
+            }
+        }
+
         bool showtheWaveOption = true;
         /*if (settings.value("thewave/enabled", true).toBool()) {
             if (arg1.toLower() == "emergency call") {
@@ -1372,13 +1399,14 @@ void AppsListModel::search(QString query) {
             }
         }
 
-        /*if (showtheWaveOption && settings.value("thewave/enabled", true).toBool()) {
-            QListWidgetItem *wave = new QListWidgetItem();
-            wave->setText(tr("Ask theWave about \"%1\"").arg(arg1));
-            wave->setIcon(QIcon(":/icons/thewave.svg"));
-            wave->setData(Qt::UserRole, "thewave:" + arg1);
-            ui->listWidget->addItem(wave);
-        }*/
+        if (showtheWaveOption && settings.value("thewave/enabled", true).toBool()) {
+            App app;
+            app.setCommand("thewave:" + query);
+            app.setDescription(tr("Query theWave"));
+            app.setName(query);
+            app.setIcon(QIcon(":/icons/thewave.svg"));
+            appsShown.append(app);
+        }
         updateData();
     }
 }
@@ -1633,14 +1661,7 @@ QSize AppsDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 
 bool AppsListModel::launchApp(QModelIndex index) {
 
-    /*if (item->data(Qt::UserRole).toString().startsWith("thewave")) {
-        ui->activateTheWave->click();
-        if (item->data(Qt::UserRole).toString().split(":").count() > 1) {
-            QStringList request = item->data(Qt::UserRole).toString().split(":");
-            request.removeFirst();
-            ui->thewave_line->setText(request.join(" "));
-            on_thewave_line_returnPressed();
-        }
+    /*
     } else if (item->data(Qt::UserRole).toString().startsWith("power:")) {
         QString operation = item->data(Qt::UserRole).toString().split(":").at(1);
         if (operation == "off") {
@@ -1666,20 +1687,38 @@ bool AppsListModel::launchApp(QModelIndex index) {
         on_lineEdit_textEdited(ui->lineEdit->text());
     } else {*/
         QString command = appsShown.at(index.row()).command().remove("%u");
-        command.remove("env ");
-        QProcess* process = new QProcess();
-        QStringList environment = process->environment();
-        QStringList commandSpace = command.split(" ");
-        for (QString part : commandSpace) {
-            if (part.contains("=")) {
-                environment.append(part);
-                commandSpace.removeOne(part);
+        if (command.startsWith("thewave")) {
+            if (command.split(":").count() > 1) {
+                QStringList request = command.split(":");
+                request.removeFirst();
+                emit queryWave(request.join(" "));
+            } else {
+                emit queryWave("");
             }
+            return false;
+        } else if (command.startsWith("call:")) {
+            QString callCommand = command.mid(5);
+            QStringList parts = callCommand.split(":");
+            int deviceIndex = parts.at(0).toInt();
+            QString number = parts.at(1);
+            bt->placeCall(deviceIndex, number);
+            return true;
+        } else {
+            command.remove("env ");
+            QProcess* process = new QProcess();
+            QStringList environment = process->environment();
+            QStringList commandSpace = command.split(" ");
+            for (QString part : commandSpace) {
+                if (part.contains("=")) {
+                    environment.append(part);
+                    commandSpace.removeOne(part);
+                }
+            }
+            commandSpace.removeAll("");
+            process->start(commandSpace.join(" "));
+            connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
+            return true;
         }
-        commandSpace.removeAll("");
-        process->start(commandSpace.join(" "));
-        connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
-        return true;
         //QProcess::startDetached(item->data(Qt::UserRole).toString().remove("%u"));
     //}
 }

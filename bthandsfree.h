@@ -23,6 +23,8 @@ signals:
 
 public slots:
     void detectDevices();
+    QList<QString> getDevices();
+    void placeCall(int deviceIndex, QString number);
 
 private:
     QBoxLayout* layout;

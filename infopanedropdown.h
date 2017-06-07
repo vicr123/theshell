@@ -320,6 +320,8 @@ private slots:
 
     void on_FlightSwitch_toggled(bool checked);
 
+    void on_TwentyFourHourSwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 

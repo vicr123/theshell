@@ -98,3 +98,15 @@ void BTHandsfree::detectDevices() {
         this->setVisible(false);
     }
 }
+
+QList<QString> BTHandsfree::getDevices() {
+    QStringList retval;
+    for (QDBusInterface* device : interfaces) {
+        retval.append(device->property("DeviceName").toString());
+    }
+    return retval;
+}
+
+void BTHandsfree::placeCall(int deviceIndex, QString number) {
+    interfaces.at(deviceIndex)->call(QDBus::NoBlock, "PlaceCall", number);
+}

@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(QApplication::desktop(), SIGNAL(primaryScreenChanged()), this, SLOT(reloadScreens()));
 
     //Create the gateway and set required flags
-    gatewayMenu = new Menu(this);
+    gatewayMenu = new Menu(ui->phonesWidget, this);
     gatewayMenu->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(gatewayMenu, &Menu::menuClosing, [=]() {
         lockHide = false;
@@ -796,7 +796,21 @@ void MainWindow::doUpdate() {
 
     //Update date and time
     ui->date->setText(QLocale().toString(QDateTime::currentDateTime(), "ddd dd MMM yyyy"));
-    ui->time->setText(QDateTime::currentDateTime().time().toString(Qt::TextDate));
+
+    if (settings.value("time/use24hour", true).toBool()) {
+        ui->time->setText(QDateTime::currentDateTime().time().toString("HH:mm:ss"));
+        ui->ampmLabel->setVisible(false);
+    } else {
+        QTime now = QDateTime::currentDateTime().time();
+        if (QDateTime::currentDateTime().time().hour() < 12) {
+            ui->ampmLabel->setText(QLocale().amText());
+        } else {
+            ui->ampmLabel->setText(QLocale().pmText());
+            now = now.addSecs(-43200);
+        }
+        ui->time->setText(now.toString("hh:mm:ss"));
+        ui->ampmLabel->setVisible(true);
+    }
     ui->StatusBarClock->setText(ui->time->text());
 
     mprisDetectedApps.clear();
