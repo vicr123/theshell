@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui x11extras dbus multimedia xml network positioning svg charts thelib
+QT       += core gui x11extras dbus multimedia xml network positioning svg charts thelib concurrent
 CONFIG   += c++14
 LIBS     += -lX11 -lxcb -lxcb-keysyms -lcups -lsystemd -lKF5AkonadiCore -lXcursor -lpulse -lpulse-mainloop-glib
 

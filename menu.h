@@ -24,6 +24,8 @@
 #include "dbusevents.h"
 #include "tutorialwindow.h"
 #include "bthandsfree.h"
+#include <QtConcurrent>
+#include <QFutureWatcher>
 
 #undef KeyPress
 
@@ -165,8 +167,6 @@ private slots:
 
     void on_thewaveMedia_Back_clicked();
 
-    void on_listWidget_customContextMenuRequested(const QPoint &pos);
-
     void on_exitButton_clicked();
 
     void on_fakeEndButton_clicked();
@@ -176,6 +176,8 @@ private slots:
     void on_reportBugButton_clicked();
 
     void on_appsListView_clicked(const QModelIndex &index);
+
+    void on_appsListView_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::Menu *ui;
@@ -221,6 +223,8 @@ public:
     void search(QString query);
 
     QList<App> availableApps();
+
+    QString currentQuery = "";
 
 signals:
     void queryWave(QString query);
