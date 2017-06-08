@@ -207,6 +207,14 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 connect(eject, SIGNAL(finished(int)), eject, SLOT(deleteLater()));
 
                 Hotkeys->show(QIcon::fromTheme("media-eject"), tr("Eject"), tr("Attempting to eject disc..."));
+            } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XK_P) && (button->state == (Mod4Mask | Mod1Mask))) ||
+                       (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Print)) ||
+                       (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff) && button->state == Mod4Mask)) { //Take screenshot
+                if (button->state & Mod4Mask) {
+                    ignoreSuper = true;
+                }
+                screenshotWindow* screenshot = new screenshotWindow;
+                screenshot->show();
             } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) ||
                        (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == (ControlMask | Mod1Mask)))) { //Power Off
                 if (!isEndSessionBoxShowing) {
@@ -242,13 +250,6 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_space) && button->state == Mod4Mask) { //theWave
                 ignoreSuper = true;
                 MainWin->openMenu(true, true);
-            } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XK_P) && (button->state == (Mod4Mask | Mod1Mask))) ||
-                       (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Print))) { //Take screenshot
-                if (button->state & Mod4Mask) {
-                    ignoreSuper = true;
-                }
-                screenshotWindow* screenshot = new screenshotWindow;
-                screenshot->show();
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F1) && (button->state == Mod4Mask)) {
                 MainWin->getInfoPane()->show(InfoPaneDropdown::Clock);
                 ignoreSuper = true;
