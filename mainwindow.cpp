@@ -1368,8 +1368,9 @@ void MainWindow::openMenu(bool openTotheWave, bool startListening) {
     } else {
         lockHide = true;
 
-        QRect screenGeometry = QApplication::desktop()->screenGeometry();
-        gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), screenGeometry.height() - (this->height() + (this->y() - screenGeometry.y())) + 1);
+        //QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        QRect availableGeometry = QApplication::desktop()->availableGeometry();
+        gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), availableGeometry.height() - (this->height() + (this->y() - availableGeometry.y())) + 1);
         gatewayMenu->show(openTotheWave, startListening);
         gatewayMenu->setFocus();
     }
