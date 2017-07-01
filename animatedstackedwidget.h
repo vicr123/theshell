@@ -5,10 +5,12 @@
 #include <tpropertyanimation.h>
 #include <QSequentialAnimationGroup>
 #include <QParallelAnimationGroup>
+#include <QGraphicsOpacityEffect>
 #include <QSettings>
 #include <QWindow>
 #include <QDebug>
 #include <QApplication>
+#include "upowerdbus.h"
 
 class AnimatedStackedWidget : public QStackedWidget
 {

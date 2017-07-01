@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/onboarding">
+        <file>statusbar.png</file>
+    </qresource>
+</RCC>

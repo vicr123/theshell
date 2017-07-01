@@ -29,7 +29,7 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
     }
 
     if (currentScreen != NULL) {
-        screenshotPixmap = currentScreen->grabWindow(0, currentScreen->geometry().x(), currentScreen->geometry().y(), currentScreen->geometry().width(), currentScreen->geometry().height());
+        screenshotPixmap = currentScreen->grabWindow(0); //, currentScreen->geometry().x(), currentScreen->geometry().y(), currentScreen->geometry().width(), currentScreen->geometry().height());
         ui->label->setPixmap(screenshotPixmap);
         savePixmap = screenshotPixmap;
 

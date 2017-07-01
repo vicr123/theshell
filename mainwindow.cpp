@@ -10,6 +10,8 @@ extern AudioManager* AudioMan;
 extern NativeEventFilter* NativeFilter;
 extern float getDPIScaling();
 extern LocationServices* locationServices;
+extern UPowerDBus* updbus;
+extern NotificationDBus* ndbus;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -69,9 +71,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(doUpdate()));
     timer->start();
 
-    NotificationDBus* ndbus = new NotificationDBus(this);
-
-    UPowerDBus* updbus = new UPowerDBus(ndbus, this);
     connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
         if (updbus->hasBattery()) {
             if (updbus->hasPCBattery()) {
@@ -138,9 +137,9 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     updbus->DeviceChanged();
 
-    DBusEvents = new DbusEvents(ndbus);
+    DBusEvents = new DbusEvents();
 
-    infoPane = new InfoPaneDropdown(ndbus, updbus, this->winId());
+    infoPane = new InfoPaneDropdown(this->winId());
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(infoPane, SIGNAL(networkLabelChanged(QString,int)), this, SLOT(internetLabelChanged(QString,int)));
     connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
@@ -527,7 +526,7 @@ void MainWindow::doUpdate() {
             w.setWID(win);
 
             bool addToList = true;
-            if (w.PID() == QApplication::applicationPid()) {
+            if (w.PID() == QApplication::applicationPid() && w.title() != "Choose Background") {
                 addToList = false;
                 if (w.title() == "Ending Session") {
                     hideTop = 0;

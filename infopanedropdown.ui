@@ -597,14 +597,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>10</month>
-                 <day>11</day>
+                 <day>10</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>10</month>
-                 <day>11</day>
+                 <day>10</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1966,7 +1966,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>10</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2674,7 +2674,7 @@
                </property>
               </spacer>
              </item>
-             <item row="6" column="0">
+             <item row="7" column="0">
               <spacer name="verticalSpacer_20">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -2686,6 +2686,9 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="3" column="1" colspan="2">
+              <widget class="QComboBox" name="themeButtonColor"/>
              </item>
              <item row="2" column="1">
               <widget class="QFrame" name="frame_5">
@@ -2725,9 +2728,6 @@
                </layout>
               </widget>
              </item>
-             <item row="3" column="1" colspan="2">
-              <widget class="QComboBox" name="themeButtonColor"/>
-             </item>
              <item row="4" column="0" colspan="3">
               <widget class="Line" name="line_12">
                <property name="orientation">
@@ -2737,6 +2737,16 @@
              </item>
              <item row="5" column="1" colspan="2">
               <widget class="QFontComboBox" name="systemFont"/>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_79">
+               <property name="text">
+                <string>Icon Theme</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1" colspan="2">
+              <widget class="QComboBox" name="systemIconTheme"/>
              </item>
             </layout>
            </widget>
@@ -4210,7 +4220,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>theShell 6.2</string>
+                   <string>theShell 7.0</string>
                   </property>
                  </widget>
                 </item>

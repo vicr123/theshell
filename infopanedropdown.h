@@ -54,7 +54,7 @@ class InfoPaneDropdown : public QDialog
     Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
 public:
-    explicit InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, WId MainWindowId, QWidget *parent = 0);
+    explicit InfoPaneDropdown(WId MainWindowId, QWidget *parent = 0);
     ~InfoPaneDropdown();
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
@@ -322,6 +322,8 @@ private slots:
 
     void on_TwentyFourHourSwitch_toggled(bool checked);
 
+    void on_systemIconTheme_currentIndexChanged(int index);
+
 public slots:
     void getNetworks();
 
@@ -332,9 +334,6 @@ public slots:
 
 private:
     Ui::InfoPaneDropdown *ui;
-
-    NotificationDBus* notificationEngine;
-    UPowerDBus* powerEngine;
 
     bool isRedshiftOn = false;
     dropdownType currentDropDown = Clock;

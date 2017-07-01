@@ -12,8 +12,10 @@ extern QTranslator *qtTranslator, *tsTranslator;
 extern float getDPIScaling();
 extern QDBusServiceWatcher* dbusServiceWatcher;
 extern QDBusServiceWatcher* dbusServiceWatcherSystem;
+extern UPowerDBus* updbus;
+extern NotificationDBus* ndbus;
 
-InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerDBus* powerEngine, WId MainWindowId, QWidget *parent) :
+InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoPaneDropdown)
 {
@@ -29,14 +31,12 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
 
     this->MainWindowId = MainWindowId;
 
-    this->notificationEngine = notificationEngine;
-    this->powerEngine = powerEngine;
-    notificationEngine->setDropdownPane(this);
+    ndbus->setDropdownPane(this);
 
-    connect(notificationEngine, SIGNAL(newNotification(int,QString,QString,QIcon)), this, SLOT(newNotificationReceived(int,QString,QString,QIcon)));
-    connect(notificationEngine, SIGNAL(removeNotification(int)), this, SLOT(removeNotification(int)));
-    connect(notificationEngine, SIGNAL(NotificationClosed(uint,uint)), this, SLOT(notificationClosed(uint,uint)));
-    connect(this, SIGNAL(closeNotification(int)), notificationEngine, SLOT(CloseNotificationUserInitiated(int)));
+    connect(ndbus, SIGNAL(newNotification(int,QString,QString,QIcon)), this, SLOT(newNotificationReceived(int,QString,QString,QIcon)));
+    connect(ndbus, SIGNAL(removeNotification(int)), this, SLOT(removeNotification(int)));
+    connect(ndbus, SIGNAL(NotificationClosed(uint,uint)), this, SLOT(notificationClosed(uint,uint)));
+    connect(this, SIGNAL(closeNotification(int)), ndbus, SLOT(CloseNotificationUserInitiated(int)));
 
     connect(dbusServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(DBusServiceRegistered(QString)));
     connect(dbusServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(DBusServiceUnregistered(QString)));
@@ -58,7 +58,7 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
     timer->setInterval(1000);
     timer->start();
 
-    connect(powerEngine, &UPowerDBus::powerStretchChanged, [=](bool isOn) {
+    connect(updbus, &UPowerDBus::powerStretchChanged, [=](bool isOn) {
         ui->PowerStretchSwitch->setChecked(isOn);
         emit batteryStretchChanged(isOn);
         doNetworkCheck();
@@ -123,6 +123,38 @@ InfoPaneDropdown::InfoPaneDropdown(NotificationDBus* notificationEngine, UPowerD
         }
 
         dbusServiceWatcher->addWatchedService("org.thesuite.tsbt");
+    }
+
+    //Load icons into icon theme box
+    {
+        QString currentIconTheme = themeSettings->value("icons/theme", "contemporary").toString();
+        QDir iconPath("/usr/share/icons");
+        for (QString iconDir : iconPath.entryList(QDir::NoDotAndDotDot | QDir::Dirs)) {
+            QFile themeFile("/usr/share/icons/" + iconDir + "/index.theme");
+            if (themeFile.exists()) {
+                themeFile.open(QFile::ReadOnly);
+                QString iconThemeName = "";
+
+                while (!themeFile.atEnd()) {
+                    QString line = themeFile.readLine();
+                    if (line.startsWith("Name")) {
+                        iconThemeName = line.mid(line.indexOf("=") + 1).remove("\n");
+                        break;
+                    }
+                }
+
+                themeFile.close();
+
+                if (iconThemeName != "") {
+                    ui->systemIconTheme->addItem(iconThemeName);
+                    ui->systemIconTheme->setItemData(ui->systemIconTheme->count() - 1, iconDir);
+
+                    if (currentIconTheme == iconDir) {
+                        ui->systemIconTheme->setCurrentIndex(ui->systemIconTheme->count() - 1);
+                    }
+                }
+            }
+        }
     }
 
     connect(this, &InfoPaneDropdown::networkLabelChanged, [=](QString label) {
@@ -562,7 +594,7 @@ void InfoPaneDropdown::timerTick() {
                 QVariantMap hints;
                 hints.insert("category", "reminder.activate");
                 hints.insert("sound-file", "qrc:/sounds/notifications/reminder.wav");
-                notificationEngine->Notify("theShell", 0, "theshell", "Reminder", data.first, QStringList(), hints, 30000);
+                ndbus->Notify("theShell", 0, "theshell", "Reminder", data.first, QStringList(), hints, 30000);
                 ReminderData.removeAt(i);
                 i--;
                 dataChanged = true;
@@ -752,7 +784,7 @@ void InfoPaneDropdown::getNetworks() {
                             QVariantMap hints;
                             hints.insert("category", "network.disconnected");
                             hints.insert("transient", true);
-                            notificationEngine->Notify("theShell", 0, "", tr("Wired Connection"),
+                            ndbus->Notify("theShell", 0, "", tr("Wired Connection"),
                                                        tr("You've been disconnected from the internet over a wired connection"),
                                                        QStringList(), hints, -1);
                         }
@@ -770,7 +802,7 @@ void InfoPaneDropdown::getNetworks() {
                             QVariantMap hints;
                             hints.insert("category", "network.connected");
                             hints.insert("transient", true);
-                            notificationEngine->Notify("theShell", 0, "", tr("Wired Connection"),
+                            ndbus->Notify("theShell", 0, "", tr("Wired Connection"),
                                                        tr("You're now connected to the internet over a wired connection"),
                                                        QStringList(), hints, -1);
                             doNetworkCheck();
@@ -805,7 +837,7 @@ void InfoPaneDropdown::getNetworks() {
                                     QVariantMap hints;
                                     hints.insert("category", "network.disconnected");
                                     hints.insert("transient", true);
-                                    notificationEngine->Notify("theShell", 0, "", tr("Wireless Connection"),
+                                    ndbus->Notify("theShell", 0, "", tr("Wireless Connection"),
                                                                tr("You've been disconnected from the internet over a wireless connection"),
                                                                QStringList(), hints, -1);
                                 }
@@ -861,7 +893,7 @@ void InfoPaneDropdown::getNetworks() {
                                     QVariantMap hints;
                                     hints.insert("category", "network.connected");
                                     hints.insert("transient", true);
-                                    notificationEngine->Notify("theShell", 0, "", tr("Wireless Connection"),
+                                    ndbus->Notify("theShell", 0, "", tr("Wireless Connection"),
                                                                tr("You're now connected to the network \"%1\"").arg(connectedSsid),
                                                                QStringList(), hints, -1);
                                     doNetworkCheck();
@@ -939,7 +971,7 @@ void InfoPaneDropdown::getNetworks() {
                                 QVariantMap hints;
                                 hints.insert("category", "network.connected");
                                 hints.insert("transient", true);
-                                notificationEngine->Notify("theShell", 0, "", tr("Bluetooth Connection"),
+                                ndbus->Notify("theShell", 0, "", tr("Bluetooth Connection"),
                                                            tr("You're now connected to the internet over a bluetooth connection"),
                                                            QStringList(), hints, -1);
                             }
@@ -959,7 +991,7 @@ void InfoPaneDropdown::getNetworks() {
                                 QVariantMap hints;
                                 hints.insert("category", "network.disconnected");
                                 hints.insert("transient", true);
-                                notificationEngine->Notify("theShell", 0, "", tr("Bluetooth Connection"),
+                                ndbus->Notify("theShell", 0, "", tr("Bluetooth Connection"),
                                                            tr("You've been disconnected from the internet over a bluetooth connection"),
                                                            QStringList(), hints, -1);
                             }
@@ -1231,7 +1263,7 @@ void InfoPaneDropdown::startTimer(QTime time) {
         timeUntilTimeout = timeUntilTimeout.addSecs(-1);
         if (timeUntilTimeout == QTime(0, 0, 0)) {
             if (timerNotificationId != 0) {
-                notificationEngine->CloseNotification(timerNotificationId);
+                ndbus->CloseNotification(timerNotificationId);
             }
 
             timer->stop();
@@ -1242,7 +1274,7 @@ void InfoPaneDropdown::startTimer(QTime time) {
                 QVariantMap hints;
                 hints.insert("x-thesuite-timercomplete", true);
                 hints.insert("suppress-sound", true);
-                timerNotificationId = notificationEngine->Notify("theShell", 0, "", tr("Timer Elapsed"),
+                timerNotificationId = ndbus->Notify("theShell", 0, "", tr("Timer Elapsed"),
                                           tr("Your timer has completed."),
                                           QStringList(), hints, 0);
                 ui->timeEdit->setVisible(true);
@@ -1476,7 +1508,7 @@ void InfoPaneDropdown::on_redshiftPause_toggled(bool checked)
 }
 
 void InfoPaneDropdown::updateSysInfo() {
-    ui->currentBattery->setText(tr("Current Battery Percentage: %1").arg(QString::number(powerEngine->currentBattery()).append("%")));
+    ui->currentBattery->setText(tr("Current Battery Percentage: %1").arg(QString::number(updbus->currentBattery()).append("%")));
 
     QTime uptime(0, 0);
     uptime = uptime.addMSecs(startTime.elapsed());
@@ -1988,7 +2020,7 @@ void InfoPaneDropdown::updateBatteryChart() {
             batteryChart->removeAxis(axis);
         }
 
-        QDBusMessage historyMessage = QDBusMessage::createMethodCall("org.freedesktop.UPower", powerEngine->defaultBattery().path(), "org.freedesktop.UPower.Device", "GetHistory");
+        QDBusMessage historyMessage = QDBusMessage::createMethodCall("org.freedesktop.UPower", updbus->defaultBattery().path(), "org.freedesktop.UPower.Device", "GetHistory");
         QVariantList historyMessageArguments;
 
         if (ui->chargeGraphButton->isChecked()) {
@@ -2016,7 +2048,7 @@ void InfoPaneDropdown::updateBatteryChart() {
         remainingTimePen.setDashOffset(3);
         batteryChartTimeRemainingData->setPen(remainingTimePen);
 
-        QDateTime remainingTime = powerEngine->batteryTimeRemaining();
+        QDateTime remainingTime = updbus->batteryTimeRemaining();
 
         int firstDateTime = QDateTime::currentSecsSinceEpoch() / 60;
         if (historyArgument.isValid()) {
@@ -2043,7 +2075,7 @@ void InfoPaneDropdown::updateBatteryChart() {
                 QDateTime lastDateTime = QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x());
                 batteryChartTimeRemainingData->append(batteryChartData->at(batteryChartData->count() - 1));
                 QDateTime endDateTime = lastDateTime.addMSecs(remainingTime.toMSecsSinceEpoch());
-                if (powerEngine->charging()) {
+                if (updbus->charging()) {
                     batteryChartTimeRemainingData->append(endDateTime.toMSecsSinceEpoch(), 100);
                 } else {
                     batteryChartTimeRemainingData->append(endDateTime.toMSecsSinceEpoch(), 0);
@@ -2119,12 +2151,12 @@ void InfoPaneDropdown::on_upArrow_clicked()
 
 void InfoPaneDropdown::on_PowerStretchSwitch_toggled(bool checked)
 {
-    powerEngine->setPowerStretch(checked);
+    updbus->setPowerStretch(checked);
     emit batteryStretchChanged(checked);
 }
 
 void InfoPaneDropdown::doNetworkCheck() {
-    if (powerEngine->powerStretch()) {
+    if (updbus->powerStretch()) {
         //Always set networkOk to ok because we don't update when power stretch is on
         networkOk = Ok;
     } else {
@@ -2146,10 +2178,10 @@ void InfoPaneDropdown::doNetworkCheck() {
                     hints.insert("category", "network.connected");
                     hints.insert("transient", true);
 
-                    uint notificationId = notificationEngine->Notify("theShell", 0, "", tr("Network Login"),
+                    uint notificationId = ndbus->Notify("theShell", 0, "", tr("Network Login"),
                                                tr("Your connection to the internet is blocked by a login page."),
                                                actions, hints, 30000);
-                    connect(notificationEngine, &NotificationDBus::ActionInvoked, [=](uint id, QString key) {
+                    connect(ndbus, &NotificationDBus::ActionInvoked, [=](uint id, QString key) {
                         if (notificationId == id && key == "login") {
                             QProcess::startDetached("xdg-open http://nmcheck.gnome.org/");
                         }
@@ -2845,4 +2877,9 @@ void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_TwentyFourHourSwitch_toggled(bool checked)
 {
     settings.setValue("time/use24hour", checked);
+}
+
+void InfoPaneDropdown::on_systemIconTheme_currentIndexChanged(int index)
+{
+    themeSettings->setValue("icons/theme", ui->systemIconTheme->itemData(index).toString());
 }

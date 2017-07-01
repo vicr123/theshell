@@ -2,13 +2,14 @@
 #include "power_adaptor.h"
 
 extern void EndSession(EndSessionWait::shutdownType type);
-UPowerDBus::UPowerDBus(NotificationDBus* notificationDBus, QObject *parent) : QObject(parent)
+extern NotificationDBus* ndbus;
+
+UPowerDBus::UPowerDBus(QObject *parent) : QObject(parent)
 {
     new PowerAdaptor(this);
     QDBusConnection::sessionBus().registerObject("/org/thesuite/Power", "org.thesuite.Power", this);
 
-    this->notificationDBus = notificationDBus;
-    connect(notificationDBus, SIGNAL(ActionInvoked(uint,QString)), this, SLOT(ActionInvoked(uint,QString)));
+    connect(ndbus, SIGNAL(ActionInvoked(uint,QString)), this, SLOT(ActionInvoked(uint,QString)));
 
     //Inhibit logind's handling of some power events
     QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Inhibit");
@@ -105,7 +106,7 @@ void UPowerDBus::DeviceChanged() {
                         hints.insert("category", "battery.charging");
                         hints.insert("transient", true);
                         hints.insert("sound-file", "qrc:/sounds/charging.wav");
-                        this->notificationDBus->Notify("theShell", 0, "", tr("Charging"),
+                        ndbus->Notify("theShell", 0, "", tr("Charging"),
                                                        message, QStringList(), hints, 10000);
                     }
 
@@ -123,7 +124,7 @@ void UPowerDBus::DeviceChanged() {
                         hourBatteryWarning = false;
                         halfHourBatteryWarning = false;
                         tenMinuteBatteryWarning = false;
-                        this->notificationDBus->CloseNotification(batteryLowNotificationNumber);
+                        ndbus->CloseNotification(batteryLowNotificationNumber);
                         batteryLowNotificationNumber = 0;
                     }
                     state += ")";
@@ -135,7 +136,7 @@ void UPowerDBus::DeviceChanged() {
                         QVariantMap hints;
                         hints.insert("category", "battery.discharging");
                         hints.insert("transient", true);
-                        this->notificationDBus->Notify("theShell", 0, "", tr("Discharging"),
+                        ndbus->Notify("theShell", 0, "", tr("Discharging"),
                                                        tr("The power cable has been removed, and your PC is now running on battery power."),
                                                        QStringList(), hints, 10000);
                     }
@@ -157,7 +158,7 @@ void UPowerDBus::DeviceChanged() {
                                 actions.append("power-stretch-on");
                                 actions.append(tr("Turn on Power Stretch"));
                             }
-                            batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Critically Low"),
+                            batteryLowNotificationNumber = ndbus->Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Critically Low"),
                                                            tr("You have about 10 minutes of battery remaining."
                                                            " Either plug in your PC or save your work"
                                                            " and power off the PC and change the battery."), actions, hints, 0);
@@ -176,7 +177,7 @@ void UPowerDBus::DeviceChanged() {
                                 actions.append("power-stretch-on");
                                 actions.append(tr("Turn on Power Stretch"));
                             }
-                            batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Low"),
+                            batteryLowNotificationNumber = ndbus->Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Low"),
                                                            tr("You have about half an hour of battery remaining."
                                                            " You should plug in your PC now."), actions, hints, 10000);
 
@@ -194,7 +195,7 @@ void UPowerDBus::DeviceChanged() {
                                 actions.append("power-stretch-on");
                                 actions.append(tr("Turn on Power Stretch"));
                             }
-                            batteryLowNotificationNumber = this->notificationDBus->Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Warning"),
+                            batteryLowNotificationNumber = ndbus->Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Warning"),
                                                            tr("You have about an hour of battery remaining."
                                                             " You may want to plug in your PC now."), actions, hints, 10000);
                             hourBatteryWarning = true;
@@ -218,7 +219,7 @@ void UPowerDBus::DeviceChanged() {
                         QVariantMap hints;
                         hints.insert("category", "battery.charged");
                         hints.insert("transient", true);
-                        this->notificationDBus->Notify("theShell", 0, "", "Battery Charged",
+                        ndbus->Notify("theShell", 0, "", "Battery Charged",
                                                        "The battery has been charged completely."
                                                        , QStringList(), hints, 10000);
                     }

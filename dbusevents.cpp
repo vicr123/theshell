@@ -1,9 +1,10 @@
 #include "dbusevents.h"
 
-DbusEvents::DbusEvents(NotificationDBus* notifications, QObject *parent) : QObject(parent)
+extern NotificationDBus* ndbus;
+
+DbusEvents::DbusEvents(QObject *parent) : QObject(parent)
 {
     qint64 pid = QApplication::applicationPid(); //Get this PID
-    this->notificationEngine = notifications;
     QDBusMessage sessionRequest = QDBusMessage::createMethodCall("org.freedesktop.login1",
                                                                  "/org/freedesktop/login1",
                                                                  "org.freedesktop.login1.Manager", "GetSessionByPid"); //Get this session
@@ -28,7 +29,7 @@ DbusEvents::DbusEvents(NotificationDBus* notifications, QObject *parent) : QObje
     QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager",
                                          "InterfacesRemoved", this, SLOT(RemoveUdisksInterface(QDBusObjectPath,QStringList)));
 
-    connect(notifications, SIGNAL(ActionInvoked(uint,QString)), this, SLOT(NotificationAction(uint,QString)));
+    connect(ndbus, SIGNAL(ActionInvoked(uint,QString)), this, SLOT(NotificationAction(uint,QString)));
 
     if (QFile("/usr/bin/idevice_id").exists()) {
         QProcess deviceId;
@@ -81,7 +82,7 @@ void DbusEvents::NewUdisksInterface(QDBusObjectPath path) {
             hints.insert("transient", true);
             hints.insert("category", "device.added");
             hints.insert("sound-file", "qrc:/sounds/media-insert.wav");
-            uint id = notificationEngine->Notify("theShell", 0, "", tr("%1 Connected").arg(deviceName), tr("%1 has been connected to this PC.").arg(deviceName), actions, hints, -1);
+            uint id = ndbus->Notify("theShell", 0, "", tr("%1 Connected").arg(deviceName), tr("%1 has been connected to this PC.").arg(deviceName), actions, hints, -1);
             notificationIds.insert(id, path);
         }
     }
@@ -146,7 +147,7 @@ void DbusEvents::DetectNewDevices() {
                     hints.insert("transient", true);
                     hints.insert("category", "device.added");
                     hints.insert("sound-file", "qrc:/sounds/media-insert.wav");
-                    notificationEngine->Notify("theShell", 0, "", tr("%1 Connected").arg(deviceName), tr("%1 has been connected to this PC.").arg(deviceName), QStringList(), hints, -1);
+                    ndbus->Notify("theShell", 0, "", tr("%1 Connected").arg(deviceName), tr("%1 has been connected to this PC.").arg(deviceName), QStringList(), hints, -1);
                     connectediOSDevices.append(device);
                 }
             }

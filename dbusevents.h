@@ -20,7 +20,7 @@ class DbusEvents : public QObject
 {
     Q_OBJECT
 public:
-    explicit DbusEvents(NotificationDBus* notifications, QObject *parent = 0);
+    explicit DbusEvents(QObject *parent = 0);
 
 signals:
 
@@ -43,7 +43,6 @@ private slots:
 private:
     QProcess* LockScreenProcess = NULL;
 
-    NotificationDBus* notificationEngine;
     QSettings settings;
     QStringList connectediOSDevices;
     QMap<uint, QDBusObjectPath> notificationIds;

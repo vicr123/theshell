@@ -44,11 +44,24 @@ private slots:
 
     void on_localeList_currentRowChanged(int currentRow);
 
+    void on_enableStatusBarButton_clicked();
+
+    void on_disableStatusBarButton_clicked();
+
+    void on_backToSetupButton_clicked();
+
+    void on_logoutButton_clicked();
+
+    void on_powerOffButton_clicked();
+
 private:
     Ui::Onboarding *ui;
 
+    void reject();
+
     int buttonCurrentLanguage = 0;
     QSettings settings;
+    bool onboardingDone = false;
 };
 
 #endif // ONBOARDING_H

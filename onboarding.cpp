@@ -2,8 +2,15 @@
 #include "ui_onboarding.h"
 #include "internationalisation.h"
 
-#define ChangelogOnbording "New in theShell 6.2:\n"\
-    "- Quiet Mode\n"\
+#define ChangelogOnbording "New in theShell 7.0:\n"\
+    "- Quiet Mode has been added to theShell! Click on the volume icon in the bar, or head to the Notifications Status Center pane to change the setting.\n"\
+    "- Flight Mode has been added\n"\
+    "- The Bluetooth Switch now works properly\n"\
+    "- Location icon now appears in the bar when your location is actively being used (for example, in GNOME Maps)\n"\
+    "- The system icon theme can now be changed in System Settings\n"\
+    "- Text on the bar has been shortened and made more concise\n"\
+    "- The clock now supports 12 hour mode. Change it in System Settings\n"\
+    "- Rate History and Application Power Usage is now included in the System Status Status Center pane\n"\
     "\n"\
     "New in theShell 6.1:\n"\
     "- New Status Bar. Go to Settings > Bar to activate it.\n"\
@@ -57,6 +64,7 @@ Onboarding::Onboarding(QWidget *parent) :
     ui->changelog->setText(ChangelogOnbording);
     ui->thewaveLogo->setPixmap(QIcon(":/icons/thewave.svg").pixmap(256, 256));
     ui->stackedWidget->setCurrentIndex(0);
+    ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg("7.0"));
 
     QTimer* timer = new QTimer(this);
     timer->setInterval(3000);
@@ -118,11 +126,12 @@ void Onboarding::on_stackedWidget_currentChanged(int arg1)
         case 1:
             ui->buttonBox->setVisible(false);
             break;
-        case 4:
-            ui->buttonBox->setVisible(false);
-            break;
         case 3:
+        case 4:
             ui->nextButton->setVisible(false);
+            break;
+        case 5:
+            ui->buttonBox->setVisible(false);
             break;
     }
 }
@@ -144,7 +153,8 @@ void Onboarding::on_backButton_clicked()
 
 void Onboarding::on_beginButton_clicked()
 {
-    this->close();
+    onboardingDone = true;
+    this->accept();
 }
 
 void Onboarding::on_enabletheWaveButton_clicked()
@@ -246,4 +256,46 @@ void Onboarding::on_localeList_currentRowChanged(int currentRow)
     Internationalisation::fillLanguageBox(ui->localeList);
 
     emit NativeFilter->DoRetranslation();
+}
+
+void Onboarding::on_enableStatusBarButton_clicked()
+{
+    settings.setValue("bar/statusBar", true);
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
+
+}
+
+void Onboarding::on_disableStatusBarButton_clicked()
+{
+    settings.setValue("bar/statusBar", false);
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
+}
+
+void Onboarding::reject() {
+    if (onboardingDone) {
+        QDialog::reject();
+    } else {
+        ui->exitStackedWidget->setCurrentIndex(1);
+    }
+}
+
+void Onboarding::on_backToSetupButton_clicked()
+{
+    ui->exitStackedWidget->setCurrentIndex(0);
+}
+
+void Onboarding::on_logoutButton_clicked()
+{
+    QDialog::reject();
+}
+
+void Onboarding::on_powerOffButton_clicked()
+{
+    //Power off the PC
+    QDBusMessage message;
+    QList<QVariant> arguments;
+    arguments.append(true);
+    message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "PowerOff");
+    message.setArguments(arguments);
+    QDBusConnection::systemBus().send(message);
 }

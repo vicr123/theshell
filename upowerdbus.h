@@ -19,7 +19,7 @@ class UPowerDBus : public QObject
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.thesuite.Power")
 public:
-    explicit UPowerDBus(NotificationDBus* notificationDBus, QObject *parent = 0);
+    explicit UPowerDBus(QObject *parent = 0);
 
     bool hasBattery();
     bool hasPCBattery();
@@ -59,7 +59,6 @@ private:
 
     uint batteryLowNotificationNumber = 0;
 
-    NotificationDBus* notificationDBus;
     bool hasBat;
     bool hasPCBat;
     int batLevel;

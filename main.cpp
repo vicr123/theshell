@@ -35,6 +35,8 @@ QTranslator *qtTranslator, *tsTranslator;
 LocationServices* locationServices = NULL;
 QDBusServiceWatcher* dbusServiceWatcher = NULL;
 QDBusServiceWatcher* dbusServiceWatcherSystem = NULL;
+UPowerDBus* updbus = NULL;
+NotificationDBus* ndbus = NULL;
 
 #define ONBOARDING_VERSION 4
 
@@ -255,16 +257,23 @@ int main(int argc, char *argv[])
     btProcess.start("ts-bt");
     btProcess.waitForStarted(); //Wait for ts-bt to start so that the Bluetooth toggle will work properly
 
+    locationServices = new LocationServices();
+
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
 
-    locationServices = new LocationServices();
+    ndbus = new NotificationDBus();
+    updbus = new UPowerDBus();
 
     if (settings.value("startup/lastOnboarding", 0) < ONBOARDING_VERSION || startOnboarding) {
         Onboarding* onboardingWindow = new Onboarding();
         onboardingWindow->showFullScreen();
-        onboardingWindow->exec();
-        settings.setValue("startup/lastOnboarding", ONBOARDING_VERSION);
+        if (onboardingWindow->exec() == QDialog::Accepted) {
+            settings.setValue("startup/lastOnboarding", ONBOARDING_VERSION);
+        } else {
+            //Log out
+            return 0;
+        }
     }
 
     MainWin = new MainWindow();

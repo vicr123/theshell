@@ -137,4 +137,5 @@ DISTFILES += \
     init_theshell
 
 RESOURCES += \
-    resources.qrc
+    resources.qrc \
+    resources2.qrc
