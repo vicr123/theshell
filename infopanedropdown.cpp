@@ -324,6 +324,44 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
     ui->settingsTabs->setCurrentIndex(ui->settingsTabs->count() - 1);
 
+    //Get distribution information
+    {
+        QString osreleaseFile = "";
+        if (QFile("/etc/os-release").exists()) {
+            osreleaseFile = "/etc/os-release";
+        } else if (QFile("/usr/lib/os-release").exists()) {
+            osreleaseFile = "/usr/lib/os-release";
+        }
+
+        if (osreleaseFile != "") {
+            QFile information(osreleaseFile);
+            information.open(QFile::ReadOnly);
+            while (!information.atEnd()) {
+                QString line = information.readLine();
+                if (line.startsWith("pretty_name=", Qt::CaseInsensitive)) {
+                    ui->distroName->setText(line.remove("pretty_name=", Qt::CaseInsensitive).remove("\"").remove("\n"));
+                } else if (line.startsWith("home_url=", Qt::CaseInsensitive)) {
+                    ui->distroWebpage->setText(line.remove("home_url=", Qt::CaseInsensitive).remove("\"").remove("\n"));
+                } else if (line.startsWith("support_url=", Qt::CaseInsensitive)) {
+                    ui->distroSupport->setText(line.remove("support_url=", Qt::CaseInsensitive).remove("\"").remove("\n"));
+                }
+            }
+            information.close();
+        }
+
+        struct sysinfo* info = new struct sysinfo;
+        if (sysinfo(info) == 0) {
+            ui->availableMemory->setText(calculateSize(info->totalram));
+            ui->availableSwap->setText(calculateSize(info->totalswap));
+        } else {
+
+        }
+        delete info;
+
+        ui->kernelVersion->setText(QSysInfo::kernelVersion());
+        ui->qtVersion->setText(qVersion());
+    }
+
     //Set up timer ringtones
     ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
     ui->timerToneSelect->addItem(tr("Happy Bee"));
@@ -1533,6 +1571,7 @@ void InfoPaneDropdown::updateSysInfo() {
     } else {
         ui->systemUptime->setText(tr("Couldn't get system uptime"));
     }
+    delete info;
 }
 
 void InfoPaneDropdown::on_printLabel_clicked()

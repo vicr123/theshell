@@ -35,6 +35,7 @@
 #include "audiomanager.h"
 #include "nativeeventfilter.h"
 #include <sys/sysinfo.h>
+#include <QSysInfo>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QTimeEdit>

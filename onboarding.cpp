@@ -11,6 +11,7 @@
     "- Text on the bar has been shortened and made more concise\n"\
     "- The clock now supports 12 hour mode. Change it in System Settings\n"\
     "- Rate History and Application Power Usage is now included in the System Status Status Center pane\n"\
+    "- The About Settings pane now shows system information\n"\
     "\n"\
     "New in theShell 6.1:\n"\
     "- New Status Bar. Go to Settings > Bar to activate it.\n"\
