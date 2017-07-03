@@ -35,10 +35,10 @@ void AnimatedStackedWidget::doSetCurrentIndex(int index) {
         } else {
             QRect newGeometry;
             if (currentIndex() < index) {
-                nextWidget->setGeometry(this->width() / 2, 0, this->width(), this->height());
+                nextWidget->setGeometry(this->width(), 0, this->width(), this->height());
                 newGeometry.setRect(-this->width() / 8, 0, this->width(), this->height());
             } else {
-                nextWidget->setGeometry(-this->width() / 2, 0, this->width(), this->height());
+                nextWidget->setGeometry(-this->width(), 0, this->width(), this->height());
                 newGeometry.setRect(this->width() / 8, 0, this->width(), this->height());
             }
 
@@ -47,7 +47,7 @@ void AnimatedStackedWidget::doSetCurrentIndex(int index) {
 
             QParallelAnimationGroup* group = new QParallelAnimationGroup;
 
-            QGraphicsOpacityEffect* opacity = new QGraphicsOpacityEffect;
+            /*QGraphicsOpacityEffect* opacity = new QGraphicsOpacityEffect;
             opacity->setOpacity(0);
             nextWidget->setGraphicsEffect(opacity);
 
@@ -56,7 +56,7 @@ void AnimatedStackedWidget::doSetCurrentIndex(int index) {
             opacityAnimation->setEndValue((float) 1);
             opacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
             opacityAnimation->setDuration(250);
-            group->addAnimation(opacityAnimation);
+            group->addAnimation(opacityAnimation);*/
 
             tPropertyAnimation* animation = new tPropertyAnimation(nextWidget, "geometry");
             animation->setStartValue(nextWidget->geometry());
@@ -76,7 +76,7 @@ void AnimatedStackedWidget::doSetCurrentIndex(int index) {
                 QStackedWidget::setCurrentIndex(index);
                 doingNewAnimation = false;
 
-                opacity->deleteLater();
+                //opacity->deleteLater();
             });
             group->start();
         }

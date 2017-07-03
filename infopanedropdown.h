@@ -34,6 +34,7 @@
 #include "endsessionwait.h"
 #include "audiomanager.h"
 #include "nativeeventfilter.h"
+#include <QScrollBar>
 #include <sys/sysinfo.h>
 #include <QSysInfo>
 #include <QNetworkAccessManager>
@@ -324,6 +325,14 @@ private slots:
     void on_TwentyFourHourSwitch_toggled(bool checked);
 
     void on_systemIconTheme_currentIndexChanged(int index);
+
+    void on_ReminderDelete_clicked();
+
+    void on_RemindersStackedWidget_currentChanged(int arg1);
+
+    void on_ReminderDeleteCancel_clicked();
+
+    void on_ReminderDeleteButton_clicked();
 
 public slots:
     void getNetworks();

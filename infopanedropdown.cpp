@@ -2922,3 +2922,82 @@ void InfoPaneDropdown::on_systemIconTheme_currentIndexChanged(int index)
 {
     themeSettings->setValue("icons/theme", ui->systemIconTheme->itemData(index).toString());
 }
+
+void InfoPaneDropdown::on_ReminderDelete_clicked()
+{
+    if (ui->RemindersList->selectionModel()->selectedRows().count() != 0) {
+        //Show delete screen
+        ui->RemindersStackedWidget->setCurrentIndex(2);
+
+        ui->deleteReminderText->setText(ui->RemindersList->model()->data(ui->RemindersList->selectionModel()->selectedRows().first()).toString());
+        ui->deleteReminderTime->setText(ui->RemindersList->model()->data(ui->RemindersList->selectionModel()->selectedRows().first(), Qt::UserRole).toString());
+    }
+}
+
+void InfoPaneDropdown::on_RemindersStackedWidget_currentChanged(int arg1)
+{
+    tVariantAnimation* height = new tVariantAnimation();
+    height->setDuration(250);
+    height->setEasingCurve(QEasingCurve::InOutCubic);
+    height->setStartValue(ui->RemindersStackedWidget->height());
+    qDebug() << ui->RemindersStackedWidget->height();
+    if (arg1 == 0) {
+        height->setEndValue((int) (300 * getDPIScaling() - 10));
+        //ui->ClockScrollArea->verticalScrollBar()->setEnabled(true);
+        ui->ClockScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    } else {
+        height->setEndValue(ui->ClockScrollArea->height() - 10);
+        //ui->ClockScrollArea->verticalScrollBar()->setEnabled(false);
+        ui->ClockScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    }
+    connect(height, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->RemindersStackedWidget->setFixedHeight(value.toInt());
+        ui->ClockScrollArea->verticalScrollBar()->setValue(ui->ClockScrollArea->verticalScrollBar()->maximum());
+    });
+    connect(height, &tVariantAnimation::finished, [=] {
+        ui->ClockScrollArea->verticalScrollBar()->setValue(ui->ClockScrollArea->verticalScrollBar()->maximum());
+    });
+    connect(height, SIGNAL(finished()), height, SLOT(deleteLater()));
+    height->start();
+}
+
+void InfoPaneDropdown::on_ReminderDeleteCancel_clicked()
+{
+    //Go back to normal screen
+    ui->RemindersStackedWidget->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::on_ReminderDeleteButton_clicked()
+{
+    QList<QPair<QString, QDateTime>> ReminderData;
+
+    QSettings reminders("theSuite/theShell.reminders");
+    reminders.beginGroup("reminders");
+    int count = reminders.beginReadArray("reminders");
+
+    for (int i = 0; i < count; i++) {
+        reminders.setArrayIndex(i);
+        QPair<QString, QDateTime> data;
+        data.first = reminders.value("title").toString();
+        data.second = reminders.value("date").toDateTime();
+        ReminderData.append(data);
+    }
+
+    reminders.endArray();
+
+    ReminderData.removeAt(ui->RemindersList->selectionModel()->selectedIndexes().at(0).row());
+
+    reminders.beginWriteArray("reminders");
+    int i = 0;
+    for (QPair<QString, QDateTime> data : ReminderData) {
+        reminders.setArrayIndex(i);
+        reminders.setValue("title", data.first);
+        reminders.setValue("date", data.second);
+        i++;
+    }
+    reminders.endArray();
+    reminders.endGroup();
+
+    ((RemindersListModel*) ui->RemindersList->model())->updateData();
+    ui->RemindersStackedWidget->setCurrentIndex(0);
+}

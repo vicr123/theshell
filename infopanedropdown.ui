@@ -342,7 +342,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -361,9 +361,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>592</width>
-            <height>1062</height>
+            <y>-342</y>
+            <width>1151</width>
+            <height>1036</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -597,14 +597,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>10</month>
-                 <day>10</day>
+                 <day>9</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>10</month>
-                 <day>10</day>
+                 <day>9</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -847,6 +847,16 @@
                   </spacer>
                  </item>
                  <item>
+                  <widget class="QPushButton" name="ReminderDelete">
+                   <property name="text">
+                    <string>Delete Reminder</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="edit-delete"/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="QPushButton" name="ReminderNew">
                    <property name="text">
                     <string>New Reminder</string>
@@ -951,6 +961,130 @@
                    </property>
                    <property name="icon">
                     <iconset theme="dialog-ok">
+                     <normaloff>.</normaloff>.</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="page_13">
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_32">
+               <item>
+                <widget class="QLabel" name="label_85">
+                 <property name="font">
+                  <font>
+                   <pointsize>20</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Delete Reminder</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_87">
+                 <property name="text">
+                  <string>Delete this reminder?</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Line" name="line_16">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_88">
+                 <property name="font">
+                  <font>
+                   <pointsize>15</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Reminder</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="deleteReminderText">
+                 <property name="text">
+                  <string notr="true">Reminder Text</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="deleteReminderTime">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string notr="true">3:00 PM</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Line" name="line_17">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_25">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_46">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <spacer name="horizontalSpacer_32">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="ReminderDeleteCancel">
+                   <property name="text">
+                    <string>Cancel</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="dialog-cancel">
+                     <normaloff>.</normaloff>.</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="ReminderDeleteButton">
+                   <property name="text">
+                    <string>Delete</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="edit-delete">
                      <normaloff>.</normaloff>.</iconset>
                    </property>
                   </widget>
@@ -4492,17 +4626,17 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Switch</class>
-   <extends>QPushButton</extends>
-   <header>switch.h</header>
-  </customwidget>
-  <customwidget>
    <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>clickablelabel.h</header>
    <slots>
     <signal>clicked()</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>Switch</class>
+   <extends>QPushButton</extends>
+   <header>switch.h</header>
   </customwidget>
   <customwidget>
    <class>AnimatedStackedWidget</class>
