@@ -182,7 +182,10 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
 
     if (!hints.value("suppress-sound", false).toBool() && !(AudioMan->QuietMode() == AudioManager::notifications || AudioMan->QuietMode() == AudioManager::mute)) {
         if (hints.contains("sound-file")) {
-            AudioMan->attenuateStreams();
+            if (settings.value("notifications/attenuate", true).toBool()) {
+                AudioMan->attenuateStreams();
+            }
+
             QMediaPlayer* player = new QMediaPlayer();
             if (hints.value("sound-file").toString().startsWith("qrc:")) {
                 player->setMedia(QMediaContent(QUrl(hints.value("sound-file").toString())));
@@ -193,11 +196,16 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
             connect(player, &QMediaPlayer::stateChanged, [=](QMediaPlayer::State state) {
                 if (state == QMediaPlayer::StoppedState) {
                     player->deleteLater();
-                    AudioMan->restoreStreams();
+                    if (settings.value("notifications/attenuate", true).toBool()) {
+                        AudioMan->restoreStreams();
+                    }
                 }
             });
         } else {
-            AudioMan->attenuateStreams();
+            if (settings.value("notifications/attenuate", true).toBool()) {
+                AudioMan->attenuateStreams();
+            }
+
             QSoundEffect* sound = new QSoundEffect();
 
             QString notificationSound = settings.value("notifications/sound", "tripleping").toString();
@@ -210,9 +218,12 @@ uint NotificationDBus::Notify(QString app_name, uint replaces_id,
             }
             sound->play();
             connect(sound, SIGNAL(playingChanged()), sound, SLOT(deleteLater()));
-            connect(sound, &QSoundEffect::playingChanged, [=]() {
-                AudioMan->restoreStreams();
-            });
+
+            if (settings.value("notifications/attenuate", true).toBool()) {
+                connect(sound, &QSoundEffect::playingChanged, [=]() {
+                    AudioMan->restoreStreams();
+                });
+            }
         }
     }
     return replaces_id;

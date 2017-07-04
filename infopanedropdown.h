@@ -334,6 +334,8 @@ private slots:
 
     void on_ReminderDeleteButton_clicked();
 
+    void on_AttenuateSwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 

@@ -6,13 +6,13 @@
 
 QT       += core gui x11extras dbus multimedia xml network positioning svg charts thelib concurrent
 CONFIG   += c++14
-LIBS     += -lX11 -lxcb -lxcb-keysyms -lcups -lsystemd -lKF5AkonadiCore -lXcursor -lpulse -lpulse-mainloop-glib
+LIBS     += -lX11 -lxcb -lxcb-keysyms -lcups -lsystemd -lKF5AkonadiCore -lpulse -lpulse-mainloop-glib
 
 INCLUDEPATH += /usr/include/glib-2.0/ /usr/lib/glib-2.0/include/
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = theshell
+TARGET = theshellb
 TEMPLATE = app
 QDBUSXML2CPP_ADAPTOR_HEADER_FLAGS = -l NotificationDBus -i notificationdbus.h
 QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h

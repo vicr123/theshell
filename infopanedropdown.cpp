@@ -254,6 +254,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->systemAnimationsAccessibilitySwitch->setChecked(themeSettings->value("accessibility/systemAnimations", true).toBool());
     ui->CapsNumLockBellSwitch->setChecked(themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool());
     ui->TwentyFourHourSwitch->setChecked(settings.value("time/use24hour", true).toBool());
+    ui->AttenuateSwitch->setChecked(settings.value("notifications/attenuate", true).toBool());
     ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
 
     QString defaultFont;
@@ -360,6 +361,14 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
         ui->kernelVersion->setText(QSysInfo::kernelVersion());
         ui->qtVersion->setText(qVersion());
+    }
+
+    if (QFileInfo(QApplication::applicationFilePath()).fileName().toLower() == "theshellb") {
+        ui->tsVersion->setText(tr("theShell %1 - Blueprint").arg(TS_VERSION));
+        ui->compileDate->setText(tr("You compiled theShell on %1").arg(__DATE__));
+    } else {
+        ui->tsVersion->setText(tr("theShell %1").arg(TS_VERSION));
+        ui->compileDate->setVisible(false);
     }
 
     //Set up timer ringtones
@@ -2940,7 +2949,6 @@ void InfoPaneDropdown::on_RemindersStackedWidget_currentChanged(int arg1)
     height->setDuration(250);
     height->setEasingCurve(QEasingCurve::InOutCubic);
     height->setStartValue(ui->RemindersStackedWidget->height());
-    qDebug() << ui->RemindersStackedWidget->height();
     if (arg1 == 0) {
         height->setEndValue((int) (300 * getDPIScaling() - 10));
         //ui->ClockScrollArea->verticalScrollBar()->setEnabled(true);
@@ -3000,4 +3008,9 @@ void InfoPaneDropdown::on_ReminderDeleteButton_clicked()
 
     ((RemindersListModel*) ui->RemindersList->model())->updateData();
     ui->RemindersStackedWidget->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::on_AttenuateSwitch_toggled(bool checked)
+{
+    settings.setValue("notifications/attenuate", checked);
 }

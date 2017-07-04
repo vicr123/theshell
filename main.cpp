@@ -22,7 +22,6 @@
 #include <QInputDialog>
 #include <signal.h>
 #include <unistd.h>
-#include <X11/Xcursor/Xcursor.h>
 #include <X11/Xlib.h>
 #include "locationservices.h"
 
@@ -215,16 +214,6 @@ int main(int argc, char *argv[])
         args.append("statusnotifierwatcher");
         sni.setArguments(args);
         QDBusConnection::sessionBus().call(sni);
-    }
-
-    {
-        //Set cursors
-        XcursorSetTheme(QX11Info::display(), "Breeze_Snow");
-        XcursorSetDefaultSize(QX11Info::display(), 24);
-
-        Cursor cursor = XcursorLibraryLoadCursor(QX11Info::display(), "left_ptr");
-        XDefineCursor(QX11Info::display(), DefaultRootWindow(QX11Info::display()), cursor);
-        XFreeCursor(QX11Info::display(), cursor);
     }
 
     QString windowManager = settings.value("startup/WindowManagerCommand", "kwin_x11").toString();

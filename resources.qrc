@@ -35,6 +35,7 @@
         <file>icon.svg</file>
         <file>thewave.svg</file>
         <file>blank.svg</file>
+        <file>icon-bp.svg</file>
     </qresource>
     <qresource prefix="/icons/flight">
         <file alias="cancelled.svg">flight/cancelled.svg</file>

@@ -225,6 +225,11 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->StatusBarQuietMode->setVisible(true);
         }
     });
+
+    if (QFileInfo(QApplication::applicationFilePath()).fileName().toLower() == "theshellb") {
+        //Apply Blueprint branding
+        ui->openMenu->setIcon(QIcon(":/icons/icon-bp.svg"));
+    }
 }
 
 MainWindow::~MainWindow()

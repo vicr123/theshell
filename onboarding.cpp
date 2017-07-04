@@ -65,7 +65,7 @@ Onboarding::Onboarding(QWidget *parent) :
     ui->changelog->setText(ChangelogOnbording);
     ui->thewaveLogo->setPixmap(QIcon(":/icons/thewave.svg").pixmap(256, 256));
     ui->stackedWidget->setCurrentIndex(0);
-    ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg("7.0"));
+    ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg(TS_VERSION));
 
     QTimer* timer = new QTimer(this);
     timer->setInterval(3000);
