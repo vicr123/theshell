@@ -2,6 +2,68 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="nl_NL" sourcelanguage="en_US">
 <context>
+    <name>AppsListModel</name>
+    <message>
+        <location filename="../menu.cpp" line="1078"/>
+        <source>Application</source>
+        <translation>Applicatie</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1114"/>
+        <source>Place a call over </source>
+        <translation>Bel via</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1309"/>
+        <source>Run Command</source>
+        <translatorcomment>Commando uitvoeren</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1320"/>
+        <source>Open webpage</source>
+        <translation>Open webpagina</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1328"/>
+        <source>Open Folder</source>
+        <translation>Open map</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1335"/>
+        <source>Open File</source>
+        <translation>Open bestand</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1348"/>
+        <source>Query theWave</source>
+        <translation>Vraag theWave</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1489"/>
+        <source>theWave</source>
+        <translation>theWave</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1490"/>
+        <source>Personal Assistant</source>
+        <translation>Persoonlijke Assistant</translation>
+    </message>
+</context>
+<context>
+    <name>AudioManager</name>
+    <message>
+        <location filename="../audiomanager.cpp" line="318"/>
+        <source>Ignores any notifications from all apps. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
+        <translation>Negeer alle notificaties van alle apps. Normale geluiden worden nog steeds afgespeeld, timers en herinneringen doen het nog, maar maken geen geluiden.</translation>
+    </message>
+    <message>
+        <location filename="../audiomanager.cpp" line="320"/>
+        <source>Completely turns off all sounds and notifications from all apps. Not even timers or reminders will notify you.</source>
+        <translation>Stopt geluiden en notificaties van alle apps. Timers of herinneringen werken nog steeds.</translation>
+    </message>
+</context>
+<context>
     <name>BTHandsfree</name>
     <message>
         <location filename="../bthandsfree.cpp" line="68"/>
@@ -366,6 +428,53 @@
         <translation>Stopwatch</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="811"/>
+        <source>Reminders</source>
+        <translation>Herinneringen</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="852"/>
+        <location filename="../infopanedropdown.ui" line="985"/>
+        <source>Delete Reminder</source>
+        <translation>Verwijder herinnering</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="862"/>
+        <location filename="../infopanedropdown.ui" line="887"/>
+        <source>New Reminder</source>
+        <translation>Nieuwe herinnering</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="896"/>
+        <source>Date</source>
+        <translation>Datum</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="903"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="960"/>
+        <source>Create Reminder</source>
+        <translation>Maak herinnering</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="992"/>
+        <source>Delete this reminder?</source>
+        <translation>Verwijder deze herinnering?</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1011"/>
+        <source>Reminder</source>
+        <translation>Herinnering</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1084"/>
+        <source>Delete</source>
+        <translation>Verwijder</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="832"/>
         <source>Charge History</source>
         <translation>Oplaadgeschiedenis</translation>
@@ -374,6 +483,21 @@
         <location filename="../infopanedropdown.ui" line="839"/>
         <source>Show projected charge</source>
         <translation>Laat geprojecteerde oplading zien</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1211"/>
+        <source>Charge</source>
+        <translation>Laad op</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1224"/>
+        <source>Rate</source>
+        <translation>Waardeer</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1234"/>
+        <source>Apps</source>
+        <translation>Applicaties</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="902"/>
@@ -633,6 +757,16 @@
         <translation>Do&amp;nker</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="2583"/>
+        <source>MediaSwitch</source>
+        <translation>MediaSwitch</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2878"/>
+        <source>Icon Theme</source>
+        <translation>Icoonthema</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="2391"/>
         <source>Show options when connecting media</source>
         <translation>Laat opties zien wanneer media wordt verbonden</translation>
@@ -673,9 +807,50 @@
         <translation>Laat niet zien</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2583"/>
-        <source>MediaSwitch</source>
-        <translation>MediaSwitch</translation>
+        <location filename="../infopanedropdown.ui" line="4294"/>
+        <location filename="../infopanedropdown.cpp" line="323"/>
+        <source>Advanced</source>
+        <translation>Geavanceerd</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4345"/>
+        <source>theShell is Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
+        <translation>theShell is Copyright (c) Victor Tran 2017. Gelicenseerd onder de termen van de GNU General Public License, versie 3 of nieuwer.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4451"/>
+        <source>System Information</source>
+        <translation>Systeeminformatie</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4479"/>
+        <source>You&apos;re using</source>
+        <translation>U gebruikt</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4520"/>
+        <source>Support</source>
+        <translation>Hulp</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4541"/>
+        <source>Available Swap</source>
+        <translation>Beschikbare Swap</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4548"/>
+        <source>Available Memory</source>
+        <translation>Beschikbare werkgeheugen</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4568"/>
+        <source>Kernel Version</source>
+        <translation>Kernel Versie</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4589"/>
+        <source>Qt Version</source>
+        <translation>Qt Versie</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2590"/>
@@ -723,6 +898,41 @@
         <location filename="../infopanedropdown.cpp" line="335"/>
         <source>Lock Screen</source>
         <translation>Vergrendelscherm</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1634"/>
+        <source>Quiet Mode</source>
+        <translation>Stille modus</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1646"/>
+        <source>Sound</source>
+        <translation>Geluid</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1663"/>
+        <source>No Notifications</source>
+        <translation>Geen Notificaties</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1677"/>
+        <source>Mute</source>
+        <translation>Stil</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3101"/>
+        <source>Attenuate audio</source>
+        <translation>Verzwak Audio</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3328"/>
+        <source>Lock screen after returning from suspend</source>
+        <translation>Vergrendel scherm na slaapstand</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3335"/>
+        <source>SuspendLockScreenSwitch</source>
+        <translation>SuspendLockScreenSwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2810"/>
@@ -901,6 +1111,32 @@
         <translation>Gebruik netwerk om datum en tijd te synchroniseren</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="3561"/>
+        <location filename="../infopanedropdown.cpp" line="340"/>
+        <source>Danger</source>
+        <translation>Gevaar</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3638"/>
+        <source>theShell 6.1</source>
+        <translation>theShell 6.1</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3668"/>
+        <source>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
+        <translation>Copyright (c) Victor Tran 2017. Gelicenseerd onder de termen van de GNU General Public License, versie 3 of later.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4031"/>
+        <source>Use 24 hour time</source>
+        <translation>Gebruik 24 uur tijd</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4038"/>
+        <source>TwentyFourHourSwitch</source>
+        <translation>TwentyFourHourSwitch</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="3471"/>
         <location filename="../infopanedropdown.cpp" line="339"/>
         <source>Language</source>
@@ -910,6 +1146,52 @@
         <location filename="../infopanedropdown.ui" line="3494"/>
         <source>Changing this setting requires you to log in and then log out.</source>
         <translation>Deze instelling is pas van toepassing nadat u overnieuw inlogt.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4111"/>
+        <source>HighContrastSwitch</source>
+        <translation>HighContrastSwitch</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4121"/>
+        <source>System Animations</source>
+        <translation>Systeemanimaties</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4128"/>
+        <source>SystemAnimationsAccessibilitySwitch</source>
+        <translation>SystemAnimationsAccessibilitySwitch</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4141"/>
+        <source>High Contrast</source>
+        <translation>Hoge Contrast</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4148"/>
+        <source>Large Text</source>
+        <translation>Grote tekst</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4155"/>
+        <source>LargeTextSwitch</source>
+        <translation>LargeTextSwitch</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4191"/>
+        <source>Tone on Caps Lock and Num Lock</source>
+        <translation>Geluid bij Caps Lock en Num Lock</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4198"/>
+        <source>CapsNumLockBellSwitch</source>
+        <translation>CapsNumLockBellSwitch</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4212"/>
+        <location filename="../infopanedropdown.cpp" line="322"/>
+        <source>Accessibility</source>
+        <translation>Toegankelijkheid</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3518"/>
@@ -922,31 +1204,15 @@
         <translation>Deze instellingen kunnen slechte dingen veroorzaken. Zorg ervoor dat u weet wat u aan het doen bent.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3561"/>
-        <location filename="../infopanedropdown.cpp" line="340"/>
-        <source>Danger</source>
-        <translation>Gevaar</translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="3584"/>
         <location filename="../infopanedropdown.cpp" line="1448"/>
         <source>Reset theShell</source>
         <translation>Herstel theShell</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3638"/>
-        <source>theShell 6.1</source>
-        <translation>theShell 6.1</translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="3661"/>
         <source>Desktop Environment</source>
         <translation>Bureaubladbeheerder</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3668"/>
-        <source>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
-        <translation>Copyright (c) Victor Tran 2017. Gelicenseerd onder de termen van de GNU General Public License, versie 3 of later.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3684"/>
@@ -977,6 +1243,32 @@
         <location filename="../infopanedropdown.cpp" line="137"/>
         <source>Turquoise</source>
         <translation>Turqoise</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="341"/>
+        <source>About</source>
+        <translation>Over</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="367"/>
+        <source>theShell %1 - Blueprint</source>
+        <translation>theShell %1 - Blauwdruk</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="368"/>
+        <source>You compiled theShell on %1</source>
+        <translation>U compileerde theShell op %1</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="370"/>
+        <source>theShell %1</source>
+        <translation>theShell %1</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="347"/>
+        <location filename="../infopanedropdown.cpp" line="1182"/>
+        <source>Happy Bee</source>
+        <translation>Happy Bee</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="202"/>
@@ -1035,17 +1327,6 @@
         <location filename="../infopanedropdown.cpp" line="246"/>
         <source>Spanish</source>
         <translation>Spaans</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.cpp" line="341"/>
-        <source>About</source>
-        <translation>Over</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.cpp" line="347"/>
-        <location filename="../infopanedropdown.cpp" line="1182"/>
-        <source>Happy Bee</source>
-        <translation>Happy Bee</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="348"/>
@@ -1186,6 +1467,11 @@
         <translation>Kan niet met het internet verbinden</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="1064"/>
+        <source>Login required</source>
+        <translation>U moet inloggen</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.cpp" line="928"/>
         <source>NetworkManager Error</source>
         <translation>NetworkManager Error</translation>
@@ -1295,6 +1581,21 @@
         <translation>Laatst vernieuwd %1</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="2223"/>
+        <source>Log in to network</source>
+        <translation>Log in bij Netwerk</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2229"/>
+        <source>Network Login</source>
+        <translation>Inloggen op Netwerk</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2230"/>
+        <source>Your connection to the internet is blocked by a login page.</source>
+        <translation>U vebinding met het internet is geblokkeerd door een inlogpagina.</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.cpp" line="2077"/>
         <source>Add New User</source>
         <translation>Voeg nieuwe gebruiker toe</translation>
@@ -1331,6 +1632,62 @@
         <location filename="../infopanedropdown.cpp" line="2133"/>
         <source>The username must not contain capital letters.</source>
         <translation>De gebruikersnaam mag geen hoofdletters bevatten.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2867"/>
+        <source>Rate History</source>
+        <translation>Waardeer geschiedenis</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2878"/>
+        <source>Application Power Usage</source>
+        <translation>Applicatie Stroomverbruik</translation>
+    </message>
+</context>
+<context>
+    <name>Internationalisation</name>
+    <message>
+        <location filename="../internationalisation.h" line="50"/>
+        <location filename="../internationalisation.h" line="53"/>
+        <location filename="../internationalisation.h" line="56"/>
+        <location filename="../internationalisation.h" line="59"/>
+        <source>English</source>
+        <translation>Engels</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="62"/>
+        <source>Vietnamese</source>
+        <translation>Vietnamees</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="65"/>
+        <source>Danish</source>
+        <translation>Deens</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="68"/>
+        <source>Portuguese</source>
+        <translation>Portugees</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="71"/>
+        <source>Dutch</source>
+        <translation>Nederlands</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="74"/>
+        <source>Spanish</source>
+        <translation>Spaans</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="77"/>
+        <source>Russian</source>
+        <translation>Russisch</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="80"/>
+        <source>Swedish</source>
+        <translation>Zweeds</translation>
     </message>
 </context>
 <context>
@@ -1404,6 +1761,21 @@
         <translation>Notificaties</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="764"/>
+        <source>Battery</source>
+        <translation>Batterij</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="833"/>
+        <source>Sound</source>
+        <translation>Geluid</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="851"/>
+        <source>Mute</source>
+        <translation>Stil</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="750"/>
         <location filename="../mainwindow.ui" line="770"/>
         <source>Icon</source>
@@ -1413,6 +1785,11 @@
         <location filename="../mainwindow.ui" line="777"/>
         <source>Song Name</source>
         <translation>Muzieknaam</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="208"/>
+        <source>Quiet Mode</source>
+        <translation>Stille modus</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="228"/>
@@ -1662,6 +2039,11 @@
         <translation>Help</translation>
     </message>
     <message>
+        <location filename="../menu.ui" line="161"/>
+        <source>Report Bug</source>
+        <translation>Probleem melden</translation>
+    </message>
+    <message>
         <location filename="../menu.ui" line="911"/>
         <source>Try these:</source>
         <translation>Probeer deze:</translation>
@@ -1907,6 +2289,11 @@
         <source>theWave Help.</source>
         <translation>theWave Help.</translation>
     </message>
+    <message>
+        <location filename="../menu.cpp" line="1715"/>
+        <source>For &quot;%1&quot;</source>
+        <translation>Voor &quot;%1&quot;</translation>
+    </message>
 </context>
 <context>
     <name>NativeEventFilter</name>
@@ -1922,6 +2309,27 @@
         <location filename="../nativeeventfilter.cpp" line="151"/>
         <source>Volume</source>
         <translation>Volume</translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="142"/>
+        <location filename="../nativeeventfilter.cpp" line="159"/>
+        <source>Quiet Mode is set to Mute.</source>
+        <translation>Stille modus is ingesteld op Stil.</translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="176"/>
+        <source>No Notifications</source>
+        <translation>Geen Notificaties</translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="180"/>
+        <source>Mute</source>
+        <translation>Stil</translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="184"/>
+        <source>Sound</source>
+        <translation>Geluid</translation>
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="157"/>
@@ -2010,11 +2418,6 @@
         <translation>Selecteer Taal</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="73"/>
-        <source>Welcome to theShell 6.1!</source>
-        <translation>Welkom bij theShell 6.1!</translation>
-    </message>
-    <message>
         <location filename="../onboarding.ui" line="95"/>
         <location filename="../onboarding.ui" line="437"/>
         <source>Next</source>
@@ -2024,6 +2427,21 @@
         <location filename="../onboarding.ui" line="149"/>
         <source>What&apos;s New?</source>
         <translation>Wat is nieuw?</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="121"/>
+        <source>Let&apos;s get your PC ready and show you what&apos;s new. This will only take a minute.</source>
+        <translation>Laten we uw PC voorbereiden en u laten zien wat er nieuw is. Dit duurt alleen maar een minuut.</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="73"/>
+        <source>Welcome to theShell 6.1!</source>
+        <translation>Welkom bij theShell 6.1!</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="154"/>
+        <source>Get Started</source>
+        <translation>Laten we beginnen</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="179"/>
@@ -2061,6 +2479,66 @@
         <translation>Klaar om te beginnen?</translation>
     </message>
     <message>
+        <location filename="../onboarding.ui" line="369"/>
+        <source>Status Bar</source>
+        <translation>Status Bar</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="376"/>
+        <source>The Status Bar is a smaller version of the bar that is always visible and shows system status icons.</source>
+        <translation>De Status Bar is een kleinere versie van de bar die altijd zichtbaar is en systeemstatus iconen laat zien.</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="425"/>
+        <source>The Status Bar will appear once the bar moves far enough out of the way.</source>
+        <translation>De Status Bar zal zichtbaar zijn zodra de bar omhoog gaat.</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="457"/>
+        <source>Use the Status Bar</source>
+        <translation>Gebruik de Status Bar</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="464"/>
+        <source>Don&apos;t use the Status Bar</source>
+        <translation>Gebruik de Status Bar niet</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="538"/>
+        <source>And that&apos;s that!</source>
+        <translation>En dat is alles!</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="545"/>
+        <source>theShell is now ready to use!</source>
+        <translation>theShell is nu klaar om te gebruiken!</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="669"/>
+        <source>Cancel Setup</source>
+        <translation>Annuleer</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="676"/>
+        <source>You haven&apos;t finished setting up theShell. What would you like to do?</source>
+        <translation>U bent nog niet klaar met het instellen van theShell. Wat wilt u doen?</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="718"/>
+        <source>Return to theShell Setup</source>
+        <translation>Ga terug</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="725"/>
+        <source>Log Out</source>
+        <translation>Log uit</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="738"/>
+        <source>Power Off</source>
+        <translation>Uitschakelen</translation>
+    </message>
+    <message>
         <location filename="../onboarding.ui" line="364"/>
         <source>BEGIN!</source>
         <translation>BEGIN!</translation>
@@ -2069,6 +2547,11 @@
         <location filename="../onboarding.ui" line="426"/>
         <source>Back</source>
         <translation>Terug</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="68"/>
+        <source>Welcome to theShell %1!</source>
+        <translation>Welkom bij theShell %1!</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="167"/>
@@ -2126,7 +2609,7 @@
     <message>
         <location filename="../onboarding.cpp" line="222"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Spaans</translation>
     </message>
 </context>
 <context>

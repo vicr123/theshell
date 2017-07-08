@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US">
+<context>
+    <name>AppsListModel</name>
+    <message>
+        <location filename="../menu.cpp" line="1078"/>
+        <source>Application</source>
+        <translation>Ứng dụng</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1114"/>
+        <source>Place a call over </source>
+        <translation>Gọi với </translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1309"/>
+        <source>Run Command</source>
+        <translation>Dụng lệnh</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1320"/>
+        <source>Open webpage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1328"/>
+        <source>Open Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1335"/>
+        <source>Open File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1348"/>
+        <source>Query theWave</source>
+        <translation>Hỏi theWave</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1489"/>
+        <source>theWave</source>
+        <translation>theWave</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1490"/>
+        <source>Personal Assistant</source>
+        <translation>Trợ lý riêng</translation>
+    </message>
+</context>
+<context>
+    <name>AudioManager</name>
+    <message>
+        <location filename="../audiomanager.cpp" line="318"/>
+        <source>Ignores any notifications from all apps. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
+        <translation>Bỏ qua thông báo của tất cả các ứng dụng. Nhạc bình thường sẽ vẫn được phát, bộ tính giờ và nhắc nhở vẫn sẽ thông báo cho bạn, tuy nhiên chúng sẽ không phát âm thanh.</translation>
+    </message>
+    <message>
+        <location filename="../audiomanager.cpp" line="320"/>
+        <source>Completely turns off all sounds and notifications from all apps. Not even timers or reminders will notify you.</source>
+        <translation>Tắt tất cả nhạc và thông báo của tất cả các ứng dụng. Bộ hẹn giờ và nhắc nhở sẽ không nhắc bạn.</translation>
+    </message>
+</context>
 <context>
     <name>BTHandsfree</name>
     <message>
@@ -31,16 +92,16 @@
         <translation>Trạng thái</translation>
     </message>
     <message>
-        <source>Open theShell Settings</source>
-        <translation>Cài đặt</translation>
-    </message>
-    <message>
         <source>For desktop</source>
         <translation>Cho hình nền</translation>
     </message>
     <message>
         <source>For system</source>
         <translation>Cho máy</translation>
+    </message>
+    <message>
+        <source>Open theShell Settings</source>
+        <translation>Cài đặt</translation>
     </message>
 </context>
 <context>
@@ -51,7 +112,7 @@
     </message>
     <message>
         <source>Inbuilt Bac&amp;kgrounds</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bao gồm hình nền</translation>
     </message>
     <message>
         <source>Done</source>
@@ -59,7 +120,7 @@
     </message>
     <message>
         <source>Custo&amp;m Background</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hình nền của bạn</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -249,7 +310,7 @@
     </message>
     <message>
         <source>Flight Mode</source>
-        <translation>Máy bay</translation>
+        <translation>Chế độ máy bay</translation>
     </message>
     <message>
         <source>Wi-Fi</source>
@@ -296,12 +357,74 @@
         <translation>Bấm giờ</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="811"/>
+        <source>Reminders</source>
+        <translation>Lời nhắc</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="852"/>
+        <location filename="../infopanedropdown.ui" line="985"/>
+        <source>Delete Reminder</source>
+        <translation>Xóa lời nhắc</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="862"/>
+        <location filename="../infopanedropdown.ui" line="887"/>
+        <source>New Reminder</source>
+        <translation>Lời nhắc mới</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="896"/>
+        <source>Date</source>
+        <translation>Ngày và giờ</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="903"/>
+        <source>Title</source>
+        <translation>Tên</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="960"/>
+        <source>Create Reminder</source>
+        <translation>Lưu lời nhắc</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="992"/>
+        <source>Delete this reminder?</source>
+        <translation>Xóa lời nhắc này?</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1011"/>
+        <source>Reminder</source>
+        <translation>Lời nhắc</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1084"/>
+        <source>Delete</source>
+        <translation>Xóa</translation>
+    </message>
+    <message>
         <source>Charge History</source>
         <translation>Pin lịch sử</translation>
     </message>
     <message>
         <source>Show projected charge</source>
         <translation>Hiện dự đoán pin</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1211"/>
+        <source>Charge</source>
+        <translation>Điện</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1224"/>
+        <source>Rate</source>
+        <translation>Tốc độ</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1234"/>
+        <source>Apps</source>
+        <translation>Ứng dụng</translation>
     </message>
     <message>
         <source>Right now, you&apos;re not connected to any networks.</source>
@@ -346,14 +469,6 @@
     <message>
         <source>Wi-Fi Information</source>
         <translation>Thông tin Wi-Fi</translation>
-    </message>
-    <message>
-        <source>Silence Notifications</source>
-        <translation>Im thông báo</translation>
-    </message>
-    <message>
-        <source>Critical notifications will still show, regardless of this setting.</source>
-        <translation>Thông báo quan trọng còn thấy.</translation>
     </message>
     <message>
         <source>No New Notifications</source>
@@ -505,6 +620,11 @@
         <translation>&amp;Tối</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="2878"/>
+        <source>Icon Theme</source>
+        <translation>Phong cách biểu tượng</translation>
+    </message>
+    <message>
         <source>Show options when connecting media</source>
         <translation>Hiển thị tùy chọn khi kết nối ổ đĩa</translation>
     </message>
@@ -537,8 +657,50 @@
         <translation>Không hiển</translation>
     </message>
     <message>
-        <source>MediaSwitch</source>
-        <translation></translation>
+        <location filename="../infopanedropdown.ui" line="4294"/>
+        <location filename="../infopanedropdown.cpp" line="323"/>
+        <source>Advanced</source>
+        <translation>Nâng cao</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4345"/>
+        <source>theShell is Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
+        <translation>theShell là bản quyền (c) Victor Tran năm 2017. Được cấp phép theo các điều khoản của Giấy phép Công cộng GNU, phiên bản 3 hoặc mới hơn.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4451"/>
+        <source>System Information</source>
+        <translation>Thông tin máy</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4479"/>
+        <source>You&apos;re using</source>
+        <translation>Bạn đang dụng</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4520"/>
+        <source>Support</source>
+        <translation>Trợ giúp</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4541"/>
+        <source>Available Swap</source>
+        <translation>Bộ nhớ đổi còn trống</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4548"/>
+        <source>Available Memory</source>
+        <translation>Bộ nhớ còn trống</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4568"/>
+        <source>Kernel Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4589"/>
+        <source>Qt Version</source>
+        <translation>Phiên bản Qt</translation>
     </message>
     <message>
         <source>Notification Sound</source>
@@ -578,6 +740,41 @@
         <translation>Khóa màn hình</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="1634"/>
+        <source>Quiet Mode</source>
+        <translation>Chế độ im</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1646"/>
+        <source>Sound</source>
+        <translation>Không im</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1663"/>
+        <source>No Notifications</source>
+        <translation>Chặn thông báo</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1677"/>
+        <source>Mute</source>
+        <translation>Im lặng</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3101"/>
+        <source>Attenuate audio</source>
+        <translation>Giảm âm thanh</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3328"/>
+        <source>Lock screen after returning from suspend</source>
+        <translation>Khóa màn hình sau khi ngủ</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3335"/>
+        <source>SuspendLockScreenSwitch</source>
+        <translation></translation>
+    </message>
+    <message>
         <source>Enable theWave</source>
         <translation>Bật theWave</translation>
     </message>
@@ -611,6 +808,11 @@
     </message>
     <message>
         <source>WikipediaSwitch</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3638"/>
+        <source>theShell 6.1</source>
         <translation></translation>
     </message>
     <message>
@@ -710,12 +912,68 @@
         <translation>Dùng Internet để đặt ngay và giờ</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="4031"/>
+        <source>Use 24 hour time</source>
+        <translation>Dùng định dạng 24 gio</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4038"/>
+        <source>TwentyFourHourSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Language</source>
         <translation>Ngôn Ngữ</translation>
     </message>
     <message>
         <source>Changing this setting requires you to log in and then log out.</source>
         <translation>Nếu bạn thay đổi điều này, bạn cần phải đăng xuất và sau đó.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4111"/>
+        <source>HighContrastSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4121"/>
+        <source>System Animations</source>
+        <translation>Hình động</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4128"/>
+        <source>SystemAnimationsAccessibilitySwitch</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4141"/>
+        <source>High Contrast</source>
+        <translation>Độ tương phản cao</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4148"/>
+        <source>Large Text</source>
+        <translation>Chữ lớn</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4155"/>
+        <source>LargeTextSwitch</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4191"/>
+        <source>Tone on Caps Lock and Num Lock</source>
+        <translation>Nhạc khi Caps Lock và Num Lock nhấn</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4198"/>
+        <source>CapsNumLockBellSwitch</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4212"/>
+        <location filename="../infopanedropdown.cpp" line="322"/>
+        <source>Accessibility</source>
+        <translation>Trở nặng</translation>
     </message>
     <message>
         <source>Window Manager Command</source>
@@ -726,25 +984,12 @@
         <translation>Trang này là nguy hiểm. Chỉ có thay đổi nếu bạn biết những gì bạn đang làm.</translation>
     </message>
     <message>
-        <source>Danger</source>
-        <translation>Nguy hiểm!</translation>
-    </message>
-    <message>
         <source>Reset theShell</source>
         <translation>Đặt lại theShell</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3638"/>
-        <source>theShell 6.1</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Desktop Environment</source>
         <translation>Môi trường desktop</translation>
-    </message>
-    <message>
-        <source>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
-        <translation>Bản quyền (c) Victor Tran năm 2017. Được cấp phép theo các điều khoản của Giấy phép Công cộng GNU, phiên bản 3 hoặc mới hơn.</translation>
     </message>
     <message>
         <source>Your settings are saved automatically.</source>
@@ -771,12 +1016,63 @@
         <translation>Ngọc lam</translation>
     </message>
     <message>
-        <source>English</source>
-        <translation>Tiếng Anh</translation>
+        <source>About</source>
+        <translation>Giới thiệu</translation>
     </message>
     <message>
-        <source>Vietnamese</source>
-        <translation>Tiếng Việt</translation>
+        <location filename="../infopanedropdown.cpp" line="367"/>
+        <source>theShell %1 - Blueprint</source>
+        <translation>theShell %1 - Kế hoạch</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="368"/>
+        <source>You compiled theShell on %1</source>
+        <translation>Bạn đã biên soạn theShell vào ngày %1</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="370"/>
+        <source>theShell %1</source>
+        <translation>theShell %1</translation>
+    </message>
+    <message>
+        <source>Happy Bee</source>
+        <translation>Ong vui</translation>
+    </message>
+    <message>
+        <source>Playing in the Dark</source>
+        <translation>Chơi trong bóng tối</translation>
+    </message>
+    <message>
+        <source>Ice Cream Truck</source>
+        <translation>Xe kem</translation>
+    </message>
+    <message>
+        <source>Party Complex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Salty Ditty</source>
+        <translation>Bài hát mặn</translation>
+    </message>
+    <message>
+        <source>Idle</source>
+        <translation>Đứng im</translation>
+    </message>
+    <message>
+        <source>Printing</source>
+        <translation>In</translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translation>Không in</translation>
+    </message>
+    <message>
+        <source>Disconnected from the Internet</source>
+        <translation>Không có Internet</translation>
+    </message>
+    <message>
+        <source>Wired Connection</source>
+        <translation>Kết nối qua dây</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="186"/>
@@ -824,50 +1120,6 @@
         <translation>Tiếng Tây Ban Nha</translation>
     </message>
     <message>
-        <source>About</source>
-        <translation>Giới thiệu</translation>
-    </message>
-    <message>
-        <source>Happy Bee</source>
-        <translation>Ong vui</translation>
-    </message>
-    <message>
-        <source>Playing in the Dark</source>
-        <translation>Chơi trong bóng tối</translation>
-    </message>
-    <message>
-        <source>Ice Cream Truck</source>
-        <translation>Xe kem</translation>
-    </message>
-    <message>
-        <source>Party Complex</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Salty Ditty</source>
-        <translation>Bài hát mặn</translation>
-    </message>
-    <message>
-        <source>Idle</source>
-        <translation>Đứng im</translation>
-    </message>
-    <message>
-        <source>Printing</source>
-        <translation>In</translation>
-    </message>
-    <message>
-        <source>Stopped</source>
-        <translation>Không in</translation>
-    </message>
-    <message>
-        <source>Disconnected from the Internet</source>
-        <translation>Không có Internet</translation>
-    </message>
-    <message>
-        <source>Wired Connection</source>
-        <translation>Kết nối qua dây</translation>
-    </message>
-    <message>
         <source>You&apos;ve been disconnected from the internet over a wired connection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -904,10 +1156,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Connected to %1</source>
-        <translation>Kết nối vào %1</translation>
-    </message>
-    <message>
         <source>You&apos;re now connected to the network &quot;%1&quot;</source>
         <translation>Bạn kết nối vào %1</translation>
     </message>
@@ -934,6 +1182,11 @@
     <message>
         <source>Can&apos;t get to the internet</source>
         <translation>Không có Internet</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="1064"/>
+        <source>Login required</source>
+        <translation>Cần đăng nhập</translation>
     </message>
     <message>
         <source>NetworkManager Error</source>
@@ -1024,6 +1277,21 @@
         <translation>Cập nhật cuối cùng ở %1</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="2223"/>
+        <source>Log in to network</source>
+        <translation>Đăng nhập vào internet</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2229"/>
+        <source>Network Login</source>
+        <translation>Đăng nhập vào internet</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2230"/>
+        <source>Your connection to the internet is blocked by a login page.</source>
+        <translation>Kết nối của bạn với internet bị chặn bởi trang đăng nhập</translation>
+    </message>
+    <message>
         <source>Add New User</source>
         <translation>Người mới</translation>
     </message>
@@ -1050,6 +1318,48 @@
     <message>
         <source>The username must not contain capital letters.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2867"/>
+        <source>Rate History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2878"/>
+        <source>Application Power Usage</source>
+        <translation>Ứng dụng đang sử dụng điện</translation>
+    </message>
+    <message>
+        <source>Silence Notifications</source>
+        <translation>Im thông báo</translation>
+    </message>
+    <message>
+        <source>Critical notifications will still show, regardless of this setting.</source>
+        <translation>Thông báo quan trọng còn thấy.</translation>
+    </message>
+    <message>
+        <source>MediaSwitch</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Danger</source>
+        <translation>Nguy hiểm!</translation>
+    </message>
+    <message>
+        <source>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
+        <translation>Bản quyền (c) Victor Tran năm 2017. Được cấp phép theo các điều khoản của Giấy phép Công cộng GNU, phiên bản 3 hoặc mới hơn.</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>Tiếng Anh</translation>
+    </message>
+    <message>
+        <source>Vietnamese</source>
+        <translation>Tiếng Việt</translation>
+    </message>
+    <message>
+        <source>Connected to %1</source>
+        <translation>Kết nối vào %1</translation>
     </message>
     <message>
         <source>theShell 6.0</source>
@@ -1149,6 +1459,52 @@
     </message>
 </context>
 <context>
+    <name>Internationalisation</name>
+    <message>
+        <location filename="../internationalisation.h" line="50"/>
+        <location filename="../internationalisation.h" line="53"/>
+        <location filename="../internationalisation.h" line="56"/>
+        <location filename="../internationalisation.h" line="59"/>
+        <source>English</source>
+        <translation>Tiếng Anh</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="62"/>
+        <source>Vietnamese</source>
+        <translation>Tiếng Việt</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="65"/>
+        <source>Danish</source>
+        <translation>Tiếng Đan mạch</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="68"/>
+        <source>Portuguese</source>
+        <translation>Tiếng Bồ Đào Nha</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="71"/>
+        <source>Dutch</source>
+        <translation>Tiếng Hà Lan</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="74"/>
+        <source>Spanish</source>
+        <translation>Tiếng Tây Ban Nha</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="77"/>
+        <source>Russian</source>
+        <translation>Tiếng Nga</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="80"/>
+        <source>Swedish</source>
+        <translation>Tiếng Thụy Điển</translation>
+    </message>
+</context>
+<context>
     <name>LoginSplash</name>
     <message>
         <source>Logging In...</source>
@@ -1209,6 +1565,21 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="764"/>
+        <source>Battery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="833"/>
+        <source>Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="851"/>
+        <source>Mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="750"/>
         <location filename="../mainwindow.ui" line="770"/>
         <source>Icon</source>
@@ -1217,6 +1588,11 @@
     <message>
         <location filename="../mainwindow.ui" line="777"/>
         <source>Song Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="208"/>
+        <source>Quiet Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1232,10 +1608,6 @@
         <translation>Đóng</translation>
     </message>
     <message>
-        <source>Flight Mode</source>
-        <translation>Máy bay</translation>
-    </message>
-    <message>
         <source>No notifications</source>
         <translation>Không có thông báo</translation>
     </message>
@@ -1248,6 +1620,10 @@
         <translation>
             <numerusform>%1 thông báo</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Flight Mode</source>
+        <translation>Chế độ máy bay</translation>
     </message>
     <message>
         <source>&amp;16:20:00</source>
@@ -1448,6 +1824,11 @@
         <translation>Giúp</translation>
     </message>
     <message>
+        <location filename="../menu.ui" line="161"/>
+        <source>Report Bug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Try these:</source>
         <translation>Thử cái này:</translation>
     </message>
@@ -1572,12 +1953,29 @@
         <translation>Chào %1!</translation>
     </message>
     <message>
-        <source>Personal Assistant</source>
-        <translation>Trợ lý riêng</translation>
-    </message>
-    <message>
         <source>Before you power off your PC, you may want to check this.</source>
         <translation>Trước khi bạn tắt máy, bạn nên xem thứ này.</translation>
+    </message>
+    <message>
+        <source>Can&apos;t place a call from this device.</source>
+        <translation>Không có gọi được.</translation>
+    </message>
+    <message>
+        <source>Can&apos;t send messages from this device.</source>
+        <translation>Không có gửi được.</translation>
+    </message>
+    <message>
+        <source>theWave Help.</source>
+        <translation>Giúp với theWave.</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1715"/>
+        <source>For &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Personal Assistant</source>
+        <translation>Trợ lý riêng</translation>
     </message>
     <message>
         <source>Place a call</source>
@@ -1622,18 +2020,6 @@
     <message>
         <source>Ask theWave about &quot;%1&quot;</source>
         <translation>Hỏi theWave về &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Can&apos;t place a call from this device.</source>
-        <translation>Không có gọi được.</translation>
-    </message>
-    <message>
-        <source>Can&apos;t send messages from this device.</source>
-        <translation>Không có gửi được.</translation>
-    </message>
-    <message>
-        <source>theWave Help.</source>
-        <translation>Giúp với theWave.</translation>
     </message>
     <message>
         <source>Install theOS</source>
@@ -1713,6 +2099,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Volume</source>
         <translation>Âm lượng</translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="142"/>
+        <location filename="../nativeeventfilter.cpp" line="159"/>
+        <source>Quiet Mode is set to Mute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="176"/>
+        <source>No Notifications</source>
+        <translation>Chặn thông báo</translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="180"/>
+        <source>Mute</source>
+        <translation>Im lặng</translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="184"/>
+        <source>Sound</source>
+        <translation>Không im</translation>
     </message>
     <message>
         <source>Keyboard Brightness</source>
@@ -1805,17 +2212,22 @@ p, li { white-space: pre-wrap; }
         <translation>Chọn ngôn ngữ</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="73"/>
-        <source>Welcome to theShell 6.1!</source>
-        <translation>Chào mừng bạn đến theShell 6.1!</translation>
-    </message>
-    <message>
         <source>Next</source>
         <translation>Kế tiếp</translation>
     </message>
     <message>
         <source>What&apos;s New?</source>
         <translation>Có gì mới?</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="121"/>
+        <source>Let&apos;s get your PC ready and show you what&apos;s new. This will only take a minute.</source>
+        <translation>Hãy chuẩn bị máy của bạn, và cho bạn thấy những điều mới.</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="154"/>
+        <source>Get Started</source>
+        <translation>Bắt đầu</translation>
     </message>
     <message>
         <source>theWave</source>
@@ -1838,16 +2250,82 @@ p, li { white-space: pre-wrap; }
         <translation>Tắt theWave</translation>
     </message>
     <message>
-        <source>Ready to begin?</source>
-        <translation>Xong chưa?</translation>
+        <location filename="../onboarding.ui" line="369"/>
+        <source>Status Bar</source>
+        <translation>Thanh trạng thái</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="376"/>
+        <source>The Status Bar is a smaller version of the bar that is always visible and shows system status icons.</source>
+        <translation>Thanh Trạng thái là thanh nhỏ hơn luôn luôn hiển thị và hiển thị trạng thái của máy của bạn.</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="425"/>
+        <source>The Status Bar will appear once the bar moves far enough out of the way.</source>
+        <translation>Thanh trạng thái xuất hiện khi thanh di chuyển.</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="457"/>
+        <source>Use the Status Bar</source>
+        <translation>Dụng thanh trạng thái</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="464"/>
+        <source>Don&apos;t use the Status Bar</source>
+        <translation>Không dụng thanh trạng thái</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="538"/>
+        <source>And that&apos;s that!</source>
+        <translation>Và đó là điều đó!</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="545"/>
+        <source>theShell is now ready to use!</source>
+        <translation>theShell bây giờ đã sẵn sàng để sử dụng</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="669"/>
+        <source>Cancel Setup</source>
+        <translation>Hủy cài đặt</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="676"/>
+        <source>You haven&apos;t finished setting up theShell. What would you like to do?</source>
+        <translation>Bạn chưa đặt theShell. Bạn muốn làm gì?</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="718"/>
+        <source>Return to theShell Setup</source>
+        <translation>Trở lại và đặt theShell</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="725"/>
+        <source>Log Out</source>
+        <translation>Đăng xuất</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="738"/>
+        <source>Power Off</source>
+        <translation>Tắt nguồn</translation>
     </message>
     <message>
         <source>BEGIN!</source>
         <translation>XONG!</translation>
     </message>
     <message>
+        <location filename="../onboarding.ui" line="73"/>
+        <source>Welcome to theShell 6.1!</source>
+        <translation>Chào mừng bạn đến theShell 6.1!</translation>
+    </message>
+    <message>
         <source>Back</source>
         <translation>Đi lại</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="68"/>
+        <source>Welcome to theShell %1!</source>
+        <translation>Chào mừng bạn đến theShell %1!</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="167"/>
@@ -1906,6 +2384,10 @@ p, li { white-space: pre-wrap; }
         <location filename="../onboarding.cpp" line="222"/>
         <source>Spanish</source>
         <translation>Tiếng Tây Ban Nha</translation>
+    </message>
+    <message>
+        <source>Ready to begin?</source>
+        <translation>Xong chưa?</translation>
     </message>
     <message>
         <source>theWave Logo</source>

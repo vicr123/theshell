@@ -205,7 +205,7 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     QMenu* quietModeMenu = new QMenu();
-    quietModeMenu->addSection("Quiet Mode");
+    quietModeMenu->addSection(tr("Quiet Mode"));
     quietModeMenu->addAction(ui->actionNone);
     quietModeMenu->addAction(ui->actionNotifications);
     quietModeMenu->addAction(ui->actionMute);

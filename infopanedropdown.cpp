@@ -307,21 +307,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     }
 
     //Don't forget to change settings pane setup things
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-login"), tr("Startup")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-bar", QIcon::fromTheme("preferences-desktop")), tr("Bar")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-gateway", QIcon::fromTheme("preferences-desktop")), tr("Gateway")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-display"), tr("Display")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-theme"), tr("Theme")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-notifications", QIcon::fromTheme("dialog-warning")), tr("Notifications")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("input-tablet"), tr("Input")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("system-lock-screen"), tr("Lock Screen")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("thewave", QIcon(":/icons/thewave.svg")), tr("theWave")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-user"), tr("Users")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-time"), tr("Date and Time")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-locale"), tr("Language")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-desktop-accessibility"), tr("Accessibility")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("preferences-system-danger", QIcon::fromTheme("emblem-warning")), tr("Advanced")));
-    ui->settingsList->addItem(new QListWidgetItem(QIcon::fromTheme("help-about"), tr("About")));
     ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
     ui->settingsTabs->setCurrentIndex(ui->settingsTabs->count() - 1);
 

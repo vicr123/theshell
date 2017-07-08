@@ -10,7 +10,12 @@
 class Internationalisation {
 private:
     static QString tr(const char* text) {
-        return QApplication::translate("InfoPaneDropdown", text);
+        QString retval;
+        retval = QApplication::translate("Internationalisation", text);
+        if (strcmp(retval.toUtf8().data(), text) == 0) {
+            retval = QApplication::translate("InfoPaneDropdown", text);
+        }
+        return retval;
     }
 
 public:

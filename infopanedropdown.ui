@@ -361,9 +361,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-162</y>
-            <width>1151</width>
-            <height>1036</height>
+            <y>0</y>
+            <width>592</width>
+            <height>1062</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -597,14 +597,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>10</month>
-                 <day>9</day>
+                 <day>8</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>10</month>
-                 <day>9</day>
+                 <day>8</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -852,7 +852,8 @@
                     <string>Delete Reminder</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="edit-delete"/>
+                    <iconset theme="edit-delete">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                   </widget>
                  </item>
@@ -1760,8 +1761,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1165</width>
-            <height>565</height>
+            <width>174</width>
+            <height>59</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -2095,6 +2096,127 @@
            <property name="defaultDropAction">
             <enum>Qt::IgnoreAction</enum>
            </property>
+           <item>
+            <property name="text">
+             <string>Startup</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-system-login"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Bar</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-desktop-bar"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Gateway</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-desktop-gateway"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Display</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-desktop-display"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Theme</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-desktop-theme"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Notifications</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-system-notifications"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Input</string>
+            </property>
+            <property name="icon">
+             <iconset theme="input-tablet"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Lock Screen</string>
+            </property>
+            <property name="icon">
+             <iconset theme="system-lock-screen"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>theWave</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/thewave.svg</normaloff>:/icons/thewave.svg</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Users</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-desktop-user"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Date and Time</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-system-time"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Language</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-system-locale"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Accessibility</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-desktop-accessibility"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Advanced</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-system-danger"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>About</string>
+            </property>
+            <property name="icon">
+             <iconset theme="help-about"/>
+            </property>
+           </item>
           </widget>
          </item>
          <item>

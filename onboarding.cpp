@@ -102,6 +102,7 @@ Onboarding::Onboarding(QWidget *parent) :
 
     connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
         ui->retranslateUi(this);
+        ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg(TS_VERSION));
     });
 }
 

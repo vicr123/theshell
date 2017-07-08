@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US">
+<context>
+    <name>AppsListModel</name>
+    <message>
+        <location filename="../menu.cpp" line="1078"/>
+        <source>Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1114"/>
+        <source>Place a call over </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1309"/>
+        <source>Run Command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1320"/>
+        <source>Open webpage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1328"/>
+        <source>Open Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1335"/>
+        <source>Open File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1348"/>
+        <source>Query theWave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1489"/>
+        <source>theWave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="1490"/>
+        <source>Personal Assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AudioManager</name>
+    <message>
+        <location filename="../audiomanager.cpp" line="318"/>
+        <source>Ignores any notifications from all apps. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiomanager.cpp" line="320"/>
+        <source>Completely turns off all sounds and notifications from all apps. Not even timers or reminders will notify you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 <context>
     <name>BTHandsfree</name>
     <message>
@@ -368,6 +429,53 @@
         <translation>Секундомер</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="811"/>
+        <source>Reminders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="852"/>
+        <location filename="../infopanedropdown.ui" line="985"/>
+        <source>Delete Reminder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="862"/>
+        <location filename="../infopanedropdown.ui" line="887"/>
+        <source>New Reminder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="896"/>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="903"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="960"/>
+        <source>Create Reminder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="992"/>
+        <source>Delete this reminder?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1011"/>
+        <source>Reminder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1084"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="832"/>
         <source>Charge History</source>
         <translation>Журнал зарядок</translation>
@@ -376,6 +484,21 @@
         <location filename="../infopanedropdown.ui" line="839"/>
         <source>Show projected charge</source>
         <translation>Показать оставшийся заряд</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1211"/>
+        <source>Charge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1224"/>
+        <source>Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1234"/>
+        <source>Apps</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="902"/>
@@ -635,6 +758,16 @@
         <translation>Тёмна&amp;я</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="2583"/>
+        <source>MediaSwitch</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2878"/>
+        <source>Icon Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="2391"/>
         <source>Show options when connecting media</source>
         <translation>Показывать возможности при подключении накопителей информации</translation>
@@ -675,9 +808,50 @@
         <translation>Не показывать</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2583"/>
-        <source>MediaSwitch</source>
-        <translation></translation>
+        <location filename="../infopanedropdown.ui" line="4294"/>
+        <location filename="../infopanedropdown.cpp" line="323"/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4345"/>
+        <source>theShell is Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4451"/>
+        <source>System Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4479"/>
+        <source>You&apos;re using</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4520"/>
+        <source>Support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4541"/>
+        <source>Available Swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4548"/>
+        <source>Available Memory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4568"/>
+        <source>Kernel Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4589"/>
+        <source>Qt Version</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2590"/>
@@ -725,6 +899,41 @@
         <location filename="../infopanedropdown.cpp" line="356"/>
         <source>Lock Screen</source>
         <translation>Экран блокировки</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1634"/>
+        <source>Quiet Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1646"/>
+        <source>Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1663"/>
+        <source>No Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1677"/>
+        <source>Mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3101"/>
+        <source>Attenuate audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3328"/>
+        <source>Lock screen after returning from suspend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3335"/>
+        <source>SuspendLockScreenSwitch</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2827"/>
@@ -903,6 +1112,32 @@
         <translation>Использовать сетевое время</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="3578"/>
+        <location filename="../infopanedropdown.cpp" line="361"/>
+        <source>Danger</source>
+        <translation>Опасность</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3655"/>
+        <source>theShell 6.1</source>
+        <translation>theShell 6.1</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3685"/>
+        <source>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
+        <translation>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4031"/>
+        <source>Use 24 hour time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4038"/>
+        <source>TwentyFourHourSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="3488"/>
         <location filename="../infopanedropdown.cpp" line="360"/>
         <source>Language</source>
@@ -912,6 +1147,52 @@
         <location filename="../infopanedropdown.ui" line="3511"/>
         <source>Changing this setting requires you to log in and then log out.</source>
         <translation>Для того, чтобы изменения вступили в силу, нужно выйти и зайти в сеанс.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4111"/>
+        <source>HighContrastSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4121"/>
+        <source>System Animations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4128"/>
+        <source>SystemAnimationsAccessibilitySwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4141"/>
+        <source>High Contrast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4148"/>
+        <source>Large Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4155"/>
+        <source>LargeTextSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4191"/>
+        <source>Tone on Caps Lock and Num Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4198"/>
+        <source>CapsNumLockBellSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4212"/>
+        <location filename="../infopanedropdown.cpp" line="322"/>
+        <source>Accessibility</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3535"/>
@@ -924,31 +1205,15 @@
         <translation>Здесь опасно. Будьте аккуратны.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3578"/>
-        <location filename="../infopanedropdown.cpp" line="361"/>
-        <source>Danger</source>
-        <translation>Опасность</translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="3601"/>
         <location filename="../infopanedropdown.cpp" line="1473"/>
         <source>Reset theShell</source>
         <translation>Перезапустить theShell</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3655"/>
-        <source>theShell 6.1</source>
-        <translation>theShell 6.1</translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="3678"/>
         <source>Desktop Environment</source>
         <translation>Среда рабочего стола</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3685"/>
-        <source>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
-        <translation>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3701"/>
@@ -979,6 +1244,32 @@
         <location filename="../infopanedropdown.cpp" line="142"/>
         <source>Turquoise</source>
         <translation>Бирюзовый</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="362"/>
+        <source>About</source>
+        <translation>Подробнее</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="367"/>
+        <source>theShell %1 - Blueprint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="368"/>
+        <source>You compiled theShell on %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="370"/>
+        <source>theShell %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="368"/>
+        <location filename="../infopanedropdown.cpp" line="1207"/>
+        <source>Happy Bee</source>
+        <translation>Счастливая пчёлка</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="207"/>
@@ -1037,17 +1328,6 @@
         <location filename="../infopanedropdown.cpp" line="246"/>
         <source>Spanish</source>
         <translation>Испанский</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.cpp" line="362"/>
-        <source>About</source>
-        <translation>Подробнее</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.cpp" line="368"/>
-        <location filename="../infopanedropdown.cpp" line="1207"/>
-        <source>Happy Bee</source>
-        <translation>Счастливая пчёлка</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="369"/>
@@ -1188,6 +1468,11 @@
         <translation>Нет подключения к интернету</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="1064"/>
+        <source>Login required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.cpp" line="953"/>
         <source>NetworkManager Error</source>
         <translation>Ошибка NetworkManager</translation>
@@ -1258,8 +1543,6 @@
         <source>%1 days</source>
         <translation>
             <numerusform>%1 день</numerusform>
-            <numerusform>%1 дня</numerusform>
-            <numerusform>%1 дней</numerusform>
         </translation>
     </message>
     <message>
@@ -1298,6 +1581,21 @@
         <translation>Обновлено последний раз %1</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="2223"/>
+        <source>Log in to network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2229"/>
+        <source>Network Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2230"/>
+        <source>Your connection to the internet is blocked by a login page.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.cpp" line="2102"/>
         <source>Add New User</source>
         <translation>Добавить нового пользователя</translation>
@@ -1334,6 +1632,62 @@
         <location filename="../infopanedropdown.cpp" line="2158"/>
         <source>The username must not contain capital letters.</source>
         <translation>Имя пользователя не должно сожержать заглавных букв.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2867"/>
+        <source>Rate History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="2878"/>
+        <source>Application Power Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Internationalisation</name>
+    <message>
+        <location filename="../internationalisation.h" line="50"/>
+        <location filename="../internationalisation.h" line="53"/>
+        <location filename="../internationalisation.h" line="56"/>
+        <location filename="../internationalisation.h" line="59"/>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="62"/>
+        <source>Vietnamese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="65"/>
+        <source>Danish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="68"/>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="71"/>
+        <source>Dutch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="74"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="77"/>
+        <source>Russian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="80"/>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1407,6 +1761,21 @@
         <translation>Уведомления</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="764"/>
+        <source>Battery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="833"/>
+        <source>Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="851"/>
+        <source>Mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="750"/>
         <location filename="../mainwindow.ui" line="770"/>
         <source>Icon</source>
@@ -1416,6 +1785,11 @@
         <location filename="../mainwindow.ui" line="777"/>
         <source>Song Name</source>
         <translation>Название песни</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="208"/>
+        <source>Quiet Mode</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="233"/>
@@ -1452,8 +1826,6 @@
         <source>%1 notifications</source>
         <translation>
             <numerusform>%1 уведомление</numerusform>
-            <numerusform>%1 уведомления</numerusform>
-            <numerusform>%1 уведомлений</numerusform>
         </translation>
     </message>
 </context>
@@ -1663,6 +2035,11 @@
         <location filename="../menu.ui" line="911"/>
         <source>Help</source>
         <translation>Помощь</translation>
+    </message>
+    <message>
+        <location filename="../menu.ui" line="161"/>
+        <source>Report Bug</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu.ui" line="918"/>
@@ -1910,6 +2287,11 @@
         <source>theWave Help.</source>
         <translation>Помощь theWave.</translation>
     </message>
+    <message>
+        <location filename="../menu.cpp" line="1715"/>
+        <source>For &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NativeEventFilter</name>
@@ -1925,6 +2307,27 @@
         <location filename="../nativeeventfilter.cpp" line="151"/>
         <source>Volume</source>
         <translation>Громкость</translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="142"/>
+        <location filename="../nativeeventfilter.cpp" line="159"/>
+        <source>Quiet Mode is set to Mute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="176"/>
+        <source>No Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="180"/>
+        <source>Mute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../nativeeventfilter.cpp" line="184"/>
+        <source>Sound</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="157"/>
@@ -2013,11 +2416,6 @@
         <translation>Выберите язык</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="92"/>
-        <source>Welcome to theShell 6.1!</source>
-        <translation>Добро пожаловать в theShell 6.1!</translation>
-    </message>
-    <message>
         <location filename="../onboarding.ui" line="124"/>
         <location filename="../onboarding.ui" line="469"/>
         <source>Next</source>
@@ -2027,6 +2425,21 @@
         <location filename="../onboarding.ui" line="178"/>
         <source>What&apos;s New?</source>
         <translation>Что нового?</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="121"/>
+        <source>Let&apos;s get your PC ready and show you what&apos;s new. This will only take a minute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="92"/>
+        <source>Welcome to theShell 6.1!</source>
+        <translation>Добро пожаловать в theShell 6.1!</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="154"/>
+        <source>Get Started</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="208"/>
@@ -2054,9 +2467,69 @@
         <translation>Отключить theWave</translation>
     </message>
     <message>
+        <location filename="../onboarding.ui" line="369"/>
+        <source>Status Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../onboarding.ui" line="371"/>
         <source>Ready to begin?</source>
         <translation>Готовы начинать?</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="376"/>
+        <source>The Status Bar is a smaller version of the bar that is always visible and shows system status icons.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="425"/>
+        <source>The Status Bar will appear once the bar moves far enough out of the way.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="457"/>
+        <source>Use the Status Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="464"/>
+        <source>Don&apos;t use the Status Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="538"/>
+        <source>And that&apos;s that!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="545"/>
+        <source>theShell is now ready to use!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="669"/>
+        <source>Cancel Setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="676"/>
+        <source>You haven&apos;t finished setting up theShell. What would you like to do?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="718"/>
+        <source>Return to theShell Setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="725"/>
+        <source>Log Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="738"/>
+        <source>Power Off</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="393"/>
@@ -2067,6 +2540,11 @@
         <location filename="../onboarding.ui" line="458"/>
         <source>Back</source>
         <translation>Назад</translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="68"/>
+        <source>Welcome to theShell %1!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="183"/>
