@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QPainter>
 #include <QPaintEvent>
+#include <tvariantanimation.h>
 
 class FadeButton : public QPushButton
 {
@@ -16,6 +17,9 @@ public:
     void setFade(bool fade);
 
     void setFullText(QString fullText);
+
+    void animateIn();
+    void animateOut();
 signals:
 
 public slots:

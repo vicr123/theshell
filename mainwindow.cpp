@@ -19,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //((QBoxLayout*) this->centralWidget()->layout())->setDirection(QBoxLayout::BottomToTop);
+
     ui->openMenu->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
     QSize ic16(16 * getDPIScaling(), 16 * getDPIScaling());
     ui->brightnessButton->setIconSize(ic16);
@@ -65,10 +67,16 @@ MainWindow::MainWindow(QWidget *parent) :
     FlowLayout* flow = new FlowLayout(ui->windowList, -1, spacing, spacing);
     ui->windowList->setLayout(flow);
 
+    taskbarManager = new TaskbarManager;
+    connect(taskbarManager, SIGNAL(updateWindow(WmWindow)), this, SLOT(updateWindow(WmWindow)));
+    connect(taskbarManager, SIGNAL(deleteWindow(WmWindow)), this, SLOT(deleteWindow(WmWindow)));
+    taskbarManager->ReloadWindows();
+
     //Create the update event timer and start it
     QTimer *timer = new QTimer(this);
     timer->setInterval(100);
     connect(timer, SIGNAL(timeout()), this, SLOT(doUpdate()));
+    connect(timer, SIGNAL(timeout()), taskbarManager, SLOT(ReloadWindows()));
     timer->start();
 
     connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
@@ -237,6 +245,108 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::updateWindow(WmWindow window) {
+
+    FadeButton *button;
+    if (buttonWindowMap.keys().contains(window.WID())) {
+        button = buttonWindowMap.value(window.WID());
+    } else {
+        //Create a new button
+        button = new FadeButton();
+
+        //Add the button to the layout
+        ui->windowList->layout()->addWidget(button);
+        button->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(button, &QPushButton::customContextMenuRequested, [=](const QPoint &pos) {
+            QMenu* menu = new QMenu();
+
+            menu->addSection(window.icon(), tr("For %1").arg(window.title()));
+            menu->addAction(QIcon::fromTheme("window-close"), tr("Close"), [=] {
+                sendMessageToRootWindow("_NET_CLOSE_WINDOW", window.WID());
+            });
+
+            //Determine if process is theShell
+            if (window.PID() != QApplication::applicationPid()) {
+                //Determine if process is suspended
+                QFile wchan("/proc/" + QString::number(window.PID()) + "/wchan");
+                if (wchan.exists()) {
+                    wchan.open(QFile::ReadOnly);
+                    if (wchan.readAll() == "do_signal_stop") { //Stopped
+                        menu->addAction("Resume", [=] {
+                            kill(window.PID(), SIGCONT);
+                        });
+                    } else { //Running
+                        menu->addAction("Stop", [=] {
+                            kill(window.PID(), SIGTSTP);
+
+                            //Determine if process is suspended
+                            QFile wchan("/proc/" + QString::number(window.PID()) + "/wchan");
+                            if (wchan.exists()) {
+                                wchan.open(QFile::ReadOnly);
+                                if (wchan.readAll() != "do_signal_stop") { //Not stopped
+                                    kill(window.PID(), SIGSTOP);
+                                }
+                                wchan.close();
+                            }
+                        });
+                    }
+                    wchan.close();
+                }
+            }
+
+            lockHide = true;
+            menu->exec(button->mapToGlobal(pos));
+            lockHide = false;
+        });
+        connect(button, SIGNAL(clicked(bool)), this, SLOT(ActivateWindow()));
+    }
+
+    button->setProperty("windowid", QVariant::fromValue(window.WID()));
+    button->setProperty("desktop", QVariant::fromValue(window.desktop()));
+    if (settings.value("bar/showText", true).toBool()) {
+        button->setFullText(window.title().replace("&", "&&"));
+    } else {
+        button->setFullText("");
+    }
+
+    if (window.isMinimized() /*|| (currentDesktop != window.desktop() && window.desktop() != 0xFFFFFFFF)*/) {
+        button->setFade(true);
+    } else {
+        button->setFade(false);
+    }
+    /*if (active == window.WID()) {
+        button->setCheckable(true);
+        button->setChecked(true);
+        connect(button, &FadeButton::toggled, [=]() {
+            button->setChecked(true);
+        });
+    }*/
+    button->setIcon(window.icon());
+
+    //If window is requesting attention, highlight it
+    if (window.attention()) {
+        button->setStyleSheet("background-color: #AAAA0000;");
+    } else {
+        button->setStyleSheet("");
+    }
+
+    if (!buttonWindowMap.keys().contains(window.WID())) {
+        button->animateIn();
+    }
+    buttonWindowMap.insert(window.WID(), button);
+}
+
+void MainWindow::deleteWindow(WmWindow window) {
+    if (buttonWindowMap.contains(window.WID())) {
+        FadeButton* button = buttonWindowMap.value(window.WID());
+        button->animateOut();
+        buttonWindowMap.remove(window.WID());
+        QTimer::singleShot(2000, [=] {
+            button->deleteLater();
+        });
+    }
+}
+
 void MainWindow::DBusNewService(QString name) {
     if (name.startsWith("org.mpris.MediaPlayer2.")) {
         if (!mprisDetectedApps.contains(name)) {
@@ -293,6 +403,7 @@ void MainWindow::on_openMenu_clicked()
 void MainWindow::doUpdate() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
+    /*
     QList<WmWindow> wlist;
 
     int hideTop = screenGeometry.y();
@@ -492,7 +603,7 @@ void MainWindow::doUpdate() {
                             currentSize = iconSizes.value(offsets);
                             imageOffset = offsets;
                         }
-                    }*/
+                    }*
 
                     //width = currentSize.width();
                     //height = currentSize.height();
@@ -617,9 +728,38 @@ void MainWindow::doUpdate() {
                 QMenu* menu = new QMenu();
 
                 menu->addSection(w.icon(), tr("For %1").arg(w.title()));
-                menu->addAction(QIcon::fromTheme("window-close"), tr("Close"), [=]() {
+                menu->addAction(QIcon::fromTheme("window-close"), tr("Close"), [=] {
                     sendMessageToRootWindow("_NET_CLOSE_WINDOW", w.WID());
                 });
+
+                //Determine if process is theShell
+                if (w.PID() != QApplication::applicationPid()) {
+                    //Determine if process is suspended
+                    QFile wchan("/proc/" + QString::number(w.PID()) + "/wchan");
+                    if (wchan.exists()) {
+                        wchan.open(QFile::ReadOnly);
+                        if (wchan.readAll() == "do_signal_stop") { //Stopped
+                            menu->addAction("Resume", [=] {
+                                kill(w.PID(), SIGCONT);
+                            });
+                        } else { //Running
+                            menu->addAction("Stop", [=] {
+                                kill(w.PID(), SIGTSTP);
+
+                                //Determine if process is suspended
+                                QFile wchan("/proc/" + QString::number(w.PID()) + "/wchan");
+                                if (wchan.exists()) {
+                                    wchan.open(QFile::ReadOnly);
+                                    if (wchan.readAll() != "do_signal_stop") { //Not stopped
+                                        kill(w.PID(), SIGSTOP);
+                                    }
+                                    wchan.close();
+                                }
+                            });
+                        }
+                        wchan.close();
+                    }
+                }
 
                 lockHide = true;
                 menu->exec(button->mapToGlobal(pos));
@@ -674,16 +814,91 @@ void MainWindow::doUpdate() {
     }
 
     oldDesktop = currentDesktop; //Keep the current desktop for tracking purposes
-    oldActiveWindow = active;
+    oldActiveWindow = active;*/
 
-    int dockTop;
-    if (settings.value("bar/statusBar", false).toBool()) {
-        dockTop = screenGeometry.y() + 24 * getDPIScaling();
-    } else {
-        dockTop = screenGeometry.y();
-    }
+    if (!lockHide && !this->property("animating").toBool()) { //Check for move lock
+        int dockTop;
+        if (settings.value("bar/statusBar", false).toBool()) {
+            dockTop = screenGeometry.y() + 24 * getDPIScaling();
+        } else {
+            dockTop = screenGeometry.y();
+        }
 
-    if (!lockHide) { //Check for move lock
+        int highestWindow = screenGeometry.bottom();
+        for (WmWindow window : taskbarManager->Windows()) {
+            if (!window.isMinimized()) {
+                if (window.geometry().top() < highestWindow &&
+                        window.geometry().right() > screenGeometry.left() &&
+                        window.geometry().left() < screenGeometry.right()) {
+                    highestWindow = window.geometry().top();
+                }
+            }
+        }
+
+        tPropertyAnimation* anim = new tPropertyAnimation(this, "geometry");
+        anim->setStartValue(this->geometry());
+        anim->setDuration(500);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+
+        int finalTop;
+        if (this->geometry().adjusted(0, 0, 0, 1).contains(QCursor::pos())) {
+            //Completely extend the bar
+            finalTop = screenGeometry.y();
+
+            //Hide the tutorial for the bar
+            TutorialWin->hideScreen(TutorialWindow::BarLocation);
+        } else {
+            if (qMax(dockTop, highestWindow - 50) - this->height() > screenGeometry.y()) {
+                finalTop = screenGeometry.y();
+
+                //Hide the tutorial for the bar
+                TutorialWin->hideScreen(TutorialWindow::BarLocation);
+            } else {
+                finalTop = qMax(dockTop, highestWindow - 50) - this->height();
+
+                //Show the tutorial for the bar
+                TutorialWin->showScreen(TutorialWindow::BarLocation);
+            }
+        }
+        anim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
+        anim->start();
+        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+        connect(anim, &tPropertyAnimation::finished, [=] {
+            this->setProperty("animating", false);
+        });
+        this->setProperty("animating", true);
+
+        if (settings.value("bar/statusBar", false).toBool()) {
+            if (finalTop == dockTop - this->height()) {
+                if (!statusBarVisible) {
+                    ui->StatusBarFrame->setVisible(true);
+                    tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
+                    statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
+                    statAnim->setEndValue((float) 1);
+                    statAnim->setDuration(250);
+                    connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
+                    statAnim->start();
+                    statusBarVisible = true;
+                }
+            } else {
+                if (statusBarVisible) {
+                    tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
+                    statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
+                    statAnim->setEndValue((float) 0);
+                    statAnim->setDuration(250);
+                    connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
+                    connect(statAnim, &tPropertyAnimation::finished, [=]() {
+                        ui->StatusBarFrame->setVisible(false);
+                    });
+                    statAnim->start();
+                    statusBarVisible = false;
+                }
+            }
+        } else {
+            ui->StatusBarFrame->setVisible(false);
+        }
+
+        /*
         if (hideTop < dockTop - this->height()) {
             if (attentionDemandingWindows > 0 && !settings.value("bar/statusBar", false).toBool()) {
                 hideTop = dockTop - this->height() + 2;
@@ -764,39 +979,9 @@ void MainWindow::doUpdate() {
                     anim->start();
                 }
             }
-        }
+        }*/
     }
     forceWindowMove = false;
-
-    if (settings.value("bar/statusBar", false).toBool()) {
-        if (this->y() == dockTop - this->height()) {
-            if (!statusBarVisible) {
-                ui->StatusBarFrame->setVisible(true);
-                tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
-                statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
-                statAnim->setEndValue((float) 1);
-                statAnim->setDuration(250);
-                connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
-                statAnim->start();
-                statusBarVisible = true;
-            }
-        } else {
-            if (statusBarVisible) {
-                tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
-                statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
-                statAnim->setEndValue((float) 0);
-                statAnim->setDuration(250);
-                connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
-                connect(statAnim, &tPropertyAnimation::finished, [=]() {
-                    ui->StatusBarFrame->setVisible(false);
-                });
-                statAnim->start();
-                statusBarVisible = false;
-            }
-        }
-    } else {
-        ui->StatusBarFrame->setVisible(false);
-    }
 
     //Update date and time
     ui->date->setText(QLocale().toString(QDateTime::currentDateTime(), "ddd dd MMM yyyy"));

@@ -60,3 +60,11 @@ bool WmWindow::isMinimized() const {
 void WmWindow::setMinimized(bool minimized) {
     min = minimized;
 }
+
+void WmWindow::setGeometry(QRect geometry) {
+    geo = geometry;
+}
+
+QRect WmWindow::geometry() const {
+    return geo;
+}

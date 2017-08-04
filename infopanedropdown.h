@@ -41,6 +41,8 @@
 #include <QNetworkReply>
 #include <QTimeEdit>
 #include <QStyledItemDelegate>
+#include <QFuture>
+#include <QFutureWatcher>
 
 class UPowerDBus;
 

@@ -276,7 +276,13 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     connect(sound, SIGNAL(playingChanged()), sound, SLOT(deleteLater()));
                 }
             }
+        } else if (event->response_type == XCB_MAP_WINDOW) {
+            xcb_map_window_request_t* map = static_cast<xcb_map_window_request_t*>(message);
 
+            qDebug() << "Window Mapped!" << map->window;
+        } else if (event->response_type == XCB_UNMAP_WINDOW) {
+            xcb_unmap_window_request_t* map = static_cast<xcb_unmap_window_request_t*>(message);
+            qDebug() << "Window unmapped!" << map->window;
         }
     }
     return false;

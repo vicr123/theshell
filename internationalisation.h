@@ -28,7 +28,6 @@ public:
         viVN,
         daDK,
         esES,
-        ptBR,
         ruRU,
         svSE,
         // Unfinished languages follow
@@ -38,6 +37,7 @@ public:
         deDE,
         frFR,
         miNZ,
+        ptBR,
         maxLanguage
     };
 
@@ -52,40 +52,40 @@ public:
         for (int i = 0; i < maxLanguage; i++) {
             switch (i) {
                 case enUS:
-                    languageBox->addItem("[US] " + tr("English") + " (English)");
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-us"), tr("English") + " (English)"));
                     break;
                 case enGB:
-                    languageBox->addItem("[GB] " + tr("English") + " (English)");
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-uk"), tr("English") + " (English)"));
                     break;
                 case enAU:
-                    languageBox->addItem("[AU] " + tr("English") + " (English)");
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-au"), tr("English") + " (English)"));
                     break;
                 case enNZ:
-                    languageBox->addItem("[NZ] " + tr("English") + " (English)");
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-nz"), tr("English") + " (English)"));
                     break;
                 case viVN:
-                    languageBox->addItem("[VN] " + tr("Vietnamese") + " (Tiếng Việt)");
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-vn"), tr("Vietnamese") + " (Tiếng Việt)"));
                     break;
                 case daDK:
-                    languageBox->addItem("[DK] " + tr("Danish") + " (Dansk) ");
-                    break;
-                case ptBR:
-                    languageBox->addItem("[BR] " + tr("Portuguese") + " (Português) ");
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-dk"), tr("Danish") + " (Dansk) "));
                     break;
                 case nlNL:
-                    languageBox->addItem("[NL] " + tr("Dutch") + " (Nederlands) ");
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-nl"), tr("Dutch") + " (Nederlands) "));
                     break;
                 case esES:
-                    languageBox->addItem("[ES] " + tr("Spanish") + " (Español) ");
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-es"), tr("Spanish") + " (Español) "));
                     break;
                 case ruRU:
-                    languageBox->addItem("[RU] " + tr("Russian") + " (русский) ");
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-ru"), tr("Russian") + " (русский) "));
                     break;
                 case svSE:
-                    languageBox->addItem("[SE] " + tr("Swedish") + " (Svenska) ");
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-se"), tr("Swedish") + " (Svenska) "));
                     break;
                 /*case arSA:
                     languageBox->addItem("[SA] " + tr("Arabic") + " (العربية) ");
+                    break;
+                case ptBR:
+                    languageBox->addItem("[BR] " + tr("Portuguese") + " (Português) ");
                     break;
                 case zhCN:
                     languageBox->addItem("[CN] " + tr("Chinese") + " (中文) ");

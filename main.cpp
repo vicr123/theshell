@@ -96,6 +96,7 @@ int main(int argc, char *argv[])
     signal(SIGILL, *catch_signal); //Catch SIGILL
 
     QSettings settings("theSuite", "theShell");
+    qputenv("GTK_THEME", settings.value("theme/gtktheme", "Contemporary").toByteArray());
 
     QString localeName = settings.value("locale/language", "en_US").toString();
     qputenv("LANG", localeName.toUtf8());

@@ -72,7 +72,8 @@ SOURCES += main.cpp\
     tutorialwindow.cpp \
     screenshotwindow.cpp \
     audiomanager.cpp \
-    locationservices.cpp
+    locationservices.cpp \
+    taskbarmanager.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -112,7 +113,8 @@ HEADERS  += mainwindow.h \
     screenshotwindow.h \
     audiomanager.h \
     internationalisation.h \
-    locationservices.h
+    locationservices.h \
+    taskbarmanager.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

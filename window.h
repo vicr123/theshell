@@ -29,6 +29,8 @@ public:
     void setDesktop(int desktop);
     bool isMinimized() const;
     void setMinimized(bool minimized);
+    QRect geometry() const;
+    void setGeometry(QRect geometry);
 signals:
 
 public slots:
@@ -42,6 +44,7 @@ private:
     bool attn = false;
     int dk = 0;
     bool min = false;
+    QRect geo;
 };
 
 #endif // WINDOW_H

@@ -27,17 +27,10 @@
 #include "FlowLayout/flowlayout.h"
 #include "tutorialwindow.h"
 #include "audiomanager.h"
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/Xatom.h>
-#include <X11/keysym.h>
-#include <QX11Info>
+#include "taskbarmanager.h"
 #include <systemd/sd-login.h>
 #include <systemd/sd-daemon.h>
 #include "locationservices.h"
-
-#undef Bool
 
 class Menu;
 
@@ -179,13 +172,20 @@ private slots:
 
     void on_actionMute_triggered();
 
+    void updateWindow(WmWindow window);
+
+    void deleteWindow(WmWindow window);
+
 signals:
     void reloadBackgrounds();
 
 private:
     Ui::MainWindow *ui;
-    QList<WmWindow> windowList;
+    //QList<WmWindow> windowList;
     Menu* gatewayMenu;
+    TaskbarManager* taskbarManager;
+
+    QMap<Window, FadeButton*> buttonWindowMap;
 
     QSettings settings;
 
