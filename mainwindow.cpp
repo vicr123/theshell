@@ -1,3 +1,23 @@
+/****************************************
+ *
+ *   theShell - Desktop Environment
+ *   Copyright (C) 2017 Victor Tran
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * *************************************/
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -164,7 +184,7 @@ MainWindow::MainWindow(QWidget *parent) :
             timer->setInterval(100);
         }
     });
-    connect(infoPane, SIGNAL(updateStruts()), this, SLOT(updateStruts()));
+    connect(infoPane, SIGNAL(updateStrutsSignal()), this, SLOT(updateStruts()));
     connect(infoPane, &InfoPaneDropdown::flightModeChanged, [=](bool flight) {
         ui->flightIcon->setVisible(flight);
         ui->StatusBarFlight->setVisible(flight);
@@ -817,20 +837,40 @@ void MainWindow::doUpdate() {
     oldActiveWindow = active;*/
 
     if (!lockHide && !this->property("animating").toBool()) { //Check for move lock
-        int dockTop;
-        if (settings.value("bar/statusBar", false).toBool()) {
-            dockTop = screenGeometry.y() + 24 * getDPIScaling();
-        } else {
-            dockTop = screenGeometry.y();
-        }
 
-        int highestWindow = screenGeometry.bottom();
-        for (WmWindow window : taskbarManager->Windows()) {
-            if (!window.isMinimized()) {
-                if (window.geometry().top() < highestWindow &&
-                        window.geometry().right() > screenGeometry.left() &&
-                        window.geometry().left() < screenGeometry.right()) {
-                    highestWindow = window.geometry().top();
+        int highestWindow, dockTop;
+        if (settings.value("bar/onTop", true).toBool()) {
+            if (settings.value("bar/statusBar", false).toBool()) {
+                dockTop = screenGeometry.y() + 24 * getDPIScaling();
+            } else {
+                dockTop = screenGeometry.y();
+            }
+
+            highestWindow = screenGeometry.bottom();
+            for (WmWindow window : taskbarManager->Windows()) {
+                if (!window.isMinimized()) {
+                    if (window.geometry().top() < highestWindow &&
+                            window.geometry().right() > screenGeometry.left() &&
+                            window.geometry().left() < screenGeometry.right()) {
+                        highestWindow = window.geometry().top();
+                    }
+                }
+            }
+        } else {
+            if (settings.value("bar/statusBar", false).toBool()) {
+                dockTop = screenGeometry.bottom() - 24 * getDPIScaling();
+            } else {
+                dockTop = screenGeometry.bottom() + 1;
+            }
+
+            highestWindow = screenGeometry.top();
+            for (WmWindow window : taskbarManager->Windows()) {
+                if (!window.isMinimized()) {
+                    if (window.geometry().bottom() > highestWindow &&
+                            window.geometry().right() > screenGeometry.left() &&
+                            window.geometry().left() < screenGeometry.right()) {
+                        highestWindow = window.geometry().bottom();
+                    }
                 }
             }
         }
@@ -841,23 +881,45 @@ void MainWindow::doUpdate() {
         anim->setEasingCurve(QEasingCurve::OutCubic);
 
         int finalTop;
-        if (this->geometry().adjusted(0, 0, 0, 1).contains(QCursor::pos())) {
-            //Completely extend the bar
-            finalTop = screenGeometry.y();
-
-            //Hide the tutorial for the bar
-            TutorialWin->hideScreen(TutorialWindow::BarLocation);
-        } else {
-            if (qMax(dockTop, highestWindow - 50) - this->height() > screenGeometry.y()) {
+        if (settings.value("bar/onTop", true).toBool()) {
+            if (this->geometry().adjusted(0, 0, 0, 1).contains(QCursor::pos())) {
+                //Completely extend the bar
                 finalTop = screenGeometry.y();
 
                 //Hide the tutorial for the bar
                 TutorialWin->hideScreen(TutorialWindow::BarLocation);
             } else {
-                finalTop = qMax(dockTop, highestWindow - 50) - this->height();
+                if (qMax(dockTop, highestWindow - 50) - this->height() > screenGeometry.y()) {
+                    finalTop = screenGeometry.y();
 
-                //Show the tutorial for the bar
-                TutorialWin->showScreen(TutorialWindow::BarLocation);
+                    //Hide the tutorial for the bar
+                    TutorialWin->hideScreen(TutorialWindow::BarLocation);
+                } else {
+                    finalTop = qMax(dockTop, highestWindow - 50) - this->height();
+
+                    //Show the tutorial for the bar
+                    TutorialWin->showScreen(TutorialWindow::BarLocation);
+                }
+            }
+        } else {
+            if (this->geometry().adjusted(0, -1, 0, 0).contains(QCursor::pos())) {
+                //Completely extend the bar
+                finalTop = screenGeometry.bottom() - this->height() + 1;
+
+                //Hide the tutorial for the bar
+                TutorialWin->hideScreen(TutorialWindow::BarLocation);
+            } else {
+                if (qMin(dockTop, highestWindow + 50) < screenGeometry.bottom() - this->height() + 1) {
+                    finalTop = screenGeometry.bottom() - this->height() + 1;
+
+                    //Hide the tutorial for the bar
+                    TutorialWin->hideScreen(TutorialWindow::BarLocation);
+                } else {
+                    finalTop = qMin(dockTop, highestWindow + 50);
+
+                    //Show the tutorial for the bar
+                    TutorialWin->showScreen(TutorialWindow::BarLocation);
+                }
             }
         }
         anim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
@@ -869,7 +931,8 @@ void MainWindow::doUpdate() {
         this->setProperty("animating", true);
 
         if (settings.value("bar/statusBar", false).toBool()) {
-            if (finalTop == dockTop - this->height()) {
+            //if (finalTop == dockTop - this->height() || finalTop == screenGeometry.height() - dockTop) {
+            if (finalTop == dockTop - this->height() || finalTop == dockTop) {
                 if (!statusBarVisible) {
                     ui->StatusBarFrame->setVisible(true);
                     tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
@@ -980,6 +1043,12 @@ void MainWindow::doUpdate() {
                 }
             }
         }*/
+    }
+
+    if (settings.value("bar/onTop", true).toBool()) {
+        ((QBoxLayout*) ui->centralWidget->layout())->setDirection(QBoxLayout::TopToBottom);
+    } else {
+        ((QBoxLayout*) ui->centralWidget->layout())->setDirection(QBoxLayout::BottomToTop);
     }
     forceWindowMove = false;
 
@@ -1166,7 +1235,12 @@ void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command 
                       QString::number(w) + "," + QString::number(this->sizeHint().height()));
     this->setFixedSize(w, this->sizeHint().height());
     ui->infoScrollArea->setFixedWidth(w - this->centralWidget()->layout()->margin());
-    ui->StatusBarFrame->move(0, this->height() - 25 * getDPIScaling());
+
+    if (settings.value("bar/onTop", true).toBool()) {
+        ui->StatusBarFrame->move(0, this->height() - 25 * getDPIScaling());
+    } else {
+        ui->StatusBarFrame->move(0, 1);
+    }
 }
 
 void MainWindow::setGeometry(QRect geometry) {
@@ -1392,7 +1466,12 @@ void MainWindow::paintEvent(QPaintEvent *event) {
             painter.drawLine(x1, this->height() - 2, x2, this->height() - 2);
         } else {
             painter.setPen(this->palette().color(QPalette::WindowText));
-            painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+
+            if (settings.value("bar/onTop", true).toBool()) {
+                painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+            } else {
+                painter.drawLine(0, 0, this->width(), 0);
+            }
             warningAnimCreated = false;
         }
     }
@@ -1557,9 +1636,22 @@ void MainWindow::openMenu(bool openTotheWave, bool startListening) {
     } else {
         lockHide = true;
 
-        //QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        QRect screenGeometry = QApplication::desktop()->screenGeometry();
         QRect availableGeometry = QApplication::desktop()->availableGeometry();
-        gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), availableGeometry.height() - (this->height() + (this->y() - availableGeometry.y())) + 1);
+
+        //gatewayMenu->setGeometry(availableGeometry.x(), availableGeometry.y(), gatewayMenu->width(), availableGeometry.height());
+        if (settings.value("bar/onTop", true).toBool()) {
+            gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), availableGeometry.height() - (this->height() + (this->y() - availableGeometry.y())) + 1);
+        } else {
+            int height;
+
+            if (availableGeometry.bottom() < screenGeometry.height() - this->height()) {
+                height = availableGeometry.height();
+            } else {
+                height = screenGeometry.height() - this->height() + 1;
+            }
+            gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), availableGeometry.y() , gatewayMenu->width(), height);
+        }
         gatewayMenu->show(openTotheWave, startListening);
         gatewayMenu->setFocus();
     }
@@ -1673,16 +1765,25 @@ void MainWindow::updateStruts() {
     if (settings.value("bar/statusBar", false).toBool()) {
         struts[0] = 0;
         struts[1] = 0;
-        struts[2] = screenGeometry.top() + 24 * getDPIScaling();
-        struts[3] = 0;
         struts[4] = 0;
         struts[5] = 0;
         struts[6] = 0;
         struts[7] = 0;
-        struts[8] = screenGeometry.left();
-        struts[9] = screenGeometry.right();
-        struts[10] = 0;
-        struts[11] = 0;
+        if (settings.value("bar/onTop", true).toBool()) {
+            struts[2] = screenGeometry.top() + 24 * getDPIScaling();
+            struts[3] = 0;
+            struts[8] = screenGeometry.left();
+            struts[9] = screenGeometry.right();
+            struts[10] = 0;
+            struts[11] = 0;
+        } else {
+            struts[2] = 0;
+            struts[3] = QApplication::desktop()->geometry().height() - screenGeometry.bottom() + 23 * getDPIScaling();
+            struts[8] = 0;
+            struts[9] = 0;
+            struts[10] = screenGeometry.left();
+            struts[11] = screenGeometry.right();
+        }
     } else {
         struts[0] = 0;
         struts[1] = 0;
@@ -1701,6 +1802,14 @@ void MainWindow::updateStruts() {
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) struts, 12);
 
     free(struts);
+
+    this->repaint();
+
+    if (settings.value("bar/onTop", true).toBool()) {
+        ui->StatusBarFrame->move(0, this->height() - 25 * getDPIScaling());
+    } else {
+        ui->StatusBarFrame->move(0, 1);
+    }
 }
 
 void MainWindow::on_actionNone_triggered()

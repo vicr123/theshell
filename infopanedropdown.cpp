@@ -1,3 +1,23 @@
+/****************************************
+ *
+ *   theShell - Desktop Environment
+ *   Copyright (C) 2017 Victor Tran
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * *************************************/
+
 #include "infopanedropdown.h"
 #include "ui_infopanedropdown.h"
 #include "internationalisation.h"
@@ -72,7 +92,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->userSettingsDeleteUser->setProperty("type", "destructive");
     ui->userSettingsDeleteUserAndData->setProperty("type", "destructive");
     ui->userSettingsDeleteUserOnly->setProperty("type", "destructive");
-    ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
 
     QPalette powerStretchPalette = ui->PowerStretchSwitch->palette();
     powerStretchPalette.setColor(QPalette::Highlight, QColor(255, 100, 0));
@@ -255,6 +274,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->CapsNumLockBellSwitch->setChecked(themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool());
     ui->TwentyFourHourSwitch->setChecked(settings.value("time/use24hour", true).toBool());
     ui->AttenuateSwitch->setChecked(settings.value("notifications/attenuate", true).toBool());
+    ui->BarOnBottom->setChecked(!settings.value("bar/onTop", true).toBool());
     ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
 
     QString defaultFont;
@@ -390,6 +410,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     ui->RemindersList->setModel(new RemindersListModel);
     ui->RemindersList->setItemDelegate(new RemindersDelegate);
+
+    updateStruts();
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -656,7 +678,11 @@ void InfoPaneDropdown::show(dropdownType showWith) {
     if (!this->isVisible()) {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-        this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height());
+        if (settings.value("bar/onTop", true).toBool()) {
+            this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height());
+        } else {
+            this->setGeometry(screenGeometry.x(), screenGeometry.bottom(), screenGeometry.width(), screenGeometry.height());
+        }
 
         Atom DesktopWindowTypeAtom;
         DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
@@ -692,7 +718,12 @@ void InfoPaneDropdown::close() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
     a->setStartValue(this->geometry());
-    a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), this->width(), this->height()));
+
+    if (settings.value("bar/onTop", true).toBool()) {
+        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), this->width(), this->height()));
+    } else {
+        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.bottom(), this->width(), this->height()));
+    }
     a->setEasingCurve(QEasingCurve::OutCubic);
     a->setDuration(500);
     connect(a, &tPropertyAnimation::finished, [=]() {
@@ -1622,8 +1653,15 @@ void InfoPaneDropdown::mouseMoveEvent(QMouseEvent *event) {
     dragRect.translate(0, event->globalY() - (initialPoint + screenGeometry.top()));
 
     //innerRect.translate(event->localPos().toPoint().y() - mouseClickPoint, 0);
-    if (dragRect.bottom() >= screenGeometry.bottom()) {
-        dragRect.moveTo(screenGeometry.left(), screenGeometry.top());
+
+    if (settings.value("bar/onTop", true).toBool()) {
+        if (dragRect.bottom() >= screenGeometry.bottom()) {
+            dragRect.moveTo(screenGeometry.left(), screenGeometry.top());
+        }
+    } else {
+        if (dragRect.top() <= screenGeometry.top()) {
+            dragRect.moveTo(screenGeometry.left(), screenGeometry.top());
+        }
     }
     this->setGeometry(dragRect);
 
@@ -1642,7 +1680,9 @@ void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
         connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
         a->start();
     } else {
-        if (mouseMovedUp) {
+        /*if ((mouseMovedUp && settings.value("bar/onTop", true).toBool()) ||
+                (!mouseMovedUp && !settings.value("bar/onTop", true).toBool())) {*/
+        if (mouseMovedUp == settings.value("bar/onTop", true).toBool()) {
             this->close();
         } else {
             tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
@@ -2274,7 +2314,11 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
     changeDropDown(showWith, false);
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height() + y, screenGeometry.width(), screenGeometry.height());
+    if (settings.value("bar/onTop", true).toBool()) {
+        this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height() + y, screenGeometry.width(), screenGeometry.height());
+    } else {
+        this->setGeometry(screenGeometry.x(), screenGeometry.top() + y, screenGeometry.width(), screenGeometry.height());
+    }
 
     Atom DesktopWindowTypeAtom;
     DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
@@ -2305,7 +2349,8 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
 void InfoPaneDropdown::completeDragDown() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    if (QCursor::pos().y() - screenGeometry.top() < previousDragY) {
+    if ((QCursor::pos().y() - screenGeometry.top() < previousDragY && settings.value("bar/onTop", true).toBool()) ||
+            (QCursor::pos().y() - screenGeometry.top() > previousDragY && !settings.value("bar/onTop", true).toBool())) {
         this->close();
     } else {
         tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
@@ -3006,4 +3051,24 @@ void InfoPaneDropdown::on_ReminderDeleteButton_clicked()
 void InfoPaneDropdown::on_AttenuateSwitch_toggled(bool checked)
 {
     settings.setValue("notifications/attenuate", checked);
+}
+
+void InfoPaneDropdown::on_BarOnBottom_toggled(bool checked)
+{
+    settings.setValue("bar/onTop", !checked);
+    updateStruts();
+}
+
+void InfoPaneDropdown::updateStruts() {
+    emit updateStrutsSignal();
+
+    if (settings.value("bar/onTop", true).toBool()) {
+        ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::TopToBottom);
+        ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::TopToBottom);
+        ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    } else {
+        ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::BottomToTop);
+        ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::BottomToTop);
+        ui->upArrow->setPixmap(QIcon::fromTheme("go-down").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    }
 }

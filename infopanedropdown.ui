@@ -597,14 +597,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>10</month>
-                 <day>8</day>
+                 <day>7</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>10</month>
-                 <day>8</day>
+                 <day>7</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2101,7 +2101,8 @@
              <string>Startup</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-system-login"/>
+             <iconset theme="preferences-system-login">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2109,7 +2110,8 @@
              <string>Bar</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-desktop-bar"/>
+             <iconset theme="preferences-desktop-bar">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2117,7 +2119,8 @@
              <string>Gateway</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-desktop-gateway"/>
+             <iconset theme="preferences-desktop-gateway">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2125,7 +2128,8 @@
              <string>Display</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-desktop-display"/>
+             <iconset theme="preferences-desktop-display">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2133,7 +2137,8 @@
              <string>Theme</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-desktop-theme"/>
+             <iconset theme="preferences-desktop-theme">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2141,7 +2146,8 @@
              <string>Notifications</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-system-notifications"/>
+             <iconset theme="preferences-system-notifications">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2149,7 +2155,8 @@
              <string>Input</string>
             </property>
             <property name="icon">
-             <iconset theme="input-tablet"/>
+             <iconset theme="input-tablet">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2157,7 +2164,8 @@
              <string>Lock Screen</string>
             </property>
             <property name="icon">
-             <iconset theme="system-lock-screen"/>
+             <iconset theme="system-lock-screen">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2174,7 +2182,8 @@
              <string>Users</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-desktop-user"/>
+             <iconset theme="preferences-desktop-user">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2182,7 +2191,8 @@
              <string>Date and Time</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-system-time"/>
+             <iconset theme="preferences-system-time">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2190,7 +2200,8 @@
              <string>Language</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-system-locale"/>
+             <iconset theme="preferences-system-locale">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2198,7 +2209,8 @@
              <string>Accessibility</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-desktop-accessibility"/>
+             <iconset theme="preferences-desktop-accessibility">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2206,7 +2218,8 @@
              <string>Advanced</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-system-danger"/>
+             <iconset theme="preferences-system-danger">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2214,7 +2227,8 @@
              <string>About</string>
             </property>
             <property name="icon">
-             <iconset theme="help-about"/>
+             <iconset theme="help-about">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
           </widget>
@@ -2222,7 +2236,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>14</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2313,6 +2327,13 @@
            </widget>
            <widget class="QWidget" name="page">
             <layout class="QGridLayout" name="gridLayout_9">
+             <item row="2" column="1">
+              <widget class="Switch" name="barDesktopsSwitch">
+               <property name="text">
+                <string notr="true">barDesktopsSwitch</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0" colspan="3">
               <widget class="QFrame" name="startupHeader_2">
                <property name="frameShape">
@@ -2362,6 +2383,47 @@
                </layout>
               </widget>
              </item>
+             <item row="1" column="1">
+              <widget class="Switch" name="TextSwitch">
+               <property name="text">
+                <string notr="true">TextSwitch</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_69">
+               <property name="text">
+                <string>Use Status Bar</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_35">
+               <property name="text">
+                <string>Show windows from other desktops</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="Switch" name="StatusBarSwitch">
+               <property name="text">
+                <string notr="true">StatusBarSwitch</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <spacer name="verticalSpacer_17">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item row="1" column="2">
               <spacer name="horizontalSpacer_14">
                <property name="orientation">
@@ -2375,13 +2437,6 @@
                </property>
               </spacer>
              </item>
-             <item row="1" column="1">
-              <widget class="Switch" name="TextSwitch">
-               <property name="text">
-                <string notr="true">TextSwitch</string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_33">
                <property name="text">
@@ -2389,44 +2444,17 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_35">
-               <property name="text">
-                <string>Show windows from other desktops</string>
-               </property>
-              </widget>
-             </item>
              <item row="4" column="0">
-              <spacer name="verticalSpacer_17">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="2" column="1">
-              <widget class="Switch" name="barDesktopsSwitch">
+              <widget class="QLabel" name="label_90">
                <property name="text">
-                <string notr="true">barDesktopsSwitch</string>
+                <string>Show Bar on bottom of screen</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_69">
+             <item row="4" column="1">
+              <widget class="Switch" name="BarOnBottom">
                <property name="text">
-                <string>Use Status Bar</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="Switch" name="StatusBarSwitch">
-               <property name="text">
-                <string notr="true">StatusBarSwitch</string>
+                <string notr="true">BarOnBottomSwitch</string>
                </property>
               </widget>
              </item>

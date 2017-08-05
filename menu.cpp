@@ -1,3 +1,23 @@
+/****************************************
+ *
+ *   theShell - Desktop Environment
+ *   Copyright (C) 2017 Victor Tran
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * *************************************/
+
 #include "menu.h"
 #include "ui_menu.h"
 
@@ -307,8 +327,8 @@ void Menu::on_pushButton_clicked()
 
         anim->setEasingCurve(QEasingCurve::OutCubic);
 
-        anim->start();*/
-/*
+        anim->start();
+
         ui->offFrame->setMask(QRegion(0, 0, 0, 0));
         ui->offFrame->setGeometry(10, 10, this->width() - 20, this->height() - 20);*/
 
@@ -962,6 +982,18 @@ void Menu::on_thewaveMedia_Play_clicked()
 void Menu::on_thewaveMedia_Back_clicked()
 {
     MainWin->previousSong();
+}
+
+void Menu::mousePressEvent(QMouseEvent *event) {
+
+}
+
+void Menu::mouseMoveEvent(QMouseEvent *event) {
+
+}
+
+void Menu::mouseReleaseEvent(QMouseEvent *event) {
+
 }
 
 theWaveFrame::theWaveFrame(QWidget *parent) : QFrame(parent)
