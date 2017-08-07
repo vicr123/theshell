@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #include "taskbarmanager.h"
@@ -187,7 +187,6 @@ void TaskbarManager::updateInternalWindow(Window window) {
         serialised.setGeometry(QRect(windowx, windowy, attributes.width, attributes.height));
 
         serialised.setWID(window);
-
 
         if (serialised.PID() == QApplication::applicationPid() && serialised.title() != "Choose Background") {
             //theShell window. Ignore.

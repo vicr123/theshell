@@ -112,7 +112,6 @@ signals:
     void timerChanged(QString timer);
     void timerVisibleChanged(bool timerVisible);
     void timerEnabledChanged(bool timerEnabled);
-    void notificationsSilencedChanged(bool silenced);
     void batteryStretchChanged(bool isOn);
     void flightModeChanged(bool flight);
     void updateStrutsSignal();
@@ -219,8 +218,6 @@ private slots:
     void on_SuperkeyGatewaySwitch_toggled(bool checked);
 
     void updateSysInfo();
-
-    void on_QuietCheck_toggled(bool checked);
 
     void on_kdeconnectLabel_clicked();
 

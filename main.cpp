@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #include "mainwindow.h"
@@ -306,7 +306,7 @@ int main(int argc, char *argv[])
     MainWin->setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width() + 1, MainWin->height());
     MainWin->show();
 
-    QThread::sleep(1);
+    //QThread::sleep(1);
 
     return a.exec();
 }

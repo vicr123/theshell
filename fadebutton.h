@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #ifndef FADEBUTTON_H
@@ -25,6 +25,7 @@
 #include <QPushButton>
 #include <QPainter>
 #include <QPaintEvent>
+#include <QLinearGradient>
 #include <tvariantanimation.h>
 
 class FadeButton : public QPushButton
@@ -37,6 +38,7 @@ public:
     void setFade(bool fade);
 
     void setFullText(QString fullText);
+    void setText(QString text);
 
     void animateIn();
     void animateOut();
@@ -47,6 +49,15 @@ public slots:
 private:
     bool f = false;
     QString txt;
+
+    QRect oldTextRect, textRect;
+    QString oldText = "", currentText = "";
+    bool animating = false;
+    void paintEvent(QPaintEvent* event);
+
+    bool hovering = false;
+    void enterEvent(QEvent* event);
+    void leaveEvent(QEvent* event);
 };
 
 #endif // FADEBUTTON_H

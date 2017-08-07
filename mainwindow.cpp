@@ -174,9 +174,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(infoPane, SIGNAL(timerChanged(QString)), this, SLOT(setTimer(QString)));
     connect(infoPane, SIGNAL(timerVisibleChanged(bool)), this, SLOT(setTimerVisible(bool)));
     connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
-    connect(infoPane, &InfoPaneDropdown::notificationsSilencedChanged, [=](bool silenced) {
-        ui->notifications->setShowDisabled(silenced);
-    });
     connect(infoPane, &InfoPaneDropdown::batteryStretchChanged, [=](bool isOn) {
         if (isOn) {
             timer->setInterval(1000);
@@ -837,7 +834,6 @@ void MainWindow::doUpdate() {
     oldActiveWindow = active;*/
 
     if (!lockHide && !this->property("animating").toBool()) { //Check for move lock
-
         int highestWindow, dockTop;
         if (settings.value("bar/onTop", true).toBool()) {
             if (settings.value("bar/statusBar", false).toBool()) {
@@ -1648,7 +1644,7 @@ void MainWindow::openMenu(bool openTotheWave, bool startListening) {
             if (availableGeometry.bottom() < screenGeometry.height() - this->height()) {
                 height = availableGeometry.height();
             } else {
-                height = screenGeometry.height() - this->height() + 1;
+                height = this->y() - screenGeometry.top() + 1;
             }
             gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), availableGeometry.y() , gatewayMenu->width(), height);
         }
