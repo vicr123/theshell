@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #ifndef MAINWINDOW_H
@@ -230,6 +230,7 @@ private:
 
     void closeEvent(QCloseEvent*);
     void paintEvent(QPaintEvent *event);
+    bool eventFilter(QObject *watched, QEvent *event);
 
     InfoPaneDropdown *infoPane;
 

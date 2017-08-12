@@ -80,11 +80,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setAttribute(Qt::WA_AlwaysShowToolTips, true);
 
-    int spacing = -1;
-    if (QApplication::style()->objectName() == "contemporary") {
-        spacing = 0;
-    }
-    FlowLayout* flow = new FlowLayout(ui->windowList, -1, spacing, spacing);
+    FlowLayout* flow = new FlowLayout(ui->windowList, -1, 0, 0);
     ui->windowList->setLayout(flow);
 
     taskbarManager = new TaskbarManager;
@@ -1821,4 +1817,8 @@ void MainWindow::on_actionNotifications_triggered()
 void MainWindow::on_actionMute_triggered()
 {
     AudioMan->setQuietMode(AudioManager::mute);
+}
+
+bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
+
 }

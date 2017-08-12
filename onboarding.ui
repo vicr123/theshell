@@ -725,7 +725,8 @@ p, li { white-space: pre-wrap; }
               <string>Log Out</string>
              </property>
              <property name="icon">
-              <iconset theme="system-log-out"/>
+              <iconset theme="system-log-out">
+               <normaloff>.</normaloff>.</iconset>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -738,7 +739,8 @@ p, li { white-space: pre-wrap; }
               <string>Power Off</string>
              </property>
              <property name="icon">
-              <iconset theme="system-shutdown"/>
+              <iconset theme="system-shutdown">
+               <normaloff>.</normaloff>.</iconset>
              </property>
              <property name="flat">
               <bool>true</bool>

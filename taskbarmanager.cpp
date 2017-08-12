@@ -22,7 +22,7 @@
 
 TaskbarManager::TaskbarManager(QObject *parent) : QObject(parent)
 {
-    XSelectInput(QX11Info::display(), DefaultRootWindow(QX11Info::display()), PropertyChangeMask | SubstructureNotifyMask);
+    //XSelectInput(QX11Info::display(), DefaultRootWindow(QX11Info::display()), PropertyChangeMask | SubstructureNotifyMask);
 }
 
 void TaskbarManager::ReloadWindows() {

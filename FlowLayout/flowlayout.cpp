@@ -172,8 +172,24 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
 
         width += item->sizeHint().width() + spaceX;
 
-        if (!testOnly)
-            item->setGeometry(QRect(QPoint(x, y), item->sizeHint()));
+        if (!testOnly) {
+            QRect newGeometry(QPoint(x, y), item->sizeHint());
+            //if (item->geometry().adjusted(-3, -3, 3, 3).intersects(newGeometry)) {
+                item->setGeometry(newGeometry);
+            /*} else {
+                tVariantAnimation* anim = new tVariantAnimation();
+                anim->setStartValue(item->geometry());
+                anim->setEndValue(newGeometry);
+                anim->setDuration(500);
+                anim->setEasingCurve(QEasingCurve::OutCubic);
+                connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                    item->setGeometry(value.toRect());
+                });
+                connect(item->widget(), SIGNAL(destroyed(QObject*)), anim, SLOT(deleteLater()));
+                connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                anim->start();
+            }*/
+        }
 
         x = nextX;
         lineHeight = qMax(lineHeight, item->sizeHint().height());

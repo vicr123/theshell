@@ -44,6 +44,7 @@
 #include <QLayout>
 #include <QRect>
 #include <QStyle>
+#include <tpropertyanimation.h>
 class FlowLayout : public QLayout
 {
 public:

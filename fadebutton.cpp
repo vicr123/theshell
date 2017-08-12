@@ -61,6 +61,7 @@ void FadeButton::setFullText(QString fullText) {
         this->setFixedWidth(value.toInt());
     });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    connect(this, SIGNAL(destroyed(QObject*)), anim, SLOT(deleteLater()));
     anim->start();
 }
 
@@ -74,7 +75,17 @@ void FadeButton::animateIn() {
         this->setFixedWidth(value.toInt());
     });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    connect(this, SIGNAL(destroyed(QObject*)), anim, SLOT(deleteLater()));
     anim->start();
+
+    if (!animating) {
+        //Correct the rectangle's location
+        QRect rect = QRect(0, 0, this->width(), this->height());
+        textRect.moveLeft(rect.left() + (rect.width() / 2) - (this->fontMetrics().width(currentText) / 2));
+        textRect.setWidth(this->fontMetrics().width(currentText));
+        textRect.setHeight(this->fontMetrics().height());
+        textRect.moveTop(rect.top() + (rect.height() / 2) - (this->fontMetrics().height() / 2));
+    }
 }
 
 void FadeButton::animateOut() {
@@ -87,6 +98,7 @@ void FadeButton::animateOut() {
         this->setFixedWidth(value.toInt());
     });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    connect(this, SIGNAL(destroyed(QObject*)), anim, SLOT(deleteLater()));
     anim->start();
 }
 
@@ -200,6 +212,7 @@ void FadeButton::setText(QString text) {
             //Clear animating flag
             animating = false;
         });
+        connect(this, SIGNAL(destroyed(QObject*)), animation, SLOT(deleteLater()));
         connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
         animation->start();
 
