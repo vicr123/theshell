@@ -788,7 +788,7 @@ void InfoPaneDropdown::getNetworks() {
         //Set the updating flag
         networkListUpdating = true;
 
-        QFuture<void> future = QtConcurrent::run([=] {
+        //QFuture<void> future = QtConcurrent::run([=] {
             //Get the NetworkManager interface
             QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus());
 
@@ -1150,16 +1150,17 @@ void InfoPaneDropdown::getNetworks() {
 
             //Emit change signal
             emit networkLabelChanged(NetworkLabel.join(" · "), signalStrength);
-        });
+        //});
 
-        QFutureWatcher<void>* watcher = new QFutureWatcher<void>();
+        /*QFutureWatcher<void>* watcher = new QFutureWatcher<void>();
         connect(watcher, &QFutureWatcher<void>::finished, [=] {
             watcher->deleteLater();
 
             //Set the updating flag
             networkListUpdating = false;
         });
-        watcher->setFuture(future);
+        watcher->setFuture(future);*/
+            networkListUpdating = false;
     }
 }
 
