@@ -528,7 +528,7 @@ void InfoPaneDropdown::processTimer() {
         }
     }
 
-    {
+    /*{
         cups_dest_t *destinations;
         int destinationCount = cupsGetDests(&destinations);
 
@@ -575,7 +575,7 @@ void InfoPaneDropdown::processTimer() {
                 connect(button, &QPushButton::clicked, [=]() {
                     emit closeNotification(id);
                 });
-                layout->addWidget(button);*/
+                layout->addWidget(button);
 
                 ui->printersList->layout()->addWidget(frame);
                 printersFrames.insert(currentDestination.name, frame);
@@ -608,7 +608,7 @@ void InfoPaneDropdown::processTimer() {
         }
 
         cupsFreeDests(destinationCount, destinations);
-    }
+    }*/
 }
 
 void InfoPaneDropdown::timerTick() {
@@ -788,7 +788,7 @@ void InfoPaneDropdown::getNetworks() {
         //Set the updating flag
         networkListUpdating = true;
 
-        //QFuture<void> future = QtConcurrent::run([=] {
+        QFuture<void> future = QtConcurrent::run([=] {
             //Get the NetworkManager interface
             QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus());
 
@@ -1150,17 +1150,16 @@ void InfoPaneDropdown::getNetworks() {
 
             //Emit change signal
             emit networkLabelChanged(NetworkLabel.join(" · "), signalStrength);
-        //});
+        });
 
-        /*QFutureWatcher<void>* watcher = new QFutureWatcher<void>();
+        QFutureWatcher<void>* watcher = new QFutureWatcher<void>();
         connect(watcher, &QFutureWatcher<void>::finished, [=] {
             watcher->deleteLater();
 
             //Set the updating flag
             networkListUpdating = false;
         });
-        watcher->setFuture(future);*/
-            networkListUpdating = false;
+        watcher->setFuture(future);
     }
 }
 
@@ -2264,6 +2263,8 @@ void InfoPaneDropdown::doNetworkCheck() {
             //Reload the connectivity status
             i.asyncCall("CheckConnectivity");
             return;
+        } else {
+            networkOk = Ok;
         }
 
         QNetworkAccessManager* manager = new QNetworkAccessManager;
