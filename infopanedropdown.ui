@@ -597,14 +597,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>10</month>
-                 <day>7</day>
+                 <day>6</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>10</month>
-                 <day>7</day>
+                 <day>6</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2236,7 +2236,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>1</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2868,26 +2868,18 @@
            </widget>
            <widget class="QWidget" name="page_3">
             <layout class="QGridLayout" name="gridLayout_11">
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_53">
-               <property name="text">
-                <string>System Font</string>
+             <item row="2" column="2">
+              <spacer name="horizontalSpacer_21">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_52">
-               <property name="text">
-                <string>Accent Color</string>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
                </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_50">
-               <property name="text">
-                <string>Color Scheme</string>
-               </property>
-              </widget>
+              </spacer>
              </item>
              <item row="0" column="0" colspan="3">
               <widget class="QFrame" name="displayHeader_8">
@@ -2938,42 +2930,6 @@
                </layout>
               </widget>
              </item>
-             <item row="1" column="0" colspan="3">
-              <widget class="QLabel" name="label_51">
-               <property name="text">
-                <string>Changes will occur in newly started applications.</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <spacer name="horizontalSpacer_21">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="7" column="0">
-              <spacer name="verticalSpacer_20">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="3" column="1" colspan="2">
-              <widget class="QComboBox" name="themeButtonColor"/>
-             </item>
              <item row="2" column="1">
               <widget class="QFrame" name="frame_5">
                <property name="frameShape">
@@ -3012,6 +2968,60 @@
                </layout>
               </widget>
              </item>
+             <item row="8" column="0">
+              <spacer name="verticalSpacer_20">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_52">
+               <property name="text">
+                <string>Accent Color</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_50">
+               <property name="text">
+                <string>Color Scheme</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1" colspan="2">
+              <widget class="QComboBox" name="systemIconTheme"/>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_79">
+               <property name="text">
+                <string>Icon Theme</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="3">
+              <widget class="QLabel" name="label_51">
+               <property name="text">
+                <string>Changes will occur in newly started applications.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1" colspan="2">
+              <widget class="QComboBox" name="themeButtonColor"/>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_53">
+               <property name="text">
+                <string>System Font</string>
+               </property>
+              </widget>
+             </item>
              <item row="4" column="0" colspan="3">
               <widget class="Line" name="line_12">
                <property name="orientation">
@@ -3022,15 +3032,15 @@
              <item row="5" column="1" colspan="2">
               <widget class="QFontComboBox" name="systemFont"/>
              </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_79">
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_91">
                <property name="text">
-                <string>Icon Theme</string>
+                <string>Widget Theme</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="1" colspan="2">
-              <widget class="QComboBox" name="systemIconTheme"/>
+             <item row="7" column="1" colspan="2">
+              <widget class="QComboBox" name="systemWidgetTheme"/>
              </item>
             </layout>
            </widget>

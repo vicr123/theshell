@@ -177,6 +177,20 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         }
     }
 
+    //Load widget themes into widget theme box
+    {
+        QString currentWidgetTheme = settings.value("style/name", "contemporary").toString();
+        QStringList keys = QStyleFactory::keys();
+        for (QString key : keys) {
+            ui->systemWidgetTheme->addItem(key);
+            ui->systemWidgetTheme->setItemData(ui->systemWidgetTheme->count() - 1, key);
+
+            if (key.toLower() == currentWidgetTheme.toLower()) {
+                ui->systemWidgetTheme->setCurrentIndex(ui->systemWidgetTheme->count() - 1);
+            }
+        }
+    }
+
     connect(this, &InfoPaneDropdown::networkLabelChanged, [=](QString label) {
         ui->networkStatus->setText(label);
     });
@@ -3055,4 +3069,11 @@ void InfoPaneDropdown::updateStruts() {
         ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::BottomToTop);
         ui->upArrow->setPixmap(QIcon::fromTheme("go-down").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     }
+}
+
+void InfoPaneDropdown::on_systemWidgetTheme_currentIndexChanged(int index)
+{
+    themeSettings->setValue("style/name", ui->systemWidgetTheme->itemData(index).toString());
+
+    QApplication::setStyle(QStyleFactory::create(ui->systemWidgetTheme->itemData(index).toString()));
 }

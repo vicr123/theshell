@@ -359,6 +359,8 @@ private slots:
 
     void updateStruts();
 
+    void on_systemWidgetTheme_currentIndexChanged(int index);
+
 public slots:
     void getNetworks();
 
