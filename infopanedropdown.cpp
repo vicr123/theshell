@@ -34,6 +34,7 @@ extern QDBusServiceWatcher* dbusServiceWatcher;
 extern QDBusServiceWatcher* dbusServiceWatcherSystem;
 extern UPowerDBus* updbus;
 extern NotificationDBus* ndbus;
+extern DBusSignals* dbusSignals;
 
 InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QDialog(parent),
@@ -197,14 +198,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     ui->FlightSwitch->setOnIcon(QIcon::fromTheme("flight-mode"));
 
-    //Set up theme button combo box
-    int themeAccentColorIndex = themeSettings->value("color/accent", 0).toInt();
-    ui->themeButtonColor->addItem(tr("Blue"));
-    ui->themeButtonColor->addItem(tr("Green"));
-    ui->themeButtonColor->addItem(tr("Orange"));
-    ui->themeButtonColor->addItem(tr("Pink"));
-    ui->themeButtonColor->addItem(tr("Turquoise"));
-
     QString redshiftStart = settings.value("display/redshiftStart", "").toString();
     if (redshiftStart == "") {
         redshiftStart = ui->startRedshift->time().toString();
@@ -260,8 +253,10 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QString themeType = themeSettings->value("color/type", "dark").toString();
     if (themeType == "light") {
         ui->lightColorThemeRadio->setChecked(true);
-    } else {
+    } else if (themeType == "dark") {
         ui->darkColorThemeRadio->setChecked(true);
+    } else if (themeType == "decorative") {
+        ui->decorativeColorThemeRadio->setChecked(true);
     }
 
     //Populate the language box
@@ -290,7 +285,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->TwentyFourHourSwitch->setChecked(settings.value("time/use24hour", true).toBool());
     ui->AttenuateSwitch->setChecked(settings.value("notifications/attenuate", true).toBool());
     ui->BarOnBottom->setChecked(!settings.value("bar/onTop", true).toBool());
-    ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
+    updateAccentColourBox();
 
     QString defaultFont;
     if (QFontDatabase().families().contains("Contemporary")) {
@@ -1959,6 +1954,8 @@ void InfoPaneDropdown::on_lightColorThemeRadio_toggled(bool checked)
 {
     if (checked) {
         themeSettings->setValue("color/type", "light");
+        updateAccentColourBox();
+        resetStyle();
     }
 }
 
@@ -1966,12 +1963,15 @@ void InfoPaneDropdown::on_darkColorThemeRadio_toggled(bool checked)
 {
     if (checked) {
         themeSettings->setValue("color/type", "dark");
+        updateAccentColourBox();
+        resetStyle();
     }
 }
 
 void InfoPaneDropdown::on_themeButtonColor_currentIndexChanged(int index)
 {
     themeSettings->setValue("color/accent", index);
+    resetStyle();
 }
 
 void InfoPaneDropdown::on_systemFont_currentFontChanged(const QFont &f)
@@ -3074,6 +3074,39 @@ void InfoPaneDropdown::updateStruts() {
 void InfoPaneDropdown::on_systemWidgetTheme_currentIndexChanged(int index)
 {
     themeSettings->setValue("style/name", ui->systemWidgetTheme->itemData(index).toString());
+    resetStyle();
+}
 
-    QApplication::setStyle(QStyleFactory::create(ui->systemWidgetTheme->itemData(index).toString()));
+void InfoPaneDropdown::resetStyle() {
+    emit dbusSignals->ThemeChanged();
+}
+
+void InfoPaneDropdown::on_decorativeColorThemeRadio_toggled(bool checked)
+{
+    if (checked) {
+        themeSettings->setValue("color/type", "decorative");
+        updateAccentColourBox();
+        resetStyle();
+    }
+}
+
+void InfoPaneDropdown::updateAccentColourBox() {
+    //Set up theme button combo box
+    int themeAccentColorIndex = themeSettings->value("color/accent", 0).toInt();
+
+    ui->themeButtonColor->clear();
+    if (themeSettings->value("color/type", "dark") == "decorative") {
+        if (themeAccentColorIndex > 1) themeAccentColorIndex = 0;
+        ui->themeButtonColor->addItem(tr("Oxygen"));
+        ui->themeButtonColor->addItem(tr("Breeze"));
+    } else {
+        if (themeAccentColorIndex > 4) themeAccentColorIndex = 0;
+        ui->themeButtonColor->addItem(tr("Blue"));
+        ui->themeButtonColor->addItem(tr("Green"));
+        ui->themeButtonColor->addItem(tr("Orange"));
+        ui->themeButtonColor->addItem(tr("Pink"));
+        ui->themeButtonColor->addItem(tr("Turquoise"));
+
+        ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
+    }
 }

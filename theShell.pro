@@ -17,9 +17,6 @@ TEMPLATE = app
 QDBUSXML2CPP_ADAPTOR_HEADER_FLAGS = -l NotificationDBus -i notificationdbus.h
 QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
 #DBUS_ADAPTORS += org.freedesktop.Notifications.xml
-#DBUS_ADAPTORS += appMenuRegistrar
-#appMenuRegistrar.files = com.canonical.AppMenu.Registrar.xml
-#appMenuRegistrar.header_flags = -l DBusMenuRegistrar -i dbusmenuregistrar.h
 
 #notifications.files = org.freedesktop.Notifications.xml
 #notifications.header_flags = -l NotificationDBus -i notificationdbus.h
@@ -33,7 +30,9 @@ power.files = org.thesuite.power.xml
 #location.header_flags = -l LocationServices -i locationservices.h
 #location.source_flags = -l LocationServices -i locationservices.h
 
-DBUS_ADAPTORS += power #location
+dsig.files = org.thesuite.theshell.xml
+
+DBUS_ADAPTORS += power dsig #location
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -73,7 +72,8 @@ SOURCES += main.cpp\
     screenshotwindow.cpp \
     audiomanager.cpp \
     locationservices.cpp \
-    taskbarmanager.cpp
+    taskbarmanager.cpp \
+    dbussignals.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -114,7 +114,8 @@ HEADERS  += mainwindow.h \
     audiomanager.h \
     internationalisation.h \
     locationservices.h \
-    taskbarmanager.h
+    taskbarmanager.h \
+    dbussignals.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

@@ -54,6 +54,7 @@
 #include "endsessionwait.h"
 #include "audiomanager.h"
 #include "nativeeventfilter.h"
+#include "dbussignals.h"
 #include <QScrollBar>
 #include <sys/sysinfo.h>
 #include <QSysInfo>
@@ -360,6 +361,12 @@ private slots:
     void updateStruts();
 
     void on_systemWidgetTheme_currentIndexChanged(int index);
+
+    void resetStyle();
+
+    void on_decorativeColorThemeRadio_toggled(bool checked);
+
+    void updateAccentColourBox();
 
 public slots:
     void getNetworks();

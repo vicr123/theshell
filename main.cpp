@@ -27,6 +27,7 @@
 #include "onboarding.h"
 #include "tutorialwindow.h"
 #include "audiomanager.h"
+#include "dbussignals.h"
 #include <iostream>
 //#include "dbusmenuregistrar.h"
 #include <nativeeventfilter.h>
@@ -56,6 +57,7 @@ QDBusServiceWatcher* dbusServiceWatcher = NULL;
 QDBusServiceWatcher* dbusServiceWatcherSystem = NULL;
 UPowerDBus* updbus = NULL;
 NotificationDBus* ndbus = NULL;
+DBusSignals* dbusSignals = NULL;
 
 #define ONBOARDING_VERSION 4
 
@@ -212,6 +214,8 @@ int main(int argc, char *argv[])
 
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerService("org.thesuite.theshell");
+
+    dbusSignals = new DBusSignals();
 
     if (startKscreen) {
         QDBusMessage kscreen = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
