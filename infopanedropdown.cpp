@@ -285,6 +285,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->TwentyFourHourSwitch->setChecked(settings.value("time/use24hour", true).toBool());
     ui->AttenuateSwitch->setChecked(settings.value("notifications/attenuate", true).toBool());
     ui->BarOnBottom->setChecked(!settings.value("bar/onTop", true).toBool());
+    ui->soundFeedbackSoundSwitch->setChecked(settings.value("sound/feedbackSound", true).toBool());
     updateAccentColourBox();
 
     QString defaultFont;
@@ -3089,6 +3090,11 @@ void InfoPaneDropdown::on_decorativeColorThemeRadio_toggled(bool checked)
         resetStyle();
     }
 }
+
+void InfoPaneDropdown::on_soundFeedbackSoundSwitch_toggled(bool checked)
+ {
+     settings.setValue("sound/feedbackSound", checked);
+ }
 
 void InfoPaneDropdown::updateAccentColourBox() {
     //Set up theme button combo box
