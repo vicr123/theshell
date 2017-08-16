@@ -2134,6 +2134,15 @@
            </item>
            <item>
             <property name="text">
+             <string>Sound</string>
+            </property>
+            <property name="icon">
+             <iconset theme="preferences-desktop-sound">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
              <string>Theme</string>
             </property>
             <property name="icon">
@@ -2883,7 +2892,103 @@
                 </size>
                </property>
               </spacer>
+             </item>    
+            <widget class="QWidget" name="page_101">
+            <layout class="QGridLayout" name="gridLayout_101">
+             <item row="1" column="1">
+              <widget class="QFrame" name="frame_101">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_101">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+              <widget class="Switch" name="soundFeedbackSoundSwitch">
+               <property name="text">
+                <string notr="true">soundFeedbackSoundSwitch</string>
+               </property>
+              </widget>
              </item>
+             <item row="2" column="0">
+              <spacer name="verticalSpacer_101">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_101">
+               <property name="text">
+                <string>Play Feedback Sound on Volume Change</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <spacer name="horizontalSpacer_101">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QFrame" name="soundHeader">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_102">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="soundLabel">
+                  <property name="font">
+                   <font>
+                    <pointsize>15</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Sound</string>
+                  </property>
+                 </widget>
+                </item>
              <item row="1" column="1">
               <widget class="QFrame" name="frame_5">
                <property name="frameShape">
