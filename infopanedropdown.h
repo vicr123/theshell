@@ -366,6 +366,8 @@ private slots:
 
     void on_decorativeColorThemeRadio_toggled(bool checked);
 
+    void on_soundFeedbackSoundSwitch_toggled(bool checked);
+
     void updateAccentColourBox();
 
 public slots:
