@@ -259,6 +259,22 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->decorativeColorThemeRadio->setChecked(true);
     }
 
+    int dpi = sessionSettings->value("screen/dpi", 96).toInt();
+    switch (dpi) {
+        case 96:
+            ui->dpi100->setChecked(true);
+            break;
+        case 144:
+            ui->dpi150->setChecked(true);
+            break;
+        case 192:
+            ui->dpi200->setChecked(true);
+            break;
+        case 288:
+            ui->dpi300->setChecked(true);
+            break;
+    }
+
     //Populate the language box
     Internationalisation::fillLanguageBox(ui->localeList);
 
@@ -285,7 +301,9 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->TwentyFourHourSwitch->setChecked(settings.value("time/use24hour", true).toBool());
     ui->AttenuateSwitch->setChecked(settings.value("notifications/attenuate", true).toBool());
     ui->BarOnBottom->setChecked(!settings.value("bar/onTop", true).toBool());
+    ui->AutoShowBarSwitch->setChecked(settings.value("bar/autoshow", true).toBool());
     updateAccentColourBox();
+    on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
 
     QString defaultFont;
     if (QFontDatabase().families().contains("Contemporary")) {
@@ -2697,6 +2715,10 @@ void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
 {
     settings.setValue("bar/statusBar", checked);
     updateStruts();
+
+    ui->AutoShowBarLabel->setEnabled(checked);
+    ui->AutoShowBarSwitch->setEnabled(checked);
+    ui->AutoShowBarExplanation->setEnabled(checked);
 }
 
 void InfoPaneDropdown::on_TouchInputSwitch_toggled(bool checked)
@@ -3109,4 +3131,37 @@ void InfoPaneDropdown::updateAccentColourBox() {
 
         ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
     }
+}
+
+void InfoPaneDropdown::on_dpi100_toggled(bool checked)
+{
+    if (checked) {
+        sessionSettings->setValue("screen/dpi", 96);
+    }
+}
+
+void InfoPaneDropdown::on_dpi150_toggled(bool checked)
+{
+    if (checked) {
+        sessionSettings->setValue("screen/dpi", 144);
+    }
+}
+
+void InfoPaneDropdown::on_dpi200_toggled(bool checked)
+{
+    if (checked) {
+        sessionSettings->setValue("screen/dpi", 192);
+    }
+}
+
+void InfoPaneDropdown::on_dpi300_toggled(bool checked)
+{
+    if (checked) {
+        sessionSettings->setValue("screen/dpi", 288);
+    }
+}
+
+void InfoPaneDropdown::on_AutoShowBarSwitch_toggled(bool checked)
+{
+    settings.setValue("bar/autoshow", checked);
 }

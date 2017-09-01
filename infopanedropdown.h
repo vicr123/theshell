@@ -368,6 +368,16 @@ private slots:
 
     void updateAccentColourBox();
 
+    void on_dpi100_toggled(bool checked);
+
+    void on_dpi150_toggled(bool checked);
+
+    void on_dpi200_toggled(bool checked);
+
+    void on_dpi300_toggled(bool checked);
+
+    void on_AutoShowBarSwitch_toggled(bool checked);
+
 public slots:
     void getNetworks();
 
@@ -413,6 +423,7 @@ private:
     QSettings settings;
     QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);
     QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
+    QSettings* sessionSettings = new QSettings("theSuite", "ts-startsession");
 
     QString editingUserPath;
 

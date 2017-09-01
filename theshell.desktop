@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=XSession
-Exec=/usr/bin/init_theshell
-TryExec=/usr/bin/init_theshell
+Exec=/usr/bin/ts-startsession
+TryExec=/usr/bin/ts-startsession
 DesktopNames=theShell
 Name=theShell
 Comment=Desktop Shell for theOS

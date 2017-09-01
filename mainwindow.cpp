@@ -51,10 +51,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarFrame->setFixedWidth(this->width());
     ui->StatusBarFrame->setFixedHeight(24 * getDPIScaling());
 
-    statusBarOpacityEffect = new QGraphicsOpacityEffect();
-    statusBarOpacityEffect->setOpacity(0);
-    ui->StatusBarFrame->setGraphicsEffect(statusBarOpacityEffect);
-
     //Set the menu of the MPRIS Media Player selection to a new menu.
     //Items will be populated during the update event.
     QMenu* mprisSelectionMenu = new QMenu();
@@ -208,6 +204,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarFlight->setPixmap(QIcon::fromTheme("flight-mode").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     ui->flightIcon->setVisible(settings.value("flightmode/on", false).toBool());
     ui->StatusBarFlight->setVisible(settings.value("flightmode/on", false).toBool());
+    ui->StatusBarFrame->installEventFilter(this);
+
+    ((QBoxLayout*) ui->centralWidget->layout())->removeWidget(ui->StatusBarHoverFrame);
+    ui->StatusBarHoverFrame->setParent(ui->StatusBarFrame);
+    ui->StatusBarHoverFrame->resize(ui->StatusBarFrame->size());
+    ui->StatusBarHoverFrame->move(0, -ui->StatusBarHoverFrame->height());
+    ui->StatusBarFrame->setMouseTracking(true);
+
+    QPalette hoverFramePal = this->palette();
+    hoverFramePal.setColor(QPalette::Window, hoverFramePal.color(QPalette::Highlight));
+    hoverFramePal.setColor(QPalette::WindowText, hoverFramePal.color(QPalette::WindowText));
+    ui->StatusBarHoverFrame->setPalette(hoverFramePal);
+
+    statusBarOpacityEffect = new QGraphicsOpacityEffect();
+    statusBarOpacityEffect->setOpacity(0);
+    ui->StatusBarFrame->setGraphicsEffect(statusBarOpacityEffect);
 
     connect(locationServices, &LocationServices::locationUsingChanged, [=](bool location) {
         ui->StatusBarLocation->setVisible(location);
@@ -215,7 +227,6 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     ui->volumeSlider->setVisible(false);
-
     ui->brightnessSlider->setVisible(false);
     ui->mprisFrame->setVisible(false);
 
@@ -867,6 +878,8 @@ void MainWindow::doUpdate() {
             }
         }
 
+        bool doAnim = true;
+
         tPropertyAnimation* anim = new tPropertyAnimation(this, "geometry");
         anim->setStartValue(this->geometry());
         anim->setDuration(500);
@@ -875,19 +888,24 @@ void MainWindow::doUpdate() {
         int finalTop;
         if (settings.value("bar/onTop", true).toBool()) {
             if (this->geometry().adjusted(0, 0, 0, 1).contains(QCursor::pos())) {
-                //Completely extend the bar
-                finalTop = screenGeometry.y();
+                if (settings.value("bar/statusBar").toBool() && !settings.value("bar/autoshow").toBool()) {
+                    //Don't move bar; wait for click
+                    doAnim = false;
+                } else {
+                    //Completely extend the bar
+                    finalTop = screenGeometry.y();
 
-                //Hide the tutorial for the bar
-                TutorialWin->hideScreen(TutorialWindow::BarLocation);
+                    //Hide the tutorial for the bar
+                    TutorialWin->hideScreen(TutorialWindow::BarLocation);
+                }
             } else {
-                if (qMax(dockTop, highestWindow - 50) - this->height() > screenGeometry.y()) {
+                if (qMax((float) dockTop, highestWindow - 50 * getDPIScaling()) - this->height() > screenGeometry.y()) {
                     finalTop = screenGeometry.y();
 
                     //Hide the tutorial for the bar
                     TutorialWin->hideScreen(TutorialWindow::BarLocation);
                 } else {
-                    finalTop = qMax(dockTop, highestWindow - 50) - this->height();
+                    finalTop = qMax((float) dockTop, highestWindow - 50 * getDPIScaling()) - this->height();
 
                     //Show the tutorial for the bar
                     TutorialWin->showScreen(TutorialWindow::BarLocation);
@@ -895,62 +913,73 @@ void MainWindow::doUpdate() {
             }
         } else {
             if (this->geometry().adjusted(0, -1, 0, 0).contains(QCursor::pos())) {
-                //Completely extend the bar
-                finalTop = screenGeometry.bottom() - this->height() + 1;
+                if (settings.value("bar/statusBar").toBool() && !settings.value("bar/autoshow").toBool()) {
+                    //Don't move bar; wait for click
+                    doAnim = false;
+                } else {
+                    //Completely extend the bar
+                    finalTop = screenGeometry.bottom() - this->height() + 1;
 
-                //Hide the tutorial for the bar
-                TutorialWin->hideScreen(TutorialWindow::BarLocation);
+                    //Hide the tutorial for the bar
+                    TutorialWin->hideScreen(TutorialWindow::BarLocation);
+                }
             } else {
-                if (qMin(dockTop, highestWindow + 50) < screenGeometry.bottom() - this->height() + 1) {
+                if (qMin((float) dockTop, highestWindow + 50 * getDPIScaling()) < screenGeometry.bottom() - this->height() + 1) {
                     finalTop = screenGeometry.bottom() - this->height() + 1;
 
                     //Hide the tutorial for the bar
                     TutorialWin->hideScreen(TutorialWindow::BarLocation);
                 } else {
-                    finalTop = qMin(dockTop, highestWindow + 50);
+                    finalTop = qMin((float) dockTop, highestWindow + 50 * getDPIScaling());
 
                     //Show the tutorial for the bar
                     TutorialWin->showScreen(TutorialWindow::BarLocation);
                 }
             }
         }
-        anim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
-        anim->start();
-        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-        connect(anim, &tPropertyAnimation::finished, [=] {
-            this->setProperty("animating", false);
-        });
-        this->setProperty("animating", true);
 
-        if (settings.value("bar/statusBar", false).toBool()) {
-            //if (finalTop == dockTop - this->height() || finalTop == screenGeometry.height() - dockTop) {
-            if (finalTop == dockTop - this->height() || finalTop == dockTop) {
-                if (!statusBarVisible) {
-                    ui->StatusBarFrame->setVisible(true);
-                    tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
-                    statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
-                    statAnim->setEndValue((float) 1);
-                    statAnim->setDuration(250);
-                    connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
-                    statAnim->start();
-                    statusBarVisible = true;
+        if (doAnim) {
+            anim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
+            anim->start();
+            connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+            connect(anim, &tPropertyAnimation::finished, [=] {
+                this->setProperty("animating", false);
+            });
+            this->setProperty("animating", true);
+
+
+            if (settings.value("bar/statusBar", false).toBool()) {
+                //if (finalTop == dockTop - this->height() || finalTop == screenGeometry.height() - dockTop) {
+                if (finalTop == dockTop - this->height() || finalTop == dockTop) {
+                    if (!statusBarVisible) {
+                        ui->StatusBarFrame->setVisible(true);
+                        tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
+                        statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
+                        statAnim->setEndValue((float) 1);
+                        statAnim->setDuration(250);
+                        connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
+                        statAnim->start();
+                        statusBarVisible = true;
+                    }
+                } else {
+                    if (statusBarVisible) {
+                        tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
+                        statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
+                        statAnim->setEndValue((float) 0);
+                        statAnim->setDuration(250);
+                        connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
+                        connect(statAnim, &tPropertyAnimation::finished, [=]() {
+                            ui->StatusBarFrame->setVisible(false);
+                        });
+                        statAnim->start();
+                        statusBarVisible = false;
+                    }
                 }
             } else {
-                if (statusBarVisible) {
-                    tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
-                    statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
-                    statAnim->setEndValue((float) 0);
-                    statAnim->setDuration(250);
-                    connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
-                    connect(statAnim, &tPropertyAnimation::finished, [=]() {
-                        ui->StatusBarFrame->setVisible(false);
-                    });
-                    statAnim->start();
-                    statusBarVisible = false;
-                }
+                ui->StatusBarFrame->setVisible(false);
             }
         } else {
-            ui->StatusBarFrame->setVisible(false);
+            anim->deleteLater();
         }
 
         /*
@@ -1768,6 +1797,9 @@ void MainWindow::updateStruts() {
             struts[9] = screenGeometry.right();
             struts[10] = 0;
             struts[11] = 0;
+            ui->StatusBarHoverFrameDown->setPixmap(QIcon::fromTheme("go-down").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+            this->centralWidget()->layout()->setContentsMargins(0, 0, 0, 9);
+            ui->InfoScrollWidget->layout()->setContentsMargins(9, 9, 9, 0);
         } else {
             struts[2] = 0;
             struts[3] = QApplication::desktop()->geometry().height() - screenGeometry.bottom() + 23 * getDPIScaling();
@@ -1775,6 +1807,9 @@ void MainWindow::updateStruts() {
             struts[9] = 0;
             struts[10] = screenGeometry.left();
             struts[11] = screenGeometry.right();
+            ui->StatusBarHoverFrameDown->setPixmap(QIcon::fromTheme("go-up").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+            this->centralWidget()->layout()->setContentsMargins(0, 9, 0, 0);
+            ui->InfoScrollWidget->layout()->setContentsMargins(9, 0, 9, 9);
         }
     } else {
         struts[0] = 0;
@@ -1820,5 +1855,83 @@ void MainWindow::on_actionMute_triggered()
 }
 
 bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    if (watched == ui->StatusBarFrame) {
+        if (event->type() == QEvent::MouseButtonPress) {
+            gatewayMenu->close();
+            tPropertyAnimation* anim = new tPropertyAnimation(this, "geometry");
+            anim->setStartValue(this->geometry());
+            anim->setDuration(500);
+            anim->setEasingCurve(QEasingCurve::OutCubic);
 
+            //Completely extend the bar
+            int finalTop;
+            if (settings.value("bar/onTop", true).toBool()) {
+                finalTop = screenGeometry.y();
+            } else {
+                finalTop = screenGeometry.bottom() - this->height() + 1;
+            }
+
+            anim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
+            anim->start();
+            connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+            connect(anim, &tPropertyAnimation::finished, [=] {
+                this->setProperty("animating", false);
+            });
+            this->setProperty("animating", true);
+
+            //Hide the tutorial for the bar
+            TutorialWin->hideScreen(TutorialWindow::BarLocation);
+
+            //Hide status bar
+            if (settings.value("bar/statusBar", false).toBool() && statusBarVisible) {
+                tPropertyAnimation* statAnim = new tPropertyAnimation(statusBarOpacityEffect, "opacity");
+                statAnim->setStartValue((float) statusBarOpacityEffect->opacity());
+                statAnim->setEndValue((float) 0);
+                statAnim->setDuration(250);
+                connect(statAnim, SIGNAL(finished()), statAnim, SLOT(deleteLater()));
+                connect(statAnim, &tPropertyAnimation::finished, [=]() {
+                    ui->StatusBarFrame->setVisible(false);
+
+                    if (settings.value("bar/onTop", true).toBool()) {
+                        ui->StatusBarHoverFrame->move(0, -ui->StatusBarFrame->height());
+                    } else {
+                        ui->StatusBarHoverFrame->move(0, ui->StatusBarFrame->height());
+                    }
+                });
+                statAnim->start();
+
+                statusBarVisible = false;
+            }
+
+            return true;
+        } else if (event->type() == QEvent::Enter) {
+            if (!settings.value("bar/autoshow").toBool()) {
+                tPropertyAnimation* anim = new tPropertyAnimation(ui->StatusBarHoverFrame, "geometry");
+                anim->setStartValue(ui->StatusBarHoverFrame->geometry());
+                anim->setEndValue(QRect(0, 0, ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
+                anim->setDuration(250);
+                anim->setEasingCurve(QEasingCurve::OutCubic);
+                connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                anim->start();
+            }
+            return true;
+        } else if (event->type() == QEvent::Leave) {
+            if (!settings.value("bar/autoshow").toBool() && statusBarVisible) {
+                tPropertyAnimation* anim = new tPropertyAnimation(ui->StatusBarHoverFrame, "geometry");
+                anim->setStartValue(ui->StatusBarHoverFrame->geometry());
+                if (settings.value("bar/onTop", true).toBool()) {
+                    anim->setEndValue(QRect(0, -ui->StatusBarFrame->height(), ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
+                } else {
+                    anim->setEndValue(QRect(0, ui->StatusBarFrame->height(), ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
+                }
+                anim->setDuration(250);
+                anim->setEasingCurve(QEasingCurve::OutCubic);
+                connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                anim->start();
+            }
+            return true;
+        }
+    }
+    return false;
 }

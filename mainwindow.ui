@@ -63,13 +63,13 @@
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
+      <widget class="QWidget" name="InfoScrollWidget">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
          <width>1826</width>
-         <height>68</height>
+         <height>45</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -816,6 +816,41 @@ padding-right: 3px;</string>
         <widget class="QLabel" name="StatusBarMpris">
          <property name="text">
           <string>Song Name</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="StatusBarHoverFrame" native="true">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="StatusBarHoverFrameDown">
+         <property name="text">
+          <string notr="true">Down</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Click to show bar</string>
          </property>
         </widget>
        </item>
