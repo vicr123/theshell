@@ -2442,9 +2442,13 @@ void InfoPaneDropdown::on_userSettingsNextButton_clicked()
         } else {
             ui->userSettingsEditUserLabel->setText(tr("Edit User"));
             QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
-            if (interface.property("PasswordMode").toInt() == 0) {
+            int passwordMode = interface.property("PasswordMode").toInt();
+            if (passwordMode == 0) {
                 ui->userSettingsPassword->setPlaceholderText(tr("(unchanged)"));
                 ui->userSettingsPasswordCheck->setPlaceholderText(tr("(unchanged)"));
+            } else if (passwordMode == 1) {
+                ui->userSettingsPassword->setPlaceholderText(tr("(set at next login)"));
+                ui->userSettingsPasswordCheck->setPlaceholderText(tr("(set at next login)"));
             } else {
                 ui->userSettingsPassword->setPlaceholderText(tr("(none)"));
                 ui->userSettingsPasswordCheck->setPlaceholderText(tr("(none)"));
@@ -2501,9 +2505,22 @@ void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
     interface.call("SetRealName", ui->userSettingsFullName->text());
 
     if (ui->userSettingsPassword->text() != "") {
-        interface.call("SetPassword", ui->userSettingsPassword->text(), ui->userSettingsPasswordHint->text());
+        interface.call("SetPasswordMode", 0);
+
+        //Crypt password
+        QByteArray characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz./";
+        QByteArray salt("$6$");
+        for (int i = 0; i < 16; i++) {
+            salt.append(characters.at((qrand() % characters.count())));
+        }
+        QString cryptedPassword = QString::fromLatin1(crypt(ui->userSettingsPassword->text().toUtf8(), salt.constData()));
+
+        interface.call("SetPassword", cryptedPassword, ui->userSettingsPasswordHint->text());
     } else {
-        interface.call("SetPasswordHint", ui->userSettingsPasswordHint->text());
+        if (editingUserPath == "new") {
+            interface.call("SetPasswordMode", 2);
+            interface.call("SetPasswordHint", ui->userSettingsPasswordHint->text());
+        }
     }
 
     setupUsersSettingsPane();

@@ -597,14 +597,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>10</month>
-                 <day>3</day>
+                 <day>2</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>10</month>
-                 <day>3</day>
+                 <day>2</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2236,7 +2236,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>1</number>
+            <number>3</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2674,6 +2674,9 @@
                   <widget class="QLabel" name="label_57">
                    <property name="text">
                     <string>If the start time is later than the end time, Redshift will be activated until the end time on the next day.</string>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
