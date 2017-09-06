@@ -596,15 +596,15 @@
                  <minute>15</minute>
                  <second>0</second>
                  <year>1969</year>
-                 <month>10</month>
-                 <day>2</day>
+                 <month>9</month>
+                 <day>30</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
-                 <month>10</month>
-                 <day>2</day>
+                 <month>9</month>
+                 <day>30</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1761,8 +1761,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>174</width>
-            <height>59</height>
+            <width>1165</width>
+            <height>565</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -2236,7 +2236,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>3</number>
+            <number>9</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2623,8 +2623,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>883</width>
-                  <height>589</height>
+                  <width>372</width>
+                  <height>465</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
@@ -3988,6 +3988,9 @@
                      </property>
                     </widget>
                    </item>
+                   <item row="4" column="1">
+                    <widget class="QLineEdit" name="userSettingsPasswordHint"/>
+                   </item>
                    <item row="2" column="0">
                     <widget class="QLabel" name="label_63">
                      <property name="text">
@@ -4002,8 +4005,52 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="4" column="1">
-                    <widget class="QLineEdit" name="userSettingsPasswordHint"/>
+                   <item row="5" column="0">
+                    <widget class="QLabel" name="label_92">
+                     <property name="text">
+                      <string>Account Type</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="5" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_12">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QPushButton" name="userSettingsStandardAccount">
+                       <property name="text">
+                        <string>Standard</string>
+                       </property>
+                       <property name="checkable">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="userSettingsAdminAccount">
+                       <property name="text">
+                        <string>Administrator</string>
+                       </property>
+                       <property name="checkable">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <spacer name="horizontalSpacer_9">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
                    </item>
                   </layout>
                  </item>
@@ -4092,7 +4139,25 @@
                  <item>
                   <widget class="QLabel" name="label_66">
                    <property name="text">
-                    <string>You're about to delete this user. Are you sure?</string>
+                    <string>Do you also want to keep files from this user?
+
+Items that will be kept if you choose to keep files:
+- Home directory
+- Mail Spool
+- Temporary Files</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_93">
+                   <property name="font">
+                    <font>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>This is the final step. The user will be deleted once you choose whether to keep or remove files.</string>
                    </property>
                   </widget>
                  </item>

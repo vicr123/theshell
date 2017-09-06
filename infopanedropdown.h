@@ -64,6 +64,7 @@
 #include <QStyledItemDelegate>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <ttoast.h>
 
 class UPowerDBus;
 
@@ -377,6 +378,10 @@ private slots:
     void on_dpi300_toggled(bool checked);
 
     void on_AutoShowBarSwitch_toggled(bool checked);
+
+    void on_userSettingsStandardAccount_toggled(bool checked);
+
+    void on_userSettingsAdminAccount_toggled(bool checked);
 
 public slots:
     void getNetworks();

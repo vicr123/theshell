@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,11 +15,13 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #include "endsessionwait.h"
 #include "ui_endsessionwait.h"
+
+extern float getDPIScaling();
 
 extern void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0, long data2 = 0, long data3 = 0, long data4 = 0);
 
@@ -54,7 +56,9 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
     });
 
     ui->slideOffFrame->installEventFilter(this);
-    ui->ArrowUp->setPixmap(QIcon::fromTheme("go-up").pixmap(16, 16));
+    ui->ArrowUp->setPixmap(QIcon::fromTheme("go-up").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->PowerOff->setProperty("type", "destructive");
+    ui->idleProgressBar->installEventFilter(this);
 
     if (!QApplication::arguments().contains("--debug")) {
         ui->DummyExit->setVisible(false);
@@ -873,6 +877,22 @@ bool EndSessionWait::eventFilter(QObject *obj, QEvent *eve) {
             painter.drawRect(event->rect());
             painter.setPen(ui->slideOffFrame->palette().color(QPalette::WindowText));
             painter.drawLine(0, 0, ui->slideOffFrame->width(), 0);
+        }
+    } else if (obj == ui->idleProgressBar) {
+        if (eve->type() == QEvent::Paint) {
+            QPaintEvent* event = (QPaintEvent*) eve;
+            QPainter painter(ui->idleProgressBar);
+            painter.setBrush(ui->idleProgressBar->palette().brush(QPalette::Highlight));
+            painter.setPen(Qt::transparent);
+
+            QRect rect;
+            rect.setLeft(0);
+            rect.setTop(0);
+            rect.setHeight(event->rect().height());
+            rect.setWidth(event->rect().width() * ((float) ui->idleProgressBar->value() / (float) ui->idleProgressBar->maximum()));
+            painter.drawRect(rect);
+
+            return true;
         }
     }
     return false;

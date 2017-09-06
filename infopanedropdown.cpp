@@ -2337,7 +2337,7 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
     }
 
     Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
     XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
                      XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
 
@@ -2439,6 +2439,8 @@ void InfoPaneDropdown::on_userSettingsNextButton_clicked()
             ui->userSettingsPassword->setPlaceholderText(tr("(none)"));
             ui->userSettingsPasswordCheck->setPlaceholderText(tr("(none)"));
             ui->userSettingsDeleteUser->setVisible(false);
+            ui->userSettingsStandardAccount->setChecked(true);
+            ui->userSettingsAdminAccount->setChecked(false);
         } else {
             ui->userSettingsEditUserLabel->setText(tr("Edit User"));
             QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
@@ -2452,6 +2454,13 @@ void InfoPaneDropdown::on_userSettingsNextButton_clicked()
             } else {
                 ui->userSettingsPassword->setPlaceholderText(tr("(none)"));
                 ui->userSettingsPasswordCheck->setPlaceholderText(tr("(none)"));
+            }
+            if (interface.property("AccountType").toInt() == 0) {
+                ui->userSettingsStandardAccount->setChecked(true);
+                ui->userSettingsAdminAccount->setChecked(false);
+            } else {
+                ui->userSettingsStandardAccount->setChecked(false);
+                ui->userSettingsAdminAccount->setChecked(true);
             }
             ui->userSettingsFullName->setText(interface.property("RealName").toString());
             ui->userSettingsUserName->setText(interface.property("UserName").toString());
@@ -2486,7 +2495,6 @@ void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
         return;
     }
 
-    ui->userSettingsStackedWidget->setCurrentIndex(0);
     if (editingUserPath == "new") {
         QDBusMessage createMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "CreateUser");
         QVariantList args;
@@ -2496,13 +2504,35 @@ void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
         createMessage.setArguments(args);
 
         QDBusReply<QDBusObjectPath> newUser = QDBusConnection::systemBus().call(createMessage);
-        if (!newUser.isValid()) return;
-        editingUserPath = newUser.value().path();
+        if (newUser.error().isValid()) {
+            tToast* toast = new tToast();
+            toast->setTitle("Couldn't create user");
+            toast->setText(newUser.error().message());
+            connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
+            toast->show(this);
+            return;
+        } else {
+            editingUserPath = newUser.value().path();
+        }
     }
 
     QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
-    interface.call("SetUserName", ui->userSettingsUserName->text());
+    QDBusMessage setUserNameMessage = interface.call("SetUserName", ui->userSettingsUserName->text());
+    if (setUserNameMessage.errorMessage() != "") {
+        tToast* toast = new tToast();
+        toast->setTitle("Couldn't create user");
+        toast->setText(setUserNameMessage.errorMessage());
+        connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
+        toast->show(this);
+        return;
+    }
     interface.call("SetRealName", ui->userSettingsFullName->text());
+
+    if (ui->userSettingsAdminAccount->isChecked()) {
+        interface.call("SetAccountType", 1);
+    } else {
+        interface.call("SetAccountType", 0);
+    }
 
     if (ui->userSettingsPassword->text() != "") {
         interface.call("SetPasswordMode", 0);
@@ -2524,6 +2554,7 @@ void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
     }
 
     setupUsersSettingsPane();
+    ui->userSettingsStackedWidget->setCurrentIndex(0);
 }
 
 void InfoPaneDropdown::on_userSettingsFullName_textEdited(const QString &arg1)
@@ -3181,4 +3212,20 @@ void InfoPaneDropdown::on_dpi300_toggled(bool checked)
 void InfoPaneDropdown::on_AutoShowBarSwitch_toggled(bool checked)
 {
     settings.setValue("bar/autoshow", checked);
+}
+
+void InfoPaneDropdown::on_userSettingsAdminAccount_toggled(bool checked)
+{
+    if (checked) {
+        ui->userSettingsStandardAccount->setChecked(false);
+        ui->userSettingsAdminAccount->setChecked(true);
+    }
+}
+
+void InfoPaneDropdown::on_userSettingsStandardAccount_toggled(bool checked)
+{
+    if (checked) {
+        ui->userSettingsStandardAccount->setChecked(true);
+        ui->userSettingsAdminAccount->setChecked(false);
+    }
 }
