@@ -108,7 +108,7 @@ public:
     void completeDragDown();
 
 signals:
-    void networkLabelChanged(QString label, int signalStrength);
+    void networkLabelChanged(QString label, QIcon icon);
     void closeNotification(int id);
     void numNotificationsChanged(int notifications);
     void timerChanged(QString timer);

@@ -88,8 +88,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     ui->label_7->setVisible(false);
     ui->pushButton_3->setVisible(false);
-    ui->networkKey->setVisible(false);
-    ui->networkConnect->setVisible(false);
+    //ui->networkKey->setVisible(false);
+    //ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
     ui->userSettingsDeleteUser->setProperty("type", "destructive");
     ui->userSettingsDeleteUserAndData->setProperty("type", "destructive");
@@ -117,21 +117,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->kdeconnectLabel->setVisible(false);
     }
 
-    {
-        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "DeviceAdded", this, SLOT(newNetworkDevice(QDBusObjectPath)));
-        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "DeviceRemoved", this, SLOT(getNetworks()));
-
-        QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
-        QDBusReply<QList<QDBusObjectPath>> reply = i->call("GetDevices");
-
-        if (reply.isValid()) {
-            for (QDBusObjectPath device : reply.value()) {
-                newNetworkDevice(device);
-            }
-        }
-
-        delete i;
-    }
+    connect(ui->NetworkManager, SIGNAL(updateBarDisplay(QString,QIcon)), this, SIGNAL(networkLabelChanged(QString,QIcon)));
 
     {
         QDBusInterface interface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus());
@@ -193,7 +179,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     }
 
     connect(this, &InfoPaneDropdown::networkLabelChanged, [=](QString label) {
-        ui->networkStatus->setText(label);
+        //ui->networkStatus->setText(label);
     });
 
     ui->FlightSwitch->setOnIcon(QIcon::fromTheme("flight-mode"));
@@ -811,7 +797,7 @@ void InfoPaneDropdown::on_pushButton_clicked()
 }
 
 void InfoPaneDropdown::getNetworks() {
-    if (!networkListUpdating) {
+    /*if (!networkListUpdating) {
         //Set the updating flag
         networkListUpdating = true;
 
@@ -1134,7 +1120,7 @@ void InfoPaneDropdown::getNetworks() {
                         QList<QVariantMap> addressData = ip6->property("AddressData").value<QList<QVariantMap>>();
                         ui->networkIpv6->setText("IPv6 Address: " + addressData.first().value("address").toString());
                         delete ip6;
-                    }*/
+                    }*//*
 
                     //Get devices
                     QList<QDBusObjectPath> devices = conn.property("Devices").value<QList<QDBusObjectPath>>();
@@ -1176,7 +1162,7 @@ void InfoPaneDropdown::getNetworks() {
             }
 
             //Emit change signal
-            emit networkLabelChanged(NetworkLabel.join(" · "), signalStrength);
+            emit networkLabelChanged(NetworkLabel.join(""), signalStrength);
         });
 
         QFutureWatcher<void>* watcher = new QFutureWatcher<void>();
@@ -1187,13 +1173,15 @@ void InfoPaneDropdown::getNetworks() {
             networkListUpdating = false;
         });
         watcher->setFuture(future);
-    }
+    }*/
+
+    ui->NetworkManager->updateGlobals();
 }
 
 void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem*)
 {
     //Check if network list is updating
-    if (!networkListUpdating) {
+    /*if (!networkListUpdating) {
         ui->networkKey->setText("");
         if (current == NULL || !current) {
             ui->networkKey->setVisible(false);
@@ -1233,12 +1221,12 @@ void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *curren
                 delete ap;
             }
         }
-    }
+    }*/
 }
 
 void InfoPaneDropdown::on_networkConnect_clicked()
 {
-    QDBusObjectPath device = ui->networkList->selectedItems().first()->data(Qt::UserRole + 1).value<QDBusObjectPath>();
+    /*QDBusObjectPath device = ui->networkList->selectedItems().first()->data(Qt::UserRole + 1).value<QDBusObjectPath>();
     QDBusObjectPath accessPoint = ui->networkList->selectedItems().first()->data(Qt::UserRole).value<QDBusObjectPath>();
 
     if (ui->networkList->selectedItems().first()->data(Qt::UserRole + 2).toBool()) { //Already connected, disconnect from this network
@@ -1291,7 +1279,7 @@ void InfoPaneDropdown::on_networkConnect_clicked()
         qDebug() << reply.errorMessage();
 
         ui->networkKey->setText("");
-    }
+    }*/
 }
 
 void InfoPaneDropdown::on_pushButton_5_clicked()

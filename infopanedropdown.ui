@@ -597,14 +597,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>30</day>
+                 <day>29</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>30</day>
+                 <day>29</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1304,305 +1304,15 @@
       <property name="autoFillBackground">
        <bool>true</bool>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_28">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_13">
-         <item>
-          <widget class="QLabel" name="label_9">
-           <property name="font">
-            <font>
-             <pointsize>20</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Network</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="networkStatus">
-           <property name="text">
-            <string>Right now, you're not connected to any networks.</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QListWidget" name="networkList"/>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="networkKey">
-           <property name="echoMode">
-            <enum>QLineEdit::Password</enum>
-           </property>
-           <property name="placeholderText">
-            <string>Key</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <item>
-            <spacer name="horizontalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="networkConnect">
-             <property name="text">
-              <string>Connect</string>
-             </property>
-             <property name="icon">
-              <iconset theme="network-connect">
-               <normaloff>.</normaloff>.</iconset>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="Line" name="line_9">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="networkInfoFrame">
+        <widget class="NetworkWidget" name="NetworkManager" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="minimumSize">
-          <size>
-           <width>250</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_10">
-            <property name="font">
-             <font>
-              <pointsize>15</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Information</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="networkMac">
-            <property name="text">
-             <string notr="true">MAC Address:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="Line" name="line_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QFrame" name="frame_3">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_14">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="label_32">
-               <property name="font">
-                <font>
-                 <pointsize>15</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Active Connection</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_45">
-               <property name="text">
-                <string>Coming soon...</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="networkIpv4">
-               <property name="text">
-                <string>IPv4 Address:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="networkIpv6">
-               <property name="text">
-                <string>IPv6 Address:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Line" name="line_7">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_44">
-            <property name="font">
-             <font>
-              <pointsize>15</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Data Usage</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="networkSent">
-            <property name="text">
-             <string notr="true">Data Sent:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="networkReceived">
-            <property name="text">
-             <string notr="true">Data Received:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_47">
-            <property name="text">
-             <string>This is measured by your device and resets every time you boot your PC. Your ISP may count your data usage differently.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="Line" name="line_8">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="networkInfoWirelessFrame" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_8">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="label_46">
-               <property name="font">
-                <font>
-                 <pointsize>15</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Wi-Fi Information</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="networkWirelessStrength">
-               <property name="text">
-                <string notr="true">Signal Strength:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="networkWirelessFrequency">
-               <property name="text">
-                <string notr="true">Frequency:</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_16">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
         </widget>
        </item>
       </layout>
@@ -2125,6 +1835,14 @@
            </item>
            <item>
             <property name="text">
+             <string>Networks</string>
+            </property>
+            <property name="icon">
+             <iconset theme="network-cellular-connected-75"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
              <string>Display</string>
             </property>
             <property name="icon">
@@ -2236,7 +1954,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>9</number>
+            <number>3</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2605,6 +2323,13 @@
              </item>
             </layout>
            </widget>
+           <widget class="QWidget" name="page_14">
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <item>
+              <widget class="NetworkWidget" name="widget" native="true"/>
+             </item>
+            </layout>
+           </widget>
            <widget class="QWidget" name="DisplaySettings">
             <layout class="QVBoxLayout" name="verticalLayout_34">
              <item>
@@ -2623,8 +2348,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>372</width>
-                  <height>465</height>
+                  <width>883</width>
+                  <height>589</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
@@ -4997,6 +4722,12 @@ Items that will be kept if you choose to keep files:
    <class>AnimatedStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>animatedstackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NetworkWidget</class>
+   <extends>QWidget</extends>
+   <header>networkmanager/networkwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

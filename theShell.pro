@@ -73,7 +73,9 @@ SOURCES += main.cpp\
     audiomanager.cpp \
     locationservices.cpp \
     taskbarmanager.cpp \
-    dbussignals.cpp
+    dbussignals.cpp \
+    networkmanager/networkwidget.cpp \
+    networkmanager/availablenetworkslist.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -115,7 +117,9 @@ HEADERS  += mainwindow.h \
     internationalisation.h \
     locationservices.h \
     taskbarmanager.h \
-    dbussignals.h
+    dbussignals.h \
+    networkmanager/networkwidget.h \
+    networkmanager/availablenetworkslist.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -132,7 +136,8 @@ FORMS    += mainwindow.ui \
     onboarding.ui \
     newmedia.ui \
     tutorialwindow.ui \
-    screenshotwindow.ui
+    screenshotwindow.ui \
+    networkmanager/networkwidget.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

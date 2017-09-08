@@ -93,14 +93,13 @@ public slots:
     void updateStruts();
 
 private slots:
-
     void on_time_clicked();
 
     void on_date_clicked();
 
     void on_pushButton_2_clicked();
 
-    void internetLabelChanged(QString display, int signalStrength);
+    void internetLabelChanged(QString text, QIcon icon);
 
     void on_networkLabel_clicked();
 

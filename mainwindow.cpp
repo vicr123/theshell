@@ -161,7 +161,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     infoPane = new InfoPaneDropdown(this->winId());
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    connect(infoPane, SIGNAL(networkLabelChanged(QString,int)), this, SLOT(internetLabelChanged(QString,int)));
+    connect(infoPane, SIGNAL(networkLabelChanged(QString,QIcon)), this, SLOT(internetLabelChanged(QString,QIcon)));
     connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
     connect(infoPane, SIGNAL(timerChanged(QString)), this, SLOT(setTimer(QString)));
     connect(infoPane, SIGNAL(timerVisibleChanged(bool)), this, SLOT(setTimerVisible(bool)));
@@ -191,7 +191,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->timer->setVisible(false);
     ui->timerIcon->setVisible(false);
     ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-    ui->networkStrength->setVisible(false);
     ui->StatusBarNotifications->setVisible(false);
     ui->StatusBarMpris->setVisible(false);
     ui->StatusBarMprisIcon->setVisible(false);
@@ -1278,8 +1277,8 @@ void MainWindow::on_pushButton_2_clicked()
     openMenu(true);
 }
 
-void MainWindow::internetLabelChanged(QString display, int signalStrength) {
-    ui->networkLabel->setText(display);
+void MainWindow::internetLabelChanged(QString text, QIcon icon) {
+    /*ui->networkLabel->setText(display);
     if (signalStrength == -1) {
         ui->networkStrength->setVisible(false);
         ui->StatusBarNetwork->setVisible(false);
@@ -1324,7 +1323,12 @@ void MainWindow::internetLabelChanged(QString display, int signalStrength) {
         ui->networkStrength->setVisible(true);
         ui->networkStrength->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
         ui->StatusBarNetwork->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-    }
+    }*/
+
+    ui->networkStrength->setVisible(true);
+    ui->networkStrength->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->StatusBarNetwork->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->networkLabel->setText(text);
 }
 
 void MainWindow::on_networkLabel_clicked()
