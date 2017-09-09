@@ -285,9 +285,9 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F5) && (button->state == Mod4Mask)) {
                 MainWin->getInfoPane()->show(InfoPaneDropdown::KDEConnect);
                 ignoreSuper = true;
-            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F6) && (button->state == Mod4Mask)) {
+            /*} else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F6) && (button->state == Mod4Mask)) {
                 MainWin->getInfoPane()->show(InfoPaneDropdown::Print);
-                ignoreSuper = true;
+                ignoreSuper = true;*/
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Num_Lock) || button->detail == XKeysymToKeycode(QX11Info::display(), XK_Caps_Lock)) {
                 if (themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool()) {
                     QSoundEffect* sound = new QSoundEffect();

@@ -425,6 +425,66 @@ void MainWindow::on_openMenu_clicked()
 
 void MainWindow::doUpdate() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    Display* d = QX11Info::display();
+
+    //Get the current desktop
+    int currentDesktop = 0;
+    {
+        unsigned long *desktop;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(d, DefaultRootWindow(d), XInternAtom(d, "_NET_CURRENT_DESKTOP", False), 0, 1024, False,
+                                        XA_CARDINAL, &ReturnType, &format, &items, &bytes, (unsigned char**) &desktop);
+        if (retval == 0 && desktop != 0) {
+            currentDesktop = *desktop;
+        }
+        XFree(desktop);
+    }
+    ui->desktopName->setProperty("desktopIndex", currentDesktop);
+
+    //Get the current desktop
+    {
+        unsigned char *desktopNames;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(d, DefaultRootWindow(d), XInternAtom(d, "_NET_DESKTOP_NAMES", False), 0, 1024, False,
+                                        XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, (unsigned char**) &desktopNames);
+        if (retval == 0 && desktopNames != 0) {
+            QByteArray characterBytes = QByteArray::fromRawData((char *) desktopNames, items);
+            QList<QByteArray> nameList = characterBytes.split(0x0);
+            if (nameList.count() <= currentDesktop) {
+                ui->desktopName->setText(tr("Desktop %1").arg(QString::number(currentDesktop + 1)));
+            } else {
+                ui->desktopName->setText(ui->desktopName->fontMetrics().elidedText(QString(nameList.at(currentDesktop)), Qt::ElideRight, 200));
+            }
+        }
+        XFree(desktopNames);
+    }
+
+    //Get the number of desktops
+    int numOfDesktops = 0;
+    {
+        unsigned long *desktops;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(QX11Info::display(), DefaultRootWindow(QX11Info::display()), XInternAtom(QX11Info::display(), "_NET_NUMBER_OF_DESKTOPS", False), 0, 1024, False,
+                                        XA_CARDINAL, &ReturnType, &format, &items, &bytes, (unsigned char**) &desktops);
+        if (retval == 0 && desktops != 0) {
+            numOfDesktops = *desktops;
+        }
+        XFree(desktops);
+    }
+    if (numOfDesktops == 1) {
+        ui->desktopsFrame->setVisible(false);
+    } else {
+        ui->desktopsFrame->setVisible(true);
+    }
 
     /*
     QList<WmWindow> wlist;

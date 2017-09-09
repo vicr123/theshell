@@ -35,7 +35,8 @@
 #include <QFileDialog>
 #include <QMediaPlaylist>
 #include <QCalendarWidget>
-#include <cups/cups.h>
+//#include <cups/cups.h>
+#include <crypt.h>
 #include <QListWidgetItem>
 #include <QRadioButton>
 #include <QLineEdit>
@@ -91,8 +92,8 @@ public:
         Battery = 1,
         Network = 2,
         Notifications = 3,
-        KDEConnect = 4,
-        Print = 5
+        KDEConnect = 4 //,
+        //Print = 5
     };
 
     enum networkAvailability {

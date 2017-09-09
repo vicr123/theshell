@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #include "onboarding.h"
@@ -32,6 +32,10 @@
     "- The clock now supports 12 hour mode. Change it in System Settings\n"\
     "- Rate History and Application Power Usage is now included in the System Status Status Center pane\n"\
     "- The About Settings pane now shows system information\n"\
+    "- The bar can now be moved to the bottom of the screen\n"\
+    "- New Automatically Show Bar option. The bar will not extend unless it is clicked on if this option is not set.\n"\
+    "- New network manager\n"\
+    "- Printers removed\n"\
     "\n"\
     "New in theShell 6.1:\n"\
     "- New Status Bar. Go to Settings > Bar to activate it.\n"\

@@ -768,9 +768,9 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     case KDEConnect:
         ui->pageStack->setCurrentWidget(ui->kdeConnectFrame, doAnimation);
         break;
-    case Print:
+    /*case Print:
         ui->pageStack->setCurrentWidget(ui->printFrame, doAnimation);
-        break;
+        break;*/
     case Settings:
         ui->pageStack->setCurrentWidget(ui->settingsFrame, doAnimation);
         break;
@@ -779,7 +779,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     if (changeTo == Clock) {
         ui->pushButton_5->setEnabled(false);
         ui->pushButton_6->setEnabled(true);
-    } else if (changeTo == Print) {
+    } else if (changeTo == KDEConnect) { //Print) {
         ui->pushButton_5->setEnabled(true);
         ui->pushButton_6->setEnabled(false);
     } else if (changeTo == Settings) {
@@ -1611,7 +1611,7 @@ void InfoPaneDropdown::updateSysInfo() {
 
 void InfoPaneDropdown::on_printLabel_clicked()
 {
-    changeDropDown(Print);
+    //changeDropDown(Print);
 }
 
 void InfoPaneDropdown::on_resetButton_clicked()
@@ -1883,7 +1883,7 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
     ui->batteryLabel->setShowDisabled(true);
     ui->notificationsLabel->setShowDisabled(true);
     ui->networkLabel->setShowDisabled(true);
-    ui->printLabel->setShowDisabled(true);
+    //ui->printLabel->setShowDisabled(true);
     ui->kdeconnectLabel->setShowDisabled(true);
 
     if (switchingWidget == ui->clockFrame) {
@@ -1894,8 +1894,8 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
         ui->notificationsLabel->setShowDisabled(false);
     } else if (switchingWidget == ui->networkFrame) {
         ui->networkLabel->setShowDisabled(false);
-    } else if (switchingWidget == ui->printFrame) {
-        ui->printLabel->setShowDisabled(false);
+    /*} else if (switchingWidget == ui->printFrame) {
+        ui->printLabel->setShowDisabled(false);*/
     } else if (switchingWidget == ui->kdeConnectFrame) {
         ui->kdeconnectLabel->setShowDisabled(false);
     }

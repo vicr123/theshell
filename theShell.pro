@@ -6,7 +6,7 @@
 
 QT       += core gui x11extras dbus multimedia xml network positioning svg charts thelib concurrent
 CONFIG   += c++14
-LIBS     += -lX11 -lxcb -lxcb-keysyms -lcups -lsystemd -lKF5AkonadiCore -lpulse -lpulse-mainloop-glib -lcrypt
+LIBS     += -lX11 -lxcb -lxcb-keysyms -lsystemd -lKF5AkonadiCore -lpulse -lpulse-mainloop-glib -lcrypt
 
 INCLUDEPATH += /usr/include/glib-2.0/ /usr/lib/glib-2.0/include/
 

@@ -144,13 +144,6 @@
           </widget>
          </item>
          <item>
-          <widget class="ClickableLabel" name="printLabel">
-           <property name="text">
-            <string>Printers</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="pushButton_6">
            <property name="text">
             <string/>
@@ -342,7 +335,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>6</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -597,14 +590,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>29</day>
+                 <day>28</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>29</day>
+                 <day>28</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1471,8 +1464,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1165</width>
-            <height>565</height>
+            <width>174</width>
+            <height>59</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1701,62 +1694,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="printFrame">
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_15">
-       <item>
-        <widget class="QLabel" name="label_13">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Printers</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="printersList">
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_11">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_9">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>487</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="settingsFrame">
       <property name="autoFillBackground">
        <bool>true</bool>
@@ -1838,7 +1775,8 @@
              <string>Networks</string>
             </property>
             <property name="icon">
-             <iconset theme="network-cellular-connected-75"/>
+             <iconset theme="network-cellular-connected-75">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -2348,8 +2286,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>883</width>
-                  <height>589</height>
+                  <width>372</width>
+                  <height>465</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
@@ -4706,6 +4644,12 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
+   <class>AnimatedStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>animatedstackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>clickablelabel.h</header>
@@ -4717,12 +4661,6 @@ Items that will be kept if you choose to keep files:
    <class>Switch</class>
    <extends>QPushButton</extends>
    <header>switch.h</header>
-  </customwidget>
-  <customwidget>
-   <class>AnimatedStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header>animatedstackedwidget.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>NetworkWidget</class>

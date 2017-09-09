@@ -688,7 +688,7 @@ void NetworkWidget::on_SecurityType_currentIndexChanged(int index)
             ui->SecurityKeysStack->setCurrentIndex(1);
             break;
         case 4: //WPA(2) Enterprise
-            ui->SecurityKeysStack->setCurrentIndex(1);
+            ui->SecurityKeysStack->setCurrentIndex(2);
             break;
     }
 }
