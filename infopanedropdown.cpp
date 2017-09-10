@@ -88,6 +88,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     ui->label_7->setVisible(false);
     ui->pushButton_3->setVisible(false);
+    ui->BatteryChargeScrollBar->setVisible(false);
     //ui->networkKey->setVisible(false);
     //ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");

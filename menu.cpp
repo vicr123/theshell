@@ -76,7 +76,12 @@ Menu::Menu(BTHandsfree* bt, QWidget *parent) :
     fullNameProc->waitForFinished();
     QString parseName(fullNameProc->readAll());
     delete fullNameProc;
-    QString fullname = parseName.split(",").at(0).split(":").last();
+
+    QStringList nameParts = parseName.split(",").at(0).split(":");
+    QString fullname;
+    if (nameParts.count() > 4) {
+        fullname = nameParts.at(4);
+    }
     if (fullname == "") {
         ui->label_2->setText(tr("Hey, %1!").arg(name));
     } else {

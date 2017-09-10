@@ -2,12 +2,17 @@
 #include "ui_networkwidget.h"
 
 extern float getDPIScaling();
+extern NativeEventFilter* NativeFilter;
 
 NetworkWidget::NetworkWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NetworkWidget)
 {
     ui->setupUi(this);
+
+    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
+        ui->retranslateUi(this);
+    });
 
     QDBusConnection::systemBus().connect(nmInterface->service(), nmInterface->path(), nmInterface->interface(), "DeviceAdded", this, SLOT(updateDevices()));
     QDBusConnection::systemBus().connect(nmInterface->service(), nmInterface->path(), nmInterface->interface(), "DeviceRemoved", this, SLOT(updateDevices()));

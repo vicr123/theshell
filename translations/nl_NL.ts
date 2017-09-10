@@ -179,6 +179,89 @@
     </message>
 </context>
 <context>
+    <name>DevicePanel</name>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="332"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="350"/>
+        <source>Wired Connection</source>
+        <translation>Bedrade verbinding</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="333"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="382"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="442"/>
+        <source>Disconnected</source>
+        <translation>Losgekoppeld</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="337"/>
+        <source>To connect to this network, try plugging a cable in.</source>
+        <translation>Probeer een kabel aan te sluiten om met dit netwerk te verbinden.</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="341"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="445"/>
+        <source>Connect</source>
+        <translation>Verbinden</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="351"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="403"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="466"/>
+        <source>Connected</source>
+        <translation>Verbonden</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="354"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="413"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="457"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="469"/>
+        <source>Disconnect</source>
+        <translation>Loskoppelen</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="372"/>
+        <source>Wi-Fi</source>
+        <translation>Wi-Fi</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="375"/>
+        <source>Disabled</source>
+        <translation>Uitgeschakeld</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="378"/>
+        <source>To connect to a network, try switching on Wi-Fi.</source>
+        <translation>Probeer Wi-Fi aan te zetten om met een netwerk te verbinden.</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="405"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="454"/>
+        <source>Connecting</source>
+        <translation>Aan het verbinden</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="407"/>
+        <source>Requires Attention</source>
+        <translation>Vereist aandacht</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="409"/>
+        <source>Disconnecting</source>
+        <translation>Aan het loskoppelen</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="425"/>
+        <source>Choose Network</source>
+        <translation>Netwerk kiezen</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="452"/>
+        <source>Unavailable</source>
+        <translation>Niet beschikbaar</translation>
+    </message>
+</context>
+<context>
     <name>EndSessionWait</name>
     <message>
         <location filename="../endsessionwait.ui" line="14"/>
@@ -349,7 +432,7 @@
         <location filename="../infopanedropdown.ui" line="142"/>
         <location filename="../infopanedropdown.ui" line="1376"/>
         <source>KDE Connect</source>
-        <translation>KDE Verbind</translation>
+        <translation>KDE Connect</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="149"/>
@@ -450,9 +533,25 @@
         <translation>Datum</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="902"/>
+        <source>Right now, you&apos;re not connected to any networks.</source>
+        <translation>Momenteel bent u niet verbonden met een netwerk.</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="903"/>
         <source>Title</source>
         <translation>Titel</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="915"/>
+        <source>Key</source>
+        <translation>Sleutel</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="937"/>
+        <location filename="../infopanedropdown.cpp" line="1041"/>
+        <source>Connect</source>
+        <translation>Verbind</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="960"/>
@@ -465,9 +564,34 @@
         <translation>Verwijder deze herinnering?</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="997"/>
+        <source>Information</source>
+        <translation>Informatie</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="1011"/>
         <source>Reminder</source>
         <translation>Herinnering</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1047"/>
+        <source>Active Connection</source>
+        <translation>Actieve Verbinding</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1054"/>
+        <source>Coming soon...</source>
+        <translation>Binnenkort...</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1061"/>
+        <source>IPv4 Address:</source>
+        <translation>IPv4 Adres:</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1068"/>
+        <source>IPv6 Address:</source>
+        <translation>IPv6 Adres:</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1084"/>
@@ -498,72 +622,6 @@
         <location filename="../infopanedropdown.ui" line="1234"/>
         <source>Apps</source>
         <translation>Applicaties</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="902"/>
-        <source>Right now, you&apos;re not connected to any networks.</source>
-        <translation>Momenteel bent u niet verbonden met een netwerk.</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="915"/>
-        <source>Key</source>
-        <translation>Sleutel</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="937"/>
-        <location filename="../infopanedropdown.cpp" line="1041"/>
-        <source>Connect</source>
-        <translation>Verbind</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="997"/>
-        <source>Information</source>
-        <translation>Informatie</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1047"/>
-        <source>Active Connection</source>
-        <translation>Actieve Verbinding</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1054"/>
-        <source>Coming soon...</source>
-        <translation>Binnenkort...</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1061"/>
-        <source>IPv4 Address:</source>
-        <translation>IPv4 Adres:</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1068"/>
-        <source>IPv6 Address:</source>
-        <translation>IPv6 Adres:</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1090"/>
-        <source>Data Usage</source>
-        <translation>Dataverbruik</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1111"/>
-        <source>This is measured by your device and resets every time you boot your PC. Your ISP may count your data usage differently.</source>
-        <translation>Dit is berekend door uw apparaat en wordt overnieuw ingesteld elke keer dat uw PC opstart. Uw ISP kan uw datagebruik anders tellen.</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1148"/>
-        <source>Wi-Fi Information</source>
-        <translation>Wi-Fi Informatie</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1212"/>
-        <source>Silence Notifications</source>
-        <translation>Demp Notificaties</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1226"/>
-        <source>Critical notifications will still show, regardless of this setting.</source>
-        <translation>Kritieke notificaties zullen blijven, wat deze instelling maar ook is.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1255"/>
@@ -951,6 +1009,91 @@
         <translation>theWave</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="1090"/>
+        <source>Data Usage</source>
+        <translation>Dataverbruik</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1111"/>
+        <source>This is measured by your device and resets every time you boot your PC. Your ISP may count your data usage differently.</source>
+        <translation>Dit is berekend door uw apparaat en wordt overnieuw ingesteld elke keer dat uw PC opstart. Uw ISP kan uw datagebruik anders tellen.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1148"/>
+        <source>Wi-Fi Information</source>
+        <translation>Wi-Fi Informatie</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1212"/>
+        <source>Silence Notifications</source>
+        <translation>Demp Notificaties</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1226"/>
+        <source>Critical notifications will still show, regardless of this setting.</source>
+        <translation>Kritieke notificaties zullen blijven, wat deze instelling maar ook is.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1775"/>
+        <source>Networks</source>
+        <translation>Netwerken</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2066"/>
+        <source>Automatically show bar</source>
+        <translation>Automatisch de Bar weergeven</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2120"/>
+        <source>Show Bar on bottom of screen</source>
+        <translation>Bar weergeven aan onderkant van het scherm</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2134"/>
+        <source>When this is checked, hovering over the Status Bar will automatically expand the bar. Otherwise, clicking on the Status Bar will expand the bar.</source>
+        <translation>Als dit is aangevinkt, zal het zweven over de statusbalk automatisch de balk uitbreiden. Anders zal het klikken op de statusbalk de balk uitbreiden.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2391"/>
+        <source>Screen Scaling</source>
+        <translation>Scaling van scherm</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2660"/>
+        <source>&amp;100% (96 dpi)</source>
+        <translation>&amp;100% (96 dpi)</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2667"/>
+        <source>1&amp;50% (144 dpi)</source>
+        <translation>1&amp;50% (144 dpi)</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2674"/>
+        <source>&amp;200% (192 dpi)</source>
+        <translation>&amp;200% (192 dpi)</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2681"/>
+        <source>&amp;300% (288 dpi)</source>
+        <translation>&amp;300% (288 dpi)</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2688"/>
+        <source>DPI settings will be applied at next login.</source>
+        <translation>DPI-instellingen zullen toegepast worden bij de volgende login.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2769"/>
+        <source>Decorati&amp;ve</source>
+        <translation>Decoratie&amp;ve</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2885"/>
+        <source>Widget Theme</source>
+        <translation>Widget-thema</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="2894"/>
         <source>Si&amp;lent</source>
         <translation>St&amp;il</translation>
@@ -1063,6 +1206,42 @@
         <translation>Wachtwoord geheugensteun</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="3257"/>
+        <source>You&apos;re about to delete this user. Are you sure?</source>
+        <translation>U gaat de gebruiker wissen. Weet u dit zeker?</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3561"/>
+        <location filename="../infopanedropdown.cpp" line="340"/>
+        <source>Danger</source>
+        <translation>Gevaar</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3638"/>
+        <source>theShell 6.1</source>
+        <translation>theShell 6.1</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3668"/>
+        <source>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
+        <translation>Copyright (c) Victor Tran 2017. Gelicenseerd onder de termen van de GNU General Public License, versie 3 of later.</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3746"/>
+        <source>Account Type</source>
+        <translation>Type account</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3758"/>
+        <source>Standard</source>
+        <translation>Standaard</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3768"/>
+        <source>Administrator</source>
+        <translation>Beheerder</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="3203"/>
         <location filename="../infopanedropdown.ui" line="3250"/>
         <source>Delete User</source>
@@ -1078,11 +1257,6 @@
         <location filename="../infopanedropdown.ui" line="3225"/>
         <source>Apply Changes</source>
         <translation>Sla veranderingen op</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3257"/>
-        <source>You&apos;re about to delete this user. Are you sure?</source>
-        <translation>U gaat de gebruiker wissen. Weet u dit zeker?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3303"/>
@@ -1111,22 +1285,6 @@
         <translation>Gebruik netwerk om datum en tijd te synchroniseren</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3561"/>
-        <location filename="../infopanedropdown.cpp" line="340"/>
-        <source>Danger</source>
-        <translation>Gevaar</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3638"/>
-        <source>theShell 6.1</source>
-        <translation>theShell 6.1</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3668"/>
-        <source>Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
-        <translation>Copyright (c) Victor Tran 2017. Gelicenseerd onder de termen van de GNU General Public License, versie 3 of later.</translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="4031"/>
         <source>Use 24 hour time</source>
         <translation>Gebruik 24 uur tijd</translation>
@@ -1141,6 +1299,26 @@
         <location filename="../infopanedropdown.cpp" line="339"/>
         <source>Language</source>
         <translation>Taal</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3877"/>
+        <source>Do you also want to keep files from this user?
+
+Items that will be kept if you choose to keep files:
+- Home directory
+- Mail Spool
+- Temporary Files</source>
+        <translation>Wilt u ook bestanden van deze gebruiker bewaren?
+
+Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
+-Home-map
+-Mail Spool
+-Tijdelijke bestanden</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3895"/>
+        <source>This is the final step. The user will be deleted once you choose whether to keep or remove files.</source>
+        <translation>Dit is de laatste stap. De gebruiker zal worden verwijderd wanneer u kiest om bestanden te houden, of te verwijderen.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3494"/>
@@ -1467,11 +1645,6 @@
         <translation>Kan niet met het internet verbinden</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1064"/>
-        <source>Login required</source>
-        <translation>U moet inloggen</translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.cpp" line="928"/>
         <source>NetworkManager Error</source>
         <translation>NetworkManager Error</translation>
@@ -1500,6 +1673,11 @@
         <location filename="../infopanedropdown.cpp" line="1015"/>
         <source>Disconnect</source>
         <translation>Verbinding verbreken</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="1064"/>
+        <source>Login required</source>
+        <translation>U moet inloggen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1151"/>
@@ -1614,6 +1792,12 @@
         <translation>(geen)</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="2440"/>
+        <location filename="../infopanedropdown.cpp" line="2441"/>
+        <source>(set at next login)</source>
+        <translation>(stel in bij volgende login)</translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.cpp" line="2123"/>
         <source>Password Check</source>
         <translation>Wachtwoord Check</translation>
@@ -1642,6 +1826,16 @@
         <location filename="../infopanedropdown.cpp" line="2878"/>
         <source>Application Power Usage</source>
         <translation>Applicatie Stroomverbruik</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="3158"/>
+        <source>Oxygen</source>
+        <translation>Oxygen</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="3159"/>
+        <source>Breeze</source>
+        <translation>Breeze</translation>
     </message>
 </context>
 <context>
@@ -1688,6 +1882,11 @@
         <location filename="../internationalisation.h" line="80"/>
         <source>Swedish</source>
         <translation>Zweeds</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="106"/>
+        <source>Lithuanian</source>
+        <translation>Litouws</translation>
     </message>
 </context>
 <context>
@@ -1764,6 +1963,11 @@
         <location filename="../mainwindow.ui" line="764"/>
         <source>Battery</source>
         <translation>Batterij</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="853"/>
+        <source>Click to show bar</source>
+        <translation>Klik om de bar te laten zien</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="833"/>
@@ -2270,14 +2474,14 @@
         <translation>Open %1</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="792"/>
-        <source>Ask theWave about &quot;%1&quot;</source>
-        <translation>Vraag theWave over &quot;%1&quot;</translation>
-    </message>
-    <message>
         <location filename="../menu.cpp" line="1152"/>
         <source>Can&apos;t place a call from this device.</source>
         <translation>Kan niet bellen vanaf dit apparaat.</translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="792"/>
+        <source>Ask theWave about &quot;%1&quot;</source>
+        <translation>Vraag theWave over &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1157"/>
@@ -2346,6 +2550,163 @@
         <location filename="../nativeeventfilter.cpp" line="174"/>
         <source>Attempting to eject disc...</source>
         <translation>Aan het proberen de schijf uit te werpen...</translation>
+    </message>
+</context>
+<context>
+    <name>NetworkWidget</name>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="59"/>
+        <source>Network Devices</source>
+        <translation>Netwerk-apparaten</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="124"/>
+        <source>Available Networks</source>
+        <translation>Beschikbare netwerken</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="140"/>
+        <location filename="../networkmanager/networkwidget.ui" line="350"/>
+        <location filename="../networkmanager/networkwidget.ui" line="440"/>
+        <source>Back</source>
+        <translation>Terug</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="164"/>
+        <source>Enter Details Manually</source>
+        <translation>Details handmatig invoeren</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="201"/>
+        <source>Security</source>
+        <translation>Beveiliging</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="215"/>
+        <source>SSID</source>
+        <translation>SSID</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="223"/>
+        <source>None</source>
+        <translation>Geen</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="228"/>
+        <source>Static WEP</source>
+        <translation>Statische WEP</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="233"/>
+        <source>Dynamic WEP</source>
+        <translation>Dynamische WEP</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="238"/>
+        <source>WPA/WPA2 PSK</source>
+        <translation>WPA/WPA2 PSK</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="243"/>
+        <source>WPA/WPA2 Enterprise</source>
+        <translation>WPA/WPA2 Enterprise</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="298"/>
+        <source>Security Key</source>
+        <translation>Beveiligingssleutel</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="321"/>
+        <source>WPA Enterprise settings coming soon. For now, use nmcli in a terminal to connect to this network.</source>
+        <translation>WPA Enterprise-instellingen worden binnenkort verwacht. In de tussentijd kunt u nmcli in een terminal gebruiken om met dit netwerk te verbinden.</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="374"/>
+        <source>Connect</source>
+        <translation>Verbinden</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="411"/>
+        <source>Information</source>
+        <translation>Informatie</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="425"/>
+        <source>Property</source>
+        <translation>Eigenschap</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="430"/>
+        <source>Value</source>
+        <translation>Waarde</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="99"/>
+        <source>Connect to %1?</source>
+        <translation>Verbinden met %1?</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="104"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="108"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="113"/>
+        <source>To connect to %1, you&apos;ll need to provide a key.</source>
+        <translation>Om met %1 te verbinden, heeft u een sleutel nodig.</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="118"/>
+        <source>To connect to %1, you&apos;ll need to provide authentication details.</source>
+        <translation>Om met %1 te verbinden, heeft u verificatiedetails nodig.</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="126"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="660"/>
+        <source>Wi-Fi</source>
+        <translation>Wi-Fi</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="127"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="661"/>
+        <source>Connecting to %1...</source>
+        <translation>Verbinden met %1...</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="500"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="516"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="528"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="554"/>
+        <source>Disconnected</source>
+        <translation>Niet verbonden</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="519"/>
+        <source>Wired</source>
+        <translation>Bedraad</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="636"/>
+        <source>WPA Enterprise</source>
+        <translation>WPA Enterprise</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="637"/>
+        <source>WPA Enterprise connections are not supported yet.</source>
+        <translation>Verbindingen met WPA Enterprise worden nog niet ondersteund.</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="651"/>
+        <source>Connection Error</source>
+        <translation>Verbindingsfout</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="671"/>
+        <source>Enter the information to connect to a new network</source>
+        <translation>Voer informatie in om met een nieuw netwerk te verbinden</translation>
     </message>
 </context>
 <context>

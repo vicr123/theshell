@@ -1464,8 +1464,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>174</width>
-            <height>59</height>
+            <width>1165</width>
+            <height>565</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -1892,7 +1892,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>3</number>
+            <number>15</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QGridLayout" name="gridLayout_2">
@@ -2358,8 +2358,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>372</width>
-                  <height>465</height>
+                  <width>883</width>
+                  <height>589</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
