@@ -1572,7 +1572,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../internationalisation.h" line="106"/>
         <source>Lithuanian</source>
-        <translation>Lietuvių</translation>
+        <translation>Lietuviškai</translation>
     </message>
 </context>
 <context>
