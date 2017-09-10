@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #ifndef TASKBARMANAGER_H
@@ -25,6 +25,7 @@
 #include <QMap>
 #include <QX11Info>
 #include <QApplication>
+#include <QSettings>
 #include "window.h"
 
 #include <X11/X.h>
@@ -50,10 +51,12 @@ public slots:
     void ReloadWindows();
 
 private slots:
-    void updateInternalWindow(Window window);
+    bool updateInternalWindow(Window window);
 
 private:
     QMap<Window, WmWindow> knownWindows;
+
+    QSettings settings;
 };
 
 #endif // TASKBARMANAGER_H

@@ -47,8 +47,9 @@ void TaskbarManager::ReloadWindows() {
 
     quint64 *windows = (quint64*) data;
     for (unsigned int i = 0; i < items; i++) {
-        updateInternalWindow(windows[i]);
-        lostWindows.removeAll(windows[i]);
+        if (updateInternalWindow(windows[i])) {
+            lostWindows.removeAll(windows[i]);
+        }
     }
     XFree(data);
 
@@ -58,8 +59,23 @@ void TaskbarManager::ReloadWindows() {
     }
 }
 
-void TaskbarManager::updateInternalWindow(Window window) {
+bool TaskbarManager::updateInternalWindow(Window window) {
     WmWindow serialised;
+
+    int currentDesktop = 0;
+    { //Get the current desktop
+        unsigned long *desktop;
+        unsigned long items, bytes;
+        int format;
+        Atom ReturnType;
+
+        int retval = XGetWindowProperty(QX11Info::display(), DefaultRootWindow(QX11Info::display()), XInternAtom(QX11Info::display(), "_NET_CURRENT_DESKTOP", False), 0, 1024, False,
+                                        XA_CARDINAL, &ReturnType, &format, &items, &bytes, (unsigned char**) &desktop);
+        if (retval == 0 && desktop != 0) {
+            currentDesktop = *desktop;
+        }
+        XFree(desktop);
+    }
 
     int ok;
     unsigned long items, bytes;
@@ -176,6 +192,15 @@ void TaskbarManager::updateInternalWindow(Window window) {
 
         XFree(returnVal);
 
+        {
+            ok = XGetWindowProperty(QX11Info::display(), window, XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False), 0, 1024, False,
+                                            XA_CARDINAL, &ReturnType, &format, &items, &bytes, (unsigned char**) &returnVal);
+            if (ok == 0 && returnVal != 0) {
+                serialised.setDesktop(*returnVal);
+            }
+            XFree(returnVal);
+        }
+
 
         XWindowAttributes attributes;
         ok = XGetWindowAttributes(QX11Info::display(), window, &attributes);
@@ -190,14 +215,23 @@ void TaskbarManager::updateInternalWindow(Window window) {
 
         if (serialised.PID() == QApplication::applicationPid() && serialised.title() != "Choose Background") {
             //theShell window. Ignore.
+            return false;
         } else {
-            knownWindows.insert(window, serialised);
-
-            emit updateWindow(serialised);
+            if (settings.value("bar/showWindowsFromOtherDesktops", true).toBool() ||
+                             serialised.desktop() == currentDesktop) {
+                knownWindows.insert(window, serialised);
+                emit updateWindow(serialised);
+                return true;
+            } else {
+                //Window not on current desktop. Ignore.
+                return false;
+            }
         }
     } else {
         //Invalid window. Ignore.
+        return false;
     }
+    return false;
 }
 
 QList<WmWindow> TaskbarManager::Windows() {
