@@ -2717,6 +2717,9 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
         case Internationalisation::svSE:
             settings.setValue("locale/language", "sv_SE");
             break;
+        case Internationalisation::ltLT:
+            settings.setValue("locale/language", "lt_LT");
+            break;
     }
 
     QString localeName = settings.value("locale/language", "en_US").toString();

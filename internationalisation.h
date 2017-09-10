@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #ifndef INTERNATIONALISATION_H
@@ -50,6 +50,7 @@ public:
         esES,
         ruRU,
         svSE,
+        ltLT,
         // Unfinished languages follow
         jaJP,
         arSA,
@@ -101,27 +102,30 @@ public:
                 case svSE:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-se"), tr("Swedish") + " (Svenska) "));
                     break;
-                /*case arSA:
-                    languageBox->addItem("[SA] " + tr("Arabic") + " (العربية) ");
+                case ltLT:
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-lt"), tr("Lithuanian") + " (Lietuviškai) "));
+                    break;
+                case arSA:
+                    //languageBox->addItem("[SA] " + tr("Arabic") + " (العربية) ");
                     break;
                 case ptBR:
-                    languageBox->addItem("[BR] " + tr("Portuguese") + " (Português) ");
+                    //languageBox->addItem("[BR] " + tr("Portuguese") + " (Português) ");
                     break;
                 case zhCN:
-                    languageBox->addItem("[CN] " + tr("Chinese") + " (中文) ");
+                    //languageBox->addItem("[CN] " + tr("Chinese") + " (中文) ");
                     break;
                 case frFR:
-                    languageBox->addItem("[FR] " + tr("French") + " (Français) ");
+                    //languageBox->addItem("[FR] " + tr("French") + " (Français) ");
                     break;
                 case miNZ:
-                    languageBox->addItem("[NZ] " + tr("Māori") + " (Māori) ");
+                    //languageBox->addItem("[NZ] " + tr("Māori") + " (Māori) ");
                     break;
                 case jaJP:
-                    languageBox->addItem("[JP] " + tr("Japanese") + " (日本語) ");
+                    //languageBox->addItem("[JP] " + tr("Japanese") + " (日本語) ");
                     break;
                 case deDE:
-                    languageBox->addItem("[DE] " + tr("German") + " (Deutsch) ");
-                    break;*/
+                    //languageBox->addItem("[DE] " + tr("German") + " (Deutsch) ");
+                    break;
             }
         }
 
@@ -162,6 +166,8 @@ public:
             languageBox->setCurrentRow(ruRU);
         } else if (currentLocale == "sv_SE") {
             languageBox->setCurrentRow(svSE);
+        } else if (currentLocale == "lt_LT") {
+            languageBox->setCurrentRow(ltLT);
         }
 
         //Unblock signals

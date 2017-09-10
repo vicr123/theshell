@@ -36,6 +36,15 @@
     "- New Automatically Show Bar option. The bar will not extend unless it is clicked on if this option is not set.\n"\
     "- New network manager\n"\
     "- Printers removed\n"\
+    "- theShell Session Manager is now used to start theShell. If theShell crashes, you'll be able to restart it.\n"\
+    "- Added DPI settings. On high DPI monitors, theShell can be scaled up.\n"\
+    "- Power Stretch now disables the animation in the Status Center\n"\
+    "- Added some accessibility settings.\n"\
+    "- Added option to keep screen unlocked after suspend\n"\
+    "- Changing any theme settings will now automatically change them in all supported applications.\n"\
+    "- New end session screen when pressing power button or CTRL+ALT+DEL\n"\
+    "- User Management now sets passwords correctly\n"\
+    "- Administrator and standard accounts can now be set in user management\n"\
     "\n"\
     "New in theShell 6.1:\n"\
     "- New Status Bar. Go to Settings > Bar to activate it.\n"\
@@ -73,7 +82,7 @@
     "- theWave now uses theCalculator to process calculations.\n" \
     "- theShell now uses its own platform abstraction module to theme your system. Change the theming in theShell Settings.\n" \
     "- theShell now uses the Contemporary theme to display widgets.\n"\
-    "- theShell now displays notifications when it detects a connected device\n" \
+    "- theShell now displays notifications when it detects a connected device\n"\
     ""
 
 extern NativeEventFilter* NativeFilter;
@@ -253,6 +262,9 @@ void Onboarding::on_localeList_currentRowChanged(int currentRow)
             break;
         case Internationalisation::svSE:
             settings.setValue("locale/language", "sv_SE");
+            break;
+        case Internationalisation::ltLT:
+            settings.setValue("locale/language", "lt_LT");
             break;
     }
 
