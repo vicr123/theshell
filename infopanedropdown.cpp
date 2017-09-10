@@ -712,7 +712,11 @@ void InfoPaneDropdown::show(dropdownType showWith) {
         this->setFixedWidth(screenGeometry.width());
         this->setFixedHeight(screenGeometry.height());
 
-        previousDragY = -1;
+        if (settings.value("bar/onTop", true).toBool()) {
+            previousDragY = -1;
+        } else {
+            previousDragY = screenGeometry.bottom();
+        }
         completeDragDown();
     }
 
