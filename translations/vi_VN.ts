@@ -160,19 +160,19 @@
         <location filename="../networkmanager/networkwidget.cpp" line="332"/>
         <location filename="../networkmanager/networkwidget.cpp" line="350"/>
         <source>Wired Connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kết nối dây</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="333"/>
         <location filename="../networkmanager/networkwidget.cpp" line="382"/>
         <location filename="../networkmanager/networkwidget.cpp" line="442"/>
         <source>Disconnected</source>
-        <translation type="unfinished"></translation>
+        <translation>Không kết nối</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="337"/>
         <source>To connect to this network, try plugging a cable in.</source>
-        <translation type="unfinished"></translation>
+        <translation>Để kết nối vào mạng này, cắm dây vào.</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="341"/>
@@ -185,7 +185,7 @@
         <location filename="../networkmanager/networkwidget.cpp" line="403"/>
         <location filename="../networkmanager/networkwidget.cpp" line="466"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Đã kết nối</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="354"/>
@@ -203,18 +203,18 @@
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="375"/>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Tắt</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="378"/>
         <source>To connect to a network, try switching on Wi-Fi.</source>
-        <translation type="unfinished"></translation>
+        <translation>Để kết nối vào mạng, bật Wi-Fi.</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="405"/>
         <location filename="../networkmanager/networkwidget.cpp" line="454"/>
         <source>Connecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang kết nối</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="407"/>
@@ -224,12 +224,12 @@
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="409"/>
         <source>Disconnecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang cúp kết nối</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="425"/>
         <source>Choose Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Chọn mạng</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="452"/>
@@ -373,7 +373,7 @@
     </message>
     <message>
         <source>Network</source>
-        <translation>Kết nối</translation>
+        <translation>Mạng</translation>
     </message>
     <message>
         <source>Notifications</source>
@@ -531,11 +531,11 @@
     </message>
     <message>
         <source>Settings and Important Information</source>
-        <translation>Cài đặt và Thông tin quan trọng</translation>
+        <translation>Cài đặt và thông tin</translation>
     </message>
     <message>
         <source>Configure theShell and get important information</source>
-        <translation>Đặt của theShell va thông tin</translation>
+        <translation>Đặt theShell va xem thông tin</translation>
     </message>
     <message>
         <source>Autostart with</source>
@@ -551,7 +551,7 @@
     </message>
     <message>
         <source>Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Thanh tác vụ</translation>
     </message>
     <message>
         <source>Show text on window buttons</source>
@@ -991,7 +991,7 @@
     </message>
     <message>
         <source>Apply Changes</source>
-        <translation>Thay đổi</translation>
+        <translation>Được</translation>
     </message>
     <message>
         <source>Delete user only</source>
@@ -999,7 +999,7 @@
     </message>
     <message>
         <source>Delete user and all files</source>
-        <translation>Xóa người va bộ nhớ</translation>
+        <translation>Xóa người va Tập tin</translation>
     </message>
     <message>
         <source>Date and Time</source>
@@ -1011,7 +1011,7 @@
     </message>
     <message>
         <source>Use network to sync date and time</source>
-        <translation>Dùng Internet để đặt ngay và giờ</translation>
+        <translation>Dùng mạng để đặt ngay và giờ</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4031"/>
@@ -1035,12 +1035,17 @@ Items that will be kept if you choose to keep files:
 - Home directory
 - Mail Spool
 - Temporary Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn có muốn giữ tập tin không?
+
+Tập tin này có thể giữ lại:
+- Mục cá nhân
+- Thư từ
+- Tập tin tạm</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3895"/>
         <source>This is the final step. The user will be deleted once you choose whether to keep or remove files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cái này là bước cuối cùng. Người này có thể xóa khi bạn chọn một lựa chọn.</translation>
     </message>
     <message>
         <source>Changing this setting requires you to log in and then log out.</source>
@@ -1049,7 +1054,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../infopanedropdown.ui" line="4111"/>
         <source>HighContrastSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4121"/>
@@ -1288,7 +1293,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../infopanedropdown.cpp" line="2223"/>
         <source>Log in to network</source>
-        <translation>Đăng nhập vào internet</translation>
+        <translation>Đăng nhập vào mạng</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2229"/>
@@ -1298,7 +1303,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../infopanedropdown.cpp" line="2230"/>
         <source>Your connection to the internet is blocked by a login page.</source>
-        <translation>Kết nối của bạn với internet bị chặn bởi trang đăng nhập</translation>
+        <translation>Mạng của bạn với internet bị chặn bởi trang đăng nhập</translation>
     </message>
     <message>
         <source>Add New User</source>

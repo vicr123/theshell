@@ -12,6 +12,7 @@ NetworkWidget::NetworkWidget(QWidget *parent) :
 
     connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
         ui->retranslateUi(this);
+        updateDevices();
     });
 
     QDBusConnection::systemBus().connect(nmInterface->service(), nmInterface->path(), nmInterface->interface(), "DeviceAdded", this, SLOT(updateDevices()));

@@ -24,6 +24,7 @@
 
 #define ChangelogOnbording "New in theShell 7.0:\n"\
     "- Quiet Mode has been added to theShell! Click on the volume icon in the bar, or head to the Notifications Status Center pane to change the setting.\n"\
+    "- The Gateway has been revamped and now shows your apps properly, as well as updates automatically whenever you install a new app.\n"\
     "- Flight Mode has been added\n"\
     "- The Bluetooth Switch now works properly\n"\
     "- Location icon now appears in the bar when your location is actively being used (for example, in GNOME Maps)\n"\
@@ -45,6 +46,7 @@
     "- New end session screen when pressing power button or CTRL+ALT+DEL\n"\
     "- User Management now sets passwords correctly\n"\
     "- Administrator and standard accounts can now be set in user management\n"\
+    "- New lock screen\n"\
     "\n"\
     "New in theShell 6.1:\n"\
     "- New Status Bar. Go to Settings > Bar to activate it.\n"\

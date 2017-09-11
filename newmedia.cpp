@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #include "newmedia.h"
@@ -99,7 +99,6 @@ void NewMedia::close() {
     anim->setEasingCurve(QEasingCurve::InCubic);
     connect(anim, &tPropertyAnimation::finished, [=]() {
         QDialog::close();
-        this->deleteLater();
     });
     anim->start();
 }
