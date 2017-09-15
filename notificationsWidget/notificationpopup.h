@@ -59,6 +59,9 @@ private:
     int timeoutLeft;
     QMap<QString, QString> actions;
     QVariantMap hints;
+
+    static NotificationPopup* currentlyShowingPopup;
+    static QList<NotificationPopup*> pendingPopups;
 };
 
 #endif // NOTIFICATIONPOPUP_H

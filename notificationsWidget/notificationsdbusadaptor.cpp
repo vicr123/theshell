@@ -1,6 +1,10 @@
 #include "notificationsdbusadaptor.h"
 #include "notificationswidget.h"
 #include "notificationobject.h"
+#include "audiomanager.h"
+#include "internationalisation.h"
+
+extern AudioManager* AudioMan;
 
 NotificationsDBusAdaptor::NotificationsDBusAdaptor(QObject *parent)
     : QDBusAbstractAdaptor(parent)
@@ -18,6 +22,8 @@ void NotificationsDBusAdaptor::CloseNotification(uint id)
     if (this->parentWidget()->hasNotificationId(id)) {
         NotificationObject* notification = this->parentWidget()->getNotification(id);
         notification->dismiss();
+    } else {
+
     }
 }
 
@@ -29,7 +35,7 @@ QStringList NotificationsDBusAdaptor::GetCapabilities()
 QString NotificationsDBusAdaptor::GetServerInformation(QString &vendor, QString &version, QString &spec_version)
 {
     vendor = "theSuite";
-    version = "2.0";
+    version = TS_VERSION;
     spec_version = "1.2";
     return "theShell";
 }
@@ -45,7 +51,24 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
         }
         this->parentWidget()->addNotification(notification);
 
-        notification->post();
+        bool postNotification = true;
+        if (AudioMan->QuietMode() == AudioManager::notifications) {
+            QStringList allowedCategories;
+            allowedCategories.append("battery.low");
+            allowedCategories.append("battery.critical");
+            allowedCategories.append("reminder.activate");
+            if (!allowedCategories.contains(hints.value("category").toString()) && !hints.value("x-thesuite-timercomplete", false).toBool()) {
+                postNotification = false;
+                emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
+            }
+        } else if (AudioMan->QuietMode() == AudioManager::mute) {
+            postNotification = false;
+            emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
+        }
+
+        if (postNotification) {
+            notification->post();
+        }
 
         return notification->getId();
     }

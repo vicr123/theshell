@@ -6,6 +6,9 @@
 extern float getDPIScaling();
 extern NotificationsDBusAdaptor* ndbus;
 
+NotificationPopup* NotificationPopup::currentlyShowingPopup = NULL;
+QList<NotificationPopup*> NotificationPopup::pendingPopups = QList<NotificationPopup*>();
+
 NotificationPopup::NotificationPopup(int id, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NotificationPopup)
@@ -38,35 +41,42 @@ NotificationPopup::~NotificationPopup()
 }
 
 void NotificationPopup::show() {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    this->move(screenGeometry.topLeft().x(), screenGeometry.top() - this->height());
-    this->setFixedWidth(screenGeometry.width());
+    if (currentlyShowingPopup != NULL) {
+        currentlyShowingPopup->close();
+        emit currentlyShowingPopup->notificationClosed(NotificationObject::Undefined);
+        pendingPopups.append(this);
+    } else {
+        currentlyShowingPopup = this;
+        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        this->move(screenGeometry.topLeft().x(), screenGeometry.top() - this->height());
+        this->setFixedWidth(screenGeometry.width());
 
-    textHeight = ui->bodyLabel->fontMetrics().boundingRect(QRect(0, 0, screenGeometry.width() - this->layout()->contentsMargins().left() - this->layout()->contentsMargins().right(), 10000), Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignTop, ui->bodyLabel->text()).height();
+        textHeight = ui->bodyLabel->fontMetrics().boundingRect(QRect(0, 0, screenGeometry.width() - this->layout()->contentsMargins().left() - this->layout()->contentsMargins().right(), 10000), Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignTop, ui->bodyLabel->text()).height();
 
-    bool showDownArrow = false;
-    if (textHeight > ui->bodyLabel->fontMetrics().height()) {
-        showDownArrow = true;
+        bool showDownArrow = false;
+        if (textHeight > ui->bodyLabel->fontMetrics().height()) {
+            showDownArrow = true;
+        }
+        if (actions.count() > 0) {
+            showDownArrow = true;
+        }
+        ui->downContainer->setVisible(showDownArrow);
+
+        this->setFixedHeight(this->sizeHint().height());
+        QDialog::show();
+
+        tPropertyAnimation* anim = new tPropertyAnimation(this, "geometry");
+        anim->setStartValue(this->geometry());
+        anim->setEndValue(QRect(this->x(), screenGeometry.y(), this->width(), this->height()));
+        anim->setDuration(500);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+        anim->start();
+
+        dismisser->start();
+
+        mouseEvents = true;
     }
-    if (actions.count() > 0) {
-        showDownArrow = true;
-    }
-    ui->downContainer->setVisible(showDownArrow);
-
-    this->setFixedHeight(this->sizeHint().height());
-    QDialog::show();
-
-    tPropertyAnimation* anim = new tPropertyAnimation(this, "geometry");
-    anim->setStartValue(this->geometry());
-    anim->setEndValue(QRect(this->x(), screenGeometry.y(), this->width(), this->height()));
-    anim->setDuration(500);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    anim->start();
-
-    dismisser->start();
-
-    mouseEvents = true;
 }
 
 void NotificationPopup::close() {
@@ -82,6 +92,11 @@ void NotificationPopup::close() {
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     connect(anim, &tPropertyAnimation::finished, [=] {
         QDialog::close();
+        currentlyShowingPopup = NULL;
+
+        if (pendingPopups.count() > 0) {
+            pendingPopups.takeFirst()->show();
+        }
     });
     anim->start();
 
@@ -209,7 +224,10 @@ void NotificationPopup::setActions(QStringList actions) {
             button->setText(value);
             connect(button, &QPushButton::clicked, [=] {
                 emit actionClicked(key);
-                this->close();
+
+                if (!this->hints.value("resident", false).toBool()) {
+                    this->close();
+                }
             });
             ((QBoxLayout*) ui->actionsWidget->layout())->addWidget(button);
 
