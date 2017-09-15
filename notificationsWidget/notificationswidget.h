@@ -5,6 +5,7 @@
 #include "notificationsdbusadaptor.h"
 #include "notificationpopup.h"
 #include "notificationobject.h"
+#include "notificationappgroup.h"
 
 namespace Ui {
 class NotificationsWidget;
@@ -26,6 +27,7 @@ private:
     Ui::NotificationsWidget *ui;
 
     QMap<int, NotificationObject*> notifications;
+    QList<NotificationAppGroup*> notificationGroups;
 };
 
 #endif // NOTIFICATIONSWIDGET_H

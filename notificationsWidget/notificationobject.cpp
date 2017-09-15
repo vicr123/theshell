@@ -105,6 +105,8 @@ void NotificationObject::setParameters(QString &app_name, QString &app_icon, QSt
             }
         }
     }
+
+    emit parametersUpdated();
 }
 
 void NotificationObject::post() {
@@ -135,5 +137,25 @@ void NotificationObject::closeDialog() {
 
 void NotificationObject::dismiss() {
     closeDialog();
+    emit closed(Dismissed);
+}
 
+QIcon NotificationObject::getAppIcon() {
+    return appIc;
+}
+
+QString NotificationObject::getAppIdentifier() {
+    return this->appName;
+}
+
+QString NotificationObject::getAppName() {
+    return this->appName;
+}
+
+QString NotificationObject::getSummary() {
+    return this->summary;
+}
+
+QString NotificationObject::getBody() {
+    return this->body;
 }

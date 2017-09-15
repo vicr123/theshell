@@ -76,7 +76,9 @@ SOURCES += main.cpp\
     notificationsWidget/notificationswidget.cpp \
     notificationsWidget/notificationsdbusadaptor.cpp \
     notificationsWidget/notificationpopup.cpp \
-    notificationsWidget/notificationobject.cpp
+    notificationsWidget/notificationobject.cpp \
+    notificationsWidget/notificationappgroup.cpp \
+    notificationsWidget/notificationpanel.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -120,7 +122,9 @@ HEADERS  += mainwindow.h \
     notificationsWidget/notificationswidget.h \
     notificationsWidget/notificationsdbusadaptor.h \
     notificationsWidget/notificationpopup.h \
-    notificationsWidget/notificationobject.h
+    notificationsWidget/notificationobject.h \
+    notificationsWidget/notificationappgroup.h \
+    notificationsWidget/notificationpanel.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -140,7 +144,9 @@ FORMS    += mainwindow.ui \
     screenshotwindow.ui \
     networkmanager/networkwidget.ui \
     notificationsWidget/notificationswidget.ui \
-    notificationsWidget/notificationpopup.ui
+    notificationsWidget/notificationpopup.ui \
+    notificationsWidget/notificationappgroup.ui \
+    notificationsWidget/notificationpanel.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

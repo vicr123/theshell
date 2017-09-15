@@ -105,7 +105,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">&amp;Body</string>
+             <string notr="true">Body</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

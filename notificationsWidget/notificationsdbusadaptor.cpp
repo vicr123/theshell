@@ -29,7 +29,7 @@ void NotificationsDBusAdaptor::CloseNotification(uint id)
 
 QStringList NotificationsDBusAdaptor::GetCapabilities()
 {
-    return QStringList() << "body" << "body-hyperlinks" << "body-markup";
+    return QStringList() << "body" << "body-hyperlinks" << "body-markup" << "persistence";
 }
 
 QString NotificationsDBusAdaptor::GetServerInformation(QString &vendor, QString &version, QString &spec_version)

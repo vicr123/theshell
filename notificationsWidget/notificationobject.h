@@ -22,10 +22,16 @@ public:
 
     int getId();
 
+    QString getAppIdentifier();
+    QString getAppName();
+    QIcon getAppIcon();
+    QString getSummary();
+    QString getBody();
+
 signals:
     void parametersUpdated();
     void actionClicked(QString key);
-    void closed(NotificationCloseReason reason);
+    void closed(NotificationObject::NotificationCloseReason reason);
 
 public slots:
     void post();
