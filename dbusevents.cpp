@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,12 +15,12 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #include "dbusevents.h"
 
-extern NotificationDBus* ndbus;
+extern NotificationsDBusAdaptor* ndbus;
 
 DbusEvents::DbusEvents(QObject *parent) : QObject(parent)
 {

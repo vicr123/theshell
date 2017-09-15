@@ -23,9 +23,6 @@
 
 #include <QDialog>
 #include <QResizeEvent>
-#include <QDBusConnection>
-#include <QDBusInterface>
-#include <QDBusReply>
 #include <QTimer>
 #include <QTime>
 #include <QMap>
@@ -50,7 +47,7 @@
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QDateTimeAxis>
 #include "animatedstackedwidget.h"
-#include "notificationdbus.h"
+#include "notificationsWidget/notificationsdbusadaptor.h"
 #include "upowerdbus.h"
 #include "endsessionwait.h"
 #include "audiomanager.h"
@@ -66,6 +63,7 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include <ttoast.h>
+#include <QDBusServiceWatcher>
 
 class UPowerDBus;
 
@@ -199,10 +197,6 @@ private slots:
     void notificationClosed(uint id, uint reason);
 
     void newNetworkDevice(QDBusObjectPath device);
-
-    void on_networkConnect_clicked();
-
-    void on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem*);
 
     void on_TextSwitch_toggled(bool checked);
 
@@ -384,6 +378,8 @@ private slots:
 
     void on_userSettingsAdminAccount_toggled(bool checked);
 
+    void notificationAction(uint id, QString action);
+
 public slots:
     void getNetworks();
 
@@ -416,6 +412,7 @@ private:
     int timerNotificationId = 0;
     QTimer* eventTimer;
     QTime timeUntilTimeout;
+    QTime lastTimer = QTime(0, 0);
     QTime startTime;
     void reject();
 

@@ -31,7 +31,7 @@ extern NativeEventFilter* NativeFilter;
 extern float getDPIScaling();
 extern LocationServices* locationServices;
 extern UPowerDBus* updbus;
-extern NotificationDBus* ndbus;
+extern NotificationsDBusAdaptor* ndbus;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -90,6 +90,27 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(doUpdate()));
     connect(timer, SIGNAL(timeout()), taskbarManager, SLOT(ReloadWindows()));
     timer->start();
+
+    infoPane = new InfoPaneDropdown(this->winId());
+    infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    connect(infoPane, SIGNAL(networkLabelChanged(QString,QIcon)), this, SLOT(internetLabelChanged(QString,QIcon)));
+    connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
+    connect(infoPane, SIGNAL(timerChanged(QString)), this, SLOT(setTimer(QString)));
+    connect(infoPane, SIGNAL(timerVisibleChanged(bool)), this, SLOT(setTimerVisible(bool)));
+    connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
+    connect(infoPane, &InfoPaneDropdown::batteryStretchChanged, [=](bool isOn) {
+        if (isOn) {
+            timer->setInterval(1000);
+        } else {
+            timer->setInterval(100);
+        }
+    });
+    connect(infoPane, SIGNAL(updateStrutsSignal()), this, SLOT(updateStruts()));
+    connect(infoPane, &InfoPaneDropdown::flightModeChanged, [=](bool flight) {
+        ui->flightIcon->setVisible(flight);
+        ui->StatusBarFlight->setVisible(flight);
+    });
+    infoPane->getNetworks();
 
     connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
         if (updbus->hasBattery()) {
@@ -158,27 +179,6 @@ MainWindow::MainWindow(QWidget *parent) :
     updbus->DeviceChanged();
 
     DBusEvents = new DbusEvents();
-
-    infoPane = new InfoPaneDropdown(this->winId());
-    infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    connect(infoPane, SIGNAL(networkLabelChanged(QString,QIcon)), this, SLOT(internetLabelChanged(QString,QIcon)));
-    connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
-    connect(infoPane, SIGNAL(timerChanged(QString)), this, SLOT(setTimer(QString)));
-    connect(infoPane, SIGNAL(timerVisibleChanged(bool)), this, SLOT(setTimerVisible(bool)));
-    connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
-    connect(infoPane, &InfoPaneDropdown::batteryStretchChanged, [=](bool isOn) {
-        if (isOn) {
-            timer->setInterval(1000);
-        } else {
-            timer->setInterval(100);
-        }
-    });
-    connect(infoPane, SIGNAL(updateStrutsSignal()), this, SLOT(updateStruts()));
-    connect(infoPane, &InfoPaneDropdown::flightModeChanged, [=](bool flight) {
-        ui->flightIcon->setVisible(flight);
-        ui->StatusBarFlight->setVisible(flight);
-    });
-    infoPane->getNetworks();
 
     QString loginSoundPath = settings.value("sounds/login", "").toString();
     if (loginSoundPath == "") {

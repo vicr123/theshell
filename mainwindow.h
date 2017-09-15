@@ -38,7 +38,7 @@
 #include <math.h>
 #include "window.h"
 #include "menu.h"
-#include "notificationdbus.h"
+#include "notificationsWidget/notificationsdbusadaptor.h"
 #include "upowerdbus.h"
 #include "infopanedropdown.h"
 #include "touchkeyboard.h"

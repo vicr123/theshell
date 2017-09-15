@@ -335,7 +335,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>5</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -590,14 +590,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>27</day>
+                 <day>26</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>27</day>
+                 <day>26</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1445,112 +1445,13 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="noNotifications">
-         <property name="text">
-          <string>No New Notifications</string>
+        <widget class="NotificationsWidget" name="widget_2" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QScrollArea" name="notificationsScroll">
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="notificationsListLayout">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>1165</width>
-            <height>565</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_17">
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>9</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QFrame" name="notificationsList">
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_9">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>20</number>
-              </property>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_6">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_11">
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <spacer name="horizontalSpacer_8">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="clearAllNotifications">
-               <property name="text">
-                <string>Clear All Notifications</string>
-               </property>
-               <property name="icon">
-                <iconset theme="edit-clear">
-                 <normaloff>.</normaloff>.</iconset>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
         </widget>
        </item>
       </layout>
@@ -2358,8 +2259,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>883</width>
-                  <height>589</height>
+                  <width>372</width>
+                  <height>465</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
@@ -4738,6 +4639,12 @@ Items that will be kept if you choose to keep files:
    <class>NetworkWidget</class>
    <extends>QWidget</extends>
    <header>networkmanager/networkwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NotificationsWidget</class>
+   <extends>QWidget</extends>
+   <header>notificationsWidget/notificationswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

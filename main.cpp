@@ -56,7 +56,7 @@ LocationServices* locationServices = NULL;
 QDBusServiceWatcher* dbusServiceWatcher = NULL;
 QDBusServiceWatcher* dbusServiceWatcherSystem = NULL;
 UPowerDBus* updbus = NULL;
-NotificationDBus* ndbus = NULL;
+NotificationsDBusAdaptor* ndbus = NULL;
 DBusSignals* dbusSignals = NULL;
 
 #define ONBOARDING_VERSION 4
@@ -215,6 +215,12 @@ int main(int argc, char *argv[])
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerService("org.thesuite.theshell");
 
+    QObject* notificationParent = new QObject();
+    ndbus = new NotificationsDBusAdaptor(notificationParent);
+
+    dbus.registerObject("/org/freedesktop/Notifications", "org.freedesktop.Notifications", notificationParent);
+    dbus.registerService("org.freedesktop.Notifications");
+
     dbusSignals = new DBusSignals();
 
     if (startKscreen) {
@@ -276,9 +282,6 @@ int main(int argc, char *argv[])
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
 
-    ndbus = new NotificationDBus();
-    updbus = new UPowerDBus();
-
     if (settings.value("startup/lastOnboarding", 0) < ONBOARDING_VERSION || startOnboarding) {
         Onboarding* onboardingWindow = new Onboarding();
         onboardingWindow->showFullScreen();
@@ -290,6 +293,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    updbus = new UPowerDBus();
     MainWin = new MainWindow();
 
     new GlobalFilter(&a);

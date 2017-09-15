@@ -22,7 +22,6 @@
 #include "ui_endsessionwait.h"
 
 extern float getDPIScaling();
-
 extern void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0, long data2 = 0, long data3 = 0, long data4 = 0);
 
 EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :

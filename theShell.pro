@@ -41,14 +41,11 @@ SOURCES += main.cpp\
     endsessionwait.cpp \
     app.cpp \
     background.cpp \
-    notificationdbus.cpp \
-    notificationdialog.cpp \
     upowerdbus.cpp \
     infopanedropdown.cpp \
     clickablelabel.cpp \
     thewaveworker.cpp \
     loginsplash.cpp \
-    notifications_adaptor.cpp \
     hoverframe.cpp \
     choosebackground.cpp \
     switch.cpp \
@@ -75,7 +72,11 @@ SOURCES += main.cpp\
     taskbarmanager.cpp \
     dbussignals.cpp \
     networkmanager/networkwidget.cpp \
-    networkmanager/availablenetworkslist.cpp
+    networkmanager/availablenetworkslist.cpp \
+    notificationsWidget/notificationswidget.cpp \
+    notificationsWidget/notificationsdbusadaptor.cpp \
+    notificationsWidget/notificationpopup.cpp \
+    notificationsWidget/notificationobject.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -83,15 +84,11 @@ HEADERS  += mainwindow.h \
     endsessionwait.h \
     app.h \
     background.h \
-    notificationdbus.h \
-    notifications_adaptor.h \
-    notificationdialog.h \
     upowerdbus.h \
     infopanedropdown.h \
     clickablelabel.h \
     thewaveworker.h \
     loginsplash.h \
-    notifications_adaptor.h \
     hoverframe.h \
     choosebackground.h \
     switch.h \
@@ -119,7 +116,11 @@ HEADERS  += mainwindow.h \
     taskbarmanager.h \
     dbussignals.h \
     networkmanager/networkwidget.h \
-    networkmanager/availablenetworkslist.h
+    networkmanager/availablenetworkslist.h \
+    notificationsWidget/notificationswidget.h \
+    notificationsWidget/notificationsdbusadaptor.h \
+    notificationsWidget/notificationpopup.h \
+    notificationsWidget/notificationobject.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -137,7 +138,9 @@ FORMS    += mainwindow.ui \
     newmedia.ui \
     tutorialwindow.ui \
     screenshotwindow.ui \
-    networkmanager/networkwidget.ui
+    networkmanager/networkwidget.ui \
+    notificationsWidget/notificationswidget.ui \
+    notificationsWidget/notificationpopup.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

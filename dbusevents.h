@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #ifndef DBUSEVENTS_H
@@ -33,7 +33,7 @@
 #include <QSettings>
 #include <QTimer>
 #include <QSoundEffect>
-#include "notificationdbus.h"
+#include "notificationsWidget/notificationsdbusadaptor.h"
 #include "newmedia.h"
 
 class DbusEvents : public QObject

@@ -22,9 +22,6 @@
 #define UPOWERDBUS_H
 
 #include <QObject>
-#include <QDBusConnection>
-#include <QDBusInterface>
-#include <QDBusObjectPath>
 #include <QDBusReply>
 #include <QDebug>
 #include <QTimer>
@@ -32,7 +29,8 @@
 #include <QIcon>
 #include <QSystemTrayIcon>
 #include <QSoundEffect>
-#include "notificationdbus.h"
+#include "endsessionwait.h"
+#include "notificationsWidget/notificationsdbusadaptor.h"
 
 class UPowerDBus : public QObject
 {

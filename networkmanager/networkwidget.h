@@ -13,6 +13,8 @@
 #include <functional>
 #include <QDebug>
 #include "availablenetworkslist.h"
+#include "nativeeventfilter.h"
+#include <ttoast.h>
 
 namespace Ui {
 class NetworkWidget;

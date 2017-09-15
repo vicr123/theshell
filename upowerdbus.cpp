@@ -22,7 +22,7 @@
 #include "power_adaptor.h"
 
 extern void EndSession(EndSessionWait::shutdownType type);
-extern NotificationDBus* ndbus;
+extern NotificationsDBusAdaptor* ndbus;
 
 UPowerDBus::UPowerDBus(QObject *parent) : QObject(parent)
 {
