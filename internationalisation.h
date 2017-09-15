@@ -25,7 +25,7 @@
 #include <QApplication>
 #include <QSettings>
 
-#define TS_VERSION "7.0"
+#define TS_VERSION "7.1"
 
 class Internationalisation {
 private:
