@@ -6,6 +6,7 @@
 #include "notificationpopup.h"
 #include "notificationobject.h"
 #include "notificationappgroup.h"
+#include <QScrollArea>
 
 namespace Ui {
 class NotificationsWidget;
@@ -25,6 +26,8 @@ public:
 
 private:
     Ui::NotificationsWidget *ui;
+
+    bool eventFilter(QObject *watched, QEvent *event);
 
     QMap<int, NotificationObject*> notifications;
     QList<NotificationAppGroup*> notificationGroups;

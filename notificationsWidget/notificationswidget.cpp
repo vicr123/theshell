@@ -10,6 +10,8 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
     ui->setupUi(this);
 
     ndbus->setParentWidget(this);
+
+    ui->scrollArea->installEventFilter(this);
 }
 
 NotificationsWidget::~NotificationsWidget()
@@ -53,4 +55,13 @@ bool NotificationsWidget::hasNotificationId(uint id) {
 
 NotificationObject* NotificationsWidget::getNotification(uint id) {
     return notifications.value(id);
+}
+
+bool NotificationsWidget::eventFilter(QObject *watched, QEvent *event) {
+    if (watched == ui->scrollArea) {
+        if (event->type() == QEvent::Resize) {
+            ui->notificationGroups->setFixedWidth(ui->scrollArea->width());
+        }
+    }
+    return false;
 }
