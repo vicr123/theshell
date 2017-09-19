@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.0" language="da_DK" sourcelanguage="en_US">
 <context>
     <name>AppsListModel</name>
     <message>
         <location filename="../menu.cpp" line="1078"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Applikation</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1114"/>
         <source>Place a call over </source>
-        <translation type="unfinished"></translation>
+        <translation>Placér et opkald over</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1309"/>
         <source>Run Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Kør Kommando</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1320"/>
         <source>Open webpage</source>
-        <translation type="unfinished"></translation>
+        <translation>Åben hjemmeside</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1328"/>
         <source>Open Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Åben Mappe</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1335"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Åben Fil</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1348"/>
         <source>Query theWave</source>
-        <translation type="unfinished"></translation>
+        <translation>Spørg theWave</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1489"/>
         <source>theWave</source>
-        <translation type="unfinished"></translation>
+        <translation>theWave</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1490"/>
         <source>Personal Assistant</source>
-        <translation type="unfinished"></translation>
+        <translation>Personlig Assistent</translation>
     </message>
 </context>
 <context>
@@ -54,12 +54,12 @@
     <message>
         <location filename="../audiomanager.cpp" line="318"/>
         <source>Ignores any notifications from all apps. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorérer alle notifikationer fra applikationer. Normale lyde vil stadig blive afspillet. Timere og påmindelser vil stadig notificere dig. Dog, vil de ikke spille lyde.</translation>
     </message>
     <message>
         <location filename="../audiomanager.cpp" line="320"/>
         <source>Completely turns off all sounds and notifications from all apps. Not even timers or reminders will notify you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Slå alle lyde fra og notifikationer fra alle applikationer. Ikke engang timere eller påmindelsere vil notificere dig.</translation>
     </message>
 </context>
 <context>
@@ -183,32 +183,32 @@
         <location filename="../networkmanager/networkwidget.cpp" line="332"/>
         <location filename="../networkmanager/networkwidget.cpp" line="350"/>
         <source>Wired Connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kabel Forbindelse</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="333"/>
         <location filename="../networkmanager/networkwidget.cpp" line="382"/>
         <location filename="../networkmanager/networkwidget.cpp" line="442"/>
         <source>Disconnected</source>
-        <translation type="unfinished"></translation>
+        <translation>Afbrudt</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="337"/>
         <source>To connect to this network, try plugging a cable in.</source>
-        <translation type="unfinished"></translation>
+        <translation>For at forbinde til dette netværk, prøv at forbinde et kabel.</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="341"/>
         <location filename="../networkmanager/networkwidget.cpp" line="445"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Forbind</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="351"/>
         <location filename="../networkmanager/networkwidget.cpp" line="403"/>
         <location filename="../networkmanager/networkwidget.cpp" line="466"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Forbundet</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="354"/>
@@ -216,48 +216,48 @@
         <location filename="../networkmanager/networkwidget.cpp" line="457"/>
         <location filename="../networkmanager/networkwidget.cpp" line="469"/>
         <source>Disconnect</source>
-        <translation type="unfinished"></translation>
+        <translation>Afbrudt</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="372"/>
         <source>Wi-Fi</source>
-        <translation type="unfinished"></translation>
+        <translation>Wi-Fi</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="375"/>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Slået Fra</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="378"/>
         <source>To connect to a network, try switching on Wi-Fi.</source>
-        <translation type="unfinished"></translation>
+        <translation>For at forbinde til et netværk, prøv at slå Wi-Fi til.</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="405"/>
         <location filename="../networkmanager/networkwidget.cpp" line="454"/>
         <source>Connecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Forbinder</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="407"/>
         <source>Requires Attention</source>
-        <translation type="unfinished"></translation>
+        <translation>Opmærksomhed påkrevet</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="409"/>
         <source>Disconnecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Afbryder</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="425"/>
         <source>Choose Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg Netværk</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="452"/>
         <source>Unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke tilgængeligt</translation>
     </message>
 </context>
 <context>
@@ -512,24 +512,24 @@
     <message>
         <location filename="../infopanedropdown.ui" line="811"/>
         <source>Reminders</source>
-        <translation type="unfinished"></translation>
+        <translation>Påmindelser</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="852"/>
         <location filename="../infopanedropdown.ui" line="985"/>
         <source>Delete Reminder</source>
-        <translation type="unfinished"></translation>
+        <translation>Slet påmindelse</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="862"/>
         <location filename="../infopanedropdown.ui" line="887"/>
         <source>New Reminder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny påmindelse</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="896"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Dato</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="902"/>
@@ -539,7 +539,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="903"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="915"/>
@@ -555,12 +555,12 @@
     <message>
         <location filename="../infopanedropdown.ui" line="960"/>
         <source>Create Reminder</source>
-        <translation type="unfinished"></translation>
+        <translation>Lav påmindelse</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="992"/>
         <source>Delete this reminder?</source>
-        <translation type="unfinished"></translation>
+        <translation>Slet denne påmindelse?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="997"/>
@@ -570,7 +570,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1011"/>
         <source>Reminder</source>
-        <translation type="unfinished"></translation>
+        <translation>Påmindelse</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1047"/>
@@ -595,7 +595,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1084"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="832"/>
@@ -610,17 +610,17 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1211"/>
         <source>Charge</source>
-        <translation type="unfinished"></translation>
+        <translation>Opladning</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1224"/>
         <source>Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Rate</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1234"/>
         <source>Apps</source>
-        <translation type="unfinished"></translation>
+        <translation>Applikationer</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1255"/>
@@ -821,7 +821,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2878"/>
         <source>Icon Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikon Tema</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2377"/>
@@ -867,47 +867,47 @@
         <location filename="../infopanedropdown.ui" line="4294"/>
         <location filename="../infopanedropdown.cpp" line="323"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Advanceret</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4345"/>
         <source>theShell is Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell is Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4451"/>
         <source>System Information</source>
-        <translation type="unfinished"></translation>
+        <translation>System Information</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4479"/>
         <source>You&apos;re using</source>
-        <translation type="unfinished"></translation>
+        <translation>Du bruger</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4520"/>
         <source>Support</source>
-        <translation type="unfinished"></translation>
+        <translation>Support</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4541"/>
         <source>Available Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilgængelig Swap</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4548"/>
         <source>Available Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilgængelig Hukommelse</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4568"/>
         <source>Kernel Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Kerne Version</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4589"/>
         <source>Qt Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt Version</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2576"/>
@@ -959,37 +959,37 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1634"/>
         <source>Quiet Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Stille tilstand</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1646"/>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyd</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1663"/>
         <source>No Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen Notifikationer</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1677"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Stum</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3101"/>
         <source>Attenuate audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Dæmp lyd</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3328"/>
         <source>Lock screen after returning from suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>Lås skærm efter returnéring fra suspendering</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3335"/>
         <source>SuspendLockScreenSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>SuspendérLåsSkærmKontakt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2796"/>
@@ -1035,62 +1035,62 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1775"/>
         <source>Networks</source>
-        <translation type="unfinished"></translation>
+        <translation>Netværk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2066"/>
         <source>Automatically show bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis bar automatisk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2120"/>
         <source>Show Bar on bottom of screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis bar i bunden af skærmen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2134"/>
         <source>When this is checked, hovering over the Status Bar will automatically expand the bar. Otherwise, clicking on the Status Bar will expand the bar.</source>
-        <translation type="unfinished"></translation>
+        <translation>Når dette er markeret, vil baren automatisk udvide når du holder musen over den. Ellers, vil den udvide hvis du klikker på den.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2391"/>
         <source>Screen Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Skærm skalering</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2660"/>
         <source>&amp;100% (96 dpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;100% (96 DPI)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2667"/>
         <source>1&amp;50% (144 dpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>1&amp;50% (144 DPI)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2674"/>
         <source>&amp;200% (192 dpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;200% (192 DPI)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2681"/>
         <source>&amp;300% (288 dpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;300% (288 DPI)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2688"/>
         <source>DPI settings will be applied at next login.</source>
-        <translation type="unfinished"></translation>
+        <translation>DPI indstillinger vil blive aktiveret næste gang du logger ind.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2769"/>
         <source>Decorati&amp;ve</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekorati&amp;ve</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2885"/>
         <source>Widget Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Widget Tema</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2880"/>
@@ -1233,17 +1233,17 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3746"/>
         <source>Account Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruger Type</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3758"/>
         <source>Standard</source>
-        <translation type="unfinished"></translation>
+        <translation>Standart</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3768"/>
         <source>Administrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Adminstrator</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3189"/>
@@ -1291,12 +1291,12 @@
     <message>
         <location filename="../infopanedropdown.ui" line="4031"/>
         <source>Use 24 hour time</source>
-        <translation type="unfinished"></translation>
+        <translation>Brug 24 timers tid (anbefalet)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4038"/>
         <source>TwentyFourHourSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>TwentyFourHourSwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3457"/>
@@ -1312,12 +1312,18 @@ Items that will be kept if you choose to keep files:
 - Home directory
 - Mail Spool
 - Temporary Files</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>(I&apos;m not sure what &quot;Mail Spool&quot; means, so i just put inbox for now.)</translatorcomment>
+        <translation>Vil du gerne beholde filer fra denne bruger?
+
+Ting der vil blive beholdt vis du vælger at beholde dem:
+- Hjemme mappe
+- Indbakke
+- Midlertidige filer </translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3895"/>
         <source>This is the final step. The user will be deleted once you choose whether to keep or remove files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dette er det sidste trin. Brugeren vil blive slettet så snart du vælger om du vil beholde filer, eller ej.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3480"/>
@@ -1328,48 +1334,48 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../infopanedropdown.ui" line="4111"/>
         <source>HighContrastSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>HøjKontrastKontakt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4121"/>
         <source>System Animations</source>
-        <translation type="unfinished"></translation>
+        <translation>System Animationer</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4128"/>
         <source>SystemAnimationsAccessibilitySwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>SystemAnimationerTilgængelighedKontakt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4141"/>
         <source>High Contrast</source>
-        <translation type="unfinished"></translation>
+        <translation>Høj Kontrast</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4148"/>
         <source>Large Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Større Tekst</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4155"/>
         <source>LargeTextSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>StørreTekstKontakt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4191"/>
         <source>Tone on Caps Lock and Num Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspil tone ved tryk på Caps Lock og Num Lock</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4198"/>
         <source>CapsNumLockBellSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>CapsNumLockKlokkeKontakt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4212"/>
         <location filename="../infopanedropdown.cpp" line="322"/>
         <source>Accessibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilgængelighed</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3504"/>
@@ -1430,17 +1436,17 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../infopanedropdown.cpp" line="367"/>
         <source>theShell %1 - Blueprint</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell %1-Koncept</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="368"/>
         <source>You compiled theShell on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Du kompilerede theShell på %1</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="370"/>
         <source>theShell %1</source>
-        <translation type="unfinished"></translation>
+        <translation>theSHell %1</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="276"/>
@@ -1674,7 +1680,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../infopanedropdown.cpp" line="1064"/>
         <source>Login required</source>
-        <translation type="unfinished"></translation>
+        <translation>Login nødvendigt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1076"/>
@@ -1757,17 +1763,17 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../infopanedropdown.cpp" line="2223"/>
         <source>Log in to network</source>
-        <translation type="unfinished"></translation>
+        <translation>Log ind til netværk</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2229"/>
         <source>Network Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Netværks Login</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2230"/>
         <source>Your connection to the internet is blocked by a login page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din forbindelse til internettet er blokeret af en log-ind side.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1991"/>
@@ -1791,7 +1797,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <location filename="../infopanedropdown.cpp" line="2440"/>
         <location filename="../infopanedropdown.cpp" line="2441"/>
         <source>(set at next login)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Set ved næste log-ind)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2037"/>
@@ -1816,22 +1822,22 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../infopanedropdown.cpp" line="2867"/>
         <source>Rate History</source>
-        <translation type="unfinished"></translation>
+        <translation>Rate Historik</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2878"/>
         <source>Application Power Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Applikations Strøm Forbrug</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3158"/>
         <source>Oxygen</source>
-        <translation type="unfinished"></translation>
+        <translation>Oxygen Tema</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3159"/>
         <source>Breeze</source>
-        <translation type="unfinished"></translation>
+        <translation>Breeze Tema</translation>
     </message>
 </context>
 <context>
@@ -1842,47 +1848,47 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <location filename="../internationalisation.h" line="56"/>
         <location filename="../internationalisation.h" line="59"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Engelsk</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="62"/>
         <source>Vietnamese</source>
-        <translation type="unfinished"></translation>
+        <translation>Vietnamesisk</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="65"/>
         <source>Danish</source>
-        <translation type="unfinished"></translation>
+        <translation>Dansk</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="68"/>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugesisk</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="71"/>
         <source>Dutch</source>
-        <translation type="unfinished"></translation>
+        <translation>Hollandsk</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="74"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Spansk</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="77"/>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>Russisk</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="80"/>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>Svensk</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="106"/>
         <source>Lithuanian</source>
-        <translation type="unfinished"></translation>
+        <translation>Litauisk</translation>
     </message>
 </context>
 <context>
@@ -1958,22 +1964,22 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../mainwindow.ui" line="764"/>
         <source>Battery</source>
-        <translation type="unfinished"></translation>
+        <translation>Batteri</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="853"/>
         <source>Click to show bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Klik for at vise baren</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="833"/>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyd</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="851"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Stum</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="750"/>
@@ -1989,7 +1995,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../mainwindow.cpp" line="208"/>
         <source>Quiet Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Stille Tilstand</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="211"/>
@@ -2239,7 +2245,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../menu.ui" line="161"/>
         <source>Report Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Rapportér Fejl</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="902"/>
@@ -2490,7 +2496,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../menu.cpp" line="1715"/>
         <source>For &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>For &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -2512,22 +2518,22 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <location filename="../nativeeventfilter.cpp" line="142"/>
         <location filename="../nativeeventfilter.cpp" line="159"/>
         <source>Quiet Mode is set to Mute.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stille Tilstand er set til Stum.</translation>
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="176"/>
         <source>No Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen Notifikationer</translation>
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="180"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Stum</translation>
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="184"/>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyd</translation>
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="157"/>
@@ -2551,123 +2557,123 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="59"/>
         <source>Network Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Netværks Enheder</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="124"/>
         <source>Available Networks</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilgængelige Netværk</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="140"/>
         <location filename="../networkmanager/networkwidget.ui" line="350"/>
         <location filename="../networkmanager/networkwidget.ui" line="440"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilbage</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="164"/>
         <source>Enter Details Manually</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv Detaljer Manuelt</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="201"/>
         <source>Security</source>
-        <translation type="unfinished"></translation>
+        <translation>Sikkerhed</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="215"/>
         <source>SSID</source>
-        <translation type="unfinished"></translation>
+        <translation>SSID</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="223"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="228"/>
         <source>Static WEP</source>
-        <translation type="unfinished"></translation>
+        <translation>Statisk WEP</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="233"/>
         <source>Dynamic WEP</source>
-        <translation type="unfinished"></translation>
+        <translation>Dynamisk WEP</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="238"/>
         <source>WPA/WPA2 PSK</source>
-        <translation type="unfinished"></translation>
+        <translation>WPA/WPA2 PSK</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="243"/>
         <source>WPA/WPA2 Enterprise</source>
-        <translation type="unfinished"></translation>
+        <translation>WPA/WPA2 Enterprise</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="298"/>
         <source>Security Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Sikkerheds Nøgle</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="321"/>
         <source>WPA Enterprise settings coming soon. For now, use nmcli in a terminal to connect to this network.</source>
-        <translation type="unfinished"></translation>
+        <translation>WPA Enterprise indstillinger kommer snart. For nu, brug nmcli i en terminal for at forbinde til internettet.</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="374"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Forbind</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="411"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="425"/>
         <source>Property</source>
-        <translation type="unfinished"></translation>
+        <translation>Egenskab</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="430"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdi</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="99"/>
         <source>Connect to %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Forbind til %1?</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="104"/>
         <location filename="../networkmanager/networkwidget.cpp" line="108"/>
         <location filename="../networkmanager/networkwidget.cpp" line="113"/>
         <source>To connect to %1, you&apos;ll need to provide a key.</source>
-        <translation type="unfinished"></translation>
+        <translation>For at forbinde til %1, skal du bruge en nøgle.</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="118"/>
         <source>To connect to %1, you&apos;ll need to provide authentication details.</source>
-        <translation type="unfinished"></translation>
+        <translation>For at forbinde til %1, skal du bruge godkendelses detajlerne. </translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="126"/>
         <location filename="../networkmanager/networkwidget.cpp" line="660"/>
         <source>Wi-Fi</source>
-        <translation type="unfinished"></translation>
+        <translation>Wi-Fi</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="127"/>
         <location filename="../networkmanager/networkwidget.cpp" line="661"/>
         <source>Connecting to %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Forbinder til %1...</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="500"/>
@@ -2675,32 +2681,32 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <location filename="../networkmanager/networkwidget.cpp" line="528"/>
         <location filename="../networkmanager/networkwidget.cpp" line="554"/>
         <source>Disconnected</source>
-        <translation type="unfinished"></translation>
+        <translation>Afbrudt</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="519"/>
         <source>Wired</source>
-        <translation type="unfinished"></translation>
+        <translation>Kabel Forbindelse</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="636"/>
         <source>WPA Enterprise</source>
-        <translation type="unfinished"></translation>
+        <translation>WPA Enterprise</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="637"/>
         <source>WPA Enterprise connections are not supported yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>WPA Enterprise forbindelser er ikke understøttet endu.</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="651"/>
         <source>Connection Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Forbindelses Fejl</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="671"/>
         <source>Enter the information to connect to a new network</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv informationen for at forbinde til et nyt netværk</translation>
     </message>
 </context>
 <context>
@@ -2786,7 +2792,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../onboarding.ui" line="121"/>
         <source>Let&apos;s get your PC ready and show you what&apos;s new. This will only take a minute.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lad os gøre din PC klar, og vise dig hvad der er nyt. Dette vil kun tage et minut.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="73"/>
@@ -2801,7 +2807,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../onboarding.ui" line="154"/>
         <source>Get Started</source>
-        <translation type="unfinished"></translation>
+        <translation>Kom Igang</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="179"/>
@@ -2841,62 +2847,62 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../onboarding.ui" line="369"/>
         <source>Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Status Bar</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="376"/>
         <source>The Status Bar is a smaller version of the bar that is always visible and shows system status icons.</source>
-        <translation type="unfinished"></translation>
+        <translation>Status Baren er en mindre version af hovedbaren, som altid er synlig og viser system status ikoner.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="425"/>
         <source>The Status Bar will appear once the bar moves far enough out of the way.</source>
-        <translation type="unfinished"></translation>
+        <translation>Status Baren vil vises så snart at hovedbaren flyttes langt not væk.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="457"/>
         <source>Use the Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Bug Status Baren</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="464"/>
         <source>Don&apos;t use the Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Brug ikke Status Baren</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="538"/>
         <source>And that&apos;s that!</source>
-        <translation type="unfinished"></translation>
+        <translation>Og det er det hele!</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="545"/>
         <source>theShell is now ready to use!</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell er nu klar til brug!</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="669"/>
         <source>Cancel Setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Annullér Opsætning</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="676"/>
         <source>You haven&apos;t finished setting up theShell. What would you like to do?</source>
-        <translation type="unfinished"></translation>
+        <translation>Du har ikke gennemført opsætningen af theShell. Hvad vil du gøre?</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="718"/>
         <source>Return to theShell Setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Gå tilbage til theShell Opsætning</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="725"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Log Ud</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="738"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluk Ned</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="364"/>
@@ -2911,7 +2917,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     <message>
         <location filename="../onboarding.cpp" line="68"/>
         <source>Welcome to theShell %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Velkommen til theShell %1!</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="167"/>

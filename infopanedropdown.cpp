@@ -1653,16 +1653,20 @@ void InfoPaneDropdown::updateBatteryChart() {
         QDBusReply<QDBusArgument> historyArgument = QDBusConnection::systemBus().call(historyMessage);
 
         QLineSeries* batteryChartData = new QLineSeries;
-        batteryChartData->setColor(this->palette().color(QPalette::WindowText));
+        QPen dataPen;
+        dataPen.setColor(this->palette().color(QPalette::Highlight));
+        dataPen.setWidth(2 * getDPIScaling());
+        batteryChartData->setPen(dataPen);
 
         QLineSeries* batteryChartTimeRemainingData = new QLineSeries;
         //batteryChartTimeRemainingData->setColor(this->palette().color(QPalette::Disabled, QPalette::WindowText));
         batteryChartTimeRemainingData->setBrush(QBrush(this->palette().color(QPalette::Disabled, QPalette::WindowText)));
 
         QPen remainingTimePen;
-        remainingTimePen.setColor(this->palette().color(QPalette::Disabled, QPalette::WindowText));
+        remainingTimePen.setColor(this->palette().color(QPalette::Disabled, QPalette::Highlight));
         remainingTimePen.setDashPattern(QVector<qreal>() << 3 << 3);
         remainingTimePen.setDashOffset(3);
+        remainingTimePen.setWidth(2 * getDPIScaling());
         batteryChartTimeRemainingData->setPen(remainingTimePen);
 
         QDateTime remainingTime = updbus->batteryTimeRemaining();

@@ -15,23 +15,6 @@ NotificationPanel::NotificationPanel(NotificationObject* object, QWidget *parent
 
     updateParameters();
     this->setFixedHeight(0);
-
-    QTimer::singleShot(100, [=] {
-        tVariantAnimation* anim = new tVariantAnimation();
-        anim->setStartValue(this->height());
-        anim->setEndValue(this->sizeHint().height());
-        anim->setEasingCurve(QEasingCurve::OutCubic);
-        anim->setDuration(500);
-        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
-            this->setFixedHeight(value.toInt());
-        });
-        connect(anim, &tVariantAnimation::finished, [=] {
-            //Remove layout constraints
-            this->setFixedSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
-        });
-        anim->start();
-    });
 }
 
 NotificationPanel::~NotificationPanel()
@@ -40,33 +23,7 @@ NotificationPanel::~NotificationPanel()
 }
 
 void NotificationPanel::mouseReleaseEvent(QMouseEvent *event) {
-    expanded = !expanded;
-
-    if (expanded) {
-        int textHeight = ui->bodyLabel->fontMetrics().boundingRect(QRect(0, 0, ui->bodyLabel->width(), 10000), Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignTop, ui->bodyLabel->text()).height();
-
-        tVariantAnimation* anim = new tVariantAnimation();
-        anim->setStartValue(ui->bodyLabel->height());
-        anim->setEndValue(textHeight);
-        anim->setEasingCurve(QEasingCurve::OutCubic);
-        anim->setDuration(500);
-        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
-            ui->bodyLabel->setFixedHeight(value.toInt());
-        });
-        anim->start();
-    } else {
-        tVariantAnimation* anim = new tVariantAnimation();
-        anim->setStartValue(ui->bodyLabel->height());
-        anim->setEndValue(ui->bodyLabel->fontMetrics().height());
-        anim->setEasingCurve(QEasingCurve::OutCubic);
-        anim->setDuration(500);
-        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
-            ui->bodyLabel->setFixedHeight(value.toInt());
-        });
-        anim->start();
-    }
+    this->toggleExpandNormal();
 }
 
 void NotificationPanel::updateParameters() {
@@ -100,4 +57,64 @@ void NotificationPanel::closeNotification(NotificationObject::NotificationCloseR
 
 NotificationObject* NotificationPanel::getObject() {
     return this->object;
+}
+
+void NotificationPanel::collapseHide() {
+    tVariantAnimation* anim = new tVariantAnimation();
+    anim->setStartValue(this->height());
+    anim->setEndValue(0);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->setDuration(500);
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        this->setFixedHeight(value.toInt());
+    });
+    anim->start();
+}
+
+void NotificationPanel::expandHide() {
+    tVariantAnimation* anim = new tVariantAnimation();
+    anim->setStartValue(this->height());
+    anim->setEndValue(this->sizeHint().height());
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    anim->setDuration(500);
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        this->setFixedHeight(value.toInt());
+    });
+    connect(anim, &tVariantAnimation::finished, [=] {
+        //Remove layout constraints
+        this->setFixedSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+    });
+    anim->start();
+}
+
+void NotificationPanel::toggleExpandNormal() {
+    expanded = !expanded;
+
+    if (expanded) {
+        int textHeight = ui->bodyLabel->fontMetrics().boundingRect(QRect(0, 0, ui->bodyLabel->width(), 10000), Qt::TextWordWrap | Qt::AlignLeft | Qt::AlignTop, ui->bodyLabel->text()).height();
+
+        tVariantAnimation* anim = new tVariantAnimation();
+        anim->setStartValue(ui->bodyLabel->height());
+        anim->setEndValue(textHeight);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        anim->setDuration(500);
+        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+            ui->bodyLabel->setFixedHeight(value.toInt());
+        });
+        anim->start();
+    } else {
+        tVariantAnimation* anim = new tVariantAnimation();
+        anim->setStartValue(ui->bodyLabel->height());
+        anim->setEndValue(ui->bodyLabel->fontMetrics().height());
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        anim->setDuration(500);
+        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+            ui->bodyLabel->setFixedHeight(value.toInt());
+        });
+        anim->start();
+    }
 }

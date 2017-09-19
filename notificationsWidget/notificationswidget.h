@@ -24,6 +24,9 @@ public:
     bool hasNotificationId(uint id);
     NotificationObject* getNotification(uint id);
 
+private slots:
+    void on_clearAllButton_clicked();
+
 private:
     Ui::NotificationsWidget *ui;
 

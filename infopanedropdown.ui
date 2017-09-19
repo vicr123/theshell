@@ -335,7 +335,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>5</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -355,8 +355,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1151</width>
-            <height>1036</height>
+            <width>592</width>
+            <height>1062</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -590,14 +590,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>25</day>
+                 <day>24</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>25</day>
+                 <day>24</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1435,13 +1435,6 @@
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="Line" name="line_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
         </widget>
        </item>
        <item>

@@ -24,15 +24,25 @@ public:
 public slots:
     void AddNotification(NotificationObject* object);
 
+    void clearAll();
+
+    void updateCollapsedCounter();
+
 private slots:
 
     void on_closeAllNotificationsButton_clicked();
+
+    void on_collapsedLabel_clicked();
+
+    void on_expandNotificationsButton_clicked();
 
 private:
     Ui::NotificationAppGroup *ui;
 
     QString appIdentifier;
     QIcon appIcon;
+
+    bool expanded = false;
 
     QList<NotificationPanel*> notifications;
 };

@@ -65,3 +65,10 @@ bool NotificationsWidget::eventFilter(QObject *watched, QEvent *event) {
     }
     return false;
 }
+
+void NotificationsWidget::on_clearAllButton_clicked()
+{
+    for (NotificationAppGroup* group : notificationGroups) {
+        group->clearAll();
+    }
+}

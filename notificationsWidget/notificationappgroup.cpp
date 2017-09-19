@@ -34,6 +34,10 @@ void NotificationAppGroup::AddNotification(NotificationObject *object) {
     connect(panel, &NotificationPanel::dismissed, [=] {
         notifications.removeAll(panel);
 
+        if (notifications.count() > 4) {
+            notifications.at(4)->expandHide();
+        }
+
         if (notifications.count() == 0) {
             tVariantAnimation* anim = new tVariantAnimation();
             anim->setStartValue(this->height());
@@ -46,9 +50,14 @@ void NotificationAppGroup::AddNotification(NotificationObject *object) {
             });
             anim->start();
         }
+        updateCollapsedCounter();
     });
 
     QTimer::singleShot(100, [=] {
+        if (notifications.count() <= 5 || expanded) {
+            panel->expandHide();
+        }
+
         tVariantAnimation* anim = new tVariantAnimation();
         anim->setStartValue(this->height());
         anim->setEndValue(this->sizeHint().height());
@@ -66,6 +75,8 @@ void NotificationAppGroup::AddNotification(NotificationObject *object) {
     });
 
     notifications.append(panel);
+
+    updateCollapsedCounter();
 }
 
 int NotificationAppGroup::count() {
@@ -75,7 +86,49 @@ int NotificationAppGroup::count() {
 
 void NotificationAppGroup::on_closeAllNotificationsButton_clicked()
 {
+    this->clearAll();
+}
+
+void NotificationAppGroup::clearAll() {
     while (!notifications.isEmpty()) {
         notifications.takeFirst()->getObject()->dismiss();
     }
+}
+
+
+void NotificationAppGroup::updateCollapsedCounter() {
+    if (notifications.count() > 5) {
+        if (expanded) {
+            ui->collapsedLabel->setText(tr("Collapse Notifications"));
+            ui->expandNotificationsButton->setIcon(QIcon::fromTheme("go-up"));
+        } else {
+            ui->collapsedLabel->setText(tr("+%1 notifications collapsed", "", notifications.count()).arg(QString::number(notifications.count() - 5)));
+            ui->expandNotificationsButton->setIcon(QIcon::fromTheme("go-down"));
+        }
+        ui->collapsedFrame->setVisible(true);
+        ui->expandNotificationsButton->setVisible(true);
+    } else {
+        ui->collapsedFrame->setVisible(false);
+        ui->expandNotificationsButton->setVisible(false);
+    }
+}
+
+void NotificationAppGroup::on_collapsedLabel_clicked()
+{
+    ui->expandNotificationsButton->click();
+}
+
+void NotificationAppGroup::on_expandNotificationsButton_clicked()
+{
+    expanded = !expanded;
+    if (expanded) {
+        for (NotificationPanel* panel : notifications) {
+            panel->expandHide();
+        }
+    } else {
+        for (int i = 5; i < notifications.count(); i++) {
+            notifications.at(i)->collapseHide();
+        }
+    }
+    updateCollapsedCounter();
 }

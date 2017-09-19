@@ -20,6 +20,11 @@ public:
 
     NotificationObject* getObject();
 
+public slots:
+    void collapseHide();
+    void expandHide();
+    void toggleExpandNormal();
+
 private slots:
     void updateParameters();
 

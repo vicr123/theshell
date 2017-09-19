@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="lt_LT" sourcelanguage="en_US">
+<TS version="2.0" language="lt_LT" sourcelanguage="en_US">
 <context>
     <name>AppsListModel</name>
     <message>
@@ -1572,7 +1572,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../internationalisation.h" line="106"/>
         <source>Lithuanian</source>
-        <translation>Lietuviškai</translation>
+        <translation>Lietuvių</translation>
     </message>
 </context>
 <context>
@@ -2758,49 +2758,51 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../tutorialwindow.ui" line="89"/>
         <source>The gateway is the portal to everything on your PC. To open it, click the theShell icon, or hit the Super key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gateway yra portalas į viską jūsų kompiuteryje. Kad atidarytumėte jį, paspauskite žalią theShell piktogramą (kairėje viršuj, arba paspauskite Super key (tas pats kaip Windows mygtukas klaviatūroje).</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="146"/>
         <source>Where&apos;d the bar go!?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kur dingo juostelė!?</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="153"/>
         <source>The bar moves off the screen to make way for other windows. Move your mouse to the top of the screen to get to the bar.</source>
-        <translation type="unfinished"></translation>
+        <translation>Juostelė išeina iš ekrano kad padarytų vietos kitoms programoms. Pajudinkite savo pelę iki ekrano viršaus, kad juostelė vėl atsirastų.</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="207"/>
         <source>Do stuff super speedy!</source>
-        <translation type="unfinished"></translation>
+        <translation>Darykite dalykus super greitai!</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="214"/>
         <source>Just open the gateway and type what you want. You don&apos;t even need to click on the search box!</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiesiog atidarykite Gateway ir rašykite ką norite. Jum net nereikia spausti ant paieškos langelio!</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="224"/>
         <source>- Open apps by typing in the name of the app
 - Get information about playing media by typing in &quot;current song&quot; (or something like that)
 - Open websites by typing in the address</source>
-        <translation type="unfinished"></translation>
+        <translation>- Atidaro programas rašant programos vardą
+- Gauna informaciją apie mediją rašant &quot;current song&quot; (arba kažkas panašaus)
+- Atidaro svetaines tiesiog rašant jų nuorodą</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="299"/>
         <source>Missed a notification?</source>
-        <translation type="unfinished"></translation>
+        <translation>Praleidote pranešimą?</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="306"/>
         <source>Check what you missed on the bar. Click &quot;1 Notification&quot; on the bar.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pažiūrėkite ką praleidote juostelėje. Spauskite &quot;1 pranešimas&quot; ant juostelės.</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="318"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -2808,136 +2810,136 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../upowerdbus.cpp" line="75"/>
         <source>Can&apos;t get battery information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neįmanoma gauti baterijos informacijos.</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="263"/>
         <source>Power Stretch on</source>
-        <translation type="unfinished"></translation>
+        <translation>Baterijos saugojimo režimas įjungtas</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="113"/>
         <location filename="../upowerdbus.cpp" line="129"/>
         <location filename="../upowerdbus.cpp" line="299"/>
         <source>Charging</source>
-        <translation type="unfinished"></translation>
+        <translation>Kraunama</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="120"/>
         <source>The power cable has been plugged in and the battery is now being charged. Power Stretch has been turned off.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektros jungtis buvo prijungta ir baterija dabar kraunasi. Baterijos saugojimo režimas išjungtas.</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="122"/>
         <source>The power cable has been plugged in and the battery is now being charged.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektros jungtis buvo prijungta ir baterija dabar kraunasi.</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="159"/>
         <location filename="../upowerdbus.cpp" line="302"/>
         <source>Discharging</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesikrauna</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="160"/>
         <source>The power cable has been removed, and your PC is now running on battery power.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektros jungtis buvo atjungta, ir jūsų kompiuteris dabar veikia iš baterijos.</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="179"/>
         <location filename="../upowerdbus.cpp" line="198"/>
         <location filename="../upowerdbus.cpp" line="216"/>
         <source>Turn on Power Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation>Įjungti baterijos saugojimo režimą</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="181"/>
         <source>Battery Critically Low</source>
-        <translation type="unfinished"></translation>
+        <translation>Liko mažai baterijos</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="182"/>
         <source>You have about 10 minutes of battery remaining. Either plug in your PC or save your work and power off the PC and change the battery.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jūs turite apie 10 minučių likusios baterijos. Arba prijunkite jūsų kompiuterį prie elektros šaltinio, arba išjunkite savo kompiuterį ir pakraukite bateriją.</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="200"/>
         <source>Battery Low</source>
-        <translation type="unfinished"></translation>
+        <translation>Mažai baterijos</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="201"/>
         <source>You have about half an hour of battery remaining. You should plug in your PC now.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jūs turite apie pusė valandos likusios baterijos. Jūs turėtumėte prijungti savo kompiuterį prie elektros šaltinio dabar.</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="218"/>
         <source>Battery Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Baterijos įspėjimas</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="219"/>
         <source>You have about an hour of battery remaining. You may want to plug in your PC now.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jūs turite apie valandą likusios baterijos. Jūs galbūt norėtumėte prijungti savo kompiuterį prie elektros šaltinio dabar.</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="233"/>
         <location filename="../upowerdbus.cpp" line="305"/>
         <source>Empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuščia</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="237"/>
         <location filename="../upowerdbus.cpp" line="309"/>
         <source>Full</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilnas</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="251"/>
         <location filename="../upowerdbus.cpp" line="312"/>
         <source>Not Charging</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesikrauna</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="256"/>
         <location filename="../upowerdbus.cpp" line="258"/>
         <source>%1% PC Battery%2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1% Kompiuterio baterija%2</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="268"/>
         <source>No Battery Inserted</source>
-        <translation type="unfinished"></translation>
+        <translation>Jokios baterijos nėra įdėta</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="290"/>
         <source>Pair %1 using theFile to see battery status.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prijunkite %1 naudojant theFile, jei norite matyti baterijos būseną.</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="292"/>
         <source>%1 battery unavailable. Device trusted?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 baterija nepasiekiama pažiūrėti būsenos. Ar įrenginys yra patikimas?</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="296"/>
         <source>%1% battery on %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1% baterija ant %2</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="339"/>
         <source>%1% battery on %2 (Full)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1% baterija ant %2 (Pilna)</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="341"/>
         <source>%1% battery on %2 (Charging)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1% baterija ant %2 (Kraunasi)</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="344"/>
         <source>%1% battery on %2 (Discharging)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1% baterija ant %2 (Nesikrauna)</translation>
     </message>
 </context>
 <context>
