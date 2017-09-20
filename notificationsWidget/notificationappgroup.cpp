@@ -111,6 +111,7 @@ void NotificationAppGroup::updateCollapsedCounter() {
         ui->collapsedFrame->setVisible(false);
         ui->expandNotificationsButton->setVisible(false);
     }
+    emit notificationCountChanged();
 }
 
 void NotificationAppGroup::on_collapsedLabel_clicked()

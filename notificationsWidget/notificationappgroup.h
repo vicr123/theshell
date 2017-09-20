@@ -36,6 +36,9 @@ private slots:
 
     void on_expandNotificationsButton_clicked();
 
+signals:
+    void notificationCountChanged();
+
 private:
     Ui::NotificationAppGroup *ui;
 

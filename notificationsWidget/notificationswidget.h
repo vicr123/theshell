@@ -27,6 +27,11 @@ public:
 private slots:
     void on_clearAllButton_clicked();
 
+    void updateNotificationCount();
+
+signals:
+    void numNotificationsChanged(int number);
+
 private:
     Ui::NotificationsWidget *ui;
 

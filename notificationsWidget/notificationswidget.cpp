@@ -43,6 +43,8 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
         nGroup = new NotificationAppGroup(object->getAppIdentifier(), object->getAppIcon(), object->getAppName());
         ((QBoxLayout*) ui->notificationGroups->layout())->insertWidget(0, nGroup);
 
+        connect(nGroup, SIGNAL(notificationCountChanged()), this, SLOT(updateNotificationCount()));
+
         notificationGroups.append(nGroup);
     }
 
@@ -71,4 +73,14 @@ void NotificationsWidget::on_clearAllButton_clicked()
     for (NotificationAppGroup* group : notificationGroups) {
         group->clearAll();
     }
+}
+
+void NotificationsWidget::updateNotificationCount() {
+    int count = 0;
+
+    for (NotificationAppGroup* group : notificationGroups) {
+        count += group->count();
+    }
+
+    emit numNotificationsChanged(count);
 }

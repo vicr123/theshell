@@ -61,6 +61,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     //connect(this, SIGNAL(closeNotification(int)), ndbus, SLOT(CloseNotificationUserInitiated(int)));
     connect(ndbus, SIGNAL(NotificationClosed(uint,uint)), this, SLOT(notificationClosed(uint,uint)));
     connect(ndbus, SIGNAL(ActionInvoked(uint,QString)), this, SLOT(notificationAction(uint,QString)));
+    connect(ui->notificationsWidget, SIGNAL(numNotificationsChanged(int)), this, SIGNAL(numNotificationsChanged(int)));
 
     connect(dbusServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(DBusServiceRegistered(QString)));
     connect(dbusServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(DBusServiceUnregistered(QString)));

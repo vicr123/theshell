@@ -1438,7 +1438,7 @@
         </widget>
        </item>
        <item>
-        <widget class="NotificationsWidget" name="widget_2" native="true">
+        <widget class="NotificationsWidget" name="notificationsWidget" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>
