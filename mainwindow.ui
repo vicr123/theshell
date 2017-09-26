@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1826</width>
-    <height>149</height>
+    <height>172</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -69,7 +69,7 @@
          <x>0</x>
          <y>0</y>
          <width>1826</width>
-         <height>45</height>
+         <height>68</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -769,6 +769,13 @@
         <widget class="QLabel" name="StatusBarQuietMode">
          <property name="text">
           <string notr="true">Quiet Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="StatusBarRedshift">
+         <property name="text">
+          <string notr="true">Redshift</string>
          </property>
         </widget>
        </item>

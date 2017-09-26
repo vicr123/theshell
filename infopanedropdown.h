@@ -64,6 +64,7 @@
 #include <QFutureWatcher>
 #include <ttoast.h>
 #include <QDBusServiceWatcher>
+#include "apps/appslistmodel.h"
 
 class UPowerDBus;
 
@@ -116,6 +117,7 @@ signals:
     void batteryStretchChanged(bool isOn);
     void flightModeChanged(bool flight);
     void updateStrutsSignal();
+    void redshiftEnabledChanged(bool enabled);
 
 private slots:
     void on_pushButton_clicked();
@@ -380,6 +382,26 @@ private slots:
 
     void notificationAction(uint id, QString action);
 
+    void updateAutostart();
+
+    void on_autostartList_itemChanged(QListWidgetItem *item);
+
+    void on_backAutoStartApps_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_backAutoStartNewApp_clicked();
+
+    void on_autostartAppList_clicked(const QModelIndex &index);
+
+    void on_enterCommandAutoStartApps_clicked();
+
+    void on_addAutostartApp_clicked();
+
+    void on_redshiftSwitch_toggled(bool checked);
+
+    void on_grayColorThemeRadio_toggled(bool checked);
+
 public slots:
     void getNetworks();
 
@@ -398,6 +420,8 @@ private:
     int initialPoint;
     bool mouseMovedUp = false;
     QRect dragRect;
+    bool effectiveRedshiftOn;
+    int overrideRedshift;
 
     QMap<int, QFrame*> notificationFrames;
     QMap<QString, QFrame*> printersFrames;

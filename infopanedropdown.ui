@@ -308,6 +308,27 @@
          </widget>
         </item>
         <item>
+         <widget class="Line" name="line_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_32">
+          <property name="text">
+           <string>Redshift</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Switch" name="redshiftSwitch">
+          <property name="text">
+           <string notr="true">RedshiftSwitch</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer_11">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -335,7 +356,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -355,8 +376,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>592</width>
-            <height>1062</height>
+            <width>1151</width>
+            <height>1036</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -590,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>24</day>
+                 <day>21</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>24</day>
+                 <day>21</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1786,45 +1807,11 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>15</number>
+            <number>5</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
-            <layout class="QGridLayout" name="gridLayout_2">
-             <item row="1" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Autostart with</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_2">
-               <property name="placeholderText">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Enter names of executables to start, seperated by a comma.</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <spacer name="verticalSpacer_8">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="0" column="0" colspan="2">
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <item>
               <widget class="QFrame" name="startupHeader">
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
@@ -1871,6 +1858,241 @@
                  </widget>
                 </item>
                </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="AnimatedStackedWidget" name="startupStack">
+               <property name="autoFillBackground">
+                <bool>true</bool>
+               </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <widget class="QWidget" name="page_15">
+                <property name="autoFillBackground">
+                 <bool>true</bool>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_22">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item row="1" column="1">
+                  <layout class="QHBoxLayout" name="horizontalLayout_4">
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <spacer name="horizontalSpacer_5">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_4">
+                     <property name="text">
+                      <string>New App</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="list-add">
+                       <normaloff>.</normaloff>.</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QListWidget" name="autostartList"/>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label">
+                   <property name="text">
+                    <string>Autostart with</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page_16">
+                <property name="autoFillBackground">
+                 <bool>true</bool>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_11">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_2">
+                   <property name="text">
+                    <string>Which app do you want to automatically start with theShell?</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QListView" name="autostartAppList"/>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_11">
+                   <item>
+                    <widget class="QPushButton" name="backAutoStartApps">
+                     <property name="text">
+                      <string>Back</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="go-previous">
+                       <normaloff>.</normaloff>.</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_8">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="enterCommandAutoStartApps">
+                     <property name="text">
+                      <string>Command</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page_17">
+                <property name="autoFillBackground">
+                 <bool>true</bool>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_2">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_13">
+                   <property name="text">
+                    <string>Command</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="autostartAppCommand"/>
+                 </item>
+                 <item row="4" column="0" colspan="2">
+                  <layout class="QHBoxLayout" name="horizontalLayout_47">
+                   <item>
+                    <widget class="QPushButton" name="backAutoStartNewApp">
+                     <property name="text">
+                      <string>Back</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="go-previous">
+                       <normaloff>.</normaloff>.</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_33">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="addAutostartApp">
+                     <property name="text">
+                      <string>Add App</string>
+                     </property>
+                     <property name="icon">
+                      <iconset theme="list-add">
+                       <normaloff>.</normaloff>.</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="0" column="0" colspan="2">
+                  <widget class="QLabel" name="label_9">
+                   <property name="text">
+                    <string>Enter details of the app to autostart</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="autostartAppName"/>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_10">
+                   <property name="text">
+                    <string>Application Name</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <spacer name="verticalSpacer_6">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
               </widget>
              </item>
             </layout>
@@ -2252,8 +2474,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>372</width>
-                  <height>465</height>
+                  <width>883</width>
+                  <height>589</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
@@ -2266,7 +2488,7 @@
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
-                 <item row="5" column="0">
+                 <item row="6" column="0">
                   <widget class="QLabel" name="label_5">
                    <property name="text">
                     <string>Start Time</string>
@@ -2289,7 +2511,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="8" column="1">
+                 <item row="9" column="1">
                   <widget class="QCheckBox" name="sunlightRedshift">
                    <property name="enabled">
                     <bool>false</bool>
@@ -2299,7 +2521,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="1">
+                 <item row="8" column="1">
                   <widget class="QLabel" name="label_57">
                    <property name="text">
                     <string>If the start time is later than the end time, Redshift will be activated until the end time on the next day.</string>
@@ -2309,14 +2531,14 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="0">
+                 <item row="7" column="0">
                   <widget class="QLabel" name="label_8">
                    <property name="text">
                     <string>End Time</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="9" column="0">
+                 <item row="10" column="0">
                   <widget class="QLabel" name="label_18">
                    <property name="text">
                     <string>Redshift Intensity</string>
@@ -2353,13 +2575,6 @@
                       </property>
                       <property name="text">
                        <string>Redshift</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="Switch" name="redshiftPause">
-                      <property name="text">
-                       <string>Pause Redshift</string>
                       </property>
                      </widget>
                     </item>
@@ -2415,7 +2630,7 @@
                    </layout>
                   </widget>
                  </item>
-                 <item row="6" column="1">
+                 <item row="7" column="1">
                   <widget class="QTimeEdit" name="endRedshift">
                    <property name="dateTime">
                     <datetime>
@@ -2480,7 +2695,7 @@
                    </layout>
                   </widget>
                  </item>
-                 <item row="9" column="1">
+                 <item row="10" column="1">
                   <widget class="QSlider" name="redshiftIntensity">
                    <property name="minimum">
                     <number>1000</number>
@@ -2502,7 +2717,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="5" column="1">
+                 <item row="6" column="1">
                   <widget class="QTimeEdit" name="startRedshift">
                    <property name="dateTime">
                     <datetime>
@@ -2585,7 +2800,7 @@
                    </item>
                   </layout>
                  </item>
-                 <item row="10" column="1">
+                 <item row="11" column="1">
                   <spacer name="verticalSpacer_26">
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
@@ -2597,6 +2812,37 @@
                     </size>
                    </property>
                   </spacer>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QLabel" name="label_44">
+                   <property name="text">
+                    <string>Scheduled</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1">
+                  <layout class="QHBoxLayout" name="horizontalLayout_48">
+                   <item>
+                    <widget class="Switch" name="redshiftPause">
+                     <property name="text">
+                      <string>Pause Redshift</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_34">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
                </widget>
@@ -2654,6 +2900,13 @@
                  <widget class="QRadioButton" name="darkColorThemeRadio">
                   <property name="text">
                    <string>Dar&amp;k</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="grayColorThemeRadio">
+                  <property name="text">
+                   <string>Gray</string>
                   </property>
                  </widget>
                 </item>

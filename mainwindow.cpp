@@ -110,6 +110,9 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->flightIcon->setVisible(flight);
         ui->StatusBarFlight->setVisible(flight);
     });
+    connect(infoPane, &InfoPaneDropdown::redshiftEnabledChanged, [=](bool enabled) {
+        ui->StatusBarRedshift->setVisible(enabled);
+    });
     infoPane->getNetworks();
 
     connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
@@ -190,20 +193,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->timer->setVisible(false);
     ui->timerIcon->setVisible(false);
-    ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(ic16));
     ui->StatusBarNotifications->setVisible(false);
     ui->StatusBarMpris->setVisible(false);
     ui->StatusBarMprisIcon->setVisible(false);
     ui->StatusBarQuietMode->setVisible(false);
     ui->StatusBarLocation->setVisible(false);
     ui->LocationIndication->setVisible(false);
-    ui->StatusBarLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-    ui->LocationIndication->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-    ui->flightIcon->setPixmap(QIcon::fromTheme("flight-mode").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-    ui->StatusBarFlight->setPixmap(QIcon::fromTheme("flight-mode").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->StatusBarLocation->setPixmap(QIcon::fromTheme("gps").pixmap(ic16));
+    ui->LocationIndication->setPixmap(QIcon::fromTheme("gps").pixmap(ic16));
+    ui->flightIcon->setPixmap(QIcon::fromTheme("flight-mode").pixmap(ic16));
+    ui->StatusBarFlight->setPixmap(QIcon::fromTheme("flight-mode").pixmap(ic16));
     ui->flightIcon->setVisible(settings.value("flightmode/on", false).toBool());
     ui->StatusBarFlight->setVisible(settings.value("flightmode/on", false).toBool());
     ui->StatusBarFrame->installEventFilter(this);
+    ui->StatusBarRedshift->setPixmap(QIcon::fromTheme("redshift-on").pixmap(ic16));
 
     ((QBoxLayout*) ui->centralWidget->layout())->removeWidget(ui->StatusBarHoverFrame);
     ui->StatusBarHoverFrame->setParent(ui->StatusBarFrame);

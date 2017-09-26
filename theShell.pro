@@ -39,7 +39,6 @@ SOURCES += main.cpp\
     window.cpp \
     menu.cpp \
     endsessionwait.cpp \
-    app.cpp \
     background.cpp \
     upowerdbus.cpp \
     infopanedropdown.cpp \
@@ -78,13 +77,14 @@ SOURCES += main.cpp\
     notificationsWidget/notificationpopup.cpp \
     notificationsWidget/notificationobject.cpp \
     notificationsWidget/notificationappgroup.cpp \
-    notificationsWidget/notificationpanel.cpp
+    notificationsWidget/notificationpanel.cpp \
+    apps/appslistmodel.cpp \
+    apps/app.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
     menu.h \
     endsessionwait.h \
-    app.h \
     background.h \
     upowerdbus.h \
     infopanedropdown.h \
@@ -124,7 +124,9 @@ HEADERS  += mainwindow.h \
     notificationsWidget/notificationpopup.h \
     notificationsWidget/notificationobject.h \
     notificationsWidget/notificationappgroup.h \
-    notificationsWidget/notificationpanel.h
+    notificationsWidget/notificationpanel.h \
+    apps/appslistmodel.h \
+    apps/app.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

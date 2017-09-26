@@ -51,6 +51,7 @@ public:
         ruRU,
         svSE,
         ltLT,
+        plPL,
         // Unfinished languages follow
         jaJP,
         arSA,
@@ -88,22 +89,25 @@ public:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-vn"), tr("Vietnamese") + " (Tiếng Việt)"));
                     break;
                 case daDK:
-                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-dk"), tr("Danish") + " (Dansk) "));
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-dk"), tr("Danish") + " (Dansk)"));
                     break;
                 case nlNL:
-                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-nl"), tr("Dutch") + " (Nederlands) "));
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-nl"), tr("Dutch") + " (Nederlands)"));
                     break;
                 case esES:
-                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-es"), tr("Spanish") + " (Español) "));
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-es"), tr("Spanish") + " (Español)"));
                     break;
                 case ruRU:
-                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-ru"), tr("Russian") + " (русский) "));
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-ru"), tr("Russian") + " (русский)"));
                     break;
                 case svSE:
-                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-se"), tr("Swedish") + " (Svenska) "));
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-se"), tr("Swedish") + " (Svenska)"));
                     break;
                 case ltLT:
-                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-lt"), tr("Lithuanian") + " (Lietuviškai) "));
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-lt"), tr("Lithuanian") + " (Lietuviškai)"));
+                    break;
+                case plPL:
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-pl"), tr("Polish") + " (Polski)"));
                     break;
                 case arSA:
                     //languageBox->addItem("[SA] " + tr("Arabic") + " (العربية) ");

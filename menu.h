@@ -25,27 +25,21 @@
 #include <QFocusEvent>
 #include <QTimer>
 #include <tpropertyanimation.h>
-#include <QDir>
 #include <QList>
 #include <QListWidgetItem>
-#include <QDirIterator>
 #include <QPaintEvent>
-#include <QPainter>
-#include <QMimeType>
-#include <QMimeDatabase>
 #include <QDrag>
 #include <QCommandLinkButton>
 #include <QStyledItemDelegate>
 #include <systemd/sd-login.h>
 #include "endsessionwait.h"
-#include "app.h"
 #include "mainwindow.h"
 #include "thewaveworker.h"
 #include "dbusevents.h"
 #include "tutorialwindow.h"
 #include "bthandsfree.h"
-#include <QtConcurrent>
 #include <QFutureWatcher>
+#include "apps/appslistmodel.h"
 
 #undef KeyPress
 
@@ -226,57 +220,6 @@ private:
     BTHandsfree* bt;
     bool isListening = false;
     bool istheWaveReady = false;
-};
-
-
-class AppsListModel : public QAbstractListModel
-{
-    Q_OBJECT
-
-public:
-    AppsListModel(BTHandsfree* bt, QObject *parent = 0);
-    ~AppsListModel();
-
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-    void updateData();
-    int pinnedAppsCount;
-    bool launchApp(QModelIndex index);
-    void search(QString query);
-
-    QList<App> availableApps();
-
-    QString currentQuery = "";
-
-public slots:
-    void loadData();
-
-signals:
-    void queryWave(QString query);
-
-private:
-    struct dataLoad {
-        QList<App> apps;
-        int pinnedAppsCount;
-    };
-
-    QSettings settings;
-    QList<App> apps;
-    QList<App> appsShown;
-    QFuture<dataLoad> loadDataFuture;
-    bool queueLoadData = false;
-    BTHandsfree* bt;
-};
-
-class AppsDelegate : public QStyledItemDelegate
-{
-    Q_OBJECT
-
-public:
-    AppsDelegate(QWidget *parent = 0);
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 #endif // MENU_H

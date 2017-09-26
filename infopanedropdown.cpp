@@ -245,6 +245,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->lightColorThemeRadio->setChecked(true);
     } else if (themeType == "dark") {
         ui->darkColorThemeRadio->setChecked(true);
+    } else if (themeType == "gray") {
+        ui->grayColorThemeRadio->setChecked(true);
     } else if (themeType == "decorative") {
         ui->decorativeColorThemeRadio->setChecked(true);
     }
@@ -269,7 +271,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     Internationalisation::fillLanguageBox(ui->localeList);
 
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
-    ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
+    //ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
     ui->thewaveWikipediaSwitch->setChecked(settings.value("thewave/wikipediaSearch", true).toBool());
     ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
@@ -429,7 +431,12 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->RemindersList->setModel(new RemindersListModel);
     ui->RemindersList->setItemDelegate(new RemindersDelegate);
 
+    /*AppsListModel* appsListModel = new AppsListModel();
+    ui->autostartAppList->setModel(appsListModel);
+    ui->autostartAppList->setItemDelegate(new AppsDelegate);*/
+
     updateStruts();
+    updateAutostart();
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -537,11 +544,43 @@ void InfoPaneDropdown::processTimer() {
                     intensity = 6500;
                 }
             }
+
+            //Check Redshift override
+            if (overrideRedshift != 0) {
+                if (intensity == 6500 && overrideRedshift == 1) {
+                    overrideRedshift = 0; //Reset Redshift override
+                } else if (intensity != 6500 && overrideRedshift == 2) {
+                    overrideRedshift = 0; //Reset Redshift override
+                } else {
+                    if (overrideRedshift == 1) {
+                        intensity = 6500;
+                    } else {
+                        intensity = endIntensity;
+                    }
+                }
+            }
+
             redshiftAdjust->start("redshift -O " + QString::number(intensity));
+
             isRedshiftOn = true;
+            if (intensity == 6500 && effectiveRedshiftOn) {
+                effectiveRedshiftOn = false;
+                ui->redshiftSwitch->setChecked(false);
+                emit redshiftEnabledChanged(false);
+            } else if (intensity != 6500 && !effectiveRedshiftOn) {
+                effectiveRedshiftOn = true;
+                ui->redshiftSwitch->setChecked(true);
+                emit redshiftEnabledChanged(true);
+            }
         } else {
             redshiftAdjust->start("redshift -O 6500");
-            isRedshiftOn = false;
+
+            if (isRedshiftOn) {
+                isRedshiftOn = false;
+                effectiveRedshiftOn = false;
+                ui->redshiftSwitch->setChecked(false);
+                emit redshiftEnabledChanged(false);
+            }
         }
     }
 
@@ -999,7 +1038,7 @@ void InfoPaneDropdown::setGeometry(QRect geometry) {
 
 void InfoPaneDropdown::on_lineEdit_2_editingFinished()
 {
-    settings.setValue("startup/autostart", ui->lineEdit_2->text());
+    //settings.setValue("startup/autostart", ui->lineEdit_2->text());
 }
 
 void InfoPaneDropdown::on_resolutionButton_clicked()
@@ -2783,5 +2822,171 @@ void InfoPaneDropdown::notificationAction(uint id, QString action) {
             startTimer(lastTimer);
         }
         this->lastTimer = lastTimer;
+    }
+}
+
+void InfoPaneDropdown::updateAutostart() {
+    ui->autostartList->clear();
+
+    QDir autostartDir(QDir::homePath() + "/.config/autostart");
+    for (QString fileName : autostartDir.entryList(QDir::NoDotAndDotDot | QDir::Files)) {
+        QString file = QDir::homePath() + "/.config/autostart/" + fileName;
+        QFile autostartFile(file);
+        autostartFile.open(QFile::ReadOnly);
+        QString data = autostartFile.readAll();
+        autostartFile.close();
+
+        QString name = fileName;
+        QString icon = "";
+        bool enabled = true;
+        bool validEntry = true;
+
+        for (QString line : data.split("\n")) {
+            QString data = line.mid(line.indexOf("=") + 1);
+            if (line.startsWith("name=", Qt::CaseInsensitive)) {
+                name = data;
+            } else if (line.startsWith("onlyshowin=", Qt::CaseInsensitive)) {
+                if (!data.contains("theshell", Qt::CaseInsensitive)) {
+                    validEntry = false;
+                }
+            } else if (line.startsWith("notshowin=", Qt::CaseInsensitive)) {
+                if (data.contains("theshell", Qt::CaseInsensitive)) {
+                    validEntry = false;
+                }
+            } else if (line.startsWith("hidden=", Qt::CaseInsensitive)) {
+                if (data.toLower() == "true") {
+                    enabled = false;
+                }
+            } else if (line.startsWith("icon=")) {
+                icon = data;
+            }
+        }
+
+        if (validEntry) {
+            QListWidgetItem* item = new QListWidgetItem();
+            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+            if (enabled) {
+                item->setCheckState(Qt::Checked);
+            } else {
+                item->setCheckState(Qt::Unchecked);
+            }
+            if (icon != "") {
+                item->setIcon(QIcon::fromTheme(icon));
+            }
+            item->setText(name);
+            item->setData(Qt::UserRole, file);
+
+            ui->autostartList->addItem(item);
+        }
+    }
+}
+void InfoPaneDropdown::on_autostartList_itemChanged(QListWidgetItem *item)
+{
+    QFile file(item->data(Qt::UserRole).toString());
+
+    file.open(QFile::ReadOnly);
+    QString data = file.readAll();
+    file.close();
+
+    QString rewriteData;
+
+    for (QString line : data.split("\n")) {
+        if (!line.startsWith("hidden", Qt::CaseInsensitive)) {
+            rewriteData.append(line + "\n");
+        }
+    }
+
+    if (item->checkState() == Qt::Unchecked) {
+        rewriteData.append("Hidden=true\n");
+    }
+
+    file.open(QFile::WriteOnly);
+    file.write(rewriteData.toUtf8());
+    file.close();
+
+    this->updateAutostart();
+}
+
+void InfoPaneDropdown::on_backAutoStartApps_clicked()
+{
+    ui->startupStack->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::on_pushButton_4_clicked()
+{
+    ui->startupStack->setCurrentIndex(1);
+}
+
+void InfoPaneDropdown::on_backAutoStartNewApp_clicked()
+{
+    ui->startupStack->setCurrentIndex(1);
+}
+
+void InfoPaneDropdown::on_autostartAppList_clicked(const QModelIndex &index)
+{
+    App app = index.data(Qt::UserRole + 3).value<App>();
+
+    ui->autostartAppName->setText(app.name());
+    ui->autostartAppCommand->setText(app.command().trimmed());
+
+    ui->startupStack->setCurrentIndex(2);
+}
+
+void InfoPaneDropdown::on_enterCommandAutoStartApps_clicked()
+{
+    ui->autostartAppName->setText("");
+    ui->autostartAppCommand->setText("");
+    ui->startupStack->setCurrentIndex(2);
+}
+
+void InfoPaneDropdown::on_addAutostartApp_clicked()
+{
+    QString desktopEntryData;
+    desktopEntryData.append("[Desktop Entry]\n");
+    desktopEntryData.append("Type=Application\n");
+    desktopEntryData.append("Version=1.0\n");
+    desktopEntryData.append("Name=" + ui->autostartAppName->text() + "\n");
+    desktopEntryData.append("Exec=" + ui->autostartAppCommand->text() + "\n");
+    desktopEntryData.append("Terminal=false\n");
+
+    QFile desktopEntry(QDir::homePath() + "/.config/autostart/" + ui->autostartAppName->text().toLower().replace(" ", "_").append(".desktop"));
+
+    if (desktopEntry.exists()) {
+        if (QMessageBox::warning(this, "Autostart Definition", "There is already an autostart definition for this app. Do you want to overwrite it?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No) {
+            return;
+        }
+    }
+
+    desktopEntry.open(QFile::WriteOnly);
+    desktopEntry.write(desktopEntryData.toUtf8());
+    desktopEntry.close();
+
+    updateAutostart();
+    ui->startupStack->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::on_redshiftSwitch_toggled(bool checked)
+{
+    if (effectiveRedshiftOn) {
+        if (checked) { //Turn Redshift back on
+            overrideRedshift = 0;
+        } else { //Temporarily disable Redshift
+            overrideRedshift = 1;
+        }
+    } else {
+        if (checked) { //Temporarily enable Redshift
+            overrideRedshift = 2;
+        } else { //Turn Redshift back off
+            overrideRedshift = 0;
+        }
+    }
+}
+
+void InfoPaneDropdown::on_grayColorThemeRadio_toggled(bool checked)
+{
+    if (checked) {
+        themeSettings->setValue("color/type", "gray");
+        updateAccentColourBox();
+        resetStyle();
     }
 }
