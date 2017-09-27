@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
     qDebug() << QLocale().name();
 
     tsTranslator = new QTranslator;
-    tsTranslator->load(QLocale().name(), "/usr/share/theshell/translations");
+    tsTranslator->load(QLocale().name(), QString(SHAREDIR) + "translations");
     a.installTranslator(tsTranslator);
 
     dbusServiceWatcher = new QDBusServiceWatcher();

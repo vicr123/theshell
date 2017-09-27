@@ -2319,7 +2319,7 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
 
     qDebug() << QLocale().name();
 
-    tsTranslator->load(QLocale().name(), "/usr/share/theshell/translations");
+    tsTranslator->load(QLocale().name(), QString(SHAREDIR) + "translations");
     QApplication::installTranslator(tsTranslator);
 
     //Fill locale box

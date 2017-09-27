@@ -12,7 +12,18 @@ INCLUDEPATH += /usr/include/glib-2.0/ /usr/lib/glib-2.0/include/
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = theshell
+blueprint {
+    message(Configuring theShell to be built as blueprint)
+    TARGET = theshellb
+
+    DEFINES += "SHAREDIR=\\\"/usr/share/theshellb/\\\""
+} else {
+    message(Configuring theShell to be built as stable)
+    TARGET = theshell
+
+    DEFINES += "SHAREDIR=\\\"/usr/share/theshell/\\\""
+}
+
 TEMPLATE = app
 QDBUSXML2CPP_ADAPTOR_HEADER_FLAGS = -l NotificationDBus -i notificationdbus.h
 QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
@@ -153,8 +164,36 @@ FORMS    += mainwindow.ui \
 DISTFILES += \
     org.freedesktop.Notifications.xml \
     theshell.desktop \
-    init_theshell
+    theshellb.desktop
 
 RESOURCES += \
     resources.qrc \
     resources2.qrc
+
+TRANSLATIONS += translations/vi_VN.ts \
+    translations/da_DK.ts \
+    translations/es_ES.ts \
+    translations/lt_LT.ts \
+    translations/nl_NL.ts \
+    translations/pl_PL.ts \
+    translations/pt_BR.ts \
+    translations/ru_RU.ts \
+    translations/sv_SE.ts \
+    translations/en_AU.ts
+
+unix {
+    target.path = /usr/bin/
+
+    translations.files = translations/*
+    xsession.path = /usr/share/xsessions
+
+    blueprint {
+        translations.path = /usr/share/theshellb
+        xsession.files = theshellb.desktop
+    } else {
+        translations.path = /usr/share/theshell
+        xsession.files = theshell.desktop
+    }
+
+    INSTALLS += target
+}
