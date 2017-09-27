@@ -195,5 +195,5 @@ unix {
         xsession.files = theshell.desktop
     }
 
-    INSTALLS += target
+    INSTALLS += target translations xsession
 }
