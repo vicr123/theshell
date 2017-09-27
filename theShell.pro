@@ -188,10 +188,10 @@ unix {
     xsession.path = /usr/share/xsessions
 
     blueprint {
-        translations.path = /usr/share/theshellb
+        translations.path = /usr/share/theshellb/translations
         xsession.files = theshellb.desktop
     } else {
-        translations.path = /usr/share/theshell
+        translations.path = /usr/share/theshell/translations
         xsession.files = theshell.desktop
     }
 
