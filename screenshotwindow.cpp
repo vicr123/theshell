@@ -77,6 +77,28 @@ screenshotWindow::~screenshotWindow()
     delete ui;
 }
 
+void screenshotWindow::keyPressEvent( QKeyEvent* event ) {
+    switch ( event->key() ) {
+    case Qt::Key_Escape:
+        //on ESC, close ui
+        on_discardButton_clicked();
+        break;
+    case Qt::Key_Enter: //We need to capture both Enter and Return since it can vary between keyboards
+        on_saveButton_clicked();
+        break;
+    case Qt::Key_Return:
+        on_saveButton_clicked();
+        break;
+    default:
+        if(Qt::Key_C && modifiers() & Qt::ControlModifier) {
+        on_copyButton_clicked();
+        break;
+        }
+        event->ignore();
+        break;
+    }
+}
+
 void screenshotWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setBrush(QColor(0, 0, 0, 150));

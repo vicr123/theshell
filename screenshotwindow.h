@@ -78,7 +78,8 @@ private:
     QRubberBand* band;
     QPoint bandOrigin;
     QRectF originalGeometry;
-
+    
+    void keyPressEvent(QKeyEvent* event);
     void paintEvent(QPaintEvent* event);
     bool eventFilter(QObject *object, QEvent *event);
 };
