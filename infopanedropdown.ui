@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>18</day>
+                 <day>17</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>18</day>
+                 <day>17</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1739,7 +1739,7 @@
            </item>
            <item>
             <property name="text">
-             <string>Notifications</string>
+             <string>Sounds and Notifications</string>
             </property>
             <property name="icon">
              <iconset theme="preferences-system-notifications">
@@ -2499,8 +2499,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>883</width>
-                  <height>589</height>
+                  <width>372</width>
+                  <height>497</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
