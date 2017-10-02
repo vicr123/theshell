@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>793</width>
-    <height>191</height>
+    <height>197</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string notr="true">Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -54,7 +54,8 @@
         <string>Open In theFile</string>
        </property>
        <property name="icon">
-        <iconset theme="system-file-manager"/>
+        <iconset theme="system-file-manager">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -73,7 +74,8 @@
         <string>Do Nothing</string>
        </property>
        <property name="icon">
-        <iconset theme="dialog-cancel"/>
+        <iconset theme="dialog-cancel">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -142,7 +144,8 @@
         <string>Do Nothing</string>
        </property>
        <property name="icon">
-        <iconset theme="dialog-cancel"/>
+        <iconset theme="dialog-cancel">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>

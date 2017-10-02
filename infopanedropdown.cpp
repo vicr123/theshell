@@ -186,7 +186,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         //ui->networkStatus->setText(label);
     });
 
-    ui->FlightSwitch->setOnIcon(QIcon::fromTheme("flight-mode"));
+    //ui->FlightSwitch->setOnIcon(QIcon::fromTheme("flight-mode"));
 
     QString redshiftStart = settings.value("display/redshiftStart", "").toString();
     if (redshiftStart == "") {
@@ -388,21 +388,16 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->qtVersion->setText(qVersion());
     }
 
-    if (QFileInfo(QApplication::applicationFilePath()).fileName().toLower() == "theshellb") {
+    #ifdef BLUEPRINT
         ui->tsVersion->setText(tr("theShell %1 - Blueprint").arg(TS_VERSION));
         ui->compileDate->setText(tr("You compiled theShell on %1").arg(__DATE__));
-    } else {
+    #else
         ui->tsVersion->setText(tr("theShell %1").arg(TS_VERSION));
         ui->compileDate->setVisible(false);
-    }
+    #endif
 
     //Set up timer ringtones
     ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
-    ui->timerToneSelect->addItem(tr("Happy Bee"));
-    ui->timerToneSelect->addItem(tr("Playing in the Dark"));
-    ui->timerToneSelect->addItem(tr("Ice Cream Truck"));
-    ui->timerToneSelect->addItem(tr("Party Complex"));
-    ui->timerToneSelect->addItem(tr("Salty Ditty"));
 
     connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
         ui->retranslateUi(this);

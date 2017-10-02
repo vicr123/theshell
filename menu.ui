@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>theShellMenu</string>
+   <string notr="true">theShellMenu</string>
   </property>
   <property name="windowIcon">
    <iconset theme="theshell" resource="resources.qrc">

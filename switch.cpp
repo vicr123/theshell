@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #include "switch.h"
@@ -98,9 +98,9 @@ void Switch::mouseMoveEvent(QMouseEvent *event) {
 
 void Switch::mouseReleaseEvent(QMouseEvent *event) {
     if (initialPoint - 2 < mouseClickPoint && initialPoint + 2 > mouseClickPoint) {
-
-        this->setChecked(!this->isChecked());
-        this->checkChanging(!this->isChecked());
+        bool checked = !this->isChecked();
+        this->setChecked(checked);
+        this->checkChanging(checked);
     } else {
         if (mouseMovedLeft) {
             this->setChecked(false);
@@ -116,7 +116,7 @@ void Switch::checkChanging(bool checked) {
     tVariantAnimation* animation = new tVariantAnimation();
     animation->setStartValue(innerRect);
     animation->setDuration(250);
-    animation->setForceAnimation(true);
+    //animation->setForceAnimation(true);
 
     if (checked) {
         animation->setEndValue(QRect(this->width() - this->height(), 0, this->height(), this->height()));
@@ -127,6 +127,10 @@ void Switch::checkChanging(bool checked) {
     animation->setEasingCurve(QEasingCurve::OutCubic);
     connect(animation, &tVariantAnimation::valueChanged, [=](QVariant value) {
         innerRect = value.toRect();
+        this->repaint();
+    });
+    connect(animation, &tVariantAnimation::finished, [=] {
+        innerRect = animation->endValue().toRect();
         this->repaint();
     });
     connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));

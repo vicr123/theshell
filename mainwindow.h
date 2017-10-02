@@ -41,7 +41,6 @@
 #include "notificationsWidget/notificationsdbusadaptor.h"
 #include "upowerdbus.h"
 #include "infopanedropdown.h"
-#include "touchkeyboard.h"
 #include "systrayicons.h"
 #include "fadebutton.h"
 #include "FlowLayout/flowlayout.h"
@@ -128,8 +127,6 @@ private slots:
     void numNotificationsChanged(int notifications);
 
     void pullDownGesture();
-
-    void on_pushButton_4_clicked();
 
     void setTimer(QString timer);
 

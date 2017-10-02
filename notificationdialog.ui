@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>786</width>
-    <height>114</height>
+    <height>119</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>NotificationDialog</string>
+   <string notr="true">NotificationDialog</string>
   </property>
   <property name="windowIcon">
    <iconset theme="theshell" resource="resources.qrc">
@@ -67,7 +67,7 @@
      <item>
       <widget class="QStackedWidget" name="notificationType">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page1">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -121,7 +121,7 @@
          <item>
           <widget class="QLabel" name="title1">
            <property name="text">
-            <string>Summary</string>
+            <string notr="true">Summary</string>
            </property>
           </widget>
          </item>
@@ -133,7 +133,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Body</string>
+            <string notr="true">Body</string>
            </property>
           </widget>
          </item>

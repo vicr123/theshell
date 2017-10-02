@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>theShellTopPanel</string>
+   <string notr="true">theShellTopPanel</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
@@ -329,7 +329,7 @@
           <item>
            <widget class="ClickableLabel" name="notifications">
             <property name="text">
-             <string>No Notifications</string>
+             <string notr="true">No Notifications</string>
             </property>
            </widget>
           </item>
@@ -740,7 +740,7 @@
           </font>
          </property>
          <property name="text">
-          <string>16:20</string>
+          <string notr="true">16:20</string>
          </property>
         </widget>
        </item>
@@ -761,7 +761,7 @@
        <item>
         <widget class="QLabel" name="StatusBarBattery">
          <property name="text">
-          <string>Battery</string>
+          <string notr="true">Battery</string>
          </property>
         </widget>
        </item>
@@ -815,14 +815,14 @@ padding-right: 3px;</string>
        <item>
         <widget class="QLabel" name="StatusBarMprisIcon">
          <property name="text">
-          <string>Icon</string>
+          <string notr="true">Icon</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="StatusBarMpris">
          <property name="text">
-          <string>Song Name</string>
+          <string notr="true">Song Name</string>
          </property>
         </widget>
        </item>

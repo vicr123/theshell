@@ -54,25 +54,25 @@ void AvailableNetworksList::reloadAP() {
             accessPoint.known = false;
 
             if ((accessPoint.RsnFlags & PairTkip) && (capabilities & TkipCipher)) {
-                if (accessPoint.WpaFlags & KeyMgmt8021X) {
+                if (accessPoint.WpaFlags & KeyMgmt8021X || accessPoint.RsnFlags & KeyMgmt8021X) {
                     accessPoint.security = Wpa2Enterprise;
                 } else {
                     accessPoint.security = Wpa2Psk;
                 }
             } else if ((accessPoint.RsnFlags & PairCcmp) && (capabilities & CcmpCipher)) {
-                if (accessPoint.WpaFlags & KeyMgmt8021X) {
+                if (accessPoint.WpaFlags & KeyMgmt8021X || accessPoint.RsnFlags & KeyMgmt8021X) {
                     accessPoint.security = Wpa2Enterprise;
                 } else {
                     accessPoint.security = Wpa2Psk;
                 }
             } else if ((accessPoint.WpaFlags & KeyMgmtPsk) && (accessPoint.WpaFlags & PairTkip) && (capabilities & TkipCipher)) {
-                if (accessPoint.WpaFlags & KeyMgmt8021X) {
+                if (accessPoint.WpaFlags & KeyMgmt8021X || accessPoint.RsnFlags & KeyMgmt8021X) {
                     accessPoint.security = WpaEnterprise;
                 } else {
                     accessPoint.security = WpaPsk;
                 }
             } else if ((accessPoint.WpaFlags & KeyMgmtPsk) && (accessPoint.WpaFlags & PairCcmp) && (capabilities & CcmpCipher)) {
-                if (accessPoint.WpaFlags & KeyMgmt8021X) {
+                if (accessPoint.WpaFlags & KeyMgmt8021X || accessPoint.RsnFlags & KeyMgmt8021X) {
                     accessPoint.security = WpaEnterprise;
                 } else {
                     accessPoint.security = WpaPsk;

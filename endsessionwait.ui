@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Ending Session</string>
+   <string notr="true">Ending Session</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
@@ -801,7 +801,7 @@
       <item>
        <widget class="QLabel" name="ArrowUp">
         <property name="text">
-         <string>Up</string>
+         <string notr="true">Up</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

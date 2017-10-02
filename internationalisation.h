@@ -133,6 +133,40 @@ public:
             }
         }
 
+        if (false) {
+            Q_UNUSED(QT_TR_NOOP("Afrikaans"));
+            Q_UNUSED(QT_TR_NOOP("Arabic"));
+            Q_UNUSED(QT_TR_NOOP("Bulgarian"));
+            Q_UNUSED(QT_TR_NOOP("Catalan"));
+            Q_UNUSED(QT_TR_NOOP("Chinese"));
+            Q_UNUSED(QT_TR_NOOP("Croatian"));
+            Q_UNUSED(QT_TR_NOOP("Czech"));
+            Q_UNUSED(QT_TR_NOOP("Estonian"));
+            Q_UNUSED(QT_TR_NOOP("Finnish"));
+            Q_UNUSED(QT_TR_NOOP("French"));
+            Q_UNUSED(QT_TR_NOOP("German"));
+            Q_UNUSED(QT_TR_NOOP("Greek"));
+            Q_UNUSED(QT_TR_NOOP("Hebrew"));
+            Q_UNUSED(QT_TR_NOOP("Hungarian"));
+            Q_UNUSED(QT_TR_NOOP("Italian"));
+            Q_UNUSED(QT_TR_NOOP("Icelandic"));
+            Q_UNUSED(QT_TR_NOOP("Indonesian"));
+            Q_UNUSED(QT_TR_NOOP("Japanese"));
+            Q_UNUSED(QT_TR_NOOP("Korean"));
+            Q_UNUSED(QT_TR_NOOP("Latvian"));
+            Q_UNUSED(QT_TR_NOOP("Māori"));
+            Q_UNUSED(QT_TR_NOOP("Norwegian"));
+            Q_UNUSED(QT_TR_NOOP("Polish"));
+            Q_UNUSED(QT_TR_NOOP("Portuguese"));
+            Q_UNUSED(QT_TR_NOOP("Serbian"));
+            Q_UNUSED(QT_TR_NOOP("Slovak"));
+            Q_UNUSED(QT_TR_NOOP("Slovenian"));
+            Q_UNUSED(QT_TR_NOOP("Tagalog"));
+            Q_UNUSED(QT_TR_NOOP("Thai"));
+            Q_UNUSED(QT_TR_NOOP("Turkish"));
+            Q_UNUSED(QT_TR_NOOP("Ukranian"));
+        }
+
         QSettings settings;
 
         QString currentLocale = settings.value("locale/language", "en_US").toString();

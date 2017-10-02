@@ -11,10 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Run</string>
+   <string notr="true">Run</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="system-run"/>
+   <iconset theme="system-run">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -57,7 +58,8 @@
         <string>Cancel</string>
        </property>
        <property name="icon">
-        <iconset theme="dialog-cancel"/>
+        <iconset theme="dialog-cancel">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -67,7 +69,8 @@
         <string>Run</string>
        </property>
        <property name="icon">
-        <iconset theme="system-run"/>
+        <iconset theme="system-run">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>

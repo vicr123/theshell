@@ -78,11 +78,6 @@
 <context>
     <name>Background</name>
     <message>
-        <location filename="../background.ui" line="14"/>
-        <source>theShell Background</source>
-        <translation>Фон theShell</translation>
-    </message>
-    <message>
         <location filename="../background.ui" line="68"/>
         <source>Change Background</source>
         <translation>Сменить фон</translation>
@@ -258,11 +253,6 @@
 <context>
     <name>EndSessionWait</name>
     <message>
-        <location filename="../endsessionwait.ui" line="14"/>
-        <source>Ending Session</source>
-        <translation>Завершаем сессию</translation>
-    </message>
-    <message>
         <location filename="../endsessionwait.ui" line="137"/>
         <source>Closing all open applications. Please wait...</source>
         <translation>Закрываем приложения. Пожалуйста подождите...</translation>
@@ -358,11 +348,6 @@
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../endsessionwait.ui" line="804"/>
-        <source>Up</source>
-        <translation>Верх</translation>
-    </message>
-    <message>
         <location filename="../endsessionwait.ui" line="829"/>
         <source>All apps will be closed and your device will turn off completely.</source>
         <translation>Все приложения закроются и ваше устройство отключится.</translation>
@@ -385,20 +370,7 @@
     </message>
 </context>
 <context>
-    <name>HotkeyHud</name>
-    <message>
-        <location filename="../hotkeyhud.ui" line="14"/>
-        <source>HotkeyHud</source>
-        <translation>Горячие клавиши</translation>
-    </message>
-</context>
-<context>
     <name>InfoPaneDropdown</name>
-    <message>
-        <location filename="../infopanedropdown.ui" line="14"/>
-        <source>theShellStatusCenter</source>
-        <translation></translation>
-    </message>
     <message>
         <location filename="../infopanedropdown.ui" line="114"/>
         <source>Clock</source>
@@ -1027,11 +999,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2909"/>
-        <source>Gray</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="2916"/>
         <source>Decorati&amp;ve</source>
         <translation type="unfinished"></translation>
@@ -1101,6 +1068,11 @@
         <location filename="../infopanedropdown.ui" line="3732"/>
         <source>Users</source>
         <translation>Пользователи</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2909"/>
+        <source>&amp;Gray</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3770"/>
@@ -1601,32 +1573,169 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../internationalisation.h" line="110"/>
+        <location filename="../internationalisation.h" line="159"/>
         <source>Polish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="137"/>
+        <source>Afrikaans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="138"/>
+        <source>Arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="139"/>
+        <source>Bulgarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="140"/>
+        <source>Catalan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="142"/>
+        <source>Croatian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="143"/>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="144"/>
+        <source>Estonian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="145"/>
+        <source>Finnish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="148"/>
+        <source>Greek</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="149"/>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="150"/>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="151"/>
+        <source>Italian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="152"/>
+        <source>Icelandic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="153"/>
+        <source>Indonesian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="154"/>
+        <source>Japanese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="155"/>
+        <source>Korean</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="156"/>
+        <source>Latvian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="158"/>
+        <source>Norwegian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="160"/>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="161"/>
+        <source>Serbian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="162"/>
+        <source>Slovak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="163"/>
+        <source>Slovenian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="164"/>
+        <source>Tagalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="165"/>
+        <source>Thai</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="166"/>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="167"/>
+        <source>Ukranian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="141"/>
+        <source>Chinese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="146"/>
+        <source>French</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="157"/>
+        <source>Māori</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="147"/>
+        <source>German</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>LoginSplash</name>
-    <message>
-        <location filename="../loginsplash.ui" line="429"/>
-        <source>Logging In...</source>
-        <translation>Входим...</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
-    <message>
-        <location filename="../mainwindow.ui" line="20"/>
-        <source>theShellTopPanel</source>
-        <translation></translation>
-    </message>
     <message>
         <location filename="../mainwindow.ui" line="160"/>
         <source>theWave</source>
         <translation>theWave</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="332"/>
         <location filename="../mainwindow.ui" line="884"/>
         <source>No Notifications</source>
         <translation>Нет уведомлений</translation>
@@ -1662,16 +1771,6 @@ Items that will be kept if you choose to keep files:
         <translation>Следующий рабочий стол</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="743"/>
-        <source>16:20</source>
-        <translation>16:20</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="764"/>
-        <source>Battery</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="860"/>
         <source>Click to show bar</source>
         <translation type="unfinished"></translation>
@@ -1685,16 +1784,6 @@ Items that will be kept if you choose to keep files:
         <location filename="../mainwindow.ui" line="893"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="818"/>
-        <source>Icon</source>
-        <translation>Иконка</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="825"/>
-        <source>Song Name</source>
-        <translation>Название песни</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="243"/>
@@ -1721,26 +1810,16 @@ Items that will be kept if you choose to keep files:
         <source>No notifications</source>
         <translation>Нет уведомлений</translation>
     </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1579"/>
-        <source>1 notification</source>
-        <translation>1 уведомление</translation>
-    </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="1581"/>
-        <source>%1 notifications</source>
-        <translation>
-            <numerusform>%1 уведомление</numerusform>
+        <location filename="../mainwindow.cpp" line="1578"/>
+        <source>%n notification(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
 <context>
     <name>Menu</name>
-    <message>
-        <location filename="../menu.ui" line="14"/>
-        <source>theShellMenu</source>
-        <translation></translation>
-    </message>
     <message>
         <location filename="../menu.ui" line="50"/>
         <source>Install theShell OS</source>
@@ -2201,8 +2280,8 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="140"/>
-        <location filename="../networkmanager/networkwidget.ui" line="350"/>
-        <location filename="../networkmanager/networkwidget.ui" line="440"/>
+        <location filename="../networkmanager/networkwidget.ui" line="715"/>
+        <location filename="../networkmanager/networkwidget.ui" line="805"/>
         <source>Back</source>
         <translation type="unfinished">Назад</translation>
     </message>
@@ -2252,27 +2331,156 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="321"/>
-        <source>WPA Enterprise settings coming soon. For now, use nmcli in a terminal to connect to this network.</source>
+        <location filename="../networkmanager/networkwidget.ui" line="341"/>
+        <source>TLS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="374"/>
+        <location filename="../networkmanager/networkwidget.ui" line="346"/>
+        <source>LEAP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="351"/>
+        <source>FAST</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="356"/>
+        <source>TTLS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="361"/>
+        <source>PEAP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="369"/>
+        <source>EAP Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="398"/>
+        <source>Servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="405"/>
+        <source>Private Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="412"/>
+        <location filename="../networkmanager/networkwidget.ui" line="598"/>
+        <source>CA Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="419"/>
+        <source>User Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="426"/>
+        <source>Subject Match</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="433"/>
+        <source>Identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="440"/>
+        <source>Alternative Subject Matches</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="447"/>
+        <source>Private Key Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="454"/>
+        <location filename="../networkmanager/networkwidget.ui" line="486"/>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="522"/>
+        <location filename="../networkmanager/networkwidget.ui" line="584"/>
+        <source>Username</source>
+        <translation type="unfinished">Имя пользователя</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="529"/>
+        <location filename="../networkmanager/networkwidget.ui" line="605"/>
+        <source>Password</source>
+        <translation type="unfinished">Пароль</translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="564"/>
+        <source>Anonymous Identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="591"/>
+        <source>PEAP version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="612"/>
+        <source>Phase 2 Authentication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="637"/>
+        <source>Auto&amp;matic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="644"/>
+        <source>Version &amp;1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="651"/>
+        <source>Version &amp;2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="674"/>
+        <source>MSCHAPv2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="679"/>
+        <source>MD5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="684"/>
+        <source>GTC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="739"/>
         <source>Connect</source>
         <translation type="unfinished">Подключиться</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="411"/>
+        <location filename="../networkmanager/networkwidget.ui" line="776"/>
         <source>Information</source>
         <translation type="unfinished">Информация</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="425"/>
+        <location filename="../networkmanager/networkwidget.ui" line="790"/>
         <source>Property</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="430"/>
+        <location filename="../networkmanager/networkwidget.ui" line="795"/>
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2295,13 +2503,13 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="132"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="666"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="667"/>
         <source>Wi-Fi</source>
         <translation type="unfinished">Wi-Fi</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="133"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="667"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="668"/>
         <source>Connecting to %1...</source>
         <translation type="unfinished">Подключаемся к %1...</translation>
     </message>
@@ -2329,23 +2537,18 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="657"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="658"/>
         <source>Connection Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="677"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="678"/>
         <source>Enter the information to connect to a new network</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>NewMedia</name>
-    <message>
-        <location filename="../newmedia.ui" line="14"/>
-        <source>Dialog</source>
-        <translation>Диалог</translation>
-    </message>
     <message>
         <location filename="../newmedia.ui" line="25"/>
         <source>New Media Inserted</source>
@@ -2362,24 +2565,19 @@ Items that will be kept if you choose to keep files:
         <translation>Открыть в theFile</translation>
     </message>
     <message>
-        <location filename="../newmedia.ui" line="73"/>
-        <location filename="../newmedia.ui" line="142"/>
+        <location filename="../newmedia.ui" line="74"/>
+        <location filename="../newmedia.ui" line="144"/>
         <source>Do Nothing</source>
         <translation>Игнорировать</translation>
     </message>
     <message>
-        <location filename="../newmedia.ui" line="122"/>
+        <location filename="../newmedia.ui" line="124"/>
         <source>Alternatively, remove the media now. (It&apos;s already ejected!)</source>
         <translation>Или вы можете извлечь устройство (оно уже отключено!)</translation>
     </message>
 </context>
 <context>
     <name>NotificationAppGroup</name>
-    <message>
-        <location filename="../notificationsWidget/notificationappgroup.ui" line="20"/>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../notificationsWidget/notificationappgroup.cpp" line="102"/>
         <source>Collapse Notifications</source>
@@ -2396,45 +2594,9 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>NotificationDialog</name>
     <message>
-        <location filename="../notificationdialog.ui" line="14"/>
-        <source>NotificationDialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../notificationdialog.ui" line="124"/>
-        <source>Summary</source>
-        <translation>Суммируя</translation>
-    </message>
-    <message>
-        <location filename="../notificationdialog.ui" line="136"/>
-        <source>Body</source>
-        <translation>Тело</translation>
-    </message>
-    <message>
         <location filename="../notificationdialog.ui" line="184"/>
         <source>Notification from</source>
         <translation>Уведомление от</translation>
-    </message>
-</context>
-<context>
-    <name>NotificationPanel</name>
-    <message>
-        <location filename="../notificationsWidget/notificationpanel.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../notificationsWidget/notificationpanel.ui" line="90"/>
-        <source>Body</source>
-        <translation type="unfinished">Тело</translation>
-    </message>
-</context>
-<context>
-    <name>NotificationPopup</name>
-    <message>
-        <location filename="../notificationsWidget/notificationpopup.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished">Диалог</translation>
     </message>
 </context>
 <context>
@@ -2452,11 +2614,6 @@ Items that will be kept if you choose to keep files:
 </context>
 <context>
     <name>Onboarding</name>
-    <message>
-        <location filename="../onboarding.ui" line="14"/>
-        <source>Dialog</source>
-        <translation>Диалог</translation>
-    </message>
     <message>
         <location filename="../onboarding.ui" line="57"/>
         <source>Select Language</source>
@@ -2587,19 +2744,18 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>RunDialog</name>
     <message>
-        <location filename="../rundialog.ui" line="14"/>
-        <location filename="../rundialog.ui" line="28"/>
-        <location filename="../rundialog.ui" line="67"/>
+        <location filename="../rundialog.ui" line="29"/>
+        <location filename="../rundialog.ui" line="69"/>
         <source>Run</source>
         <translation>Запустить</translation>
     </message>
     <message>
-        <location filename="../rundialog.ui" line="35"/>
+        <location filename="../rundialog.ui" line="36"/>
         <source>Enter Command</source>
         <translation>Введите комманду</translation>
     </message>
     <message>
-        <location filename="../rundialog.ui" line="57"/>
+        <location filename="../rundialog.ui" line="58"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -2670,164 +2826,6 @@ Items that will be kept if you choose to keep files:
         <location filename="../systrayicons.cpp" line="67"/>
         <source>System Tray Unavailable.</source>
         <translation>Системный трей недоступен.</translation>
-    </message>
-</context>
-<context>
-    <name>TouchKeyboard</name>
-    <message>
-        <location filename="../touchkeyboard.ui" line="25"/>
-        <source>Dialog</source>
-        <translation>Диалог</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="56"/>
-        <source>q</source>
-        <translation>q</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="72"/>
-        <source>w</source>
-        <translation>w</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="88"/>
-        <source>e</source>
-        <translation>e</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="104"/>
-        <source>r</source>
-        <translation>r</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="120"/>
-        <source>t</source>
-        <translation>t</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="136"/>
-        <source>y</source>
-        <translation>y</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="152"/>
-        <source>u</source>
-        <translation>u</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="168"/>
-        <source>i</source>
-        <translation>i</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="184"/>
-        <source>o</source>
-        <translation>o</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="200"/>
-        <source>p</source>
-        <translation>p</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="216"/>
-        <source>a</source>
-        <translation>a</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="232"/>
-        <source>s</source>
-        <translation>s</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="248"/>
-        <source>d</source>
-        <translation>d</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="264"/>
-        <source>f</source>
-        <translation>f</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="280"/>
-        <source>g</source>
-        <translation>g</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="296"/>
-        <source>h</source>
-        <translation>h</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="312"/>
-        <source>j</source>
-        <translation>j</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="328"/>
-        <source>k</source>
-        <translation>k</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="344"/>
-        <source>l</source>
-        <translation>l</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="360"/>
-        <source>z</source>
-        <translation>z</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="376"/>
-        <source>x</source>
-        <translation>x</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="392"/>
-        <source>c</source>
-        <translation>c</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="408"/>
-        <source>v</source>
-        <translation>v</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="424"/>
-        <source>b</source>
-        <translation>b</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="440"/>
-        <source>n</source>
-        <translation>n</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="456"/>
-        <source>m</source>
-        <translation>m</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="472"/>
-        <source>⏎</source>
-        <translation>⏎</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="488"/>
-        <source>⇧</source>
-        <translation>⇧</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="507"/>
-        <source>⌫</source>
-        <translation>⌫</translation>
-    </message>
-    <message>
-        <location filename="../touchkeyboard.ui" line="523"/>
-        <source>123</source>
-        <translation>123</translation>
     </message>
 </context>
 <context>
@@ -3052,11 +3050,6 @@ Enter the name or path of a window manager to attempt to start a different windo
 </context>
 <context>
     <name>screenshotWindow</name>
-    <message>
-        <location filename="../screenshotwindow.ui" line="14"/>
-        <source>Dialog</source>
-        <translation>Диалог</translation>
-    </message>
     <message>
         <location filename="../screenshotwindow.ui" line="33"/>
         <source>Select a region using the mouse. To clear the region, right click.</source>

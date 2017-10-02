@@ -17,6 +17,7 @@ blueprint {
     TARGET = theshellb
 
     DEFINES += "SHAREDIR=\\\"/usr/share/theshellb/\\\""
+    DEFINES += "BLUEPRINT"
 } else {
     message(Configuring theShell to be built as stable)
     TARGET = theshell
@@ -60,7 +61,6 @@ SOURCES += main.cpp\
     choosebackground.cpp \
     switch.cpp \
     FlowLayout/flowlayout.cpp \
-    touchkeyboard.cpp \
     segfaultdialog.cpp \
     globalfilter.cpp \
     systrayicons.cpp \
@@ -106,7 +106,6 @@ HEADERS  += mainwindow.h \
     choosebackground.h \
     switch.h \
     FlowLayout/flowlayout.h \
-    touchkeyboard.h \
     segfaultdialog.h \
     globalfilter.h \
     systrayicons.h \
@@ -147,7 +146,6 @@ FORMS    += mainwindow.ui \
     infopanedropdown.ui \
     loginsplash.ui \
     choosebackground.ui \
-    touchkeyboard.ui \
     segfaultdialog.ui \
     hotkeyhud.ui \
     rundialog.ui \
@@ -179,7 +177,10 @@ TRANSLATIONS += translations/vi_VN.ts \
     translations/pt_BR.ts \
     translations/ru_RU.ts \
     translations/sv_SE.ts \
-    translations/en_AU.ts
+    translations/en_AU.ts \
+    translations/en_US.ts \
+    translations/en_GB.ts \
+    translations/en_NZ.ts
 
 unix {
     target.path = /usr/bin/

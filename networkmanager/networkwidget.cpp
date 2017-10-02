@@ -637,13 +637,14 @@ void NetworkWidget::on_SecurityConnectButton_clicked()
             security.insert("key-mgmt", "wpa-psk");
             security.insert("psk", ui->securityKey->text());
             break;
-        case 4: //WPA(2)-Enterprise
+        case 4: { //WPA(2)-Enterprise
             tToast* toast = new tToast();
             toast->setTitle(tr("WPA Enterprise"));
             toast->setText(tr("WPA Enterprise connections are not supported yet."));
             connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
             toast->show(this->window());
             return;
+        }
     }
     settings.insert("802-11-wireless-security", security);
 
@@ -697,4 +698,30 @@ void NetworkWidget::on_SecurityType_currentIndexChanged(int index)
             ui->SecurityKeysStack->setCurrentIndex(2);
             break;
     }
+}
+
+void NetworkWidget::on_EnterpriseAuthMethod_currentIndexChanged(int index)
+{
+    ui->WpaEnterpriseAuthDetails->setCurrentIndex(index);
+}
+
+QString NetworkWidget::selectCertificate() {
+    QFileDialog* dialog = new QFileDialog(this);
+    dialog->setNameFilter("Certificates (*.der *.pem *.crt *.cer)");
+    if (dialog->exec() == QFileDialog::Accepted) {
+        dialog->deleteLater();
+        return dialog->selectedFiles().first();
+    } else {
+        dialog->deleteLater();
+        return "";
+    }
+}
+void NetworkWidget::on_EnterpriseTLSUserCertificateSelect_clicked()
+{
+    ui->EnterpriseTLSUserCertificate->setText(selectCertificate());
+}
+
+void NetworkWidget::on_EnterpriseTLSCACertificateSelect_clicked()
+{
+    ui->EnterpriseTLSCACertificate->setText(selectCertificate());
 }

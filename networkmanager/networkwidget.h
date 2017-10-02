@@ -70,6 +70,14 @@ private slots:
 
     void on_SecurityType_currentIndexChanged(int index);
 
+    void on_EnterpriseAuthMethod_currentIndexChanged(int index);
+
+    QString selectCertificate();
+
+    void on_EnterpriseTLSUserCertificateSelect_clicked();
+
+    void on_EnterpriseTLSCACertificateSelect_clicked();
+
 public slots:
     void updateGlobals();
 

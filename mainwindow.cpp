@@ -114,6 +114,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->StatusBarRedshift->setVisible(enabled);
     });
     infoPane->getNetworks();
+    ui->StatusBarRedshift->setVisible(false);
 
     connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
         if (updbus->hasBattery()) {
@@ -261,10 +262,10 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     });
 
-    if (QFileInfo(QApplication::applicationFilePath()).fileName().toLower() == "theshellb") {
+    #ifdef BLUEPRINT
         //Apply Blueprint branding
         ui->openMenu->setIcon(QIcon(":/icons/icon-bp.svg"));
-    }
+    #endif
 }
 
 MainWindow::~MainWindow()
@@ -1575,11 +1576,7 @@ void MainWindow::numNotificationsChanged(int notifications) {
         ui->StatusBarNotifications->setVisible(false);
     } else {
         font.setBold(true);
-        if (notifications == 1) {
-            ui->notifications->setText(tr("1 notification"));
-        } else {
-            ui->notifications->setText(tr("%1 notifications", NULL, notifications).arg(QString::number(notifications)));
-        }
+        ui->notifications->setText(tr("%n notification(s)", NULL, notifications));
         ui->StatusBarNotifications->setText(QString::number(notifications));
         ui->StatusBarNotifications->setVisible(true);
     }
@@ -1588,15 +1585,6 @@ void MainWindow::numNotificationsChanged(int notifications) {
 
 InfoPaneDropdown* MainWindow::getInfoPane() {
     return this->infoPane;
-}
-
-void MainWindow::on_pushButton_4_clicked()
-{
-    TouchKeyboard* keyboard = new TouchKeyboard();
-    keyboard->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::Dialog | Qt::FramelessWindowHint);
-    keyboard->setAttribute(Qt::WA_ShowWithoutActivating, true);
-    keyboard->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
-    keyboard->show();
 }
 
 void MainWindow::setTimer(QString timer) {

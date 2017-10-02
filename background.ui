@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>theShell Background</string>
+   <string notr="true">theShell Background</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
