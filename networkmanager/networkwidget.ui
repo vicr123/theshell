@@ -29,7 +29,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="devices">
       <property name="autoFillBackground">
@@ -73,8 +73,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>506</width>
-            <height>380</height>
+            <width>642</width>
+            <height>446</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">

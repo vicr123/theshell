@@ -332,18 +332,20 @@ void UPowerDBus::DeviceChanged() {
                     QDBusReply<int> currentCharge = batteryInterface.call("charge");
                     QDBusReply<bool> charging = batteryInterface.call("isCharging");
 
-                    if (currentCharge != -1) {
-                        QString batteryText;
-                        if (charging) {
-                            if (currentCharge == 100) {
-                                batteryText = tr("%1% battery on %2 (Full)").arg(QString::number(currentCharge), name);
+                    if (currentCharge.isValid()) {
+                        if (currentCharge != -1) {
+                            QString batteryText;
+                            if (charging) {
+                                if (currentCharge == 100) {
+                                    batteryText = tr("%1% battery on %2 (Full)").arg(QString::number(currentCharge), name);
+                                } else {
+                                    batteryText = tr("%1% battery on %2 (Charging)").arg(QString::number(currentCharge), name);
+                                }
                             } else {
-                                batteryText = tr("%1% battery on %2 (Charging)").arg(QString::number(currentCharge), name);
+                                batteryText = tr("%1% battery on %2 (Discharging)").arg(QString::number(currentCharge), name);
                             }
-                        } else {
-                            batteryText = tr("%1% battery on %2 (Discharging)").arg(QString::number(currentCharge), name);
+                            displayOutput.append(batteryText);
                         }
-                        displayOutput.append(batteryText);
                     }
                 }
             }
