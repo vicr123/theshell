@@ -33,7 +33,7 @@ extern float getDPIScaling();
 extern QDBusServiceWatcher* dbusServiceWatcher;
 extern QDBusServiceWatcher* dbusServiceWatcherSystem;
 extern UPowerDBus* updbus;
-extern NotificationsDBusAdaptor* ndbus;
+extern NotificationDBus* ndbus;
 extern DBusSignals* dbusSignals;
 
 InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
@@ -53,15 +53,12 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     this->MainWindowId = MainWindowId;
 
-    //ndbus->setDropdownPane(this);
+    ndbus->setDropdownPane(this);
 
-    /*connect(ndbus, SIGNAL(newNotification(int,QString,QString,QIcon)), this, SLOT(newNotificationReceived(int,QString,QString,QIcon)));
+    connect(ndbus, SIGNAL(newNotification(int,QString,QString,QIcon)), this, SLOT(newNotificationReceived(int,QString,QString,QIcon)));
     connect(ndbus, SIGNAL(removeNotification(int)), this, SLOT(removeNotification(int)));
-    connect(ndbus, SIGNAL(NotificationClosed(uint,uint)), this, SLOT(notificationClosed(uint,uint)));*/
-    //connect(this, SIGNAL(closeNotification(int)), ndbus, SLOT(CloseNotificationUserInitiated(int)));
     connect(ndbus, SIGNAL(NotificationClosed(uint,uint)), this, SLOT(notificationClosed(uint,uint)));
-    connect(ndbus, SIGNAL(ActionInvoked(uint,QString)), this, SLOT(notificationAction(uint,QString)));
-    connect(ui->notificationsWidget, SIGNAL(numNotificationsChanged(int)), this, SIGNAL(numNotificationsChanged(int)));
+    connect(this, SIGNAL(closeNotification(int)), ndbus, SLOT(CloseNotificationUserInitiated(int)));
 
     connect(dbusServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(DBusServiceRegistered(QString)));
     connect(dbusServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(DBusServiceUnregistered(QString)));
@@ -91,9 +88,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     ui->label_7->setVisible(false);
     ui->pushButton_3->setVisible(false);
-    ui->BatteryChargeScrollBar->setVisible(false);
-    //ui->networkKey->setVisible(false);
-    //ui->networkConnect->setVisible(false);
+    ui->networkKey->setVisible(false);
+    ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
     ui->userSettingsDeleteUser->setProperty("type", "destructive");
     ui->userSettingsDeleteUserAndData->setProperty("type", "destructive");
@@ -121,7 +117,21 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->kdeconnectLabel->setVisible(false);
     }
 
-    connect(ui->NetworkManager, SIGNAL(updateBarDisplay(QString,QIcon)), this, SIGNAL(networkLabelChanged(QString,QIcon)));
+    {
+        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "DeviceAdded", this, SLOT(newNetworkDevice(QDBusObjectPath)));
+        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "DeviceRemoved", this, SLOT(getNetworks()));
+
+        QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
+        QDBusReply<QList<QDBusObjectPath>> reply = i->call("GetDevices");
+
+        if (reply.isValid()) {
+            for (QDBusObjectPath device : reply.value()) {
+                newNetworkDevice(device);
+            }
+        }
+
+        delete i;
+    }
 
     {
         QDBusInterface interface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus());
@@ -183,10 +193,10 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     }
 
     connect(this, &InfoPaneDropdown::networkLabelChanged, [=](QString label) {
-        //ui->networkStatus->setText(label);
+        ui->networkStatus->setText(label);
     });
 
-    //ui->FlightSwitch->setOnIcon(QIcon::fromTheme("flight-mode"));
+    ui->FlightSwitch->setOnIcon(QIcon::fromTheme("flight-mode"));
 
     QString redshiftStart = settings.value("display/redshiftStart", "").toString();
     if (redshiftStart == "") {
@@ -245,33 +255,15 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->lightColorThemeRadio->setChecked(true);
     } else if (themeType == "dark") {
         ui->darkColorThemeRadio->setChecked(true);
-    } else if (themeType == "gray") {
-        ui->grayColorThemeRadio->setChecked(true);
     } else if (themeType == "decorative") {
         ui->decorativeColorThemeRadio->setChecked(true);
-    }
-
-    int dpi = sessionSettings->value("screen/dpi", 96).toInt();
-    switch (dpi) {
-        case 96:
-            ui->dpi100->setChecked(true);
-            break;
-        case 144:
-            ui->dpi150->setChecked(true);
-            break;
-        case 192:
-            ui->dpi200->setChecked(true);
-            break;
-        case 288:
-            ui->dpi300->setChecked(true);
-            break;
     }
 
     //Populate the language box
     Internationalisation::fillLanguageBox(ui->localeList);
 
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
-    //ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
+    ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
     ui->thewaveWikipediaSwitch->setChecked(settings.value("thewave/wikipediaSearch", true).toBool());
     ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
@@ -293,10 +285,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->TwentyFourHourSwitch->setChecked(settings.value("time/use24hour", true).toBool());
     ui->AttenuateSwitch->setChecked(settings.value("notifications/attenuate", true).toBool());
     ui->BarOnBottom->setChecked(!settings.value("bar/onTop", true).toBool());
-    ui->AutoShowBarSwitch->setChecked(settings.value("bar/autoshow", true).toBool());
-    ui->SoundFeedbackSoundSwitch->setChecked(settings.value("sound/feedbackSound", true).toBool());
     updateAccentColourBox();
-    on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
 
     QString defaultFont;
     if (QFontDatabase().families().contains("Contemporary")) {
@@ -389,16 +378,21 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->qtVersion->setText(qVersion());
     }
 
-    #ifdef BLUEPRINT
+    if (QFileInfo(QApplication::applicationFilePath()).fileName().toLower() == "theshellb") {
         ui->tsVersion->setText(tr("theShell %1 - Blueprint").arg(TS_VERSION));
         ui->compileDate->setText(tr("You compiled theShell on %1").arg(__DATE__));
-    #else
+    } else {
         ui->tsVersion->setText(tr("theShell %1").arg(TS_VERSION));
         ui->compileDate->setVisible(false);
-    #endif
+    }
 
     //Set up timer ringtones
     ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
+    ui->timerToneSelect->addItem(tr("Happy Bee"));
+    ui->timerToneSelect->addItem(tr("Playing in the Dark"));
+    ui->timerToneSelect->addItem(tr("Ice Cream Truck"));
+    ui->timerToneSelect->addItem(tr("Party Complex"));
+    ui->timerToneSelect->addItem(tr("Salty Ditty"));
 
     connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
         ui->retranslateUi(this);
@@ -427,12 +421,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->RemindersList->setModel(new RemindersListModel);
     ui->RemindersList->setItemDelegate(new RemindersDelegate);
 
-    /*AppsListModel* appsListModel = new AppsListModel();
-    ui->autostartAppList->setModel(appsListModel);
-    ui->autostartAppList->setItemDelegate(new AppsDelegate);*/
-
     updateStruts();
-    updateAutostart();
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -540,43 +529,11 @@ void InfoPaneDropdown::processTimer() {
                     intensity = 6500;
                 }
             }
-
-            //Check Redshift override
-            if (overrideRedshift != 0) {
-                if (intensity == 6500 && overrideRedshift == 1) {
-                    overrideRedshift = 0; //Reset Redshift override
-                } else if (intensity != 6500 && overrideRedshift == 2) {
-                    overrideRedshift = 0; //Reset Redshift override
-                } else {
-                    if (overrideRedshift == 1) {
-                        intensity = 6500;
-                    } else {
-                        intensity = endIntensity;
-                    }
-                }
-            }
-
             redshiftAdjust->start("redshift -O " + QString::number(intensity));
-
             isRedshiftOn = true;
-            if (intensity == 6500 && effectiveRedshiftOn) {
-                effectiveRedshiftOn = false;
-                ui->redshiftSwitch->setChecked(false);
-                emit redshiftEnabledChanged(false);
-            } else if (intensity != 6500 && !effectiveRedshiftOn) {
-                effectiveRedshiftOn = true;
-                ui->redshiftSwitch->setChecked(true);
-                emit redshiftEnabledChanged(true);
-            }
         } else {
             redshiftAdjust->start("redshift -O 6500");
-
-            if (isRedshiftOn) {
-                isRedshiftOn = false;
-                effectiveRedshiftOn = false;
-                ui->redshiftSwitch->setChecked(false);
-                emit redshiftEnabledChanged(false);
-            }
+            isRedshiftOn = false;
         }
     }
 
@@ -750,11 +707,7 @@ void InfoPaneDropdown::show(dropdownType showWith) {
         this->setFixedWidth(screenGeometry.width());
         this->setFixedHeight(screenGeometry.height());
 
-        if (settings.value("bar/onTop", true).toBool()) {
-            previousDragY = -1;
-        } else {
-            previousDragY = screenGeometry.bottom();
-        }
+        previousDragY = -1;
         completeDragDown();
     }
 
@@ -811,9 +764,9 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     case KDEConnect:
         ui->pageStack->setCurrentWidget(ui->kdeConnectFrame, doAnimation);
         break;
-    /*case Print:
+    case Print:
         ui->pageStack->setCurrentWidget(ui->printFrame, doAnimation);
-        break;*/
+        break;
     case Settings:
         ui->pageStack->setCurrentWidget(ui->settingsFrame, doAnimation);
         break;
@@ -822,7 +775,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     if (changeTo == Clock) {
         ui->pushButton_5->setEnabled(false);
         ui->pushButton_6->setEnabled(true);
-    } else if (changeTo == KDEConnect) { //Print) {
+    } else if (changeTo == Print) {
         ui->pushButton_5->setEnabled(true);
         ui->pushButton_6->setEnabled(false);
     } else if (changeTo == Settings) {
@@ -840,7 +793,487 @@ void InfoPaneDropdown::on_pushButton_clicked()
 }
 
 void InfoPaneDropdown::getNetworks() {
-    ui->NetworkManager->updateGlobals();
+    if (!networkListUpdating) {
+        //Set the updating flag
+        networkListUpdating = true;
+
+        QFuture<void> future = QtConcurrent::run([=] {
+            //Get the NetworkManager interface
+            QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus());
+
+            //Get the devices
+            QDBusReply<QList<QDBusObjectPath>> reply = i.call("GetDevices");
+
+            //Create a variable to store text on main window
+            QStringList NetworkLabel;
+            int signalStrength = -1;
+
+            //Check if we are in flight mode
+            if (ui->FlightSwitch->isChecked()) {
+                //Update text accordingly
+                NetworkLabel.append(tr("Flight Mode"));
+            }
+
+            //Create an enum to store the type of network we're currently using.
+            //Higher numbers take precedence over others.
+            enum NetworkType {
+                None = 0,
+                Bluetooth = 1,
+                Wireless = 2,
+                Wired = 3
+            };
+
+            NetworkType NetworkLabelType = NetworkType::None;
+
+            //Make sure that the devices are valid
+            if (reply.isValid()) {
+                //Keep the current selection
+                int currentSelection = ui->networkList->currentRow();
+
+                //Clear the list of network connections
+                ui->networkList->clear();
+
+                bool allowAppendNoNetworkMessage = false;
+
+                //Iterate over all devices
+                for (QDBusObjectPath device : reply.value()) {
+                    //Get the device interface
+                    QDBusInterface deviceInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus());
+
+                    //Get the driver interface
+                    QString interface = deviceInterface.property("Interface").toString();
+
+                    //Switch based on the device type
+                    switch (deviceInterface.property("DeviceType").toInt()) {
+                        case 1: //Ethernet
+                        {
+                            QDBusInterface *wire = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wired", QDBusConnection::systemBus());
+                            if (wire->property("Carrier").toBool()) { //Connected to a network
+                                if (!connectedNetworks.keys().contains(interface)) {
+                                    connectedNetworks.insert(interface, "true");
+                                } else {
+                                    if (connectedNetworks.value(interface) != "false") {
+                                        connectedNetworks.insert(interface, "false");
+                                        QVariantMap hints;
+                                        hints.insert("category", "network.disconnected");
+                                        hints.insert("transient", true);
+                                        ndbus->Notify("theShell", 0, "", tr("Wired Connection"),
+                                                                   tr("You've been disconnected from the internet over a wired connection"),
+                                                                   QStringList(), hints, -1);
+                                    }
+                                }
+                                NetworkLabel.append(tr("Connected over a wired connection"));
+                                NetworkLabelType = NetworkType::Wired;
+                                signalStrength = 5;
+                                allowAppendNoNetworkMessage = true;
+                            } else { //Not connected over Ethernet
+                                if (!connectedNetworks.keys().contains(interface)) {
+                                    connectedNetworks.insert(interface, "false");
+                                } else {
+                                    if (connectedNetworks.value(interface) == "true") {
+                                        connectedNetworks.insert(interface, "true");
+                                        QVariantMap hints;
+                                        hints.insert("category", "network.connected");
+                                        hints.insert("transient", true);
+                                        ndbus->Notify("theShell", 0, "", tr("Wired Connection"),
+                                                                   tr("You're now connected to the internet over a wired connection"),
+                                                                   QStringList(), hints, -1);
+                                        doNetworkCheck();
+                                    }
+                                }
+
+                                if (signalStrength < 0) {
+                                    if (ui->FlightSwitch->isChecked()) {
+                                        signalStrength = -1;
+                                    } else {
+                                        signalStrength = -4;
+                                    }
+                                }
+                            }
+                            delete wire;
+                        }
+                            break;
+                        case 2: //WiFi
+                        {
+                            QDBusInterface wifi("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wireless", QDBusConnection::systemBus());
+                            QString connectedSsid;
+                            { //Detect Connected Network
+                                if (NetworkLabelType < NetworkType::Wireless) {
+                                    QDBusInterface ap("org.freedesktop.NetworkManager", wifi.property("ActiveAccessPoint").value<QDBusObjectPath>().path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus());
+                                    switch (deviceInterface.property("State").toInt()) {
+                                        case 30:
+                                            if (!connectedNetworks.keys().contains(interface)) {
+                                                connectedNetworks.insert(interface, "");
+                                            } else {
+                                                if (connectedNetworks.value(interface) != "") {
+                                                    connectedNetworks.insert(interface, "");
+                                                    QVariantMap hints;
+                                                    hints.insert("category", "network.disconnected");
+                                                    hints.insert("transient", true);
+                                                    ndbus->Notify("theShell", 0, "", tr("Wireless Connection"),
+                                                                               tr("You've been disconnected from the internet over a wireless connection"),
+                                                                               QStringList(), hints, -1);
+                                                }
+                                            }
+                                            signalStrength = -3;
+                                            break;
+                                        case 40:
+                                        case 50:
+                                        case 60:
+                                            connectedSsid = ap.property("Ssid").toString();
+                                            NetworkLabel.append(tr("Connecting to %1...").arg(connectedSsid));
+                                            NetworkLabelType = NetworkType::Wireless;
+                                            break;
+                                        case 70:
+                                            connectedSsid = ap.property("Ssid").toString();
+                                            NetworkLabel.append(tr("Getting IP address from %1...").arg(connectedSsid));
+                                            NetworkLabelType = NetworkType::Wireless;
+                                            break;
+                                        case 80:
+                                            connectedSsid = ap.property("Ssid").toString();
+                                            NetworkLabel.append(tr("Doing some checks..."));
+                                            NetworkLabelType = NetworkType::Wireless;
+                                            break;
+                                        case 90:
+                                            connectedSsid = ap.property("Ssid").toString();
+                                            NetworkLabel.append(tr("Connecting to a secondary connection..."));
+                                            NetworkLabelType = NetworkType::Wireless;
+                                            break;
+                                        case 100: {
+                                            connectedSsid = ap.property("Ssid").toString();
+                                            int strength = ap.property("Strength").toInt();
+
+                                            if (strength < 15) {
+                                                signalStrength = 0;
+                                            } else if (strength < 35) {
+                                                signalStrength = 1;
+                                            } else if (strength < 65) {
+                                                signalStrength = 2;
+                                            } else if (strength < 85) {
+                                                signalStrength = 3;
+                                            } else {
+                                                signalStrength = 4;
+                                            }
+
+                                            NetworkLabel.append(connectedSsid);
+                                            NetworkLabelType = NetworkType::Wireless;
+                                            ui->networkMac->setText("MAC Address: " + wifi.property("PermHwAddress").toString());
+                                            if (!connectedNetworks.keys().contains(interface)) {
+                                                connectedNetworks.insert(interface, connectedSsid);
+                                            } else {
+                                                if (connectedNetworks.value(interface) != connectedSsid) {
+                                                    connectedNetworks.insert(interface, connectedSsid);
+                                                    QVariantMap hints;
+                                                    hints.insert("category", "network.connected");
+                                                    hints.insert("transient", true);
+                                                    ndbus->Notify("theShell", 0, "", tr("Wireless Connection"),
+                                                                               tr("You're now connected to the network \"%1\"").arg(connectedSsid),
+                                                                               QStringList(), hints, -1);
+                                                    doNetworkCheck();
+                                                }
+                                            }
+                                            allowAppendNoNetworkMessage = true;
+                                            break;
+                                            }
+                                        case 110:
+                                        case 120:
+                                            connectedSsid = ap.property("Ssid").toString();
+                                            NetworkLabel.append(tr("Disconnecting from %1...").arg(connectedSsid));
+                                            NetworkLabelType = NetworkType::Wireless;
+                                            break;
+                                    }
+                                }
+                            }
+
+                            { //Detect Available Networks
+                                QList<QDBusObjectPath> accessPoints = wifi.property("AccessPoints").value<QList<QDBusObjectPath>>();
+                                QStringList foundSsids;
+                                for (QDBusObjectPath accessPoint : accessPoints) {
+                                    QDBusInterface ap("org.freedesktop.NetworkManager", accessPoint.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus());
+                                    QString ssid = ap.property("Ssid").toString();
+                                    //Have we seen this SSID already? Is the SSID not broadcast?
+                                    if (foundSsids.contains(ssid) || ssid == "") {
+                                        //Ignore it and continue on
+                                        continue;
+                                    }
+
+                                    int strength = ap.property("Strength").toInt();
+
+                                    QListWidgetItem* apItem = new QListWidgetItem();
+                                    apItem->setText(ssid);
+                                    if (strength < 15) {
+                                        apItem->setIcon(QIcon::fromTheme("network-wireless-connected-00"));
+                                    } else if (strength < 35) {
+                                        apItem->setIcon(QIcon::fromTheme("network-wireless-connected-25"));
+                                    } else if (strength < 65) {
+                                        apItem->setIcon(QIcon::fromTheme("network-wireless-connected-50"));
+                                    } else if (strength < 85) {
+                                        apItem->setIcon(QIcon::fromTheme("network-wireless-connected-75"));
+                                    } else {
+                                        apItem->setIcon(QIcon::fromTheme("network-wireless-connected-100"));
+                                    }
+                                    if (ssid == connectedSsid) {
+                                        apItem->setBackground(QBrush(QColor(0, 255, 0, 100)));
+                                    }
+                                    apItem->setData(Qt::UserRole, QVariant::fromValue(accessPoint));
+                                    apItem->setData(Qt::UserRole + 1, QVariant::fromValue(device));
+                                    apItem->setData(Qt::UserRole + 2, ssid == connectedSsid);
+                                    ui->networkList->addItem(apItem);
+                                }
+                            }
+                        }
+
+                            break;
+                        case 5: //Bluetooth
+                        {
+                            if (NetworkLabelType < NetworkType::Bluetooth) {
+                                QDBusInterface bt("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Bluetooth", QDBusConnection::systemBus());
+                                switch (deviceInterface.property("State").toInt()) {
+                                    case 100:
+                                        if (!connectedNetworks.keys().contains(interface)) {
+                                            connectedNetworks.insert(interface, "true");
+                                        } else {
+                                            if (connectedNetworks.value(interface) == "false") {
+                                                connectedNetworks.insert(interface, "true");
+                                                QVariantMap hints;
+                                                hints.insert("category", "network.connected");
+                                                hints.insert("transient", true);
+                                                ndbus->Notify("theShell", 0, "", tr("Bluetooth Connection"),
+                                                                           tr("You're now connected to the internet over a bluetooth connection"),
+                                                                           QStringList(), hints, -1);
+                                            }
+                                        }
+
+                                        NetworkLabel.append(tr("Connected to %1 over Bluetooth").arg(bt.property("Name").toString()));
+                                        NetworkLabelType = NetworkType::Bluetooth;
+                                        signalStrength = 6;
+                                        allowAppendNoNetworkMessage = true;
+                                        break;
+                                    default:
+                                        if (!connectedNetworks.keys().contains(interface)) {
+                                            connectedNetworks.insert(interface, "false");
+                                        } else {
+                                            if (connectedNetworks.value(interface) == "true") {
+                                                connectedNetworks.insert(interface, "false");
+                                                QVariantMap hints;
+                                                hints.insert("category", "network.disconnected");
+                                                hints.insert("transient", true);
+                                                ndbus->Notify("theShell", 0, "", tr("Bluetooth Connection"),
+                                                                           tr("You've been disconnected from the internet over a bluetooth connection"),
+                                                                           QStringList(), hints, -1);
+                                            }
+                                        }
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                if (allowAppendNoNetworkMessage && networkOk != Ok) {
+                    if (NetworkLabelType == Wired) {
+                        signalStrength = -5;
+                    } else {
+                        signalStrength = -2;
+                    }
+
+                    if (networkOk == Unspecified) {
+                        NetworkLabel.prepend(tr("Can't get to the internet"));
+                    } else if (networkOk == BehindPortal) {
+                        NetworkLabel.prepend(tr("Login required"));
+                    }
+                }
+
+                //If possible, restore the current selection
+                if (currentSelection != -1 && ui->networkList->count() > currentSelection) {
+                    ui->networkList->setCurrentRow(currentSelection);
+                }
+
+            } else {
+                NetworkLabel.append(tr("NetworkManager Error"));
+            }
+
+
+            //Populate current connection area
+            {
+                QDBusObjectPath active = i.property("PrimaryConnection").value<QDBusObjectPath>();
+                if (active.path() == "/") {
+                    ui->networkInfoFrame->setVisible(false);
+                } else {
+                    QDBusInterface conn("org.freedesktop.NetworkManager", active.path(), "org.freedesktop.NetworkManager.Connection.Active", QDBusConnection::systemBus());
+                    /*{
+                        QDBusObjectPath ipv4 = conn->property("Ip4Config").value<QDBusObjectPath>();
+                        //QDBusInterface *ip4 = new QDBusInterface("org.freedesktop.NetworkManager", ipv4.path(), "org.freedesktop.NetworkManager.IP4Config", QDBusConnection::systemBus(), this);
+                        QDBusInterface ip4("org.freedesktop.NetworkManager", ipv4.path(), "org.freedesktop.NetworkManager.IP4Config", QDBusConnection::systemBus(), this);
+
+                        QList<QVariantMap> addressData = ip4.property("AddressData").value<QList<QVariantMap>>();
+                        ui->networkIpv4->setText("IPv4 Address: " + addressData.first().value("address").toString());
+                        //delete ip4;
+                    }
+                    {
+                        QDBusObjectPath ipv6 = conn->property("Ip6Config").value<QDBusObjectPath>();
+                        QDBusInterface *ip6 = new QDBusInterface("org.freedesktop.NetworkManager", ipv6.path(), "org.freedesktop.NetworkManager.IP6Config", QDBusConnection::systemBus(), this);
+                        QList<QVariantMap> addressData = ip6->property("AddressData").value<QList<QVariantMap>>();
+                        ui->networkIpv6->setText("IPv6 Address: " + addressData.first().value("address").toString());
+                        delete ip6;
+                    }*/
+
+                    //Get devices
+                    QList<QDBusObjectPath> devices = conn.property("Devices").value<QList<QDBusObjectPath>>();
+
+                    //Iterate over all devices
+                    qulonglong txBytes = 0, rxBytes = 0;
+                    for (QDBusObjectPath object : devices) {
+                        QDBusInterface statsInterface("org.freedesktop.NetworkManager", object.path(), "org.freedesktop.NetworkManager.Device.Statistics", QDBusConnection::systemBus());
+                        txBytes += statsInterface.property("TxBytes").toULongLong();
+                        rxBytes += statsInterface.property("RxBytes").toULongLong();
+                    }
+                    ui->networkSent->setText(tr("Data Sent: %1").arg(calculateSize(txBytes)));
+                    ui->networkReceived->setText(tr("Data Received: %1").arg(calculateSize(rxBytes)));
+
+                    //Hide individual frames
+                    ui->networkInfoWirelessFrame->setVisible(false);
+
+                    if (devices.count() > 0) {
+                        //Do the rest on the first device
+                        switch (NetworkLabelType) {
+                        case Wireless:
+                        {
+                            QDBusInterface firstDeviceInterface("org.freedesktop.NetworkManager", devices.first().path(), "org.freedesktop.NetworkManager.Device.Wireless", QDBusConnection::systemBus());
+                            QDBusObjectPath activeAccessPoint = firstDeviceInterface.property("ActiveAccessPoint").value<QDBusObjectPath>();
+                            QDBusInterface activeAccessPointInterface("org.freedesktop.NetworkManager", activeAccessPoint.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus());
+                            ui->networkWirelessStrength->setText(tr("Signal Strength: %1").arg(QString::number(activeAccessPointInterface.property("Strength").toInt()) + "%"));
+                            ui->networkWirelessFrequency->setText(tr("Frequency: %1").arg(QString::number(activeAccessPointInterface.property("Frequency").toFloat() / 1e3f, 'f', 1) + " GHz"));
+                            ui->networkInfoWirelessFrame->setVisible(true);
+                        }
+                        }
+                    }
+
+                    ui->networkInfoFrame->setVisible(true);
+                }
+            }
+
+            if (NetworkLabel.count() == 0) {
+                NetworkLabel.append(tr("Disconnected from the Internet"));
+            }
+
+            //Emit change signal
+            emit networkLabelChanged(NetworkLabel.join(" · "), signalStrength);
+        });
+
+        QFutureWatcher<void>* watcher = new QFutureWatcher<void>();
+        connect(watcher, &QFutureWatcher<void>::finished, [=] {
+            watcher->deleteLater();
+
+            //Set the updating flag
+            networkListUpdating = false;
+        });
+        watcher->setFuture(future);
+    }
+}
+
+void InfoPaneDropdown::on_networkList_currentItemChanged(QListWidgetItem *current, QListWidgetItem*)
+{
+    //Check if network list is updating
+    if (!networkListUpdating) {
+        ui->networkKey->setText("");
+        if (current == NULL || !current) {
+            ui->networkKey->setVisible(false);
+            ui->networkConnect->setVisible(false);
+        } else {
+            if (current->data(Qt::UserRole + 2).toBool()) { //Connected to this network
+                ui->networkKey->setVisible(false);
+                ui->networkConnect->setText(tr("Disconnect"));
+                ui->networkConnect->setIcon(QIcon::fromTheme("network-disconnect"));
+                ui->networkConnect->setVisible(true);
+            } else { //Not connected to this network
+                QDBusInterface *ap = new QDBusInterface("org.freedesktop.NetworkManager", current->data(Qt::UserRole).value<QDBusObjectPath>().path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus(), this);
+
+                bool isSaved = false;
+                QDBusInterface *settings = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager/Settings", "org.freedesktop.NetworkManager.Settings", QDBusConnection::systemBus(), this);
+                QDBusReply<QList<QDBusObjectPath>> allConnections = settings->call("ListConnections");
+                for (QDBusObjectPath connection : allConnections.value()) {
+                    QDBusInterface *settings = new QDBusInterface("org.freedesktop.NetworkManager", connection.path(), "org.freedesktop.NetworkManager.Settings.Connection", QDBusConnection::systemBus(), this);
+
+                    QDBusReply<QMap<QString, QVariantMap>> reply = settings->call("GetSettings");
+                    QMap<QString, QVariantMap> connectionSettings = reply.value();
+                    if (connectionSettings.value("802-11-wireless").value("ssid").toString() == ap->property("Ssid")) {
+                        isSaved = true;
+                    }
+                }
+
+                current->setData(Qt::UserRole + 3, isSaved);
+
+                if (ap->property("WpaFlags").toUInt() != 0 && !isSaved) {
+                    ui->networkKey->setVisible(true);
+                } else {
+                    ui->networkKey->setVisible(false);
+                }
+                ui->networkConnect->setText(tr("Connect"));
+                ui->networkConnect->setIcon(QIcon::fromTheme("network-connect"));
+                ui->networkConnect->setVisible(true);
+                delete ap;
+            }
+        }
+    }
+}
+
+void InfoPaneDropdown::on_networkConnect_clicked()
+{
+    QDBusObjectPath device = ui->networkList->selectedItems().first()->data(Qt::UserRole + 1).value<QDBusObjectPath>();
+    QDBusObjectPath accessPoint = ui->networkList->selectedItems().first()->data(Qt::UserRole).value<QDBusObjectPath>();
+
+    if (ui->networkList->selectedItems().first()->data(Qt::UserRole + 2).toBool()) { //Already connected, disconnect from this network
+        QDBusInterface *d = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus(), this);
+        d->call("Disconnect");
+        delete d;
+    } else { //Not connected, connect to this network
+        QDBusMessage message;
+        if (ui->networkList->selectedItems().first()->data(Qt::UserRole + 3).toBool()) { //This network is already known
+            message = QDBusMessage::createMethodCall("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "ActivateConnection");
+
+            QVariantList arguments;
+            arguments.append(QVariant::fromValue(QDBusObjectPath("/")));
+            arguments.append(QVariant::fromValue(device));
+            arguments.append(QVariant::fromValue(accessPoint));
+            message.setArguments(arguments);
+        } else {
+            QDBusInterface *ap = new QDBusInterface("org.freedesktop.NetworkManager", accessPoint.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus(), this);
+            uint wpaFlags = ap->property("WpaFlags").toUInt();
+
+            QMap<QString, QVariantMap> connection;
+
+            if (wpaFlags != 0) {
+                QVariantMap wireless;
+                wireless.insert("security", "802-11-wireless-security");
+                connection.insert("802-11-wireless", wireless);
+
+                QVariantMap wirelessSecurity;
+                if (wpaFlags == 0x1 || wpaFlags == 0x2) { //WEP Authentication
+                    wirelessSecurity.insert("key-mgmt", "none");
+                    wirelessSecurity.insert("auth-alg", "shared");
+                    wirelessSecurity.insert("wep-key0", ui->networkKey->text());
+                } else { //WPA Authentication
+                    wirelessSecurity.insert("key-mgmt", "wpa-psk");
+                    wirelessSecurity.insert("psk", ui->networkKey->text());
+                }
+                connection.insert("802-11-wireless-security", wirelessSecurity);
+            }
+            message = QDBusMessage::createMethodCall("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", "AddAndActivateConnection");
+            QVariantList arguments;
+
+            arguments.append(QVariant::fromValue(connection));
+            arguments.append(QVariant::fromValue(device));
+            arguments.append(QVariant::fromValue(accessPoint));
+
+            message.setArguments(arguments);
+            delete ap;
+        }
+        QDBusMessage reply = QDBusConnection::systemBus().call(message);
+        qDebug() << reply.errorMessage();
+
+        ui->networkKey->setText("");
+    }
 }
 
 void InfoPaneDropdown::on_pushButton_5_clicked()
@@ -886,10 +1319,8 @@ void InfoPaneDropdown::startTimer(QTime time) {
         emit timerVisibleChanged(false);
         emit timerEnabledChanged(true);
     }
-
     ui->pushButton_2->setText(tr("Pause"));
     timeUntilTimeout = time;
-    lastTimer = time;
     ui->label_7->setText(ui->timeEdit->text());
     ui->timeEdit->setVisible(false);
     ui->label_7->setVisible(true);
@@ -907,20 +1338,12 @@ void InfoPaneDropdown::startTimer(QTime time) {
             timer = NULL;
 
             if (AudioMan->QuietMode() != AudioManager::notifications && AudioMan->QuietMode() != AudioManager::mute) { //Check if we should show the notification so the user isn't stuck listening to the tone
-                QStringList actions;
-                actions << "restart" << "Restart Timer";
-                actions << "+0.5" << "+30 sec";
-                actions << "+1" << "+1 min";
-                actions << "+2" << "+2 min";
-                actions << "+5" << "+5 min";
-                actions << "+10" << "+10 min";
-
                 QVariantMap hints;
                 hints.insert("x-thesuite-timercomplete", true);
                 hints.insert("suppress-sound", true);
                 timerNotificationId = ndbus->Notify("theShell", 0, "", tr("Timer Elapsed"),
                                           tr("Your timer has completed."),
-                                          actions, hints, 0);
+                                          QStringList(), hints, 0);
                 ui->timeEdit->setVisible(true);
                 ui->label_7->setVisible(false);
                 ui->pushButton_2->setText("Start");
@@ -941,6 +1364,7 @@ void InfoPaneDropdown::startTimer(QTime time) {
                 playlist->setPlaybackMode(QMediaPlaylist::Loop);
                 ringtone->setPlaylist(playlist);
                 ringtone->play();
+
 
                 AudioMan->attenuateStreams();
             }
@@ -1034,7 +1458,7 @@ void InfoPaneDropdown::setGeometry(QRect geometry) {
 
 void InfoPaneDropdown::on_lineEdit_2_editingFinished()
 {
-    //settings.setValue("startup/autostart", ui->lineEdit_2->text());
+    settings.setValue("startup/autostart", ui->lineEdit_2->text());
 }
 
 void InfoPaneDropdown::on_resolutionButton_clicked()
@@ -1110,9 +1534,9 @@ void InfoPaneDropdown::newNotificationReceived(int id, QString summary, QString 
         });
         layout->addWidget(button);
 
-        //ui->notificationsList->layout()->addWidget(frame);
-        //ui->noNotifications->setVisible(false);
-        //ui->clearAllNotifications->setVisible(true);
+        ui->notificationsList->layout()->addWidget(frame);
+        ui->noNotifications->setVisible(false);
+        ui->clearAllNotifications->setVisible(true);
         frame->setProperty("summaryLabel", QVariant::fromValue(sumLabel));
         frame->setProperty("bodyLabel", QVariant::fromValue(bodyLabel));
 
@@ -1131,8 +1555,8 @@ void InfoPaneDropdown::removeNotification(int id) {
     emit numNotificationsChanged(notificationFrames.count());
 
     if (notificationFrames.count() == 0) {
-        //ui->noNotifications->setVisible(true);
-        //ui->clearAllNotifications->setVisible(false);
+        ui->noNotifications->setVisible(true);
+        ui->clearAllNotifications->setVisible(false);
     }
 }
 
@@ -1181,7 +1605,7 @@ void InfoPaneDropdown::updateSysInfo() {
 
 void InfoPaneDropdown::on_printLabel_clicked()
 {
-    //changeDropDown(Print);
+    changeDropDown(Print);
 }
 
 void InfoPaneDropdown::on_resetButton_clicked()
@@ -1453,7 +1877,7 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
     ui->batteryLabel->setShowDisabled(true);
     ui->notificationsLabel->setShowDisabled(true);
     ui->networkLabel->setShowDisabled(true);
-    //ui->printLabel->setShowDisabled(true);
+    ui->printLabel->setShowDisabled(true);
     ui->kdeconnectLabel->setShowDisabled(true);
 
     if (switchingWidget == ui->clockFrame) {
@@ -1464,8 +1888,8 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
         ui->notificationsLabel->setShowDisabled(false);
     } else if (switchingWidget == ui->networkFrame) {
         ui->networkLabel->setShowDisabled(false);
-    /*} else if (switchingWidget == ui->printFrame) {
-        ui->printLabel->setShowDisabled(false);*/
+    } else if (switchingWidget == ui->printFrame) {
+        ui->printLabel->setShowDisabled(false);
     } else if (switchingWidget == ui->kdeConnectFrame) {
         ui->kdeconnectLabel->setShowDisabled(false);
     }
@@ -1689,20 +2113,16 @@ void InfoPaneDropdown::updateBatteryChart() {
         QDBusReply<QDBusArgument> historyArgument = QDBusConnection::systemBus().call(historyMessage);
 
         QLineSeries* batteryChartData = new QLineSeries;
-        QPen dataPen;
-        dataPen.setColor(this->palette().color(QPalette::Highlight));
-        dataPen.setWidth(2 * getDPIScaling());
-        batteryChartData->setPen(dataPen);
+        batteryChartData->setColor(this->palette().color(QPalette::WindowText));
 
         QLineSeries* batteryChartTimeRemainingData = new QLineSeries;
         //batteryChartTimeRemainingData->setColor(this->palette().color(QPalette::Disabled, QPalette::WindowText));
         batteryChartTimeRemainingData->setBrush(QBrush(this->palette().color(QPalette::Disabled, QPalette::WindowText)));
 
         QPen remainingTimePen;
-        remainingTimePen.setColor(this->palette().color(QPalette::Disabled, QPalette::Highlight));
+        remainingTimePen.setColor(this->palette().color(QPalette::Disabled, QPalette::WindowText));
         remainingTimePen.setDashPattern(QVector<qreal>() << 3 << 3);
         remainingTimePen.setDashOffset(3);
-        remainingTimePen.setWidth(2 * getDPIScaling());
         batteryChartTimeRemainingData->setPen(remainingTimePen);
 
         QDateTime remainingTime = updbus->batteryTimeRemaining();
@@ -1838,7 +2258,7 @@ void InfoPaneDropdown::doNetworkCheck() {
                     uint notificationId = ndbus->Notify("theShell", 0, "", tr("Network Login"),
                                                tr("Your connection to the internet is blocked by a login page."),
                                                actions, hints, 30000);
-                    connect(ndbus, &NotificationsDBusAdaptor::ActionInvoked, [=](uint id, QString key) {
+                    connect(ndbus, &NotificationDBus::ActionInvoked, [=](uint id, QString key) {
                         if (notificationId == id && key == "login") {
                             QProcess::startDetached("xdg-open http://nmcheck.gnome.org/");
                         }
@@ -1899,7 +2319,7 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
     }
 
     Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
     XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
                      XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
 
@@ -2001,28 +2421,15 @@ void InfoPaneDropdown::on_userSettingsNextButton_clicked()
             ui->userSettingsPassword->setPlaceholderText(tr("(none)"));
             ui->userSettingsPasswordCheck->setPlaceholderText(tr("(none)"));
             ui->userSettingsDeleteUser->setVisible(false);
-            ui->userSettingsStandardAccount->setChecked(true);
-            ui->userSettingsAdminAccount->setChecked(false);
         } else {
             ui->userSettingsEditUserLabel->setText(tr("Edit User"));
             QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
-            int passwordMode = interface.property("PasswordMode").toInt();
-            if (passwordMode == 0) {
+            if (interface.property("PasswordMode").toInt() == 0) {
                 ui->userSettingsPassword->setPlaceholderText(tr("(unchanged)"));
                 ui->userSettingsPasswordCheck->setPlaceholderText(tr("(unchanged)"));
-            } else if (passwordMode == 1) {
-                ui->userSettingsPassword->setPlaceholderText(tr("(set at next login)"));
-                ui->userSettingsPasswordCheck->setPlaceholderText(tr("(set at next login)"));
             } else {
                 ui->userSettingsPassword->setPlaceholderText(tr("(none)"));
                 ui->userSettingsPasswordCheck->setPlaceholderText(tr("(none)"));
-            }
-            if (interface.property("AccountType").toInt() == 0) {
-                ui->userSettingsStandardAccount->setChecked(true);
-                ui->userSettingsAdminAccount->setChecked(false);
-            } else {
-                ui->userSettingsStandardAccount->setChecked(false);
-                ui->userSettingsAdminAccount->setChecked(true);
             }
             ui->userSettingsFullName->setText(interface.property("RealName").toString());
             ui->userSettingsUserName->setText(interface.property("UserName").toString());
@@ -2057,6 +2464,7 @@ void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
         return;
     }
 
+    ui->userSettingsStackedWidget->setCurrentIndex(0);
     if (editingUserPath == "new") {
         QDBusMessage createMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "CreateUser");
         QVariantList args;
@@ -2066,57 +2474,21 @@ void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
         createMessage.setArguments(args);
 
         QDBusReply<QDBusObjectPath> newUser = QDBusConnection::systemBus().call(createMessage);
-        if (newUser.error().isValid()) {
-            tToast* toast = new tToast();
-            toast->setTitle("Couldn't create user");
-            toast->setText(newUser.error().message());
-            connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
-            toast->show(this);
-            return;
-        } else {
-            editingUserPath = newUser.value().path();
-        }
+        if (!newUser.isValid()) return;
+        editingUserPath = newUser.value().path();
     }
 
     QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
-    QDBusMessage setUserNameMessage = interface.call("SetUserName", ui->userSettingsUserName->text());
-    if (setUserNameMessage.errorMessage() != "") {
-        tToast* toast = new tToast();
-        toast->setTitle("Couldn't create user");
-        toast->setText(setUserNameMessage.errorMessage());
-        connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
-        toast->show(this);
-        return;
-    }
+    interface.call("SetUserName", ui->userSettingsUserName->text());
     interface.call("SetRealName", ui->userSettingsFullName->text());
 
-    if (ui->userSettingsAdminAccount->isChecked()) {
-        interface.call("SetAccountType", 1);
-    } else {
-        interface.call("SetAccountType", 0);
-    }
-
     if (ui->userSettingsPassword->text() != "") {
-        interface.call("SetPasswordMode", 0);
-
-        //Crypt password
-        QByteArray characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz./";
-        QByteArray salt("$6$");
-        for (int i = 0; i < 16; i++) {
-            salt.append(characters.at((qrand() % characters.count())));
-        }
-        QString cryptedPassword = QString::fromLatin1(crypt(ui->userSettingsPassword->text().toUtf8(), salt.constData()));
-
-        interface.call("SetPassword", cryptedPassword, ui->userSettingsPasswordHint->text());
+        interface.call("SetPassword", ui->userSettingsPassword->text(), ui->userSettingsPasswordHint->text());
     } else {
-        if (editingUserPath == "new") {
-            interface.call("SetPasswordMode", 2);
-            interface.call("SetPasswordHint", ui->userSettingsPasswordHint->text());
-        }
+        interface.call("SetPasswordHint", ui->userSettingsPasswordHint->text());
     }
 
     setupUsersSettingsPane();
-    ui->userSettingsStackedWidget->setCurrentIndex(0);
 }
 
 void InfoPaneDropdown::on_userSettingsFullName_textEdited(const QString &arg1)
@@ -2291,9 +2663,6 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
         case Internationalisation::svSE:
             settings.setValue("locale/language", "sv_SE");
             break;
-        case Internationalisation::ltLT:
-            settings.setValue("locale/language", "lt_LT");
-            break;
     }
 
     QString localeName = settings.value("locale/language", "en_US").toString();
@@ -2315,7 +2684,7 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
 
     qDebug() << QLocale().name();
 
-    tsTranslator->load(QLocale().name(), QString(SHAREDIR) + "translations");
+    tsTranslator->load(QLocale().name(), "/usr/share/theshell/translations");
     QApplication::installTranslator(tsTranslator);
 
     //Fill locale box
@@ -2328,10 +2697,6 @@ void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
 {
     settings.setValue("bar/statusBar", checked);
     updateStruts();
-
-    ui->AutoShowBarLabel->setEnabled(checked);
-    ui->AutoShowBarSwitch->setEnabled(checked);
-    ui->AutoShowBarExplanation->setEnabled(checked);
 }
 
 void InfoPaneDropdown::on_TouchInputSwitch_toggled(bool checked)
@@ -2725,11 +3090,6 @@ void InfoPaneDropdown::on_decorativeColorThemeRadio_toggled(bool checked)
     }
 }
 
-void InfoPaneDropdown::on_SoundFeedbackSoundSwitch_toggled(bool checked)
- {
-     settings.setValue("sound/feedbackSound", checked);
- }
-
 void InfoPaneDropdown::updateAccentColourBox() {
     //Set up theme button combo box
     int themeAccentColorIndex = themeSettings->value("color/accent", 0).toInt();
@@ -2748,246 +3108,5 @@ void InfoPaneDropdown::updateAccentColourBox() {
         ui->themeButtonColor->addItem(tr("Turquoise"));
 
         ui->themeButtonColor->setCurrentIndex(themeAccentColorIndex);
-    }
-}
-
-void InfoPaneDropdown::on_dpi100_toggled(bool checked)
-{
-    if (checked) {
-        sessionSettings->setValue("screen/dpi", 96);
-    }
-}
-
-void InfoPaneDropdown::on_dpi150_toggled(bool checked)
-{
-    if (checked) {
-        sessionSettings->setValue("screen/dpi", 144);
-    }
-}
-
-void InfoPaneDropdown::on_dpi200_toggled(bool checked)
-{
-    if (checked) {
-        sessionSettings->setValue("screen/dpi", 192);
-    }
-}
-
-void InfoPaneDropdown::on_dpi300_toggled(bool checked)
-{
-    if (checked) {
-        sessionSettings->setValue("screen/dpi", 288);
-    }
-}
-
-void InfoPaneDropdown::on_AutoShowBarSwitch_toggled(bool checked)
-{
-    settings.setValue("bar/autoshow", checked);
-}
-
-void InfoPaneDropdown::on_userSettingsAdminAccount_toggled(bool checked)
-{
-    if (checked) {
-        ui->userSettingsStandardAccount->setChecked(false);
-        ui->userSettingsAdminAccount->setChecked(true);
-    }
-}
-
-void InfoPaneDropdown::on_userSettingsStandardAccount_toggled(bool checked)
-{
-    if (checked) {
-        ui->userSettingsStandardAccount->setChecked(true);
-        ui->userSettingsAdminAccount->setChecked(false);
-    }
-}
-
-void InfoPaneDropdown::notificationAction(uint id, QString action) {
-    if (id == timerNotificationId) {
-        //Preserve old timer in case user wants to restart it
-        QTime lastTimer = this->lastTimer;
-
-        ringtone->stop();
-        AudioMan->restoreStreams();
-        timerNotificationId = 0;
-
-        if (action == "+0.5") {
-            startTimer(QTime(0, 0, 30));
-        } else if (action == "+1") {
-            startTimer(QTime(0, 1));
-        } else if (action == "+2") {
-            startTimer(QTime(0, 2));
-        } else if (action == "+5") {
-            startTimer(QTime(0, 5));
-        } else if (action == "+10") {
-            startTimer(QTime(0, 10));
-        } else if (action == "restart") {
-            startTimer(lastTimer);
-        }
-        this->lastTimer = lastTimer;
-    }
-}
-
-void InfoPaneDropdown::updateAutostart() {
-    ui->autostartList->clear();
-
-    QDir autostartDir(QDir::homePath() + "/.config/autostart");
-    for (QString fileName : autostartDir.entryList(QDir::NoDotAndDotDot | QDir::Files)) {
-        QString file = QDir::homePath() + "/.config/autostart/" + fileName;
-        QFile autostartFile(file);
-        autostartFile.open(QFile::ReadOnly);
-        QString data = autostartFile.readAll();
-        autostartFile.close();
-
-        QString name = fileName;
-        QString icon = "";
-        bool enabled = true;
-        bool validEntry = true;
-
-        for (QString line : data.split("\n")) {
-            QString data = line.mid(line.indexOf("=") + 1);
-            if (line.startsWith("name=", Qt::CaseInsensitive)) {
-                name = data;
-            } else if (line.startsWith("onlyshowin=", Qt::CaseInsensitive)) {
-                if (!data.contains("theshell", Qt::CaseInsensitive)) {
-                    validEntry = false;
-                }
-            } else if (line.startsWith("notshowin=", Qt::CaseInsensitive)) {
-                if (data.contains("theshell", Qt::CaseInsensitive)) {
-                    validEntry = false;
-                }
-            } else if (line.startsWith("hidden=", Qt::CaseInsensitive)) {
-                if (data.toLower() == "true") {
-                    enabled = false;
-                }
-            } else if (line.startsWith("icon=")) {
-                icon = data;
-            }
-        }
-
-        if (validEntry) {
-            QListWidgetItem* item = new QListWidgetItem();
-            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-            if (enabled) {
-                item->setCheckState(Qt::Checked);
-            } else {
-                item->setCheckState(Qt::Unchecked);
-            }
-            if (icon != "") {
-                item->setIcon(QIcon::fromTheme(icon));
-            }
-            item->setText(name);
-            item->setData(Qt::UserRole, file);
-
-            ui->autostartList->addItem(item);
-        }
-    }
-}
-void InfoPaneDropdown::on_autostartList_itemChanged(QListWidgetItem *item)
-{
-    QFile file(item->data(Qt::UserRole).toString());
-
-    file.open(QFile::ReadOnly);
-    QString data = file.readAll();
-    file.close();
-
-    QString rewriteData;
-
-    for (QString line : data.split("\n")) {
-        if (!line.startsWith("hidden", Qt::CaseInsensitive)) {
-            rewriteData.append(line + "\n");
-        }
-    }
-
-    if (item->checkState() == Qt::Unchecked) {
-        rewriteData.append("Hidden=true\n");
-    }
-
-    file.open(QFile::WriteOnly);
-    file.write(rewriteData.toUtf8());
-    file.close();
-
-    this->updateAutostart();
-}
-
-void InfoPaneDropdown::on_backAutoStartApps_clicked()
-{
-    ui->startupStack->setCurrentIndex(0);
-}
-
-void InfoPaneDropdown::on_pushButton_4_clicked()
-{
-    ui->startupStack->setCurrentIndex(1);
-}
-
-void InfoPaneDropdown::on_backAutoStartNewApp_clicked()
-{
-    ui->startupStack->setCurrentIndex(1);
-}
-
-void InfoPaneDropdown::on_autostartAppList_clicked(const QModelIndex &index)
-{
-    App app = index.data(Qt::UserRole + 3).value<App>();
-
-    ui->autostartAppName->setText(app.name());
-    ui->autostartAppCommand->setText(app.command().trimmed());
-
-    ui->startupStack->setCurrentIndex(2);
-}
-
-void InfoPaneDropdown::on_enterCommandAutoStartApps_clicked()
-{
-    ui->autostartAppName->setText("");
-    ui->autostartAppCommand->setText("");
-    ui->startupStack->setCurrentIndex(2);
-}
-
-void InfoPaneDropdown::on_addAutostartApp_clicked()
-{
-    QString desktopEntryData;
-    desktopEntryData.append("[Desktop Entry]\n");
-    desktopEntryData.append("Type=Application\n");
-    desktopEntryData.append("Version=1.0\n");
-    desktopEntryData.append("Name=" + ui->autostartAppName->text() + "\n");
-    desktopEntryData.append("Exec=" + ui->autostartAppCommand->text() + "\n");
-    desktopEntryData.append("Terminal=false\n");
-
-    QFile desktopEntry(QDir::homePath() + "/.config/autostart/" + ui->autostartAppName->text().toLower().replace(" ", "_").append(".desktop"));
-
-    if (desktopEntry.exists()) {
-        if (QMessageBox::warning(this, "Autostart Definition", "There is already an autostart definition for this app. Do you want to overwrite it?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No) {
-            return;
-        }
-    }
-
-    desktopEntry.open(QFile::WriteOnly);
-    desktopEntry.write(desktopEntryData.toUtf8());
-    desktopEntry.close();
-
-    updateAutostart();
-    ui->startupStack->setCurrentIndex(0);
-}
-
-void InfoPaneDropdown::on_redshiftSwitch_toggled(bool checked)
-{
-    if (effectiveRedshiftOn) {
-        if (checked) { //Turn Redshift back on
-            overrideRedshift = 0;
-        } else { //Temporarily disable Redshift
-            overrideRedshift = 1;
-        }
-    } else {
-        if (checked) { //Temporarily enable Redshift
-            overrideRedshift = 2;
-        } else { //Turn Redshift back off
-            overrideRedshift = 0;
-        }
-    }
-}
-
-void InfoPaneDropdown::on_grayColorThemeRadio_toggled(bool checked)
-{
-    if (checked) {
-        themeSettings->setValue("color/type", "gray");
-        updateAccentColourBox();
-        resetStyle();
     }
 }

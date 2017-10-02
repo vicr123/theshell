@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>19</day>
+                 <day>18</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>19</day>
+                 <day>18</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1832,7 +1832,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>4</number>
+            <number>6</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -3062,34 +3062,6 @@
            </widget>
            <widget class="QWidget" name="NotificationsSettings">
             <layout class="QGridLayout" name="gridLayout_3">
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_49">
-               <property name="text">
-                <string>Show options when connecting media</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_43">
-               <property name="text">
-                <string>Show Notifications on lock screen</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_14">
-               <property name="text">
-                <string>Don't keep notifications from</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="2">
-              <widget class="QListView" name="listView">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="2">
               <widget class="QPushButton" name="pushButton_9">
                <property name="enabled">
@@ -3107,28 +3079,19 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_3">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="placeholderText">
-                <string>Enter app_name parameter</string>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_43">
+               <property name="text">
+                <string>Show Notifications on lock screen</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="0" colspan="3">
-              <spacer name="verticalSpacer_10">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_89">
+               <property name="text">
+                <string>Attenuate audio</string>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
+              </widget>
              </item>
              <item row="0" column="0" colspan="3">
               <widget class="QFrame" name="displayHeader_2">
@@ -3179,6 +3142,47 @@
                </layout>
               </widget>
              </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_49">
+               <property name="text">
+                <string>Show options when connecting media</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_14">
+               <property name="text">
+                <string>Don't keep notifications from</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_58">
+               <property name="text">
+                <string>Notification Sound</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QListView" name="listView">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0" colspan="3">
+              <spacer name="verticalSpacer_10">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item row="3" column="1" colspan="2">
               <widget class="QCheckBox" name="checkBox">
                <property name="enabled">
@@ -3186,6 +3190,30 @@
                </property>
                <property name="text">
                 <string>Keep notifications from blank app_name parameters</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="3">
+              <widget class="Line" name="line_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="Switch" name="AttenuateSwitch">
+               <property name="text">
+                <string notr="true">AttenuateSwitch</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1" colspan="2">
+              <widget class="QComboBox" name="notificationSoundBox"/>
+             </item>
+             <item row="6" column="1">
+              <widget class="Switch" name="MediaSwitch">
+               <property name="text">
+                <string notr="true">MediaSwitch</string>
                </property>
               </widget>
              </item>
@@ -3247,41 +3275,27 @@
                </layout>
               </widget>
              </item>
-             <item row="5" column="0" colspan="3">
-              <widget class="Line" name="line_11">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="lineEdit_3">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>Enter app_name parameter</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="1" colspan="2">
-              <widget class="QComboBox" name="notificationSoundBox"/>
-             </item>
-             <item row="6" column="1">
-              <widget class="Switch" name="MediaSwitch">
+             <item row="9" column="0">
+              <widget class="QLabel" name="label_45">
                <property name="text">
-                <string notr="true">MediaSwitch</string>
+                <string>Volume change sound</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_58">
+             <item row="9" column="1">
+              <widget class="Switch" name="SoundFeedbackSoundSwitch">
                <property name="text">
-                <string>Notification Sound</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
-              <widget class="QLabel" name="label_89">
-               <property name="text">
-                <string>Attenuate audio</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="1">
-              <widget class="Switch" name="AttenuateSwitch">
-               <property name="text">
-                <string notr="true">AttenuateSwitch</string>
+                <string>SoundFeedbackSoundSwitch</string>
                </property>
               </widget>
              </item>
@@ -4888,18 +4902,18 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
+   <class>AnimatedStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>animatedstackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>clickablelabel.h</header>
    <slots>
     <signal>clicked()</signal>
    </slots>
-  </customwidget>
-  <customwidget>
-   <class>AnimatedStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header>animatedstackedwidget.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>Switch</class>

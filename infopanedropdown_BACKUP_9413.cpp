@@ -293,8 +293,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->TwentyFourHourSwitch->setChecked(settings.value("time/use24hour", true).toBool());
     ui->AttenuateSwitch->setChecked(settings.value("notifications/attenuate", true).toBool());
     ui->BarOnBottom->setChecked(!settings.value("bar/onTop", true).toBool());
+<<<<<<< HEAD
     ui->AutoShowBarSwitch->setChecked(settings.value("bar/autoshow", true).toBool());
-    ui->SoundFeedbackSoundSwitch->setChecked(settings.value("sound/feedbackSound", true).toBool());
+=======
+    ui->soundFeedbackSoundSwitch->setChecked(settings.value("sound/feedbackSound", true).toBool());
+>>>>>>> 4a651e97fca01452b08c6585aae5e4a81498a0ea
     updateAccentColourBox();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
 
@@ -2725,7 +2728,7 @@ void InfoPaneDropdown::on_decorativeColorThemeRadio_toggled(bool checked)
     }
 }
 
-void InfoPaneDropdown::on_SoundFeedbackSoundSwitch_toggled(bool checked)
+void InfoPaneDropdown::on_soundFeedbackSoundSwitch_toggled(bool checked)
  {
      settings.setValue("sound/feedbackSound", checked);
  }
