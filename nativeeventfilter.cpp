@@ -161,6 +161,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     if (AudioMan->QuietMode() == AudioManager::mute) {
                         Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
                     } else {
+                        if (!(settings.value("sound/volumeOverdrive", true).toBool() && volume > 100)) {
                         volume = volume + 5;
                         if (volume - 5 < 100 && volume > 100) {
                             volume = 100;
@@ -176,6 +177,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                         }
 
                         Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
+                        }
                     }
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume)) { //Decrease Volume by 5%
                     if (AudioMan->QuietMode() == AudioManager::mute) {

@@ -295,6 +295,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->BarOnBottom->setChecked(!settings.value("bar/onTop", true).toBool());
     ui->AutoShowBarSwitch->setChecked(settings.value("bar/autoshow", true).toBool());
     ui->SoundFeedbackSoundSwitch->setChecked(settings.value("sound/feedbackSound", true).toBool());
+    ui->SoundFeedbackSoundSwitch->setChecked(settings.value("sound/volumeOverdrive", true).toBool());
     updateAccentColourBox();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
 
@@ -2725,10 +2726,13 @@ void InfoPaneDropdown::on_decorativeColorThemeRadio_toggled(bool checked)
     }
 }
 
-void InfoPaneDropdown::on_SoundFeedbackSoundSwitch_toggled(bool checked)
- {
-     settings.setValue("sound/feedbackSound", checked);
- }
+void InfoPaneDropdown::on_SoundFeedbackSoundSwitch_toggled(bool checked) {
+    settings.setValue("sound/feedbackSound", checked);
+}
+
+void InfoPaneDropdown::on_VolumeOverdriveSwitch_toggled(bool checked) {
+    settings.setValue("sound/volumeOverdrive", checked);
+}
 
 void InfoPaneDropdown::updateAccentColourBox() {
     //Set up theme button combo box
