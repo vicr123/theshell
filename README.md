@@ -34,15 +34,23 @@ make
 ```
 
 ## Install
-1. Copy theshell and init_theshell over to your binaries folder (usually /usr/bin)
-2. Copy theshell.desktop to your xsessions folder (usually /usr/share/xsessions)
+```
+make install
+```
 
 ## Starting
-- Use init_theshell in an X session to start theShell
+- Use ts-startsession in an X session to start theShell
 - Use a display manager and use "theShell" as the session
 
 ## Packages
-theShell is available in Arch Linux on the AUR under the name "[theshell](https://aur.archlinux.org/packages/theshell/)." This also pulls in all the required dependencies for theShell so it should work properly.
+theShell is available in Arch Linux in a custom package repository. Simply add the following lines to the bottom of `/etc/pacman.conf`
+```
+[theapps]
+SigLevel = Optional TrustAll
+Server = https://vicr123.github.io/repo/arch/$arch/
+```
+To install theShell, perform system updates with `pacman -Syu` first, and then `pacman -S theshell`.
+theShell is also on the AUR under the name "[theshell](https://aur.archlinux.org/packages/theshell/)." This also pulls in all the required dependencies for theShell so it should work properly.
 
 ## Bugs/Feature Requests
 - Report any bugs using the "Issues" tab up there. Alternatively, click [here](https://github.com/vicr123/theshell/issues) to jump straight there. (Thanks!)
