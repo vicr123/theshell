@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #include "screenshotwindow.h"
@@ -77,25 +77,21 @@ screenshotWindow::~screenshotWindow()
     delete ui;
 }
 
-void screenshotWindow::keyPressEvent( QKeyEvent* event ) {
-    switch ( event->key() ) {
-    case Qt::Key_Escape:
-        //on ESC, close ui
-        on_discardButton_clicked();
-        break;
-    case Qt::Key_Enter: //We need to capture both Enter and Return since it can vary between keyboards
-        on_saveButton_clicked();
-        break;
-    case Qt::Key_Return:
-        on_saveButton_clicked();
-        break;
-    default:
-        if(Qt::Key_C && modifiers() & Qt::ControlModifier) {
-        on_copyButton_clicked();
-        break;
-        }
-        event->ignore();
-        break;
+void screenshotWindow::keyPressEvent(QKeyEvent* event) {
+    switch (event->key()) {
+        case Qt::Key_Escape:
+            //on ESC, close ui
+            ui->discardButton->click();
+            break;
+        case Qt::Key_Enter: //We need to capture both Enter and Return since it can vary between keyboards
+        case Qt::Key_Return:
+            ui->saveButton->click();
+            break;
+        default:
+            if (Qt::Key_C && event->modifiers() & Qt::ControlModifier) {
+                ui->copyButton->click();
+            }
+            break;
     }
 }
 
