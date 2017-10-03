@@ -295,7 +295,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->BarOnBottom->setChecked(!settings.value("bar/onTop", true).toBool());
     ui->AutoShowBarSwitch->setChecked(settings.value("bar/autoshow", true).toBool());
     ui->SoundFeedbackSoundSwitch->setChecked(settings.value("sound/feedbackSound", true).toBool());
-    ui->SoundFeedbackSoundSwitch->setChecked(settings.value("sound/volumeOverdrive", true).toBool());
+    ui->VolumeOverdriveSwitch->setChecked(settings.value("sound/volumeOverdrive", true).toBool());
     updateAccentColourBox();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
 

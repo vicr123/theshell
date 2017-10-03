@@ -376,8 +376,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>614</width>
-            <height>1046</height>
+            <width>592</width>
+            <height>1062</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>15</day>
+                 <day>14</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>15</day>
+                 <day>14</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2418,8 +2418,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>883</width>
-                  <height>601</height>
+                  <width>372</width>
+                  <height>497</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
@@ -3226,7 +3226,7 @@
               </widget>
              </item>
              <item row="10" column="1">
-              <widget class="Switch" name="pushButton_8">
+              <widget class="Switch" name="VolumeOverdriveSwitch">
                <property name="text">
                 <string>VolumeOverdriveSwitch</string>
                </property>

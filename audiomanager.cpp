@@ -50,8 +50,8 @@ void AudioManager::changeVolume(int volume) {
         if (newVol < PA_VOLUME_MUTED) newVol = PA_VOLUME_MUTED;
         if (newVol > PA_VOLUME_MAX) newVol = PA_VOLUME_MAX;
 
-        if (!(settings.value("sound/volumeOverdrive", true).toBool() && volume > 100)) {
-            if (newVol > PA_VOLUME_NORM) newVol = PA_VOLUME_NORM;
+        if (!settings.value("sound/volumeOverdrive", true).toBool() && newVol > PA_VOLUME_NORM) {
+            newVol = PA_VOLUME_NORM;
         }
 
         if (volume < 0) {
