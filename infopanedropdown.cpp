@@ -335,6 +335,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
        }
     } while (allObjects.count() != 0);*/
 
+    ui->notificationSoundBox->blockSignals(true);
     ui->notificationSoundBox->addItem("Triple Ping");
     ui->notificationSoundBox->addItem("Upside Down");
     ui->notificationSoundBox->addItem("Echo");
@@ -347,6 +348,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     } else if (notificationSound == "echo") {
         ui->notificationSoundBox->setCurrentIndex(2);
     }
+    ui->notificationSoundBox->blockSignals(false);
 
     //Don't forget to change settings pane setup things
     ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
