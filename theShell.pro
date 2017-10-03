@@ -4,13 +4,17 @@
 #
 #-------------------------------------------------
 
-QT       += core gui x11extras dbus multimedia xml network positioning svg charts thelib concurrent
+QT       += core gui dbus multimedia xml network positioning svg charts concurrent
 CONFIG   += c++14
 LIBS     += -lX11 -lxcb -lxcb-keysyms -lsystemd -lKF5AkonadiCore -lpulse -lpulse-mainloop-glib -lcrypt
 
 INCLUDEPATH += /usr/include/glib-2.0/ /usr/lib/glib-2.0/include/
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+unix {
+    QT += thelib x11extras
+}
 
 blueprint {
     message(Configuring theShell to be built as blueprint)
