@@ -376,8 +376,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>592</width>
-            <height>1062</height>
+            <width>614</width>
+            <height>1046</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>16</day>
+                 <day>15</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>16</day>
+                 <day>15</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1823,7 +1823,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>1</number>
+            <number>5</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2419,7 +2419,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>883</width>
-                  <height>589</height>
+                  <height>601</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
@@ -2981,161 +2981,6 @@
            </widget>
            <widget class="QWidget" name="NotificationsSettings">
             <layout class="QGridLayout" name="gridLayout_3">
-             <item row="1" column="2">
-              <widget class="QPushButton" name="pushButton_9">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset theme="list-add">
-                 <normaloff>.</normaloff>.</iconset>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_43">
-               <property name="text">
-                <string>Show Notifications on lock screen</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
-              <widget class="QLabel" name="label_89">
-               <property name="text">
-                <string>Attenuate audio</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QFrame" name="displayHeader_2">
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_13">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="displayLabel_2">
-                  <property name="font">
-                   <font>
-                    <pointsize>15</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Notifications</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="Line" name="displayLine_2">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_49">
-               <property name="text">
-                <string>Show options when connecting media</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_14">
-               <property name="text">
-                <string>Don't keep notifications from</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_58">
-               <property name="text">
-                <string>Notification Sound</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="2">
-              <widget class="QListView" name="listView">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="10" column="0" colspan="3">
-              <spacer name="verticalSpacer_10">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="3" column="1" colspan="2">
-              <widget class="QCheckBox" name="checkBox">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Keep notifications from blank app_name parameters</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0" colspan="3">
-              <widget class="Line" name="line_11">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="1">
-              <widget class="Switch" name="AttenuateSwitch">
-               <property name="text">
-                <string notr="true">AttenuateSwitch</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="1" colspan="2">
-              <widget class="QComboBox" name="notificationSoundBox"/>
-             </item>
-             <item row="6" column="1">
-              <widget class="Switch" name="MediaSwitch">
-               <property name="text">
-                <string notr="true">MediaSwitch</string>
-               </property>
-              </widget>
-             </item>
              <item row="4" column="1" colspan="2">
               <widget class="QFrame" name="frame_4">
                <property name="frameShape">
@@ -3194,6 +3039,161 @@
                </layout>
               </widget>
              </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QFrame" name="displayHeader_2">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_13">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="displayLabel_2">
+                  <property name="font">
+                   <font>
+                    <pointsize>15</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Notifications</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="Line" name="displayLine_2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QPushButton" name="pushButton_9">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="list-add">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_89">
+               <property name="text">
+                <string>Attenuate audio</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_43">
+               <property name="text">
+                <string>Show Notifications on lock screen</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QListView" name="listView">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_14">
+               <property name="text">
+                <string>Don't keep notifications from</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_58">
+               <property name="text">
+                <string>Notification Sound</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_49">
+               <property name="text">
+                <string>Show options when connecting media</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="3">
+              <widget class="Line" name="line_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="Switch" name="MediaSwitch">
+               <property name="text">
+                <string notr="true">MediaSwitch</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0" colspan="3">
+              <spacer name="verticalSpacer_10">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="3" column="1" colspan="2">
+              <widget class="QCheckBox" name="checkBox">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Keep notifications from blank app_name parameters</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="Switch" name="AttenuateSwitch">
+               <property name="text">
+                <string notr="true">AttenuateSwitch</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1" colspan="2">
+              <widget class="QComboBox" name="notificationSoundBox"/>
+             </item>
              <item row="1" column="1">
               <widget class="QLineEdit" name="lineEdit_3">
                <property name="enabled">
@@ -3215,6 +3215,20 @@
               <widget class="Switch" name="SoundFeedbackSoundSwitch">
                <property name="text">
                 <string>SoundFeedbackSoundSwitch</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QLabel" name="label_46">
+               <property name="text">
+                <string>Volume overdrive</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <widget class="Switch" name="pushButton_8">
+               <property name="text">
+                <string>VolumeOverdriveSwitch</string>
                </property>
               </widget>
              </item>
