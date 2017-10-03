@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #include "audiomanager.h"
@@ -49,6 +49,10 @@ void AudioManager::changeVolume(int volume) {
         pa_volume_t newVol = avgVol + (onePercent * volume);
         if (newVol < PA_VOLUME_MUTED) newVol = PA_VOLUME_MUTED;
         if (newVol > PA_VOLUME_MAX) newVol = PA_VOLUME_MAX;
+
+        if (!(settings.value("sound/volumeOverdrive", true).toBool() && volume > 100)) {
+            if (newVol > PA_VOLUME_NORM) newVol = PA_VOLUME_NORM;
+        }
 
         if (volume < 0) {
             if (newVol > avgVol) {
