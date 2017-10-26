@@ -6,47 +6,47 @@
     <message>
         <location filename="../menu.cpp" line="1110"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Uygulama</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1146"/>
         <source>Place a call over </source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Bir yoklama koyun </translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1341"/>
         <source>Run Command</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Komut Çalıştır</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1352"/>
         <source>Open webpage</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Örütbağ sayfasını açın</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1360"/>
         <source>Open Folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Klasörü Açın</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1367"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Dosyayı Açın</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1380"/>
         <source>Query theWave</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">theWave'i sorgulayın</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1521"/>
         <source>theWave</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">theWave</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="1522"/>
         <source>Personal Assistant</source>
-        <translation type="unfinished"></translation>
+        <translation type="finished">Kişisel Yardımcı</translation>
     </message>
 </context>
 <context>
