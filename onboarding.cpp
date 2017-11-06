@@ -89,6 +89,7 @@
 
 extern NativeEventFilter* NativeFilter;
 extern QTranslator *qtTranslator, *tsTranslator;
+extern float getDPIScaling();
 
 Onboarding::Onboarding(QWidget *parent) :
     QDialog(parent),
@@ -96,11 +97,15 @@ Onboarding::Onboarding(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->buttonBox->setVisible(false);
+    //ui->buttonBox->setVisible(false);
+    ui->backButton->setVisible(false);
     ui->changelog->setText(ChangelogOnbording);
     ui->thewaveLogo->setPixmap(QIcon(":/icons/thewave.svg").pixmap(256, 256));
     ui->stackedWidget->setCurrentIndex(0);
     ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg(TS_VERSION));
+    ui->tsLogo->setPixmap(QIcon::fromTheme("theshell").pixmap(256, 256));
+    ui->tsLogo_2->setPixmap(QIcon::fromTheme("theshell").pixmap(256, 256));
+    ui->iconLabel->setPixmap(QIcon(":/icons/icon.svg").pixmap(32 * getDPIScaling(), 32 * getDPIScaling()));
 
     QTimer* timer = new QTimer(this);
     timer->setInterval(3000);
@@ -153,34 +158,36 @@ void Onboarding::on_closeButton_clicked()
 
 void Onboarding::on_stackedWidget_currentChanged(int arg1)
 {
-    ui->buttonBox->setVisible(true);
-    ui->nextButton->setVisible(true);
     ui->backButton->setVisible(true);
+    ui->nextButton->setEnabled(true);
+    ui->backButton->setVisible(true);
+    ui->nextButton->setText(tr("Next"));
     switch (arg1) {
         case 0:
             ui->backButton->setVisible(false);
+            ui->nextButton->setEnabled(true);
             break;
         case 1:
-            ui->buttonBox->setVisible(false);
+            ui->backButton->setVisible(false);
             break;
         case 3:
         case 4:
-            ui->nextButton->setVisible(false);
+            ui->nextButton->setEnabled(false);
             break;
         case 5:
-            ui->buttonBox->setVisible(false);
+            ui->nextButton->setText(tr("Start"));
             break;
     }
 }
 
-void Onboarding::on_nextButtonFirstPage_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
-}
-
 void Onboarding::on_nextButton_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
+    if (ui->stackedWidget->currentIndex() == 5) {
+        onboardingDone = true;
+        this->accept();
+    } else {
+        ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
+    }
 }
 
 void Onboarding::on_backButton_clicked()
@@ -338,4 +345,15 @@ void Onboarding::on_powerOffButton_clicked()
     message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "PowerOff");
     message.setArguments(arguments);
     QDBusConnection::systemBus().send(message);
+}
+
+void Onboarding::on_exitStackedWidget_currentChanged(int arg1)
+{
+    if (arg1 == 0) {
+        ui->nextButton->setVisible(true);
+        ui->backButton->setVisible(true);
+    } else {
+        ui->nextButton->setVisible(false);
+        ui->backButton->setVisible(false);
+    }
 }

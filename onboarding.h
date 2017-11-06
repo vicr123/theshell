@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #ifndef ONBOARDING_H
@@ -47,9 +47,7 @@ private slots:
     void on_closeButton_clicked();
 
     void on_stackedWidget_currentChanged(int arg1);
-    
-    void on_nextButtonFirstPage_clicked();
-    
+
     void on_nextButton_clicked();
 
     void on_backButton_clicked();
@@ -73,6 +71,8 @@ private slots:
     void on_logoutButton_clicked();
 
     void on_powerOffButton_clicked();
+
+    void on_exitStackedWidget_currentChanged(int arg1);
 
 private:
     Ui::Onboarding *ui;

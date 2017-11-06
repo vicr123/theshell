@@ -1,5 +1,5 @@
 /****************************************
- * 
+ *
  *   theShell - Desktop Environment
  *   Copyright (C) 2017 Victor Tran
  *
@@ -15,7 +15,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * *************************************/
 
 #include "choosebackground.h"
@@ -30,6 +30,7 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
     QString backPath = settings.value("desktop/background", "inbuilt:triangles").toString();
 
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/triangles"), ""));
+    ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/ribbon"), ""));
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/blueprint"), ""));
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/triplecircle"), ""));
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/shatter"), ""));
@@ -45,24 +46,26 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
         QString selection = ":/backgrounds/" + backPath.split(":").at(1);
         if (selection == "triangles") {
             ui->listWidget->item(0)->setSelected(true);
-        } else if (selection == "blueprint") {
+        } else if (selection == "ribbon") {
             ui->listWidget->item(1)->setSelected(true);
-        } else if (selection == "triplecircle") {
+        } else if (selection == "blueprint") {
             ui->listWidget->item(2)->setSelected(true);
-        } else if (selection == "shatter") {
+        } else if (selection == "triplecircle") {
             ui->listWidget->item(3)->setSelected(true);
-        } else if (selection == "slice") {
+        } else if (selection == "shatter") {
             ui->listWidget->item(4)->setSelected(true);
-        } else if (selection == "nav") {
+        } else if (selection == "slice") {
             ui->listWidget->item(5)->setSelected(true);
-        } else if (selection == "leftwaves") {
+        } else if (selection == "nav") {
             ui->listWidget->item(6)->setSelected(true);
-        } else if (selection == "beach") {
+        } else if (selection == "leftwaves") {
             ui->listWidget->item(7)->setSelected(true);
-        } else if (selection == "arrows") {
+        } else if (selection == "beach") {
             ui->listWidget->item(8)->setSelected(true);
-        } else if (selection == "waves") {
+        } else if (selection == "arrows") {
             ui->listWidget->item(9)->setSelected(true);
+        } else if (selection == "waves") {
+            ui->listWidget->item(10)->setSelected(true);
         }
         ui->lineEdit->setEnabled(false);
         ui->pushButton_2->setEnabled(false);
@@ -121,30 +124,33 @@ void ChooseBackground::on_listWidget_currentRowChanged(int currentRow)
             settings.setValue("desktop/background", "inbuilt:triangles");
             break;
         case 1:
-            settings.setValue("desktop/background", "inbuilt:blueprint");
+            settings.setValue("desktop/background", "inbuilt:ribbon");
             break;
         case 2:
-            settings.setValue("desktop/background", "inbuilt:triplecircle");
+            settings.setValue("desktop/background", "inbuilt:blueprint");
             break;
         case 3:
-            settings.setValue("desktop/background", "inbuilt:shatter");
+            settings.setValue("desktop/background", "inbuilt:triplecircle");
             break;
         case 4:
-            settings.setValue("desktop/background", "inbuilt:slice");
+            settings.setValue("desktop/background", "inbuilt:shatter");
             break;
         case 5:
-            settings.setValue("desktop/background", "inbuilt:nav");
+            settings.setValue("desktop/background", "inbuilt:slice");
             break;
         case 6:
-            settings.setValue("desktop/background", "inbuilt:leftwaves");
+            settings.setValue("desktop/background", "inbuilt:nav");
             break;
         case 7:
-            settings.setValue("desktop/background", "inbuilt:beach");
+            settings.setValue("desktop/background", "inbuilt:leftwaves");
             break;
         case 8:
-            settings.setValue("desktop/background", "inbuilt:arrows");
+            settings.setValue("desktop/background", "inbuilt:beach");
             break;
         case 9:
+            settings.setValue("desktop/background", "inbuilt:arrows");
+            break;
+        case 10:
             settings.setValue("desktop/background", "inbuilt:waves");
             break;
     }

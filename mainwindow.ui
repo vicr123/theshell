@@ -329,7 +329,7 @@
           <item>
            <widget class="ClickableLabel" name="notifications">
             <property name="text">
-             <string notr="true">No Notifications</string>
+             <string>No Notifications</string>
             </property>
            </widget>
           </item>

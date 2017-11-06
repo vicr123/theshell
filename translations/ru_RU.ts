@@ -4,47 +4,57 @@
 <context>
     <name>AppsListModel</name>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="31"/>
+        <location filename="../apps/appslistmodel.cpp" line="32"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="65"/>
+        <location filename="../apps/appslistmodel.cpp" line="66"/>
         <source>Place a call over </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="260"/>
+        <location filename="../apps/appslistmodel.cpp" line="261"/>
         <source>Run Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="271"/>
+        <location filename="../apps/appslistmodel.cpp" line="272"/>
         <source>Open webpage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="279"/>
+        <location filename="../apps/appslistmodel.cpp" line="280"/>
         <source>Open Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="286"/>
+        <location filename="../apps/appslistmodel.cpp" line="287"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="299"/>
+        <location filename="../apps/appslistmodel.cpp" line="300"/>
         <source>Query theWave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="356"/>
+        <location filename="../apps/appslistmodel.cpp" line="341"/>
+        <source>System Settings</source>
+        <translation type="unfinished">Параметры системы</translation>
+    </message>
+    <message>
+        <location filename="../apps/appslistmodel.cpp" line="342"/>
+        <source>System Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../apps/appslistmodel.cpp" line="364"/>
         <source>theWave</source>
         <translation type="unfinished">theWave</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="357"/>
+        <location filename="../apps/appslistmodel.cpp" line="365"/>
         <source>Personal Assistant</source>
         <translation type="unfinished">Персональный ассистент</translation>
     </message>
@@ -52,12 +62,12 @@
 <context>
     <name>AudioManager</name>
     <message>
-        <location filename="../audiomanager.cpp" line="338"/>
+        <location filename="../audiomanager.cpp" line="342"/>
         <source>Ignores any notifications from all apps. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiomanager.cpp" line="340"/>
+        <location filename="../audiomanager.cpp" line="344"/>
         <source>Completely turns off all sounds and notifications from all apps. Not even timers or reminders will notify you.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -132,7 +142,7 @@
         <translation>Найти...</translation>
     </message>
     <message>
-        <location filename="../choosebackground.cpp" line="162"/>
+        <location filename="../choosebackground.cpp" line="168"/>
         <source>Select Background</source>
         <translation>Выберите фон</translation>
     </message>
@@ -378,27 +388,26 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="121"/>
-        <location filename="../infopanedropdown.ui" line="1145"/>
+        <location filename="../infopanedropdown.ui" line="1170"/>
         <source>System Status</source>
         <translation>Статус системы</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="128"/>
-        <location filename="../infopanedropdown.ui" line="2411"/>
+        <location filename="../infopanedropdown.ui" line="2355"/>
         <source>Network</source>
         <translation>Сеть</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="135"/>
-        <location filename="../infopanedropdown.ui" line="1347"/>
-        <location filename="../infopanedropdown.ui" line="1717"/>
-        <location filename="../infopanedropdown.ui" line="3137"/>
+        <location filename="../infopanedropdown.ui" line="1372"/>
+        <location filename="../infopanedropdown.ui" line="3071"/>
         <source>Notifications</source>
         <translation>Уведомления</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="142"/>
-        <location filename="../infopanedropdown.ui" line="1486"/>
+        <location filename="../infopanedropdown.ui" line="1511"/>
         <source>KDE Connect</source>
         <translation>KDE Connect</translation>
     </message>
@@ -428,16 +437,6 @@
         <translation>Экономия энергии</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="424"/>
-        <source>16:20:00</source>
-        <translation>16:20:00</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="436"/>
-        <source>Sunday, 1 Janurary 1111</source>
-        <translation>Воскресенье, 1 Января 1111</translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="549"/>
         <source>Today</source>
         <translation>Сегодня</translation>
@@ -453,756 +452,780 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;quot;Happy Bee&amp;quot;, &amp;quot;Salty Ditty&amp;quot; copyright (c) Kevin MacLeod. Licensed under the Creative Commons CC-BY license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="688"/>
-        <location filename="../infopanedropdown.ui" line="765"/>
+        <location filename="../infopanedropdown.ui" line="713"/>
+        <location filename="../infopanedropdown.ui" line="790"/>
         <source>Reset</source>
         <translation>Сброс</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="699"/>
-        <location filename="../infopanedropdown.ui" line="776"/>
-        <location filename="../infopanedropdown.cpp" line="888"/>
-        <location filename="../infopanedropdown.cpp" line="1017"/>
-        <location filename="../infopanedropdown.cpp" line="1506"/>
+        <location filename="../infopanedropdown.ui" line="724"/>
+        <location filename="../infopanedropdown.ui" line="801"/>
+        <location filename="../infopanedropdown.cpp" line="887"/>
+        <location filename="../infopanedropdown.cpp" line="1016"/>
+        <location filename="../infopanedropdown.cpp" line="1505"/>
         <source>Start</source>
         <translation>Начать</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="728"/>
+        <location filename="../infopanedropdown.ui" line="753"/>
         <source>Stopwatch</source>
         <translation>Секундомер</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="825"/>
+        <location filename="../infopanedropdown.ui" line="850"/>
         <source>Reminders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="866"/>
-        <location filename="../infopanedropdown.ui" line="1000"/>
+        <location filename="../infopanedropdown.ui" line="891"/>
+        <location filename="../infopanedropdown.ui" line="1025"/>
         <source>Delete Reminder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="877"/>
         <location filename="../infopanedropdown.ui" line="902"/>
+        <location filename="../infopanedropdown.ui" line="927"/>
         <source>New Reminder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="911"/>
+        <location filename="../infopanedropdown.ui" line="936"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="918"/>
+        <location filename="../infopanedropdown.ui" line="943"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="975"/>
+        <location filename="../infopanedropdown.ui" line="1000"/>
         <source>Create Reminder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1007"/>
+        <location filename="../infopanedropdown.ui" line="1032"/>
         <source>Delete this reminder?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1026"/>
+        <location filename="../infopanedropdown.ui" line="1051"/>
         <source>Reminder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1099"/>
+        <location filename="../infopanedropdown.ui" line="1124"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1201"/>
-        <location filename="../infopanedropdown.cpp" line="2531"/>
+        <location filename="../infopanedropdown.ui" line="1226"/>
+        <location filename="../infopanedropdown.cpp" line="2530"/>
         <source>Charge History</source>
         <translation>Журнал зарядок</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1208"/>
+        <location filename="../infopanedropdown.ui" line="1233"/>
         <source>Show projected charge</source>
         <translation>Показать оставшийся заряд</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1226"/>
+        <location filename="../infopanedropdown.ui" line="1251"/>
         <source>Charge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1239"/>
+        <location filename="../infopanedropdown.ui" line="1264"/>
         <source>Rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1249"/>
+        <location filename="../infopanedropdown.ui" line="1274"/>
         <source>Apps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1516"/>
+        <location filename="../infopanedropdown.ui" line="1541"/>
         <source>KDE Connect is not running.</source>
         <translation>KDE Connect не включён.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1523"/>
+        <location filename="../infopanedropdown.ui" line="1548"/>
         <source>Start KDE Connect Daemon</source>
         <translation>Включить KDE Connect</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1586"/>
+        <location filename="../infopanedropdown.ui" line="1611"/>
         <source>Ping</source>
         <translation>Прозвонить</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1597"/>
+        <location filename="../infopanedropdown.ui" line="1622"/>
         <source>Locate</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1625"/>
+        <location filename="../infopanedropdown.ui" line="1650"/>
         <source>Settings and Important Information</source>
         <translation>Настройки и важная информация</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1638"/>
+        <location filename="../infopanedropdown.ui" line="1663"/>
         <source>Configure theShell and get important information</source>
         <translation>Настроить theShell и получить важную информацию</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1925"/>
+        <location filename="../infopanedropdown.ui" line="1941"/>
         <source>Autostart with</source>
         <translation>Запускаться с</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1663"/>
-        <location filename="../infopanedropdown.ui" line="1843"/>
+        <location filename="../infopanedropdown.ui" line="1688"/>
+        <location filename="../infopanedropdown.ui" line="1859"/>
         <source>Startup</source>
         <translation>Запуск</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1672"/>
-        <location filename="../infopanedropdown.ui" line="2145"/>
-        <source>Bar</source>
-        <translation>Панель</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="2229"/>
+        <location filename="../infopanedropdown.ui" line="2252"/>
         <source>Show text on window buttons</source>
         <translation>Показывать текст на кнопках окон</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2189"/>
+        <location filename="../infopanedropdown.ui" line="2212"/>
         <source>Show windows from other desktops</source>
         <translation>Показывать окна с других рабочих столов</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2175"/>
+        <location filename="../infopanedropdown.ui" line="2198"/>
         <source>Use Status Bar</source>
         <translation>Использовать Статусную панель</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2282"/>
+        <location filename="../infopanedropdown.ui" line="2308"/>
         <source>Within Gateway</source>
         <translation>В пределах Врат</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2289"/>
+        <location filename="../infopanedropdown.ui" line="2315"/>
         <source>Fu&amp;ll Screen</source>
         <translation>Полны&amp;й экран</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2312"/>
+        <location filename="../infopanedropdown.ui" line="2280"/>
         <source>End Session Confirmation</source>
         <translation>Подтверждение завершения сессии</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1681"/>
-        <location filename="../infopanedropdown.ui" line="2358"/>
-        <source>Gateway</source>
-        <translation>Врата</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="1699"/>
-        <location filename="../infopanedropdown.ui" line="2626"/>
+        <location filename="../infopanedropdown.ui" line="1715"/>
+        <location filename="../infopanedropdown.ui" line="2771"/>
         <source>Display</source>
         <translation>Дисплей</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2740"/>
+        <location filename="../infopanedropdown.ui" line="2648"/>
         <source>Screen Brightness</source>
         <translation>Яркость экрана</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2687"/>
+        <location filename="../infopanedropdown.ui" line="2595"/>
         <source>Adjust Screen Resolution</source>
         <translation>Настройка разрешения экрана</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="320"/>
-        <location filename="../infopanedropdown.ui" line="2577"/>
+        <location filename="../infopanedropdown.ui" line="2521"/>
         <source>Redshift</source>
         <translation>Режим ночи</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2828"/>
+        <location filename="../infopanedropdown.ui" line="2723"/>
         <source>Pause Redshift</source>
         <translation>Приостановить режим ночи</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2494"/>
+        <location filename="../infopanedropdown.ui" line="2438"/>
         <source>Start Time</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2537"/>
+        <location filename="../infopanedropdown.ui" line="2481"/>
         <source>End Time</source>
         <translation>Конец</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2646"/>
-        <location filename="../infopanedropdown.ui" line="2733"/>
+        <location filename="../infopanedropdown.ui" line="2554"/>
+        <location filename="../infopanedropdown.ui" line="2641"/>
         <source>HH:mm</source>
         <translation>ЧЧ:ММ (Часы:Минуты)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2520"/>
+        <location filename="../infopanedropdown.ui" line="2464"/>
         <source>Use Sunlight Cycle (coming soon)</source>
         <translation>Использовать данные о дне (уже скоро)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2544"/>
+        <location filename="../infopanedropdown.ui" line="2488"/>
         <source>Redshift Intensity</source>
         <translation>Интенсивность Режима ночи</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2527"/>
+        <location filename="../infopanedropdown.ui" line="2471"/>
         <source>If the start time is later than the end time, Redshift will be activated until the end time on the next day.</source>
         <translation>Если начало позже чем конец, то Режим ночи будет активирован до конца следующего дня.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2966"/>
+        <location filename="../infopanedropdown.ui" line="2910"/>
         <source>System Font</source>
         <translation>Системный шрифт</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2939"/>
+        <location filename="../infopanedropdown.ui" line="2883"/>
         <source>Accent Color</source>
         <translation>Главный цвет</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2946"/>
+        <location filename="../infopanedropdown.ui" line="2890"/>
         <source>Color Scheme</source>
         <translation>Цветовая палитра</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1708"/>
-        <location filename="../infopanedropdown.ui" line="2999"/>
+        <location filename="../infopanedropdown.ui" line="1724"/>
+        <location filename="../infopanedropdown.ui" line="2943"/>
         <source>Theme</source>
         <translation>Тема</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2895"/>
+        <location filename="../infopanedropdown.ui" line="2839"/>
         <source>&amp;Light</source>
         <translation>&amp;Светлая</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2902"/>
+        <location filename="../infopanedropdown.ui" line="2846"/>
         <source>Dar&amp;k</source>
         <translation>Тёмна&amp;я</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2956"/>
+        <location filename="../infopanedropdown.ui" line="2900"/>
         <source>Icon Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3043"/>
+        <location filename="../infopanedropdown.ui" line="3146"/>
         <source>Show options when connecting media</source>
         <translation>Показывать возможности при подключении накопителей информации</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3050"/>
+        <location filename="../infopanedropdown.ui" line="3118"/>
         <source>Show Notifications on lock screen</source>
         <translation>Показывать уведомления на экране блокировки</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3057"/>
+        <location filename="../infopanedropdown.ui" line="3132"/>
         <source>Don&apos;t keep notifications from</source>
         <translation>Не показывать уведомления от</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3091"/>
+        <location filename="../infopanedropdown.ui" line="3203"/>
         <source>Enter app_name parameter</source>
         <translation>Введите названия приложений</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3163"/>
+        <location filename="../infopanedropdown.ui" line="3183"/>
         <source>Keep notifications from blank app_name parameters</source>
         <translation>Показывать уведомления от следующих приложений</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3191"/>
+        <location filename="../infopanedropdown.ui" line="3008"/>
         <source>Show Contents</source>
         <translation>Показать содержание</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3198"/>
+        <location filename="../infopanedropdown.ui" line="3015"/>
         <source>Hide Contents</source>
         <translation>Скрыть содержание</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3205"/>
+        <location filename="../infopanedropdown.ui" line="3022"/>
         <source>Don&apos;t Show</source>
         <translation>Не показывать</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1789"/>
-        <location filename="../infopanedropdown.ui" line="4510"/>
+        <location filename="../infopanedropdown.ui" line="1805"/>
+        <location filename="../infopanedropdown.ui" line="4495"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4561"/>
+        <location filename="../infopanedropdown.ui" line="4546"/>
         <source>theShell is Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4667"/>
+        <location filename="../infopanedropdown.ui" line="4652"/>
         <source>System Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4695"/>
+        <location filename="../infopanedropdown.ui" line="4680"/>
         <source>You&apos;re using</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4736"/>
+        <location filename="../infopanedropdown.ui" line="4721"/>
         <source>Support</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4757"/>
+        <location filename="../infopanedropdown.ui" line="4742"/>
         <source>Available Swap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4764"/>
+        <location filename="../infopanedropdown.ui" line="4749"/>
         <source>Available Memory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4784"/>
+        <location filename="../infopanedropdown.ui" line="4769"/>
         <source>Kernel Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4805"/>
+        <location filename="../infopanedropdown.ui" line="4790"/>
         <source>Qt Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3245"/>
+        <location filename="../infopanedropdown.ui" line="3139"/>
         <source>Notification Sound</source>
         <translation>Звук уведомления</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3270"/>
+        <location filename="../infopanedropdown.ui" line="3242"/>
         <source>Use Super Key to open Gateway</source>
         <translation>Использовать клавишу Super для открытия Врат</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3290"/>
+        <location filename="../infopanedropdown.ui" line="3262"/>
         <source>Audible Touch Feedback</source>
         <translation>Звуки нажатий</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1726"/>
-        <location filename="../infopanedropdown.ui" line="3349"/>
+        <location filename="../infopanedropdown.ui" line="1742"/>
+        <location filename="../infopanedropdown.ui" line="3321"/>
         <source>Input</source>
         <translation>Ввод</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3379"/>
+        <location filename="../infopanedropdown.ui" line="3351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you&apos;d like to use the Super Key for another key combination, turn this off so that theShell won&apos;t take control of it. &lt;span style=&quot; font-weight:600;&quot;&gt;Changing t&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;his setting requires you to log out and then log back in.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;Если вам нужно использовать клавишу Super для другой комбинации, отключите этот параметр для того чтобы theShell не контролировал её. &amp;lt;span style=&amp;quot; font-weight:600;&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;span style=&amp;quot; font-weight:600;&amp;quot;&amp;gt;Для того, чтобы изменения вступили в силу, нужно выйти и зайти в сеанс.&amp;lt;/span&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3389"/>
+        <location filename="../infopanedropdown.ui" line="3361"/>
         <source>Optimise for touch input</source>
         <translation>Оптимизировать для сенсорного ввода</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3410"/>
+        <location filename="../infopanedropdown.ui" line="3382"/>
         <source>Background</source>
         <translation>Фон</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3504"/>
+        <location filename="../infopanedropdown.ui" line="3476"/>
         <source>Browse...</source>
         <translation>Поиск...</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1735"/>
-        <location filename="../infopanedropdown.ui" line="3443"/>
+        <location filename="../infopanedropdown.ui" line="1751"/>
+        <location filename="../infopanedropdown.ui" line="3415"/>
         <source>Lock Screen</source>
         <translation>Экран блокировки</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1359"/>
+        <location filename="../infopanedropdown.ui" line="1384"/>
         <source>Quiet Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1371"/>
+        <location filename="../infopanedropdown.ui" line="1396"/>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1388"/>
+        <location filename="../infopanedropdown.ui" line="1413"/>
         <source>No Notifications</source>
         <translation type="unfinished">Нет уведомлений</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1402"/>
+        <location filename="../infopanedropdown.ui" line="1427"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3252"/>
+        <location filename="../infopanedropdown.ui" line="3111"/>
         <source>Attenuate audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3479"/>
+        <location filename="../infopanedropdown.ui" line="3451"/>
         <source>Lock screen after returning from suspend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3486"/>
+        <location filename="../infopanedropdown.ui" line="3458"/>
         <source>SuspendLockScreenSwitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3530"/>
+        <location filename="../infopanedropdown.ui" line="3509"/>
         <source>Enable theWave</source>
         <translation>Включить theWave</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3537"/>
+        <location filename="../infopanedropdown.ui" line="3516"/>
         <source>Search on Wikipedia</source>
         <translation>Искать в Википедии</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1744"/>
-        <location filename="../infopanedropdown.ui" line="3570"/>
+        <location filename="../infopanedropdown.ui" line="1760"/>
+        <location filename="../infopanedropdown.ui" line="3549"/>
         <source>theWave</source>
         <translation>theWave</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1690"/>
+        <location filename="../infopanedropdown.ui" line="1697"/>
+        <location filename="../infopanedropdown.ui" line="2168"/>
+        <source>Gateway and Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1706"/>
         <source>Networks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1909"/>
+        <location filename="../infopanedropdown.ui" line="1733"/>
+        <source>Sounds and Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="1925"/>
         <source>New App</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1954"/>
+        <location filename="../infopanedropdown.ui" line="1970"/>
         <source>Which app do you want to automatically start with theShell?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1966"/>
-        <location filename="../infopanedropdown.ui" line="2030"/>
+        <location filename="../infopanedropdown.ui" line="1982"/>
+        <location filename="../infopanedropdown.ui" line="2046"/>
         <source>Back</source>
         <translation type="unfinished">Назад</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1990"/>
-        <location filename="../infopanedropdown.ui" line="2018"/>
+        <location filename="../infopanedropdown.ui" line="2006"/>
+        <location filename="../infopanedropdown.ui" line="2034"/>
         <source>Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2054"/>
+        <location filename="../infopanedropdown.ui" line="2070"/>
         <source>Add App</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2067"/>
+        <location filename="../infopanedropdown.ui" line="2083"/>
         <source>Enter details of the app to autostart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2077"/>
+        <location filename="../infopanedropdown.ui" line="2093"/>
         <source>Application Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2182"/>
+        <location filename="../infopanedropdown.ui" line="2205"/>
         <source>Automatically show bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2236"/>
+        <location filename="../infopanedropdown.ui" line="2259"/>
         <source>Show Bar on bottom of screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2250"/>
+        <location filename="../infopanedropdown.ui" line="2273"/>
         <source>When this is checked, hovering over the Status Bar will automatically expand the bar. Otherwise, clicking on the Status Bar will expand the bar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2507"/>
+        <location filename="../infopanedropdown.ui" line="2451"/>
         <source>Screen Scaling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2769"/>
+        <location filename="../infopanedropdown.ui" line="2664"/>
         <source>&amp;100% (96 dpi)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2776"/>
+        <location filename="../infopanedropdown.ui" line="2671"/>
         <source>1&amp;50% (144 dpi)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2783"/>
+        <location filename="../infopanedropdown.ui" line="2678"/>
         <source>&amp;200% (192 dpi)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2790"/>
+        <location filename="../infopanedropdown.ui" line="2685"/>
         <source>&amp;300% (288 dpi)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2797"/>
+        <location filename="../infopanedropdown.ui" line="2692"/>
         <source>DPI settings will be applied at next login.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2819"/>
+        <location filename="../infopanedropdown.ui" line="2714"/>
         <source>Scheduled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2916"/>
+        <location filename="../infopanedropdown.ui" line="2860"/>
         <source>Decorati&amp;ve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3032"/>
+        <location filename="../infopanedropdown.ui" line="2976"/>
         <source>Widget Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3614"/>
+        <location filename="../infopanedropdown.ui" line="3210"/>
+        <source>Volume change sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3217"/>
+        <source>SoundFeedbackSoundSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3224"/>
+        <source>Volume overdrive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3231"/>
+        <source>VolumeOverdriveSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3498"/>
+        <source>To change your password, go to User settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3593"/>
         <source>Si&amp;lent</source>
         <translation>Ти&amp;хо</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3621"/>
+        <location filename="../infopanedropdown.ui" line="3600"/>
         <source>Festi&amp;val</source>
         <translation>Festi&amp;val</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3628"/>
+        <location filename="../infopanedropdown.ui" line="3607"/>
         <source>espea&amp;k</source>
         <translation>espea&amp;k</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3635"/>
+        <location filename="../infopanedropdown.ui" line="3614"/>
         <source>pico&amp;2wave</source>
         <translation>pico&amp;2wave</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3658"/>
+        <location filename="../infopanedropdown.ui" line="3637"/>
         <source>Text to Speech engine</source>
         <translation>Сервис синтеза текста в голос</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3665"/>
+        <location filename="../infopanedropdown.ui" line="3644"/>
         <source>WikipediaSwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3685"/>
+        <location filename="../infopanedropdown.ui" line="3664"/>
         <source>Block recognized offensive words</source>
         <translation>Скрывать распознанные нецензурные слова</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3695"/>
+        <location filename="../infopanedropdown.ui" line="3674"/>
         <source>OffensiveSwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3702"/>
+        <location filename="../infopanedropdown.ui" line="3681"/>
         <source>Preferred Name</source>
         <translation>Желаемое имя</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3709"/>
+        <location filename="../infopanedropdown.ui" line="3688"/>
         <source>theWaveSwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3716"/>
+        <location filename="../infopanedropdown.ui" line="3695"/>
         <source>Recognized offensive words will be replaced with asterisks. However, there will probably be some false positives.</source>
         <translation>Распознанные нецензурные слова будут заменены звёздочками. К сожалению, может быть ложное срабатывание.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1753"/>
-        <location filename="../infopanedropdown.ui" line="3732"/>
+        <location filename="../infopanedropdown.ui" line="1769"/>
+        <location filename="../infopanedropdown.ui" line="3711"/>
         <source>Users</source>
         <translation>Пользователи</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2909"/>
+        <location filename="../infopanedropdown.ui" line="2853"/>
         <source>&amp;Gray</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3770"/>
+        <location filename="../infopanedropdown.ui" line="3749"/>
         <source>Select a user</source>
         <translation>Выберите пользователя</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3795"/>
+        <location filename="../infopanedropdown.ui" line="3774"/>
         <source>Next</source>
         <translation>Дальше</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3820"/>
-        <location filename="../infopanedropdown.cpp" line="2011"/>
+        <location filename="../infopanedropdown.ui" line="3799"/>
+        <location filename="../infopanedropdown.cpp" line="2010"/>
         <source>Edit User</source>
         <translation>Редактировать пользователя</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3829"/>
+        <location filename="../infopanedropdown.ui" line="3808"/>
         <source>Retype Password</source>
         <translation>Повторите пароль</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3836"/>
+        <location filename="../infopanedropdown.ui" line="3815"/>
         <source>Full Name</source>
         <translation>Полное имя</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3846"/>
-        <location filename="../infopanedropdown.ui" line="3869"/>
+        <location filename="../infopanedropdown.ui" line="3825"/>
+        <location filename="../infopanedropdown.ui" line="3848"/>
+        <location filename="../infopanedropdown.cpp" line="2014"/>
         <location filename="../infopanedropdown.cpp" line="2015"/>
-        <location filename="../infopanedropdown.cpp" line="2016"/>
         <source>(unchanged)</source>
         <translation>(неизменно)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3853"/>
-        <location filename="../infopanedropdown.cpp" line="2055"/>
-        <location filename="../infopanedropdown.cpp" line="2060"/>
+        <location filename="../infopanedropdown.ui" line="3832"/>
+        <location filename="../infopanedropdown.cpp" line="2054"/>
+        <location filename="../infopanedropdown.cpp" line="2059"/>
         <source>Username</source>
         <translation>Имя пользователя</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3879"/>
+        <location filename="../infopanedropdown.ui" line="3858"/>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3886"/>
+        <location filename="../infopanedropdown.ui" line="3865"/>
         <source>Password Hint</source>
         <translation>Подсказка для пароля</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3893"/>
+        <location filename="../infopanedropdown.ui" line="3872"/>
         <source>Account Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3905"/>
+        <location filename="../infopanedropdown.ui" line="3884"/>
         <source>Standard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3915"/>
+        <location filename="../infopanedropdown.ui" line="3894"/>
         <source>Administrator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3970"/>
-        <location filename="../infopanedropdown.ui" line="4017"/>
+        <location filename="../infopanedropdown.ui" line="3952"/>
+        <location filename="../infopanedropdown.ui" line="3999"/>
         <source>Delete User</source>
         <translation>Удалить пользователя</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="964"/>
-        <location filename="../infopanedropdown.ui" line="1088"/>
-        <location filename="../infopanedropdown.ui" line="3981"/>
-        <location filename="../infopanedropdown.ui" line="4064"/>
+        <location filename="../infopanedropdown.ui" line="989"/>
+        <location filename="../infopanedropdown.ui" line="1113"/>
+        <location filename="../infopanedropdown.ui" line="3963"/>
+        <location filename="../infopanedropdown.ui" line="4049"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3992"/>
+        <location filename="../infopanedropdown.ui" line="3974"/>
         <source>Apply Changes</source>
         <translation>Принять изменения</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4088"/>
+        <location filename="../infopanedropdown.ui" line="4073"/>
         <source>Delete user only</source>
         <translation>Удалить только пользователя</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4099"/>
+        <location filename="../infopanedropdown.ui" line="4084"/>
         <source>Delete user and all files</source>
         <translation>Удалить пользователя и его данные</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1762"/>
-        <location filename="../infopanedropdown.ui" line="4125"/>
+        <location filename="../infopanedropdown.ui" line="1778"/>
+        <location filename="../infopanedropdown.ui" line="4110"/>
         <source>Date and Time</source>
         <translation>Дата и время</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4175"/>
+        <location filename="../infopanedropdown.ui" line="4160"/>
         <source>Set</source>
         <translation>Установить</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4216"/>
+        <location filename="../infopanedropdown.ui" line="4201"/>
         <source>Use network to sync date and time</source>
         <translation>Использовать сетевое время</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4247"/>
+        <location filename="../infopanedropdown.ui" line="4232"/>
         <source>Use 24 hour time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4254"/>
+        <location filename="../infopanedropdown.ui" line="4239"/>
         <source>TwentyFourHourSwitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1771"/>
-        <location filename="../infopanedropdown.ui" line="4293"/>
+        <location filename="../infopanedropdown.ui" line="1787"/>
+        <location filename="../infopanedropdown.ui" line="4278"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4024"/>
+        <location filename="../infopanedropdown.ui" line="4006"/>
         <source>Do you also want to keep files from this user?
 
 Items that will be kept if you choose to keep files:
@@ -1212,316 +1235,317 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4042"/>
+        <location filename="../infopanedropdown.ui" line="4024"/>
         <source>This is the final step. The user will be deleted once you choose whether to keep or remove files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4316"/>
+        <location filename="../infopanedropdown.ui" line="4301"/>
         <source>Changing this setting requires you to log in and then log out.</source>
         <translation>Для того, чтобы изменения вступили в силу, нужно выйти и зайти в сеанс.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4327"/>
+        <location filename="../infopanedropdown.ui" line="4312"/>
         <source>HighContrastSwitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4337"/>
+        <location filename="../infopanedropdown.ui" line="4322"/>
         <source>System Animations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4344"/>
+        <location filename="../infopanedropdown.ui" line="4329"/>
         <source>SystemAnimationsAccessibilitySwitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4357"/>
+        <location filename="../infopanedropdown.ui" line="4342"/>
         <source>High Contrast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4364"/>
+        <location filename="../infopanedropdown.ui" line="4349"/>
         <source>Large Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4371"/>
+        <location filename="../infopanedropdown.ui" line="4356"/>
         <source>LargeTextSwitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4407"/>
+        <location filename="../infopanedropdown.ui" line="4392"/>
         <source>Tone on Caps Lock and Num Lock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4414"/>
+        <location filename="../infopanedropdown.ui" line="4399"/>
         <source>CapsNumLockBellSwitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1780"/>
-        <location filename="../infopanedropdown.ui" line="4428"/>
+        <location filename="../infopanedropdown.ui" line="1796"/>
+        <location filename="../infopanedropdown.ui" line="4413"/>
         <source>Accessibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4467"/>
+        <location filename="../infopanedropdown.ui" line="4452"/>
         <source>Window Manager Command</source>
         <translation>Команда менеджеру окон</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4477"/>
+        <location filename="../infopanedropdown.ui" line="4462"/>
         <source>The items under here can do some bad things. Make sure you know what you&apos;re doing.</source>
         <translation>Здесь опасно. Будьте аккуратны.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4533"/>
-        <location filename="../infopanedropdown.cpp" line="1193"/>
+        <location filename="../infopanedropdown.ui" line="4518"/>
+        <location filename="../infopanedropdown.cpp" line="1192"/>
         <source>Reset theShell</source>
         <translation>Перезапустить theShell</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4824"/>
+        <location filename="../infopanedropdown.ui" line="4809"/>
         <source>Desktop Environment</source>
         <translation>Среда рабочего стола</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4844"/>
+        <location filename="../infopanedropdown.ui" line="4829"/>
         <source>Your settings are saved automatically.</source>
         <translation>Ваши параметры автоматически сохранятся.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2743"/>
+        <location filename="../infopanedropdown.cpp" line="2750"/>
         <source>Blue</source>
         <translation>Синий</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2744"/>
+        <location filename="../infopanedropdown.cpp" line="2751"/>
         <source>Green</source>
         <translation>Зелёный</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2745"/>
+        <location filename="../infopanedropdown.cpp" line="2752"/>
         <source>Orange</source>
         <translation>Оранжевый</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2746"/>
+        <location filename="../infopanedropdown.cpp" line="2753"/>
         <source>Pink</source>
         <translation>Розовый</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2747"/>
+        <location filename="../infopanedropdown.cpp" line="2754"/>
         <source>Turquoise</source>
         <translation>Бирюзовый</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1798"/>
+        <location filename="../infopanedropdown.ui" line="1814"/>
         <source>About</source>
         <translation>Подробнее</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="392"/>
+        <location filename="../infopanedropdown.cpp" line="396"/>
         <source>theShell %1 - Blueprint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="393"/>
+        <location filename="../infopanedropdown.cpp" line="397"/>
         <source>You compiled theShell on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="395"/>
+        <location filename="../infopanedropdown.cpp" line="399"/>
         <source>theShell %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="401"/>
-        <location filename="../infopanedropdown.cpp" line="934"/>
+        <location filename="../infopanedropdown.ui" line="681"/>
+        <location filename="../infopanedropdown.ui" line="685"/>
+        <location filename="../infopanedropdown.cpp" line="933"/>
         <source>Happy Bee</source>
         <translation>Счастливая пчёлка</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="402"/>
-        <location filename="../infopanedropdown.cpp" line="936"/>
+        <location filename="../infopanedropdown.ui" line="690"/>
+        <location filename="../infopanedropdown.cpp" line="935"/>
         <source>Playing in the Dark</source>
         <translation>Играет в темноте</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="403"/>
-        <location filename="../infopanedropdown.cpp" line="938"/>
+        <location filename="../infopanedropdown.ui" line="695"/>
+        <location filename="../infopanedropdown.cpp" line="937"/>
         <source>Ice Cream Truck</source>
         <translation>Самосвал мороженого</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="404"/>
-        <location filename="../infopanedropdown.cpp" line="940"/>
+        <location filename="../infopanedropdown.ui" line="700"/>
+        <location filename="../infopanedropdown.cpp" line="939"/>
         <source>Party Complex</source>
         <translation>Комплекс Вечеринок</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="405"/>
-        <location filename="../infopanedropdown.cpp" line="942"/>
+        <location filename="../infopanedropdown.ui" line="705"/>
+        <location filename="../infopanedropdown.cpp" line="941"/>
         <source>Salty Ditty</source>
         <translation>Непристойные частушки</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="894"/>
-        <location filename="../infopanedropdown.cpp" line="1005"/>
+        <location filename="../infopanedropdown.cpp" line="893"/>
+        <location filename="../infopanedropdown.cpp" line="1004"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="925"/>
+        <location filename="../infopanedropdown.cpp" line="924"/>
         <source>Timer Elapsed</source>
         <translation>Таймер зазвонил</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="926"/>
+        <location filename="../infopanedropdown.cpp" line="925"/>
         <source>Your timer has completed.</source>
         <translation>Ваш таймер завершён.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1000"/>
+        <location filename="../infopanedropdown.cpp" line="999"/>
         <source>Resume</source>
         <translation>Возобновить</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1158"/>
+        <location filename="../infopanedropdown.cpp" line="1157"/>
         <source>Current Battery Percentage: %1</source>
         <translation>Текущий заряд батареи: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1162"/>
+        <location filename="../infopanedropdown.cpp" line="1161"/>
         <source>theShell Uptime: %1</source>
         <translation>Время работы theShell: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1172"/>
+        <location filename="../infopanedropdown.cpp" line="1171"/>
         <source>1 day</source>
         <translation>1 день</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="1174"/>
+        <location filename="../infopanedropdown.cpp" line="1173"/>
         <source>%1 days</source>
         <translation>
             <numerusform>%1 день</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1179"/>
+        <location filename="../infopanedropdown.cpp" line="1178"/>
         <source>System Uptime: %1</source>
         <translation>Время работы системы: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1181"/>
+        <location filename="../infopanedropdown.cpp" line="1180"/>
         <source>Couldn&apos;t get system uptime</source>
         <translation>Невозможно получить время работы системы</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1194"/>
+        <location filename="../infopanedropdown.cpp" line="1193"/>
         <source>All settings will be reset to default, and you will be logged out. Are you sure you want to do this?</source>
         <translation>Все настройки будут сброшены к стандартным и вам придётся выйти из сеанса. Всё верно?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1513"/>
+        <location filename="../infopanedropdown.cpp" line="1512"/>
         <source>Stop</source>
         <translation>Остановить</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1567"/>
+        <location filename="../infopanedropdown.cpp" line="1566"/>
         <source>Locate Device</source>
         <translation>Найти устройство</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1567"/>
+        <location filename="../infopanedropdown.cpp" line="1566"/>
         <source>Your device will ring at full volume. Tap the button on the screen of the device to silence it.</source>
         <translation>аше устройство будет звонить на полную громкость. Нажмите на кнопку на экране своего устройства чтобы оно замолчало.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1798"/>
+        <location filename="../infopanedropdown.cpp" line="1797"/>
         <source>Last updated %1</source>
         <translation>Обновлено последний раз %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1836"/>
+        <location filename="../infopanedropdown.cpp" line="1835"/>
         <source>Log in to network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1842"/>
+        <location filename="../infopanedropdown.cpp" line="1841"/>
         <source>Network Login</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1843"/>
+        <location filename="../infopanedropdown.cpp" line="1842"/>
         <source>Your connection to the internet is blocked by a login page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1991"/>
+        <location filename="../infopanedropdown.cpp" line="1990"/>
         <source>Add New User</source>
         <translation>Добавить нового пользователя</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2002"/>
+        <location filename="../infopanedropdown.cpp" line="2001"/>
         <source>New User</source>
         <translation>Новый пользователь</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="2004"/>
         <location filename="../infopanedropdown.cpp" line="2005"/>
-        <location filename="../infopanedropdown.cpp" line="2006"/>
+        <location filename="../infopanedropdown.cpp" line="2020"/>
         <location filename="../infopanedropdown.cpp" line="2021"/>
-        <location filename="../infopanedropdown.cpp" line="2022"/>
         <source>(none)</source>
         <translation>(пусто)</translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.cpp" line="2017"/>
         <location filename="../infopanedropdown.cpp" line="2018"/>
-        <location filename="../infopanedropdown.cpp" line="2019"/>
         <source>(set at next login)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2050"/>
+        <location filename="../infopanedropdown.cpp" line="2049"/>
         <source>Password Check</source>
         <translation>Проверка пароля</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2050"/>
+        <location filename="../infopanedropdown.cpp" line="2049"/>
         <source>The passwords don&apos;t match.</source>
         <translation>Пароли не совпадают.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2055"/>
+        <location filename="../infopanedropdown.cpp" line="2054"/>
         <source>The username must not contain spaces.</source>
         <translation>Имя пользователя не должно сожержать пробелов.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2060"/>
+        <location filename="../infopanedropdown.cpp" line="2059"/>
         <source>The username must not contain capital letters.</source>
         <translation>Имя пользователя не должно сожержать заглавных букв.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2542"/>
+        <location filename="../infopanedropdown.cpp" line="2541"/>
         <source>Rate History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2553"/>
+        <location filename="../infopanedropdown.cpp" line="2552"/>
         <source>Application Power Usage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2739"/>
+        <location filename="../infopanedropdown.cpp" line="2746"/>
         <source>Oxygen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2740"/>
+        <location filename="../infopanedropdown.cpp" line="2747"/>
         <source>Breeze</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1786,32 +1810,32 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="243"/>
+        <location filename="../mainwindow.cpp" line="245"/>
         <source>Quiet Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="464"/>
+        <location filename="../mainwindow.cpp" line="466"/>
         <source>Desktop %1</source>
         <translation>Рабочий стол %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="290"/>
+        <location filename="../mainwindow.cpp" line="292"/>
         <source>For %1</source>
         <translation>Для %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="291"/>
+        <location filename="../mainwindow.cpp" line="293"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1574"/>
+        <location filename="../mainwindow.cpp" line="1579"/>
         <source>No notifications</source>
         <translation>Нет уведомлений</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="1578"/>
+        <location filename="../mainwindow.cpp" line="1583"/>
         <source>%n notification(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -2217,46 +2241,46 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="162"/>
-        <location filename="../nativeeventfilter.cpp" line="175"/>
-        <location filename="../nativeeventfilter.cpp" line="179"/>
-        <location filename="../nativeeventfilter.cpp" line="190"/>
+        <location filename="../nativeeventfilter.cpp" line="178"/>
+        <location filename="../nativeeventfilter.cpp" line="182"/>
+        <location filename="../nativeeventfilter.cpp" line="196"/>
         <source>Volume</source>
         <translation>Громкость</translation>
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="162"/>
-        <location filename="../nativeeventfilter.cpp" line="179"/>
+        <location filename="../nativeeventfilter.cpp" line="182"/>
         <source>Quiet Mode is set to Mute.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="196"/>
+        <location filename="../nativeeventfilter.cpp" line="202"/>
         <source>No Notifications</source>
         <translation type="unfinished">Нет уведомлений</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="200"/>
+        <location filename="../nativeeventfilter.cpp" line="206"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="204"/>
+        <location filename="../nativeeventfilter.cpp" line="210"/>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="212"/>
         <location filename="../nativeeventfilter.cpp" line="218"/>
+        <location filename="../nativeeventfilter.cpp" line="224"/>
         <source>Keyboard Brightness</source>
         <translation>Яркость клавиатуры</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="229"/>
+        <location filename="../nativeeventfilter.cpp" line="235"/>
         <source>Eject</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="229"/>
+        <location filename="../nativeeventfilter.cpp" line="235"/>
         <source>Attempting to eject disc...</source>
         <translation>Пытаемся отключить диск...</translation>
     </message>
@@ -2615,137 +2639,128 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>Onboarding</name>
     <message>
-        <location filename="../onboarding.ui" line="57"/>
+        <location filename="../onboarding.ui" line="69"/>
         <source>Select Language</source>
         <translation>Выберите язык</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="643"/>
+        <location filename="../onboarding.ui" line="576"/>
+        <source>Thank you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="593"/>
+        <source>You&apos;re ready to start using theShell.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.ui" line="825"/>
+        <location filename="../onboarding.cpp" line="164"/>
         <source>Next</source>
         <translation>Далее</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="208"/>
+        <location filename="../onboarding.ui" line="243"/>
         <source>What&apos;s New?</source>
         <translation>Что нового?</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="121"/>
-        <source>Let&apos;s get your PC ready and show you what&apos;s new. This will only take a minute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../onboarding.ui" line="154"/>
-        <source>Get Started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../onboarding.ui" line="238"/>
+        <location filename="../onboarding.ui" line="273"/>
         <source>theWave</source>
         <translation>theWave</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="245"/>
+        <location filename="../onboarding.ui" line="280"/>
         <source>theWave is a personal assistant that comes with theShell.</source>
         <translation>theWave - персональный ассистент, идущий в комплекте с theShell.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="291"/>
+        <location filename="../onboarding.ui" line="326"/>
         <source>You can find theWave inside the Gateway or on the bar.</source>
         <translation>Вы можеше найти theWave во Вратах или на панели.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="323"/>
+        <location filename="../onboarding.ui" line="358"/>
         <source>Enable theWave</source>
         <translation>Включить theWave</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="330"/>
+        <location filename="../onboarding.ui" line="365"/>
         <source>Disable theWave</source>
         <translation>Отключить theWave</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="369"/>
+        <location filename="../onboarding.ui" line="404"/>
         <source>Status Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="376"/>
+        <location filename="../onboarding.ui" line="411"/>
         <source>The Status Bar is a smaller version of the bar that is always visible and shows system status icons.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="425"/>
+        <location filename="../onboarding.ui" line="460"/>
         <source>The Status Bar will appear once the bar moves far enough out of the way.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="457"/>
+        <location filename="../onboarding.ui" line="492"/>
         <source>Use the Status Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="464"/>
+        <location filename="../onboarding.ui" line="499"/>
         <source>Don&apos;t use the Status Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="538"/>
-        <source>And that&apos;s that!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../onboarding.ui" line="545"/>
-        <source>theShell is now ready to use!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../onboarding.ui" line="669"/>
+        <location filename="../onboarding.ui" line="648"/>
         <source>Cancel Setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="676"/>
+        <location filename="../onboarding.ui" line="655"/>
         <source>You haven&apos;t finished setting up theShell. What would you like to do?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="718"/>
+        <location filename="../onboarding.ui" line="697"/>
         <source>Return to theShell Setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="725"/>
+        <location filename="../onboarding.ui" line="704"/>
         <source>Log Out</source>
         <translation type="unfinished">Выход</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="739"/>
+        <location filename="../onboarding.ui" line="718"/>
         <source>Power Off</source>
         <translation type="unfinished">Выключение</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="567"/>
-        <source>BEGIN!</source>
-        <translation>ВПЕРЁД!</translation>
-    </message>
-    <message>
-        <location filename="../onboarding.ui" line="632"/>
+        <location filename="../onboarding.ui" line="814"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="103"/>
-        <location filename="../onboarding.cpp" line="140"/>
+        <location filename="../onboarding.cpp" line="105"/>
+        <location filename="../onboarding.cpp" line="145"/>
         <source>Welcome to theShell %1!</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../onboarding.cpp" line="178"/>
+        <source>Start</source>
+        <translation type="unfinished">Начать</translation>
     </message>
 </context>
 <context>
     <name>RunDialog</name>
     <message>
         <location filename="../rundialog.ui" line="29"/>
-        <location filename="../rundialog.ui" line="69"/>
+        <location filename="../rundialog.ui" line="72"/>
         <source>Run</source>
         <translation>Запустить</translation>
     </message>
@@ -2755,7 +2770,7 @@ Items that will be kept if you choose to keep files:
         <translation>Введите комманду</translation>
     </message>
     <message>
-        <location filename="../rundialog.ui" line="58"/>
+        <location filename="../rundialog.ui" line="61"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -3007,17 +3022,17 @@ Items that will be kept if you choose to keep files:
         <translation>Батарея %2 заряжена на %1%</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="339"/>
+        <location filename="../upowerdbus.cpp" line="340"/>
         <source>%1% battery on %2 (Full)</source>
         <translation>Батарея %2 заряжена на %1% (Полностью заряжена)</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="341"/>
+        <location filename="../upowerdbus.cpp" line="342"/>
         <source>%1% battery on %2 (Charging)</source>
         <translation>Батарея %2 заряжена на %1% (Заряжается)</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="344"/>
+        <location filename="../upowerdbus.cpp" line="345"/>
         <source>%1% battery on %2 (Discharging)</source>
         <translation>Батарея %2 заряжена на %1% (Разряжается)</translation>
     </message>

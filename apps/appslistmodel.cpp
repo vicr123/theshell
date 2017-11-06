@@ -2,6 +2,7 @@
 
 extern float getDPIScaling();
 extern NativeEventFilter* NativeFilter;
+extern MainWindow* MainWin;
 
 AppsListModel::AppsListModel(BTHandsfree* bt, QObject *parent) : QAbstractListModel(parent) {
     this->bt = bt;
@@ -334,6 +335,13 @@ void AppsListModel::loadData() {
 
             delete iterator;
 
+            App settingsApp;
+            settingsApp.setCommand("sc:settings");
+            settingsApp.setIcon(QIcon::fromTheme("configure"));
+            settingsApp.setName(tr("System Settings"));
+            settingsApp.setDescription(tr("System Configuration"));
+            apps.append(settingsApp);
+
             appFolder = QDir(QDir::homePath() + "/.local/share/applications");
             if (appFolder.exists()) {
                 iterator = new QDirIterator(appFolder, QDirIterator::Subdirectories);
@@ -639,6 +647,9 @@ bool AppsListModel::launchApp(QModelIndex index) {
             int deviceIndex = parts.at(0).toInt();
             QString number = parts.at(1);
             bt->placeCall(deviceIndex, number);
+            return true;
+        } else if (command == "sc:settings") {
+            MainWin->getInfoPane()->show(InfoPaneDropdown::Settings);
             return true;
         } else {
             command.remove("env ");

@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>14</day>
+                 <day>12</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>14</day>
+                 <day>12</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1706,7 +1706,7 @@
              <string>Networks</string>
             </property>
             <property name="icon">
-             <iconset theme="network-cellular-connected-75">
+             <iconset theme="preferences-system-network">
               <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
@@ -1742,7 +1742,7 @@
              <string>Input</string>
             </property>
             <property name="icon">
-             <iconset theme="input-tablet">
+             <iconset theme="preferences-desktop-input">
               <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
@@ -1751,7 +1751,7 @@
              <string>Lock Screen</string>
             </property>
             <property name="icon">
-             <iconset theme="system-lock-screen">
+             <iconset theme="preferences-system-lock">
               <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
@@ -1814,7 +1814,7 @@
              <string>About</string>
             </property>
             <property name="icon">
-             <iconset theme="help-about">
+             <iconset theme="preferences-desktop-about">
               <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
@@ -1823,7 +1823,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>5</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -3432,7 +3432,7 @@
                </layout>
               </widget>
              </item>
-             <item row="3" column="0" colspan="4">
+             <item row="4" column="0" colspan="4">
               <spacer name="verticalSpacer_15">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -3491,6 +3491,13 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="3" column="0" colspan="4">
+              <widget class="QLabel" name="label_47">
+               <property name="text">
+                <string>To change your password, go to User settings</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -3923,6 +3930,9 @@
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_5">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
                    <item>
                     <spacer name="horizontalSpacer_23">
                      <property name="orientation">
@@ -4030,6 +4040,9 @@ Items that will be kept if you choose to keep files:
                  </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_35">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
                    <item>
                     <widget class="QPushButton" name="userSettingsCancelDeleteUser">
                      <property name="text">

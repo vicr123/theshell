@@ -211,9 +211,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarRedshift->setPixmap(QIcon::fromTheme("redshift-on").pixmap(ic16));
 
     ((QBoxLayout*) ui->centralWidget->layout())->removeWidget(ui->StatusBarHoverFrame);
-    ui->StatusBarHoverFrame->setParent(ui->StatusBarFrame);
+    ui->StatusBarHoverFrame->setParent(this);
     ui->StatusBarHoverFrame->resize(ui->StatusBarFrame->size());
     ui->StatusBarHoverFrame->move(0, -ui->StatusBarHoverFrame->height());
+    ui->StatusBarHoverFrame->installEventFilter(this);
     ui->StatusBarFrame->setMouseTracking(true);
 
     QPalette hoverFramePal = this->palette();
@@ -1915,7 +1916,7 @@ void MainWindow::on_actionMute_triggered()
 
 bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    if (watched == ui->StatusBarFrame) {
+    if (watched == ui->StatusBarFrame || watched == ui->StatusBarHoverFrame) {
         if (event->type() == QEvent::MouseButtonPress) {
             gatewayMenu->close();
             tPropertyAnimation* anim = new tPropertyAnimation(this, "geometry");
@@ -1953,10 +1954,11 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
                     ui->StatusBarFrame->setVisible(false);
 
                     if (settings.value("bar/onTop", true).toBool()) {
-                        ui->StatusBarHoverFrame->move(0, -ui->StatusBarFrame->height());
+                        ui->StatusBarHoverFrame->move(0, ui->StatusBarFrame->y() - ui->StatusBarFrame->height());
                     } else {
-                        ui->StatusBarHoverFrame->move(0, ui->StatusBarFrame->height());
+                        ui->StatusBarHoverFrame->move(0, ui->StatusBarFrame->y() + ui->StatusBarFrame->height());
                     }
+                    ui->StatusBarHoverFrame->setVisible(false);
                 });
                 statAnim->start();
 
@@ -1966,9 +1968,14 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
             return true;
         } else if (event->type() == QEvent::Enter) {
             if (!settings.value("bar/autoshow").toBool()) {
+                /*ui->StatusBarHoverFrame->setParent(ui->StatusBarFrame);
+                ui->StatusBarHoverFrame->resize(ui->StatusBarFrame->size());
+                ui->StatusBarHoverFrame->move(0, -ui->StatusBarHoverFrame->height());*/
+
+                ui->StatusBarHoverFrame->setVisible(true);
                 tPropertyAnimation* anim = new tPropertyAnimation(ui->StatusBarHoverFrame, "geometry");
                 anim->setStartValue(ui->StatusBarHoverFrame->geometry());
-                anim->setEndValue(QRect(0, 0, ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
+                anim->setEndValue(QRect(0, ui->StatusBarFrame->y(), ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
                 anim->setDuration(250);
                 anim->setEasingCurve(QEasingCurve::OutCubic);
                 connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -1980,12 +1987,15 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
                 tPropertyAnimation* anim = new tPropertyAnimation(ui->StatusBarHoverFrame, "geometry");
                 anim->setStartValue(ui->StatusBarHoverFrame->geometry());
                 if (settings.value("bar/onTop", true).toBool()) {
-                    anim->setEndValue(QRect(0, -ui->StatusBarFrame->height(), ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
+                    anim->setEndValue(QRect(0, ui->StatusBarFrame->y() - ui->StatusBarFrame->height(), ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
                 } else {
-                    anim->setEndValue(QRect(0, ui->StatusBarFrame->height(), ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
+                    anim->setEndValue(QRect(0, ui->StatusBarFrame->y() + ui->StatusBarFrame->height(), ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
                 }
                 anim->setDuration(250);
                 anim->setEasingCurve(QEasingCurve::OutCubic);
+                connect(anim, &tPropertyAnimation::finished, [=] {
+                    ui->StatusBarHoverFrame->setVisible(false);
+                });
                 connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
                 anim->start();
             }
