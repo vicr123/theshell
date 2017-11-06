@@ -148,7 +148,6 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
     int y = effectiveRect.y();
     int width = 0;
     int lineHeight = 0;
-    int lineWrapped = false;
 
     QLayoutItem *item;
     foreach (item, itemList) {
@@ -167,7 +166,6 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
             y = y + lineHeight + spaceY;
             nextX = x + item->sizeHint().width() + spaceX;
             lineHeight = 0;
-            lineWrapped = true;
         }
 
         width += item->sizeHint().width() + spaceX;

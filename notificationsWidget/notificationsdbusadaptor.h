@@ -11,6 +11,7 @@
 #include <QSettings>
 #include <QApplication>
 #include <QDBusReply>
+#include <QSettings>
 
 class NotificationsWidget;
 
@@ -75,6 +76,7 @@ signals: // SIGNALS
 
 private:
     NotificationsWidget* pt = NULL;
+    QSettings settings;
 };
 
 #endif // NOTIFICATIONSDBUSADAPTOR_H

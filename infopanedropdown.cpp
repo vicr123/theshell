@@ -1608,7 +1608,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, BatteryInfo &info
 
 //DBus WakeupsInfo Structure
 struct WakeupsInfo {
-    bool process;
+    bool process = false;
     uint pid;
     double wakeups;
     QString path, description;

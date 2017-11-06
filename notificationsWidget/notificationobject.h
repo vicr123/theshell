@@ -20,7 +20,7 @@ public:
     explicit NotificationObject(QString app_name, QString app_icon, QString summary, QString body, QStringList actions, QVariantMap hints, int expire_timeout, QObject *parent = nullptr);
     static int currentId;
 
-    int getId();
+    uint getId();
 
     QString getAppIdentifier();
     QString getAppName();

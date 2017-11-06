@@ -125,7 +125,7 @@ void NotificationObject::post() {
     dialog->show();
 }
 
-int NotificationObject::getId() {
+uint NotificationObject::getId() {
     return this->id;
 }
 

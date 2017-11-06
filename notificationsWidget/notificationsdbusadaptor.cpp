@@ -70,6 +70,32 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
             notification->post();
         }
 
+        //Send the notification to the lock screen if the user desires
+        if (settings.value("notifications/lockScreen").toString() != "none") {
+            //If the notification is transient, don't send it to the lock screen
+            if (!hints.value("transient", false).toBool()) {
+                //Create a DBus message relaying the message to the lock screen
+                QDBusMessage NotificationEmit = QDBusMessage::createMethodCall("org.thesuite.tsscreenlock", "/org/thesuite/tsscreenlock", "org.thesuite.tsscreenlock.Notifications", "newNotification");
+                QVariantList NotificationArgs;
+
+                if (settings.value("notifications/lockScreen", "noContents").toString() == "contents") {
+                    NotificationArgs.append(summary);
+                    NotificationArgs.append(body);
+                    NotificationArgs.append(notification->getId());
+                    NotificationArgs.append(actions);
+                } else {
+                    NotificationArgs.append(app_name);
+                    NotificationArgs.append("New Notification");
+                    NotificationArgs.append(notification->getId());
+                    NotificationArgs.append(QStringList());
+                }
+                NotificationArgs.append(hints);
+
+                NotificationEmit.setArguments(NotificationArgs);
+                QDBusConnection::sessionBus().call(NotificationEmit, QDBus::NoBlock);
+            }
+        }
+
         return notification->getId();
     }
     return 0;
