@@ -85,7 +85,7 @@ public:
     QString songAlbum();
 
 public slots:
-    void openMenu(bool openTotheWave = false, bool startListening = false);
+    void openMenu();
 
     void doUpdate();
 
@@ -95,8 +95,6 @@ private slots:
     void on_time_clicked();
 
     void on_date_clicked();
-
-    void on_pushButton_2_clicked();
 
     void internetLabelChanged(QString text, QIcon icon);
 

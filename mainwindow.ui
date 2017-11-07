@@ -145,33 +145,6 @@
            <widget class="BTHandsfree" name="phonesWidget" native="true"/>
           </item>
           <item>
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_2">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string>theWave</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset theme="thewave" resource="resources.qrc">
-              <normaloff>:/icons/thewave.svg</normaloff>:/icons/thewave.svg</iconset>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QFrame" name="batteryFrame">
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>

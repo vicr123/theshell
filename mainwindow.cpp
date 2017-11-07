@@ -1338,11 +1338,6 @@ void MainWindow::on_date_clicked()
     infoPane->show(InfoPaneDropdown::Clock);
 }
 
-void MainWindow::on_pushButton_2_clicked()
-{
-    openMenu(true);
-}
-
 void MainWindow::internetLabelChanged(QString text, QIcon icon) {
     /*ui->networkLabel->setText(display);
     if (signalStrength == -1) {
@@ -1708,34 +1703,27 @@ void MainWindow::on_desktopBack_clicked()
     sendMessageToRootWindow("_NET_CURRENT_DESKTOP", 0, switchToDesktop);
 }
 
-void MainWindow::openMenu(bool openTotheWave, bool startListening) {
-    if (gatewayMenu->isVisible()) {
-        if (openTotheWave) {
-            gatewayMenu->show(openTotheWave, startListening);
+void MainWindow::openMenu() {
+    lockHide = true;
 
-        }
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect availableGeometry = QApplication::desktop()->availableGeometry();
+
+    //gatewayMenu->setGeometry(availableGeometry.x(), availableGeometry.y(), gatewayMenu->width(), availableGeometry.height());
+    if (settings.value("bar/onTop", true).toBool()) {
+        gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), availableGeometry.height() - (this->height() + (this->y() - availableGeometry.y())) + 1);
     } else {
-        lockHide = true;
+        int height;
 
-        QRect screenGeometry = QApplication::desktop()->screenGeometry();
-        QRect availableGeometry = QApplication::desktop()->availableGeometry();
-
-        //gatewayMenu->setGeometry(availableGeometry.x(), availableGeometry.y(), gatewayMenu->width(), availableGeometry.height());
-        if (settings.value("bar/onTop", true).toBool()) {
-            gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), availableGeometry.height() - (this->height() + (this->y() - availableGeometry.y())) + 1);
+        if (availableGeometry.bottom() < screenGeometry.height() - this->height()) {
+            height = availableGeometry.height();
         } else {
-            int height;
-
-            if (availableGeometry.bottom() < screenGeometry.height() - this->height()) {
-                height = availableGeometry.height();
-            } else {
-                height = this->y() - screenGeometry.top() + 1;
-            }
-            gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), availableGeometry.y() , gatewayMenu->width(), height);
+            height = this->y() - screenGeometry.top() + 1;
         }
-        gatewayMenu->show(openTotheWave, startListening);
-        gatewayMenu->setFocus();
+        gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), availableGeometry.y() , gatewayMenu->width(), height);
     }
+    gatewayMenu->show();
+    gatewayMenu->setFocus();
 }
 
 bool MainWindow::isMprisAvailable() {

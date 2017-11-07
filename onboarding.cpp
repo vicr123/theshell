@@ -22,7 +22,12 @@
 #include "ui_onboarding.h"
 #include "internationalisation.h"
 
-#define ChangelogOnbording "New in theShell 7.0:\n"\
+#define ChangelogOnbording \
+    "New in theShell 7.1:\n"\
+    "- theWave has been discontinued.\n"\
+    "- New Notifications system\n"\
+    "\n"\
+    "New in theShell 7.0:\n"\
     "- Quiet Mode has been added to theShell! Click on the volume icon in the bar, or head to the Notifications Status Center pane to change the setting.\n"\
     "- The Gateway has been revamped and now shows your apps properly, as well as updates automatically whenever you install a new app.\n"\
     "- Flight Mode has been added\n"\
@@ -100,7 +105,6 @@ Onboarding::Onboarding(QWidget *parent) :
     //ui->buttonBox->setVisible(false);
     ui->backButton->setVisible(false);
     ui->changelog->setText(ChangelogOnbording);
-    ui->thewaveLogo->setPixmap(QIcon(":/icons/thewave.svg").pixmap(256, 256));
     ui->stackedWidget->setCurrentIndex(0);
     ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg(TS_VERSION));
     ui->tsLogo->setPixmap(QIcon::fromTheme("theshell").pixmap(256, 256));
@@ -171,10 +175,9 @@ void Onboarding::on_stackedWidget_currentChanged(int arg1)
             ui->backButton->setVisible(false);
             break;
         case 3:
-        case 4:
             ui->nextButton->setEnabled(false);
             break;
-        case 5:
+        case 4:
             ui->nextButton->setText(tr("Start"));
             break;
     }
@@ -182,7 +185,7 @@ void Onboarding::on_stackedWidget_currentChanged(int arg1)
 
 void Onboarding::on_nextButton_clicked()
 {
-    if (ui->stackedWidget->currentIndex() == 5) {
+    if (ui->stackedWidget->currentIndex() == 4) {
         onboardingDone = true;
         this->accept();
     } else {
@@ -199,18 +202,6 @@ void Onboarding::on_beginButton_clicked()
 {
     onboardingDone = true;
     this->accept();
-}
-
-void Onboarding::on_enabletheWaveButton_clicked()
-{
-    settings.setValue("thewave/enabled", true);
-    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
-}
-
-void Onboarding::on_disabletheWaveButton_clicked()
-{
-    settings.setValue("thewave/enabled", false);
-    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
 }
 
 void Onboarding::on_changeLanguageButton_clicked()

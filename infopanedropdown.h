@@ -172,18 +172,6 @@ private slots:
 
     void on_TouchFeedbackSwitch_toggled(bool checked);
 
-    void on_thewaveTTSpico2wave_clicked();
-
-    void on_thewaveTTSfestival_clicked();
-
-    void on_thewaveWikipediaSwitch_toggled(bool checked);
-
-    void on_thewaveTTSespeak_clicked();
-
-    void on_thewaveOffensiveSwitch_toggled(bool checked);
-
-    void on_theWaveName_textEdited(const QString &arg1);
-
     void on_brightnessSlider_sliderMoved(int position);
 
     void on_brightnessSlider_valueChanged(int value);
@@ -205,10 +193,6 @@ private slots:
     void on_windowManager_textEdited(const QString &arg1);
 
     void on_barDesktopsSwitch_toggled(bool checked);
-
-    void on_thewaveTTSsilent_clicked();
-
-    void on_theWaveSwitch_toggled(bool checked);
 
     void bluetoothEnabledChanged();
 
@@ -411,7 +395,6 @@ public slots:
 
     void startTimer(QTime time);
 
-    //Switches for theWave
     void on_WifiSwitch_toggled(bool checked);
 
 private:

@@ -33,7 +33,6 @@
     </qresource>
     <qresource prefix="/icons">
         <file>icon.svg</file>
-        <file>thewave.svg</file>
         <file>blank.svg</file>
         <file>icon-bp.svg</file>
     </qresource>

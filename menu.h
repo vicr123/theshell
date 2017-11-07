@@ -34,7 +34,6 @@
 #include <systemd/sd-login.h>
 #include "endsessionwait.h"
 #include "mainwindow.h"
-#include "thewaveworker.h"
 #include "dbusevents.h"
 #include "tutorialwindow.h"
 #include "bthandsfree.h"
@@ -42,27 +41,6 @@
 #include "apps/appslistmodel.h"
 
 #undef KeyPress
-
-class theWaveWorker;
-
-class theWaveFrame : public QFrame
-{
-    Q_OBJECT
-    Q_PROPERTY(QString backupText READ backupText WRITE setBackupText)
-public:
-    explicit theWaveFrame(QWidget *parent = 0);
-
-signals:
-
-public slots:
-    QString backupText();
-    void setBackupText(QString text);
-private:
-    QPoint startPosition;
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    QString bText;
-};
 
 namespace Ui {
 class Menu;
@@ -79,30 +57,13 @@ public:
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
 
-    void show(bool openTotheWave = false, bool startListening = false);
+    void show();
     void close();
-
-    QFrame* theWaveFrame;
 
 signals:
     void menuClosing();
 
-    void thewave_processText(QString text, bool isText = false);
-
-    void thewave_sayLaunchApp(QString app);
-
-    void thewave_sayLaunchApp_disambiguation(QStringList apps);
-
-    void thewaveBegin();
-
-    void thewaveStop();
-
     void currentSettingChanged(bool isOn);
-
-public slots:
-    void collapse();
-
-    void uncollapse();
 
 private slots:
     void checkForclose();
@@ -131,55 +92,9 @@ private slots:
 
     void on_commandLinkButton_8_clicked();
 
-    void on_activateTheWave_clicked();
-
-    void on_closetheWaveButton_clicked();
-
-    void showCallFrame(bool emergency);
-
-    void resetFrames();
-
-    void showMessageFrame();
-
-    void showHelpFrame();
-
-    void showWikipediaFrame(QString title, QString text);
-
-    void thewave_launchapp(QString app);
-
-    void on_thewave_line_returnPressed();
-
-    void on_closetheWaveButton_2_clicked();
-
-    void on_thewave_launch_launchapp_clicked();
-
-    void thewave_outputSpeech(QString speech);
-
-    void showFlightFrame(QString flight);
-
-    void thewaveLoudnessChanged(qreal loudness);
-
     void on_commandLinkButton_6_clicked();
 
     void on_commandLinkButton_4_clicked();
-
-    void on_listentheWave_clicked();
-
-    void on_thewave_launch_disambiguation_itemClicked(QListWidgetItem *item);
-
-    void showSettingFrame(QIcon icon, QString text, bool isOn);
-
-    void on_thewaveSettingsFrame_Switch_toggled(bool checked);
-
-    void showMathematicsFrame(QString expression, QString answer);
-
-    void showMediaFrame(QPixmap art, QString title, QString artist, bool isPlaying);
-
-    void on_thewaveMedia_Next_clicked();
-
-    void on_thewaveMedia_Play_clicked();
-
-    void on_thewaveMedia_Back_clicked();
 
     void on_exitButton_clicked();
 
@@ -204,7 +119,6 @@ private:
     int pinnedAppsCount = 0;
 
     bool doCheckForClose = false;
-    bool istheWaveOpen = false;
 
     //void closeEvent(QCloseEvent *event);
     void paintEvent(QPaintEvent* event);
@@ -216,10 +130,7 @@ private:
 
     void reject();
 
-    theWaveWorker* waveWorker;
     BTHandsfree* bt;
-    bool isListening = false;
-    bool istheWaveReady = false;
 };
 
 #endif // MENU_H

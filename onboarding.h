@@ -54,10 +54,6 @@ private slots:
 
     void on_beginButton_clicked();
 
-    void on_enabletheWaveButton_clicked();
-
-    void on_disabletheWaveButton_clicked();
-
     void on_changeLanguageButton_clicked();
 
     void on_localeList_currentRowChanged(int currentRow);

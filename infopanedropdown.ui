@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>12</day>
+                 <day>11</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>12</day>
+                 <day>11</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1757,15 +1757,6 @@
            </item>
            <item>
             <property name="text">
-             <string>theWave</string>
-            </property>
-            <property name="icon">
-             <iconset resource="resources.qrc">
-              <normaloff>:/icons/thewave.svg</normaloff>:/icons/thewave.svg</iconset>
-            </property>
-           </item>
-           <item>
-            <property name="text">
              <string>Users</string>
             </property>
             <property name="icon">
@@ -1823,7 +1814,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>7</number>
+            <number>8</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -3501,203 +3492,6 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="theWaveSettings">
-            <layout class="QGridLayout" name="gridLayout_7">
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_36">
-               <property name="text">
-                <string>Enable theWave</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_28">
-               <property name="text">
-                <string>Search on Wikipedia</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QFrame" name="displayHeader_6">
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_20">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="displayLabel_6">
-                  <property name="font">
-                   <font>
-                    <pointsize>15</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>theWave</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="Line" name="displayLine_6">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QFrame" name="frame">
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_2">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QRadioButton" name="thewaveTTSsilent">
-                  <property name="text">
-                   <string>Si&amp;lent</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="thewaveTTSfestival">
-                  <property name="text">
-                   <string>Festi&amp;val</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="thewaveTTSespeak">
-                  <property name="text">
-                   <string>espea&amp;k</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="thewaveTTSpico2wave">
-                  <property name="text">
-                   <string>pico&amp;2wave</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="3" column="2">
-              <spacer name="horizontalSpacer_13">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_27">
-               <property name="text">
-                <string>Text to Speech engine</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="Switch" name="thewaveWikipediaSwitch">
-               <property name="text">
-                <string>WikipediaSwitch</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="1">
-              <spacer name="verticalSpacer_14">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_29">
-               <property name="text">
-                <string>Block recognized offensive words</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="2">
-              <widget class="QLineEdit" name="theWaveName"/>
-             </item>
-             <item row="5" column="1">
-              <widget class="Switch" name="thewaveOffensiveSwitch">
-               <property name="text">
-                <string>OffensiveSwitch</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_30">
-               <property name="text">
-                <string>Preferred Name</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="Switch" name="theWaveSwitch">
-               <property name="text">
-                <string>theWaveSwitch</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1" colspan="2">
-              <widget class="QLabel" name="label_55">
-               <property name="text">
-                <string>Recognized offensive words will be replaced with asterisks. However, there will probably be some false positives.</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
            <widget class="QWidget" name="page_4">
             <layout class="QGridLayout" name="gridLayout_12">
              <item row="0" column="0">
@@ -4848,14 +4642,6 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>clickablelabel.h</header>
-   <slots>
-    <signal>clicked()</signal>
-   </slots>
-  </customwidget>
-  <customwidget>
    <class>AnimatedStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>animatedstackedwidget.h</header>
@@ -4865,6 +4651,14 @@ Items that will be kept if you choose to keep files:
    <class>Switch</class>
    <extends>QPushButton</extends>
    <header>switch.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>clickablelabel.h</header>
+   <slots>
+    <signal>clicked()</signal>
+   </slots>
   </customwidget>
   <customwidget>
    <class>NetworkWidget</class>

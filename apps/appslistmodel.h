@@ -45,7 +45,6 @@ public slots:
     void loadData();
 
 signals:
-    void queryWave(QString query);
 
 private:
     struct dataLoad {

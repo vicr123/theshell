@@ -209,17 +209,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     }
     ui->redshiftIntensity->setValue(redshiftVal.toInt());
 
-    QString thewaveVoiceEngine = settings.value("thewave/ttsEngine", "festival").toString();
-    if (thewaveVoiceEngine == "pico2wave") {
-        ui->thewaveTTSpico2wave->setChecked(true);
-    } else if (thewaveVoiceEngine == "espeak") {
-        ui->thewaveTTSespeak->setChecked(true);
-    } else if (thewaveVoiceEngine == "festival") {
-        ui->thewaveTTSfestival->setChecked(true);
-    } else if (thewaveVoiceEngine == "none") {
-        ui->thewaveTTSsilent->setChecked(true);
-    }
-
     if (settings.value("ui/useFullScreenEndSession", false).toBool()) {
         ui->endSessionConfirmFullScreen->setChecked(true);
         ui->endSessionConfirmInMenu->setChecked(false);
@@ -273,12 +262,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
     //ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
-    ui->thewaveWikipediaSwitch->setChecked(settings.value("thewave/wikipediaSearch", true).toBool());
     ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
     ui->SuperkeyGatewaySwitch->setChecked(settings.value("input/superkeyGateway", true).toBool());
-    ui->thewaveOffensiveSwitch->setChecked(settings.value("thewave/blockOffensiveWords", true).toBool());
-    ui->theWaveSwitch->setChecked(settings.value("thewave/enabled", true).toBool());
-    ui->theWaveName->setText(settings.value("thewave/name", "").toString());
     ui->TextSwitch->setChecked(settings.value("bar/showText", true).toBool());
     ui->windowManager->setText(settings.value("startup/WindowManagerCommand", "kwin_x11").toString());
     ui->barDesktopsSwitch->setChecked(settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
@@ -1278,37 +1263,6 @@ void InfoPaneDropdown::on_TouchFeedbackSwitch_toggled(bool checked)
     settings.setValue("input/touchFeedbackSound", checked);
 }
 
-void InfoPaneDropdown::on_thewaveTTSpico2wave_clicked()
-{
-    settings.setValue("thewave/ttsEngine", "pico2wave");
-}
-
-void InfoPaneDropdown::on_thewaveTTSfestival_clicked()
-{
-    settings.setValue("thewave/ttsEngine", "festival");
-}
-
-
-void InfoPaneDropdown::on_thewaveWikipediaSwitch_toggled(bool checked)
-{
-    settings.setValue("thewave/wikipediaSearch", checked);
-}
-
-void InfoPaneDropdown::on_thewaveTTSespeak_clicked()
-{
-    settings.setValue("thewave/ttsEngine", "espeak");
-}
-
-void InfoPaneDropdown::on_thewaveOffensiveSwitch_toggled(bool checked)
-{
-    settings.setValue("thewave/blockOffensiveWords", checked);
-}
-
-void InfoPaneDropdown::on_theWaveName_textEdited(const QString &arg1)
-{
-    settings.setValue("thewave/name", arg1);
-}
-
 void InfoPaneDropdown::on_brightnessSlider_sliderMoved(int position)
 {
     QProcess* backlight = new QProcess(this);
@@ -1367,16 +1321,6 @@ void InfoPaneDropdown::on_windowManager_textEdited(const QString &arg1)
 void InfoPaneDropdown::on_barDesktopsSwitch_toggled(bool checked)
 {
     settings.setValue("bar/showWindowsFromOtherDesktops", checked);
-}
-
-void InfoPaneDropdown::on_thewaveTTSsilent_clicked()
-{
-    settings.setValue("thewave/ttsEngine", "none");
-}
-
-void InfoPaneDropdown::on_theWaveSwitch_toggled(bool checked)
-{
-    settings.setValue("thewave/enabled", checked);
 }
 
 void InfoPaneDropdown::on_BluetoothSwitch_toggled(bool checked)

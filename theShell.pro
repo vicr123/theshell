@@ -59,7 +59,6 @@ SOURCES += main.cpp\
     upowerdbus.cpp \
     infopanedropdown.cpp \
     clickablelabel.cpp \
-    thewaveworker.cpp \
     loginsplash.cpp \
     hoverframe.cpp \
     choosebackground.cpp \
@@ -73,7 +72,6 @@ SOURCES += main.cpp\
     dbusevents.cpp \
     fadebutton.cpp \
     rundialog.cpp \
-    thewavefeedbackframe.cpp \
     mousescrollwidget.cpp \
     animatedstackedwidget.cpp \
     onboarding.cpp \
@@ -104,7 +102,6 @@ HEADERS  += mainwindow.h \
     upowerdbus.h \
     infopanedropdown.h \
     clickablelabel.h \
-    thewaveworker.h \
     loginsplash.h \
     hoverframe.h \
     choosebackground.h \
@@ -118,7 +115,6 @@ HEADERS  += mainwindow.h \
     dbusevents.h \
     fadebutton.h \
     rundialog.h \
-    thewavefeedbackframe.h \
     mousescrollwidget.h \
     animatedstackedwidget.h \
     onboarding.h \
