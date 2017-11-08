@@ -25,7 +25,7 @@
 #define ChangelogOnbording \
     "New in theShell 7.1:\n"\
     "- theWave has been discontinued.\n"\
-    "- New Notifications system\n"\
+    "- New Notifications system, allowing for simpler notifications to be shown\n"\
     "\n"\
     "New in theShell 7.0:\n"\
     "- Quiet Mode has been added to theShell! Click on the volume icon in the bar, or head to the Notifications Status Center pane to change the setting.\n"\
