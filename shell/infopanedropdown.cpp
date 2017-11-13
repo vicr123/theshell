@@ -3030,8 +3030,8 @@ void InfoPaneDropdown::on_SetSystemTimezoneButton_clicked()
     while (!tzInfo.atEnd()) {
         QString tzLine = tzInfo.readLine();
         if (!tzLine.startsWith("#")) {
-            QStringList parts = tzLine.split("\t", QString::SkipEmptyParts);
-            if (parts.length() > 3) {
+            QStringList parts = tzLine.trimmed().split("\t", QString::SkipEmptyParts);
+            if (parts.length() >= 3) {
                 QString region = parts.at(2).left(parts.at(2).indexOf("/"));
                 QString city = parts.at(2).mid(parts.at(2).indexOf("/") + 1);
 
