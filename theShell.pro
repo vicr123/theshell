@@ -180,7 +180,8 @@ TRANSLATIONS += translations/vi_VN.ts \
     translations/en_AU.ts \
     translations/en_US.ts \
     translations/en_GB.ts \
-    translations/en_NZ.ts
+    translations/en_NZ.ts \
+    translations/de_DE.ts
 
 unix {
     target.path = /usr/bin/
