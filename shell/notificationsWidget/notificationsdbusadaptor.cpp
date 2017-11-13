@@ -80,7 +80,7 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
         this->parentWidget()->addNotification(notification);
 
         bool postNotification = true;
-        if (AudioMan->QuietMode() == AudioManager::notifications) {
+        if (AudioMan->QuietMode() == AudioManager::notifications && !applicationNotifications->value(app_name + "/bypassQuiet", false).toBool()) {
             QStringList allowedCategories;
             allowedCategories.append("battery.low");
             allowedCategories.append("battery.critical");

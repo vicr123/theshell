@@ -400,6 +400,18 @@ private slots:
 
     void on_appAllowPopup_toggled(bool checked);
 
+    void on_appBypassQuiet_toggled(bool checked);
+
+    void on_SetSystemTimezoneButton_clicked();
+
+    void on_backTimezone_clicked();
+
+    void on_setTimezoneButton_clicked();
+
+    void on_timezoneList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+    void on_timezoneCityList_currentRowChanged(int currentRow);
+
     public slots:
     void getNetworks();
 
@@ -463,6 +475,8 @@ private:
 
     int previousDragY;
     WId MainWindowId;
+
+    QJsonObject timezoneData;
 };
 
 class RemindersListModel : public QAbstractListModel

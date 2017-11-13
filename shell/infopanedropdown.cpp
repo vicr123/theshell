@@ -92,6 +92,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->label_7->setVisible(false);
     ui->pushButton_3->setVisible(false);
     ui->BatteryChargeScrollBar->setVisible(false);
+    ui->appNotificationsConfigureLock->setVisible(false);
     //ui->networkKey->setVisible(false);
     //ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
@@ -2966,14 +2967,22 @@ void InfoPaneDropdown::on_AppNotifications_currentItemChanged(QListWidgetItem *c
 {
     if (current == NULL) {
         ui->appNotificationsPane->setEnabled(false);
+        ui->appNotificationsConfigureLock->setVisible(false);
     } else {
-        ui->appNotificationsPane->setEnabled(true);
         ui->appNotificationsTitle->setText(tr("Notifications for %1").arg(current->text()));
-        notificationAppSettings->beginGroup(current->text());
-        ui->appAllowNotifications->setChecked(notificationAppSettings->value("allow", true).toBool());
-        ui->appAllowSounds->setChecked(notificationAppSettings->value("sounds", true).toBool());
-        ui->appAllowPopup->setChecked(notificationAppSettings->value("popup", true).toBool());
-        notificationAppSettings->endGroup();
+        ui->appAllowNotifications->setChecked(notificationAppSettings->value(current->text() + "/allow", true).toBool());
+        ui->appAllowSounds->setChecked(notificationAppSettings->value(current->text() + "/sounds", true).toBool());
+        ui->appAllowPopup->setChecked(notificationAppSettings->value(current->text() + "/popup", true).toBool());
+        ui->appBypassQuiet->setChecked(notificationAppSettings->value(current->text() + "/bypassQuiet", false).toBool());
+
+        if (current->text() == "theShell") {
+            ui->appNotificationsPane->setEnabled(false);
+            ui->appNotificationsConfigureLock->setText(tr("You can't configure notifications for %1").arg(current->text()));
+            ui->appNotificationsConfigureLock->setVisible(true);
+        } else {
+            ui->appNotificationsPane->setEnabled(true);
+            ui->appNotificationsConfigureLock->setVisible(false);
+        }
     }
 }
 
@@ -2995,5 +3004,102 @@ void InfoPaneDropdown::on_appAllowPopup_toggled(bool checked)
 {
     if (ui->AppNotifications->currentItem() != NULL) {
         notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/popup", checked);
+    }
+}
+
+void InfoPaneDropdown::on_appBypassQuiet_toggled(bool checked)
+{
+    if (ui->AppNotifications->currentItem() != NULL) {
+        notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/bypassQuiet", checked);
+    }
+}
+
+void InfoPaneDropdown::on_SetSystemTimezoneButton_clicked()
+{
+    ui->TimezoneStackedWidget->setCurrentIndex(1);
+
+    launchDateTimeService();
+    QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
+    QString currentTimezone = dateTimeInterface.property("Timezone").toString();
+
+    timezoneData = QJsonObject();
+
+    ui->timezoneList->clear();
+    QFile tzInfo("/usr/share/zoneinfo/zone.tab");
+    tzInfo.open(QFile::ReadOnly);
+    while (!tzInfo.atEnd()) {
+        QString tzLine = tzInfo.readLine();
+        if (!tzLine.startsWith("#")) {
+            QStringList parts = tzLine.split("\t", QString::SkipEmptyParts);
+            if (parts.length() > 3) {
+                QString region = parts.at(2).left(parts.at(2).indexOf("/"));
+                QString city = parts.at(2).mid(parts.at(2).indexOf("/") + 1);
+
+                if (!timezoneData.contains(region)) {
+                    QListWidgetItem* i = new QListWidgetItem();
+                    i->setText(region);
+                    ui->timezoneList->addItem(i);
+                    timezoneData.insert(region, QJsonArray());
+                }
+
+                QJsonObject cityData;
+                cityData.insert("name", city);
+                cityData.insert("country", parts.at(0).toLower());
+                cityData.insert("descriptor", parts.at(2));
+                if (parts.at(2) == currentTimezone) {
+                    cityData.insert("selected", true);
+                } else {
+                    cityData.insert("selected", false);
+                }
+
+                QJsonArray a = timezoneData.value(region).toArray();
+                a.append(cityData);
+                timezoneData.insert(region, a);
+            }
+        }
+    }
+    tzInfo.close();
+}
+
+void InfoPaneDropdown::on_backTimezone_clicked()
+{
+    ui->TimezoneStackedWidget->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::on_setTimezoneButton_clicked()
+{
+    ui->TimezoneStackedWidget->setCurrentIndex(0);
+
+    //Set the timezone
+    launchDateTimeService();
+    QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
+    dateTimeInterface.call(QDBus::NoBlock, "SetTimezone", ui->timezoneCityList->currentItem()->data(Qt::UserRole), true);
+}
+
+void InfoPaneDropdown::on_timezoneList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    ui->timezoneCityList->clear();
+    if (current != NULL) {
+        QJsonArray a = timezoneData.value(current->text()).toArray();
+        for (QJsonValue v : a) {
+            QListWidgetItem* i = new QListWidgetItem();
+            QJsonObject cityData = v.toObject();
+            i->setText(cityData.value("name").toString().replace("_", " "));
+            i->setData(Qt::UserRole, cityData.value("descriptor").toString());
+            i->setIcon(QIcon::fromTheme("flag-" + cityData.value("country").toString(), QIcon::fromTheme("flag")));
+            ui->timezoneCityList->addItem(i);
+            if (cityData.value("selected").toBool()) {
+                i->setSelected(true);
+            }
+        }
+    }
+}
+
+void InfoPaneDropdown::on_timezoneCityList_currentRowChanged(int currentRow)
+{
+    if (currentRow == -1) {
+        ui->setTimezoneButton->setEnabled(false);
+    } else {
+        ui->setTimezoneButton->setEnabled(true);
     }
 }
