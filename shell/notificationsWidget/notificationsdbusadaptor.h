@@ -77,6 +77,7 @@ signals: // SIGNALS
 private:
     NotificationsWidget* pt = NULL;
     QSettings settings;
+    QSettings* applicationNotifications;
 };
 
 #endif // NOTIFICATIONSDBUSADAPTOR_H

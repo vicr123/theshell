@@ -10,6 +10,7 @@ NotificationsDBusAdaptor::NotificationsDBusAdaptor(QObject *parent)
     : QDBusAbstractAdaptor(parent)
 {
     this->setAutoRelaySignals(true);
+    applicationNotifications = new QSettings("theSuite", "theShell-notifications");
 }
 
 NotificationsDBusAdaptor::~NotificationsDBusAdaptor()
@@ -43,6 +44,33 @@ QString NotificationsDBusAdaptor::GetServerInformation(QString &vendor, QString 
 uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id, const QString &app_icon, const QString &summary, const QString &body, const QStringList &actions, const QVariantMap &hints, int expire_timeout)
 {
     if (this->parentWidget() != NULL) {
+        QStringList knownApplications;
+        int amount = applicationNotifications->beginReadArray("notifications/knownApplications");
+        for (int i = 0; i < amount; i++) {
+            applicationNotifications->setArrayIndex(i);
+            knownApplications.append(applicationNotifications->value("appname").toString());
+        }
+        applicationNotifications->endArray();
+
+        if (!knownApplications.contains(app_name)) {
+            knownApplications.append(app_name);
+            applicationNotifications->beginWriteArray("notifications/knownApplications");
+
+            int i = 0;
+            for (QString appname : knownApplications) {
+                applicationNotifications->setArrayIndex(i);
+                applicationNotifications->setValue("appname", appname);
+                i++;
+            }
+            applicationNotifications->endArray();
+        }
+
+        if (!applicationNotifications->value(app_name + "/allow", true).toBool()) {
+            //User doesn't want this app to post notifications
+            emit NotificationClosed(999999, 2);
+            return 999999;
+        }
+
         NotificationObject* notification;
         if (this->parentWidget()->hasNotificationId(replaces_id)) {
             notification = this->parentWidget()->getNotification(replaces_id);

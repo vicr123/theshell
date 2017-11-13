@@ -1,6 +1,7 @@
 #include "notificationobject.h"
 
 int NotificationObject::currentId = 0;
+extern AudioManager* AudioMan;
 
 NotificationObject::NotificationObject(QString app_name, QString app_icon, QString summary, QString body, QStringList actions, QVariantMap hints, int expire_timeout, QObject *parent) : QObject(parent) {
     currentId++;
@@ -122,7 +123,53 @@ void NotificationObject::post() {
     }
     dialog->setTimeout(timeout);
 
-    dialog->show();
+    if (notificationAppSettings->value(appName + "/popup", true).toBool()) {
+        dialog->show();
+    }
+
+    //Play sounds if requested
+    if (!hints.value("suppress-sound", false).toBool() && !(AudioMan->QuietMode() == AudioManager::notifications || AudioMan->QuietMode() == AudioManager::mute) && notificationAppSettings->value(appName + "/sounds", true).toBool()) {
+        if (settings.value("notifications/attenuate", true).toBool()) {
+            AudioMan->attenuateStreams();
+        }
+
+        if (hints.contains("sound-file")) {
+            QMediaPlayer* player = new QMediaPlayer();
+            if (hints.value("sound-file").toString().startsWith("qrc:")) {
+                player->setMedia(QMediaContent(QUrl(hints.value("sound-file").toString())));
+            } else {
+                player->setMedia(QMediaContent(QUrl::fromLocalFile(hints.value("sound-file").toString())));
+            }
+            player->play();
+            connect(player, &QMediaPlayer::stateChanged, [=](QMediaPlayer::State state) {
+                if (state == QMediaPlayer::StoppedState) {
+                    player->deleteLater();
+                    if (settings.value("notifications/attenuate", true).toBool()) {
+                        AudioMan->restoreStreams();
+                    }
+                }
+            });
+        } else {
+            QSoundEffect* sound = new QSoundEffect();
+
+            QString notificationSound = settings.value("notifications/sound", "tripleping").toString();
+            if (notificationSound == "tripleping") {
+                sound->setSource(QUrl("qrc:/sounds/notifications/tripleping.wav"));
+            } else if (notificationSound == "upsidedown") {
+                sound->setSource(QUrl("qrc:/sounds/notifications/upsidedown.wav"));
+            } else if (notificationSound == "echo") {
+                sound->setSource(QUrl("qrc:/sounds/notifications/echo.wav"));
+            }
+            sound->play();
+            connect(sound, SIGNAL(playingChanged()), sound, SLOT(deleteLater()));
+
+            if (settings.value("notifications/attenuate", true).toBool()) {
+                connect(sound, &QSoundEffect::playingChanged, [=]() {
+                    AudioMan->restoreStreams();
+                });
+            }
+        }
+    }
 }
 
 uint NotificationObject::getId() {

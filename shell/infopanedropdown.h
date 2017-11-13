@@ -276,6 +276,8 @@ private slots:
 
     void setupDateTimeSettingsPane();
 
+    void setupNotificationsSettingsPane();
+
     void launchDateTimeService();
 
     void on_dateTimeSetDateTimeButton_clicked();
@@ -390,7 +392,15 @@ private slots:
 
     void on_grayColorThemeRadio_toggled(bool checked);
 
-public slots:
+    void on_AppNotifications_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+    void on_appAllowNotifications_toggled(bool checked);
+
+    void on_appAllowSounds_toggled(bool checked);
+
+    void on_appAllowPopup_toggled(bool checked);
+
+    public slots:
     void getNetworks();
 
     void startTimer(QTime time);
@@ -438,6 +448,7 @@ private:
     QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);
     QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
     QSettings* sessionSettings = new QSettings("theSuite", "ts-startsession");
+    QSettings* notificationAppSettings = new QSettings("theSuite", "theShell-notifications", this);
 
     QString editingUserPath;
 

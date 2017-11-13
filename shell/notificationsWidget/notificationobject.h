@@ -2,7 +2,10 @@
 #define NOTIFICATIONOBJECT_H
 
 #include <QObject>
+#include <QMediaPlayer>
+#include <QSoundEffect>
 #include "notificationpopup.h"
+#include "audiomanager.h"
 
 class NotificationPopup;
 
@@ -49,6 +52,8 @@ private:
     NotificationPopup* dialog;
 
     QIcon appIc, bigIc;
+    QSettings settings;
+    QSettings* notificationAppSettings = new QSettings("theSuite", "theShell-notifications", this);
 };
 
 #endif // NOTIFICATIONOBJECT_H

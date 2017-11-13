@@ -1280,10 +1280,30 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     ui->settingsTabs->setCurrentIndex(currentRow);
 
     //Set up settings
-    if (currentRow == 9) { //Users
+    if (currentRow == 5) { //Notifications
+        setupNotificationsSettingsPane();
+    } else if (currentRow == 8) { //Users
         setupUsersSettingsPane();
-    } else if (currentRow == 10) { //Date and Time
+    } else if (currentRow == 9) { //Date and Time
         setupDateTimeSettingsPane();
+    }
+}
+
+void InfoPaneDropdown::setupNotificationsSettingsPane() {
+    ui->AppNotifications->clear();
+
+    QStringList knownApplications;
+    int amount = notificationAppSettings->beginReadArray("notifications/knownApplications");
+    for (int i = 0; i < amount; i++) {
+        notificationAppSettings->setArrayIndex(i);
+        knownApplications.append(notificationAppSettings->value("appname").toString());
+    }
+    notificationAppSettings->endArray();
+
+    for (QString app : knownApplications) {
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(app);
+        ui->AppNotifications->addItem(item);
     }
 }
 
@@ -2939,5 +2959,41 @@ void InfoPaneDropdown::on_grayColorThemeRadio_toggled(bool checked)
         themeSettings->setValue("color/type", "gray");
         updateAccentColourBox();
         resetStyle();
+    }
+}
+
+void InfoPaneDropdown::on_AppNotifications_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if (current == NULL) {
+        ui->appNotificationsPane->setEnabled(false);
+    } else {
+        ui->appNotificationsPane->setEnabled(true);
+        ui->appNotificationsTitle->setText(tr("Notifications for %1").arg(current->text()));
+        notificationAppSettings->beginGroup(current->text());
+        ui->appAllowNotifications->setChecked(notificationAppSettings->value("allow", true).toBool());
+        ui->appAllowSounds->setChecked(notificationAppSettings->value("sounds", true).toBool());
+        ui->appAllowPopup->setChecked(notificationAppSettings->value("popup", true).toBool());
+        notificationAppSettings->endGroup();
+    }
+}
+
+void InfoPaneDropdown::on_appAllowNotifications_toggled(bool checked)
+{
+    if (ui->AppNotifications->currentItem() != NULL) {
+        notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/allow", checked);
+    }
+}
+
+void InfoPaneDropdown::on_appAllowSounds_toggled(bool checked)
+{
+    if (ui->AppNotifications->currentItem() != NULL) {
+        notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/sounds", checked);
+    }
+}
+
+void InfoPaneDropdown::on_appAllowPopup_toggled(bool checked)
+{
+    if (ui->AppNotifications->currentItem() != NULL) {
+        notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/popup", checked);
     }
 }
