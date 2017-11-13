@@ -25,8 +25,6 @@
 #include <QApplication>
 #include <QSettings>
 
-#define TS_VERSION "7.1"
-
 class Internationalisation {
 private:
     static QString tr(const char* text) {
