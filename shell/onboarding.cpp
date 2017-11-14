@@ -26,6 +26,8 @@
     "New in theShell 7.1:\n"\
     "- theWave has been discontinued.\n"\
     "- New Notifications system, allowing for simpler notifications to be shown\n"\
+    "- Notifications can now be configured on an app by app basis. For example, you can block an app from sending notifications."\
+    "- Timezone can now be set in Settings"\
     "\n"\
     "New in theShell 7.0:\n"\
     "- Quiet Mode has been added to theShell! Click on the volume icon in the bar, or head to the Notifications Status Center pane to change the setting.\n"\

@@ -32,6 +32,14 @@
 #include "endsessionwait.h"
 #include "notificationsWidget/notificationsdbusadaptor.h"
 
+#include <X11/Xlib.h>
+
+#define Bool int
+#define Status int
+#include <X11/extensions/scrnsaver.h>
+#undef Bool
+#undef Status
+
 class UPowerDBus : public QObject
 {
     Q_OBJECT
@@ -59,6 +67,7 @@ public slots:
     void checkUpower();
     void devicesChanged();
     void setPowerStretch(bool on);
+    void queryIdleState();
 
 private slots:
     void ActionInvoked(uint id, QString action_key);
@@ -91,6 +100,8 @@ private:
     QDateTime timeRemain;
 
     bool isLidClosed = false;
+
+    bool idleScreen = false, idleSuspend = false;
 };
 
 #endif // UPOWERDBUS_H

@@ -412,6 +412,14 @@ private slots:
 
     void on_timezoneCityList_currentRowChanged(int currentRow);
 
+    void on_batteryScreenOff_valueChanged(int value);
+
+    void on_batterySuspend_valueChanged(int value);
+
+    void on_powerScreenOff_valueChanged(int value);
+
+    void on_powerSuspend_valueChanged(int value);
+
     public slots:
     void getNetworks();
 

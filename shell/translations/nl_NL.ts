@@ -722,47 +722,47 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1796"/>
-        <location filename="../infopanedropdown.ui" line="4355"/>
+        <location filename="../infopanedropdown.ui" line="4501"/>
         <source>Advanced</source>
         <translation>Geavanceerd</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4406"/>
+        <location filename="../infopanedropdown.ui" line="4552"/>
         <source>theShell is Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
         <translation>theShell is Copyright (c) Victor Tran 2017. Gelicenseerd onder de termen van de GNU General Public License, versie 3 of nieuwer.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4512"/>
+        <location filename="../infopanedropdown.ui" line="4658"/>
         <source>System Information</source>
         <translation>Systeeminformatie</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4540"/>
+        <location filename="../infopanedropdown.ui" line="4686"/>
         <source>You&apos;re using</source>
         <translation>U gebruikt</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4581"/>
+        <location filename="../infopanedropdown.ui" line="4727"/>
         <source>Support</source>
         <translation>Hulp</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4602"/>
+        <location filename="../infopanedropdown.ui" line="4748"/>
         <source>Available Swap</source>
         <translation>Beschikbare Swap</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4609"/>
+        <location filename="../infopanedropdown.ui" line="4755"/>
         <source>Available Memory</source>
         <translation>Beschikbare werkgeheugen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4629"/>
+        <location filename="../infopanedropdown.ui" line="4775"/>
         <source>Kernel Version</source>
         <translation>Kernel Versie</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4650"/>
+        <location filename="../infopanedropdown.ui" line="4796"/>
         <source>Qt Version</source>
         <translation>Qt Versie</translation>
     </message>
@@ -877,6 +877,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1973"/>
         <location filename="../infopanedropdown.ui" line="2037"/>
+        <location filename="../infopanedropdown.ui" line="4236"/>
         <source>Back</source>
         <translation type="unfinished">Terug</translation>
     </message>
@@ -967,18 +968,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3157"/>
-        <source>SoundFeedbackSoundSwitch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="3164"/>
         <source>Volume overdrive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3171"/>
-        <source>VolumeOverdriveSwitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1129,28 +1120,28 @@
         <translation>Datum en tijd</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4020"/>
+        <location filename="../infopanedropdown.ui" line="4042"/>
         <source>Set</source>
         <translation>Stel in</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4061"/>
+        <location filename="../infopanedropdown.ui" line="4083"/>
         <source>Use network to sync date and time</source>
         <translation>Gebruik netwerk om datum en tijd te synchroniseren</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4092"/>
+        <location filename="../infopanedropdown.ui" line="4114"/>
         <source>Use 24 hour time</source>
         <translation>Gebruik 24 uur tijd</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4099"/>
+        <location filename="../infopanedropdown.ui" line="4121"/>
         <source>TwentyFourHourSwitch</source>
         <translation>TwentyFourHourSwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1778"/>
-        <location filename="../infopanedropdown.ui" line="4138"/>
+        <location filename="../infopanedropdown.ui" line="4284"/>
         <source>Language</source>
         <translation>Taal</translation>
     </message>
@@ -1175,79 +1166,94 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>Dit is de laatste stap. De gebruiker zal worden verwijderd wanneer u kiest om bestanden te houden, of te verwijderen.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4161"/>
+        <location filename="../infopanedropdown.ui" line="4164"/>
+        <source>Set System Timezone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4197"/>
+        <source>Where are you located?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4259"/>
+        <source>Set Timezone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4307"/>
         <source>Changing this setting requires you to log in and then log out.</source>
         <translation>Deze instelling is pas van toepassing nadat u overnieuw inlogt.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4172"/>
+        <location filename="../infopanedropdown.ui" line="4318"/>
         <source>HighContrastSwitch</source>
         <translation>HighContrastSwitch</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4182"/>
+        <location filename="../infopanedropdown.ui" line="4328"/>
         <source>System Animations</source>
         <translation>Systeemanimaties</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4189"/>
+        <location filename="../infopanedropdown.ui" line="4335"/>
         <source>SystemAnimationsAccessibilitySwitch</source>
         <translation>SystemAnimationsAccessibilitySwitch</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4202"/>
+        <location filename="../infopanedropdown.ui" line="4348"/>
         <source>High Contrast</source>
         <translation>Hoge Contrast</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4209"/>
+        <location filename="../infopanedropdown.ui" line="4355"/>
         <source>Large Text</source>
         <translation>Grote tekst</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4216"/>
+        <location filename="../infopanedropdown.ui" line="4362"/>
         <source>LargeTextSwitch</source>
         <translation>LargeTextSwitch</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4252"/>
+        <location filename="../infopanedropdown.ui" line="4398"/>
         <source>Tone on Caps Lock and Num Lock</source>
         <translation>Geluid bij Caps Lock en Num Lock</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4259"/>
+        <location filename="../infopanedropdown.ui" line="4405"/>
         <source>CapsNumLockBellSwitch</source>
         <translation>CapsNumLockBellSwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1787"/>
-        <location filename="../infopanedropdown.ui" line="4273"/>
+        <location filename="../infopanedropdown.ui" line="4419"/>
         <source>Accessibility</source>
         <translation>Toegankelijkheid</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4312"/>
+        <location filename="../infopanedropdown.ui" line="4458"/>
         <source>Window Manager Command</source>
         <translation>Vensterbeheerder Commando</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4322"/>
+        <location filename="../infopanedropdown.ui" line="4468"/>
         <source>The items under here can do some bad things. Make sure you know what you&apos;re doing.</source>
         <translation>Deze instellingen kunnen slechte dingen veroorzaken. Zorg ervoor dat u weet wat u aan het doen bent.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4378"/>
+        <location filename="../infopanedropdown.ui" line="4524"/>
         <location filename="../infopanedropdown.cpp" line="1178"/>
         <source>Reset theShell</source>
         <translation>Herstel theShell</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4669"/>
+        <location filename="../infopanedropdown.ui" line="4815"/>
         <source>Desktop Environment</source>
         <translation>Bureaubladbeheerder</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4689"/>
+        <location filename="../infopanedropdown.ui" line="4835"/>
         <source>Your settings are saved automatically.</source>
         <translation>Uw instellingen worden automatisch opgeslagen.</translation>
     </message>

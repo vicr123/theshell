@@ -282,6 +282,10 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->AutoShowBarSwitch->setChecked(settings.value("bar/autoshow", true).toBool());
     ui->SoundFeedbackSoundSwitch->setChecked(settings.value("sound/feedbackSound", true).toBool());
     ui->VolumeOverdriveSwitch->setChecked(settings.value("sound/volumeOverdrive", true).toBool());
+    ui->batteryScreenOff->setValue(settings.value("power/batteryScreenOff", 15).toInt());
+    ui->batterySuspend->setValue(settings.value("power/batterySuspend", 30).toInt());
+    ui->powerScreenOff->setValue(settings.value("power/powerScreenOff", 30).toInt());
+    ui->powerSuspend->setValue(settings.value("power/powerSuspend", 90).toInt());
     updateAccentColourBox();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
 
@@ -1283,9 +1287,9 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     //Set up settings
     if (currentRow == 5) { //Notifications
         setupNotificationsSettingsPane();
-    } else if (currentRow == 8) { //Users
+    } else if (currentRow == 9) { //Users
         setupUsersSettingsPane();
-    } else if (currentRow == 9) { //Date and Time
+    } else if (currentRow == 10) { //Date and Time
         setupDateTimeSettingsPane();
     }
 }
@@ -3059,6 +3063,9 @@ void InfoPaneDropdown::on_SetSystemTimezoneButton_clicked()
         }
     }
     tzInfo.close();
+
+    ui->setTimezoneButton->setEnabled(false);
+    ui->timezoneCityList->clear();
 }
 
 void InfoPaneDropdown::on_backTimezone_clicked()
@@ -3101,5 +3108,45 @@ void InfoPaneDropdown::on_timezoneCityList_currentRowChanged(int currentRow)
         ui->setTimezoneButton->setEnabled(false);
     } else {
         ui->setTimezoneButton->setEnabled(true);
+    }
+}
+
+void InfoPaneDropdown::on_batteryScreenOff_valueChanged(int value)
+{
+    settings.setValue("power/batteryScreenOff", value);
+    if (value == 121) {
+        ui->batteryScreenOffLabel->setText(tr("Never"));
+    } else {
+        ui->batteryScreenOffLabel->setText(tr("%1 min(s)", NULL, value).arg(QString::number(value)));
+    }
+}
+
+void InfoPaneDropdown::on_batterySuspend_valueChanged(int value)
+{
+    settings.setValue("power/batterySuspend", value);
+    if (value == 121) {
+        ui->batterySuspendLabel->setText(tr("Never"));
+    } else {
+        ui->batterySuspendLabel->setText(tr("%1 min(s)", NULL, value).arg(QString::number(value)));
+    }
+}
+
+void InfoPaneDropdown::on_powerScreenOff_valueChanged(int value)
+{
+    settings.setValue("power/powerScreenOff", value);
+    if (value == 121) {
+        ui->powerScreenOffLabel->setText(tr("Never"));
+    } else {
+        ui->powerScreenOffLabel->setText(tr("%1 min(s)", NULL, value).arg(QString::number(value)));
+    }
+}
+
+void InfoPaneDropdown::on_powerSuspend_valueChanged(int value)
+{
+    settings.setValue("power/powerSuspend", value);
+    if (value == 121) {
+        ui->powerSuspendLabel->setText(tr("Never"));
+    } else {
+        ui->powerSuspendLabel->setText(tr("%1 min(s)", NULL, value).arg(QString::number(value)));
     }
 }

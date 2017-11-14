@@ -42,6 +42,7 @@ UPowerDBus::UPowerDBus(QObject *parent) : QObject(parent)
     checkTimer->setInterval(1000);
     connect(checkTimer, SIGNAL(timeout()), this, SLOT(checkUpower()));
     connect(checkTimer, SIGNAL(timeout()), this, SLOT(DeviceChanged()));
+    connect(checkTimer, SIGNAL(timeout()), this, SLOT(queryIdleState()));
     checkTimer->start();
 
     QDBusConnection::systemBus().connect("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower", "DeviceAdded", this, SLOT(devicesChanged()));
@@ -420,4 +421,36 @@ void UPowerDBus::ActionInvoked(uint id, QString action_key) {
 
 bool UPowerDBus::hasPCBattery() {
     return hasPCBat;
+}
+
+void UPowerDBus::queryIdleState() {
+    XScreenSaverInfo *info = new XScreenSaverInfo;
+    if (!XScreenSaverQueryInfo(QX11Info::display(), DefaultRootWindow(QX11Info::display()), info)) {
+        return;
+    }
+
+    if (info->idle < 3000) {
+        idleScreen = false;
+        idleSuspend = false;
+    }
+
+    if (charging()) {
+        if (info->idle > settings.value("power/batteryScreenOff", 15).toInt() * 1000 && !idleScreen) {
+            idleScreen = true;
+            QProcess::execute("xset dpms force off");
+        }
+        if (info->idle > settings.value("power/batterySuspend", 30).toInt() * 1000 && !idleSuspend) {
+            EndSession(EndSessionWait::suspend);
+        }
+    } else {
+        if (info->idle > settings.value("power/powerScreenOff", 30).toInt() * 1000 && !idleScreen) {
+            idleScreen = true;
+            QProcess::execute("xset dpms force off");
+        }
+        if (info->idle > settings.value("power/powerSuspend", 90).toInt() * 1000 && !idleSuspend) {
+            EndSession(EndSessionWait::suspend);
+        }
+    }
+
+    XFree(info);
 }

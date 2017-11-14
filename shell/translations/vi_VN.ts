@@ -721,47 +721,47 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1796"/>
-        <location filename="../infopanedropdown.ui" line="4355"/>
+        <location filename="../infopanedropdown.ui" line="4501"/>
         <source>Advanced</source>
         <translation>Nâng cao</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4406"/>
+        <location filename="../infopanedropdown.ui" line="4552"/>
         <source>theShell is Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
         <translation>theShell là bản quyền (c) Victor Tran năm 2017. Được cấp phép theo các điều khoản của Giấy phép Công cộng GNU, phiên bản 3 hoặc mới hơn.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4512"/>
+        <location filename="../infopanedropdown.ui" line="4658"/>
         <source>System Information</source>
         <translation>Thông tin máy</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4540"/>
+        <location filename="../infopanedropdown.ui" line="4686"/>
         <source>You&apos;re using</source>
         <translation>Bạn đang dụng</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4581"/>
+        <location filename="../infopanedropdown.ui" line="4727"/>
         <source>Support</source>
         <translation>Trợ giúp</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4602"/>
+        <location filename="../infopanedropdown.ui" line="4748"/>
         <source>Available Swap</source>
         <translation>Bộ nhớ đổi còn trống</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4609"/>
+        <location filename="../infopanedropdown.ui" line="4755"/>
         <source>Available Memory</source>
         <translation>Bộ nhớ còn trống</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4629"/>
+        <location filename="../infopanedropdown.ui" line="4775"/>
         <source>Kernel Version</source>
         <translation>Phiên bản Kernel</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4650"/>
+        <location filename="../infopanedropdown.ui" line="4796"/>
         <source>Qt Version</source>
         <translation>Phiên bản Qt</translation>
     </message>
@@ -876,6 +876,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1973"/>
         <location filename="../infopanedropdown.ui" line="2037"/>
+        <location filename="../infopanedropdown.ui" line="4236"/>
         <source>Back</source>
         <translation>Lại</translation>
     </message>
@@ -966,18 +967,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3157"/>
-        <source>SoundFeedbackSoundSwitch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="3164"/>
         <source>Volume overdrive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3171"/>
-        <source>VolumeOverdriveSwitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1128,28 +1119,28 @@
         <translation>Ngày và giờ</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4020"/>
+        <location filename="../infopanedropdown.ui" line="4042"/>
         <source>Set</source>
         <translation>Đặt</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4061"/>
+        <location filename="../infopanedropdown.ui" line="4083"/>
         <source>Use network to sync date and time</source>
         <translation>Dùng mạng để đặt ngay và giờ</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4092"/>
+        <location filename="../infopanedropdown.ui" line="4114"/>
         <source>Use 24 hour time</source>
         <translation>Dùng định dạng 24 gio</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4099"/>
+        <location filename="../infopanedropdown.ui" line="4121"/>
         <source>TwentyFourHourSwitch</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1778"/>
-        <location filename="../infopanedropdown.ui" line="4138"/>
+        <location filename="../infopanedropdown.ui" line="4284"/>
         <source>Language</source>
         <translation>Ngôn Ngữ</translation>
     </message>
@@ -1174,79 +1165,94 @@ Tập tin này có thể giữ lại:
         <translation>Cái này là bước cuối cùng. Người này có thể xóa khi bạn chọn một lựa chọn.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4161"/>
+        <location filename="../infopanedropdown.ui" line="4164"/>
+        <source>Set System Timezone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4197"/>
+        <source>Where are you located?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4259"/>
+        <source>Set Timezone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4307"/>
         <source>Changing this setting requires you to log in and then log out.</source>
         <translation>Nếu bạn thay đổi điều này, bạn cần phải đăng xuất và sau đó.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4172"/>
+        <location filename="../infopanedropdown.ui" line="4318"/>
         <source>HighContrastSwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4182"/>
+        <location filename="../infopanedropdown.ui" line="4328"/>
         <source>System Animations</source>
         <translation>Hình động</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4189"/>
+        <location filename="../infopanedropdown.ui" line="4335"/>
         <source>SystemAnimationsAccessibilitySwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4202"/>
+        <location filename="../infopanedropdown.ui" line="4348"/>
         <source>High Contrast</source>
         <translation>Độ tương phản cao</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4209"/>
+        <location filename="../infopanedropdown.ui" line="4355"/>
         <source>Large Text</source>
         <translation>Chữ lớn</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4216"/>
+        <location filename="../infopanedropdown.ui" line="4362"/>
         <source>LargeTextSwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4252"/>
+        <location filename="../infopanedropdown.ui" line="4398"/>
         <source>Tone on Caps Lock and Num Lock</source>
         <translation>Nhạc khi Caps Lock và Num Lock nhấn</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4259"/>
+        <location filename="../infopanedropdown.ui" line="4405"/>
         <source>CapsNumLockBellSwitch</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1787"/>
-        <location filename="../infopanedropdown.ui" line="4273"/>
+        <location filename="../infopanedropdown.ui" line="4419"/>
         <source>Accessibility</source>
         <translation>Trở nặng</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4312"/>
+        <location filename="../infopanedropdown.ui" line="4458"/>
         <source>Window Manager Command</source>
         <translation>Ứng dụng quản lý cửa sổ</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4322"/>
+        <location filename="../infopanedropdown.ui" line="4468"/>
         <source>The items under here can do some bad things. Make sure you know what you&apos;re doing.</source>
         <translation>Trang này là nguy hiểm. Chỉ có thay đổi nếu bạn biết những gì bạn đang làm.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4378"/>
+        <location filename="../infopanedropdown.ui" line="4524"/>
         <location filename="../infopanedropdown.cpp" line="1178"/>
         <source>Reset theShell</source>
         <translation>Đặt lại theShell</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4669"/>
+        <location filename="../infopanedropdown.ui" line="4815"/>
         <source>Desktop Environment</source>
         <translation>Môi trường desktop</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4689"/>
+        <location filename="../infopanedropdown.ui" line="4835"/>
         <source>Your settings are saved automatically.</source>
         <translation>Cài đặt lưu tự động.</translation>
     </message>
