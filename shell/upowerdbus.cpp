@@ -435,22 +435,22 @@ void UPowerDBus::queryIdleState() {
     }
 
     if (charging()) {
-        int idleTime = settings.value("power/batteryScreenOff", 15).toInt();
-        if (info->idle > idleTime * 60000 && !idleScreen && idleTime != 121) {
-            idleScreen = true;
-            QProcess::execute("xset dpms force off");
-        }
-        int suspendTime = settings.value("power/batterySuspend", 15).toInt() * 1000;
-        if (info->idle > suspendTime * 60000 && !idleSuspend && suspendTime != 121) {
-            EndSession(EndSessionWait::suspend);
-        }
-    } else {
         int idleTime = settings.value("power/powerScreenOff", 15).toInt();
         if (info->idle > idleTime * 1000 && !idleScreen && idleTime != 121) {
             idleScreen = true;
             QProcess::execute("xset dpms force off");
         }
         int suspendTime = settings.value("power/powerSuspend", 15).toInt() * 1000;
+        if (info->idle > suspendTime * 60000 && !idleSuspend && suspendTime != 121) {
+            EndSession(EndSessionWait::suspend);
+        }
+    } else {
+        int idleTime = settings.value("power/batteryScreenOff", 15).toInt();
+        if (info->idle > idleTime * 60000 && !idleScreen && idleTime != 121) {
+            idleScreen = true;
+            QProcess::execute("xset dpms force off");
+        }
+        int suspendTime = settings.value("power/batterySuspend", 15).toInt() * 1000;
         if (info->idle > suspendTime * 60000 && !idleSuspend && suspendTime != 121) {
             EndSession(EndSessionWait::suspend);
         }
