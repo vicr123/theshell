@@ -29,10 +29,12 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
     });
     connect(object, &NotificationObject::closed, [=](NotificationObject::NotificationCloseReason reason) {
         emit ndbus->NotificationClosed(object->getId(), reason);
-        notifications.remove(object->getId());
+        if (reason != NotificationObject::Expired) {
+            notifications.remove(object->getId());
 
-        if (notifications.count() == 0) {
-            ui->noNotificationsFrame->setVisible(true);
+            if (notifications.count() == 0) {
+                ui->noNotificationsFrame->setVisible(true);
+            }
         }
     });
 

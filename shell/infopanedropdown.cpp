@@ -408,7 +408,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
         if (mode == AudioManager::none) {
             ui->quietModeSound->setChecked(true);
-            ui->quietModeSettings->setVisible(false);
 
             ui->quietModeForeverButton->setEnabled(false);
             ui->quietModeTurnOffAt->setEnabled(false);
@@ -416,14 +415,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             ui->quietModeForeverButton->setChecked(true);
         } else if (mode == AudioManager::notifications) {
             ui->quietModeNotification->setChecked(true);
-            ui->quietModeSettings->setVisible(true);
         } else {
             ui->quietModeMute->setChecked(true);
-            ui->quietModeSettings->setVisible(true);
         }
         ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
     });
-    ui->quietModeSettings->setVisible(false);
     ui->quietModeForeverButton->setChecked(true);
     ui->quietModeForeverButton->setEnabled(false);
     ui->quietModeTurnOffAt->setEnabled(false);
