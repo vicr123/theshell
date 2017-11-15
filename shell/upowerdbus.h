@@ -37,6 +37,7 @@
 #define Bool int
 #define Status int
 #include <X11/extensions/scrnsaver.h>
+#include <X11/extensions/dpms.h>
 #undef Bool
 #undef Status
 

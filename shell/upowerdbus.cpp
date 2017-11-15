@@ -37,6 +37,9 @@ UPowerDBus::UPowerDBus(QObject *parent) : QObject(parent)
     QDBusReply<QDBusUnixFileDescriptor> inhibitReply = QDBusConnection::systemBus().call(message);
     powerInhibit = inhibitReply.value();
 
+    //Disable DPMS timeouts
+    DPMSSetTimeouts(QX11Info::display(), 0, 0, 0);
+
     //Set up timer to check UPower properties
     checkTimer = new QTimer(this);
     checkTimer->setInterval(1000);
@@ -438,20 +441,22 @@ void UPowerDBus::queryIdleState() {
         int idleTime = settings.value("power/powerScreenOff", 15).toInt();
         if (info->idle > idleTime * 1000 && !idleScreen && idleTime != 121) {
             idleScreen = true;
-            QProcess::execute("xset dpms force off");
+            EndSession(EndSessionWait::screenOff);
         }
         int suspendTime = settings.value("power/powerSuspend", 15).toInt() * 1000;
         if (info->idle > suspendTime * 60000 && !idleSuspend && suspendTime != 121) {
+            idleSuspend = true;
             EndSession(EndSessionWait::suspend);
         }
     } else {
         int idleTime = settings.value("power/batteryScreenOff", 15).toInt();
         if (info->idle > idleTime * 60000 && !idleScreen && idleTime != 121) {
             idleScreen = true;
-            QProcess::execute("xset dpms force off");
+            EndSession(EndSessionWait::screenOff);
         }
         int suspendTime = settings.value("power/batterySuspend", 15).toInt() * 1000;
         if (info->idle > suspendTime * 60000 && !idleSuspend && suspendTime != 121) {
+            idleSuspend = true;
             EndSession(EndSessionWait::suspend);
         }
     }

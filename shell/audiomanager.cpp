@@ -40,6 +40,15 @@ AudioManager::AudioManager(QObject *parent) : QObject(parent)
     } else {
         pulseAvailable = true;
     }
+
+    quietModeWatcher = new QTimer();
+    quietModeWatcher->setInterval(1000);
+    connect(quietModeWatcher, &QTimer::timeout, [=] {
+        if (QDateTime::currentDateTime() > quietModeOff) {
+            setQuietMode(none);
+            quietModeWatcher->stop();
+        }
+    });
 }
 
 void AudioManager::changeVolume(int volume) {
@@ -337,10 +346,19 @@ AudioManager::quietMode AudioManager::QuietMode() {
 QString AudioManager::getCurrentQuietModeDescription() {
     switch (this->currentQuietMode) {
         case none:
-            return "";
+            return tr("Allows all sounds from all apps, and notifications from all apps.");
         case notifications:
-            return tr("Ignores any notifications from all apps. Normal sounds will still be played, and timers and reminders will still notify you, however, they won't play sounds.");
+            return tr("Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won't play sounds.");
         case mute:
-            return tr("Completely turns off all sounds and notifications from all apps. Not even timers or reminders will notify you.");
+            return tr("Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.");
+    }
+}
+
+void AudioManager::setQuietModeResetTime(QDateTime time) {
+    if (time.isValid()) {
+        quietModeOff = time;
+        quietModeWatcher->start();
+    } else {
+        quietModeWatcher->stop();
     }
 }

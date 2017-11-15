@@ -25,6 +25,7 @@
 #include <QProcess>
 #include <QMap>
 #include <QTimer>
+#include <QDateTime>
 #include <tvariantanimation.h>
 #include <pulse/context.h>
 #include <pulse/glib-mainloop.h>
@@ -60,6 +61,7 @@ public slots:
     void silenceStreams();
     void restoreStreams(bool immediate = false);
     void setQuietMode(quietMode mode);
+    void setQuietModeResetTime(QDateTime time);
 
 private:
     pa_context* pulseContext = NULL;
@@ -85,6 +87,9 @@ private:
     pa_cvolume defaultSinkVolume;
     quietMode currentQuietMode = none;
     QSettings settings;
+
+    QDateTime quietModeOff;
+    QTimer* quietModeWatcher;
 };
 
 #endif // AUDIOMANAGER_H

@@ -21,6 +21,7 @@ NotificationsWidget::~NotificationsWidget()
 
 void NotificationsWidget::addNotification(NotificationObject *object) {
     notifications.insert(object->getId(), object);
+    ui->noNotificationsFrame->setVisible(false);
 
     connect(object, &NotificationObject::actionClicked, [=](QString key) {
         emit ndbus->ActionInvoked(object->getId(), key);
@@ -28,6 +29,11 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
     });
     connect(object, &NotificationObject::closed, [=](NotificationObject::NotificationCloseReason reason) {
         emit ndbus->NotificationClosed(object->getId(), reason);
+        notifications.remove(object->getId());
+
+        if (notifications.count() == 0) {
+            ui->noNotificationsFrame->setVisible(true);
+        }
     });
 
     NotificationAppGroup* nGroup = NULL;

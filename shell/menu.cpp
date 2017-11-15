@@ -480,8 +480,8 @@ void Menu::on_commandLinkButton_7_clicked()
 
 void Menu::on_commandLinkButton_8_clicked()
 {
+    EndSession(EndSessionWait::screenOff);
     this->close();
-    QProcess::startDetached("xset dpms force off");
 }
 
 void Menu::on_commandLinkButton_6_clicked()

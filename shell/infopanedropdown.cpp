@@ -93,6 +93,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->pushButton_3->setVisible(false);
     ui->BatteryChargeScrollBar->setVisible(false);
     ui->appNotificationsConfigureLock->setVisible(false);
+    ui->quietModeExtras->setFixedHeight(0);
     //ui->networkKey->setVisible(false);
     //ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
@@ -260,7 +261,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     //Populate the language box
     Internationalisation::fillLanguageBox(ui->localeList);
 
-    ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/icons/theos/backgrounds/triangle/1920x1080.png").toString());
+    ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/tsscreenlock/triangles.svg").toString());
     //ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
     ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
     ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
@@ -401,21 +402,33 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->quietModeSound->setChecked(false);
         ui->quietModeNotification->setChecked(false);
         ui->quietModeMute->setChecked(false);
+        ui->quietModeForeverButton->setEnabled(true);
+        ui->quietModeTurnOffAt->setEnabled(true);
+        ui->quietModeTurnOffIn->setEnabled(true);
 
         if (mode == AudioManager::none) {
             ui->quietModeSound->setChecked(true);
             ui->quietModeSettings->setVisible(false);
+
+            ui->quietModeForeverButton->setEnabled(false);
+            ui->quietModeTurnOffAt->setEnabled(false);
+            ui->quietModeTurnOffIn->setEnabled(false);
+            ui->quietModeForeverButton->setChecked(true);
         } else if (mode == AudioManager::notifications) {
             ui->quietModeNotification->setChecked(true);
             ui->quietModeSettings->setVisible(true);
-            ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
         } else {
             ui->quietModeMute->setChecked(true);
             ui->quietModeSettings->setVisible(true);
-            ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
         }
+        ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
     });
     ui->quietModeSettings->setVisible(false);
+    ui->quietModeForeverButton->setChecked(true);
+    ui->quietModeForeverButton->setEnabled(false);
+    ui->quietModeTurnOffAt->setEnabled(false);
+    ui->quietModeTurnOffIn->setEnabled(false);
+    ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
 
     ui->RemindersList->setModel(new RemindersListModel);
     ui->RemindersList->setItemDelegate(new RemindersDelegate);
@@ -781,6 +794,10 @@ void InfoPaneDropdown::close() {
     });
     connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
     a->start();
+
+    if (ui->quietModeExtras->height() != 0) {
+        ui->quietModeExpandButton->click();
+    }
 }
 
 void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
@@ -3149,4 +3166,69 @@ void InfoPaneDropdown::on_powerSuspend_valueChanged(int value)
     } else {
         ui->powerSuspendLabel->setText(tr("%1 min(s)", NULL, value).arg(QString::number(value)));
     }
+}
+
+void InfoPaneDropdown::on_quietModeExpandButton_clicked()
+{
+    tVariantAnimation* anim = new tVariantAnimation();
+    anim->setStartValue(ui->quietModeExtras->height());
+    if (ui->quietModeExtras->height() == 0) {
+        anim->setEndValue(ui->quietModeExtras->sizeHint().height());
+        ui->quietModeExpandButton->setIcon(QIcon::fromTheme("go-up"));
+    } else {
+        anim->setEndValue(0);
+        ui->quietModeExpandButton->setIcon(QIcon::fromTheme("go-down"));
+    }
+    anim->setDuration(500);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->quietModeExtras->setFixedHeight(value.toInt());
+    });
+    anim->start();
+}
+
+void InfoPaneDropdown::on_quietModeForeverButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->quietModeTurnOffAtTimer->setVisible(false);
+        ui->quietModeTurnOffInTimer->setVisible(false);
+        AudioMan->setQuietModeResetTime(QDateTime::fromString(""));
+    }
+}
+
+void InfoPaneDropdown::on_quietModeTurnOffIn_toggled(bool checked)
+{
+    if (checked) {
+        ui->quietModeTurnOffAtTimer->setVisible(false);
+        ui->quietModeTurnOffInTimer->setVisible(true);
+
+        QDateTime oneHour = QDateTime::currentDateTime().addSecs(3600);
+        AudioMan->setQuietModeResetTime(oneHour);
+        ui->quietModeTurnOffInTimer->setTime(QTime(1, 0));
+    }
+}
+
+void InfoPaneDropdown::on_quietModeTurnOffAt_toggled(bool checked)
+{
+
+    if (checked) {
+        ui->quietModeTurnOffAtTimer->setVisible(true);
+        ui->quietModeTurnOffInTimer->setVisible(false);
+
+        QDateTime oneHour = QDateTime::currentDateTime().addSecs(3600);
+        AudioMan->setQuietModeResetTime(oneHour);
+        ui->quietModeTurnOffAtTimer->setDateTime(oneHour);
+    }
+}
+
+void InfoPaneDropdown::on_quietModeTurnOffAtTimer_editingFinished()
+{
+    AudioMan->setQuietModeResetTime(ui->quietModeTurnOffAtTimer->dateTime());
+}
+
+void InfoPaneDropdown::on_quietModeTurnOffInTimer_editingFinished()
+{
+    QDateTime timeout = QDateTime::currentDateTime().addMSecs(ui->quietModeTurnOffInTimer->time().msecsSinceStartOfDay());
+    AudioMan->setQuietModeResetTime(timeout);
 }

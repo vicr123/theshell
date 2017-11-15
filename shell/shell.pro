@@ -6,7 +6,7 @@
 
 QT       += core gui dbus multimedia xml network positioning svg charts concurrent
 CONFIG   += c++14
-LIBS     += -lX11 -lxcb -lxcb-keysyms -lXss -lsystemd -lKF5AkonadiCore -lpulse -lpulse-mainloop-glib -lcrypt
+LIBS     += -lX11 -lxcb -lxcb-keysyms -lXss -lXext -lsystemd -lKF5AkonadiCore -lpulse -lpulse-mainloop-glib -lcrypt
 
 INCLUDEPATH += /usr/include/glib-2.0/ /usr/lib/glib-2.0/include/
 
@@ -144,7 +144,6 @@ FORMS    += mainwindow.ui \
     menu.ui \
     endsessionwait.ui \
     background.ui \
-    notificationdialog.ui \
     infopanedropdown.ui \
     loginsplash.ui \
     choosebackground.ui \

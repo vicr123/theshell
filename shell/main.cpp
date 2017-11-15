@@ -44,6 +44,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <X11/Xlib.h>
+#include <X11/extensions/dpms.h>
 #include "locationservices.h"
 
 MainWindow* MainWin = NULL;
@@ -346,35 +347,35 @@ void EndSession(EndSessionWait::shutdownType type) {
     case EndSessionWait::powerOff:
     case EndSessionWait::reboot:
     case EndSessionWait::logout:
-    case EndSessionWait::dummy:
-    {
-        EndSessionWait* w = new EndSessionWait(type);
-        w->showFullScreen();
-        QApplication::setOverrideCursor(Qt::BlankCursor);
-    }
-        break;
+    case EndSessionWait::dummy: {
+            EndSessionWait* w = new EndSessionWait(type);
+            w->showFullScreen();
+            QApplication::setOverrideCursor(Qt::BlankCursor);
+            break;
+        }
+    case EndSessionWait::suspend: {
+            QList<QVariant> arguments;
+            arguments.append(true);
 
-    case EndSessionWait::suspend:
-    {
-        QList<QVariant> arguments;
-        arguments.append(true);
+            QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Suspend");
+            message.setArguments(arguments);
+            QDBusConnection::systemBus().send(message);
+            break;
+        }
+    case EndSessionWait::hibernate: {
 
-        QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Suspend");
-        message.setArguments(arguments);
-        QDBusConnection::systemBus().send(message);
-    }
-        break;
-    case EndSessionWait::hibernate:
-    {
+            QList<QVariant> arguments;
+            arguments.append(true);
 
-        QList<QVariant> arguments;
-        arguments.append(true);
-
-        QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Hibernate");
-        message.setArguments(arguments);
-        QDBusConnection::systemBus().send(message);
-    }
-        break;
+            QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Hibernate");
+            message.setArguments(arguments);
+            QDBusConnection::systemBus().send(message);
+            break;
+        }
+        case EndSessionWait::screenOff: {
+            DPMSForceLevel(QX11Info::display(), DPMSModeOff);
+            break;
+        }
     }
 
 }

@@ -90,6 +90,7 @@ public:
         suspend,
         hibernate,
         ask,
+        screenOff,
         dummy //FOR TESTING
     };
 

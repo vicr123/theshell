@@ -420,6 +420,18 @@ private slots:
 
     void on_powerSuspend_valueChanged(int value);
 
+    void on_quietModeExpandButton_clicked();
+
+    void on_quietModeForeverButton_toggled(bool checked);
+
+    void on_quietModeTurnOffIn_toggled(bool checked);
+
+    void on_quietModeTurnOffAt_toggled(bool checked);
+
+    void on_quietModeTurnOffAtTimer_editingFinished();
+
+    void on_quietModeTurnOffInTimer_editingFinished();
+
     public slots:
     void getNetworks();
 
@@ -437,7 +449,7 @@ private:
     int initialPoint;
     bool mouseMovedUp = false;
     QRect dragRect;
-    bool effectiveRedshiftOn;
+    bool effectiveRedshiftOn = false;
     int overrideRedshift;
 
     QMap<int, QFrame*> notificationFrames;

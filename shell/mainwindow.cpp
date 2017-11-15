@@ -1501,7 +1501,6 @@ void MainWindow::on_brightnessFrame_MouseExit()
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::InCubic);
     anim->start();
-
 }
 
 void MainWindow::on_brightnessSlider_sliderMoved(int position)
