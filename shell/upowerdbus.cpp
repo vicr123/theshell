@@ -439,7 +439,7 @@ void UPowerDBus::queryIdleState() {
 
     if (charging()) {
         int idleTime = settings.value("power/powerScreenOff", 15).toInt();
-        if (info->idle > idleTime * 1000 && !idleScreen && idleTime != 121) {
+        if (info->idle > idleTime * 60000 && !idleScreen && idleTime != 121) {
             idleScreen = true;
             EndSession(EndSessionWait::screenOff);
         }
