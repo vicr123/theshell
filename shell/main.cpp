@@ -59,6 +59,7 @@ QDBusServiceWatcher* dbusServiceWatcherSystem = NULL;
 UPowerDBus* updbus = NULL;
 NotificationsDBusAdaptor* ndbus = NULL;
 DBusSignals* dbusSignals = NULL;
+QSettings::Format desktopFileFormat;
 
 #define ONBOARDING_VERSION 4
 
@@ -152,6 +153,23 @@ int main(int argc, char *argv[])
     tsTranslator = new QTranslator;
     tsTranslator->load(QLocale().name(), QString(SHAREDIR) + "translations");
     a.installTranslator(tsTranslator);
+
+    desktopFileFormat = QSettings::registerFormat("desktop", [](QIODevice &device, QSettings::SettingsMap &map) -> bool {
+        QString group;
+        while (!device.atEnd()) {
+            QString line = device.readLine().trimmed();
+            if (line.startsWith("[") && line.endsWith("]")) {
+                group = line.mid(1, line.length() - 2);
+            } else {
+                QString key = line.left(line.indexOf("="));
+                QString value = line.mid(line.indexOf("=") + 1);
+                map.insert(group + "/" + key, value);
+            }
+        }
+        return true;
+    }, [](QIODevice &device, const QSettings::SettingsMap &map) -> bool {
+        return false;
+    }, Qt::CaseInsensitive);
 
     dbusServiceWatcher = new QDBusServiceWatcher();
     dbusServiceWatcher->setConnection(QDBusConnection::sessionBus());

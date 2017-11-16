@@ -104,7 +104,9 @@ private slots:
 
     void on_reportBugButton_clicked();
 
-    void on_appsListView_clicked(const QModelIndex &index);
+    void launchAppByIndex(const QModelIndex &index);
+
+    void showActionMenuByIndex(QModelIndex index);
 
     void on_appsListView_customContextMenuRequested(const QPoint &pos);
 

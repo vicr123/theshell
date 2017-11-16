@@ -49,6 +49,10 @@ public:
     QString desktopEntry() const;
     void setDesktopEntry(QString entry);
 
+    QList<App> actions() const;
+    void setActions(QList<App> actions);
+    void addAction(App action);
+
     bool invalid();
 
     static App invalidApp();
@@ -77,6 +81,7 @@ private:
     QString appfile = "";
     bool pin = false;
     bool isInvalid = false;
+    QList<App> acts;
 };
 
 

@@ -1,8 +1,6 @@
 # theShell
 Desktop Environment written using the Qt toolkit
 
-**Yay! theShell is now out of beta! :D**
-
 ## Screenshots
 ![Screenshot 1](https://raw.githubusercontent.com/vicr123/theshell/master/images/desktop.png)
 
@@ -23,9 +21,6 @@ Desktop Environment written using the Qt toolkit
 - [ts-polkitagent](https://github.com/vicr123/ts-polkitagent)
 - [ts-bt](https://github.com/vicr123/ts-bt)
 - [ts-qtplatform](https://github.com/vicr123/ts-qtplatform)
-- alsa-utils (optional, for volume controls)
-- pocketsphinx (optional, for voice control)
-- festival (optional, for voice control)
 
 ## Build
 ```

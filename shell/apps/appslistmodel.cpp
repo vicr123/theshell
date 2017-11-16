@@ -3,6 +3,7 @@
 extern float getDPIScaling();
 extern NativeEventFilter* NativeFilter;
 extern MainWindow* MainWin;
+extern QSettings::Format desktopFileFormat;
 
 AppsListModel::AppsListModel(BTHandsfree* bt, QObject *parent) : QAbstractListModel(parent) {
     this->bt = bt;
@@ -236,7 +237,7 @@ QList<App> AppsListModel::availableApps() {
 }
 
 App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
-    QFile file(appFile);
+    /*QFile file(appFile);
     if (file.exists() & QFileInfo(file).suffix().contains("desktop")) {
         file.open(QFile::ReadOnly);
         QString appinfo(file.readAll());
@@ -327,7 +328,80 @@ App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
             }
         }
     }
-    return App::invalidApp();
+    */
+    QSettings desc(appFile, desktopFileFormat);
+    App app;
+    QString lang = QLocale().name().split('_').first();
+    desc.beginGroup("Desktop Entry");
+
+    if (desc.value("Type", "").toString() != "Application") {
+        return App::invalidApp();
+    }
+    if (desc.value("NoDisplay", false).toBool() == true) {
+        return App::invalidApp();
+    }
+    if (!desc.value("OnlyShowIn", "theshell;").toString().contains("theshell;")) {
+        return App::invalidApp();
+    }
+    if (desc.value("NotShowIn", "").toString().contains("theshell;")) {
+        return App::invalidApp();
+    }
+
+    if (desc.contains("Name[" + lang + "]")) {
+        app.setName(desc.value("Name[" + lang + "]").toString());
+    } else {
+        app.setName(desc.value("Name").toString());
+    }
+
+    QString commandLine = desc.value("Exec").toString();
+    commandLine.remove("%u");
+    commandLine.remove("%U");
+    commandLine.remove("%f");
+    commandLine.remove("%F");
+    commandLine.remove("%k");
+    commandLine.remove("%i");
+    commandLine.replace("%c", "\"" + app.name() + "\"");
+    app.setCommand(commandLine);
+
+    if (desc.contains("GenericName")) {
+        app.setDescription(desc.value("GenericName").toString());
+    }
+
+    if (desc.contains("Icon")) {
+        QString iconname = desc.value("Icon").toString();
+        QIcon icon;
+        if (QFile(iconname).exists()) {
+            icon = QIcon(iconname);
+        } else {
+            icon = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
+        }
+        app.setIcon(icon);
+    }
+
+    if (desc.contains("Actions")) {
+        qDebug() << desc.value("Actions").toString();
+        QStringList availableActions = desc.value("Actions").toString().split(";", QString::SkipEmptyParts);
+        desc.endGroup();
+
+        for (QString action : availableActions) {
+            desc.beginGroup("Desktop Action " + action);
+
+            App act;
+            act.setName(desc.value("Name").toString());
+            act.setCommand(desc.value("Exec").toString());
+            app.addAction(act);
+
+            desc.endGroup();
+        }
+    }
+    desc.endGroup();
+
+    if (pinnedAppsList.contains(appFile)) {
+        app.setPinned(true);
+    }
+
+    app.setDesktopEntry(appFile);
+    return app;
 }
 
 AppsDelegate::AppsDelegate(QWidget *parent) : QStyledItemDelegate(parent) {
@@ -413,9 +487,19 @@ void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
             painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
             painter->drawText(descRect, index.data(Qt::UserRole).toString());
         }
-
     }
     painter->drawPixmap(iconRect, index.data(Qt::DecorationRole).value<QPixmap>());
+
+    App a = index.data(Qt::UserRole + 3).value<App>();
+    if (a.actions().count() > 0) { //Actions included
+        QRect actionsRect;
+        actionsRect.setWidth(16 * getDPIScaling());
+        actionsRect.setHeight(16 * getDPIScaling());
+        actionsRect.moveRight(option.rect.right() - 9 * getDPIScaling());
+        actionsRect.moveTop(option.rect.top() + option.rect.height() / 2 - 8 * getDPIScaling());
+
+        painter->drawPixmap(actionsRect, QIcon::fromTheme("arrow-right").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    }
 
     int pinned = ((AppsListModel*) index.model())->pinnedAppsCount;
     if (index.row() == pinned - 1 && ((AppsListModel*) index.model())->currentQuery == "") {

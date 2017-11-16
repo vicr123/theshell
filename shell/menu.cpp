@@ -80,6 +80,7 @@ Menu::Menu(BTHandsfree* bt, QWidget *parent) :
     ui->appsListView->installEventFilter(this);
     ui->pushButton->installEventFilter(this);
     ui->pushButton_3->installEventFilter(this);
+    ui->appsListView->viewport()->installEventFilter(this);
     this->installEventFilter(this);
 
 
@@ -351,6 +352,7 @@ void Menu::on_commandLinkButton_3_clicked()
 void Menu::on_lineEdit_textEdited(const QString &arg1)
 {
     ((AppsListModel*) ui->appsListView->model())->search(arg1);
+    ui->appsListView->selectionModel()->select(ui->appsListView->model()->index(0, 0), QItemSelectionModel::ClearAndSelect);
 }
 
 bool Menu::eventFilter(QObject *object, QEvent *event) {
@@ -415,6 +417,21 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
             }
             e->ignore();
             return true;
+        } else if (event->type() == QEvent::MouseButtonRelease) {
+            QMouseEvent *e = (QMouseEvent*) event;
+            if (object == ui->appsListView->viewport()) {
+                QModelIndex index = ui->appsListView->indexAt(e->pos());
+                QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
+                qDebug() << e->pos().x();
+                qDebug() << ui->appsListView->viewport()->width() - 34 * getDPIScaling();
+                if (acts.count() > 0 && e->pos().x() > ui->appsListView->viewport()->width() - 34 * getDPIScaling()) {
+                    showActionMenuByIndex(index);
+                } else {
+                    launchAppByIndex(index);
+                }
+            }
+            e->ignore();
+            return true;
         } else {
             return QDialog::eventFilter(object, event);
         }
@@ -434,9 +451,9 @@ void Menu::on_lineEdit_returnPressed()
 
     if (ui->appsListView->model()->rowCount() > 0) {
         if (ui->appsListView->selectionModel()->selectedRows().count() == 1) {
-            on_appsListView_clicked(ui->appsListView->selectionModel()->selectedRows().first());
+            launchAppByIndex(ui->appsListView->selectionModel()->selectedRows().first());
         } else {
-            on_appsListView_clicked(ui->appsListView->model()->index(0, 0));
+            launchAppByIndex(ui->appsListView->model()->index(0, 0));
         }
     }
 }
@@ -537,11 +554,40 @@ void Menu::on_reportBugButton_clicked()
     this->close();
 }
 
-void Menu::on_appsListView_clicked(const QModelIndex &index)
+void Menu::launchAppByIndex(const QModelIndex &index)
 {
     if (((AppsListModel*) ui->appsListView->model())->launchApp(index)) {
         this->close();
     }
+}
+
+void Menu::showActionMenuByIndex(QModelIndex index) {
+    QMenu* menu = new QMenu();
+    menu->addSection(index.data(Qt::DecorationRole).value<QIcon>(), tr("Actions for \"%1\"").arg(index.data(Qt::DisplayRole).toString()));
+
+    QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
+    for (App action : acts) {
+        menu->addAction(action.name(), [=] {
+            QString command = action.command();
+            command.remove("env ");
+            QProcess* process = new QProcess();
+            QStringList environment = process->environment();
+            QStringList commandSpace = command.split(" ");
+            for (QString part : commandSpace) {
+                if (part.contains("=")) {
+                    environment.append(part);
+                    commandSpace.removeOne(part);
+                }
+            }
+            commandSpace.removeAll("");
+            process->start(commandSpace.join(" "));
+            connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
+            this->close();
+            return true;
+        });
+    }
+    QRect rect = ui->appsListView->visualRect(index);
+    menu->exec(ui->appsListView->mapToGlobal(rect.topRight()));
 }
 
 void Menu::on_appsListView_customContextMenuRequested(const QPoint &pos)

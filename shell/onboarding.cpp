@@ -30,6 +30,7 @@
     "- Timezone can now be set in Settings\n"\
     "- Screen power saving settings can now be set in System Settings\n"\
     "- Quiet Mode can now be timed\n"\
+    "- Desktop actions are now supported in the Gateway\n"\
     "\n"\
     "New in theShell 7.0:\n"\
     "- Quiet Mode has been added to theShell! Click on the volume icon in the bar, or head to the Notifications Status Center pane to change the setting.\n"\

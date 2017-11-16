@@ -77,6 +77,18 @@ bool App::invalid() {
     return isInvalid;
 }
 
+void App::setActions(QList<App> actions) {
+    acts = actions;
+}
+
+void App::addAction(App action) {
+    acts.append(action);
+}
+
+QList<App> App::actions() const {
+    return acts;
+}
+
 App App::invalidApp() {
     App app;
     app.isInvalid = true;
