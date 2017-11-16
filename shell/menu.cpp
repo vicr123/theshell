@@ -81,6 +81,7 @@ Menu::Menu(BTHandsfree* bt, QWidget *parent) :
     ui->pushButton->installEventFilter(this);
     ui->pushButton_3->installEventFilter(this);
     ui->appsListView->viewport()->installEventFilter(this);
+    ui->lineEdit->installEventFilter(this);
     this->installEventFilter(this);
 
 
@@ -359,82 +360,85 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
     if (event->type() == QEvent::KeyPress && ((QKeyEvent*) event)->key() == Qt::Key_Escape) {
         this->close();
         return true;
-    } else {
-        if (event->type() == QEvent::KeyPress) {
-            QKeyEvent *e = (QKeyEvent*) event;
-            if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
-                if (object != ui->lineEdit && object != this) {
-                    if (object == ui->appsListView) {
-                        on_lineEdit_returnPressed();
-                    } else {
-                        ((QPushButton*) object)->click();
-                    }
+    }
+
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *e = (QKeyEvent*) event;
+
+        int currentRow;
+        if (ui->appsListView->selectionModel()->selectedRows().count() == 0) {
+            currentRow = -1;
+        } else {
+            currentRow = ui->appsListView->selectionModel()->selectedRows().first().row();
+        }
+
+        if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
+            if (object != ui->lineEdit) {
+                if (object == ui->appsListView) {
                     on_lineEdit_returnPressed();
-                }
-                event->ignore();
-            } else {
-                if (e->key() != Qt::Key_Up && e->key() != Qt::Key_Down) {
-                    ui->lineEdit->setText(ui->lineEdit->text().append(e->text())); //Type letter into search box
-                    ui->lineEdit->setFocus();
-                    on_lineEdit_textEdited(ui->lineEdit->text());
                 } else {
-                    int currentRow;
-                    if (ui->appsListView->selectionModel()->selectedRows().count() == 0) {
-                        currentRow = -1;
-                    } else {
-                        currentRow = ui->appsListView->selectionModel()->selectedRows().first().row();
-                    }
-
-                    if (e->key() == Qt::Key_Down) {
-                        QModelIndex indexToSelect;
-                        if (currentRow == pinnedAppsCount - 1 && pinnedAppsCount != 0 && ui->lineEdit->text() == "") {
-                            indexToSelect = ui->appsListView->model()->index(pinnedAppsCount + 1, 0);
-                        } else if (currentRow == -1) {
-                            indexToSelect = ui->appsListView->model()->index(0, 0);
-                        } else if (currentRow == ui->appsListView->model()->rowCount() - 1) {
-                            indexToSelect = ui->appsListView->model()->index(0, 0);
-                        } else {
-                            indexToSelect = ui->appsListView->model()->index(currentRow + 1, 0);
-                        }
-                        ui->appsListView->selectionModel()->select(indexToSelect, QItemSelectionModel::ClearAndSelect);
-                        ui->appsListView->scrollTo(indexToSelect);
-
-                    } else if (e->key() == Qt::Key_Up) {
-                        QModelIndex indexToSelect;
-                        if (currentRow == pinnedAppsCount + 1 && pinnedAppsCount != 0 && ui->lineEdit->text() == "") {
-                            indexToSelect = ui->appsListView->model()->index(pinnedAppsCount - 1, 0);
-                        } else if (currentRow == -1) {
-                            indexToSelect = ui->appsListView->model()->index(ui->appsListView->model()->rowCount() - 1, 0);
-                        } else if (currentRow == 0) {
-                            indexToSelect = ui->appsListView->model()->index(ui->appsListView->model()->rowCount() - 1, 0);
-                        } else {
-                            indexToSelect = ui->appsListView->model()->index(currentRow - 1, 0);
-                        }
-                        ui->appsListView->selectionModel()->select(indexToSelect, QItemSelectionModel::ClearAndSelect);
-                        ui->appsListView->scrollTo(indexToSelect);
-                    }
+                    ((QPushButton*) object)->click();
                 }
+                on_lineEdit_returnPressed();
             }
-            e->ignore();
+        } else if (e->key() == Qt::Key_Right && ui->appsListView->model()->index(currentRow, 0).data(Qt::UserRole + 3).value<App>().actions().count() > 0) {
+            showActionMenuByIndex(ui->appsListView->model()->index(currentRow, 0));
             return true;
-        } else if (event->type() == QEvent::MouseButtonRelease) {
-            QMouseEvent *e = (QMouseEvent*) event;
-            if (object == ui->appsListView->viewport()) {
-                QModelIndex index = ui->appsListView->indexAt(e->pos());
-                QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
-                qDebug() << e->pos().x();
-                qDebug() << ui->appsListView->viewport()->width() - 34 * getDPIScaling();
-                if (acts.count() > 0 && e->pos().x() > ui->appsListView->viewport()->width() - 34 * getDPIScaling()) {
-                    showActionMenuByIndex(index);
-                } else {
-                    launchAppByIndex(index);
-                }
+        } else if (e->key() == Qt::Key_Down) {
+            QModelIndex indexToSelect;
+            if (currentRow == pinnedAppsCount - 1 && pinnedAppsCount != 0 && ui->lineEdit->text() == "") {
+                indexToSelect = ui->appsListView->model()->index(pinnedAppsCount + 1, 0);
+            } else if (currentRow == -1) {
+                indexToSelect = ui->appsListView->model()->index(0, 0);
+            } else if (currentRow == ui->appsListView->model()->rowCount() - 1) {
+                indexToSelect = ui->appsListView->model()->index(0, 0);
+            } else {
+                indexToSelect = ui->appsListView->model()->index(currentRow + 1, 0);
             }
-            e->ignore();
+            ui->appsListView->selectionModel()->select(indexToSelect, QItemSelectionModel::ClearAndSelect);
+            ui->appsListView->scrollTo(indexToSelect);
+            return true;
+        } else if (e->key() == Qt::Key_Up) {
+            QModelIndex indexToSelect;
+            if (currentRow == pinnedAppsCount + 1 && pinnedAppsCount != 0 && ui->lineEdit->text() == "") {
+                indexToSelect = ui->appsListView->model()->index(pinnedAppsCount - 1, 0);
+            } else if (currentRow == -1) {
+                indexToSelect = ui->appsListView->model()->index(ui->appsListView->model()->rowCount() - 1, 0);
+            } else if (currentRow == 0) {
+                indexToSelect = ui->appsListView->model()->index(ui->appsListView->model()->rowCount() - 1, 0);
+            } else {
+                indexToSelect = ui->appsListView->model()->index(currentRow - 1, 0);
+            }
+            ui->appsListView->selectionModel()->select(indexToSelect, QItemSelectionModel::ClearAndSelect);
+            ui->appsListView->scrollTo(indexToSelect);
             return true;
         } else {
-            return QDialog::eventFilter(object, event);
+           if (object != ui->lineEdit) {
+               ui->lineEdit->event(event);
+               return true;
+           }
         }
+        e->ignore();
+        return false;
+    } else if (event->type() == QEvent::MouseButtonRelease) {
+        QMouseEvent *e = (QMouseEvent*) event;
+        if (object == ui->appsListView->viewport()) {
+            QModelIndex index = ui->appsListView->indexAt(e->pos());
+            if (!index.isValid()) {
+                return false;
+            }
+
+            QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
+            if (acts.count() > 0 && e->pos().x() > ui->appsListView->viewport()->width() - 34 * getDPIScaling()) {
+                showActionMenuByIndex(index);
+            } else {
+                launchAppByIndex(index);
+            }
+        }
+        e->ignore();
+        return true;
+    } else {
+        return QDialog::eventFilter(object, event);
     }
 }
 
@@ -567,7 +571,7 @@ void Menu::showActionMenuByIndex(QModelIndex index) {
 
     QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
     for (App action : acts) {
-        menu->addAction(action.name(), [=] {
+        menu->addAction(QIcon::fromTheme("arrow-right"), action.name(), [=] {
             QString command = action.command();
             command.remove("env ");
             QProcess* process = new QProcess();

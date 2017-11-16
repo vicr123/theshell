@@ -363,7 +363,9 @@ App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
     commandLine.replace("%c", "\"" + app.name() + "\"");
     app.setCommand(commandLine);
 
-    if (desc.contains("GenericName")) {
+    if (desc.contains("GenericName[" + lang + "]")) {
+        app.setDescription(desc.value("GenericName[" + lang + "]").toString());
+    } else {
         app.setDescription(desc.value("GenericName").toString());
     }
 
@@ -379,7 +381,6 @@ App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
     }
 
     if (desc.contains("Actions")) {
-        qDebug() << desc.value("Actions").toString();
         QStringList availableActions = desc.value("Actions").toString().split(";", QString::SkipEmptyParts);
         desc.endGroup();
 
@@ -387,8 +388,22 @@ App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
             desc.beginGroup("Desktop Action " + action);
 
             App act;
-            act.setName(desc.value("Name").toString());
-            act.setCommand(desc.value("Exec").toString());
+            if (desc.contains("Name[" + lang + "]")) {
+                act.setName(desc.value("Name[" + lang + "]").toString());
+            } else {
+                act.setName(desc.value("Name").toString());
+            }
+
+            QString commandLine = desc.value("Exec").toString();
+            commandLine.remove("%u");
+            commandLine.remove("%U");
+            commandLine.remove("%f");
+            commandLine.remove("%F");
+            commandLine.remove("%k");
+            commandLine.remove("%i");
+            commandLine.replace("%c", "\"" + app.name() + "\"");
+            act.setCommand(commandLine);
+
             app.addAction(act);
 
             desc.endGroup();
