@@ -263,6 +263,8 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     });
 
+    ui->StatusBarHoverFrame->setVisible(false);
+
     #ifdef BLUEPRINT
         //Apply Blueprint branding
         ui->openMenu->setIcon(QIcon(":/icons/icon-bp.svg"));
