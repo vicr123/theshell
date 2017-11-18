@@ -91,6 +91,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         emit batteryStretchChanged(isOn);
         doNetworkCheck();
     });
+    ui->PowerStretchSwitch->setChecked(updbus->powerStretch());
+    emit batteryStretchChanged(updbus->powerStretch());
 
     ui->label_7->setVisible(false);
     ui->pushButton_3->setVisible(false);

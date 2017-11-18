@@ -48,6 +48,8 @@ UPowerDBus::UPowerDBus(QObject *parent) : QObject(parent)
     connect(checkTimer, SIGNAL(timeout()), this, SLOT(queryIdleState()));
     checkTimer->start();
 
+    setPowerStretch(settings.value("powerstretch/on", false).toBool());
+
     QDBusConnection::systemBus().connect("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower", "DeviceAdded", this, SLOT(devicesChanged()));
     QDBusConnection::systemBus().connect("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower", "DeviceRemoved", this, SLOT(devicesChanged()));
 
@@ -409,6 +411,7 @@ bool UPowerDBus::powerStretch() {
 void UPowerDBus::setPowerStretch(bool on) {
     if (isPowerStretchOn != on) {
         isPowerStretchOn = on;
+        settings.setValue("powerstretch/on", on);
         emit powerStretchChanged(on);
         this->devicesChanged();
     }
