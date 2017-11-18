@@ -29,7 +29,7 @@ NotificationPopup::NotificationPopup(int id, QWidget *parent) :
             timeoutLeft -= 500;
             if (timeoutLeft < 0) {
                 this->close();
-                emit notificationClosed(NotificationObject::Expired);
+                //emit notificationClosed(NotificationObject::Expired);
             }
         }
     });

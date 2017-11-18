@@ -356,7 +356,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>9</day>
+                 <day>8</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>9</day>
+                 <day>8</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1447,7 +1447,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset theme="go-down"/>
+              <iconset theme="go-down">
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>
@@ -1494,7 +1495,7 @@
             <x>0</x>
             <y>0</y>
             <width>1165</width>
-            <height>141</height>
+            <height>114</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_35">
@@ -1861,7 +1862,8 @@
              <string>Power</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-system-power"/>
+             <iconset theme="preferences-system-power">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -1932,7 +1934,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>7</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2496,7 +2498,7 @@
                 <number>9</number>
                </property>
                <item>
-                <widget class="NetworkWidget" name="widget" native="true">
+                <widget class="NetworkWidget" name="networkManagerSettings" native="true">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -2527,8 +2529,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>372</width>
-                  <height>497</height>
+                  <width>883</width>
+                  <height>589</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
@@ -5176,6 +5178,14 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>clickablelabel.h</header>
+   <slots>
+    <signal>clicked()</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
    <class>AnimatedStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>animatedstackedwidget.h</header>
@@ -5185,14 +5195,6 @@ Items that will be kept if you choose to keep files:
    <class>Switch</class>
    <extends>QPushButton</extends>
    <header>switch.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>clickablelabel.h</header>
-   <slots>
-    <signal>clicked()</signal>
-   </slots>
   </customwidget>
   <customwidget>
    <class>NetworkWidget</class>

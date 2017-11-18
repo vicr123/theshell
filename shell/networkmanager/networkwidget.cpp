@@ -3,6 +3,7 @@
 
 extern float getDPIScaling();
 extern NativeEventFilter* NativeFilter;
+extern MainWindow* MainWin;
 
 NetworkWidget::NetworkWidget(QWidget *parent) :
     QWidget(parent),
@@ -28,6 +29,11 @@ NetworkWidget::NetworkWidget(QWidget *parent) :
 NetworkWidget::~NetworkWidget()
 {
     delete ui;
+}
+
+void NetworkWidget::flightModeChanged(bool flight) {
+    flightMode = flight;
+    updateGlobals();
 }
 
 void NetworkWidget::updateDevices() {
@@ -569,35 +575,10 @@ void NetworkWidget::updateGlobals() {
         }
     }
 
-    int connectivity = nmInterface->property("Connectivity").toUInt();
-    if (connectivity == 2) {
-        text.prepend("Login Required · ");
-
-        switch (deviceType) {
-            case Ethernet:
-                icon = QIcon::fromTheme("network-wired-error");
-                break;
-            case Wifi:
-                icon = QIcon::fromTheme("network-wireless-error");
-                break;
-        }
-
-        //Reload the connectivity status
-        nmInterface->asyncCall("CheckConnectivity");
-    } else if (connectivity == 3) {
-        text.prepend("Can't get to the internet · ");
-
-        switch (deviceType) {
-            case Ethernet:
-                icon = QIcon::fromTheme("network-wired-error");
-                break;
-            case Wifi:
-                icon = QIcon::fromTheme("network-wireless-error");
-                break;
-        }
-
-        //Reload the connectivity status
-        nmInterface->asyncCall("CheckConnectivity");
+    if (text == tr("Disconnected") && flightMode) {
+        icon = QIcon();
+        text = tr("Flight Mode");
+        //text = "";
     }
 
     emit updateBarDisplay(text, icon);

@@ -272,14 +272,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="flightIcon">
+           <widget class="ClickableLabel" name="flightIcon">
             <property name="text">
              <string notr="true">Flight</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="networkStrength">
+           <widget class="ClickableLabel" name="networkStrength">
             <property name="text">
              <string notr="true">signalStrength</string>
             </property>

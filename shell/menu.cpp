@@ -374,12 +374,11 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
 
         if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
             if (object != ui->lineEdit) {
-                if (object == ui->appsListView) {
+                if (object == ui->appsListView || object == this) {
                     on_lineEdit_returnPressed();
                 } else {
                     ((QPushButton*) object)->click();
                 }
-                on_lineEdit_returnPressed();
             }
         } else if (e->key() == Qt::Key_Right && ui->appsListView->model()->index(currentRow, 0).data(Qt::UserRole + 3).value<App>().actions().count() > 0) {
             showActionMenuByIndex(ui->appsListView->model()->index(currentRow, 0));
@@ -420,20 +419,18 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
         }
         e->ignore();
         return false;
-    } else if (event->type() == QEvent::MouseButtonRelease) {
+    } else if (event->type() == QEvent::MouseButtonRelease && object == ui->appsListView->viewport()) {
         QMouseEvent *e = (QMouseEvent*) event;
-        if (object == ui->appsListView->viewport()) {
-            QModelIndex index = ui->appsListView->indexAt(e->pos());
-            if (!index.isValid()) {
-                return false;
-            }
+        QModelIndex index = ui->appsListView->indexAt(e->pos());
+        if (!index.isValid()) {
+            return false;
+        }
 
-            QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
-            if (acts.count() > 0 && e->pos().x() > ui->appsListView->viewport()->width() - 34 * getDPIScaling()) {
-                showActionMenuByIndex(index);
-            } else {
-                launchAppByIndex(index);
-            }
+        QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
+        if (acts.count() > 0 && e->pos().x() > ui->appsListView->viewport()->width() - 34 * getDPIScaling()) {
+            showActionMenuByIndex(index);
+        } else {
+            launchAppByIndex(index);
         }
         e->ignore();
         return true;

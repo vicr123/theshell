@@ -190,7 +190,11 @@ private slots:
 
     void deleteWindow(WmWindow window);
 
-signals:
+    void on_flightIcon_clicked();
+
+    void on_networkStrength_clicked();
+
+    signals:
     void reloadBackgrounds();
 
 private:

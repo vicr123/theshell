@@ -1386,10 +1386,22 @@ void MainWindow::internetLabelChanged(QString text, QIcon icon) {
         ui->StatusBarNetwork->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     }*/
 
-    ui->networkStrength->setVisible(true);
-    ui->networkStrength->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-    ui->StatusBarNetwork->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-    ui->networkLabel->setText(text);
+    if (icon.isNull()) {
+        ui->networkStrength->setVisible(false);
+        ui->StatusBarNetwork->setVisible(false);
+    } else {
+        ui->networkStrength->setVisible(true);
+        ui->StatusBarNetwork->setVisible(true);
+        ui->networkStrength->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+        ui->StatusBarNetwork->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    }
+
+    if (text == "") {
+        ui->networkLabel->setVisible(false);
+    } else {
+        ui->networkLabel->setVisible(true);
+        ui->networkLabel->setText(text);
+    }
 }
 
 void MainWindow::on_networkLabel_clicked()
@@ -1990,4 +2002,14 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
         }
     }
     return false;
+}
+
+void MainWindow::on_flightIcon_clicked()
+{
+    infoPane->show(InfoPaneDropdown::Network);
+}
+
+void MainWindow::on_networkStrength_clicked()
+{
+    infoPane->show(InfoPaneDropdown::Network);
 }

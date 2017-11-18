@@ -47,6 +47,9 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     startTime.start();
 
+    connect(this, SIGNAL(flightModeChanged(bool)), ui->NetworkManager, SLOT(flightModeChanged(bool)));
+    connect(this, SIGNAL(flightModeChanged(bool)), ui->networkManagerSettings, SLOT(flightModeChanged(bool)));
+
     if (settings.value("flightmode/on", false).toBool()) {
         ui->FlightSwitch->setChecked(true);
     }
@@ -102,9 +105,24 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->userSettingsDeleteUserOnly->setProperty("type", "destructive");
 
     QPalette powerStretchPalette = ui->PowerStretchSwitch->palette();
-    powerStretchPalette.setColor(QPalette::Highlight, QColor(255, 100, 0));
-    powerStretchPalette.setColor(QPalette::WindowText, Qt::white);
+    QPalette flightModePalette = ui->FlightSwitch->palette();
+
+    QColor background = this->palette().color(QPalette::Background);
+    int averageCol = (background.red() + background.green() + background.blue()) / 3;
+
+    if (averageCol < 127) {
+        powerStretchPalette.setColor(QPalette::Highlight, QColor(255, 100, 0));
+        powerStretchPalette.setColor(QPalette::WindowText, Qt::white);
+        flightModePalette.setColor(QPalette::Highlight, QColor(0, 0, 200));
+        flightModePalette.setColor(QPalette::WindowText, Qt::white);
+    } else {
+        powerStretchPalette.setColor(QPalette::Highlight, QColor(255, 200, 0));
+        powerStretchPalette.setColor(QPalette::WindowText, Qt::black);
+        flightModePalette.setColor(QPalette::Highlight, QColor(100, 200, 255));
+        flightModePalette.setColor(QPalette::WindowText, Qt::black);
+    }
     ui->PowerStretchSwitch->setPalette(powerStretchPalette);
+    ui->FlightSwitch->setPalette(flightModePalette);
 
     //Set up battery chart
     batteryChart = new QChart();
@@ -123,7 +141,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->kdeconnectLabel->setVisible(false);
     }
 
+    //Set up networking
+    QDBusInterface networkInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
     connect(ui->NetworkManager, SIGNAL(updateBarDisplay(QString,QIcon)), this, SIGNAL(networkLabelChanged(QString,QIcon)));
+
+    ui->WifiSwitch->setChecked(networkInterface.property("WirelessEnabled").toBool());
 
     {
         QDBusInterface interface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus());
@@ -2558,6 +2580,8 @@ void InfoPaneDropdown::on_CapsNumLockBellSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
 {
+    QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
+
     //Set flags that persist between changes
     settings.setValue("flightmode/on", checked);
     if (checked) {
@@ -2567,10 +2591,18 @@ void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
         //Disable bluetooth and WiFi.
         ui->WifiSwitch->setChecked(false);
         ui->BluetoothSwitch->setChecked(false);
+
+        //Disable WiMAX and mobile networking
+        i.setProperty("WwanEnabled", false);
+        i.setProperty("WimaxEnabled", false);
     } else {
         //Enable bluetooth and WiFi.
         ui->WifiSwitch->setChecked(settings.value("flightmode/wifi", true).toBool());
         ui->BluetoothSwitch->setChecked(settings.value("flightmode/bt", true).toBool());
+
+        //Enable WiMAX and mobile networking
+        i.setProperty("WwanEnabled", true);
+        i.setProperty("WimaxEnabled", true);
     }
 
     emit flightModeChanged(checked);

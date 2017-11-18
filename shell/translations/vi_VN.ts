@@ -4,42 +4,42 @@
 <context>
     <name>AppsListModel</name>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="32"/>
+        <location filename="../apps/appslistmodel.cpp" line="33"/>
         <source>Application</source>
         <translation>Ứng dụng</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="66"/>
+        <location filename="../apps/appslistmodel.cpp" line="67"/>
         <source>Place a call over </source>
         <translation>Gọi với </translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="109"/>
+        <location filename="../apps/appslistmodel.cpp" line="110"/>
         <source>Run Command</source>
         <translation>Dụng lệnh</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="120"/>
+        <location filename="../apps/appslistmodel.cpp" line="121"/>
         <source>Open webpage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="128"/>
+        <location filename="../apps/appslistmodel.cpp" line="129"/>
         <source>Open Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="135"/>
+        <location filename="../apps/appslistmodel.cpp" line="136"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="181"/>
+        <location filename="../apps/appslistmodel.cpp" line="182"/>
         <source>System Settings</source>
         <translation>Cài đặt</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="182"/>
+        <location filename="../apps/appslistmodel.cpp" line="183"/>
         <source>System Configuration</source>
         <translation>Cấu hình hệ thông</translation>
     </message>
@@ -1900,7 +1900,7 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../menu.ui" line="249"/>
-        <location filename="../menu.cpp" line="243"/>
+        <location filename="../menu.cpp" line="245"/>
         <source>You&apos;re about to power off your PC. Are you sure?</source>
         <translation>Bạn có chắc chắn muốn tắt máy?</translation>
     </message>
@@ -2031,12 +2031,17 @@ Tập tin này có thể giữ lại:
         <translation>Chào %1!</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="240"/>
+        <location filename="../menu.cpp" line="242"/>
         <source>Before you power off your PC, you may want to check this.</source>
         <translation>Trước khi bạn tắt máy, bạn nên xem thứ này.</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="554"/>
+        <location filename="../menu.cpp" line="570"/>
+        <source>Actions for &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="604"/>
         <source>For &quot;%1&quot;</source>
         <translation type="unfinished">Cho &quot;%1&quot;</translation>
     </message>
@@ -2467,7 +2472,7 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../onboarding.ui" line="694"/>
-        <location filename="../onboarding.cpp" line="172"/>
+        <location filename="../onboarding.cpp" line="173"/>
         <source>Next</source>
         <translation>Tiếp</translation>
     </message>
@@ -2532,13 +2537,13 @@ Tập tin này có thể giữ lại:
         <translation>Lại</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="113"/>
-        <location filename="../onboarding.cpp" line="153"/>
+        <location filename="../onboarding.cpp" line="114"/>
+        <location filename="../onboarding.cpp" line="154"/>
         <source>Welcome to theShell %1!</source>
         <translation>Chào mừng bạn đến theShell %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="185"/>
+        <location filename="../onboarding.cpp" line="186"/>
         <source>Start</source>
         <translation>Bắt đầu</translation>
     </message>
@@ -2826,22 +2831,22 @@ Tập tin này có thể giữ lại:
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="209"/>
+        <location filename="../main.cpp" line="227"/>
         <source>theShell already running</source>
         <translation>theShell đang chạy</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="209"/>
+        <location filename="../main.cpp" line="227"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell đang chạy. Bạn vẫn muốn bắt đầu không?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="255"/>
+        <location filename="../main.cpp" line="273"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Quản lý cửa sổ khơng thể chạy</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="256"/>
+        <location filename="../main.cpp" line="274"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

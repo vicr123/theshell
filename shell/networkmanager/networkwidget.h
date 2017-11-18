@@ -15,6 +15,7 @@
 #include "availablenetworkslist.h"
 #include "nativeeventfilter.h"
 #include <ttoast.h>
+#include "infopanedropdown.h"
 
 namespace Ui {
 class NetworkWidget;
@@ -47,47 +48,51 @@ class NetworkWidget : public QWidget
 {
     Q_OBJECT
 
-public:
-    explicit NetworkWidget(QWidget *parent = 0);
-    ~NetworkWidget();
+    public:
+        explicit NetworkWidget(QWidget *parent = 0);
+        ~NetworkWidget();
 
-private slots:
-    void updateDevices();
+    public slots:
+        void flightModeChanged(bool flight);
 
-    void on_networksBackButton_clicked();
+    private slots:
+        void updateDevices();
 
-    void on_SecurityBackButton_clicked();
+        void on_networksBackButton_clicked();
 
-    void on_AvailableNetworksList_clicked(const QModelIndex &index);
+        void on_SecurityBackButton_clicked();
 
-    void connectToWirelessDevice(QDBusObjectPath device);
+        void on_AvailableNetworksList_clicked(const QModelIndex &index);
 
-    void getInformationAboutDevice(QDBusObjectPath device);
+        void connectToWirelessDevice(QDBusObjectPath device);
 
-    void on_SecurityConnectButton_clicked();
+        void getInformationAboutDevice(QDBusObjectPath device);
 
-    void on_networksManualButton_clicked();
+        void on_SecurityConnectButton_clicked();
 
-    void on_SecurityType_currentIndexChanged(int index);
+        void on_networksManualButton_clicked();
 
-    void on_EnterpriseAuthMethod_currentIndexChanged(int index);
+        void on_SecurityType_currentIndexChanged(int index);
 
-    QString selectCertificate();
+        void on_EnterpriseAuthMethod_currentIndexChanged(int index);
 
-    void on_EnterpriseTLSUserCertificateSelect_clicked();
+        QString selectCertificate();
 
-    void on_EnterpriseTLSCACertificateSelect_clicked();
+        void on_EnterpriseTLSUserCertificateSelect_clicked();
 
-public slots:
-    void updateGlobals();
+        void on_EnterpriseTLSCACertificateSelect_clicked();
 
-signals:
-    void updateBarDisplay(QString text, QIcon icon);
+    public slots:
+        void updateGlobals();
 
-private:
-    Ui::NetworkWidget *ui;
+    signals:
+        void updateBarDisplay(QString text, QIcon icon);
 
-    QDBusInterface* nmInterface = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus());
+    private:
+        Ui::NetworkWidget *ui;
+
+        QDBusInterface* nmInterface = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus());
+        bool flightMode = false;
 };
 
 #endif // NETWORKWIDGET_H
