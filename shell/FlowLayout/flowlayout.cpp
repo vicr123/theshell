@@ -197,7 +197,8 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
         width = effectiveRect.width();
 
     if (!testOnly)
-        this->parentWidget()->setFixedSize(rect.width(), y + lineHeight);
+        //this->parentWidget()->setFixedSize(rect.width(), y + lineHeight);
+        this->parentWidget()->setFixedHeight(y + lineHeight);
     return y + lineHeight - rect.y() + bottom;
 }
 
