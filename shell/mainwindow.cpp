@@ -39,8 +39,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //((QBoxLayout*) this->centralWidget()->layout())->setDirection(QBoxLayout::BottomToTop);
-
     ui->openMenu->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
     QSize ic16(16 * getDPIScaling(), 16 * getDPIScaling());
     ui->brightnessButton->setIconSize(ic16);
@@ -263,6 +261,7 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     });
 
+    ui->StatusBarFrame->setVisible(false);
     ui->StatusBarHoverFrame->setVisible(false);
 
     #ifdef BLUEPRINT
@@ -296,7 +295,7 @@ void MainWindow::updateWindow(WmWindow window) {
                 sendMessageToRootWindow("_NET_CLOSE_WINDOW", window.WID());
             });
 
-            //Determine if process is theShell
+            /*//Determine if process is theShell
             if (window.PID() != QApplication::applicationPid()) {
                 //Determine if process is suspended
                 QFile wchan("/proc/" + QString::number(window.PID()) + "/wchan");
@@ -323,7 +322,7 @@ void MainWindow::updateWindow(WmWindow window) {
                     }
                     wchan.close();
                 }
-            }
+            }*/
 
             lockHide = true;
             menu->exec(button->mapToGlobal(pos));
@@ -1006,13 +1005,17 @@ void MainWindow::doUpdate() {
         }
 
         if (doAnim) {
-            anim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
-            anim->start();
-            connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-            connect(anim, &tPropertyAnimation::finished, [=] {
-                this->setProperty("animating", false);
-            });
-            this->setProperty("animating", true);
+            if (finalTop == this->y()) {
+                anim->deleteLater();
+            } else {
+                anim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
+                anim->start();
+                connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                connect(anim, &tPropertyAnimation::finished, [=] {
+                    this->setProperty("animating", false);
+                });
+                this->setProperty("animating", true);
+            }
 
 
             if (settings.value("bar/statusBar", false).toBool()) {
@@ -1982,6 +1985,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
                 connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
                 anim->start();
             }
+            doUpdate();
             return true;
         } else if (event->type() == QEvent::Leave) {
             if (!settings.value("bar/autoshow").toBool() && statusBarVisible) {
@@ -2014,4 +2018,8 @@ void MainWindow::on_flightIcon_clicked()
 void MainWindow::on_networkStrength_clicked()
 {
     infoPane->show(InfoPaneDropdown::Network);
+}
+
+void MainWindow::enterEvent(QMouseEvent *event) {
+    doUpdate();
 }
