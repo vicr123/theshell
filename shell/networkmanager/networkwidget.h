@@ -82,6 +82,12 @@ class NetworkWidget : public QWidget
 
         void on_EnterpriseTLSCACertificateSelect_clicked();
 
+        void on_knownNetworksButton_clicked();
+
+        void on_knownNetworksBackButton_clicked();
+
+        void on_EnterprisePEAPCaCertificateSelect_clicked();
+
     public slots:
         void updateGlobals();
 

@@ -65,7 +65,7 @@ void NetworkWidget::on_networksBackButton_clicked()
 
 void NetworkWidget::on_SecurityBackButton_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(2);
 }
 
 void NetworkWidget::on_AvailableNetworksList_clicked(const QModelIndex &index)
@@ -132,7 +132,7 @@ void NetworkWidget::on_AvailableNetworksList_clicked(const QModelIndex &index)
         }
         ui->SecurityType->setVisible(false);
 
-        ui->stackedWidget->setCurrentIndex(2);
+        ui->stackedWidget->setCurrentIndex(3);
     } else {
         tToast* toast = new tToast();
         toast->setTitle(tr("Wi-Fi"));
@@ -197,7 +197,7 @@ QList<QTreeWidgetItem*> getInfoChildren(QVariantMap parent) {
 }
 
 void NetworkWidget::getInformationAboutDevice(QDBusObjectPath device) {
-    ui->stackedWidget->setCurrentIndex(3);
+    ui->stackedWidget->setCurrentIndex(4);
 
     QDBusInterface deviceInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus());
 
@@ -498,7 +498,7 @@ void DevicePanel::updateInfo() {
 }
 
 void NetworkWidget::connectToWirelessDevice(QDBusObjectPath device) {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(2);
     ui->AvailableNetworksList->setModel(new AvailableNetworksList(device));
 }
 
@@ -641,13 +641,23 @@ void NetworkWidget::on_SecurityConnectButton_clicked()
                     break;
                 case 2: { //FAST
                     enterpriseSettings.insert("eap", QStringList() << "fast");
+                    enterpriseSettings.insert("anonymous-identity", ui->EnterpriseFASTAnonymousIdentity->text());
+                    enterpriseSettings.insert("pac-file", ui->EnterpriseFASTPacFile->text());
 
-                    tToast* toast = new tToast();
-                    toast->setTitle(tr("WPA Enterprise"));
-                    toast->setText(tr("WPA Enterprise connections over FAST are not supported yet."));
-                    connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
-                    toast->show(this->window());
-                    return;
+                    int provisioning = 0;
+                    if (ui->EnterpriseFASTPacProvisioningAnonymous->isChecked()) provisioning++;
+                    if (ui->EnterpriseFASTPacProvisioningAuthenticated->isChecked()) provisioning += 2;
+                    enterpriseSettings.insert("phase1-fast-provisioning", QString::number(provisioning));
+
+                    if (ui->EnterpriseFASTPhase2Auth->currentIndex() == 0) { //GTC
+                        enterpriseSettings.insert("phase2-auth", "gtc");
+                    } else if (ui->EnterpriseFASTPhase2Auth->currentIndex() == 1) { //MSCHAPv2
+                        enterpriseSettings.insert("phase2-auth", "mschapv2");
+                    }
+
+                    enterpriseSettings.insert("identity", ui->EnterpriseFASTUsername->text());
+                    enterpriseSettings.insert("password", ui->EnterpriseFASTPassword->text());
+
                     break;
                 }
                 case 4: //PEAP
@@ -712,7 +722,7 @@ void NetworkWidget::on_networksManualButton_clicked()
     ui->SecuritySsidEdit->setVisible(true);
     ui->SecurityType->setVisible(true);
     ui->securityDescriptionLabel->setText(tr("Enter the information to connect to a new network"));
-    ui->stackedWidget->setCurrentIndex(2);
+    ui->stackedWidget->setCurrentIndex(3);
 }
 
 void NetworkWidget::on_SecurityType_currentIndexChanged(int index)
@@ -768,4 +778,19 @@ void NetworkWidget::on_EnterpriseTLSUserCertificateSelect_clicked()
 void NetworkWidget::on_EnterpriseTLSCACertificateSelect_clicked()
 {
     ui->EnterpriseTLSCACertificate->setText(selectCertificate());
+}
+
+void NetworkWidget::on_knownNetworksButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void NetworkWidget::on_knownNetworksBackButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void NetworkWidget::on_EnterprisePEAPCaCertificateSelect_clicked()
+{
+    ui->EnterprisePEAPCaCertificate->setText(selectCertificate());
 }
