@@ -22,7 +22,7 @@
 #define HOTKEYHUD_H
 
 #include <QDialog>
-#include <QPropertyAnimation>
+#include <tpropertyanimation.h>
 #include <QTimer>
 #include <QProcess>
 #include <QPainter>

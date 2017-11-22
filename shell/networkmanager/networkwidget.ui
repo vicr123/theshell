@@ -29,7 +29,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="devices">
       <property name="autoFillBackground">
@@ -205,7 +205,7 @@
        <item>
         <widget class="QLabel" name="securityDescriptionLabel">
          <property name="text">
-          <string notr="true">To connect to this network, you'll need to provide a key.</string>
+          <string notr="true">To connect to this network, you'll need to provide a &amp;key.</string>
          </property>
         </widget>
        </item>
@@ -373,7 +373,7 @@
            <item row="1" column="0" colspan="2">
             <widget class="QStackedWidget" name="WpaEnterpriseAuthDetails">
              <property name="currentIndex">
-              <number>0</number>
+              <number>3</number>
              </property>
              <widget class="QWidget" name="page_4">
               <layout class="QGridLayout" name="gridLayout_2">
@@ -543,7 +543,6 @@
               </layout>
              </widget>
              <widget class="QWidget" name="page_6"/>
-             <widget class="QWidget" name="page_7"/>
              <widget class="QWidget" name="page_8">
               <layout class="QGridLayout" name="gridLayout_4">
                <property name="leftMargin">
@@ -558,13 +557,6 @@
                <property name="bottomMargin">
                 <number>0</number>
                </property>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_16">
-                 <property name="text">
-                  <string>Anonymous Identity</string>
-                 </property>
-                </widget>
-               </item>
                <item row="6" column="0">
                 <spacer name="verticalSpacer_4">
                  <property name="orientation">
@@ -586,7 +578,7 @@
                 </widget>
                </item>
                <item row="2" column="0">
-                <widget class="QLabel" name="label_18">
+                <widget class="QLabel" name="peapVersionLabel">
                  <property name="text">
                   <string>PEAP version</string>
                  </property>
@@ -614,7 +606,7 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLineEdit" name="EnterprisePEATAnonymousIdentity"/>
+                <widget class="QLineEdit" name="EnterprisePEAPAnonymousIdentity"/>
                </item>
                <item row="1" column="1">
                 <widget class="QLineEdit" name="EnterprisePEAPCaCertificate"/>
@@ -628,44 +620,6 @@
                   <enum>QLineEdit::Password</enum>
                  </property>
                 </widget>
-               </item>
-               <item row="2" column="1">
-                <layout class="QHBoxLayout" name="horizontalLayout_4">
-                 <item>
-                  <widget class="QRadioButton" name="EnterprisePEAPAuto">
-                   <property name="text">
-                    <string>Auto&amp;matic</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QRadioButton" name="EnterprisePEAPVer1">
-                   <property name="text">
-                    <string>Version &amp;1</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QRadioButton" name="EnterprisePEAPVer2">
-                   <property name="text">
-                    <string>Version &amp;2</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
                </item>
                <item row="3" column="1">
                 <widget class="QComboBox" name="EnterprisePEAPPhase2Auth">
@@ -684,6 +638,68 @@
                    <string>GTC</string>
                   </property>
                  </item>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QFrame" name="peapVersionButtons">
+                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QRadioButton" name="EnterprisePEAPAuto">
+                    <property name="text">
+                     <string>Auto&amp;matic</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="EnterprisePEAPVer0">
+                    <property name="text">
+                     <string>Version &amp;0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="EnterprisePEAPVer1">
+                    <property name="text">
+                     <string>Version &amp;1</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_4">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_16">
+                 <property name="text">
+                  <string>Anonymous Identity</string>
+                 </property>
                 </widget>
                </item>
               </layout>

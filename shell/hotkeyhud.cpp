@@ -90,13 +90,13 @@ void HotkeyHud::show(int timeout) {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
         this->setGeometry(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height());
 
-        QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+        tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
         anim->setStartValue(this->geometry());
         anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), this->height()));
         anim->setDuration(100);
         anim->setEasingCurve(QEasingCurve::OutCubic);
         anim->start();
-        connect(anim, &QPropertyAnimation::finished, [=](){
+        connect(anim, &tPropertyAnimation::finished, [=](){
             this->repaint();
         });
     }
@@ -144,12 +144,12 @@ void HotkeyHud::Timeout() {
 void HotkeyHud::close() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+    tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
     anim->setStartValue(this->geometry());
     anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height()));
     anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, &QPropertyAnimation::finished, [=]() {
+    connect(anim, &tPropertyAnimation::finished, [=]() {
         QDialog::close();
         isShowing = false;
     });

@@ -595,10 +595,10 @@ void NetworkWidget::on_SecurityConnectButton_clicked()
     QVariantMap wireless;
     wireless.insert("ssid", ui->SecuritySsidEdit->text().toUtf8());
     wireless.insert("mode", "infrastructure");
-    if (ui->SecurityType->currentIndex() != 0) {
-        wireless.insert("security", "802-11-wireless-security");
+
+    if (ui->SecuritySsidEdit->isVisible()) {
+        wireless.insert("hidden", true);
     }
-    settings.insert("802-11-wireless", wireless);
 
     QVariantMap security;
     switch (ui->SecurityType->currentIndex()) {
@@ -619,14 +619,69 @@ void NetworkWidget::on_SecurityConnectButton_clicked()
             security.insert("psk", ui->securityKey->text());
             break;
         case 4: { //WPA(2)-Enterprise
-            tToast* toast = new tToast();
-            toast->setTitle(tr("WPA Enterprise"));
-            toast->setText(tr("WPA Enterprise connections are not supported yet."));
-            connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
-            toast->show(this->window());
-            return;
+            QVariantMap enterpriseSettings;
+            security.insert("key-mgmt", "wpa-eap");
+            enterpriseSettings.insert("eap", QStringList() << "ttls");
+
+            switch (ui->EnterpriseAuthMethod->currentIndex()) {
+                case 0: //TLS
+                    enterpriseSettings.insert("eap", QStringList() << "tls");
+                    enterpriseSettings.insert("identity", ui->EnterpriseTLSIdentity->text());
+                    enterpriseSettings.insert("client-cert", QUrl::fromLocalFile(ui->EnterpriseTLSUserCertificate->text()).toEncoded());
+                    enterpriseSettings.insert("ca-cert", QUrl::fromLocalFile(ui->EnterpriseTLSCACertificate->text()).toEncoded());
+                    enterpriseSettings.insert("subject-match", ui->EnterpriseTLSSubjectMatch->text());
+                    enterpriseSettings.insert("altsubject-matches", ui->EnterpriseTLSAlternateSubjectMatch->text().split(","));
+                    enterpriseSettings.insert("private-key", QUrl::fromLocalFile(ui->EnterpriseTLSPrivateKey->text()).toEncoded());
+                    enterpriseSettings.insert("private-key-password", ui->EnterpriseTLSPrivateKeyPassword->text());
+                    break;
+                case 1: //LEAP
+                    enterpriseSettings.insert("eap", QStringList() << "leap");
+                    enterpriseSettings.insert("identity", ui->EnterpriseLEAPUsername->text());
+                    enterpriseSettings.insert("password", ui->EnterpriseLEAPPassword->text());
+                    break;
+                case 2: { //FAST
+                    enterpriseSettings.insert("eap", QStringList() << "fast");
+
+                    tToast* toast = new tToast();
+                    toast->setTitle(tr("WPA Enterprise"));
+                    toast->setText(tr("WPA Enterprise connections over FAST are not supported yet."));
+                    connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
+                    toast->show(this->window());
+                    return;
+                    break;
+                }
+                case 4: //PEAP
+                    enterpriseSettings.insert("eap", QStringList() << "peap");
+
+                    if (ui->EnterprisePEAPVer0->isChecked()) { //Force version 0
+                        enterpriseSettings.insert("phase1-peapver", "0");
+                    } else if (ui->EnterprisePEAPVer1->isChecked()) { //Force version 1
+                        enterpriseSettings.insert("phase1-peapver", "1");
+                    }
+
+                    //fall through
+                case 3: //TTLS
+                    enterpriseSettings.insert("anonymous-identity", ui->EnterprisePEAPAnonymousIdentity->text());
+                    enterpriseSettings.insert("client-cert", QUrl::fromLocalFile(ui->EnterprisePEAPCaCertificate->text()).toEncoded());
+
+                    if (ui->EnterprisePEAPPhase2Auth->currentIndex() == 0) { //MSCHAPv2
+                        enterpriseSettings.insert("phase2-auth", "mschapv2");
+                    } else if (ui->EnterprisePEAPPhase2Auth->currentIndex() == 1) { //MD5
+                        enterpriseSettings.insert("phase2-auth", "md5");
+                    } else if (ui->EnterprisePEAPPhase2Auth->currentIndex() == 2) { //GTC
+                        enterpriseSettings.insert("phase2-auth", "gtc");
+                    }
+
+                    enterpriseSettings.insert("identity", ui->EnterprisePEAPUsername->text());
+                    enterpriseSettings.insert("password", ui->EnterprisePEAPPassword->text());
+                    break;
+            }
+
+            settings.insert("802-1x", enterpriseSettings);
+            break;
         }
     }
+    settings.insert("802-11-wireless", wireless);
     settings.insert("802-11-wireless-security", security);
 
     QDBusPendingCall pendingCall = nmInterface->asyncCall("AddAndActivateConnection", QVariant::fromValue(settings), QVariant::fromValue(((AvailableNetworksList*) ui->AvailableNetworksList->model())->devicePath()), QVariant::fromValue(QDBusObjectPath("/")));
@@ -683,7 +738,15 @@ void NetworkWidget::on_SecurityType_currentIndexChanged(int index)
 
 void NetworkWidget::on_EnterpriseAuthMethod_currentIndexChanged(int index)
 {
-    ui->WpaEnterpriseAuthDetails->setCurrentIndex(index);
+    if (index == 4) {
+        ui->peapVersionButtons->setVisible(true);
+        ui->peapVersionLabel->setVisible(true);
+        ui->WpaEnterpriseAuthDetails->setCurrentIndex(3);
+    } else {
+        ui->peapVersionButtons->setVisible(false);
+        ui->peapVersionLabel->setVisible(false);
+        ui->WpaEnterpriseAuthDetails->setCurrentIndex(index);
+    }
 }
 
 QString NetworkWidget::selectCertificate() {
