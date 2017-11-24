@@ -4,6 +4,7 @@ extern float getDPIScaling();
 extern NativeEventFilter* NativeFilter;
 extern MainWindow* MainWin;
 extern QSettings::Format desktopFileFormat;
+extern void EndSession(EndSessionWait::shutdownType type);
 
 AppsListModel::AppsListModel(BTHandsfree* bt, QObject *parent) : QAbstractListModel(parent) {
     this->bt = bt;
@@ -81,25 +82,41 @@ void AppsListModel::search(QString query) {
             i++;
         }
 
-        /*if (QString("shutdown").contains(arg1, Qt::CaseInsensitive) || QString("power off").contains(arg1, Qt::CaseInsensitive)) {
-            QListWidgetItem *i = new QListWidgetItem();
-            i->setText(tr("Power Off"));
-            i->setIcon(QIcon::fromTheme("system-shutdown"));
-            i->setData(Qt::UserRole, "power:off");
-            ui->listWidget->addItem(i);
-        } else if (QString("restart").contains(arg1, Qt::CaseInsensitive) || QString("reboot").contains(arg1, Qt::CaseInsensitive)) {
-            QListWidgetItem *i = new QListWidgetItem();
-            i->setText(tr("Reboot"));
-            i->setIcon(QIcon::fromTheme("system-reboot"));
-            i->setData(Qt::UserRole, "power:reboot");
-            ui->listWidget->addItem(i);
-        } else if (QString("logout").contains(arg1, Qt::CaseInsensitive) || QString("logoff").contains(arg1, Qt::CaseInsensitive)) {
-            QListWidgetItem *i = new QListWidgetItem();
-            i->setText(tr("Log Out"));
-            i->setIcon(QIcon::fromTheme("system-log-out"));
-            i->setData(Qt::UserRole, "power:logout");
-            ui->listWidget->addItem(i);
-        }*/
+        if (QString("shutdown").contains(query, Qt::CaseInsensitive) || QString("power off").contains(query, Qt::CaseInsensitive) ||  QString("shut down").contains(query, Qt::CaseInsensitive)) {
+            App app;
+            app.setName(tr("Power Off"));
+            app.setCommand("::poweroff");
+            app.setDescription(tr("Power off this device"));
+            app.setIcon(QIcon::fromTheme("system-shutdown"));
+
+            /*App reboot;
+            reboot.setName(tr("Reboot"));
+            reboot.setCommand("::reboot");
+            reboot.setIcon(QIcon::fromTheme("system-reboot"));
+            app.addAction(reboot);
+
+            App logout;
+            logout.setName(tr("Log Out"));
+            logout.setCommand("::logout");
+            logout.setIcon(QIcon::fromTheme("system-log-out"));
+            app.addAction(logout);*/
+
+            appsShown.append(app);
+        } else if (QString("restart").contains(query, Qt::CaseInsensitive) || QString("reboot").contains(query, Qt::CaseInsensitive)) {
+            App app;
+            app.setName(tr("Reboot"));
+            app.setCommand("::reboot");
+            app.setDescription(tr("Reboot this device"));
+            app.setIcon(QIcon::fromTheme("system-reboot"));
+            appsShown.append(app);
+        } else if (QString("logout").contains(query, Qt::CaseInsensitive) || QString("logoff").contains(query, Qt::CaseInsensitive)) {
+            App app;
+            app.setName(tr("Log Out"));
+            app.setCommand("::logout");
+            app.setDescription(tr("End your session"));
+            app.setIcon(QIcon::fromTheme("system-log-out"));
+            appsShown.append(app);
+        }
 
         QString pathEnv = QProcessEnvironment::systemEnvironment().value("PATH");
         for (QString env : pathEnv.split(":")) {
@@ -177,7 +194,7 @@ void AppsListModel::loadData() {
             delete iterator;
 
             App settingsApp;
-            settingsApp.setCommand("sc:settings");
+            settingsApp.setCommand("::settings");
             settingsApp.setIcon(QIcon::fromTheme("configure"));
             settingsApp.setName(tr("System Settings"));
             settingsApp.setDescription(tr("System Configuration"));
@@ -237,98 +254,6 @@ QList<App> AppsListModel::availableApps() {
 }
 
 App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
-    /*QFile file(appFile);
-    if (file.exists() & QFileInfo(file).suffix().contains("desktop")) {
-        file.open(QFile::ReadOnly);
-        QString appinfo(file.readAll());
-
-        QStringList desktopLines;
-        QString currentDesktopLine;
-        for (QString desktopLine : appinfo.split("\n")) {
-            if (desktopLine.startsWith("[") && currentDesktopLine != "") {
-                desktopLines.append(currentDesktopLine);
-                currentDesktopLine = "";
-            }
-            currentDesktopLine.append(desktopLine + "\n");
-        }
-        desktopLines.append(currentDesktopLine);
-
-        QString lang = QLocale().name().split('_').first();
-
-        for (QString desktopPart : desktopLines) {
-            App app;
-            app.setDesktopEntry(appFile);
-
-            if (pinnedAppsList.contains(appFile)) {
-                app.setPinned(true);
-            }
-
-            bool isApplication = false;
-            bool display = true;
-            QString name, localName = "";
-            for (QString line : desktopPart.split("\n")) {
-                if (line.startsWith("genericname=", Qt::CaseInsensitive)) {
-                    app.setDescription(line.split("=")[1]);
-                } else if (line.startsWith("name=", Qt::CaseInsensitive)) {
-                    name = line.split("=")[1];
-                } else if (line.startsWith("name[" + lang + "]=", Qt::CaseInsensitive)) {
-                    localName = line.split("=")[1];
-                } else if (line.startsWith("icon=", Qt::CaseInsensitive)) {
-                    QString iconname = line.split("=")[1];
-                    QIcon icon;
-                    if (QFile(iconname).exists()) {
-                        icon = QIcon(iconname);
-                    } else {
-                        icon = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
-                    }
-                    app.setIcon(icon);
-                } else if (line.startsWith("exec=", Qt::CaseInsensitive)) {
-                    QStringList command = line.split("=");
-                    command.removeFirst();
-
-                    QString commandLine = command.join("=");
-                    commandLine.remove("%u");
-                    commandLine.remove("%U");
-                    commandLine.remove("%f");
-                    commandLine.remove("%F");
-                    commandLine.remove("%k");
-                    commandLine.remove("%i");
-                    app.setCommand(commandLine);
-                } else if (line.startsWith("description=", Qt::CaseInsensitive)) {
-                    app.setDescription(line.split("=")[1]);
-                } else if (line.startsWith("type=", Qt::CaseInsensitive)) {
-                    if (line.split("=")[1] == "Application") {
-                        isApplication = true;
-                    }
-                } else if (line.startsWith("nodisplay=", Qt::CaseInsensitive)) {
-                    if (line.split("=")[1] == "true") {
-                        display = false;
-                        break;
-                    }
-                } else if (line.startsWith("onlyshowin=", Qt::CaseInsensitive)) {
-                    if (!line.split("=")[1].contains("theshell;")) {
-                        display = false;
-                    }
-                } else if (line.startsWith("notshowin=", Qt::CaseInsensitive)) {
-                    if (line.split("=")[1].contains("theshell;")) {
-                        display = false;
-                    }
-                }
-            }
-
-            if (localName != "") {
-                app.setName(localName);
-            } else {
-                app.setName(name);
-            }
-            app.setCommand(app.command().replace("%c", "\"" + app.name() + "\""));
-
-            if (isApplication && display) {
-                return app;
-            }
-        }
-    }
-    */
     QSettings desc(appFile, desktopFileFormat);
     App app;
     QString lang = QLocale().name().split('_').first();
@@ -537,59 +462,40 @@ QSize AppsDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 }
 
 bool AppsListModel::launchApp(QModelIndex index) {
-
-    /*
-    } else if (item->data(Qt::UserRole).toString().startsWith("power:")) {
-        QString operation = item->data(Qt::UserRole).toString().split(":").at(1);
-        if (operation == "off") {
-            EndSession(EndSessionWait::powerOff);
-        } else if (operation == "reboot") {
-            EndSession(EndSessionWait::reboot);
-        } else if (operation ==  "logout") {
-            EndSession(EndSessionWait::logout);
-        }
-    } else if (item->data(Qt::UserRole).toString().startsWith("media:")) {
-        QString operation = item->data(Qt::UserRole).toString().split(":").at(1);
-        if (operation == "play") {
-            MainWin->play();
-        } else if (operation == "pause") {
-            MainWin->pause();
-        } else if (operation ==  "next") {
-            MainWin->nextSong();
-        } else if (operation ==  "previous") {
-            MainWin->previousSong();
-        }
-        MainWin->doUpdate();
-        QThread::msleep(50);
-        on_lineEdit_textEdited(ui->lineEdit->text());
-    } else {*/
-        QString command = appsShown.at(index.row()).command().remove("%u");
-        if (command.startsWith("call:")) {
-            QString callCommand = command.mid(5);
-            QStringList parts = callCommand.split(":");
-            int deviceIndex = parts.at(0).toInt();
-            QString number = parts.at(1);
-            bt->placeCall(deviceIndex, number);
-            return true;
-        } else if (command == "sc:settings") {
-            MainWin->getInfoPane()->show(InfoPaneDropdown::Settings);
-            return true;
-        } else {
-            command.remove("env ");
-            QProcess* process = new QProcess();
-            QStringList environment = process->environment();
-            QStringList commandSpace = command.split(" ");
-            for (QString part : commandSpace) {
-                if (part.contains("=")) {
-                    environment.append(part);
-                    commandSpace.removeOne(part);
-                }
+    QString command = appsShown.at(index.row()).command().remove("%u");
+    if (command.startsWith("call:")) {
+        QString callCommand = command.mid(5);
+        QStringList parts = callCommand.split(":");
+        int deviceIndex = parts.at(0).toInt();
+        QString number = parts.at(1);
+        bt->placeCall(deviceIndex, number);
+        return true;
+    } else if (command == "::settings") {
+        MainWin->getInfoPane()->show(InfoPaneDropdown::Settings);
+        return true;
+    } else if (command == "::poweroff") {
+        EndSession(EndSessionWait::powerOff);
+        return true;
+    } else if (command == "::reboot") {
+        EndSession(EndSessionWait::reboot);
+        return true;
+    } else if (command == "::logout") {
+        EndSession(EndSessionWait::logout);
+        return true;
+    } else {
+        command.remove("env ");
+        QProcess* process = new QProcess();
+        QStringList environment = process->environment();
+        QStringList commandSpace = command.split(" ");
+        for (QString part : commandSpace) {
+            if (part.contains("=")) {
+                environment.append(part);
+                commandSpace.removeOne(part);
             }
-            commandSpace.removeAll("");
-            process->start(commandSpace.join(" "));
-            connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
-            return true;
         }
-        //QProcess::startDetached(item->data(Qt::UserRole).toString().remove("%u"));
-    //}
+        commandSpace.removeAll("");
+        process->start(commandSpace.join(" "));
+        connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
+        return true;
+    }
 }

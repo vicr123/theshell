@@ -121,20 +121,19 @@
             <string>Tethering</string>
            </property>
            <property name="icon">
-            <iconset theme="network-wireless-tethered"/>
+            <iconset theme="network-wireless-tethered">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="knownNetworksButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="text">
             <string>Manage Known Networks</string>
            </property>
            <property name="icon">
-            <iconset theme="network-wireless"/>
+            <iconset theme="network-wireless">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -180,6 +179,9 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QPushButton" name="knownNetworksBackButton">
            <property name="text">
@@ -203,6 +205,32 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="knownNetworksDeleteButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Forget</string>
+           </property>
+           <property name="icon">
+            <iconset theme="edit-delete"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="knownNetworksEditButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Edit</string>
+           </property>
+           <property name="icon">
+            <iconset theme="edit-rename"/>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -1108,6 +1136,143 @@
             </size>
            </property>
           </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_9">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_28">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Tethering</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_29">
+         <property name="text">
+          <string>Enabling Tethering allows your internet connection to be shared from a wired connection. You won't be able to use Wi-Fi while Tethering is active.</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_30">
+           <property name="text">
+            <string>SSID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_32">
+           <property name="text">
+            <string>Key</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_31">
+           <property name="text">
+            <string>Security</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="tetheringSSID"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="tetheringSecurity">
+           <item>
+            <property name="text">
+             <string>None</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>WPA2 PSK</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="tetheringKey"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <widget class="QPushButton" name="tetheringBackButton">
+           <property name="text">
+            <string>Back</string>
+           </property>
+           <property name="icon">
+            <iconset theme="go-previous">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="tetheringEnableTetheringButton">
+           <property name="text">
+            <string>Enable Tethering</string>
+           </property>
+           <property name="icon">
+            <iconset theme="network-wireless-tethered"/>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

@@ -2020,6 +2020,6 @@ void MainWindow::on_networkStrength_clicked()
     infoPane->show(InfoPaneDropdown::Network);
 }
 
-void MainWindow::enterEvent(QMouseEvent *event) {
+void MainWindow::enterEvent(QEvent *event) {
     doUpdate();
 }

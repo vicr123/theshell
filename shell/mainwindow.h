@@ -229,7 +229,7 @@ private:
     void closeEvent(QCloseEvent*);
     void paintEvent(QPaintEvent *event);
     bool eventFilter(QObject *watched, QEvent *event);
-    void enterEvent(QMouseEvent* event);
+    void enterEvent(QEvent* event);
 
     InfoPaneDropdown *infoPane;
 

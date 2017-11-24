@@ -16,6 +16,8 @@ NetworkWidget::NetworkWidget(QWidget *parent) :
         updateDevices();
     });
 
+    ui->knownNetworksDeleteButton->setProperty("type", "destructive");
+
     QDBusConnection::systemBus().connect(nmInterface->service(), nmInterface->path(), nmInterface->interface(), "DeviceAdded", this, SLOT(updateDevices()));
     QDBusConnection::systemBus().connect(nmInterface->service(), nmInterface->path(), nmInterface->interface(), "DeviceRemoved", this, SLOT(updateDevices()));
     QDBusConnection::systemBus().connect(nmInterface->service(), nmInterface->path(), "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(updateGlobals()));
@@ -23,7 +25,18 @@ NetworkWidget::NetworkWidget(QWidget *parent) :
     updateDevices();
     updateGlobals();
 
+    ui->KnownNetworksList->setModel(new SavedNetworksList());
+    connect(ui->KnownNetworksList->selectionModel(), &QItemSelectionModel::currentRowChanged, [=](QModelIndex previous, QModelIndex current) {
+        Q_UNUSED(previous)
+        if (current.isValid()) {
+            ui->knownNetworksDeleteButton->setEnabled(true);
+        } else {
+            ui->knownNetworksDeleteButton->setEnabled(false);
+        }
+    });
+
     ui->AvailableNetworksList->setItemDelegate(new AvailableNetworksListDelegate());
+    ui->KnownNetworksList->setItemDelegate(new AvailableNetworksListDelegate());
 }
 
 NetworkWidget::~NetworkWidget()
@@ -446,7 +459,7 @@ void DevicePanel::updateInfo() {
 
         case Bluetooth: {
             QDBusInterface btInterface(nmInterface->service(), device.path(), "org.freedesktop.NetworkManager.Device.Bluetooth", QDBusConnection::systemBus());
-            icon = QIcon::fromTheme("bluetooth");
+            icon = QIcon::fromTheme("network-bluetooth");
             connectionNameLabel->setText(btInterface.property("Name").toString());
 
 
@@ -564,10 +577,10 @@ void NetworkWidget::updateGlobals() {
 
                     if (state == Disconnected || state == Failed || state == Unavailable) {
                         text = tr("Disconnected");
-                        icon = QIcon::fromTheme("bluetooth");
+                        icon = QIcon::fromTheme("network-bluetooth");
                     } else {
                         text = btInterface.property("Name").toString();
-                        icon = QIcon::fromTheme("bluetooth");
+                        icon = QIcon::fromTheme("network-bluetooth");
                     }
                     break;
                 }
@@ -578,7 +591,6 @@ void NetworkWidget::updateGlobals() {
     if (text == tr("Disconnected") && flightMode) {
         icon = QIcon();
         text = tr("Flight Mode");
-        //text = "";
     }
 
     emit updateBarDisplay(text, icon);
@@ -603,6 +615,7 @@ void NetworkWidget::on_SecurityConnectButton_clicked()
     QVariantMap security;
     switch (ui->SecurityType->currentIndex()) {
         case 0: //No security
+            security.insert("key-mgmt", "none");
             break;
         case 1: //Static WEP
             security.insert("key-mgmt", "none");
@@ -793,4 +806,93 @@ void NetworkWidget::on_knownNetworksBackButton_clicked()
 void NetworkWidget::on_EnterprisePEAPCaCertificateSelect_clicked()
 {
     ui->EnterprisePEAPCaCertificate->setText(selectCertificate());
+}
+
+void NetworkWidget::on_knownNetworksDeleteButton_clicked()
+{
+    Setting s = ui->KnownNetworksList->model()->data(ui->KnownNetworksList->selectionModel()->selectedIndexes().first(), Qt::UserRole).value<Setting>();
+    s.del();
+}
+
+void NetworkWidget::on_tetheringEnableTetheringButton_clicked()
+{
+
+    QMap<QString, QVariantMap> settings;
+
+    QVariantMap connection;
+    connection.insert("id", "Tethering");
+    connection.insert("type", "802-11-wireless");
+    settings.insert("connection", connection);
+
+    QVariantMap wireless;
+    wireless.insert("ssid", ui->tetheringSSID->text().toUtf8());
+    wireless.insert("mode", "ap");
+    wireless.insert("security", "802-11-wireless-security");
+
+    QVariantMap security;
+    switch (ui->tetheringSecurity->currentIndex()) {
+        case 0: //No security
+            security.insert("key-mgmt", "none");
+            break;
+        case 1: //WPA2-PSK
+            security.insert("key-mgmt", "wpa-psk");
+            security.insert("psk", ui->tetheringKey->text());
+            break;
+    }
+
+    QVariantMap ipv4;
+    ipv4.insert("method", "shared");
+
+    QVariantMap ipv6;
+    ipv6.insert("method", "auto");
+
+    settings.insert("ipv4", ipv4);
+    settings.insert("ipv6", ipv6);
+    settings.insert("802-11-wireless", wireless);
+    settings.insert("802-11-wireless-security", security);
+
+    QDBusObjectPath devPath("/");
+    QList<QDBusObjectPath> devices = nmInterface->property("AllDevices").value<QList<QDBusObjectPath>>();
+    if (devices.length() != 0) {
+        for (QDBusObjectPath device : devices) {
+            QDBusInterface deviceInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus());
+
+            if (deviceInterface.property("DeviceType").toInt() == Wifi) {
+                devPath = device;
+            }
+        }
+    }
+
+
+    QDBusPendingCall pendingCall = nmInterface->asyncCall("AddAndActivateConnection", QVariant::fromValue(settings), QVariant::fromValue(devPath), QVariant::fromValue(QDBusObjectPath("/")));
+
+    QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(pendingCall);
+    connect(watcher, &QDBusPendingCallWatcher::finished, [=] {
+        watcher->deleteLater();
+        if (pendingCall.isError()) {
+            tToast* toast = new tToast();
+            toast->setTitle(tr("Tethering Error"));
+            toast->setText(pendingCall.error().message());
+            toast->setTimeout(10000);
+            connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
+            toast->show(this->window());
+        }
+    });
+
+    tToast* toast = new tToast();
+    toast->setTitle(tr("Tethering"));
+    toast->setText(tr("Preparing Tethering").arg(ui->SecuritySsidEdit->text()));
+    connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
+    toast->show(this->window());
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void NetworkWidget::on_tetheringBackButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void NetworkWidget::on_tetheringButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(5);
 }

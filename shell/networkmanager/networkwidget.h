@@ -13,6 +13,7 @@
 #include <functional>
 #include <QDebug>
 #include "availablenetworkslist.h"
+#include "savednetworkslist.h"
 #include "nativeeventfilter.h"
 #include <ttoast.h>
 #include "infopanedropdown.h"
@@ -87,6 +88,14 @@ class NetworkWidget : public QWidget
         void on_knownNetworksBackButton_clicked();
 
         void on_EnterprisePEAPCaCertificateSelect_clicked();
+
+        void on_knownNetworksDeleteButton_clicked();
+
+        void on_tetheringEnableTetheringButton_clicked();
+
+        void on_tetheringBackButton_clicked();
+
+        void on_tetheringButton_clicked();
 
     public slots:
         void updateGlobals();
