@@ -32,6 +32,7 @@
 #include <QLayout>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QSettings>
 
 class MouseScrollWidget : public QScrollArea
 {
@@ -56,6 +57,7 @@ private:
     void setEventFilter(QLayout* layout);
 
     QWidget* vp;
+    QSettings settings;
 
     int scrollSpeed = 0;
 };

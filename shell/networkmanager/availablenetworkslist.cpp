@@ -153,23 +153,23 @@ QVariant AvailableNetworksList::data(const QModelIndex &index, int role) const
             return QVariant::fromValue(ap);
         case Qt::UserRole + 1: {
             if (ap.known) {
-                return "Saved";
+                return tr("Saved");
             } else {
                 switch (ap.security) {
                     case Wpa2Psk:
-                        return "Secured with WPA2-PSK";
+                        return tr("Secured with WPA2-PSK");
                     case WpaPsk:
-                        return "Secured with WPA-PSK";
+                        return tr("Secured with WPA-PSK");
                     case WpaEnterprise:
-                        return "Secured with WPA Enterprise";
+                        return tr("Secured with WPA Enterprise");
                     case Wpa2Enterprise:
-                        return "Secured with WPA2 Enterprise";
+                        return tr("Secured with WPA2 Enterprise");
                     case DynamicWep:
-                        return "Secured with Dynamic WEP";
+                        return tr("Secured with Dynamic WEP");
                     case StaticWep:
-                        return "Secured with Static WEP";
+                        return tr("Secured with Static WEP");
                     case NoSecurity:
-                        return "Not Secured";
+                        return tr("Not Secured");
                 }
             }
         }

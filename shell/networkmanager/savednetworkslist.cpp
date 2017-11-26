@@ -49,7 +49,7 @@ QVariant SavedNetworksList::data(const QModelIndex &index, int role) const
         case Qt::UserRole:
             return QVariant::fromValue(s);
         case Qt::UserRole + 1:
-            return "Saved";
+            return tr("Saved");
     }
     return QVariant();
 }

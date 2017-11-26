@@ -163,28 +163,6 @@ bool MouseScrollWidget::eventFilter(QObject *object, QEvent *event) {
 
         painter.setPen(QColor(0, 0, 0, 0));
         int leftStart = this->horizontalScrollBar()->value();
-        /*
-        painter.setBrush(this->palette().brush(QPalette::WindowText));
-
-        //Check if we need to draw the left scroll indicator
-        if (this->horizontalScrollBar()->value() != 0) {
-            QPolygon pol;
-            pol.append(QPoint(leftStart + 5, 0));
-            pol.append(QPoint(leftStart + 5, 8));
-            pol.append(QPoint(leftStart + 1, 4));
-
-            painter.drawPolygon(pol);
-        }
-
-        //Check if we need to draw the right scroll indicator
-        if (this->horizontalScrollBar()->value() != this->horizontalScrollBar()->maximum()) {
-            QPolygon pol;
-            pol.append(QPoint(leftStart + this->width() - 6, 0));
-            pol.append(QPoint(leftStart + this->width() - 6, 8));
-            pol.append(QPoint(leftStart + this->width() - 2, 4));
-
-            painter.drawPolygon(pol);
-        }*/
 
         if (this->horizontalScrollBar()->maximum() != 0) {
             painter.setBrush(this->palette().brush(QPalette::Highlight));
@@ -196,7 +174,11 @@ bool MouseScrollWidget::eventFilter(QObject *object, QEvent *event) {
             qreal ratio = (qreal) this->horizontalScrollBar()->value() / (qreal) this->horizontalScrollBar()->maximum();
             left = this->horizontalScrollBar()->value() * ratio;
 
-            painter.drawRect(leftStart + left, 0, width, 4);
+            if (settings.value("bar/onTop").toBool()) {
+                painter.drawRect(leftStart + left, 0, width, 4);
+            } else {
+                painter.drawRect(leftStart + left, this->height() - 4, width, 4);
+            }
         }
         return true;
     }

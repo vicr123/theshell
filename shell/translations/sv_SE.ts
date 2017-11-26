@@ -4,42 +4,72 @@
 <context>
     <name>AppsListModel</name>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="33"/>
+        <location filename="../apps/appslistmodel.cpp" line="34"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="67"/>
+        <location filename="../apps/appslistmodel.cpp" line="68"/>
         <source>Place a call over </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="110"/>
+        <location filename="../apps/appslistmodel.cpp" line="87"/>
+        <source>Power Off</source>
+        <translation type="unfinished">Stäng Av</translation>
+    </message>
+    <message>
+        <location filename="../apps/appslistmodel.cpp" line="89"/>
+        <source>Power off this device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../apps/appslistmodel.cpp" line="107"/>
+        <source>Reboot</source>
+        <translation type="unfinished">Starta om</translation>
+    </message>
+    <message>
+        <location filename="../apps/appslistmodel.cpp" line="109"/>
+        <source>Reboot this device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../apps/appslistmodel.cpp" line="114"/>
+        <source>Log Out</source>
+        <translation type="unfinished">Logga Ut</translation>
+    </message>
+    <message>
+        <location filename="../apps/appslistmodel.cpp" line="116"/>
+        <source>End your session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../apps/appslistmodel.cpp" line="127"/>
         <source>Run Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="121"/>
+        <location filename="../apps/appslistmodel.cpp" line="138"/>
         <source>Open webpage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="129"/>
+        <location filename="../apps/appslistmodel.cpp" line="146"/>
         <source>Open Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="136"/>
+        <location filename="../apps/appslistmodel.cpp" line="153"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="182"/>
+        <location filename="../apps/appslistmodel.cpp" line="199"/>
         <source>System Settings</source>
         <translation type="unfinished">Systeminställningar</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="183"/>
+        <location filename="../apps/appslistmodel.cpp" line="200"/>
         <source>System Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -59,6 +89,49 @@
     <message>
         <location filename="../audiomanager.cpp" line="353"/>
         <source>Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AvailableNetworksList</name>
+    <message>
+        <location filename="../networkmanager/availablenetworkslist.cpp" line="156"/>
+        <source>Saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/availablenetworkslist.cpp" line="160"/>
+        <source>Secured with WPA2-PSK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/availablenetworkslist.cpp" line="162"/>
+        <source>Secured with WPA-PSK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/availablenetworkslist.cpp" line="164"/>
+        <source>Secured with WPA Enterprise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/availablenetworkslist.cpp" line="166"/>
+        <source>Secured with WPA2 Enterprise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/availablenetworkslist.cpp" line="168"/>
+        <source>Secured with Dynamic WEP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/availablenetworkslist.cpp" line="170"/>
+        <source>Secured with Static WEP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/availablenetworkslist.cpp" line="172"/>
+        <source>Not Secured</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -170,82 +243,82 @@
 <context>
     <name>DevicePanel</name>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="344"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="362"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="357"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="375"/>
         <source>Wired Connection</source>
         <translation type="unfinished">Kabelanslutning</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="345"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="394"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="454"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="358"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="407"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="467"/>
         <source>Disconnected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="349"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="362"/>
         <source>To connect to this network, try plugging a cable in.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="353"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="457"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="366"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="470"/>
         <source>Connect</source>
         <translation type="unfinished">Anslut</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="363"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="415"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="478"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="376"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="428"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="491"/>
         <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="366"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="425"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="469"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="481"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="379"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="438"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="482"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="494"/>
         <source>Disconnect</source>
         <translation type="unfinished">Frånkoppla</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="384"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="397"/>
         <source>Wi-Fi</source>
         <translation type="unfinished">Wi-Fi</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="387"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="400"/>
         <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="390"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="403"/>
         <source>To connect to a network, try switching on Wi-Fi.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="417"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="466"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="430"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="479"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="419"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="432"/>
         <source>Requires Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="421"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="434"/>
         <source>Disconnecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="437"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="450"/>
         <source>Choose Network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="464"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="477"/>
         <source>Unavailable</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2108,315 +2181,361 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="236"/>
+        <location filename="../networkmanager/networkwidget.ui" line="264"/>
         <source>Available Networks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="186"/>
-        <location filename="../networkmanager/networkwidget.ui" line="252"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1001"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1091"/>
+        <location filename="../networkmanager/networkwidget.ui" line="188"/>
+        <location filename="../networkmanager/networkwidget.ui" line="280"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1029"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1119"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1246"/>
         <source>Back</source>
         <translation type="unfinished">Tillbaka</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="121"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1169"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="883"/>
         <source>Tethering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="134"/>
+        <location filename="../networkmanager/networkwidget.ui" line="132"/>
         <source>Manage Known Networks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="170"/>
+        <location filename="../networkmanager/networkwidget.ui" line="169"/>
         <source>Known Networks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="276"/>
+        <location filename="../networkmanager/networkwidget.ui" line="215"/>
+        <source>Forget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="228"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="304"/>
         <source>Enter Details Manually</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="313"/>
+        <location filename="../networkmanager/networkwidget.ui" line="341"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1202"/>
         <source>Security</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="327"/>
+        <location filename="../networkmanager/networkwidget.ui" line="355"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1188"/>
         <source>SSID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="335"/>
+        <location filename="../networkmanager/networkwidget.ui" line="363"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1213"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="340"/>
+        <location filename="../networkmanager/networkwidget.ui" line="368"/>
         <source>Static WEP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="345"/>
+        <location filename="../networkmanager/networkwidget.ui" line="373"/>
         <source>Dynamic WEP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="350"/>
+        <location filename="../networkmanager/networkwidget.ui" line="378"/>
         <source>WPA/WPA2 PSK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="355"/>
+        <location filename="../networkmanager/networkwidget.ui" line="383"/>
         <source>WPA/WPA2 Enterprise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="410"/>
+        <location filename="../networkmanager/networkwidget.ui" line="438"/>
         <source>Security Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="453"/>
+        <location filename="../networkmanager/networkwidget.ui" line="481"/>
         <source>TLS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="458"/>
+        <location filename="../networkmanager/networkwidget.ui" line="486"/>
         <source>LEAP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="463"/>
+        <location filename="../networkmanager/networkwidget.ui" line="491"/>
         <source>FAST</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="468"/>
+        <location filename="../networkmanager/networkwidget.ui" line="496"/>
         <source>TTLS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="473"/>
+        <location filename="../networkmanager/networkwidget.ui" line="501"/>
         <source>PEAP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="481"/>
+        <location filename="../networkmanager/networkwidget.ui" line="509"/>
         <source>EAP Method</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="510"/>
+        <location filename="../networkmanager/networkwidget.ui" line="538"/>
         <source>Servers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="517"/>
+        <location filename="../networkmanager/networkwidget.ui" line="545"/>
         <source>Private Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="524"/>
-        <location filename="../networkmanager/networkwidget.ui" line="853"/>
+        <location filename="../networkmanager/networkwidget.ui" line="552"/>
+        <location filename="../networkmanager/networkwidget.ui" line="881"/>
         <source>CA Certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="531"/>
+        <location filename="../networkmanager/networkwidget.ui" line="559"/>
         <source>User Certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="538"/>
+        <location filename="../networkmanager/networkwidget.ui" line="566"/>
         <source>Subject Match</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="545"/>
+        <location filename="../networkmanager/networkwidget.ui" line="573"/>
         <source>Identity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="552"/>
+        <location filename="../networkmanager/networkwidget.ui" line="580"/>
         <source>Alternative Subject Matches</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="559"/>
+        <location filename="../networkmanager/networkwidget.ui" line="587"/>
         <source>Private Key Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="566"/>
-        <location filename="../networkmanager/networkwidget.ui" line="598"/>
-        <location filename="../networkmanager/networkwidget.ui" line="884"/>
+        <location filename="../networkmanager/networkwidget.ui" line="594"/>
+        <location filename="../networkmanager/networkwidget.ui" line="626"/>
+        <location filename="../networkmanager/networkwidget.ui" line="912"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="634"/>
-        <location filename="../networkmanager/networkwidget.ui" line="674"/>
-        <location filename="../networkmanager/networkwidget.ui" line="839"/>
+        <location filename="../networkmanager/networkwidget.ui" line="662"/>
+        <location filename="../networkmanager/networkwidget.ui" line="702"/>
+        <location filename="../networkmanager/networkwidget.ui" line="867"/>
         <source>Username</source>
         <translation type="unfinished">Användarnamn</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="641"/>
-        <location filename="../networkmanager/networkwidget.ui" line="688"/>
-        <location filename="../networkmanager/networkwidget.ui" line="860"/>
+        <location filename="../networkmanager/networkwidget.ui" line="669"/>
+        <location filename="../networkmanager/networkwidget.ui" line="716"/>
+        <location filename="../networkmanager/networkwidget.ui" line="888"/>
         <source>Password</source>
         <translation type="unfinished">Lösenord</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="695"/>
-        <location filename="../networkmanager/networkwidget.ui" line="877"/>
+        <location filename="../networkmanager/networkwidget.ui" line="723"/>
+        <location filename="../networkmanager/networkwidget.ui" line="905"/>
         <source>Anonymous Identity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="702"/>
+        <location filename="../networkmanager/networkwidget.ui" line="730"/>
         <source>PAC file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="746"/>
+        <location filename="../networkmanager/networkwidget.ui" line="774"/>
         <source>Anonymous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="753"/>
+        <location filename="../networkmanager/networkwidget.ui" line="781"/>
         <source>Authenticated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="776"/>
+        <location filename="../networkmanager/networkwidget.ui" line="804"/>
         <source>Automatic PAC Provisioning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="846"/>
+        <location filename="../networkmanager/networkwidget.ui" line="874"/>
         <source>PEAP version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="681"/>
-        <location filename="../networkmanager/networkwidget.ui" line="867"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1176"/>
+        <source>Enabling Tethering allows your internet connection to be shared from a wired connection. You won&apos;t be able to use Wi-Fi while Tethering is active.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="1195"/>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="1218"/>
+        <source>WPA2 PSK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="1270"/>
+        <source>Enable Tethering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="709"/>
+        <location filename="../networkmanager/networkwidget.ui" line="895"/>
         <source>Phase 2 Authentication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="938"/>
+        <location filename="../networkmanager/networkwidget.ui" line="966"/>
         <source>Auto&amp;matic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="955"/>
+        <location filename="../networkmanager/networkwidget.ui" line="983"/>
         <source>Version &amp;1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="792"/>
-        <location filename="../networkmanager/networkwidget.ui" line="895"/>
+        <location filename="../networkmanager/networkwidget.ui" line="820"/>
+        <location filename="../networkmanager/networkwidget.ui" line="923"/>
         <source>MSCHAPv2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="900"/>
+        <location filename="../networkmanager/networkwidget.ui" line="928"/>
         <source>MD5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="787"/>
-        <location filename="../networkmanager/networkwidget.ui" line="905"/>
+        <location filename="../networkmanager/networkwidget.ui" line="815"/>
+        <location filename="../networkmanager/networkwidget.ui" line="933"/>
         <source>GTC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="948"/>
+        <location filename="../networkmanager/networkwidget.ui" line="976"/>
         <source>Version &amp;0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1025"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1053"/>
         <source>Connect</source>
         <translation type="unfinished">Anslut</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1062"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1090"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1076"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1104"/>
         <source>Property</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1081"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1109"/>
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="111"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="124"/>
         <source>Connect to %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="116"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="120"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="125"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="129"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="133"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="138"/>
         <source>To connect to %1, you&apos;ll need to provide a key.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="130"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="143"/>
         <source>To connect to %1, you&apos;ll need to provide authentication details.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="138"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="713"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="151"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="726"/>
         <source>Wi-Fi</source>
         <translation type="unfinished">Wi-Fi</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="139"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="714"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="152"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="727"/>
         <source>Connecting to %1...</source>
         <translation type="unfinished">Ansluter till %1...</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="512"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="528"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="540"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="566"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="578"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="525"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="541"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="553"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="579"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="591"/>
         <source>Disconnected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="531"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="544"/>
         <source>Wired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="580"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="593"/>
         <source>Flight Mode</source>
         <translation type="unfinished">Flygläge</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="704"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="717"/>
         <source>Connection Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="724"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="737"/>
         <source>Enter the information to connect to a new network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="874"/>
+        <source>Tethering Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="884"/>
+        <source>Preparing Tethering</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2506,7 +2625,7 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../onboarding.ui" line="694"/>
-        <location filename="../onboarding.cpp" line="175"/>
+        <location filename="../onboarding.cpp" line="176"/>
         <source>Next</source>
         <translation>Fortsätt</translation>
     </message>
@@ -2571,13 +2690,13 @@ Items that will be kept if you choose to keep files:
         <translation>Tillbaka</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="116"/>
-        <location filename="../onboarding.cpp" line="156"/>
+        <location filename="../onboarding.cpp" line="117"/>
+        <location filename="../onboarding.cpp" line="157"/>
         <source>Welcome to theShell %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="188"/>
+        <location filename="../onboarding.cpp" line="189"/>
         <source>Start</source>
         <translation type="unfinished">Starta</translation>
     </message>
@@ -2599,6 +2718,14 @@ Items that will be kept if you choose to keep files:
         <location filename="../rundialog.ui" line="61"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
+    </message>
+</context>
+<context>
+    <name>SavedNetworksList</name>
+    <message>
+        <location filename="../networkmanager/savednetworkslist.cpp" line="52"/>
+        <source>Saved</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
