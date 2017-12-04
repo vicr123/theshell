@@ -274,6 +274,12 @@ void Onboarding::on_localeList_currentRowChanged(int currentRow)
         case Internationalisation::ltLT:
             settings.setValue("locale/language", "lt_LT");
             break;
+        case Internationalisation::inID:
+            settings.setValue("locale/language", "in_ID");
+            break;
+        case Internationalisation::auAU:
+            settings.setValue("locale/language", "au_AU");
+            break;
     }
 
     QString localeName = settings.value("locale/language", "en_US").toString();

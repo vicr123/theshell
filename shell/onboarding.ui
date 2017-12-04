@@ -303,7 +303,7 @@ p, li { white-space: pre-wrap; }
               <string notr="true"/>
              </property>
              <property name="pixmap">
-              <pixmap>:/onboarding/statusbar.png</pixmap>
+              <pixmap resource="resources2.qrc">:/onboarding/statusbar.png</pixmap>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -716,6 +716,8 @@ p, li { white-space: pre-wrap; }
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources2.qrc"/>
+ </resources>
  <connections/>
 </ui>

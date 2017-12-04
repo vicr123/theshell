@@ -151,7 +151,11 @@ int main(int argc, char *argv[])
     qDebug() << QLocale().name();
 
     tsTranslator = new QTranslator;
-    tsTranslator->load(QLocale().name(), QString(SHAREDIR) + "translations");
+    if (defaultLocale.name() == "C") {
+        tsTranslator->load(localeName, QString(SHAREDIR) + "translations");
+    } else {
+        tsTranslator->load(defaultLocale.name(), QString(SHAREDIR) + "translations");
+    }
     a.installTranslator(tsTranslator);
 
     desktopFileFormat = QSettings::registerFormat("desktop", [](QIODevice &device, QSettings::SettingsMap &map) -> bool {

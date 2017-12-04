@@ -49,8 +49,10 @@ public:
         ruRU,
         svSE,
         ltLT,
-        plPL,
+        inID,
+        auAU,
         // Unfinished languages follow
+        plPL,
         jaJP,
         arSA,
         zhCN,
@@ -104,8 +106,14 @@ public:
                 case ltLT:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-lt"), tr("Lithuanian") + " (Lietuviškai)"));
                     break;
+                case inID:
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-in"), tr("Indonesian") + " (Bahasa Indonesia)"));
+                    break;
+                case auAU:
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-au"), tr("Australian") + " (Aussie)"));
+                    break;
                 case plPL:
-                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-pl"), tr("Polish") + " (Polski)"));
+                    //languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-pl"), tr("Polish") + " (Polski)"));
                     break;
                 case arSA:
                     //languageBox->addItem("[SA] " + tr("Arabic") + " (العربية) ");
@@ -204,6 +212,10 @@ public:
             languageBox->setCurrentRow(svSE);
         } else if (currentLocale == "lt_LT") {
             languageBox->setCurrentRow(ltLT);
+        } else if (currentLocale == "in_ID") {
+            languageBox->setCurrentRow(inID);
+        } else if (currentLocale == "au_AU") {
+            languageBox->setCurrentRow(auAU);
         }
 
         //Unblock signals

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
@@ -215,7 +215,8 @@
             <string>Forget</string>
            </property>
            <property name="icon">
-            <iconset theme="edit-delete"/>
+            <iconset theme="edit-delete">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -228,7 +229,8 @@
             <string>Edit</string>
            </property>
            <property name="icon">
-            <iconset theme="edit-rename"/>
+            <iconset theme="edit-rename">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -1270,7 +1272,8 @@
             <string>Enable Tethering</string>
            </property>
            <property name="icon">
-            <iconset theme="network-wireless-tethered"/>
+            <iconset theme="network-wireless-tethered">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>

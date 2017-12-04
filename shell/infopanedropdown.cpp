@@ -2299,6 +2299,12 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
         case Internationalisation::ltLT:
             settings.setValue("locale/language", "lt_LT");
             break;
+        case Internationalisation::inID:
+            settings.setValue("locale/language", "in_ID");
+            break;
+        case Internationalisation::auAU:
+            settings.setValue("locale/language", "au_AU");
+            break;
     }
 
     QString localeName = settings.value("locale/language", "en_US").toString();
@@ -2318,9 +2324,11 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
     qtTranslator->load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     QApplication::installTranslator(qtTranslator);
 
-    qDebug() << QLocale().name();
-
-    tsTranslator->load(QLocale().name(), QString(SHAREDIR) + "translations");
+    if (defaultLocale.name() == "C") {
+        tsTranslator->load(localeName, QString(SHAREDIR) + "translations");
+    } else {
+        tsTranslator->load(defaultLocale.name(), QString(SHAREDIR) + "translations");
+    }
     QApplication::installTranslator(tsTranslator);
 
     //Fill locale box
@@ -2951,6 +2959,7 @@ void InfoPaneDropdown::on_autostartAppList_clicked(const QModelIndex &index)
 
     ui->autostartAppName->setText(app.name());
     ui->autostartAppCommand->setText(app.command().trimmed());
+    ui->autostartInTheshell->setChecked(false);
 
     ui->startupStack->setCurrentIndex(2);
 }
@@ -2959,6 +2968,7 @@ void InfoPaneDropdown::on_enterCommandAutoStartApps_clicked()
 {
     ui->autostartAppName->setText("");
     ui->autostartAppCommand->setText("");
+    ui->autostartInTheshell->setChecked(false);
     ui->startupStack->setCurrentIndex(2);
 }
 
@@ -2971,6 +2981,9 @@ void InfoPaneDropdown::on_addAutostartApp_clicked()
     desktopEntryData.append("Name=" + ui->autostartAppName->text() + "\n");
     desktopEntryData.append("Exec=" + ui->autostartAppCommand->text() + "\n");
     desktopEntryData.append("Terminal=false\n");
+    if (ui->autostartInTheshell->isChecked()) {
+        desktopEntryData.append("OnlyShowIn=theshell;");
+    }
 
     QFile desktopEntry(QDir::homePath() + "/.config/autostart/" + ui->autostartAppName->text().toLower().replace(" ", "_").append(".desktop"));
 

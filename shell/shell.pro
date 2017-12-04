@@ -182,7 +182,9 @@ TRANSLATIONS += translations/vi_VN.ts \
     translations/en_US.ts \
     translations/en_GB.ts \
     translations/en_NZ.ts \
-    translations/de_DE.ts
+    translations/de_DE.ts \
+    translations/in_IN.ts \
+    translations/au_AU.ts
 
 unix {
     target.path = /usr/bin/
