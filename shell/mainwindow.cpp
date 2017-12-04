@@ -192,7 +192,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->timer->setVisible(false);
     ui->timerIcon->setVisible(false);
-    ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(ic16));
+    ui->timerIcon->setPixmap(QIcon::fromTheme("chronometer").pixmap(ic16));
     ui->StatusBarNotifications->setVisible(false);
     ui->StatusBarMpris->setVisible(false);
     ui->StatusBarMprisIcon->setVisible(false);

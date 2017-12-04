@@ -48,8 +48,6 @@ void FadeButton::setFade(bool fade) {
 
 void FadeButton::setFullText(QString fullText) {
     this->txt = fullText;
-    //QFontMetrics metrics(this->font());
-    //this->setText(metrics.elidedText(fullText, Qt::ElideRight, 200));
     this->setText(fullText);
 
     tVariantAnimation* anim = new tVariantAnimation();
@@ -172,7 +170,7 @@ void FadeButton::paintEvent(QPaintEvent *event) {
 
 void FadeButton::setText(QString text) {
     QRect rect = QRect(0, 0, this->width(), this->height());
-    if (currentText == text) {
+    if (currentText == text.remove("&")) {
         if (!animating) {
             //Correct the rectangle's location
             textRect.moveLeft(rect.left() + (rect.width() / 2) - (this->fontMetrics().width(text) / 2));

@@ -908,12 +908,14 @@ void InfoPaneDropdown::startTimer(QTime time) {
         ui->label_7->setVisible(false);
         ui->label_7->setEnabled(true);
         ui->pushButton_2->setText(tr("Start"));
+        ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-start"));
         ui->pushButton_3->setVisible(false);
         emit timerVisibleChanged(false);
         emit timerEnabledChanged(true);
     }
 
     ui->pushButton_2->setText(tr("Pause"));
+    ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-pause"));
     timeUntilTimeout = time;
     lastTimer = time;
     ui->label_7->setText(ui->timeEdit->text());
@@ -950,6 +952,7 @@ void InfoPaneDropdown::startTimer(QTime time) {
                 ui->timeEdit->setVisible(true);
                 ui->label_7->setVisible(false);
                 ui->pushButton_2->setText("Start");
+                ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-start"));
 
                 QMediaPlaylist* playlist = new QMediaPlaylist();
 
@@ -1020,11 +1023,13 @@ void InfoPaneDropdown::on_pushButton_2_clicked()
             ui->pushButton_3->setVisible(true);
             ui->label_7->setEnabled(false);
             ui->pushButton_2->setText(tr("Resume"));
+            ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-start"));
         } else {
             timer->start();
             ui->pushButton_3->setVisible(false);
             ui->label_7->setEnabled(true);
             ui->pushButton_2->setText(tr("Pause"));
+            ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-pause"));
         }
     }
 }
@@ -1037,6 +1042,7 @@ void InfoPaneDropdown::on_pushButton_3_clicked()
     ui->label_7->setVisible(false);
     ui->label_7->setEnabled(true);
     ui->pushButton_2->setText(tr("Start"));
+    ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-start"));
     ui->pushButton_3->setVisible(false);
     emit timerVisibleChanged(false);
     emit timerEnabledChanged(true);
@@ -1505,14 +1511,14 @@ void InfoPaneDropdown::on_stopwatchStart_clicked()
 
         ui->stopwatchReset->setVisible(true);
         ui->stopwatchStart->setText(tr("Start"));
-        ui->stopwatchStart->setIcon(QIcon::fromTheme("media-playback-start"));
+        ui->stopwatchStart->setIcon(QIcon::fromTheme("chronometer-start"));
     } else {
         stopwatchTime.restart();
         stopwatchRunning = true;
 
         ui->stopwatchReset->setVisible(false);
         ui->stopwatchStart->setText(tr("Stop"));
-        ui->stopwatchStart->setIcon(QIcon::fromTheme("media-playback-stop"));
+        ui->stopwatchStart->setIcon(QIcon::fromTheme("chronometer-pause"));
     }
 }
 

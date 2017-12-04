@@ -1951,8 +1951,8 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <location filename="../mainwindow.cpp" line="1594"/>
         <source>%n notification(s)</source>
         <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n melding</numerusform>
+            <numerusform>%n meldingen</numerusform>
         </translation>
     </message>
 </context>

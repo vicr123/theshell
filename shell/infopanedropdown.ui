@@ -356,7 +356,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -375,9 +375,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>616</width>
-            <height>1062</height>
+            <y>-344</y>
+            <width>1151</width>
+            <height>1038</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -708,26 +708,33 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_3">
-                 <property name="text">
-                  <string>Reset</string>
+                <layout class="QHBoxLayout" name="horizontalLayout_52">
+                 <property name="spacing">
+                  <number>0</number>
                  </property>
-                 <property name="icon">
-                  <iconset theme="edit-undo">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pushButton_2">
-                 <property name="text">
-                  <string>Start</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="dialog-ok">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </widget>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_3">
+                   <property name="text">
+                    <string>Reset</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="chronometer-reset">
+                     <normaloff>.</normaloff>.</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_2">
+                   <property name="text">
+                    <string>Start</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="chronometer-start">
+                     <normaloff>.</normaloff>.</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -771,6 +778,9 @@
              </item>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_29">
+               <property name="spacing">
+                <number>0</number>
+               </property>
                <item>
                 <spacer name="horizontalSpacer_18">
                  <property name="orientation">
@@ -790,7 +800,7 @@
                   <string>Reset</string>
                  </property>
                  <property name="icon">
-                  <iconset theme="edit-undo">
+                  <iconset theme="chronometer-reset">
                    <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
@@ -801,7 +811,7 @@
                   <string>Start</string>
                  </property>
                  <property name="icon">
-                  <iconset theme="media-playback-start">
+                  <iconset theme="chronometer-start">
                    <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
