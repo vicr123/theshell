@@ -66,6 +66,8 @@ void NotificationPanel::collapseHide() {
     anim->setEasingCurve(QEasingCurve::OutCubic);
     anim->setDuration(500);
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    connect(this, SIGNAL(destroyed(QObject*)), anim, SLOT(stop()));
+    connect(this, SIGNAL(destroyed(QObject*)), anim, SLOT(deleteLater()));
     connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         this->setFixedHeight(value.toInt());
     });
@@ -79,6 +81,8 @@ void NotificationPanel::expandHide() {
     anim->setEasingCurve(QEasingCurve::OutCubic);
     anim->setDuration(500);
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    connect(this, SIGNAL(destroyed(QObject*)), anim, SLOT(stop()));
+    connect(this, SIGNAL(destroyed(QObject*)), anim, SLOT(deleteLater()));
     connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         this->setFixedHeight(value.toInt());
     });

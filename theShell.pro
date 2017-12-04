@@ -4,4 +4,12 @@ DISTFILES += \
     version
 
 SUBDIRS += \
-    shell
+    shell \
+    startsession
+
+blueprint {
+    message(Configuring theShell to be built as blueprint)
+    DEFINES += "BLUEPRINT"
+} else {
+    message(Configuring theShell to be built as stable)
+}

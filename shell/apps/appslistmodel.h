@@ -66,10 +66,13 @@ class AppsDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 
-public:
-    AppsDelegate(QWidget *parent = 0);
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    public:
+        AppsDelegate(QWidget *parent = 0, bool drawArrows = true);
+        void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+        QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+    private:
+        bool drawArrows;
 };
 
 #endif // APPSLISTMODEL_H

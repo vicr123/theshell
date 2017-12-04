@@ -344,8 +344,8 @@ App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
     return app;
 }
 
-AppsDelegate::AppsDelegate(QWidget *parent) : QStyledItemDelegate(parent) {
-
+AppsDelegate::AppsDelegate(QWidget *parent, bool drawArrows) : QStyledItemDelegate(parent) {
+    this->drawArrows = drawArrows;
 }
 
 void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
@@ -430,15 +430,17 @@ void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     }
     painter->drawPixmap(iconRect, index.data(Qt::DecorationRole).value<QPixmap>());
 
-    App a = index.data(Qt::UserRole + 3).value<App>();
-    if (a.actions().count() > 0) { //Actions included
-        QRect actionsRect;
-        actionsRect.setWidth(16 * getDPIScaling());
-        actionsRect.setHeight(16 * getDPIScaling());
-        actionsRect.moveRight(option.rect.right() - 9 * getDPIScaling());
-        actionsRect.moveTop(option.rect.top() + option.rect.height() / 2 - 8 * getDPIScaling());
+    if (drawArrows) {
+        App a = index.data(Qt::UserRole + 3).value<App>();
+        if (a.actions().count() > 0) { //Actions included
+            QRect actionsRect;
+            actionsRect.setWidth(16 * getDPIScaling());
+            actionsRect.setHeight(16 * getDPIScaling());
+            actionsRect.moveRight(option.rect.right() - 9 * getDPIScaling());
+            actionsRect.moveTop(option.rect.top() + option.rect.height() / 2 - 8 * getDPIScaling());
 
-        painter->drawPixmap(actionsRect, QIcon::fromTheme("arrow-right").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+            painter->drawPixmap(actionsRect, QIcon::fromTheme("arrow-right").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+        }
     }
 
     int pinned = ((AppsListModel*) index.model())->pinnedAppsCount;

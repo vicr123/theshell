@@ -19,13 +19,10 @@ unix {
 }
 
 blueprint {
-    message(Configuring theShell to be built as blueprint)
     TARGET = theshellb
 
     DEFINES += "SHAREDIR=\\\"/usr/share/theshellb/\\\""
-    DEFINES += "BLUEPRINT"
 } else {
-    message(Configuring theShell to be built as stable)
     TARGET = theshell
 
     DEFINES += "SHAREDIR=\\\"/usr/share/theshell/\\\""

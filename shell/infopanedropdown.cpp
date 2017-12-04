@@ -453,10 +453,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->RemindersList->setModel(new RemindersListModel);
     ui->RemindersList->setItemDelegate(new RemindersDelegate);
 
-    /*AppsListModel* appsListModel = new AppsListModel();
-    ui->autostartAppList->setModel(appsListModel);
-    ui->autostartAppList->setItemDelegate(new AppsDelegate);*/
-
     updateStruts();
     updateAutostart();
 }
@@ -2938,6 +2934,10 @@ void InfoPaneDropdown::on_backAutoStartApps_clicked()
 void InfoPaneDropdown::on_pushButton_4_clicked()
 {
     ui->startupStack->setCurrentIndex(1);
+
+    AppsListModel* appsListModel = new AppsListModel();
+    ui->autostartAppList->setModel(appsListModel);
+    ui->autostartAppList->setItemDelegate(new AppsDelegate(nullptr, false));
 }
 
 void InfoPaneDropdown::on_backAutoStartNewApp_clicked()
@@ -3261,4 +3261,34 @@ void InfoPaneDropdown::on_quietModeTurnOffInTimer_editingFinished()
 {
     QDateTime timeout = QDateTime::currentDateTime().addMSecs(ui->quietModeTurnOffInTimer->time().msecsSinceStartOfDay());
     AudioMan->setQuietModeResetTime(timeout);
+}
+
+void InfoPaneDropdown::on_removeAutostartButton_clicked()
+{
+    if (ui->autostartList->currentItem() != nullptr) {
+        tToast* toast = new tToast();
+        toast->setText("Autostart item has been removed.");
+        toast->setTitle("Remove Autostart Item");
+
+        QMap<QString, QString> actions;
+        actions.insert("undo", "Undo");
+        toast->setActions(actions);
+
+        QListWidgetItem* i = ui->autostartList->takeItem(ui->autostartList->currentIndex().row());
+        bool* deleteItem = new bool(true);
+
+        connect(toast, &tToast::dismissed, [=] {
+            if (*deleteItem) {
+                QFile(i->data(Qt::UserRole).toString()).remove();
+                delete i;
+            }
+            delete deleteItem;
+            toast->deleteLater();
+        });
+        connect(toast, &tToast::actionClicked, [=](QString key) {
+            *deleteItem = false;
+            ui->autostartList->addItem(i);
+        });
+        toast->show(this);
+    }
 }

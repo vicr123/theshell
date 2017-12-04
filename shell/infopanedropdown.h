@@ -432,6 +432,8 @@ private slots:
 
     void on_quietModeTurnOffInTimer_editingFinished();
 
+    void on_removeAutostartButton_clicked();
+
     public slots:
     void getNetworks();
 
