@@ -7,6 +7,7 @@
 #include "notificationobject.h"
 #include "notificationappgroup.h"
 #include <QScrollArea>
+#include "nativeeventfilter.h"
 
 namespace Ui {
 class NotificationsWidget;

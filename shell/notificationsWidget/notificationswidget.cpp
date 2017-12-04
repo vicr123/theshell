@@ -2,6 +2,7 @@
 #include "ui_notificationswidget.h"
 
 extern NotificationsDBusAdaptor* ndbus;
+extern NativeEventFilter* NativeFilter;
 
 NotificationsWidget::NotificationsWidget(QWidget *parent) :
     QWidget(parent),
@@ -12,6 +13,10 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
     ndbus->setParentWidget(this);
 
     ui->scrollArea->installEventFilter(this);
+
+    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
+        ui->retranslateUi(this);
+    });
 }
 
 NotificationsWidget::~NotificationsWidget()

@@ -628,7 +628,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1226"/>
-        <location filename="../infopanedropdown.cpp" line="2532"/>
+        <location filename="../infopanedropdown.cpp" line="2540"/>
         <source>Charge History</source>
         <translation>Oplaadgeschiedenis</translation>
     </message>
@@ -1588,73 +1588,73 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>De gebruikersnaam mag geen hoofdletters bevatten.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2543"/>
+        <location filename="../infopanedropdown.cpp" line="2551"/>
         <source>Rate History</source>
         <translation>Waardeer geschiedenis</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2554"/>
+        <location filename="../infopanedropdown.cpp" line="2562"/>
         <source>Application Power Usage</source>
         <translation>Applicatie Stroomverbruik</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2758"/>
+        <location filename="../infopanedropdown.cpp" line="2766"/>
         <source>Oxygen</source>
         <translation>Oxygen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2759"/>
+        <location filename="../infopanedropdown.cpp" line="2767"/>
         <source>Breeze</source>
         <translation>Breeze</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2762"/>
+        <location filename="../infopanedropdown.cpp" line="2770"/>
         <source>Blue</source>
         <translation>Blauw</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2763"/>
+        <location filename="../infopanedropdown.cpp" line="2771"/>
         <source>Green</source>
         <translation>Groen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2764"/>
+        <location filename="../infopanedropdown.cpp" line="2772"/>
         <source>Orange</source>
         <translation>Oranje</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2765"/>
+        <location filename="../infopanedropdown.cpp" line="2773"/>
         <source>Pink</source>
         <translation>Roze</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2766"/>
+        <location filename="../infopanedropdown.cpp" line="2774"/>
         <source>Turquoise</source>
         <translation>Turqoise</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3028"/>
+        <location filename="../infopanedropdown.cpp" line="3036"/>
         <source>Notifications for %1</source>
         <translation>Meldingen voor %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3036"/>
+        <location filename="../infopanedropdown.cpp" line="3044"/>
         <source>You can&apos;t configure notifications for %1</source>
         <translation>U kunt geen meldingen configureren voor %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3170"/>
-        <location filename="../infopanedropdown.cpp" line="3180"/>
-        <location filename="../infopanedropdown.cpp" line="3190"/>
-        <location filename="../infopanedropdown.cpp" line="3200"/>
+        <location filename="../infopanedropdown.cpp" line="3178"/>
+        <location filename="../infopanedropdown.cpp" line="3188"/>
+        <location filename="../infopanedropdown.cpp" line="3198"/>
+        <location filename="../infopanedropdown.cpp" line="3208"/>
         <source>Never</source>
         <translation>Nooit</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="3172"/>
-        <location filename="../infopanedropdown.cpp" line="3182"/>
-        <location filename="../infopanedropdown.cpp" line="3192"/>
-        <location filename="../infopanedropdown.cpp" line="3202"/>
+        <location filename="../infopanedropdown.cpp" line="3180"/>
+        <location filename="../infopanedropdown.cpp" line="3190"/>
+        <location filename="../infopanedropdown.cpp" line="3200"/>
+        <location filename="../infopanedropdown.cpp" line="3210"/>
         <source>%1 min(s)</source>
         <translation>
             <numerusform>%1 min</numerusform>
@@ -1665,200 +1665,206 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
 <context>
     <name>Internationalisation</name>
     <message>
-        <location filename="../internationalisation.h" line="75"/>
-        <location filename="../internationalisation.h" line="78"/>
-        <location filename="../internationalisation.h" line="81"/>
-        <location filename="../internationalisation.h" line="84"/>
+        <location filename="../internationalisation.h" line="77"/>
+        <location filename="../internationalisation.h" line="80"/>
+        <location filename="../internationalisation.h" line="83"/>
+        <location filename="../internationalisation.h" line="86"/>
         <source>English</source>
         <translation>Engels</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="87"/>
+        <location filename="../internationalisation.h" line="89"/>
         <source>Vietnamese</source>
         <translation>Vietnamees</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="90"/>
+        <location filename="../internationalisation.h" line="92"/>
         <source>Danish</source>
         <translation>Deens</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="93"/>
+        <location filename="../internationalisation.h" line="95"/>
         <source>Dutch</source>
         <translation>Nederlands</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="96"/>
+        <location filename="../internationalisation.h" line="98"/>
         <source>Spanish</source>
         <translation>Spaans</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="99"/>
+        <location filename="../internationalisation.h" line="101"/>
         <source>Russian</source>
         <translation>Russisch</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="102"/>
+        <location filename="../internationalisation.h" line="104"/>
         <source>Swedish</source>
         <translation>Zweeds</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="105"/>
+        <location filename="../internationalisation.h" line="107"/>
         <source>Lithuanian</source>
         <translation>Litouws</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="157"/>
+        <location filename="../internationalisation.h" line="165"/>
         <source>Polish</source>
         <translation>Pools</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="135"/>
+        <location filename="../internationalisation.h" line="143"/>
         <source>Afrikaans</source>
         <translation>Afrikaans</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="136"/>
+        <location filename="../internationalisation.h" line="113"/>
+        <source>Australian</source>
+        <translation>Australisch</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="144"/>
         <source>Arabic</source>
         <translation>Arabisch</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="137"/>
+        <location filename="../internationalisation.h" line="145"/>
         <source>Bulgarian</source>
         <translation>Bulgaars</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="138"/>
+        <location filename="../internationalisation.h" line="146"/>
         <source>Catalan</source>
         <translation>Catalaans</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="139"/>
+        <location filename="../internationalisation.h" line="147"/>
         <source>Chinese</source>
         <translation>Chinees</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="140"/>
+        <location filename="../internationalisation.h" line="148"/>
         <source>Croatian</source>
         <translation>Kroatisch</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="141"/>
+        <location filename="../internationalisation.h" line="149"/>
         <source>Czech</source>
         <translation>Tsjechisch</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="142"/>
+        <location filename="../internationalisation.h" line="150"/>
         <source>Estonian</source>
         <translation>Estlands</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="143"/>
+        <location filename="../internationalisation.h" line="151"/>
         <source>Finnish</source>
         <translation>Fins</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="144"/>
+        <location filename="../internationalisation.h" line="152"/>
         <source>French</source>
         <translation>Frans</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="145"/>
+        <location filename="../internationalisation.h" line="153"/>
         <source>German</source>
         <translation>Duits</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="146"/>
+        <location filename="../internationalisation.h" line="154"/>
         <source>Greek</source>
         <translation>Grieks</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="147"/>
+        <location filename="../internationalisation.h" line="155"/>
         <source>Hebrew</source>
         <translation>Hebreeuws</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="148"/>
+        <location filename="../internationalisation.h" line="156"/>
         <source>Hungarian</source>
         <translation>Hongaars</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="149"/>
+        <location filename="../internationalisation.h" line="157"/>
         <source>Italian</source>
         <translation>Italiaans</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="150"/>
+        <location filename="../internationalisation.h" line="158"/>
         <source>Icelandic</source>
         <translation>IJslands</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="151"/>
+        <location filename="../internationalisation.h" line="110"/>
+        <location filename="../internationalisation.h" line="159"/>
         <source>Indonesian</source>
         <translation>Indonesisch</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="152"/>
+        <location filename="../internationalisation.h" line="160"/>
         <source>Japanese</source>
         <translation>Japans</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="153"/>
+        <location filename="../internationalisation.h" line="161"/>
         <source>Korean</source>
         <translation>Koreaans</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="154"/>
+        <location filename="../internationalisation.h" line="162"/>
         <source>Latvian</source>
         <translation>Letlands</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="155"/>
+        <location filename="../internationalisation.h" line="163"/>
         <source>Māori</source>
         <translation>Māori</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="156"/>
+        <location filename="../internationalisation.h" line="164"/>
         <source>Norwegian</source>
         <translation>Noors</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="158"/>
+        <location filename="../internationalisation.h" line="166"/>
         <source>Portuguese</source>
         <translation>Portugees</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="159"/>
+        <location filename="../internationalisation.h" line="167"/>
         <source>Serbian</source>
         <translation>Servisch</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="160"/>
+        <location filename="../internationalisation.h" line="168"/>
         <source>Slovak</source>
         <translation>Slowaaks</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="161"/>
+        <location filename="../internationalisation.h" line="169"/>
         <source>Slovenian</source>
         <translation>Sloveens</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="162"/>
+        <location filename="../internationalisation.h" line="170"/>
         <source>Tagalog</source>
         <translation>Tagalog</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="163"/>
+        <location filename="../internationalisation.h" line="171"/>
         <source>Thai</source>
         <translation>Thai</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="164"/>
+        <location filename="../internationalisation.h" line="172"/>
         <source>Turkish</source>
         <translation>Turks</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="165"/>
+        <location filename="../internationalisation.h" line="173"/>
         <source>Ukranian</source>
         <translation>Oekraïns</translation>
     </message>
@@ -2188,32 +2194,27 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
 <context>
     <name>NetworkWidget</name>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
         <location filename="../networkmanager/networkwidget.ui" line="59"/>
         <source>Network Devices</source>
         <translation>Netwerk-apparaten</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="264"/>
+        <location filename="../networkmanager/networkwidget.ui" line="266"/>
         <source>Available Networks</source>
         <translation>Beschikbare netwerken</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="188"/>
-        <location filename="../networkmanager/networkwidget.ui" line="280"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1029"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1119"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1246"/>
+        <location filename="../networkmanager/networkwidget.ui" line="282"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1031"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1121"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1248"/>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="121"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1169"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1171"/>
         <location filename="../networkmanager/networkwidget.cpp" line="883"/>
         <source>Tethering</source>
         <translation>Tethering</translation>
@@ -2234,256 +2235,256 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>Vergeten</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="228"/>
+        <location filename="../networkmanager/networkwidget.ui" line="229"/>
         <source>Edit</source>
         <translation>Wijzig</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="304"/>
+        <location filename="../networkmanager/networkwidget.ui" line="306"/>
         <source>Enter Details Manually</source>
         <translation>Details handmatig invoeren</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="341"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1202"/>
+        <location filename="../networkmanager/networkwidget.ui" line="343"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1204"/>
         <source>Security</source>
         <translation>Beveiliging</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="355"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1188"/>
+        <location filename="../networkmanager/networkwidget.ui" line="357"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1190"/>
         <source>SSID</source>
         <translation>SSID</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="363"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1213"/>
+        <location filename="../networkmanager/networkwidget.ui" line="365"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1215"/>
         <source>None</source>
         <translation>Geen</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="368"/>
+        <location filename="../networkmanager/networkwidget.ui" line="370"/>
         <source>Static WEP</source>
         <translation>Statische WEP</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="373"/>
+        <location filename="../networkmanager/networkwidget.ui" line="375"/>
         <source>Dynamic WEP</source>
         <translation>Dynamische WEP</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="378"/>
+        <location filename="../networkmanager/networkwidget.ui" line="380"/>
         <source>WPA/WPA2 PSK</source>
         <translation>WPA/WPA2 PSK</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="383"/>
+        <location filename="../networkmanager/networkwidget.ui" line="385"/>
         <source>WPA/WPA2 Enterprise</source>
         <translation>WPA/WPA2 Enterprise</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="438"/>
+        <location filename="../networkmanager/networkwidget.ui" line="440"/>
         <source>Security Key</source>
         <translation>Beveiligingssleutel</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="481"/>
+        <location filename="../networkmanager/networkwidget.ui" line="483"/>
         <source>TLS</source>
         <translation>TLS</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="486"/>
+        <location filename="../networkmanager/networkwidget.ui" line="488"/>
         <source>LEAP</source>
         <translation>LEAP</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="491"/>
+        <location filename="../networkmanager/networkwidget.ui" line="493"/>
         <source>FAST</source>
         <translation>FAST</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="496"/>
+        <location filename="../networkmanager/networkwidget.ui" line="498"/>
         <source>TTLS</source>
         <translation>TTLS</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="501"/>
+        <location filename="../networkmanager/networkwidget.ui" line="503"/>
         <source>PEAP</source>
         <translation>PEAP</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="509"/>
+        <location filename="../networkmanager/networkwidget.ui" line="511"/>
         <source>EAP Method</source>
         <translation>EAP Method</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="538"/>
+        <location filename="../networkmanager/networkwidget.ui" line="540"/>
         <source>Servers</source>
         <translation>Servers</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="545"/>
+        <location filename="../networkmanager/networkwidget.ui" line="547"/>
         <source>Private Key</source>
         <translation>Privésleutel</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="552"/>
-        <location filename="../networkmanager/networkwidget.ui" line="881"/>
+        <location filename="../networkmanager/networkwidget.ui" line="554"/>
+        <location filename="../networkmanager/networkwidget.ui" line="883"/>
         <source>CA Certificate</source>
         <translation>CA-certificaat</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="559"/>
+        <location filename="../networkmanager/networkwidget.ui" line="561"/>
         <source>User Certificate</source>
         <translation>Gebruikerscertificaat</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="566"/>
+        <location filename="../networkmanager/networkwidget.ui" line="568"/>
         <source>Subject Match</source>
         <translation>Subject Match</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="573"/>
+        <location filename="../networkmanager/networkwidget.ui" line="575"/>
         <source>Identity</source>
         <translation>Identiteit</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="580"/>
+        <location filename="../networkmanager/networkwidget.ui" line="582"/>
         <source>Alternative Subject Matches</source>
         <translation>Alternatieve Subject Matches</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="587"/>
+        <location filename="../networkmanager/networkwidget.ui" line="589"/>
         <source>Private Key Password</source>
         <translation>Wachtwoord van privésleutel</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="594"/>
-        <location filename="../networkmanager/networkwidget.ui" line="626"/>
-        <location filename="../networkmanager/networkwidget.ui" line="912"/>
+        <location filename="../networkmanager/networkwidget.ui" line="596"/>
+        <location filename="../networkmanager/networkwidget.ui" line="628"/>
+        <location filename="../networkmanager/networkwidget.ui" line="914"/>
         <source>Select</source>
         <translation>Selecteer</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="662"/>
-        <location filename="../networkmanager/networkwidget.ui" line="702"/>
-        <location filename="../networkmanager/networkwidget.ui" line="867"/>
+        <location filename="../networkmanager/networkwidget.ui" line="664"/>
+        <location filename="../networkmanager/networkwidget.ui" line="704"/>
+        <location filename="../networkmanager/networkwidget.ui" line="869"/>
         <source>Username</source>
         <translation>Gebruikersnaam</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="669"/>
-        <location filename="../networkmanager/networkwidget.ui" line="716"/>
-        <location filename="../networkmanager/networkwidget.ui" line="888"/>
+        <location filename="../networkmanager/networkwidget.ui" line="671"/>
+        <location filename="../networkmanager/networkwidget.ui" line="718"/>
+        <location filename="../networkmanager/networkwidget.ui" line="890"/>
         <source>Password</source>
         <translation>Wachtwoord</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="723"/>
-        <location filename="../networkmanager/networkwidget.ui" line="905"/>
+        <location filename="../networkmanager/networkwidget.ui" line="725"/>
+        <location filename="../networkmanager/networkwidget.ui" line="907"/>
         <source>Anonymous Identity</source>
         <translation>Anonieme identiteit</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="730"/>
+        <location filename="../networkmanager/networkwidget.ui" line="732"/>
         <source>PAC file</source>
         <translation>PAC-bestand</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="774"/>
+        <location filename="../networkmanager/networkwidget.ui" line="776"/>
         <source>Anonymous</source>
         <translation>Anoniem</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="781"/>
+        <location filename="../networkmanager/networkwidget.ui" line="783"/>
         <source>Authenticated</source>
         <translation>Geverifieerd</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="804"/>
+        <location filename="../networkmanager/networkwidget.ui" line="806"/>
         <source>Automatic PAC Provisioning</source>
         <translation>Automatische PAC-provisioning</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="874"/>
+        <location filename="../networkmanager/networkwidget.ui" line="876"/>
         <source>PEAP version</source>
         <translation>PEAP-versie</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1176"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1178"/>
         <source>Enabling Tethering allows your internet connection to be shared from a wired connection. You won&apos;t be able to use Wi-Fi while Tethering is active.</source>
         <translation>Het aanzetten van Tethering staat u toe om uw internetverbinding te delen,vanaf een bedrade verbining. U kunt Wi-Fi niet gebruiken als Tethering actief is.</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1195"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1197"/>
         <source>Key</source>
         <translation>Sleutel</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1218"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1220"/>
         <source>WPA2 PSK</source>
         <translation>WPA2 PSK</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1270"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1272"/>
         <source>Enable Tethering</source>
         <translation>Zet Tethering aan</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="709"/>
-        <location filename="../networkmanager/networkwidget.ui" line="895"/>
+        <location filename="../networkmanager/networkwidget.ui" line="711"/>
+        <location filename="../networkmanager/networkwidget.ui" line="897"/>
         <source>Phase 2 Authentication</source>
         <translation>Phase 2 Authentication</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="966"/>
+        <location filename="../networkmanager/networkwidget.ui" line="968"/>
         <source>Auto&amp;matic</source>
         <translation>Auto&amp;matisch</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="983"/>
+        <location filename="../networkmanager/networkwidget.ui" line="985"/>
         <source>Version &amp;1</source>
         <translation>Versie &amp;1</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="820"/>
-        <location filename="../networkmanager/networkwidget.ui" line="923"/>
+        <location filename="../networkmanager/networkwidget.ui" line="822"/>
+        <location filename="../networkmanager/networkwidget.ui" line="925"/>
         <source>MSCHAPv2</source>
         <translation>MSCHAPv2</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="928"/>
+        <location filename="../networkmanager/networkwidget.ui" line="930"/>
         <source>MD5</source>
         <translation>MD5</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="815"/>
-        <location filename="../networkmanager/networkwidget.ui" line="933"/>
+        <location filename="../networkmanager/networkwidget.ui" line="817"/>
+        <location filename="../networkmanager/networkwidget.ui" line="935"/>
         <source>GTC</source>
         <translation>GTC</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="976"/>
+        <location filename="../networkmanager/networkwidget.ui" line="978"/>
         <source>Version &amp;0</source>
         <translation>Versie &amp;0</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1053"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1055"/>
         <source>Connect</source>
         <translation>Verbinden</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1090"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1092"/>
         <source>Information</source>
         <translation>Informatie</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1104"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1106"/>
         <source>Property</source>
         <translation>Eigenschap</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1109"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1111"/>
         <source>Value</source>
         <translation>Waarde</translation>
     </message>
@@ -2603,11 +2604,6 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
 </context>
 <context>
     <name>NotificationsWidget</name>
-    <message>
-        <location filename="../notificationsWidget/notificationswidget.ui" line="14"/>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
     <message>
         <location filename="../notificationsWidget/notificationswidget.ui" line="92"/>
         <source>No notifications</source>
@@ -3011,22 +3007,22 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="227"/>
+        <location filename="../main.cpp" line="231"/>
         <source>theShell already running</source>
         <translation>theShell is al actief</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="227"/>
+        <location filename="../main.cpp" line="231"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell lijkt al actief te zijn. Wilt u het alsnog starten?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="273"/>
+        <location filename="../main.cpp" line="277"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Vensterbeheerder kon niet starten</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="274"/>
+        <location filename="../main.cpp" line="278"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>
