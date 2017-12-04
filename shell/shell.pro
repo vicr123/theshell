@@ -20,6 +20,7 @@ unix {
 
 blueprint {
     TARGET = theshellb
+    DEFINES += "BLUEPRINT"
 
     DEFINES += "SHAREDIR=\\\"/usr/share/theshellb/\\\""
 } else {

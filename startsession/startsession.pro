@@ -5,6 +5,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 blueprint {
     TARGET = ts-startsessionb
+
+    DEFINES += "BLUEPRINT"
 } else {
     TARGET = ts-startsession
 }
