@@ -11,37 +11,37 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="68"/>
         <source>Place a call over </source>
-        <translation>Paskambinti</translation>
+        <translation>Paskambinti </translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="87"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Išjungti</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="89"/>
         <source>Power off this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Išjungi šį įrenginį</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="107"/>
         <source>Reboot</source>
-        <translation type="unfinished">Perkrauti</translation>
+        <translation>Perkrauti</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="109"/>
         <source>Reboot this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Perkrauti šį įrenginį</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="114"/>
         <source>Log Out</source>
-        <translation type="unfinished">Atsijungti</translation>
+        <translation>Atsijungti</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="116"/>
         <source>End your session</source>
-        <translation type="unfinished"></translation>
+        <translation>Baigti darbą su šia paskyra</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="127"/>
@@ -66,12 +66,12 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="199"/>
         <source>System Settings</source>
-        <translation type="unfinished">Sistemos Nustatymai</translation>
+        <translation>Sistemos Nustatymai</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="200"/>
         <source>System Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistemos konfigūracija</translation>
     </message>
 </context>
 <context>
@@ -79,17 +79,17 @@
     <message>
         <location filename="../audiomanager.cpp" line="349"/>
         <source>Allows all sounds from all apps, and notifications from all apps.</source>
-        <translation type="unfinished"></translation>
+        <translation>Leis visus garsus iš visų programų, ir pranešimus iš visų programų.</translation>
     </message>
     <message>
         <location filename="../audiomanager.cpp" line="351"/>
         <source>Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignoruos bet kokius pranešimus iš visų programų, išskyrus tas, kurios nustatytos, jog nekreiptų dėmesio į &quot;Tylos Režimo&quot; nustatymą. Normalūs garsai vistiek bus grojami,žadintuvai ir pranešimai vistiek veiks, bet jie neleis jokių garsų.</translation>
     </message>
     <message>
         <location filename="../audiomanager.cpp" line="353"/>
         <source>Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilnai išjungia visus garsus ir pranešimus iš visų programų, įskaitant tuos kurie nustatyti &quot;Tylos Režimo&quot; ignoravimui. Net žadintuvai neskambės ir nerodys pranešimų.</translation>
     </message>
 </context>
 <context>
@@ -97,42 +97,42 @@
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="156"/>
         <source>Saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Išsaugota</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="160"/>
         <source>Secured with WPA2-PSK</source>
-        <translation type="unfinished"></translation>
+        <translation>Apsaugota su WPA2-PSK</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="162"/>
         <source>Secured with WPA-PSK</source>
-        <translation type="unfinished"></translation>
+        <translation>Apsaugota su WPA-PSK</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="164"/>
         <source>Secured with WPA Enterprise</source>
-        <translation type="unfinished"></translation>
+        <translation>Apsaugota su WPA Enterprise</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="166"/>
         <source>Secured with WPA2 Enterprise</source>
-        <translation type="unfinished"></translation>
+        <translation>Apsaugota su WPA2 Enterprise</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="168"/>
         <source>Secured with Dynamic WEP</source>
-        <translation type="unfinished"></translation>
+        <translation>Apsaugota su Dynamic WEP</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="170"/>
         <source>Secured with Static WEP</source>
-        <translation type="unfinished"></translation>
+        <translation>Apsaugota su Static WEP</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="172"/>
         <source>Not Secured</source>
-        <translation type="unfinished"></translation>
+        <translation>Neapsaugotas</translation>
     </message>
 </context>
 <context>
@@ -611,22 +611,22 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1524"/>
         <source>Fore&amp;ver</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa&amp;da</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1533"/>
         <source>Turn off in</source>
-        <translation type="unfinished"></translation>
+        <translation>Išjungti</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1567"/>
         <source>Turn off at</source>
-        <translation type="unfinished"></translation>
+        <translation>Išjungti</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1580"/>
         <source>HH:mm:ss</source>
-        <translation type="unfinished"></translation>
+        <translation>HH:mm:ss</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1652"/>
@@ -662,12 +662,12 @@
         <location filename="../infopanedropdown.ui" line="1862"/>
         <location filename="../infopanedropdown.ui" line="3746"/>
         <source>Power</source>
-        <translation type="unfinished"></translation>
+        <translation>Energija</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2039"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Pašalinti</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2065"/>
@@ -962,7 +962,7 @@
         <location filename="../infopanedropdown.ui" line="1808"/>
         <location filename="../infopanedropdown.ui" line="2299"/>
         <source>Gateway and Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Gateway ir juostelė</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1817"/>
@@ -972,50 +972,50 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1844"/>
         <source>Sounds and Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Garsai ir pranešimai</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2049"/>
         <source>New App</source>
-        <translation type="unfinished"></translation>
+        <translation>Nauja programa</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2094"/>
         <source>Which app do you want to automatically start with theShell?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kokią programą turėtų theShell automatiškai paleisti kai įjungiate kompiuterį?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2106"/>
         <location filename="../infopanedropdown.ui" line="2170"/>
         <location filename="../infopanedropdown.ui" line="4578"/>
         <source>Back</source>
-        <translation type="unfinished">Grįžti</translation>
+        <translation>Grįžti</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2130"/>
         <location filename="../infopanedropdown.ui" line="2158"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Komanda</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2194"/>
         <source>Add App</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridėti programą</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2207"/>
         <source>Enter details of the app to autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Įveskite programos detales automatiškam paleidimui</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2217"/>
         <source>Application Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Programos vardas</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2237"/>
         <source>Only autostart this app in theShell</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiktai automatiškai paleisti šią programą theShell</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2336"/>
@@ -1065,7 +1065,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2845"/>
         <source>Scheduled</source>
-        <translation type="unfinished"></translation>
+        <translation>Suplanuotas</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2991"/>
@@ -1080,74 +1080,74 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3277"/>
         <source>Volume change sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Garso stiprumo pakeitimo garsas</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3291"/>
         <source>Volume overdrive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3311"/>
         <source>Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Programos</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3361"/>
         <source>Allow notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Leisti pranešimus</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3368"/>
         <source>Allow sounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Leisti garsus</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3375"/>
         <source>Allow popup</source>
-        <translation type="unfinished"></translation>
+        <translation>Leisti iššokančius langus</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3382"/>
         <source>Bypass Quiet Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Apeiti &quot;Tylų Režimą&quot;</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3389"/>
         <source>Allow this app&apos;s notifications to show when Quiet Mode is set to No Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Leisti šiai programai rodyti pranešimus, nors &quot;Tylos Režimas&quot; yra nustatytas į &quot;Jokių pranešimų&quot;</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3582"/>
         <location filename="../infopanedropdown.ui" line="3667"/>
         <source>Suspend after</source>
-        <translation type="unfinished"></translation>
+        <translation>Pristabdyti po</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3589"/>
         <source>When this device is running off battery power,</source>
-        <translation type="unfinished"></translation>
+        <translation>Kai šis įrenginys išsikrauna,</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3609"/>
         <location filename="../infopanedropdown.ui" line="3623"/>
         <source>Turn off screen after</source>
-        <translation type="unfinished"></translation>
+        <translation>Išjungti ekraną po</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3644"/>
         <source>When this device is connected to power,</source>
-        <translation type="unfinished"></translation>
+        <translation>Kai šis įrenginys yra prijungtas prie elektros šaltinio,</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3681"/>
         <source>Drag the slider to the right to turn off power management</source>
-        <translation type="unfinished"></translation>
+        <translation>Vilkite slankiklį į dešinę, jei norite išjungti elektros valdymą šiame kompiuteryje</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3896"/>
         <source>To change your password, go to User settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Jei norite pakeisti slaptažodį, eikite į naudotojo nustatymus</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1880"/>
@@ -1158,7 +1158,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2984"/>
         <source>&amp;Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pilka</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3950"/>
@@ -1310,17 +1310,17 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../infopanedropdown.ui" line="4505"/>
         <source>Set System Timezone</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustatyti sistemos laiko zoną</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4539"/>
         <source>Where are you located?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kur jūs esate?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4602"/>
         <source>Set Timezone</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustatyti laiko zoną</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4651"/>
@@ -1515,7 +1515,7 @@ Daiktai kurie bus palikti:
         <location filename="../infopanedropdown.cpp" line="1196"/>
         <source>%1 days</source>
         <translation>
-            <numerusform>%1 dienos</numerusform>
+            <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
@@ -1637,12 +1637,12 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../infopanedropdown.cpp" line="3036"/>
         <source>Notifications for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pranešimai %1</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3044"/>
         <source>You can&apos;t configure notifications for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Jūs negalite konfigūruoti pranešimų %1</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3178"/>
@@ -1650,7 +1650,7 @@ Daiktai kurie bus palikti:
         <location filename="../infopanedropdown.cpp" line="3198"/>
         <location filename="../infopanedropdown.cpp" line="3208"/>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Niekada</translation>
     </message>
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="3180"/>
@@ -1658,7 +1658,7 @@ Daiktai kurie bus palikti:
         <location filename="../infopanedropdown.cpp" line="3200"/>
         <location filename="../infopanedropdown.cpp" line="3210"/>
         <source>%1 min(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -1713,163 +1713,163 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../internationalisation.h" line="165"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Lenkų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="143"/>
         <source>Afrikaans</source>
-        <translation type="unfinished"></translation>
+        <translation>Afrikanų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="113"/>
         <source>Australian</source>
-        <translation type="unfinished"></translation>
+        <translation>Australų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="144"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="145"/>
         <source>Bulgarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Bulgarų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="146"/>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalonų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="148"/>
         <source>Croatian</source>
-        <translation type="unfinished"></translation>
+        <translation>Kroatų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="149"/>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Čekų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="150"/>
         <source>Estonian</source>
-        <translation type="unfinished"></translation>
+        <translation>Estų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="151"/>
         <source>Finnish</source>
-        <translation type="unfinished"></translation>
+        <translation>Suomių</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="154"/>
         <source>Greek</source>
-        <translation type="unfinished"></translation>
+        <translation>Graikų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="155"/>
         <source>Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>Hebrajų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="156"/>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Vengrų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="157"/>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>Italų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="158"/>
         <source>Icelandic</source>
-        <translation type="unfinished"></translation>
+        <translation>Islandų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="110"/>
         <location filename="../internationalisation.h" line="159"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Indonezų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="160"/>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japonų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="161"/>
         <source>Korean</source>
-        <translation type="unfinished"></translation>
+        <translation>Korėjiečių</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="162"/>
         <source>Latvian</source>
-        <translation type="unfinished"></translation>
+        <translation>Latvių</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="164"/>
         <source>Norwegian</source>
-        <translation type="unfinished"></translation>
+        <translation>Norvergų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="166"/>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugalų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="167"/>
         <source>Serbian</source>
-        <translation type="unfinished"></translation>
+        <translation>Serbų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="168"/>
         <source>Slovak</source>
-        <translation type="unfinished"></translation>
+        <translation>Slovakų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="169"/>
         <source>Slovenian</source>
-        <translation type="unfinished"></translation>
+        <translation>Slovėnų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="170"/>
         <source>Tagalog</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagalogų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="171"/>
         <source>Thai</source>
-        <translation type="unfinished"></translation>
+        <translation>Tailandų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="172"/>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Turkų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="173"/>
         <source>Ukranian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukrainiečių</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="147"/>
         <source>Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation>Kinų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="152"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Prancūzų</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="163"/>
         <source>Māori</source>
-        <translation type="unfinished"></translation>
+        <translation>Maorių</translation>
     </message>
     <message>
         <location filename="../internationalisation.h" line="153"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Vokiečių</translation>
     </message>
 </context>
 <context>
@@ -1953,10 +1953,10 @@ Daiktai kurie bus palikti:
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="1594"/>
         <source>%n notification(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n pranešimas</numerusform>
+            <numerusform>%n pranešimas</numerusform>
+            <numerusform>%n pranešimai</numerusform>
         </translation>
     </message>
 </context>
@@ -2133,7 +2133,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../menu.cpp" line="567"/>
         <source>Actions for &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Veiksmai &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="601"/>
@@ -2221,27 +2221,27 @@ Daiktai kurie bus palikti:
         <location filename="../networkmanager/networkwidget.ui" line="1171"/>
         <location filename="../networkmanager/networkwidget.cpp" line="883"/>
         <source>Tethering</source>
-        <translation type="unfinished"></translation>
+        <translation>Pririšimas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="132"/>
         <source>Manage Known Networks</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvarkyti žinomus tinklus</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="169"/>
         <source>Known Networks</source>
-        <translation type="unfinished"></translation>
+        <translation>Žinomi tinklai</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="215"/>
         <source>Forget</source>
-        <translation type="unfinished"></translation>
+        <translation>Pamiršti</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="229"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Redaguoti</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="306"/>
@@ -2294,183 +2294,183 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="483"/>
         <source>TLS</source>
-        <translation type="unfinished"></translation>
+        <translation>TLS</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="488"/>
         <source>LEAP</source>
-        <translation type="unfinished"></translation>
+        <translation>LEAP</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="493"/>
         <source>FAST</source>
-        <translation type="unfinished"></translation>
+        <translation>FAST</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="498"/>
         <source>TTLS</source>
-        <translation type="unfinished"></translation>
+        <translation>TTLS</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="503"/>
         <source>PEAP</source>
-        <translation type="unfinished"></translation>
+        <translation>PEAP</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="511"/>
         <source>EAP Method</source>
-        <translation type="unfinished"></translation>
+        <translation>EAP metodas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="540"/>
         <source>Servers</source>
-        <translation type="unfinished"></translation>
+        <translation>Serveriai</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="547"/>
         <source>Private Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Privatus raktas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="554"/>
         <location filename="../networkmanager/networkwidget.ui" line="883"/>
         <source>CA Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>CA sertifikatas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="561"/>
         <source>User Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudotojo sertifikatas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="568"/>
         <source>Subject Match</source>
-        <translation type="unfinished"></translation>
+        <translation>Temos atitikimas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="575"/>
         <source>Identity</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifikuoti</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="582"/>
         <source>Alternative Subject Matches</source>
-        <translation type="unfinished"></translation>
+        <translation>Alernatyvūs temos atitikimai</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="589"/>
         <source>Private Key Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Privataus rakto slaptažodis</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="596"/>
         <location filename="../networkmanager/networkwidget.ui" line="628"/>
         <location filename="../networkmanager/networkwidget.ui" line="914"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkti</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="664"/>
         <location filename="../networkmanager/networkwidget.ui" line="704"/>
         <location filename="../networkmanager/networkwidget.ui" line="869"/>
         <source>Username</source>
-        <translation type="unfinished">Vardas</translation>
+        <translation>Vardas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="671"/>
         <location filename="../networkmanager/networkwidget.ui" line="718"/>
         <location filename="../networkmanager/networkwidget.ui" line="890"/>
         <source>Password</source>
-        <translation type="unfinished">Slaptažodis</translation>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="725"/>
         <location filename="../networkmanager/networkwidget.ui" line="907"/>
         <source>Anonymous Identity</source>
-        <translation type="unfinished"></translation>
+        <translation>Nežinomas žmogus</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="732"/>
         <source>PAC file</source>
-        <translation type="unfinished"></translation>
+        <translation>PAC failas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="776"/>
         <source>Anonymous</source>
-        <translation type="unfinished"></translation>
+        <translation>Nežinomas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="783"/>
         <source>Authenticated</source>
-        <translation type="unfinished"></translation>
+        <translation>Autentifikuotas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="806"/>
         <source>Automatic PAC Provisioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatiškas PAC aprūpininas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="876"/>
         <source>PEAP version</source>
-        <translation type="unfinished"></translation>
+        <translation>PEAP versija</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1178"/>
         <source>Enabling Tethering allows your internet connection to be shared from a wired connection. You won&apos;t be able to use Wi-Fi while Tethering is active.</source>
-        <translation type="unfinished"></translation>
+        <translation>Įjungiant pririšimą leis jums interneto ryšį dalintis iš laidinio ryšio. Jūs negalėsite naudotis Wi-Fi kai pririšimas bus įjungtas.</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1197"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Raktas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1220"/>
         <source>WPA2 PSK</source>
-        <translation type="unfinished"></translation>
+        <translation>WPA2 PSK</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1272"/>
         <source>Enable Tethering</source>
-        <translation type="unfinished"></translation>
+        <translation>Įjungti pririšimą</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="711"/>
         <location filename="../networkmanager/networkwidget.ui" line="897"/>
         <source>Phase 2 Authentication</source>
-        <translation type="unfinished"></translation>
+        <translation>Phase 2 autentifikavimas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="968"/>
         <source>Auto&amp;matic</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto&amp;matinis</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="985"/>
         <source>Version &amp;1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versija &amp;1</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="822"/>
         <location filename="../networkmanager/networkwidget.ui" line="925"/>
         <source>MSCHAPv2</source>
-        <translation type="unfinished"></translation>
+        <translation>MSCHAPv2</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="930"/>
         <source>MD5</source>
-        <translation type="unfinished"></translation>
+        <translation>MD5</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="817"/>
         <location filename="../networkmanager/networkwidget.ui" line="935"/>
         <source>GTC</source>
-        <translation type="unfinished"></translation>
+        <translation>GTC</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="978"/>
         <source>Version &amp;0</source>
-        <translation type="unfinished"></translation>
+        <translation>Versija &amp;0</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1055"/>
@@ -2538,7 +2538,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="593"/>
         <source>Flight Mode</source>
-        <translation type="unfinished">Lėktuvo režimas</translation>
+        <translation>Lėktuvo režimas</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="717"/>
@@ -2553,12 +2553,12 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="874"/>
         <source>Tethering Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Pririšimo klaida</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="884"/>
         <source>Preparing Tethering</source>
-        <translation type="unfinished"></translation>
+        <translation>Paruošiamas pririšimas</translation>
     </message>
 </context>
 <context>
@@ -2595,15 +2595,15 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../notificationsWidget/notificationappgroup.cpp" line="102"/>
         <source>Collapse Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolapsinti pranešimus</translation>
     </message>
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationappgroup.cpp" line="105"/>
         <source>+%1 notifications collapsed</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>+%1 pranešimas kolapsintas</numerusform>
+            <numerusform>+%1 pranešimai kolapsinti</numerusform>
+            <numerusform>+%1 pranešimai kolapsinti</numerusform>
         </translation>
     </message>
 </context>
@@ -2612,17 +2612,17 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../notificationsWidget/notificationswidget.ui" line="92"/>
         <source>No notifications</source>
-        <translation type="unfinished">Jokių pranešimų</translation>
+        <translation>Jokių pranešimų</translation>
     </message>
     <message>
         <location filename="../notificationsWidget/notificationswidget.ui" line="102"/>
         <source>There&apos;s nothing to see at the moment. Don&apos;t worry, we&apos;ll be sure to tell you as soon as something pops up.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kol kas nėra nieko matyti šiuo momento. Nebijokite, me&apos;s jums pasakysime tuo pat metu kai kažkas iššoks.</translation>
     </message>
     <message>
         <location filename="../notificationsWidget/notificationswidget.ui" line="150"/>
         <source>Clear All</source>
-        <translation type="unfinished"></translation>
+        <translation>Išvalyti viską</translation>
     </message>
 </context>
 <context>
@@ -2635,12 +2635,12 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../onboarding.ui" line="445"/>
         <source>Thank you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ačiū.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="462"/>
         <source>You&apos;re ready to start using theShell.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jūs esate pasiruošę naudoti theShell.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="694"/>
@@ -2717,7 +2717,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../onboarding.cpp" line="189"/>
         <source>Start</source>
-        <translation type="unfinished">Pradėti</translation>
+        <translation>Pradėti</translation>
     </message>
 </context>
 <context>
@@ -2744,7 +2744,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../networkmanager/savednetworkslist.cpp" line="52"/>
         <source>Saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Išsaugota</translation>
     </message>
 </context>
 <context>

@@ -34,6 +34,7 @@
     "- Flight Mode no longer displays the disconnected icon when you're disconnected from a network and in flight mode\n"\
     "- Power Stretch now persists between sessions\n"\
     "- Connecting to WPA Enterprise networks are now supported using theShell\n"\
+    "- Autostarted apps now follow the XDG standard\n"\
     "\n"\
     "New in theShell 7.0:\n"\
     "- Quiet Mode has been added to theShell! Click on the volume icon in the bar, or head to the Notifications Status Center pane to change the setting.\n"\

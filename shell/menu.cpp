@@ -85,7 +85,7 @@ Menu::Menu(BTHandsfree* bt, QWidget *parent) :
     this->installEventFilter(this);
 
 
-    if (QFile("/usr/bin/scallop").exists()) {
+    if (QFile("/etc/scallop-live").exists()) {
         ui->InstallLayout->setVisible(true);
     } else {
         ui->InstallLayout->setVisible(false);
