@@ -434,6 +434,8 @@ private slots:
 
     void on_removeAutostartButton_clicked();
 
+    void on_resetDeviceButton_clicked();
+
     public slots:
     void getNetworks();
 
@@ -463,6 +465,8 @@ private:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void changeEvent(QEvent* event);
+
     QTimer* timer = NULL;
     int timerNotificationId = 0;
     QTimer* eventTimer;

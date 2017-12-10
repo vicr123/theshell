@@ -11,11 +11,6 @@ NetworkWidget::NetworkWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
-        ui->retranslateUi(this);
-        updateDevices();
-    });
-
     ui->knownNetworksDeleteButton->setProperty("type", "destructive");
 
     QDBusConnection::systemBus().connect(nmInterface->service(), nmInterface->path(), nmInterface->interface(), "DeviceAdded", this, SLOT(updateDevices()));
@@ -895,4 +890,12 @@ void NetworkWidget::on_tetheringBackButton_clicked()
 void NetworkWidget::on_tetheringButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(5);
+}
+
+void NetworkWidget::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+        updateDevices();
+    }
+    QWidget::changeEvent(event);
 }

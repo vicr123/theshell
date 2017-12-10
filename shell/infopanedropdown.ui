@@ -356,7 +356,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -375,7 +375,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-344</y>
+            <y>0</y>
             <width>1151</width>
             <height>1038</height>
            </rect>
@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>6</day>
+                 <day>5</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>6</day>
+                 <day>5</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1947,7 +1947,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>0</number>
+            <number>13</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2052,7 +2052,8 @@
                       <string>Remove</string>
                      </property>
                      <property name="icon">
-                      <iconset theme="list-remove"/>
+                      <iconset theme="list-remove">
+                       <normaloff>.</normaloff>.</iconset>
                      </property>
                     </widget>
                    </item>
@@ -4796,7 +4797,7 @@ Items that will be kept if you choose to keep files:
            </widget>
            <widget class="QWidget" name="DangerSettings">
             <layout class="QGridLayout" name="gridLayout_5">
-             <item row="5" column="0">
+             <item row="6" column="0">
               <spacer name="verticalSpacer_12">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -4883,6 +4884,19 @@ Items that will be kept if you choose to keep files:
                <property name="icon">
                 <iconset theme="view-refresh">
                  <normaloff>.</normaloff>.</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="2">
+              <widget class="QPushButton" name="resetDeviceButton">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Reset Device</string>
+               </property>
+               <property name="icon">
+                <iconset theme="view-refresh"/>
                </property>
               </widget>
              </item>

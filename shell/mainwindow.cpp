@@ -235,10 +235,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setFocusPolicy(Qt::NoFocus);
 
-    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
-        ui->retranslateUi(this);
-    });
-
     QMenu* quietModeMenu = new QMenu();
     quietModeMenu->addSection(tr("Quiet Mode"));
     quietModeMenu->addAction(ui->actionNone);
@@ -2022,4 +2018,11 @@ void MainWindow::on_networkStrength_clicked()
 
 void MainWindow::enterEvent(QEvent *event) {
     doUpdate();
+}
+
+void MainWindow::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+    QMainWindow::changeEvent(event);
 }

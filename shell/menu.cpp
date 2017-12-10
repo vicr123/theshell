@@ -154,10 +154,6 @@ void Menu::show() {
 
     //Show Tutorial Screen
     TutorialWin->showScreen(TutorialWindow::GatewaySearch);
-
-    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
-        ui->retranslateUi(this);
-    });
 }
 
 void Menu::changeEvent(QEvent *event) {
@@ -166,6 +162,9 @@ void Menu::changeEvent(QEvent *event) {
         if (!this->isActiveWindow()) {
             this->close();
         }
+    } else if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+        ((AppsListModel*) ui->appsListView->model())->loadData();
     }
 }
 

@@ -106,6 +106,8 @@ class NetworkWidget : public QWidget
     private:
         Ui::NetworkWidget *ui;
 
+        void changeEvent(QEvent* event);
+
         QDBusInterface* nmInterface = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus());
         bool flightMode = false;
 };

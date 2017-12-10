@@ -152,11 +152,6 @@ Onboarding::Onboarding(QWidget *parent) :
         }
     });
     timer->start();
-
-    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
-        ui->retranslateUi(this);
-        ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg(TS_VERSION));
-    });
 }
 
 Onboarding::~Onboarding()
@@ -307,8 +302,6 @@ void Onboarding::on_localeList_currentRowChanged(int currentRow)
 
     //Fill locale box
     Internationalisation::fillLanguageBox(ui->localeList);
-
-    emit NativeFilter->DoRetranslation();
 }
 
 void Onboarding::on_enableStatusBarButton_clicked()
@@ -362,4 +355,13 @@ void Onboarding::on_exitStackedWidget_currentChanged(int arg1)
         ui->nextButton->setVisible(false);
         ui->backButton->setVisible(false);
     }
+}
+
+
+void Onboarding::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+        ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg(TS_VERSION));
+    }
+    QDialog::changeEvent(event);
 }

@@ -13,10 +13,6 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
     ndbus->setParentWidget(this);
 
     ui->scrollArea->installEventFilter(this);
-
-    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
-        ui->retranslateUi(this);
-    });
 }
 
 NotificationsWidget::~NotificationsWidget()
@@ -94,4 +90,12 @@ void NotificationsWidget::updateNotificationCount() {
     }
 
     emit numNotificationsChanged(count);
+}
+
+
+void NotificationsWidget::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
 }

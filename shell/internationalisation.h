@@ -104,7 +104,7 @@ public:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-se"), tr("Swedish") + " (Svenska)"));
                     break;
                 case ltLT:
-                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-lt"), tr("Lithuanian") + " (Lietuviškai)"));
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-lt"), tr("Lithuanian") + " (Lietuvių)"));
                     break;
                 case inID:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-in"), tr("Indonesian") + " (Bahasa Indonesia)"));

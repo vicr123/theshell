@@ -59,7 +59,6 @@ public:
 
 signals:
     void SysTrayEvent(long opcode, long data2, long data3, long data4);
-    void DoRetranslation();
 
 public slots:
 

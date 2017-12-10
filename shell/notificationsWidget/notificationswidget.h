@@ -37,6 +37,7 @@ private:
     Ui::NotificationsWidget *ui;
 
     bool eventFilter(QObject *watched, QEvent *event);
+    void changeEvent(QEvent* event);
 
     QMap<int, NotificationObject*> notifications;
     QList<NotificationAppGroup*> notificationGroups;

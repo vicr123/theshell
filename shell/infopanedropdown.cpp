@@ -105,6 +105,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->userSettingsDeleteUser->setProperty("type", "destructive");
     ui->userSettingsDeleteUserAndData->setProperty("type", "destructive");
     ui->userSettingsDeleteUserOnly->setProperty("type", "destructive");
+    ui->resetDeviceButton->setProperty("type", "destructive");
 
     QPalette powerStretchPalette = ui->PowerStretchSwitch->palette();
     QPalette flightModePalette = ui->FlightSwitch->palette();
@@ -141,6 +142,10 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     if (!QFile("/usr/lib/kdeconnectd").exists()) {
         //If KDE Connect is not installed, hide the KDE Connect option
         ui->kdeconnectLabel->setVisible(false);
+    }
+
+    if (!QFile("/usr/bin/scallop").exists()) {
+        ui->resetDeviceButton->setVisible(false);
     }
 
     //Set up networking
@@ -417,10 +422,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     //Set up timer ringtones
     ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
-
-    connect(NativeFilter, &NativeEventFilter::DoRetranslation, [=] {
-        ui->retranslateUi(this);
-    });
 
     connect(AudioMan, &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
         ui->quietModeSound->setChecked(false);
@@ -956,16 +957,22 @@ void InfoPaneDropdown::startTimer(QTime time) {
 
                 QMediaPlaylist* playlist = new QMediaPlaylist();
 
+                #ifdef BLUEPRINT
+                    QString ringtonesPath = "/usr/share/sounds/theshellb/tones/";
+                #else
+                    QString ringtonesPath = "/usr/share/sounds/theshell/tones/";
+                #endif
+
                 if (ui->timerToneSelect->currentText() == tr("Happy Bee")) {
-                    playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/happybee")));
+                    playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "happybee.ogg")));
                 } else if (ui->timerToneSelect->currentText() == tr("Playing in the Dark")) {
-                    playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/playinginthedark")));
+                    playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "playinginthedark.ogg")));
                 } else if (ui->timerToneSelect->currentText() == tr("Ice Cream Truck")) {
-                    playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/icecream")));
+                    playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "icecream.ogg")));
                 } else if (ui->timerToneSelect->currentText() == tr("Party Complex")) {
-                    playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/party")));
+                    playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "party.ogg")));
                 } else if (ui->timerToneSelect->currentText() == tr("Salty Ditty")) {
-                    playlist->addMedia(QMediaContent(QUrl("qrc:/sounds/tones/saltyditty")));
+                    playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "saltyditty.ogg")));
                 }
                 playlist->setPlaybackMode(QMediaPlaylist::Loop);
                 ringtone->setPlaylist(playlist);
@@ -2339,8 +2346,6 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
 
     //Fill locale box
     Internationalisation::fillLanguageBox(ui->localeList);
-
-    emit NativeFilter->DoRetranslation();
 }
 
 void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
@@ -3310,4 +3315,17 @@ void InfoPaneDropdown::on_removeAutostartButton_clicked()
         });
         toast->show(this);
     }
+}
+
+void InfoPaneDropdown::on_resetDeviceButton_clicked()
+{
+    QProcess::startDetached("scallop --reset");
+    this->close();
+}
+
+void InfoPaneDropdown::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+    QDialog::changeEvent(event);
 }

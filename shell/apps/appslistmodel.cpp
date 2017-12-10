@@ -9,8 +9,6 @@ extern void EndSession(EndSessionWait::shutdownType type);
 AppsListModel::AppsListModel(BTHandsfree* bt, QObject *parent) : QAbstractListModel(parent) {
     this->bt = bt;
     loadData();
-
-    connect(NativeFilter, SIGNAL(DoRetranslation()), this, SLOT(loadData()));
 }
 
 AppsListModel::~AppsListModel() {

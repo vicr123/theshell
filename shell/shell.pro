@@ -193,12 +193,18 @@ unix {
     translations.files = translations/*
     xsession.path = /usr/share/xsessions
 
+    ringtones.files = tones/*
+
     blueprint {
         translations.path = /usr/share/theshellb/translations
         xsession.files = theshellb.desktop
+
+        ringtones.path = /usr/share/sounds/theshellb/tones
     } else {
         translations.path = /usr/share/theshell/translations
         xsession.files = theshell.desktop
+
+        ringtones.path = /usr/share/sounds/theshell/tones
     }
 
     INSTALLS += target translations xsession

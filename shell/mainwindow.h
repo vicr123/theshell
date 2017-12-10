@@ -230,6 +230,7 @@ private:
     void paintEvent(QPaintEvent *event);
     bool eventFilter(QObject *watched, QEvent *event);
     void enterEvent(QEvent* event);
+    void changeEvent(QEvent* event);
 
     InfoPaneDropdown *infoPane;
 

@@ -74,6 +74,7 @@ private:
     Ui::Onboarding *ui;
 
     void reject();
+    void changeEvent(QEvent* event);
 
     int buttonCurrentLanguage = 0;
     QSettings settings;
