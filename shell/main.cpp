@@ -61,7 +61,7 @@ NotificationsDBusAdaptor* ndbus = NULL;
 DBusSignals* dbusSignals = NULL;
 QSettings::Format desktopFileFormat;
 
-#define ONBOARDING_VERSION 4
+#define ONBOARDING_VERSION 5
 
 void raise_signal(QString message) {
     //Clean up required stuff

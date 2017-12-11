@@ -201,7 +201,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     //Load widget themes into widget theme box
     {
-        QString currentWidgetTheme = settings.value("style/name", "contemporary").toString();
+        ui->systemWidgetTheme->blockSignals(true);
+        QString currentWidgetTheme = themeSettings->value("style/name", "contemporary").toString();
         QStringList keys = QStyleFactory::keys();
         for (QString key : keys) {
             ui->systemWidgetTheme->addItem(key);
@@ -211,6 +212,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                 ui->systemWidgetTheme->setCurrentIndex(ui->systemWidgetTheme->count() - 1);
             }
         }
+        ui->systemWidgetTheme->blockSignals(false);
     }
 
     connect(this, &InfoPaneDropdown::networkLabelChanged, [=](QString label) {

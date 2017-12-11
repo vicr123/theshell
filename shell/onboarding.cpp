@@ -23,6 +23,8 @@
 #include "internationalisation.h"
 
 #define ChangelogOnbording \
+    "New in theShell 7.2:\n"\
+    "\n"\
     "New in theShell 7.1:\n"\
     "- theWave has been discontinued.\n"\
     "- New Notifications system, allowing for simpler notifications to be shown\n"\
