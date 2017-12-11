@@ -318,7 +318,9 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->batterySuspend->setValue(settings.value("power/batterySuspend", 30).toInt());
     ui->powerScreenOff->setValue(settings.value("power/powerScreenOff", 30).toInt());
     ui->powerSuspend->setValue(settings.value("power/powerSuspend", 90).toInt());
+    ui->sunlightRedshift->setChecked(settings.value("display/redshiftSunlightCycle", false).toBool());
     updateAccentColourBox();
+    updateRedshiftTime();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
 
     QString defaultFont;
@@ -342,20 +344,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     QObjectList allObjects;
     allObjects.append(this);
-
-    /*do {
-       for (QObject* object : allObjects) {
-           if (object != NULL) {
-               if (object->children().count() != 0) {
-                   for (QObject* object2 : object->children()) {
-                       allObjects.append(object2);
-                   }
-               }
-               object->installEventFilter(this);
-               allObjects.removeOne(object);
-           }
-       }
-    } while (allObjects.count() != 0);*/
 
     ui->notificationSoundBox->blockSignals(true);
     ui->notificationSoundBox->addItem("Triple Ping");
@@ -3330,4 +3318,85 @@ void InfoPaneDropdown::changeEvent(QEvent *event) {
         ui->retranslateUi(this);
     }
     QDialog::changeEvent(event);
+}
+
+void InfoPaneDropdown::on_sunlightRedshift_toggled(bool checked)
+{
+    settings.setValue("display/redshiftSunlightCycle", checked);
+    updateRedshiftTime();
+}
+
+void InfoPaneDropdown::updateRedshiftTime() {
+    if (!settings.value("display/redshiftSunlightCycle", false).toBool()) {
+        //Don't grab location if user doesn't want
+        ui->startRedshift->setEnabled(true);
+        ui->endRedshift->setEnabled(true);
+        return;
+    }
+    ui->startRedshift->setEnabled(false);
+    ui->endRedshift->setEnabled(false);
+
+    QDBusMessage getMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "ListActivatableNames");
+    QDBusReply<QStringList> reply = QDBusConnection::systemBus().call(getMessage);
+    if (!reply.value().contains("org.freedesktop.GeoClue2")) {
+        qDebug() << "Can't start GeoClue";
+        return;
+    }
+
+    QDBusMessage launchMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "StartServiceByName");
+    QVariantList args;
+    args.append("org.freedesktop.GeoClue2");
+    args.append((uint) 0);
+    launchMessage.setArguments(args);
+
+    QDBusConnection::systemBus().call(launchMessage);
+
+    QDBusMessage clientMessage = QDBusMessage::createMethodCall("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.GeoClue2.Manager", "GetClient");
+    QDBusReply<QDBusObjectPath> clientPathReply = QDBusConnection::systemBus().call(clientMessage);
+    geoclueClientPath = clientPathReply.value();
+
+    QDBusInterface clientInterface("org.freedesktop.GeoClue2", geoclueClientPath.path(), "org.freedesktop.GeoClue2.Client", QDBusConnection::systemBus());
+    clientInterface.setProperty("DesktopId", "theshell");
+    QDBusConnection::systemBus().connect(clientInterface.service(), geoclueClientPath.path(), clientInterface.interface(), "LocationUpdated", this, SLOT(updateGeoclueLocation()));
+    clientInterface.call("Start");
+}
+
+void InfoPaneDropdown::updateGeoclueLocation() {
+    QDBusInterface clientInterface("org.freedesktop.GeoClue2", geoclueClientPath.path(), "org.freedesktop.GeoClue2.Client", QDBusConnection::systemBus());
+    QDBusObjectPath locationPath = clientInterface.property("Location").value<QDBusObjectPath>();
+
+    QDBusInterface locationInterface("org.freedesktop.GeoClue2", locationPath.path(), "org.freedesktop.GeoClue2.Location", QDBusConnection::systemBus());
+    double latitude = locationInterface.property("Latitude").toDouble();
+    double longitude = locationInterface.property("Longitude").toDouble();
+
+    QNetworkAccessManager* manager = new QNetworkAccessManager();
+    QNetworkRequest sunriseApi(QUrl(QString("https://api.sunrise-sunset.org/json?lat=%1&lng=%2&formatted=0").arg(latitude).arg(longitude)));
+    sunriseApi.setHeader(QNetworkRequest::UserAgentHeader, QString("theShell/%1").arg(TS_VERSION));
+
+    QNetworkReply* reply = manager->get(sunriseApi);
+    connect(reply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
+        [=](QNetworkReply::NetworkError code){
+        qDebug() << "Error";
+    });
+    connect(reply, &QNetworkReply::finished, [=] {
+        QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+        QJsonObject root = doc.object();
+        if (root.value("status").toString() != "OK") {
+            qDebug() << root.value("status").toString();
+            return;
+        }
+
+        //The time returned should be midway into the transition period, add/remove 30 minutes to compensate
+        QJsonObject results = root.value("results").toObject();
+        QDateTime sunrise = QDateTime::fromString(results.value("sunrise").toString(), Qt::ISODate).toLocalTime().addSecs(-1800);
+        QDateTime sunset = QDateTime::fromString(results.value("sunset").toString(), Qt::ISODate).toLocalTime().addSecs(1800);
+
+        ui->startRedshift->setDateTime(sunset);
+        ui->endRedshift->setDateTime(sunrise);
+
+        reply->deleteLater();
+        manager->deleteLater();
+    });
+
+    clientInterface.call("Stop");
 }
