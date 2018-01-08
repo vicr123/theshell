@@ -24,13 +24,14 @@
 #include <QObject>
 #include <QDBusMessage>
 #include <QDBusInterface>
+#include <QDBusPendingCall>
 #include <QDebug>
 
 class LocationServices : public QObject
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.freedesktop.GeoClue2.Agent")
-    Q_PROPERTY(uint MaxAccuracyLevel READ MaxAccuracyLevel)
+    Q_SCRIPTABLE Q_PROPERTY(uint MaxAccuracyLevel READ MaxAccuracyLevel)
 
 public:
     explicit LocationServices(QObject *parent = 0);
@@ -39,6 +40,7 @@ public:
 
 public Q_SLOTS:
     Q_SCRIPTABLE bool AuthorizeApp(QString desktop_id, uint req_accuracy_level, uint &allowed_accuracy_level);
+    bool requiresAuthorization();
 
 signals:
     void locationUsingChanged(bool location);
@@ -47,7 +49,7 @@ public slots:
     void GeocluePropertiesChanged(QString interface, QVariantMap properties);
 
 private:
-
+    bool reqAuth = false;
 };
 
 #endif // LOCATIONSERVICES_H

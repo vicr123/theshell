@@ -42,13 +42,13 @@ QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
 
 power.files = org.thesuite.power.xml
 
-#location.files = org.freedesktop.GeoClue2.Agent.xml
-#location.header_flags = -l LocationServices -i locationservices.h
-#location.source_flags = -l LocationServices -i locationservices.h
+location.files = org.freedesktop.GeoClue2.Agent.xml
+location.header_flags = -l LocationServices -i locationservices.h
+location.source_flags = -l LocationServices -i locationservices.h
 
 dsig.files = org.thesuite.theshell.xml
 
-DBUS_ADAPTORS += power dsig #location
+DBUS_ADAPTORS += power dsig location
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -163,7 +163,8 @@ FORMS    += mainwindow.ui \
 DISTFILES += \
     org.freedesktop.Notifications.xml \
     theshell.desktop \
-    theshellb.desktop
+    theshellb.desktop \
+    org.freedesktop.GeoClue2.Agent.xml
 
 RESOURCES += \
     resources.qrc \

@@ -86,10 +86,15 @@ bool TaskbarManager::updateInternalWindow(Window window) {
     //Query Title
     ok = XGetWindowProperty(QX11Info::display(), window, XInternAtom(QX11Info::display(), "_NET_WM_NAME", False), 0, 1024, False,
                        XInternAtom(QX11Info::display(), "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &returnVal);
+
+    if (returnVal == 0x0) {
+        ok = XGetWindowProperty(QX11Info::display(), window, XInternAtom(QX11Info::display(), "WM_NAME", False), 0, 1024, False,
+                           XInternAtom(QX11Info::display(), "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &returnVal);
+    }
+
     if (ok == 0 && returnVal != 0x0) {
         serialised.setTitle(QString::fromUtf8((char*) returnVal));
         XFree(returnVal);
-
 
         ok = XGetWindowProperty(QX11Info::display(), window, XInternAtom(QX11Info::display(), "_NET_WM_PID", False), 0, 1024, False,
                                 XA_CARDINAL, &ReturnType, &format, &items, &bytes, &returnVal);

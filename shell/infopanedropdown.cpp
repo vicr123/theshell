@@ -35,6 +35,7 @@ extern QDBusServiceWatcher* dbusServiceWatcherSystem;
 extern UPowerDBus* updbus;
 extern NotificationsDBusAdaptor* ndbus;
 extern DBusSignals* dbusSignals;
+extern LocationServices* locationServices;
 
 InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QDialog(parent),
@@ -582,7 +583,12 @@ void InfoPaneDropdown::processTimer() {
                 emit redshiftEnabledChanged(true);
             }
         } else {
-            redshiftAdjust->start("redshift -O 6500");
+            //Check Redshift Override
+            if (overrideRedshift == 2) {
+                redshiftAdjust->start("redshift -O " + QString::number(endIntensity));
+            } else {
+                redshiftAdjust->start("redshift -O 6500");
+            }
 
             if (isRedshiftOn) {
                 isRedshiftOn = false;
@@ -1323,9 +1329,17 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     //Set up settings
     if (currentRow == 5) { //Notifications
         setupNotificationsSettingsPane();
-    } else if (currentRow == 9) { //Users
+    } else if (currentRow == 6) { //Location
+        if (locationServices->requiresAuthorization()) {
+            ui->locationRequireAuthLabel->setVisible(true);
+            ui->locationFrame->setEnabled(false);
+        } else {
+            ui->locationRequireAuthLabel->setVisible(false);
+            ui->locationFrame->setEnabled(true);
+        }
+    } else if (currentRow == 10) { //Users
         setupUsersSettingsPane();
-    } else if (currentRow == 10) { //Date and Time
+    } else if (currentRow == 11) { //Date and Time
         setupDateTimeSettingsPane();
     }
 }

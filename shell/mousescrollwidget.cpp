@@ -25,12 +25,20 @@ MouseScrollWidget::MouseScrollWidget(QWidget *parent) : QScrollArea(parent)
     this->setMouseTracking(true);
     shiftLeft.setInterval(10);
     connect(&shiftLeft, &QTimer::timeout, [=]() {
-        this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() - scrollSpeed);
+        if (QApplication::isRightToLeft()) {
+            this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() + scrollSpeed);
+        } else {
+            this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() - scrollSpeed);
+        }
     });
 
     shiftRight.setInterval(10);
     connect(&shiftRight, &QTimer::timeout, [=]() {
-        this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() + scrollSpeed);
+        if (QApplication::isRightToLeft()) {
+            this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() - scrollSpeed);
+        } else {
+            this->horizontalScrollBar()->setValue(this->horizontalScrollBar()->value() + scrollSpeed);
+        }
     });
 
     connect(this->horizontalScrollBar(), &QScrollBar::valueChanged, [=]() {
@@ -162,7 +170,7 @@ bool MouseScrollWidget::eventFilter(QObject *object, QEvent *event) {
         QPainter painter(vp);
 
         painter.setPen(QColor(0, 0, 0, 0));
-        int leftStart = this->horizontalScrollBar()->value();
+        int leftStart = this->horizontalScrollBar()->value() * 2;
 
         if (this->horizontalScrollBar()->maximum() != 0) {
             painter.setBrush(this->palette().brush(QPalette::Highlight));

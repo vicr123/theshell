@@ -131,6 +131,7 @@ private:
     void mouseReleaseEvent(QMouseEvent* event);
 
     void reject();
+    bool resizing = false;
 
     BTHandsfree* bt;
 };

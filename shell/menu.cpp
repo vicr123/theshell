@@ -34,15 +34,15 @@ Menu::Menu(BTHandsfree* bt, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->resize(this->width() * getDPIScaling(), this->height());
-    //ui->listWidget->setIconSize(QSize(16 * getDPIScaling(), 16 * getDPIScaling()));
-
-    ui->offFrame->setParent(this);
-    ui->offFrame->setVisible(false);
-    this->layout()->removeWidget(ui->offFrame);
-    ui->offFrame->setGeometry(10, -this->height(), this->width() - 20, this->height() - 20);
-    ui->timerIcon->setPixmap(QIcon::fromTheme("player-time").pixmap(16));
-    ui->userIcon->setPixmap(QIcon::fromTheme("system-users").pixmap(16));
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    int thisWidth = settings.value("gateway/width", this->width() * getDPIScaling()).toInt();
+    if (thisWidth < 100 * getDPIScaling()) {
+        thisWidth = 100 * getDPIScaling();
+    }
+    if (thisWidth > screenGeometry.width() - 300 * getDPIScaling()) {
+        thisWidth = screenGeometry.width() - 300 * getDPIScaling();
+    }
+    this->resize(thisWidth, this->height());
 
     ui->commandLinkButton->setProperty("type", "destructive");
     ui->commandLinkButton_2->setProperty("type", "destructive");
@@ -136,11 +136,16 @@ void Menu::show() {
     QDialog::show();
     doCheckForClose = true;
 
-    ui->offFrame->setGeometry(10, this->height(), this->width() - 20, this->height() - 20);
+    ui->stackedWidget->setCurrentIndex(0);
 
     tPropertyAnimation* animation = new tPropertyAnimation(this, "geometry");
     animation->setStartValue(this->geometry());
-    animation->setEndValue(QRect(this->x() + this->width(), this->y(), this->width(), this->height()));
+
+    if (QApplication::isRightToLeft()) {
+        animation->setEndValue(QRect(this->x() - this->width(), this->y(), this->width(), this->height()));
+    } else {
+        animation->setEndValue(QRect(this->x() + this->width(), this->y(), this->width(), this->height()));
+    }
     animation->setDuration(500);
     animation->setEasingCurve(QEasingCurve::OutCubic);
     connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
@@ -171,7 +176,12 @@ void Menu::changeEvent(QEvent *event) {
 void Menu::close() {
     tPropertyAnimation* animation = new tPropertyAnimation(this, "geometry");
     animation->setStartValue(this->geometry());
-    animation->setEndValue(QRect(this->x() - this->width(), this->y(), this->width(), this->height()));
+
+    if (QApplication::isRightToLeft()) {
+        animation->setEndValue(QRect(this->x() + this->width(), this->y(), this->width(), this->height()));
+    } else {
+        animation->setEndValue(QRect(this->x() - this->width(), this->y(), this->width(), this->height()));
+    }
     animation->setDuration(500);
     animation->setEasingCurve(QEasingCurve::OutCubic);
     connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
@@ -218,7 +228,7 @@ void Menu::on_pushButton_clicked()
         endSession->showFullScreen();
         endSession->exec();
     } else {
-        bool showWarningPane = false;
+        /*bool showWarningPane = false;
         if (MainWin->getInfoPane()->isTimerRunning()) {
             showWarningPane = true;
             ui->timerIcon->setVisible(true);
@@ -243,22 +253,19 @@ void Menu::on_pushButton_clicked()
         } else {
             ui->shutdownText->setText(tr("You're about to power off your PC. Are you sure?"));
             ui->shutdownWarnings->setVisible(false);
-        }
+        }*/
 
-        ui->offFrame->setVisible(true);
+        /*ui->offFrame->setVisible(true);
 
-        /*tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
-        //anim->setStartValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
-        anim->setStartValue(ui->pushButton->geometry());
-        anim->setEndValue(QRect(10, 10, this->width() - 20, this->height() - 20));
+        tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
+        anim->setStartValue(QRect(this->width(), 10 * getDPIScaling(), this->width() - 20 * getDPIScaling(), this->height() - 20 * getDPIScaling()));
+        anim->setEndValue(QRect(10 * getDPIScaling(), 10 * getDPIScaling(), this->width() - 20 * getDPIScaling(), this->height() - 20 * getDPIScaling()));
         anim->setDuration(500);
-
         anim->setEasingCurve(QEasingCurve::OutCubic);
+        anim->start();*/
 
-        anim->start();
-
-        ui->offFrame->setMask(QRegion(0, 0, 0, 0));
-        ui->offFrame->setGeometry(10, 10, this->width() - 20, this->height() - 20);*/
+        /*ui->offFrame->setMask(QRegion(0, 0, 0, 0));
+        ui->offFrame->setGeometry(10, 10, this->width() - 20, this->height() - 20);
 
         tVariantAnimation* horiz = new tVariantAnimation(this);
         horiz->setStartValue((float) 0);
@@ -314,16 +321,18 @@ void Menu::on_pushButton_clicked()
             vert->start();
         });
         connect(horiz, SIGNAL(finished()), horiz, SLOT(deleteLater()));
-        horiz->start();
+        horiz->start();*/
+
+        ui->stackedWidget->setCurrentIndex(1);
     }
 }
 
 void Menu::on_pushButton_2_clicked()
 {
-    tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
-    anim->setStartValue(QRect(10, 10, this->width() - 20, this->height() - 20));
+    /*tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
+    anim->setStartValue(QRect(10 * getDPIScaling(), 10 * getDPIScaling(), this->width() - 20 * getDPIScaling(), this->height() - 20 * getDPIScaling()));
     //anim->setEndValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
-    anim->setEndValue(QRect(10, ui->pushButton->geometry().bottom(), this->width() - 20, 0));
+    anim->setEndValue(QRect(this->width(), 10 * getDPIScaling(), this->width() - 20 * getDPIScaling(), this->height() - 20 * getDPIScaling()));
     anim->setDuration(250);
     anim->setEasingCurve(QEasingCurve::InCubic);
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -331,7 +340,9 @@ void Menu::on_pushButton_2_clicked()
         ui->offFrame->setVisible(false);
     });
 
-    anim->start();
+    anim->start();*/
+
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void Menu::on_commandLinkButton_clicked()
@@ -473,7 +484,11 @@ void Menu::on_commandLinkButton_5_clicked()
 void Menu::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setPen(this->palette().color(QPalette::WindowText));
-    painter.drawLine(this->width() - 1, 0, this->width() - 1, this->height());
+    if (QApplication::isRightToLeft()) {
+        painter.drawLine(0, 0, 0, this->height());
+    } else {
+        painter.drawLine(this->width() - 1, 0, this->width() - 1, this->height());
+    }
     event->accept();
 }
 
@@ -517,15 +532,57 @@ void Menu::on_commandLinkButton_4_clicked()
 }
 
 void Menu::mousePressEvent(QMouseEvent *event) {
-
+    if (QApplication::isRightToLeft()) {
+        if (event->x() < 5) {
+            resizing = true;
+        }
+    } else {
+        if (event->x() > this->width() - 5) {
+            resizing = true;
+        }
+    }
 }
 
 void Menu::mouseMoveEvent(QMouseEvent *event) {
-
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    if (resizing) {
+        int width;
+        if (QApplication::isRightToLeft()) {
+            width = screenGeometry.right() - QCursor::pos().x();
+        } else {
+            width = event->x();
+        }
+        if (width < 100 * getDPIScaling()) {
+            width = 100 * getDPIScaling();
+        }
+        if (width > screenGeometry.width() - 300 * getDPIScaling()) {
+            width = screenGeometry.width() - 300 * getDPIScaling();
+        }
+        this->resize(width, this->height());
+        if (QApplication::isRightToLeft()) {
+            this->move(screenGeometry.right() - width, this->y());
+        }
+    } else {
+        if (QApplication::isRightToLeft()) {
+            if (event->x() < 5) {
+                this->setCursor(QCursor(Qt::SizeHorCursor));
+            } else {
+                this->setCursor(QCursor(Qt::ArrowCursor));
+            }
+        } else {
+            if (event->x() > this->width() - 5) {
+                this->setCursor(QCursor(Qt::SizeHorCursor));
+            } else {
+                this->setCursor(QCursor(Qt::ArrowCursor));
+            }
+        }
+    }
 }
 
 void Menu::mouseReleaseEvent(QMouseEvent *event) {
-
+    resizing = false;
+    this->setCursor(QCursor(Qt::ArrowCursor));
+    settings.setValue("gateway/width", this->width());
 }
 
 void Menu::on_exitButton_clicked()

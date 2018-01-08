@@ -24,6 +24,7 @@
 
 #define ChangelogOnbording \
     "New in theShell 7.2:\n"\
+    "Redshift can now be automatically timed according to the sunlight cycle based on your location\n"\
     "\n"\
     "New in theShell 7.1:\n"\
     "- theWave has been discontinued.\n"\

@@ -1721,9 +1721,16 @@ void MainWindow::openMenu() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     QRect availableGeometry = QApplication::desktop()->availableGeometry();
 
+    int left;
+    if (QApplication::isRightToLeft()) {
+        left = this->x() + this->width();
+    } else {
+        left = this->x() - gatewayMenu->width();
+    }
+
     //gatewayMenu->setGeometry(availableGeometry.x(), availableGeometry.y(), gatewayMenu->width(), availableGeometry.height());
     if (settings.value("bar/onTop", true).toBool()) {
-        gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), this->y() + this->height() - 1, gatewayMenu->width(), availableGeometry.height() - (this->height() + (this->y() - availableGeometry.y())) + 1);
+        gatewayMenu->setGeometry(left, this->y() + this->height() - 1, gatewayMenu->width(), availableGeometry.height() - (this->height() + (this->y() - availableGeometry.y())) + 1);
     } else {
         int height;
 
@@ -1732,7 +1739,7 @@ void MainWindow::openMenu() {
         } else {
             height = this->y() - screenGeometry.top() + 1;
         }
-        gatewayMenu->setGeometry(this->x() - gatewayMenu->width(), availableGeometry.y() , gatewayMenu->width(), height);
+        gatewayMenu->setGeometry(left, availableGeometry.y() , gatewayMenu->width(), height);
     }
     gatewayMenu->show();
     gatewayMenu->setFocus();

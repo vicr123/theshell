@@ -19,22 +19,33 @@
  * *************************************/
 
 #include "locationservices.h"
-//#include "agent_adaptor.h"
+#include "agent_adaptor.h"
 
 LocationServices::LocationServices(QObject *parent) : QObject(parent)
 {
-    /*QDBusMessage activator = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "StartServiceByName");
+    QDBusMessage activator = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "StartServiceByName");
     activator.setArguments(QVariantList() << "org.freedesktop.GeoClue2");
     QDBusConnection::systemBus().call(activator);
 
     new AgentAdaptor(this);
     QDBusConnection dbus = QDBusConnection::systemBus();
-    qDebug() << dbus.registerObject("/org/freedesktop/GeoClue2/Agent", this);
+    dbus.registerObject("/org/freedesktop/GeoClue2/Agent", "org.freedesktop.GeoClue2.Agent", this);
 
     QDBusMessage agentMessage = QDBusMessage::createMethodCall("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.GeoClue2.Manager", "AddAgent");
-    agentMessage.setArguments(QVariantList() << "gnome-shell");
-    QDBusPendingCall message = QDBusConnection::systemBus().asyncCall(agentMessage);*/
-    //qDebug() << message.errorMessage();
+    agentMessage.setArguments(QVariantList() << "theshell");
+    QDBusPendingCall message = QDBusConnection::systemBus().asyncCall(agentMessage);
+    QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(message);
+    connect(watcher, &QDBusPendingCallWatcher::finished, [=] {
+        qDebug() << message.error().name();
+        qDebug() << message.error().message();
+
+        if (message.isError()) {
+            if (message.error().name() == "org.freedesktop.DBus.Error.AccessDenied") {
+                reqAuth = true;
+            }
+        }
+        watcher->deleteLater();
+    });
 
     QDBusConnection::systemBus().connect("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(GeocluePropertiesChanged(QString,QVariantMap)));
 }
@@ -42,6 +53,14 @@ LocationServices::LocationServices(QObject *parent) : QObject(parent)
 bool LocationServices::AuthorizeApp(QString desktop_id, uint req_accuracy_level, uint &allowed_accuracy_level) {
     qDebug() << desktop_id + " is accessing location";
     allowed_accuracy_level = req_accuracy_level;
+
+    if (desktop_id == "theshell") {
+        //Allow theShell
+        return true;
+    }
+
+
+
     return true;
 }
 
@@ -55,4 +74,8 @@ void LocationServices::GeocluePropertiesChanged(QString interface, QVariantMap p
             emit locationUsingChanged(properties.value("InUse").toBool());
         }
     }
+}
+
+bool LocationServices::requiresAuthorization() {
+    return reqAuth;
 }

@@ -25,12 +25,12 @@ void startupDesktopFile(QString path, QSettings::Format format) {
     }
 
     if (desktopFile.contains("TryExec")) {
-        if (!QFile(desktopFile.value("TryExec").toString()).exists()) {
+        if (!QFile(desktopFile.value("TryExec").toString()).exists() && !QFile("/usr/bin/" + desktopFile.value("TryExec").toString()).exists()) {
             return;
         }
     }
 
-    if (desktopFile.value("hidden", false).toBool()) {
+    if (desktopFile.value("Hidden", false).toBool()) {
         return;
     }
 
@@ -86,7 +86,9 @@ int main(int argc, char *argv[])
         QString group;
         while (!device.atEnd()) {
             QString line = device.readLine().trimmed();
-            if (line.startsWith("[") && line.endsWith("]")) {
+            if (line == "") {
+
+            } else if (line.startsWith("[") && line.endsWith("]")) {
                 group = line.mid(1, line.length() - 2);
             } else {
                 QString key = line.left(line.indexOf("="));

@@ -54,7 +54,7 @@ void AnimatedStackedWidget::doSetCurrentIndex(int index) {
             QStackedWidget::setCurrentIndex(index);
         } else {
             QRect newGeometry;
-            if (currentIndex() < index) {
+            if ((currentIndex() < index && !QApplication::isRightToLeft()) || (currentIndex() > index && QApplication::isRightToLeft())) {
                 nextWidget->setGeometry(this->width(), 0, this->width(), this->height());
                 newGeometry.setRect(-this->width() / 8, 0, this->width(), this->height());
             } else {

@@ -324,13 +324,6 @@ int main(int argc, char *argv[])
     qDBusRegisterMetaType<QList<QVariantMap>>();
     qDBusRegisterMetaType<QMap<QString, QVariantMap>>();
 
-    if (autoStart) {
-        QStringList autostartApps = settings.value("startup/autostart", "").toString().split(",");
-        for (QString app : autostartApps) {
-            QProcess::startDetached(app);
-        }
-    }
-
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
     MainWin->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus);
