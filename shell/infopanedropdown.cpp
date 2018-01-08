@@ -48,6 +48,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     startTime.start();
 
+    ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2018"));
+
     connect(this, SIGNAL(flightModeChanged(bool)), ui->NetworkManager, SLOT(flightModeChanged(bool)));
     connect(this, SIGNAL(flightModeChanged(bool)), ui->networkManagerSettings, SLOT(flightModeChanged(bool)));
 

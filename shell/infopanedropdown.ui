@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>3</day>
+                 <day>2</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>3</day>
+                 <day>2</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1866,7 +1866,8 @@
              <string>Location</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-system-geolocation"/>
+             <iconset theme="preferences-system-geolocation">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -1955,7 +1956,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>6</number>
+            <number>15</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2571,8 +2572,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>883</width>
-                  <height>589</height>
+                  <width>372</width>
+                  <height>565</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_21">
@@ -5041,9 +5042,9 @@ Items that will be kept if you choose to keep files:
               </spacer>
              </item>
              <item row="7" column="0">
-              <widget class="QLabel" name="label_21">
+              <widget class="QLabel" name="copyrightNotice">
                <property name="text">
-                <string>theShell is Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</string>
+                <string notr="true">theShell is Copyright (c) Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.</string>
                </property>
                <property name="wordWrap">
                 <bool>true</bool>
