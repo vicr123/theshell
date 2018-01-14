@@ -30,6 +30,23 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->cancelButton->setVisible(false);
+    ui->killAllButton->setVisible(false);
+
+    tbManager = new TaskbarManager();
+    connect(tbManager, &TaskbarManager::deleteWindow, [=] {
+        if (tbManager->Windows().count() - 1 == 0) {
+            tbTimer->stop();
+            if (performEndSessionWhenAllAppsClosed) {
+                performEndSession();
+            }
+        }
+    });
+
+    tbTimer = new QTimer();
+    tbTimer->setInterval(100);
+    connect(tbTimer, SIGNAL(timeout()), tbManager, SLOT(ReloadWindows()));
+
     powerOffTimer = new QVariantAnimation();
     powerOffTimer->setStartValue(0);
     powerOffTimer->setEndValue(300);
@@ -41,7 +58,7 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
     connect(powerOffTimer, &QVariantAnimation::finished, [=]() {
         //Power off the device
         this->type = powerOff;
-        ui->label->setText(tr("Power Off"));
+        ui->powerType->setText(tr("Power Off"));
 
         //We need to use a QTimer to run the function on the event loop because we do something strange in this->showFullScreen()
         QTimer* invokeTimer = new QTimer();
@@ -65,19 +82,19 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
 
     switch (type) {
         case powerOff:
-            ui->label->setText(tr("Power Off"));
+            ui->powerType->setText(tr("Power Off"));
             ui->askWhatToDo->setVisible(false);
             break;
         case reboot:
-            ui->label->setText(tr("Reboot"));
+            ui->powerType->setText(tr("Reboot"));
             ui->askWhatToDo->setVisible(false);
             break;
         case logout:
-            ui->label->setText(tr("Log out"));
+            ui->powerType->setText(tr("Log out"));
             ui->askWhatToDo->setVisible(false);
             break;
         case dummy:
-            ui->label->setText(tr("Dummy"));
+            ui->powerType->setText(tr("Dummy"));
             ui->askWhatToDo->setVisible(false);
             break;
         case ask:
@@ -111,6 +128,10 @@ void EndSessionWait::close() {
 
 void EndSessionWait::showFullScreen() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
+
+    ui->powerType->setVisible(false);
+    ui->closingAppsMessage->setVisible(false);
+
     if (this->type == slideOff) {
         this->setAttribute(Qt::WA_TranslucentBackground);
 
@@ -201,34 +222,6 @@ void EndSessionWait::showFullScreen() {
         if (this->type != dummy && this->type != ask) {
             powerOffTimer->stop();
             powerOffTimer->setCurrentTime(0);
-            /*QProcess p;
-            p.start("wmctrl -lp");
-            p.waitForStarted();
-            while (p.state() != 0) {
-                QApplication::processEvents();
-            }
-
-            QList<WmWindow*> *wlist = new QList<WmWindow*>();
-
-            QString output(p.readAllStandardOutput());
-            for (QString window : output.split("\n")) {
-                QStringList parts = window.split(" ");
-                parts.removeAll("");
-                if (parts.length() >= 4) {
-                    if (parts[2].toInt() != QCoreApplication::applicationPid()) {
-                        WmWindow *w = new WmWindow();
-                        w->setPID(parts[2].toInt());
-                        QString title;
-                        for (int i = 4; i != parts.length(); i++) {
-                            title = title.append(" " + parts[i]);
-                        }
-                        title = title.remove(0, 1);
-
-                        w->setTitle(title);
-                        wlist->append(w);
-                    }
-                }
-            }*/
 
             //Prepare a window list
             QList<WmWindow> wlist;
@@ -315,7 +308,6 @@ void EndSessionWait::showFullScreen() {
             }
 
             for (WmWindow window : wlist) {
-
                 if (QApplication::arguments().contains("--debug")) {
                     if (!window.title().toLower().contains("theterminal") && !window.title().toLower().contains("qt creator")) {
                         sendMessageToRootWindow("_NET_CLOSE_WINDOW", window.WID());
@@ -323,42 +315,25 @@ void EndSessionWait::showFullScreen() {
                 } else {
                     sendMessageToRootWindow("_NET_CLOSE_WINDOW", window.WID());
                 }
-                /*p.start("wmctrl -c " + window.title());
-                p.waitForStarted();
-                while (p.state() != 0) {
-                    QApplication::processEvents();
-                }*/
             }
 
-            bool appsOpen = true;
+            tbManager->ReloadWindows();
+            if (tbManager->Windows().count() == 0) {
+                performEndSession();
+            } else {
+                tbTimer->start();
+                performEndSessionWhenAllAppsClosed = true;
 
-            QProcess p;
-            while (appsOpen) {
-                appsOpen = false;
-                p.start("wmctrl -lp");
-                p.waitForStarted();
-                while (p.state() != 0) {
-                    QApplication::processEvents();
-                }
-                QString output(p.readAllStandardOutput());
-                for (QString window : output.split("\n")) {
-                    QStringList parts = window.split(" ");
-                    parts.removeAll("");
-                    if (parts.length() >= 4) {
-                        if (parts[2].toInt() != QCoreApplication::applicationPid()) {
-                            appsOpen = true;
-                        }
-                    }
-                }
-                QApplication::processEvents();
+                QTimer::singleShot(5000, [=] {
+                    ui->powerType->setVisible(true);
+                    ui->closingAppsMessage->setVisible(true);
+                });
             }
-
-            performEndSession();
         }
     }
 }
 
-void EndSessionWait::on_pushButton_clicked()
+void EndSessionWait::on_killAllButton_clicked()
 {
     QProcess p;
     p.start("wmctrl -lp");
@@ -389,6 +364,7 @@ void EndSessionWait::on_pushButton_clicked()
         }
     }
 
+    tbTimer->stop();
     performEndSession();
 }
 
@@ -457,8 +433,9 @@ void EndSessionWait::EndSessionNow() {
     }
 }
 
-void EndSessionWait::on_pushButton_2_clicked()
+void EndSessionWait::on_cancelButton_clicked()
 {
+    performEndSessionWhenAllAppsClosed = false;
     this->close();
 }
 
@@ -470,21 +447,21 @@ void EndSessionWait::on_CancelAsk_clicked()
 void EndSessionWait::on_PowerOff_clicked()
 {
     this->type = powerOff;
-    ui->label->setText(tr("Power Off"));
+    ui->powerType->setText(tr("Power Off"));
     this->showFullScreen();
 }
 
 void EndSessionWait::on_Reboot_clicked()
 {
     this->type = reboot;
-    ui->label->setText(tr("Reboot"));
+    ui->powerType->setText(tr("Reboot"));
     this->showFullScreen();
 }
 
 void EndSessionWait::on_LogOut_clicked()
 {
     this->type = logout;
-    ui->label->setText(tr("Log Out"));
+    ui->powerType->setText(tr("Log Out"));
     this->showFullScreen();
 }
 
@@ -777,7 +754,7 @@ void EndSessionWait::on_DummyExit_clicked()
 {
     //Fake Exit
     this->type = dummy;
-    ui->label->setText(tr("Dummy"));
+    ui->powerType->setText(tr("Dummy"));
     this->showFullScreen();
 }
 
@@ -848,7 +825,7 @@ bool EndSessionWait::eventFilter(QObject *obj, QEvent *eve) {
 
                     this->setAttribute(Qt::WA_TranslucentBackground, false);
                     this->update();
-                    ui->label->setText(tr("Power Off"));
+                    ui->powerType->setText(tr("Power Off"));
                     ui->MainFrame->setVisible(true);
                     ui->askWhatToDo->setVisible(false);
                     this->showFullScreen();

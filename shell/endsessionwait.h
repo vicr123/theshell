@@ -65,6 +65,7 @@
 #include <QMouseEvent>
 #include "window.h"
 #include "tpropertyanimation.h"
+#include "taskbarmanager.h"
 #include <QToolButton>
 
 #include <signal.h>
@@ -101,9 +102,9 @@ public:
     void reject();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_killAllButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_cancelButton_clicked();
 
     void EndSessionNow();
     void on_CancelAsk_clicked();
@@ -141,6 +142,10 @@ private:
     bool alreadyShowing = false;
 
     QVariantAnimation* powerOffTimer;
+
+    TaskbarManager* tbManager;
+    bool performEndSessionWhenAllAppsClosed = false;
+    QTimer* tbTimer;
 
     int pressLocation;
 

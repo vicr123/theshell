@@ -753,9 +753,9 @@ void InfoPaneDropdown::show(dropdownType showWith) {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
         if (settings.value("bar/onTop", true).toBool()) {
-            this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height());
+            this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height() + 1);
         } else {
-            this->setGeometry(screenGeometry.x(), screenGeometry.bottom(), screenGeometry.width(), screenGeometry.height());
+            this->setGeometry(screenGeometry.x(), screenGeometry.bottom(), screenGeometry.width(), screenGeometry.height() + 1);
         }
 
         Atom DesktopWindowTypeAtom;
@@ -769,7 +769,7 @@ void InfoPaneDropdown::show(dropdownType showWith) {
 
         QDialog::show();
         this->setFixedWidth(screenGeometry.width());
-        this->setFixedHeight(screenGeometry.height());
+        this->setFixedHeight(screenGeometry.height() + 1);
 
         if (settings.value("bar/onTop", true).toBool()) {
             previousDragY = -1;
@@ -798,9 +798,9 @@ void InfoPaneDropdown::close() {
     a->setStartValue(this->geometry());
 
     if (settings.value("bar/onTop", true).toBool()) {
-        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), this->width(), this->height()));
+        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - screenGeometry.height() + 1, this->width(), this->height()));
     } else {
-        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.bottom(), this->width(), this->height()));
+        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.bottom() + 1, this->width(), this->height()));
     }
     a->setEasingCurve(QEasingCurve::OutCubic);
     a->setDuration(500);
@@ -1268,8 +1268,8 @@ void InfoPaneDropdown::mouseMoveEvent(QMouseEvent *event) {
             dragRect.moveTo(screenGeometry.left(), screenGeometry.top());
         }
     } else {
-        if (dragRect.top() <= screenGeometry.top()) {
-            dragRect.moveTo(screenGeometry.left(), screenGeometry.top());
+        if (dragRect.top() <= screenGeometry.top() - 1) {
+            dragRect.moveTo(screenGeometry.left(), screenGeometry.top() - 1);
         }
     }
     this->setGeometry(dragRect);
@@ -1283,7 +1283,7 @@ void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
     if (initialPoint - 5 > mouseClickPoint && initialPoint + 5 < mouseClickPoint) {
         tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
         a->setStartValue(this->geometry());
-        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), this->height()));
+        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), this->height()));
         a->setEasingCurve(QEasingCurve::OutCubic);
         a->setDuration(500);
         connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
@@ -1296,7 +1296,7 @@ void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
         } else {
             tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
             a->setStartValue(this->geometry());
-            a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), this->height()));
+            a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), this->height()));
             a->setEasingCurve(QEasingCurve::OutCubic);
             a->setDuration(500);
             connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
@@ -1917,9 +1917,9 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
     if (settings.value("bar/onTop", true).toBool()) {
-        this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height() + y, screenGeometry.width(), screenGeometry.height());
+        this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height() + y, screenGeometry.width(), screenGeometry.height() + 1);
     } else {
-        this->setGeometry(screenGeometry.x(), screenGeometry.top() + y, screenGeometry.width(), screenGeometry.height());
+        this->setGeometry(screenGeometry.x(), screenGeometry.top() + y + screenGeometry.y(), screenGeometry.width(), screenGeometry.height() + 1);
     }
 
     Atom DesktopWindowTypeAtom;
@@ -1957,7 +1957,7 @@ void InfoPaneDropdown::completeDragDown() {
     } else {
         tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
         a->setStartValue(this->geometry());
-        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), this->width(), screenGeometry.height()));
+        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), screenGeometry.height() + 1));
         a->setEasingCurve(QEasingCurve::OutCubic);
         a->setDuration(500);
         connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
@@ -3415,4 +3415,15 @@ void InfoPaneDropdown::updateGeoclueLocation() {
     });
 
     clientInterface.call("Stop");
+}
+
+void InfoPaneDropdown::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    painter.setPen(this->palette().color(QPalette::WindowText));
+    if (settings.value("bar/onTop", true).toBool()) {
+        painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+    } else {
+        painter.drawLine(0, 0, this->width(), 0);
+    }
+    event->accept();
 }

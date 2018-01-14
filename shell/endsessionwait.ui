@@ -113,8 +113,11 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>20</number>
+         </property>
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="powerType">
            <property name="font">
             <font>
              <pointsize>20</pointsize>
@@ -126,28 +129,24 @@
            <property name="text">
             <string notr="true">Power Off</string>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_2">
+          <widget class="tCircularSpinner" name="widget" native="true"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="closingAppsMessage">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Closing all open applications. Please wait...</string>
+            <string>Waiting for apps to close...</string>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="progressBar">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="maximum">
-            <number>0</number>
-           </property>
-           <property name="value">
-            <number>-1</number>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -173,7 +172,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="cancelButton">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -187,7 +186,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="killAllButton">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -838,6 +837,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>tCircularSpinner</class>
+   <extends>QWidget</extends>
+   <header location="global">tcircularspinner.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>

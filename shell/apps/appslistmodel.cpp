@@ -514,7 +514,10 @@ bool AppsListModel::launchApp(QModelIndex index) {
             }
         }
         commandSpace.removeAll("");
-        process->start(commandSpace.join(" "));
+        //process->setEnvironment(environment);
+        QString finalCommand = commandSpace.join(" ");
+        qDebug() << finalCommand;
+        process->start(finalCommand);
         connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
         return true;
     }

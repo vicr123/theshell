@@ -1532,10 +1532,10 @@ void MainWindow::on_volumeSlider_sliderReleased()
 {
     //Check if the user has feedback sound on
     if (settings.value("sound/feedbackSound", true).toBool()) {
-    QSoundEffect* volumeSound = new QSoundEffect();
-    volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
-    volumeSound->play();
-    connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
+        QSoundEffect* volumeSound = new QSoundEffect();
+        volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
+        volumeSound->play();
+        connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
     }
 }
 

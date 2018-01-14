@@ -473,6 +473,7 @@ class InfoPaneDropdown : public QDialog
         void mouseMoveEvent(QMouseEvent *event);
         void mouseReleaseEvent(QMouseEvent *event);
         void changeEvent(QEvent* event);
+        void paintEvent(QPaintEvent* event);
 
         QTimer* timer = NULL;
         int timerNotificationId = 0;
