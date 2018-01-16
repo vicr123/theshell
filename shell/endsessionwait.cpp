@@ -30,8 +30,8 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->cancelButton->setVisible(false);
-    ui->killAllButton->setVisible(false);
+    ui->cancelButton->setFixedHeight(0);
+    ui->killAllButton->setFixedHeight(0);
 
     tbManager = new TaskbarManager();
     connect(tbManager, &TaskbarManager::deleteWindow, [=] {
@@ -129,8 +129,10 @@ void EndSessionWait::close() {
 void EndSessionWait::showFullScreen() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    ui->powerType->setVisible(false);
-    ui->closingAppsMessage->setVisible(false);
+    ui->powerType->setFixedHeight(0);
+    ui->closingAppsMessage->setFixedHeight(0);
+    ui->cancelButton->setFixedHeight(0);
+    ui->killAllButton->setFixedHeight(0);
 
     if (this->type == slideOff) {
         this->setAttribute(Qt::WA_TranslucentBackground);
@@ -159,6 +161,7 @@ void EndSessionWait::showFullScreen() {
         QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
         anim->setDuration(250);
         anim->setStartValue(this->windowOpacity());
+        anim->setEasingCurve(QEasingCurve::InCubic);
         if (this->type == ask) {
             anim->setEndValue(1.0);
         } else {
@@ -168,11 +171,14 @@ void EndSessionWait::showFullScreen() {
         if (!alreadyShowing) {
             alreadyShowing = true;
             this->setWindowOpacity(0.0);
+            anim->setStartValue(0.0);
+
             QDialog::showFullScreen();
             ui->terminateAppFrame->setGeometry(ui->terminateAppFrame->x(), ui->terminateAppFrame->y(), ui->terminateAppFrame->width(), 0);
             ui->terminateAppFrame->setVisible(false);
             ui->ExitFrameTop->resize(ui->ExitFrameTop->sizeHint());
             ui->ExitFrameBottom->resize(ui->ExitFrameBottom->sizeHint());
+
             anim->start(QAbstractAnimation::DeleteWhenStopped);
             powerOffTimer->start();
         } else {
@@ -217,7 +223,6 @@ void EndSessionWait::showFullScreen() {
                 QApplication::processEvents();
             }
         }
-
 
         if (this->type != dummy && this->type != ask) {
             powerOffTimer->stop();
@@ -325,10 +330,45 @@ void EndSessionWait::showFullScreen() {
                 performEndSessionWhenAllAppsClosed = true;
 
                 QTimer::singleShot(5000, [=] {
-                    ui->powerType->setVisible(true);
-                    ui->closingAppsMessage->setVisible(true);
+                    auto animateResize = [=](QWidget* widget) {
+                        tVariantAnimation* anim = new tVariantAnimation();
+                        anim->setStartValue(widget->height());
+                        anim->setEndValue(widget->sizeHint().height());
+                        anim->setEasingCurve(QEasingCurve::OutCubic);
+                        anim->setDuration(500);
+                        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                            widget->setFixedHeight(value.toInt());
+                        });
+                        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                        anim->start();
+                    };
+
+                    animateResize(ui->powerType);
+                    animateResize(ui->closingAppsMessage);
+                    animateResize(ui->cancelButton);
+                    animateResize(ui->killAllButton);
                 });
             }
+        } else if (this->type == dummy) {
+            QTimer::singleShot(5000, [=] {
+                auto animateResize = [=](QWidget* widget) {
+                    tVariantAnimation* anim = new tVariantAnimation();
+                    anim->setStartValue(widget->height());
+                    anim->setEndValue(widget->sizeHint().height());
+                    anim->setEasingCurve(QEasingCurve::OutCubic);
+                    anim->setDuration(500);
+                    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                        widget->setFixedHeight(value.toInt());
+                    });
+                    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+                    anim->start();
+                };
+
+                animateResize(ui->powerType);
+                animateResize(ui->closingAppsMessage);
+                animateResize(ui->cancelButton);
+                animateResize(ui->killAllButton);
+            });
         }
     }
 }

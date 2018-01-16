@@ -172,7 +172,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="cancelButton">
+            <widget class="QToolButton" name="cancelButton">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -183,21 +183,58 @@
               <iconset theme="dialog-cancel">
                <normaloff>.</normaloff>.</iconset>
              </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="killAllButton">
+            <widget class="QToolButton" name="killAllButton">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>Kill all open applications</string>
+              <string>End Now</string>
              </property>
              <property name="icon">
               <iconset theme="application-exit">
                <normaloff>.</normaloff>.</iconset>
              </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="toolButtonStyle">
+              <enum>Qt::ToolButtonTextUnderIcon</enum>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
             </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </item>

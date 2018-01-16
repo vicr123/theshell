@@ -35,11 +35,18 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
     this->setAttribute(Qt::WA_TranslucentBackground);
 
     ui->label->setParent(this);
+    this->layout()->removeWidget(ui->label);
     ui->label->raise();
     ui->label->installEventFilter(this);
     band = new QRubberBand(QRubberBand::Rectangle, ui->label);
     bandOrigin = QPoint(0, 0);
     band->setGeometry(QRect(bandOrigin, ui->label->size()));
+
+    regionBand = new QRubberBand(QRubberBand::Rectangle, ui->label);
+    QPalette regionBandPal = regionBand->palette();
+    regionBandPal.setColor(QPalette::Highlight, Qt::white);
+    regionBand->setPalette(regionBandPal);
+    regionBand->hide();
 
     QScreen* currentScreen = NULL;
     for (QScreen* screen : QApplication::screens()) {
@@ -49,9 +56,11 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
     }
 
     if (currentScreen != NULL) {
-        screenshotPixmap = currentScreen->grabWindow(0); //, currentScreen->geometry().x(), currentScreen->geometry().y(), currentScreen->geometry().width(), currentScreen->geometry().height());
+        originalPixmap = currentScreen->grabWindow(0); //, currentScreen->geometry().x(), currentScreen->geometry().y(), currentScreen->geometry().width(), currentScreen->geometry().height());
+        screenshotPixmap = originalPixmap;
         ui->label->setPixmap(screenshotPixmap);
         savePixmap = screenshotPixmap;
+        selectedRegion.setCoords(0, 0, originalPixmap.width(), originalPixmap.height());
 
         QSoundEffect* takeScreenshot = new QSoundEffect();
         takeScreenshot->setSource(QUrl("qrc:/sounds/screenshot.wav"));
@@ -105,23 +114,31 @@ void screenshotWindow::paintEvent(QPaintEvent *event) {
 void screenshotWindow::show() {
     QDialog::show();
 
-    ui->label->setGeometry(0, 0, this->width(), this->height());
-
-    originalGeometry = ui->label->geometry();
-    QRectF endGeometry = ui->label->geometry();
+    originalGeometry = QRect(0, 0, this->width(), this->height());
+    QRectF endGeometry = originalGeometry;
     //qreal scaleFactor = endGeometry.width() - (endGeometry.width() - 50);
     //endGeometry.adjust(50, endGeometry.height() * scaleFactor, -50, -endGeometry.height() * scaleFactor);
     //endGeometry.adjust(75, 75, -75, -75);
-    qreal newHeight = ((endGeometry.width() - 125 * getDPIScaling()) / endGeometry.width()) * endGeometry.height();
+    /*qreal newHeight = ((endGeometry.width() - 125 * getDPIScaling()) / endGeometry.width()) * endGeometry.height();
     endGeometry.setHeight(newHeight);
     endGeometry.setWidth(endGeometry.width() - 125 * getDPIScaling());
-    endGeometry.moveTo(100 * getDPIScaling() / 2, ((ui->label->height() - newHeight) / 2) - 35 * getDPIScaling());
+    endGeometry.moveTo(100 * getDPIScaling() / 2, ((ui->label->height() - newHeight) / 2) - 35 * getDPIScaling());*/
 
-    QPropertyAnimation* anim = new QPropertyAnimation(ui->label, "geometry");
-    anim->setStartValue(ui->label->geometry());
+    qreal scaleFactor = (endGeometry.width() - 125 * getDPIScaling()) / endGeometry.width();
+    endGeometry.setHeight(endGeometry.height() * scaleFactor);
+    endGeometry.setWidth(endGeometry.width() * scaleFactor);
+    endGeometry.moveLeft(this->width() / 2 - endGeometry.width() / 2);
+    endGeometry.moveTop(ui->descriptionLabel->geometry().y() / 2 - endGeometry.height() / 2);
+
+    tVariantAnimation* anim = new tVariantAnimation();
+    anim->setStartValue(QRectF(0, 0, this->width(), this->height()));
     anim->setEndValue(endGeometry);
     anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        ui->label->setGeometry(value.toRect());
+        ui->label->setFixedSize(value.toRect().size());
+    });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     anim->start();
 }
@@ -213,14 +230,12 @@ bool screenshotWindow::eventFilter(QObject *object, QEvent *event) {
     if (object == ui->label) {
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouseEvent = (QMouseEvent*) event;
-            if (mouseEvent->button() == Qt::RightButton) {
-                bandOrigin = QPoint(0, 0);
-                band->setGeometry(QRect(bandOrigin, ui->label->size()));
-                band->hide();
-            } else {
-                bandOrigin = mouseEvent->pos();
-                band->setGeometry(QRect(bandOrigin, mouseEvent->pos()).normalized());
-                band->show();
+            bandOrigin = mouseEvent->pos();
+            band->setGeometry(QRect(bandOrigin, mouseEvent->pos()).normalized());
+            band->show();
+
+            if (ui->regionSelectButton->isChecked()) {
+                regionBand->hide();
             }
         } else if (event->type() == QEvent::MouseMove) {
             QMouseEvent* mouseEvent = (QMouseEvent*) event;
@@ -228,13 +243,25 @@ bool screenshotWindow::eventFilter(QObject *object, QEvent *event) {
                 band->setGeometry(QRect(bandOrigin, mouseEvent->pos()).normalized());
             }
         } else if (event->type() == QEvent::MouseButtonRelease) {
-            QRect copyReigon;
+            QRect region;
             qreal scaleFactor = ((originalGeometry.width() - 125 * getDPIScaling()) / originalGeometry.width());
-            copyReigon.setLeft(band->geometry().left() / scaleFactor);
-            copyReigon.setTop(band->geometry().top() / scaleFactor);
-            copyReigon.setRight(band->geometry().right() / scaleFactor);
-            copyReigon.setBottom(band->geometry().bottom() / scaleFactor);
-            savePixmap = screenshotPixmap.copy(copyReigon);
+            region.setLeft(band->geometry().left() / scaleFactor);
+            region.setTop(band->geometry().top() / scaleFactor);
+            region.setRight(band->geometry().right() / scaleFactor);
+            region.setBottom(band->geometry().bottom() / scaleFactor);
+            if (ui->regionSelectButton->isChecked()) {
+                selectedRegion = region;
+                regionBand->setGeometry(band->geometry());
+                band->hide();
+                regionBand->show();
+            } else if (ui->blankerButton->isChecked()) {
+                QPainter p(&screenshotPixmap);
+                p.setBrush(Qt::black);
+                p.drawRect(region);
+                band->hide();
+            }
+            savePixmap = screenshotPixmap.copy(selectedRegion);
+            ui->label->setPixmap(screenshotPixmap);
         }
     }
     return false;
@@ -243,4 +270,13 @@ bool screenshotWindow::eventFilter(QObject *object, QEvent *event) {
 void screenshotWindow::close() {
     QDialog::close();
     this->deleteLater();
+}
+
+void screenshotWindow::on_resetButton_clicked()
+{
+    selectedRegion.setCoords(0, 0, originalPixmap.width(), originalPixmap.height());
+    screenshotPixmap = originalPixmap;
+    ui->label->setPixmap(screenshotPixmap);
+    savePixmap = screenshotPixmap;
+    regionBand->hide();
 }

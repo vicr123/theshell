@@ -70,14 +70,18 @@ private slots:
 
     void on_saveButton_clicked();
 
-private:
+    void on_resetButton_clicked();
+
+    private:
     Ui::screenshotWindow *ui;
 
+    QPixmap originalPixmap;
     QPixmap screenshotPixmap;
     QPixmap savePixmap;
-    QRubberBand* band;
+    QRubberBand *band, *regionBand;
     QPoint bandOrigin;
     QRectF originalGeometry;
+    QRect selectedRegion;
     
     void keyPressEvent(QKeyEvent* event);
     void paintEvent(QPaintEvent* event);

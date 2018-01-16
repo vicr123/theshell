@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>575</width>
-    <height>368</height>
+    <width>764</width>
+    <height>409</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,9 +28,22 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="descriptionLabel">
      <property name="text">
-      <string>Select a region using the mouse. To clear the region, right click.</string>
+      <string>Select a region using the mouse.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -55,6 +68,41 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QPushButton" name="regionSelectButton">
+        <property name="text">
+         <string>Crop</string>
+        </property>
+        <property name="icon">
+         <iconset theme="edit-select-all"/>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="blankerButton">
+        <property name="text">
+         <string>Redact</string>
+        </property>
+        <property name="icon">
+         <iconset theme="visibility"/>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -113,6 +161,16 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="resetButton">
+        <property name="text">
+         <string>Reset Modificiations</string>
+        </property>
+        <property name="icon">
+         <iconset theme="view-refresh"/>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

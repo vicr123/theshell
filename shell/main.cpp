@@ -359,16 +359,15 @@ QIcon getIconFromTheme(QString name, QColor textColor) {
 
 void EndSession(EndSessionWait::shutdownType type) {
     switch (type) {
-    case EndSessionWait::powerOff:
-    case EndSessionWait::reboot:
-    case EndSessionWait::logout:
-    case EndSessionWait::dummy: {
+        case EndSessionWait::powerOff:
+        case EndSessionWait::reboot:
+        case EndSessionWait::logout:
+        case EndSessionWait::dummy: {
             EndSessionWait* w = new EndSessionWait(type);
             w->showFullScreen();
-            QApplication::setOverrideCursor(Qt::BlankCursor);
             break;
         }
-    case EndSessionWait::suspend: {
+        case EndSessionWait::suspend: {
             QList<QVariant> arguments;
             arguments.append(true);
 
@@ -377,8 +376,7 @@ void EndSession(EndSessionWait::shutdownType type) {
             QDBusConnection::systemBus().send(message);
             break;
         }
-    case EndSessionWait::hibernate: {
-
+        case EndSessionWait::hibernate: {
             QList<QVariant> arguments;
             arguments.append(true);
 
