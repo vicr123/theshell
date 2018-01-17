@@ -72,6 +72,10 @@ private slots:
 
     void on_resetButton_clicked();
 
+    void on_regionSelectButton_clicked();
+
+    void on_blankerButton_clicked();
+
     private:
     Ui::screenshotWindow *ui;
 

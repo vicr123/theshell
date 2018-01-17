@@ -228,102 +228,15 @@ void Menu::on_pushButton_clicked()
         endSession->showFullScreen();
         endSession->exec();
     } else {
-        /*bool showWarningPane = false;
-        if (MainWin->getInfoPane()->isTimerRunning()) {
-            showWarningPane = true;
-            ui->timerIcon->setVisible(true);
-            ui->timerLabel->setVisible(true);
-        } else {
-            ui->timerIcon->setVisible(false);
-            ui->timerLabel->setVisible(false);
-        }
-
-        if (false) {
-            showWarningPane = true;
-            ui->userIcon->setVisible(true);
-            ui->userLabel->setVisible(true);
-        } else {
-            ui->userIcon->setVisible(false);
-            ui->userLabel->setVisible(false);
-        }
-
-        if (showWarningPane) {
-            ui->shutdownText->setText(tr("Before you power off your PC, you may want to check this."));
-            ui->shutdownWarnings->setVisible(true);
-        } else {
-            ui->shutdownText->setText(tr("You're about to power off your PC. Are you sure?"));
-            ui->shutdownWarnings->setVisible(false);
-        }*/
-
-        /*ui->offFrame->setVisible(true);
-
-        tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
-        anim->setStartValue(QRect(this->width(), 10 * getDPIScaling(), this->width() - 20 * getDPIScaling(), this->height() - 20 * getDPIScaling()));
-        anim->setEndValue(QRect(10 * getDPIScaling(), 10 * getDPIScaling(), this->width() - 20 * getDPIScaling(), this->height() - 20 * getDPIScaling()));
-        anim->setDuration(500);
-        anim->setEasingCurve(QEasingCurve::OutCubic);
-        anim->start();*/
-
-        /*ui->offFrame->setMask(QRegion(0, 0, 0, 0));
-        ui->offFrame->setGeometry(10, 10, this->width() - 20, this->height() - 20);
-
-        tVariantAnimation* horiz = new tVariantAnimation(this);
-        horiz->setStartValue((float) 0);
-        horiz->setEndValue((float) 1);
-        horiz->setDuration(100);
-        horiz->setEasingCurve(QEasingCurve::OutCubic);
-        connect(horiz, &tVariantAnimation::valueChanged, [=](QVariant percentage) {
-            QRect subtraction;
-            subtraction.setTop(ui->pushButton->mapTo(this, QPoint(0, 0)).y());
-            subtraction.setHeight(ui->pushButton->height());
-            int leftButton = ui->pushButton->mapTo(this, QPoint(0, 0)).x();
-            int middleButton = leftButton + ui->pushButton->width() / 2;
-
-            //Calculate left area
-            int leftArea = ((float) (middleButton - 10) * percentage.toFloat());
-
-            //Calculate right area
-            int rightArea = ((float) (this->width() - middleButton - 10) * percentage.toFloat());
-
-            subtraction.setLeft(middleButton - leftArea);
-            subtraction.setRight(middleButton + rightArea);
-
-            ui->offFrame->setGeometry(subtraction);
-            ui->offFrame->repaint();
-        });
-        connect(horiz, &tVariantAnimation::finished, [=] {
-            horiz->deleteLater();
-
-            tVariantAnimation* vert = new tVariantAnimation(this);
-            vert->setStartValue((float) 0);
-            vert->setEndValue((float) 1);
-            vert->setDuration(100);
-            vert->setEasingCurve(QEasingCurve::InCubic);
-            connect(vert, &tVariantAnimation::valueChanged, [=](QVariant percentage) {
-                QRect subtraction;
-                subtraction.setLeft(10);
-                subtraction.setWidth(this->width() - 20);
-
-                int topButton = ui->pushButton->mapTo(this, QPoint(0, 0)).y();
-
-                //Calculate top area
-                int topArea = (float) (topButton - (this->height() - ui->pushButton->geometry().bottom())) * percentage.toFloat();
-
-                //Calculate bottom area
-                int bottomArea = (float) (this->height() - (topButton + ui->pushButton->height()) - (this->height() - ui->pushButton->geometry().bottom())) * percentage.toFloat();
-
-                subtraction.setTop(topButton - topArea);
-                subtraction.setBottom(topButton + ui->pushButton->height() + bottomArea);
-
-                ui->offFrame->setGeometry(subtraction);
-            });
-            connect(vert, SIGNAL(finished()), vert, SLOT(deleteLater()));
-            vert->start();
-        });
-        connect(horiz, SIGNAL(finished()), horiz, SLOT(deleteLater()));
-        horiz->start();*/
-
         ui->stackedWidget->setCurrentIndex(1);
+
+        ui->endSessionWarnings->clear();
+        if (MainWin->getInfoPane()->isTimerRunning()) {
+            QListWidgetItem* item = new QListWidgetItem;
+            item->setText("A timer is currently running");
+            item->setIcon(QIcon::fromTheme("chronometer"));
+            ui->endSessionWarnings->addItem(item);
+        }
     }
 }
 
@@ -347,17 +260,38 @@ void Menu::on_pushButton_2_clicked()
 
 void Menu::on_commandLinkButton_clicked()
 {
-    EndSession(EndSessionWait::powerOff);
+    if (ui->endSessionWarnings->count() > 0) {
+        pendingEndSessionType = EndSessionWait::powerOff;
+        ui->endSessionAnywayButton->setText(tr("Power Off Anyway"));
+        ui->endSessionAnywayButton->setIcon(QIcon::fromTheme("system-shutdown"));
+        ui->stackedWidget->setCurrentIndex(2);
+    } else {
+        EndSession(EndSessionWait::powerOff);
+    }
 }
 
 void Menu::on_commandLinkButton_2_clicked()
 {
-    EndSession(EndSessionWait::reboot);
+    if (ui->endSessionWarnings->count() > 0) {
+        pendingEndSessionType = EndSessionWait::reboot;
+        ui->endSessionAnywayButton->setText(tr("Reboot Anyway"));
+        ui->endSessionAnywayButton->setIcon(QIcon::fromTheme("system-reboot"));
+        ui->stackedWidget->setCurrentIndex(2);
+    } else {
+        EndSession(EndSessionWait::reboot);
+    }
 }
 
 void Menu::on_commandLinkButton_3_clicked()
 {
-    EndSession(EndSessionWait::logout);
+    if (ui->endSessionWarnings->count() > 0) {
+        pendingEndSessionType = EndSessionWait::logout;
+        ui->endSessionAnywayButton->setText(tr("Log Out Anyway"));
+        ui->endSessionAnywayButton->setIcon(QIcon::fromTheme("system-log-out"));
+        ui->stackedWidget->setCurrentIndex(2);
+    } else {
+        EndSession(EndSessionWait::logout);
+    }
 }
 
 void Menu::on_lineEdit_textEdited(const QString &arg1)
@@ -596,7 +530,14 @@ void Menu::reject() {
 
 void Menu::on_fakeEndButton_clicked()
 {
-    EndSession(EndSessionWait::dummy);
+    if (ui->endSessionWarnings->count() > 0) {
+        pendingEndSessionType = EndSessionWait::dummy;
+        ui->endSessionAnywayButton->setText("Perform Fake Exit Anyway");
+        ui->endSessionAnywayButton->setIcon(QIcon::fromTheme("arrow-right"));
+        ui->stackedWidget->setCurrentIndex(2);
+    } else {
+        EndSession(EndSessionWait::dummy);
+    }
 }
 
 void Menu::on_helpButton_clicked()
@@ -712,4 +653,14 @@ void Menu::on_appsListView_customContextMenuRequested(const QPoint &pos)
             menu->exec(ui->appsListView->mapToGlobal(pos));
         }
     }
+}
+
+void Menu::on_cancelEndSessionWarningButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void Menu::on_endSessionAnywayButton_clicked()
+{
+    EndSession(pendingEndSessionType);
 }

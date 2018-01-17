@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>2</day>
+                 <day>1</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>2</day>
+                 <day>1</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1956,7 +1956,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>15</number>
+            <number>8</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -3697,6 +3697,13 @@
            </widget>
            <widget class="QWidget" name="page_2">
             <layout class="QGridLayout" name="gridLayout_10">
+             <item row="9" column="0" colspan="3">
+              <widget class="Line" name="line_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
              <item row="3" column="1">
               <widget class="QSlider" name="batterySuspend">
                <property name="minimum">
@@ -3727,7 +3734,7 @@
                </property>
               </widget>
              </item>
-             <item row="9" column="0">
+             <item row="12" column="0">
               <spacer name="verticalSpacer_9">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -3905,6 +3912,80 @@
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
+              </widget>
+             </item>
+             <item row="11" column="0">
+              <widget class="QLabel" name="label_98">
+               <property name="text">
+                <string>Power Button</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0" colspan="3">
+              <widget class="QLabel" name="label_21">
+               <property name="text">
+                <string>When I press the</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="1" colspan="2">
+              <widget class="QComboBox" name="powerButtonPressed">
+               <item>
+                <property name="text">
+                 <string>Ask me what to do</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="user"/>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Power Off</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="system-shutdown"/>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Reboot</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="system-reboot"/>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Log Out</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="system-log-out"/>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Suspend</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="system-suspend"/>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Lock</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="system-lock-screen"/>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Turn Off Screen</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="video-display"/>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>
@@ -5363,15 +5444,18 @@ Items that will be kept if you choose to keep files:
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>Switch</class>
-   <extends>QPushButton</extends>
-   <header>switch.h</header>
-  </customwidget>
-  <customwidget>
    <class>NetworkWidget</class>
    <extends>QWidget</extends>
    <header>networkmanager/networkwidget.h</header>
    <container>1</container>
+   <slots>
+    <signal>networkAvailable(bool)</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>Switch</class>
+   <extends>QPushButton</extends>
+   <header>switch.h</header>
   </customwidget>
   <customwidget>
    <class>NotificationsWidget</class>

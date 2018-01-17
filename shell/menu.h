@@ -51,89 +51,95 @@ class Menu : public QDialog
     Q_OBJECT
     Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
-public:
-    explicit Menu(BTHandsfree* bt, QWidget *parent = 0);
-    ~Menu();
-    void setGeometry(int x, int y, int w, int h);
-    void setGeometry(QRect geometry);
+    public:
+        explicit Menu(BTHandsfree* bt, QWidget *parent = 0);
+        ~Menu();
+        void setGeometry(int x, int y, int w, int h);
+        void setGeometry(QRect geometry);
 
-    void show();
-    void close();
+        void show();
+        void close();
 
-signals:
-    void menuClosing();
+    signals:
+        void menuClosing();
 
-    void currentSettingChanged(bool isOn);
+        void currentSettingChanged(bool isOn);
 
-private slots:
-    void checkForclose();
+    private slots:
+        void checkForclose();
 
-    void on_pushButton_clicked();
+        void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
+        void on_pushButton_2_clicked();
 
-    void on_commandLinkButton_clicked();
+        void on_commandLinkButton_clicked();
 
-    void on_commandLinkButton_2_clicked();
+        void on_commandLinkButton_2_clicked();
 
-    void on_commandLinkButton_3_clicked();
+        void on_commandLinkButton_3_clicked();
 
-    void on_lineEdit_textEdited(const QString &arg1);
+        void on_lineEdit_textEdited(const QString &arg1);
 
-    bool eventFilter(QObject *object, QEvent *event);
+        bool eventFilter(QObject *object, QEvent *event);
 
-    void on_lineEdit_returnPressed();
+        void on_lineEdit_returnPressed();
 
-    void on_pushButton_3_clicked();
+        void on_pushButton_3_clicked();
 
-    void on_commandLinkButton_5_clicked();
+        void on_commandLinkButton_5_clicked();
 
-    void on_commandLinkButton_7_clicked();
+        void on_commandLinkButton_7_clicked();
 
-    void on_commandLinkButton_8_clicked();
+        void on_commandLinkButton_8_clicked();
 
-    void on_commandLinkButton_6_clicked();
+        void on_commandLinkButton_6_clicked();
 
-    void on_commandLinkButton_4_clicked();
+        void on_commandLinkButton_4_clicked();
 
-    void on_exitButton_clicked();
+        void on_exitButton_clicked();
 
-    void on_fakeEndButton_clicked();
+        void on_fakeEndButton_clicked();
 
-    void on_helpButton_clicked();
+        void on_helpButton_clicked();
 
-    void on_reportBugButton_clicked();
+        void on_reportBugButton_clicked();
 
-    void launchAppByIndex(const QModelIndex &index);
+        void launchAppByIndex(const QModelIndex &index);
 
-    void showActionMenuByIndex(QModelIndex index);
+        void showActionMenuByIndex(QModelIndex index);
 
-    void on_appsListView_customContextMenuRequested(const QPoint &pos);
+        void on_appsListView_customContextMenuRequested(const QPoint &pos);
 
-private:
-    Ui::Menu *ui;
+        void on_cancelEndSessionWarningButton_clicked();
 
-    bool checkFocus(QLayout *layout);
-    QSettings settings;
+        void on_endSessionAnywayButton_clicked();
 
-    //QList<App> apps;
-    //QList<App> appsShown;
-    int pinnedAppsCount = 0;
+    private:
+        Ui::Menu *ui;
 
-    bool doCheckForClose = false;
+        bool checkFocus(QLayout *layout);
+        QSettings settings;
 
-    //void closeEvent(QCloseEvent *event);
-    void paintEvent(QPaintEvent* event);
-    void changeEvent(QEvent* event);
+        //QList<App> apps;
+        //QList<App> appsShown;
+        int pinnedAppsCount = 0;
 
-    void mousePressEvent(QMouseEvent* event);
-    void mouseMoveEvent(QMouseEvent* event);
-    void mouseReleaseEvent(QMouseEvent* event);
+        bool doCheckForClose = false;
 
-    void reject();
-    bool resizing = false;
+        //void closeEvent(QCloseEvent *event);
+        void paintEvent(QPaintEvent* event);
+        void changeEvent(QEvent* event);
 
-    BTHandsfree* bt;
+        void mousePressEvent(QMouseEvent* event);
+        void mouseMoveEvent(QMouseEvent* event);
+        void mouseReleaseEvent(QMouseEvent* event);
+
+        EndSessionWait::shutdownType pendingEndSessionType;
+
+        void reject();
+        bool resizing = false;
+
+        BTHandsfree* bt;
 };
 
 #endif // MENU_H

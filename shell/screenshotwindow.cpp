@@ -44,7 +44,7 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
 
     regionBand = new QRubberBand(QRubberBand::Rectangle, ui->label);
     QPalette regionBandPal = regionBand->palette();
-    regionBandPal.setColor(QPalette::Highlight, Qt::white);
+    regionBandPal.setColor(QPalette::Highlight, QColor(0, 150, 255));
     regionBand->setPalette(regionBandPal);
     regionBand->hide();
 
@@ -279,4 +279,14 @@ void screenshotWindow::on_resetButton_clicked()
     ui->label->setPixmap(screenshotPixmap);
     savePixmap = screenshotPixmap;
     regionBand->hide();
+}
+
+void screenshotWindow::on_regionSelectButton_clicked()
+{
+    ui->descriptionLabel->setText(tr("Select a region using the mouse."));
+}
+
+void screenshotWindow::on_blankerButton_clicked()
+{
+    ui->descriptionLabel->setText(tr("Redact a region using the mouse."));
 }
