@@ -66,6 +66,7 @@
 #include <QDBusServiceWatcher>
 #include <QGeoPositionInfoSource>
 #include "apps/appslistmodel.h"
+#include <QSpinBox>
 
 class UPowerDBus;
 
@@ -444,6 +445,14 @@ class InfoPaneDropdown : public QDialog
         void updateGeoclueLocation();
 
         void on_systemGTK3Theme_currentIndexChanged(int index);
+
+        void on_systemFontSize_valueChanged(int arg1);
+
+        void on_systemGTK3Font_currentFontChanged(const QFont &f);
+
+        void on_systemGTK3FontSize_valueChanged(int arg1);
+
+        void on_useSystemFontForGTKButton_clicked();
 
     public slots:
         void getNetworks();

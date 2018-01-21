@@ -354,7 +354,14 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     } else {
         defaultFont = "Noto Sans";
     }
-    ui->systemFont->setFont(QFont(themeSettings->value("fonts/defaultFamily", defaultFont).toString(), themeSettings->value("font/defaultSize", 10).toInt()));
+    ui->systemFont->setCurrentFont(QFont(themeSettings->value("fonts/defaultFamily", defaultFont).toString(), themeSettings->value("font/defaultSize", 10).toInt()));
+    ui->systemFontSize->setValue(themeSettings->value("font/defaultSize", 10).toInt());
+
+    QString gtk3FontString = gtk3Settings->value("Settings/gtk-font-name", "Contemporary 10").toString();
+    QString gtk3FontFamily = gtk3FontString.left(gtk3FontString.lastIndexOf(" "));
+    QString gtk3FontSize = gtk3FontString.mid(gtk3FontString.lastIndexOf(" ") + 1);
+    ui->systemGTK3Font->setCurrentFont(QFont(gtk3FontFamily, gtk3FontSize.toInt()));
+    ui->systemGTK3FontSize->setValue(gtk3FontSize.toInt());
 
     eventTimer = new QTimer(this);
     eventTimer->setInterval(1000);
@@ -1600,6 +1607,7 @@ void InfoPaneDropdown::on_systemFont_currentFontChanged(const QFont &f)
 {
     themeSettings->setValue("fonts/defaultFamily", f.family());
     themeSettings->setValue("fonts/smallFamily", f.family());
+    ui->systemFontSize->setValue(themeSettings->value("font/defaultSize", 10).toInt());
     //ui->systemFont->setFont(QFont(themeSettings->value("font/defaultFamily", defaultFont).toString(), themeSettings->value("font/defaultSize", 10).toInt()));
 }
 
@@ -3453,4 +3461,25 @@ void InfoPaneDropdown::paintEvent(QPaintEvent *event) {
 void InfoPaneDropdown::on_systemGTK3Theme_currentIndexChanged(int index)
 {
     gtk3Settings->setValue("Settings/gtk-theme-name", ui->systemGTK3Theme->itemText(index));
+}
+
+void InfoPaneDropdown::on_systemFontSize_valueChanged(int arg1)
+{
+    themeSettings->setValue("font/defaultSize", arg1);
+}
+
+void InfoPaneDropdown::on_systemGTK3Font_currentFontChanged(const QFont &f)
+{
+    gtk3Settings->setValue("Settings/gtk-font-name", f.family() + " " + QString::number(ui->systemGTK3FontSize->value()));
+}
+
+void InfoPaneDropdown::on_systemGTK3FontSize_valueChanged(int arg1)
+{
+    gtk3Settings->setValue("Settings/gtk-font-name", ui->systemGTK3Font->currentFont().family() + " " + QString::number(arg1));
+}
+
+void InfoPaneDropdown::on_useSystemFontForGTKButton_clicked()
+{
+    ui->systemGTK3Font->setCurrentFont(ui->systemFont->currentFont());
+    ui->systemGTK3FontSize->setValue(ui->systemFontSize->value());
 }
