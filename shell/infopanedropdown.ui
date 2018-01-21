@@ -610,15 +610,15 @@
                  <minute>15</minute>
                  <second>0</second>
                  <year>1969</year>
-                 <month>9</month>
-                 <day>1</day>
+                 <month>8</month>
+                 <day>31</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
-                 <month>9</month>
-                 <day>1</day>
+                 <month>8</month>
+                 <day>31</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1716,6 +1716,9 @@
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_24">
+            <property name="spacing">
+             <number>0</number>
+            </property>
             <item>
              <spacer name="horizontalSpacer_22">
               <property name="orientation">
@@ -1956,7 +1959,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>8</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2960,6 +2963,62 @@
            </widget>
            <widget class="QWidget" name="page_3">
             <layout class="QGridLayout" name="gridLayout_11">
+             <item row="0" column="0" colspan="4">
+              <widget class="QFrame" name="displayHeader_8">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_31">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="displayLabel_8">
+                  <property name="font">
+                   <font>
+                    <pointsize>15</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Theme</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="Line" name="displayLine_8">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_53">
+               <property name="text">
+                <string>System Font</string>
+               </property>
+              </widget>
+             </item>
              <item row="6" column="1" colspan="3">
               <widget class="QComboBox" name="systemWidgetTheme"/>
              </item>
@@ -3028,7 +3087,7 @@
                </layout>
               </widget>
              </item>
-             <item row="7" column="0">
+             <item row="9" column="0">
               <spacer name="verticalSpacer_20">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -3068,62 +3127,6 @@
              <item row="2" column="1" colspan="3">
               <widget class="QComboBox" name="themeButtonColor"/>
              </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_53">
-               <property name="text">
-                <string>System Font</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="4">
-              <widget class="QFrame" name="displayHeader_8">
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_31">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="displayLabel_8">
-                  <property name="font">
-                   <font>
-                    <pointsize>15</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Theme</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="Line" name="displayLine_8">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
              <item row="3" column="0" colspan="4">
               <widget class="Line" name="line_12">
                <property name="orientation">
@@ -3140,6 +3143,23 @@
                 <string>Widget Theme</string>
                </property>
               </widget>
+             </item>
+             <item row="7" column="0" colspan="4">
+              <widget class="Line" name="line_18">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_99">
+               <property name="text">
+                <string>GTK3 Theme</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1" colspan="3">
+              <widget class="QComboBox" name="systemGTK3Theme"/>
              </item>
             </layout>
            </widget>
@@ -3935,7 +3955,8 @@
                  <string>Ask me what to do</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="user"/>
+                 <iconset theme="user">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </item>
                <item>
@@ -3943,7 +3964,8 @@
                  <string>Power Off</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="system-shutdown"/>
+                 <iconset theme="system-shutdown">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </item>
                <item>
@@ -3951,7 +3973,8 @@
                  <string>Reboot</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="system-reboot"/>
+                 <iconset theme="system-reboot">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </item>
                <item>
@@ -3959,7 +3982,8 @@
                  <string>Log Out</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="system-log-out"/>
+                 <iconset theme="system-log-out">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </item>
                <item>
@@ -3967,7 +3991,8 @@
                  <string>Suspend</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="system-suspend"/>
+                 <iconset theme="system-suspend">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </item>
                <item>
@@ -3975,7 +4000,8 @@
                  <string>Lock</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="system-lock-screen"/>
+                 <iconset theme="system-lock-screen">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </item>
                <item>
@@ -3983,7 +4009,8 @@
                  <string>Turn Off Screen</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="video-display"/>
+                 <iconset theme="video-display">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </item>
               </widget>
@@ -5430,14 +5457,6 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>clickablelabel.h</header>
-   <slots>
-    <signal>clicked()</signal>
-   </slots>
-  </customwidget>
-  <customwidget>
    <class>AnimatedStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>animatedstackedwidget.h</header>
@@ -5450,6 +5469,14 @@ Items that will be kept if you choose to keep files:
    <container>1</container>
    <slots>
     <signal>networkAvailable(bool)</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>clickablelabel.h</header>
+   <slots>
+    <signal>clicked()</signal>
    </slots>
   </customwidget>
   <customwidget>

@@ -39,6 +39,7 @@
 #include "bthandsfree.h"
 #include <QFutureWatcher>
 #include "apps/appslistmodel.h"
+#include "networkmanager/availablenetworkslist.h"
 
 #undef KeyPress
 
@@ -113,6 +114,12 @@ class Menu : public QDialog
         void on_cancelEndSessionWarningButton_clicked();
 
         void on_endSessionAnywayButton_clicked();
+
+        void on_cancelSwitchUsersButton_clicked();
+
+        void on_startNewSessionButton_clicked();
+
+        void on_availableUsersList_itemActivated(QListWidgetItem *item);
 
     private:
         Ui::Menu *ui;

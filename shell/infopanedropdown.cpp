@@ -218,11 +218,33 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->systemWidgetTheme->blockSignals(false);
     }
 
-    connect(this, &InfoPaneDropdown::networkLabelChanged, [=](QString label) {
-        //ui->networkStatus->setText(label);
-    });
+    //Load GTK3 themes into GTK3 theme box
+    {
+        ui->systemGTK3Theme->blockSignals(true);
+        QString currentWidgetTheme = gtk3Settings->value("Settings/gtk-theme-name", "Contemporary").toString();
+        QStringList themes;
 
-    //ui->FlightSwitch->setOnIcon(QIcon::fromTheme("flight-mode"));
+        QString themeSearchDirectory = "/usr/share/themes/";
+
+        QDir themeDir(themeSearchDirectory);
+        QStringList themeDirEntries = themeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+        for (QString entry : themeDirEntries) {
+            if (QDir(themeSearchDirectory + entry + "/gtk-3.0/").exists()) {
+                themes.append(entry);
+            }
+        }
+
+        for (QString theme : themes) {
+            ui->systemGTK3Theme->addItem(theme);
+            ui->systemGTK3Theme->setItemData(ui->systemGTK3Theme->count() - 1, theme);
+
+            if (theme.toLower() == currentWidgetTheme.toLower()) {
+                ui->systemGTK3Theme->setCurrentIndex(ui->systemGTK3Theme->count() - 1);
+            }
+        }
+
+        ui->systemGTK3Theme->blockSignals(false);
+    }
 
     QString redshiftStart = settings.value("display/redshiftStart", "").toString();
     if (redshiftStart == "") {
@@ -3426,4 +3448,9 @@ void InfoPaneDropdown::paintEvent(QPaintEvent *event) {
         painter.drawLine(0, 0, this->width(), 0);
     }
     event->accept();
+}
+
+void InfoPaneDropdown::on_systemGTK3Theme_currentIndexChanged(int index)
+{
+    gtk3Settings->setValue("Settings/gtk-theme-name", ui->systemGTK3Theme->itemText(index));
 }

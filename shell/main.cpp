@@ -47,6 +47,8 @@
 #include <X11/extensions/dpms.h>
 #include "locationservices.h"
 
+#define EVENT() a.processEvents();
+
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
 DbusEvents* DBusEvents = NULL;
@@ -120,7 +122,7 @@ int main(int argc, char *argv[])
     signal(SIGILL, *catch_signal); //Catch SIGILL
 
     QSettings settings("theSuite", "theShell");
-    qputenv("GTK_THEME", settings.value("theme/gtktheme", "Contemporary").toByteArray());
+    //qputenv("GTK_THEME", settings.value("theme/gtktheme", "Contemporary").toByteArray());
 
     QString localeName = settings.value("locale/language", "en_US").toString();
     qputenv("LANGUAGE", localeName.toUtf8());
@@ -221,10 +223,13 @@ int main(int argc, char *argv[])
         }
     }
 
+    QEventLoop waiter;
+    LoginSplash* splash = new LoginSplash();
     if (showSplash) {
-        LoginSplash* splash = new LoginSplash();
         splash->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
         splash->showFullScreen();
+
+        EVENT();
     }
 
     if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.thesuite.theshell")) {
@@ -234,6 +239,8 @@ int main(int argc, char *argv[])
             return 0;
         }
     }
+
+    EVENT();
 
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerService("org.thesuite.theshell");
@@ -246,6 +253,8 @@ int main(int argc, char *argv[])
 
     dbusSignals = new DBusSignals();
 
+    EVENT();
+
     if (startKscreen) {
         QDBusMessage kscreen = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
         QVariantList args;
@@ -253,6 +262,8 @@ int main(int argc, char *argv[])
         kscreen.setArguments(args);
         QDBusConnection::sessionBus().call(kscreen);
     }
+
+    EVENT();
 
     {
         QDBusMessage touchpad = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
@@ -262,6 +273,8 @@ int main(int argc, char *argv[])
         QDBusConnection::sessionBus().call(touchpad);
     }
 
+    EVENT();
+
     {
         QDBusMessage sni = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
         QVariantList args;
@@ -269,6 +282,8 @@ int main(int argc, char *argv[])
         sni.setArguments(args);
         QDBusConnection::sessionBus().call(sni);
     }
+
+    EVENT();
 
     QString windowManager = settings.value("startup/WindowManagerCommand", "kwin_x11").toString();
 
@@ -284,6 +299,8 @@ int main(int argc, char *argv[])
         }
     }
 
+    EVENT();
+
     TutorialWin = new TutorialWindow(tutorialDoSettings);
     AudioMan = new AudioManager;
 
@@ -292,18 +309,23 @@ int main(int argc, char *argv[])
         QProcess::startDetached("/usr/lib/kdeconnectd");
     }
 
+    EVENT();
 
     QProcess polkitProcess;
     polkitProcess.start("/usr/lib/ts-polkitagent");
 
     QProcess btProcess;
     btProcess.start("ts-bt");
-    btProcess.waitForStarted(); //Wait for ts-bt to start so that the Bluetooth toggle will work properly
+    QObject::connect(&btProcess, SIGNAL(started()), &waiter, SLOT(quit()));
+    waiter.exec();
+    //Wait for ts-bt to start so that the Bluetooth toggle will work properly
 
     locationServices = new LocationServices();
 
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
+
+    EVENT();
 
     if (settings.value("startup/lastOnboarding", 0) < ONBOARDING_VERSION || startOnboarding) {
         Onboarding* onboardingWindow = new Onboarding();
@@ -316,8 +338,12 @@ int main(int argc, char *argv[])
         }
     }
 
+    EVENT();
+
     updbus = new UPowerDBus();
     MainWin = new MainWindow();
+
+    EVENT();
 
     new GlobalFilter(&a);
 
@@ -331,6 +357,8 @@ int main(int argc, char *argv[])
     MainWin->show();
 
     //QThread::sleep(1);
+    splash->close();
+    //splash->deleteLater();
 
     return a.exec();
 }

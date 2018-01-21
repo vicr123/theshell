@@ -443,6 +443,8 @@ class InfoPaneDropdown : public QDialog
 
         void updateGeoclueLocation();
 
+        void on_systemGTK3Theme_currentIndexChanged(int index);
+
     public slots:
         void getNetworks();
 
@@ -495,6 +497,7 @@ class InfoPaneDropdown : public QDialog
         QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
         QSettings* sessionSettings = new QSettings("theSuite", "ts-startsession");
         QSettings* notificationAppSettings = new QSettings("theSuite", "theShell-notifications", this);
+        QSettings* gtk3Settings = new QSettings(QDir::homePath() + "/.config/gtk-3.0/settings.ini", QSettings::IniFormat);
 
         QString editingUserPath;
 

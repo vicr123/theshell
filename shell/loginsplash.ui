@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>560</width>
-    <height>591</height>
+    <height>655</height>
    </rect>
   </property>
   <property name="palette">
@@ -468,25 +468,16 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>20</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_3">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>512</width>
-          <height>512</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>512</width>
-          <height>512</height>
-         </size>
         </property>
         <property name="text">
          <string notr="true"/>
@@ -494,20 +485,13 @@
         <property name="pixmap">
          <pixmap resource="resources.qrc">:/icons/icon.svg</pixmap>
         </property>
-        <property name="scaledContents">
-         <bool>true</bool>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QProgressBar" name="progressBar">
-        <property name="maximum">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>-1</number>
-        </property>
-       </widget>
+       <widget class="tCircularSpinner" name="widget" native="true"/>
       </item>
      </layout>
     </widget>
@@ -540,6 +524,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>tCircularSpinner</class>
+   <extends>QWidget</extends>
+   <header location="global">tcircularspinner.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>

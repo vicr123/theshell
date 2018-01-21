@@ -84,6 +84,7 @@ Menu::Menu(BTHandsfree* bt, QWidget *parent) :
     ui->lineEdit->installEventFilter(this);
     this->installEventFilter(this);
 
+    ui->availableUsersList->setItemDelegate(new AvailableNetworksListDelegate);
 
     if (QFile("/etc/scallop-live").exists()) {
         ui->InstallLayout->setVisible(true);
@@ -456,13 +457,98 @@ void Menu::on_commandLinkButton_6_clicked()
     DBusEvents->LockScreen();
 }
 
+struct LoginSession {
+    QString sessionId;
+    uint userId;
+    QString username;
+    QString seat;
+    QDBusObjectPath path;
+};
+Q_DECLARE_METATYPE(LoginSession)
+
+const QDBusArgument &operator<<(QDBusArgument &argument, const LoginSession &session) {
+    argument.beginStructure();
+    argument << session.sessionId << session.userId << session.username << session.seat << session.path;
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, LoginSession &session) {
+    argument.beginStructure();
+    argument >> session.sessionId >> session.userId >> session.username >> session.seat >> session.path;
+    argument.endStructure();
+    return argument;
+}
+
 void Menu::on_commandLinkButton_4_clicked()
 {
-    this->close();
-    DBusEvents->LockScreen();
+    //Load available users
+    QDBusInterface i("org.freedesktop.login1", "/org/freedesktop/login1/session/self", "org.freedesktop.login1.Session", QDBusConnection::systemBus());
+    QString thisId = i.property("Id").toString();
 
-    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.DisplayManager", QString(qgetenv("XDG_SEAT_PATH")), "org.freedesktop.DisplayManager.Seat", "SwitchToGreeter");
-    QDBusConnection::systemBus().send(message);
+    QDBusMessage availableSessions = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "ListSessions");
+    QDBusMessage availableSessionsReply = QDBusConnection::systemBus().call(availableSessions);
+
+    QDBusArgument availableSessionsArg = availableSessionsReply.arguments().first().value<QDBusArgument>();
+    QList<LoginSession> sessions;
+    availableSessionsArg >> sessions;
+
+    ui->availableUsersList->clear();
+    for (LoginSession session : sessions) {
+        if (session.sessionId != thisId) {
+            QListWidgetItem* item = new QListWidgetItem();
+
+            QDBusInterface i("org.freedesktop.login1", session.path.path(), "org.freedesktop.login1.Session", QDBusConnection::systemBus());
+            QString type = i.property("Type").toString();
+
+            QString cls = i.property("Class").toString();
+            if (cls == "user") {
+                QDBusMessage accountsMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "FindUserById");
+                accountsMessage.setArguments(QList<QVariant>() << (qlonglong) session.userId);
+                QDBusMessage accountsMessageReply = QDBusConnection::systemBus().call(accountsMessage);
+
+                QDBusObjectPath accountObjectPath = accountsMessageReply.arguments().first().value<QDBusObjectPath>();
+                QDBusInterface userInterface("org.freedesktop.Accounts", accountObjectPath.path(), "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
+
+                QString name = userInterface.property("RealName").toString();
+                if (name == "") {
+                    name = session.username;
+                }
+                item->setText(name);
+                item->setIcon(QIcon::fromTheme("user"));
+
+                QString desktop = i.property("Desktop").toString();
+
+                QString secondLine;
+                if (type == "x11") {
+                    secondLine = tr("%1 on X11 display %2").arg(desktop, i.property("Display").toString());
+                } else if (type == "tty") {
+                    secondLine = tr("on %1").arg(i.property("TTY").toString());
+                } else if (type == "wayland") {
+                    secondLine = tr("%1 on VT #%2").arg(desktop, QString::number(i.property("VTNr").toUInt()));
+                } else {
+                    secondLine = tr("Session");
+                }
+                item->setData(Qt::UserRole + 1, secondLine);
+            } else if (cls == "greeter") {
+                item->setText(session.username);
+                item->setIcon(QIcon::fromTheme("arrow-right"));
+                item->setData(Qt::UserRole + 1, "Login Screen");
+            } else {
+                delete item;
+                continue;
+            }
+            item->setData(Qt::UserRole, session.path.path());
+
+            ui->availableUsersList->addItem(item);
+        }
+    }
+
+    if (ui->availableUsersList->count() == 0) {
+        ui->startNewSessionButton->click();
+    } else {
+        ui->stackedWidget->setCurrentIndex(3);
+    }
 }
 
 void Menu::mousePressEvent(QMouseEvent *event) {
@@ -663,4 +749,27 @@ void Menu::on_cancelEndSessionWarningButton_clicked()
 void Menu::on_endSessionAnywayButton_clicked()
 {
     EndSession(pendingEndSessionType);
+}
+
+void Menu::on_cancelSwitchUsersButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void Menu::on_startNewSessionButton_clicked()
+{
+    this->close();
+    DBusEvents->LockScreen();
+
+    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.DisplayManager", QString(qgetenv("XDG_SEAT_PATH")), "org.freedesktop.DisplayManager.Seat", "SwitchToGreeter");
+    QDBusConnection::systemBus().send(message);
+}
+
+void Menu::on_availableUsersList_itemActivated(QListWidgetItem *item)
+{
+    this->close();
+    DBusEvents->LockScreen();
+
+    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", item->data(Qt::UserRole).toString(), "org.freedesktop.login1.Session", "Activate");
+    QDBusConnection::systemBus().send(message);
 }
