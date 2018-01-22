@@ -33,6 +33,7 @@
 #include <QPushButton>
 #include <QBoxLayout>
 #include <QDirIterator>
+#include <QtMath>
 
 namespace Ui {
 class NotificationPopup;
@@ -82,6 +83,10 @@ private:
 
     static NotificationPopup* currentlyShowingPopup;
     static QList<NotificationPopup*> pendingPopups;
+
+    QWidget* coverWidget;
+    QLabel *coverAppIcon, *coverAppName;
+    QSettings settings;
 };
 
 #endif // NOTIFICATIONPOPUP_H

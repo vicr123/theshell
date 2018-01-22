@@ -26,9 +26,11 @@ void ScreenRecorder::start() {
         }
 
         if (currentScreen != NULL) {
-            QString command = "ffmpeg -y -video_size %1 -f x11grab -i %2.0+0,0 %3/.screenRecording.mp4";
+            QString command = "ffmpeg -y -video_size %1 -f x11grab -i %2.0+%3,%4 %5/.screenRecording.mp4";
             command = command.arg(QString::number(currentScreen->geometry().width()) + "x" + QString::number(currentScreen->geometry().height()));
             command = command.arg(QString(qgetenv("DISPLAY")));
+            command = command.arg(QString::number(currentScreen->geometry().left()));
+            command = command.arg(QString::number(currentScreen->geometry().top()));
             command = command.arg(QDir::homePath());
             //command = command.arg("~");
 
@@ -56,7 +58,6 @@ void ScreenRecorder::recorderFinished(int returnCode) {
     isRecording = false;
     emit recordingChanged(false);
 
-    qDebug() << returnCode;
     if (returnCode == 0 || returnCode == 255) {
         QDir::home().mkdir("Recordings");
         QFile f(QDir::homePath() + "/.screenRecording.mp4");

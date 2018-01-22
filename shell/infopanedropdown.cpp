@@ -93,6 +93,14 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->PowerStretchSwitch->setChecked(isOn);
         emit batteryStretchChanged(isOn);
         doNetworkCheck();
+
+        if (isOn) {
+            slice1.stop();
+            slice2.stop();
+        } else {
+            slice1.start();
+            slice2.start();
+        }
     });
     ui->PowerStretchSwitch->setChecked(updbus->powerStretch());
     emit batteryStretchChanged(updbus->powerStretch());
@@ -345,6 +353,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->powerScreenOff->setValue(settings.value("power/powerScreenOff", 30).toInt());
     ui->powerSuspend->setValue(settings.value("power/powerSuspend", 90).toInt());
     ui->sunlightRedshift->setChecked(settings.value("display/redshiftSunlightCycle", false).toBool());
+    ui->EmphasiseAppSwitch->setChecked(settings.value("notifications/emphasiseApp", true).toBool());
     updateAccentColourBox();
     updateRedshiftTime();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
@@ -476,6 +485,42 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     ui->RemindersList->setModel(new RemindersListModel);
     ui->RemindersList->setItemDelegate(new RemindersDelegate);
+
+    slice1.setStartValue(this->width() - 250 * getDPIScaling());
+    slice1.setEndValue(this->width() - 300 * getDPIScaling());
+    slice1.setEasingCurve(QEasingCurve::OutCubic);
+    slice1.setDuration(60000);
+    connect(&slice1, &tVariantAnimation::finished, [=] {
+        slice1.setStartValue(slice1.endValue());
+        if (slice1.endValue() == this->width() - 300 * getDPIScaling()) {
+            slice1.setEndValue(this->width() - 250 * getDPIScaling());
+        } else {
+            slice1.setEndValue(this->width() - 300 * getDPIScaling());
+        }
+        slice1.setEasingCurve(QEasingCurve::InOutCubic);
+        slice1.start();
+    });
+    connect(&slice1, SIGNAL(valueChanged(QVariant)), ui->partFrame, SLOT(repaint()));
+    slice1.start();
+
+
+    QTimer::singleShot(10000, [=] {
+        slice2.setStartValue(this->width() - 300 * getDPIScaling());
+        slice2.setEndValue(this->width() - 350 * getDPIScaling());
+        slice2.setEasingCurve(QEasingCurve::OutCubic);
+        slice2.setDuration(60000);
+        connect(&slice2, &tVariantAnimation::finished, [=] {
+            slice2.setStartValue(slice2.endValue());
+            if (slice2.endValue() == this->width() - 350 * getDPIScaling()) {
+                slice2.setEndValue(this->width() - 300 * getDPIScaling());
+            } else {
+                slice2.setEndValue(this->width() - 350 * getDPIScaling());
+            }
+            slice2.setEasingCurve(QEasingCurve::InOutCubic);
+            slice2.start();
+        });
+        slice2.start();
+    });
 
     updateStruts();
     updateAutostart();
@@ -852,31 +897,31 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     switch (changeTo) {
     case Clock:
         ui->pageStack->setCurrentWidget(ui->clockFrame, doAnimation);
-        setHeaderColour(QColor(0, 150, 0));
+        setHeaderColour(QColor(0, 50, 0));
         break;
     case Battery:
         ui->pageStack->setCurrentWidget(ui->statusFrame, doAnimation);
         updateBatteryChart();
-        setHeaderColour(QColor(200, 100, 0));
+        setHeaderColour(QColor(100, 50, 0));
         break;
     case Notifications:
         ui->pageStack->setCurrentWidget(ui->notificationsFrame, doAnimation);
-        setHeaderColour(QColor(200, 50, 50));
+        setHeaderColour(QColor(100, 25, 50));
         break;
     case Network:
         ui->pageStack->setCurrentWidget(ui->networkFrame, doAnimation);
-        setHeaderColour(QColor(100, 100, 200));
+        setHeaderColour(QColor(50, 50, 100));
         break;
     case KDEConnect:
         ui->pageStack->setCurrentWidget(ui->kdeConnectFrame, doAnimation);
-        setHeaderColour(QColor(100, 0, 200));
+        setHeaderColour(QColor(50, 0, 100));
         break;
     /*case Print:
         ui->pageStack->setCurrentWidget(ui->printFrame, doAnimation);
         break;*/
     case Settings:
         ui->pageStack->setCurrentWidget(ui->settingsFrame, doAnimation);
-        setHeaderColour(QColor(0, 100, 255));
+        setHeaderColour(QColor(0, 50, 100));
         break;
     }
 
@@ -3534,7 +3579,7 @@ void InfoPaneDropdown::setHeaderColour(QColor col) {
 }
 
 bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
-    if (obj = ui->partFrame) {
+    if (obj == ui->partFrame) {
         if (e->type() == QEvent::Paint) {
             QPainter p(ui->partFrame);
             QPalette pal = ui->partFrame->palette();
@@ -3544,8 +3589,10 @@ bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
             p.drawRect(0, 0, ui->partFrame->width(), ui->partFrame->height());
 
             QPolygon firstPoly;
-            firstPoly.append(QPoint(ui->partFrame->width() * 0.8, 0));
-            firstPoly.append(QPoint(ui->partFrame->width() * 0.775, ui->partFrame->height()));
+            //firstPoly.append(QPoint(ui->partFrame->width() * 0.8, 0));
+            firstPoly.append(QPoint(slice1.currentValue().toInt(), 0));
+            firstPoly.append(QPoint(slice2.currentValue().toInt(), ui->partFrame->height()));
+            //firstPoly.append(QPoint(ui->partFrame->width() * 0.775, ui->partFrame->height()));
             firstPoly.append(QPoint(ui->partFrame->width(), ui->partFrame->height()));
             firstPoly.append(QPoint(ui->partFrame->width(), 0));
             p.setBrush(pal.color(QPalette::Window).lighter(110));
@@ -3562,4 +3609,9 @@ bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
         }
     }
     return false;
+}
+
+void InfoPaneDropdown::on_EmphasiseAppSwitch_toggled(bool checked)
+{
+    settings.setValue("notifications/emphasiseApp", checked);
 }

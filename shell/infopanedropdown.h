@@ -456,6 +456,8 @@ class InfoPaneDropdown : public QDialog
 
         void setHeaderColour(QColor col);
 
+        void on_EmphasiseAppSwitch_toggled(bool checked);
+
     public slots:
         void getNetworks();
 
@@ -526,6 +528,8 @@ class InfoPaneDropdown : public QDialog
         WId MainWindowId;
 
         QDBusObjectPath geoclueClientPath;
+
+        QVariantAnimation slice1, slice2, slice3, slice4;
 
         QJsonObject timezoneData;
 };

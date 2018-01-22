@@ -53,6 +53,26 @@ NotificationPopup::NotificationPopup(int id, QWidget *parent) :
             }
         }
     });
+
+    coverWidget = new QWidget();
+    coverWidget->setParent(this);
+    coverWidget->setAutoFillBackground(true);
+    coverWidget->setVisible(false);
+    QBoxLayout* layout = new QBoxLayout(QBoxLayout::LeftToRight);
+    coverWidget->setLayout(layout);
+
+    layout->addStretch();
+
+    coverAppIcon = new QLabel;
+    layout->addWidget(coverAppIcon);
+
+    coverAppName = new QLabel;
+    QFont f = coverAppName->font();
+    f.setPointSize(15);
+    coverAppName->setFont(f);
+    layout->addWidget(coverAppName);
+
+    layout->addStretch();
 }
 
 NotificationPopup::~NotificationPopup()
@@ -93,7 +113,34 @@ void NotificationPopup::show() {
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
         anim->start();
 
-        dismisser->start();
+        if (settings.value("notifications/emphasiseApp", true).toBool()) {
+            coverWidget->move(0, 0);
+            coverWidget->resize(this->width(), this->height() - 1);
+            coverWidget->clearMask();
+            coverWidget->setVisible(true);
+            QTimer::singleShot(1000, [=] {
+                tVariantAnimation* anim = new tVariantAnimation();
+                QPoint origin = ui->appIcon->geometry().center();
+
+                int radius = qSqrt(qPow(this->width() - origin.x(), 2) + qPow(this->height() - origin.y(), 2));
+                anim->setStartValue(radius);
+                anim->setEndValue(1);
+                anim->setDuration(250);
+                anim->setEasingCurve(QEasingCurve::InCubic);
+                connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                    QRegion r(QRect(origin.x() - value.toInt(), origin.y() - value.toInt(), value.toInt() * 2, value.toInt() * 2), QRegion::Ellipse);
+                    coverWidget->setMask(r);
+                });
+                connect(anim, &tVariantAnimation::finished, [=] {
+                    coverWidget->setVisible(false);
+                });
+                anim->start();
+
+                dismisser->start();
+            });
+        } else {
+            dismisser->start();
+        }
 
         mouseEvents = true;
     }
@@ -220,6 +267,26 @@ void NotificationPopup::paintEvent(QPaintEvent *event) {
 void NotificationPopup::setApp(QString appName, QIcon appIcon) {
     ui->appnameLabel->setText(appName);
     ui->appIcon->setPixmap(appIcon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+
+    QPixmap pm = appIcon.pixmap(32 * getDPIScaling(), 32 * getDPIScaling());
+    coverAppIcon->setPixmap(pm);
+    coverAppName->setText(appName);
+
+    QImage im = pm.toImage();
+    for (int i = 0; i < pm.width(); i++) {
+        for (int j = 0; j < pm.height(); j++) {
+            QColor c = im.pixelColor(i, j);
+            if (c.alpha() != 0) {
+                i = pm.width();
+                j = pm.height();
+
+                c.setAlpha(255);
+                QPalette pal = coverWidget->palette();
+                pal.setColor(QPalette::Window, c.darker(150));
+                coverWidget->setPalette(pal);
+            }
+        }
+    }
 }
 
 void NotificationPopup::setSummary(QString summary) {
