@@ -34,6 +34,7 @@
 #include "endsessionwait.h"
 #include "dbusevents.h"
 #include "rundialog.h"
+#include "screenrecorder.h"
 #include <QDBusUnixFileDescriptor>
 #include <QDBusMessage>
 #include <QDBusConnection>

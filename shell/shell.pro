@@ -96,7 +96,8 @@ SOURCES += main.cpp\
     notificationsWidget/notificationpanel.cpp \
     apps/appslistmodel.cpp \
     apps/app.cpp \
-    networkmanager/savednetworkslist.cpp
+    networkmanager/savednetworkslist.cpp \
+    screenrecorder.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -141,7 +142,8 @@ HEADERS  += mainwindow.h \
     notificationsWidget/notificationpanel.h \
     apps/appslistmodel.h \
     apps/app.h \
-    networkmanager/savednetworkslist.h
+    networkmanager/savednetworkslist.h \
+    screenrecorder.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

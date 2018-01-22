@@ -2626,6 +2626,7 @@ void InfoPaneDropdown::on_LargeTextSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_HighContrastSwitch_toggled(bool checked)
 {
     themeSettings->setValue("accessibility/highcontrast", checked);
+    setHeaderColour(QColor(0, 100, 255));
 }
 
 void InfoPaneDropdown::on_systemAnimationsAccessibilitySwitch_toggled(bool checked)
@@ -3492,40 +3493,44 @@ void InfoPaneDropdown::on_useSystemFontForGTKButton_clicked()
 }
 
 void InfoPaneDropdown::setHeaderColour(QColor col) {
-    QPalette pal = ui->partFrame->palette();
-
-    tVariantAnimation* anim = new tVariantAnimation();
-    anim->setStartValue(pal.color(QPalette::Window));
-    anim->setEndValue(col);
-    anim->setDuration(250);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+    if (ui->HighContrastSwitch->isChecked()) {
+        ui->partFrame->setPalette(QApplication::palette(ui->partFrame));
+    } else {
         QPalette pal = ui->partFrame->palette();
-        QColor col = value.value<QColor>();
 
-        pal.setColor(QPalette::Window, col);
+        tVariantAnimation* anim = new tVariantAnimation();
+        anim->setStartValue(pal.color(QPalette::Window));
+        anim->setEndValue(col);
+        anim->setDuration(250);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+            QPalette pal = ui->partFrame->palette();
+            QColor col = value.value<QColor>();
 
-        //if ((col.red() + col.green() + col.blue()) / 3 < 127) {
-            pal.setColor(QPalette::WindowText, Qt::white);
-            pal.setColor(QPalette::Disabled, QPalette::WindowText, col.lighter(150));
-        /*} else {
-            pal.setColor(QPalette::WindowText, Qt::black);
-            pal.setColor(QPalette::Disabled, QPalette::WindowText, col.darker(150));
-        }*/
+            pal.setColor(QPalette::Window, col);
 
-        ui->partFrame->setPalette(pal);
+            //if ((col.red() + col.green() + col.blue()) / 3 < 127) {
+                pal.setColor(QPalette::WindowText, Qt::white);
+                pal.setColor(QPalette::Disabled, QPalette::WindowText, col.lighter(150));
+            /*} else {
+                pal.setColor(QPalette::WindowText, Qt::black);
+                pal.setColor(QPalette::Disabled, QPalette::WindowText, col.darker(150));
+            }*/
 
-        pal.setColor(QPalette::Window, col.lighter(120));
-        ui->pushButton_7->setPalette(pal);
+            ui->partFrame->setPalette(pal);
 
-        ui->clockLabel->setShowDisabled(ui->clockLabel->showDisabled());
-        ui->batteryLabel->setShowDisabled(ui->batteryLabel->showDisabled());
-        ui->networkLabel->setShowDisabled(ui->networkLabel->showDisabled());
-        ui->notificationsLabel->setShowDisabled(ui->notificationsLabel->showDisabled());
-        ui->kdeconnectLabel->setShowDisabled(ui->kdeconnectLabel->showDisabled());
-    });
-    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    anim->start();
+            pal.setColor(QPalette::Window, col.lighter(120));
+            ui->pushButton_7->setPalette(pal);
+
+            ui->clockLabel->setShowDisabled(ui->clockLabel->showDisabled());
+            ui->batteryLabel->setShowDisabled(ui->batteryLabel->showDisabled());
+            ui->networkLabel->setShowDisabled(ui->networkLabel->showDisabled());
+            ui->notificationsLabel->setShowDisabled(ui->notificationsLabel->showDisabled());
+            ui->kdeconnectLabel->setShowDisabled(ui->kdeconnectLabel->showDisabled());
+        });
+        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+        anim->start();
+    }
 }
 
 bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {

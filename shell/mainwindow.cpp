@@ -32,6 +32,7 @@ extern float getDPIScaling();
 extern LocationServices* locationServices;
 extern UPowerDBus* updbus;
 extern NotificationsDBusAdaptor* ndbus;
+extern ScreenRecorder* screenRecorder;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -192,6 +193,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->timer->setVisible(false);
     ui->timerIcon->setVisible(false);
+    ui->screenRecordingFrame->setVisible(false);
     ui->timerIcon->setPixmap(QIcon::fromTheme("chronometer").pixmap(ic16));
     ui->StatusBarNotifications->setVisible(false);
     ui->StatusBarMpris->setVisible(false);
@@ -199,6 +201,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarQuietMode->setVisible(false);
     ui->StatusBarLocation->setVisible(false);
     ui->LocationIndication->setVisible(false);
+    ui->StatusBarRecording->setVisible(false);
     ui->StatusBarLocation->setPixmap(QIcon::fromTheme("gps").pixmap(ic16));
     ui->LocationIndication->setPixmap(QIcon::fromTheme("gps").pixmap(ic16));
     ui->flightIcon->setPixmap(QIcon::fromTheme("flight-mode").pixmap(ic16));
@@ -207,6 +210,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarFlight->setVisible(settings.value("flightmode/on", false).toBool());
     ui->StatusBarFrame->installEventFilter(this);
     ui->StatusBarRedshift->setPixmap(QIcon::fromTheme("redshift-on").pixmap(ic16));
+    ui->StatusBarRecording->setPixmap(QIcon::fromTheme("media-record").pixmap(ic16));
 
     ((QBoxLayout*) ui->centralWidget->layout())->removeWidget(ui->StatusBarHoverFrame);
     ui->StatusBarHoverFrame->setParent(this);
@@ -254,6 +258,15 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->volumeButton->setIcon(QIcon::fromTheme("audio-volume-muted"));
             ui->StatusBarQuietMode->setPixmap(QIcon::fromTheme("audio-volume-muted").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
             ui->StatusBarQuietMode->setVisible(true);
+        }
+    });
+    connect(screenRecorder, &ScreenRecorder::recordingChanged, [=](bool isRecording) {
+        if (isRecording) {
+            ui->StatusBarRecording->setVisible(true);
+            ui->screenRecordingFrame->setVisible(true);
+        } else {
+            ui->StatusBarRecording->setVisible(false);
+            ui->screenRecordingFrame->setVisible(false);
         }
     });
 
@@ -2032,4 +2045,9 @@ void MainWindow::changeEvent(QEvent *event) {
         ui->retranslateUi(this);
     }
     QMainWindow::changeEvent(event);
+}
+
+void MainWindow::on_stopRecordingButton_clicked()
+{
+    screenRecorder->stop();
 }

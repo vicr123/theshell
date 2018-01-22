@@ -50,6 +50,7 @@
 #include <systemd/sd-login.h>
 #include <systemd/sd-daemon.h>
 #include "locationservices.h"
+#include "screenrecorder.h"
 
 class Menu;
 
@@ -193,6 +194,8 @@ private slots:
     void on_flightIcon_clicked();
 
     void on_networkStrength_clicked();
+
+    void on_stopRecordingButton_clicked();
 
     signals:
     void reloadBackgrounds();

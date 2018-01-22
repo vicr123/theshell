@@ -314,6 +314,57 @@
            </widget>
           </item>
           <item>
+           <widget class="QFrame" name="screenRecordingFrame">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="screenRecordingActiveLabel">
+               <property name="text">
+                <string>Screen Recording Active</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="stopRecordingButton">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="media-playback-stop"/>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
            <widget class="Line" name="line_5">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -725,6 +776,19 @@
         <widget class="QLabel" name="StatusBarRedshift">
          <property name="text">
           <string notr="true">Redshift</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="StatusBarRecording">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(200, 0, 0);
+color: white;
+padding-left: 3px;
+padding-right: 3px;</string>
+         </property>
+         <property name="text">
+          <string>Recording</string>
          </property>
         </widget>
        </item>

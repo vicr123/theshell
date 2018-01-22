@@ -40,6 +40,7 @@
 #include <QFutureWatcher>
 #include "apps/appslistmodel.h"
 #include "networkmanager/availablenetworkslist.h"
+#include "screenrecorder.h"
 
 #undef KeyPress
 

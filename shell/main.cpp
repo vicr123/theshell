@@ -28,6 +28,7 @@
 #include "tutorialwindow.h"
 #include "audiomanager.h"
 #include "dbussignals.h"
+#include "screenrecorder.h"
 #include <iostream>
 //#include "dbusmenuregistrar.h"
 #include <nativeeventfilter.h>
@@ -62,6 +63,7 @@ UPowerDBus* updbus = NULL;
 NotificationsDBusAdaptor* ndbus = NULL;
 DBusSignals* dbusSignals = NULL;
 QSettings::Format desktopFileFormat;
+ScreenRecorder* screenRecorder = nullptr;
 
 #define ONBOARDING_VERSION 5
 
@@ -303,6 +305,7 @@ int main(int argc, char *argv[])
 
     TutorialWin = new TutorialWindow(tutorialDoSettings);
     AudioMan = new AudioManager;
+    screenRecorder = new ScreenRecorder;
 
     if (!QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect") && QFile("/usr/lib/kdeconnectd").exists()) {
         //Start KDE Connect if it is not running and it is existant on the PC

@@ -24,6 +24,7 @@ extern void EndSession(EndSessionWait::shutdownType type);
 extern DbusEvents* DBusEvents;
 extern MainWindow* MainWin;
 extern AudioManager* AudioMan;
+extern ScreenRecorder* screenRecorder;
 
 NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
 {
@@ -48,6 +49,7 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_L), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F2), Mod1Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_P), Mod4Mask | Mod1Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
+    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_O), Mod4Mask | Mod1Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F1), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F2), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F3), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
@@ -86,6 +88,7 @@ NativeEventFilter::~NativeEventFilter() {
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Super_L), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Super_R), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_P), Mod4Mask | Mod1Mask, QX11Info::appRootWindow());
+    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_O), Mod4Mask | Mod1Mask, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F1), Mod4Mask, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F2), Mod4Mask, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F3), Mod4Mask, QX11Info::appRootWindow());
@@ -237,8 +240,24 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 if (button->state & Mod4Mask) {
                     ignoreSuper = true;
                 }
-                screenshotWindow* screenshot = new screenshotWindow;
-                screenshot->show();
+
+                if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Print) && button->state & ShiftMask) {
+                    if (screenRecorder->recording()) {
+                        screenRecorder->stop();
+                    } else {
+                        screenRecorder->start();
+                    }
+                } else {
+                    screenshotWindow* screenshot = new screenshotWindow;
+                    screenshot->show();
+                }
+            } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XK_O)) && (button->state == (Mod4Mask | Mod1Mask))) {
+                if (screenRecorder->recording()) {
+                    screenRecorder->stop();
+                } else {
+                    screenRecorder->start();
+                }
+                ignoreSuper = true;
             } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) ||
                        (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == (ControlMask | Mod1Mask)))) { //Power Off
                 if (!isEndSessionBoxShowing) {

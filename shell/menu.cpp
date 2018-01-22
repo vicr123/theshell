@@ -27,6 +27,7 @@ extern MainWindow* MainWin;
 extern DbusEvents* DBusEvents;
 extern TutorialWindow* TutorialWin;
 extern NativeEventFilter* NativeFilter;
+extern ScreenRecorder* screenRecorder;
 
 Menu::Menu(BTHandsfree* bt, QWidget *parent) :
     QDialog(parent),
@@ -236,6 +237,13 @@ void Menu::on_pushButton_clicked()
             QListWidgetItem* item = new QListWidgetItem;
             item->setText("A timer is currently running");
             item->setIcon(QIcon::fromTheme("chronometer"));
+            ui->endSessionWarnings->addItem(item);
+        }
+
+        if (screenRecorder->recording()) {
+            QListWidgetItem* item = new QListWidgetItem;
+            item->setText("You are currently recording your screen");
+            item->setIcon(QIcon::fromTheme("media-record"));
             ui->endSessionWarnings->addItem(item);
         }
     }
