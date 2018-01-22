@@ -36,14 +36,16 @@ TutorialWindow::TutorialWindow(bool doSettings, QWidget *parent) :
 
     settings.beginGroup("tutorial");
 
-    Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_UTILITY", False);
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
-                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
+    if (QX11Info::isPlatformX11()) {
+        Atom DesktopWindowTypeAtom;
+        DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_UTILITY", False);
+        XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+                         XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
 
-    unsigned long desktop = 0xFFFFFFFF;
-    qDebug() << XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
-                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+        unsigned long desktop = 0xFFFFFFFF;
+        qDebug() << XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
+                         XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+    }
 
     this->showFullScreen();
     this->doSettings = doSettings;

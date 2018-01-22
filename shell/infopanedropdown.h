@@ -454,6 +454,8 @@ class InfoPaneDropdown : public QDialog
 
         void on_useSystemFontForGTKButton_clicked();
 
+        void setHeaderColour(QColor col);
+
     public slots:
         void getNetworks();
 
@@ -485,6 +487,7 @@ class InfoPaneDropdown : public QDialog
         void mouseReleaseEvent(QMouseEvent *event);
         void changeEvent(QEvent* event);
         void paintEvent(QPaintEvent* event);
+        bool eventFilter(QObject *obj, QEvent *e);
 
         QTimer* timer = NULL;
         int timerNotificationId = 0;

@@ -48,8 +48,15 @@ bool ClickableLabel::showDisabled() {
 
 void ClickableLabel::setShowDisabled(bool showDisabled) {
     isShowDisabled = showDisabled;
-    QLabel* tempLabel = new QLabel;
-    QPalette applicationPal = QApplication::palette(tempLabel);
+
+    QPalette applicationPal;
+    if (this->parentWidget() == nullptr) {
+        QLabel* tempLabel = new QLabel;
+        applicationPal = QApplication::palette(tempLabel);
+        tempLabel->deleteLater();
+    } else {
+        applicationPal = this->parentWidget()->palette();
+    }
     QPalette thisPal = this->palette();
     if (isShowDisabled) {
         thisPal.setBrush(QPalette::WindowText, applicationPal.brush(QPalette::Disabled, QPalette::WindowText));
@@ -57,7 +64,6 @@ void ClickableLabel::setShowDisabled(bool showDisabled) {
         thisPal.setBrush(QPalette::WindowText, applicationPal.brush(QPalette::Normal, QPalette::WindowText));
     }
     this->setPalette(thisPal);
-    delete tempLabel;
 }
 
 void ClickableLabel::mouseMoveEvent(QMouseEvent *event) {

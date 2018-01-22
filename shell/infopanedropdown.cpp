@@ -44,7 +44,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->setupUi(this);
 
     ui->settingsList->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
-    ui->settingsList->setFixedWidth(250 * getDPIScaling());
+    ui->settingsListStack->setFixedWidth(250 * getDPIScaling());
 
     startTime.start();
 
@@ -109,6 +109,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->userSettingsDeleteUserAndData->setProperty("type", "destructive");
     ui->userSettingsDeleteUserOnly->setProperty("type", "destructive");
     ui->resetDeviceButton->setProperty("type", "destructive");
+    ui->partFrame->installEventFilter(this);
 
     QPalette powerStretchPalette = ui->PowerStretchSwitch->palette();
     QPalette flightModePalette = ui->FlightSwitch->palette();
@@ -851,25 +852,31 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     switch (changeTo) {
     case Clock:
         ui->pageStack->setCurrentWidget(ui->clockFrame, doAnimation);
+        setHeaderColour(QColor(0, 150, 0));
         break;
     case Battery:
         ui->pageStack->setCurrentWidget(ui->statusFrame, doAnimation);
         updateBatteryChart();
+        setHeaderColour(QColor(200, 100, 0));
         break;
     case Notifications:
         ui->pageStack->setCurrentWidget(ui->notificationsFrame, doAnimation);
+        setHeaderColour(QColor(200, 50, 50));
         break;
     case Network:
         ui->pageStack->setCurrentWidget(ui->networkFrame, doAnimation);
+        setHeaderColour(QColor(100, 100, 200));
         break;
     case KDEConnect:
         ui->pageStack->setCurrentWidget(ui->kdeConnectFrame, doAnimation);
+        setHeaderColour(QColor(100, 0, 200));
         break;
     /*case Print:
         ui->pageStack->setCurrentWidget(ui->printFrame, doAnimation);
         break;*/
     case Settings:
         ui->pageStack->setCurrentWidget(ui->settingsFrame, doAnimation);
+        setHeaderColour(QColor(0, 100, 255));
         break;
     }
 
@@ -3482,4 +3489,72 @@ void InfoPaneDropdown::on_useSystemFontForGTKButton_clicked()
 {
     ui->systemGTK3Font->setCurrentFont(ui->systemFont->currentFont());
     ui->systemGTK3FontSize->setValue(ui->systemFontSize->value());
+}
+
+void InfoPaneDropdown::setHeaderColour(QColor col) {
+    QPalette pal = ui->partFrame->palette();
+
+    tVariantAnimation* anim = new tVariantAnimation();
+    anim->setStartValue(pal.color(QPalette::Window));
+    anim->setEndValue(col);
+    anim->setDuration(250);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        QPalette pal = ui->partFrame->palette();
+        QColor col = value.value<QColor>();
+
+        pal.setColor(QPalette::Window, col);
+
+        //if ((col.red() + col.green() + col.blue()) / 3 < 127) {
+            pal.setColor(QPalette::WindowText, Qt::white);
+            pal.setColor(QPalette::Disabled, QPalette::WindowText, col.lighter(150));
+        /*} else {
+            pal.setColor(QPalette::WindowText, Qt::black);
+            pal.setColor(QPalette::Disabled, QPalette::WindowText, col.darker(150));
+        }*/
+
+        ui->partFrame->setPalette(pal);
+
+        pal.setColor(QPalette::Window, col.lighter(120));
+        ui->pushButton_7->setPalette(pal);
+
+        ui->clockLabel->setShowDisabled(ui->clockLabel->showDisabled());
+        ui->batteryLabel->setShowDisabled(ui->batteryLabel->showDisabled());
+        ui->networkLabel->setShowDisabled(ui->networkLabel->showDisabled());
+        ui->notificationsLabel->setShowDisabled(ui->notificationsLabel->showDisabled());
+        ui->kdeconnectLabel->setShowDisabled(ui->kdeconnectLabel->showDisabled());
+    });
+    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    anim->start();
+}
+
+bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
+    if (obj = ui->partFrame) {
+        if (e->type() == QEvent::Paint) {
+            QPainter p(ui->partFrame);
+            QPalette pal = ui->partFrame->palette();
+
+            p.setBrush(pal.color(QPalette::Window));
+            p.setPen(Qt::transparent);
+            p.drawRect(0, 0, ui->partFrame->width(), ui->partFrame->height());
+
+            QPolygon firstPoly;
+            firstPoly.append(QPoint(ui->partFrame->width() * 0.8, 0));
+            firstPoly.append(QPoint(ui->partFrame->width() * 0.775, ui->partFrame->height()));
+            firstPoly.append(QPoint(ui->partFrame->width(), ui->partFrame->height()));
+            firstPoly.append(QPoint(ui->partFrame->width(), 0));
+            p.setBrush(pal.color(QPalette::Window).lighter(110));
+            p.drawPolygon(firstPoly);
+
+            QPolygon secondPoly;
+            secondPoly.append(QPoint(ui->partFrame->width() * 0.85, 0));
+            secondPoly.append(QPoint(ui->partFrame->width() * 0.825, ui->partFrame->height()));
+            secondPoly.append(QPoint(ui->partFrame->width(), ui->partFrame->height()));
+            secondPoly.append(QPoint(ui->partFrame->width(), 0));
+            p.setBrush(pal.color(QPalette::Window).lighter(120));
+            p.drawPolygon(secondPoly);
+            return true;
+        }
+    }
+    return false;
 }
