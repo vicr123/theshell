@@ -2,7 +2,7 @@
 Desktop Environment written using the Qt toolkit
 
 ## Screenshots
-![Screenshot 1](https://raw.githubusercontent.com/vicr123/theshell/master/images/desktop.png)
+![Screenshot 1](https://raw.githubusercontent.com/vicr123/theshell/master/shell/images/desktop.png)
 
 ## Dependencies
 - qmake
