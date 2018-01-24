@@ -260,10 +260,21 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->StatusBarQuietMode->setVisible(true);
         }
     });
-    connect(screenRecorder, &ScreenRecorder::recordingChanged, [=](bool isRecording) {
-        if (isRecording) {
+    connect(screenRecorder, &ScreenRecorder::stateChanged, [=](ScreenRecorder::State state) {
+        if (state == ScreenRecorder::Recording) {
             ui->StatusBarRecording->setVisible(true);
             ui->screenRecordingFrame->setVisible(true);
+            ui->screenRecordingProcessingSpinner->setVisible(false);
+            ui->stopRecordingButton->setVisible(true);
+            ui->screenRecordingActiveLabel->setText(tr("Recording Screen"));
+        } else if (state == ScreenRecorder::Processing) {
+            ui->StatusBarRecording->setVisible(false);
+            ui->screenRecordingFrame->setVisible(true);
+            ui->screenRecordingProcessingSpinner->setVisible(true);
+            ui->stopRecordingButton->setVisible(false);
+            ui->screenRecordingActiveLabel->setText(tr("Processing Screen Recording..."));
+
+            ui->screenRecordingProcessingSpinner->setFixedWidth(16 * getDPIScaling());
         } else {
             ui->StatusBarRecording->setVisible(false);
             ui->screenRecordingFrame->setVisible(false);

@@ -18,8 +18,15 @@ class ScreenRecorder : public QObject
     public:
         explicit ScreenRecorder(QObject *parent = nullptr);
 
+        enum State {
+            Idle,
+            Recording,
+            Processing
+        };
+
     signals:
-        void recordingChanged(bool recording);
+        void stateChanged(State state);
+
 
     public slots:
         void start();
@@ -31,7 +38,7 @@ class ScreenRecorder : public QObject
 
     private:
         QProcess* recorderProcess;
-        bool isRecording = false;
+        State s = Idle;
 };
 
 #endif // SCREENRECORDER_H

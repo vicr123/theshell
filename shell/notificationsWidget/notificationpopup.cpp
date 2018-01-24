@@ -272,21 +272,40 @@ void NotificationPopup::setApp(QString appName, QIcon appIcon) {
     coverAppIcon->setPixmap(pm);
     coverAppName->setText(appName);
 
+    qulonglong red = 0, green = 0, blue = 0;
+
+    int totalPixels = 0;
     QImage im = pm.toImage();
     for (int i = 0; i < pm.width(); i++) {
         for (int j = 0; j < pm.height(); j++) {
             QColor c = im.pixelColor(i, j);
             if (c.alpha() != 0) {
-                i = pm.width();
-                j = pm.height();
+                //i = pm.width();
+                //j = pm.height();
 
-                c.setAlpha(255);
-                QPalette pal = coverWidget->palette();
-                pal.setColor(QPalette::Window, c.darker(150));
-                coverWidget->setPalette(pal);
+                //c.setAlpha(255);
+                //QPalette pal = coverWidget->palette();
+                //pal.setColor(QPalette::Window, c.darker(150));
+                //coverWidget->setPalette(pal);
+                red += c.red();
+                green += c.green();
+                blue += c.blue();
+                totalPixels++;
             }
         }
     }
+
+    QColor c(red / totalPixels, green / totalPixels, blue / totalPixels);
+
+    QPalette pal = coverWidget->palette();
+
+    int averageCol = (pal.color(QPalette::Window).red() + pal.color(QPalette::Window).green() + pal.color(QPalette::Window).blue()) / 3;
+    if (averageCol < 127) {
+        pal.setColor(QPalette::Window, c.darker(200));
+    } else {
+        pal.setColor(QPalette::Window, c.lighter(200));
+    }
+    coverWidget->setPalette(pal);
 }
 
 void NotificationPopup::setSummary(QString summary) {

@@ -95,11 +95,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         doNetworkCheck();
 
         if (isOn) {
-            slice1.stop();
-            slice2.stop();
+            slice1.pause();
+            slice2.pause();
         } else {
-            slice1.start();
-            slice2.start();
+            slice1.resume();
+            slice2.resume();
         }
     });
     ui->PowerStretchSwitch->setChecked(updbus->powerStretch());
@@ -489,7 +489,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     slice1.setStartValue(this->width() - 250 * getDPIScaling());
     slice1.setEndValue(this->width() - 300 * getDPIScaling());
     slice1.setEasingCurve(QEasingCurve::OutCubic);
-    slice1.setDuration(60000);
+    slice1.setDuration(15000);
     connect(&slice1, &tVariantAnimation::finished, [=] {
         slice1.setStartValue(slice1.endValue());
         if (slice1.endValue() == this->width() - 300 * getDPIScaling()) {
@@ -503,12 +503,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     connect(&slice1, SIGNAL(valueChanged(QVariant)), ui->partFrame, SLOT(repaint()));
     slice1.start();
 
-
-    QTimer::singleShot(10000, [=] {
+    QTimer::singleShot(2500, [=] {
         slice2.setStartValue(this->width() - 300 * getDPIScaling());
         slice2.setEndValue(this->width() - 350 * getDPIScaling());
         slice2.setEasingCurve(QEasingCurve::OutCubic);
-        slice2.setDuration(60000);
+        slice2.setDuration(15000);
         connect(&slice2, &tVariantAnimation::finished, [=] {
             slice2.setStartValue(slice2.endValue());
             if (slice2.endValue() == this->width() - 350 * getDPIScaling()) {
@@ -897,31 +896,56 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     switch (changeTo) {
     case Clock:
         ui->pageStack->setCurrentWidget(ui->clockFrame, doAnimation);
-        setHeaderColour(QColor(0, 50, 0));
+
+        if (ui->lightColorThemeRadio->isChecked()) {
+            setHeaderColour(QColor(0, 150, 0));
+        } else {
+            setHeaderColour(QColor(0, 50, 0));
+        }
         break;
     case Battery:
         ui->pageStack->setCurrentWidget(ui->statusFrame, doAnimation);
         updateBatteryChart();
-        setHeaderColour(QColor(100, 50, 0));
+        if (ui->lightColorThemeRadio->isChecked()) {
+            setHeaderColour(QColor(200, 150, 0));
+        } else {
+            setHeaderColour(QColor(100, 50, 0));
+        }
         break;
     case Notifications:
         ui->pageStack->setCurrentWidget(ui->notificationsFrame, doAnimation);
-        setHeaderColour(QColor(100, 25, 50));
+        if (ui->lightColorThemeRadio->isChecked()) {
+            setHeaderColour(QColor(200, 50, 100));
+        } else {
+            setHeaderColour(QColor(100, 25, 50));
+        }
         break;
     case Network:
         ui->pageStack->setCurrentWidget(ui->networkFrame, doAnimation);
-        setHeaderColour(QColor(50, 50, 100));
+        if (ui->lightColorThemeRadio->isChecked()) {
+            setHeaderColour(QColor(100, 100, 255));
+        } else {
+            setHeaderColour(QColor(50, 50, 100));
+        }
         break;
     case KDEConnect:
         ui->pageStack->setCurrentWidget(ui->kdeConnectFrame, doAnimation);
-        setHeaderColour(QColor(50, 0, 100));
+        if (ui->lightColorThemeRadio->isChecked()) {
+            setHeaderColour(QColor(200, 100, 255));
+        } else {
+            setHeaderColour(QColor(50, 0, 100));
+        }
         break;
     /*case Print:
         ui->pageStack->setCurrentWidget(ui->printFrame, doAnimation);
         break;*/
     case Settings:
         ui->pageStack->setCurrentWidget(ui->settingsFrame, doAnimation);
-        setHeaderColour(QColor(0, 50, 100));
+        if (ui->lightColorThemeRadio->isChecked()) {
+            setHeaderColour(QColor(0, 150, 255));
+        } else {
+            setHeaderColour(QColor(0, 50, 100));
+        }
         break;
     }
 
@@ -1637,6 +1661,7 @@ void InfoPaneDropdown::on_lightColorThemeRadio_toggled(bool checked)
         themeSettings->setValue("color/type", "light");
         updateAccentColourBox();
         resetStyle();
+        changeDropDown(Settings, false);
     }
 }
 
@@ -1646,6 +1671,7 @@ void InfoPaneDropdown::on_darkColorThemeRadio_toggled(bool checked)
         themeSettings->setValue("color/type", "dark");
         updateAccentColourBox();
         resetStyle();
+        changeDropDown(Settings, false);
     }
 }
 
@@ -3124,6 +3150,7 @@ void InfoPaneDropdown::on_grayColorThemeRadio_toggled(bool checked)
         themeSettings->setValue("color/type", "gray");
         updateAccentColourBox();
         resetStyle();
+        changeDropDown(Settings, false);
     }
 }
 

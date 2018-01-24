@@ -35,8 +35,8 @@ void ScreenRecorder::start() {
             //command = command.arg("~");
 
             recorderProcess->start(command);
-            isRecording = true;
-            emit recordingChanged(true);
+            s = Recording;
+            emit stateChanged(Recording);
         } else {
             ndbus->Notify("theShell", 0, "", tr("Screen Recorder"), tr("Couldn't start screen recording"), QStringList(), QVariantMap(), -1);
         }
@@ -45,18 +45,21 @@ void ScreenRecorder::start() {
 }
 
 void ScreenRecorder::stop() {
-    if (isRecording) {
+    if (s == Recording) {
         recorderProcess->terminate();
+
+        s = Processing;
+        emit stateChanged(Processing);
     }
 }
 
 bool ScreenRecorder::recording() {
-    return this->isRecording;
+    return s == Recording;
 }
 
 void ScreenRecorder::recorderFinished(int returnCode) {
-    isRecording = false;
-    emit recordingChanged(false);
+    s = Idle;
+    emit stateChanged(Idle);
 
     if (returnCode == 0 || returnCode == 255) {
         QDir::home().mkdir("Recordings");
