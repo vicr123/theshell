@@ -43,6 +43,7 @@ public:
         enAU,
         enNZ,
         nlNL,
+        deDE,
         viVN,
         daDK,
         esES,
@@ -56,7 +57,6 @@ public:
         jaJP,
         arSA,
         zhCN,
-        deDE,
         frFR,
         miNZ,
         ptBR,
@@ -93,6 +93,9 @@ public:
                     break;
                 case nlNL:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-nl"), tr("Dutch") + " (Nederlands)"));
+                    break;
+                case deDE:
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-de"), tr("German") + " (Deutsch)"));
                     break;
                 case esES:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-es"), tr("Spanish") + " (Español)"));
@@ -132,9 +135,6 @@ public:
                     break;
                 case jaJP:
                     //languageBox->addItem("[JP] " + tr("Japanese") + " (日本語) ");
-                    break;
-                case deDE:
-                    //languageBox->addItem("[DE] " + tr("German") + " (Deutsch) ");
                     break;
             }
         }
