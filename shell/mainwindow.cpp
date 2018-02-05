@@ -2120,7 +2120,7 @@ void MainWindow::reloadBar() {
     } else {
         ((QBoxLayout*) ui->centralWidget->layout())->insertLayout(1, ui->lowerBarLayout);
         ui->openStatusCenterButton->setVisible(false);
-        ui->openMenu->setVisible(false);
+        ui->openMenu->setVisible(true);
         ui->openMenuCompact->setVisible(false);
         ui->dateLayout->setDirection(QBoxLayout::LeftToRight);
         ui->dateLayout->setSpacing(6);
