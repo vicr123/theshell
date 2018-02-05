@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->openMenu->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
+    ui->openMenuCompact->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
     QSize ic16(16 * getDPIScaling(), 16 * getDPIScaling());
     ui->brightnessButton->setIconSize(ic16);
     ui->volumeButton->setIconSize(ic16);
@@ -75,8 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setAttribute(Qt::WA_AlwaysShowToolTips, true);
 
-    FlowLayout* flow = new FlowLayout(ui->windowList, -1, 0, 0);
-    ui->windowList->setLayout(flow);
+    reloadBar();
 
     taskbarManager = new TaskbarManager;
     connect(taskbarManager, SIGNAL(updateWindow(WmWindow)), this, SLOT(updateWindow(WmWindow)));
@@ -105,6 +105,7 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     });
     connect(infoPane, SIGNAL(updateStrutsSignal()), this, SLOT(updateStruts()));
+    connect(infoPane, SIGNAL(updateBarSignal()), this, SLOT(reloadBar()));
     connect(infoPane, &InfoPaneDropdown::flightModeChanged, [=](bool flight) {
         ui->flightIcon->setVisible(flight);
         ui->StatusBarFlight->setVisible(flight);
@@ -114,6 +115,8 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     infoPane->getNetworks();
     ui->StatusBarRedshift->setVisible(false);
+
+    connect(ui->openMenuCompact, SIGNAL(customContextMenuRequested(QPoint)), ui->openMenu, SIGNAL(customContextMenuRequested(QPoint)));
 
     connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
         if (updbus->hasBattery()) {
@@ -1164,7 +1167,11 @@ void MainWindow::doUpdate() {
     forceWindowMove = false;
 
     //Update date and time
-    ui->date->setText(QLocale().toString(QDateTime::currentDateTime(), "ddd dd MMM yyyy"));
+    if (settings.value("bar/compact", false).toBool()) {
+        ui->date->setText(QLocale().toString(QDateTime::currentDateTime().date(), QLocale::ShortFormat /*"dd/mm/yy"*/));
+    } else {
+        ui->date->setText(QLocale().toString(QDateTime::currentDateTime(), "ddd dd MMM yyyy"));
+    }
 
     if (settings.value("time/use24hour", true).toBool()) {
         ui->time->setText(QDateTime::currentDateTime().time().toString("HH:mm:ss"));
@@ -2061,4 +2068,69 @@ void MainWindow::changeEvent(QEvent *event) {
 void MainWindow::on_stopRecordingButton_clicked()
 {
     screenRecorder->stop();
+}
+
+void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu* menu = new QMenu();
+    menu->addSection(tr("For Bar"));
+    if (settings.value("bar/onTop").toBool()) {
+        menu->addAction(tr("Move to bottom"), [=] {
+            settings.setValue("bar/onTop", false);
+            this->updateStruts();
+        });
+    } else {
+        menu->addAction("Move to top", [=] {
+            settings.setValue("bar/onTop", true);
+            this->updateStruts();
+        });
+    }
+
+    menu->addSection(tr("For System"));
+    menu->addAction(tr("Open Status Center"), [=] {
+        getInfoPane()->show(InfoPaneDropdown::Clock);
+    });
+    menu->addAction(tr("Open System Settings"), [=] {
+        getInfoPane()->show(InfoPaneDropdown::Settings);
+    });
+    menu->exec(this->mapToGlobal(pos));
+}
+
+void MainWindow::on_openMenu_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu* menu = new QMenu();
+    menu->addAction("Open Gateway", this, SLOT(openMenu()));
+    menu->exec(ui->openMenu->mapToGlobal(pos));
+}
+
+void MainWindow::reloadBar() {
+    ui->lowerBarLayout->setParent(nullptr);
+    if (settings.value("bar/compact", false).toBool()) {
+        ui->topBarLayout->insertLayout(6, ui->lowerBarLayout);
+        ui->openStatusCenterButton->setVisible(true);
+        ui->openMenu->setVisible(false);
+        ui->openMenuCompact->setVisible(true);
+        ui->dateLayout->setDirection(QBoxLayout::TopToBottom);
+        ui->dateLayout->setSpacing(0);
+
+        QBoxLayout* flow = new QBoxLayout(QBoxLayout::LeftToRight);
+        flow->setSpacing(0);
+        flow->setMargin(-1);
+        ui->windowList->setLayout(flow);
+    } else {
+        ((QBoxLayout*) ui->centralWidget->layout())->insertLayout(1, ui->lowerBarLayout);
+        ui->openStatusCenterButton->setVisible(false);
+        ui->openMenu->setVisible(false);
+        ui->openMenuCompact->setVisible(false);
+        ui->dateLayout->setDirection(QBoxLayout::LeftToRight);
+        ui->dateLayout->setSpacing(6);
+
+        FlowLayout* flow = new FlowLayout(ui->windowList, -1, 0, 0);
+        ui->windowList->setLayout(flow);
+    }
+}
+
+void MainWindow::on_openStatusCenterButton_clicked()
+{
+    getInfoPane()->show(InfoPaneDropdown::Clock);
 }

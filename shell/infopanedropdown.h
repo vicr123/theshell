@@ -119,6 +119,7 @@ class InfoPaneDropdown : public QDialog
         void batteryStretchChanged(bool isOn);
         void flightModeChanged(bool flight);
         void updateStrutsSignal();
+        void updateBarSignal();
         void redshiftEnabledChanged(bool enabled);
 
     private slots:
@@ -457,6 +458,8 @@ class InfoPaneDropdown : public QDialog
         void setHeaderColour(QColor col);
 
         void on_EmphasiseAppSwitch_toggled(bool checked);
+
+        void on_CompactBarSwitch_toggled(bool checked);
 
     public slots:
         void getNetworks();

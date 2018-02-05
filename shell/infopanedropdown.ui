@@ -632,14 +632,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>31</day>
+                 <day>30</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>31</day>
+                 <day>30</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1561,7 +1561,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1165</width>
+            <width>182</width>
             <height>114</height>
            </rect>
           </property>
@@ -1848,7 +1848,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QFrame" name="">
+        <widget class="QFrame" name="frame">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -2108,7 +2108,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>5</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2384,63 +2384,31 @@
             </widget>
             <widget class="QWidget" name="page">
              <layout class="QGridLayout" name="gridLayout_9">
-              <item row="7" column="0" colspan="3">
-               <widget class="Line" name="line_5">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="1">
-               <widget class="Switch" name="AutoShowBarSwitch">
-                <property name="text">
-                 <string notr="true">AutoShowBarSwitch</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="Switch" name="barDesktopsSwitch">
-                <property name="text">
-                 <string notr="true">barDesktopsSwitch</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="Switch" name="TextSwitch">
-                <property name="text">
-                 <string notr="true">TextSwitch</string>
-                </property>
-               </widget>
-              </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="label_69">
+               <widget class="QLabel" name="label_15">
                 <property name="text">
-                 <string>Use Status Bar</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="AutoShowBarLabel">
-                <property name="text">
-                 <string>Automatically show bar</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_35">
-                <property name="text">
-                 <string>Show windows from other desktops</string>
+                 <string>Use Compact Bar</string>
                 </property>
                </widget>
               </item>
               <item row="3" column="1">
+               <widget class="Switch" name="CompactBarSwitch">
+                <property name="text">
+                 <string notr="true">CompactBarSwitch</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
                <widget class="Switch" name="StatusBarSwitch">
                 <property name="text">
                  <string notr="true">StatusBarSwitch</string>
                 </property>
                </widget>
               </item>
-              <item row="9" column="0">
+              <item row="12" column="0">
                <spacer name="verticalSpacer_17">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
@@ -2473,35 +2441,28 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
+              <item row="9" column="0">
                <widget class="QLabel" name="label_90">
                 <property name="text">
                  <string>Show Bar on bottom of screen</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
+              <item row="9" column="1">
                <widget class="Switch" name="BarOnBottom">
                 <property name="text">
                  <string notr="true">BarOnBottomSwitch</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="0" colspan="3">
-               <widget class="QLabel" name="AutoShowBarExplanation">
-                <property name="text">
-                 <string>When this is checked, hovering over the Status Bar will automatically expand the bar. Otherwise, clicking on the Status Bar will expand the bar.</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="0">
+              <item row="11" column="0">
                <widget class="QLabel" name="label_42">
                 <property name="text">
                  <string>End Session Confirmation</string>
                 </property>
                </widget>
               </item>
-              <item row="8" column="1">
+              <item row="11" column="1">
                <widget class="QFrame" name="frame_2">
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
@@ -2551,6 +2512,85 @@
                 </property>
                </widget>
               </item>
+              <item row="10" column="0" colspan="3">
+               <widget class="Line" name="line_5">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="Switch" name="AutoShowBarSwitch">
+                <property name="text">
+                 <string notr="true">AutoShowBarSwitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="Switch" name="barDesktopsSwitch">
+                <property name="text">
+                 <string notr="true">barDesktopsSwitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="Switch" name="TextSwitch">
+                <property name="text">
+                 <string notr="true">TextSwitch</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_69">
+                <property name="text">
+                 <string>Use Status Bar</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="AutoShowBarLabel">
+                <property name="text">
+                 <string>Automatically show bar</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_35">
+                <property name="text">
+                 <string>Show windows from other desktops</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1" colspan="2">
+               <widget class="QLabel" name="label_103">
+                <property name="text">
+                 <string>The Status Bar is a shown when a window is maximised.</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1" colspan="2">
+               <widget class="QLabel" name="label_16">
+                <property name="text">
+                 <string>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1" colspan="2">
+               <widget class="QLabel" name="AutoShowBarExplanation">
+                <property name="text">
+                 <string>When this is checked, hovering over the Status Bar will automatically expand the bar. Otherwise, clicking on the Status Bar will expand the bar.</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
             <widget class="QWidget" name="page_14">
@@ -2586,7 +2626,7 @@
                    <x>0</x>
                    <y>0</y>
                    <width>854</width>
-                   <height>674</height>
+                   <height>694</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_21">
@@ -3058,7 +3098,8 @@
                  <string>Use for GTK</string>
                 </property>
                 <property name="icon">
-                 <iconset theme="arrow-right"/>
+                 <iconset theme="arrow-right">
+                  <normaloff>.</normaloff>.</iconset>
                 </property>
                </widget>
               </item>
@@ -5146,6 +5187,14 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>clickablelabel.h</header>
+   <slots>
+    <signal>clicked()</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
    <class>AnimatedStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>animatedstackedwidget.h</header>
@@ -5158,14 +5207,6 @@ Items that will be kept if you choose to keep files:
    <container>1</container>
    <slots>
     <signal>networkAvailable(bool)</signal>
-   </slots>
-  </customwidget>
-  <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>clickablelabel.h</header>
-   <slots>
-    <signal>clicked()</signal>
    </slots>
   </customwidget>
   <customwidget>

@@ -152,30 +152,32 @@ bool TaskbarManager::updateInternalWindow(Window window) {
                 ok = XGetWindowProperty(QX11Info::display(), window, XInternAtom(QX11Info::display(), "_NET_WM_ICON", False), 2, width * height * 4, False,
                                    XA_CARDINAL, &ReturnType, &format, &items, &bytes, &returnVal);
 
-                QImage image(16, 16, QImage::Format_ARGB32);
+                if (returnVal != 0x0) {
+                    QImage image(16, 16, QImage::Format_ARGB32);
 
-                float widthSpacing = (float) width / (float) 16;
-                float heightSpacing = (float) height / (float) 16;
+                    float widthSpacing = (float) width / (float) 16;
+                    float heightSpacing = (float) height / (float) 16;
 
-                for (int y = 0; y < 16; y++) {
-                    for (int x = 0; x < 16 * 8; x = x + 8) {
-                        unsigned long a, r, g, b;
+                    for (int y = 0; y < 16; y++) {
+                        for (int x = 0; x < 16 * 8; x = x + 8) {
+                            unsigned long a, r, g, b;
 
-                        b = (returnVal[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 0)]);
-                        g = (returnVal[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 1)]);
-                        r = (returnVal[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 2)]);
-                        a = (returnVal[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 3)]);
+                            b = (returnVal[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 0)]);
+                            g = (returnVal[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 1)]);
+                            r = (returnVal[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 2)]);
+                            a = (returnVal[(int) (y * heightSpacing * width * 8 + x * widthSpacing + 3)]);
 
-                        QColor col = QColor(r, g, b, a);
+                            QColor col = QColor(r, g, b, a);
 
-                        image.setPixelColor(x / 8, y, col);
+                            image.setPixelColor(x / 8, y, col);
+                        }
                     }
+
+                    QPixmap iconPixmap(QPixmap::fromImage(image).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                    serialised.setIcon(QIcon(iconPixmap));
+
+                    XFree(returnVal);
                 }
-
-                QPixmap iconPixmap(QPixmap::fromImage(image).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-                serialised.setIcon(QIcon(iconPixmap));
-
-                XFree(returnVal);
             }
         }
 

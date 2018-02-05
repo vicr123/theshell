@@ -354,6 +354,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->powerSuspend->setValue(settings.value("power/powerSuspend", 90).toInt());
     ui->sunlightRedshift->setChecked(settings.value("display/redshiftSunlightCycle", false).toBool());
     ui->EmphasiseAppSwitch->setChecked(settings.value("notifications/emphasiseApp", true).toBool());
+    ui->CompactBarSwitch->setChecked(settings.value("bar/compact", false).toBool());
     updateAccentColourBox();
     updateRedshiftTime();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
@@ -1306,7 +1307,7 @@ void InfoPaneDropdown::updateSysInfo() {
         QString uptimeString;
         if (info->uptime > 86400) {
             int days = info->uptime / 86400;
-            uptimeString = tr("%n days", NULL, days).arg(days) + " " + sysUptime.toString("hh:mm:ss");
+            uptimeString = tr("%n days", NULL, days) + " " + sysUptime.toString("hh:mm:ss");
         } else {
             uptimeString = sysUptime.toString("hh:mm:ss");
         }
@@ -3637,4 +3638,32 @@ bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
 void InfoPaneDropdown::on_EmphasiseAppSwitch_toggled(bool checked)
 {
     settings.setValue("notifications/emphasiseApp", checked);
+}
+
+void InfoPaneDropdown::on_CompactBarSwitch_toggled(bool checked)
+{
+    if (settings.value("bar/compact") != checked) {
+        settings.setValue("bar/compact", checked);
+
+        QMap<QString, QString> actions;
+        actions.insert("logout", tr("Log Out Now"));
+
+        tToast* t = new tToast();
+        t->setTitle(tr("Logoff Required"));
+
+        if (checked) {
+            t->setText(tr("In order to enable the Compact Bar, you'll need to log out and then log back on."));
+        } else {
+            t->setText(tr("In order to disable the Compact Bar, you'll need to log out and then log back on."));
+        }
+        t->setActions(actions);
+        t->setTimeout(10000);
+        connect(t, &tToast::actionClicked, [=](QString key) {
+            if (key == "logout") {
+                EndSession(EndSessionWait::logout);
+            }
+        });
+        connect(t, SIGNAL(dismissed()), t, SLOT(deleteLater()));
+        t->show(this);
+    }
 }

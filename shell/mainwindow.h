@@ -92,6 +92,8 @@ public slots:
 
     void updateStruts();
 
+    void reloadBar();
+
 private slots:
     void on_time_clicked();
 
@@ -196,6 +198,12 @@ private slots:
     void on_networkStrength_clicked();
 
     void on_stopRecordingButton_clicked();
+
+    void on_MainWindow_customContextMenuRequested(const QPoint &pos);
+
+    void on_openMenu_customContextMenuRequested(const QPoint &pos);
+
+    void on_openStatusCenterButton_clicked();
 
     signals:
     void reloadBackgrounds();

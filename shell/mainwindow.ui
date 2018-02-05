@@ -16,6 +16,9 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::CustomContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string notr="true">theShellTopPanel</string>
   </property>
@@ -86,46 +89,87 @@
          <number>0</number>
         </property>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="topBarLayout">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_10">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QPushButton" name="openMenuCompact">
+            <property name="contextMenuPolicy">
+             <enum>Qt::CustomContextMenu</enum>
             </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="openStatusCenterButton">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset theme="go-down">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="dateLayout">
             <item>
-             <widget class="ClickableLabel" name="time">
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="ClickableLabel" name="time">
+                <property name="font">
+                 <font>
+                  <pointsize>15</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string notr="true">&amp;16:20:00</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="ampmLabel">
+                <property name="text">
+                 <string notr="true">a</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="ClickableLabel" name="date">
               <property name="font">
                <font>
-                <pointsize>15</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="text">
-               <string notr="true">&amp;16:20:00</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="ampmLabel">
-              <property name="text">
-               <string notr="true">a</string>
+               <string notr="true">Sunday 1st &amp;Jan 1111</string>
               </property>
              </widget>
             </item>
            </layout>
-          </item>
-          <item>
-           <widget class="ClickableLabel" name="date">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string notr="true">Sunday 1st &amp;Jan 1111</string>
-            </property>
-           </widget>
           </item>
           <item>
            <widget class="ClickableLabel" name="timerIcon">
@@ -595,7 +639,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QHBoxLayout" name="lowerBarLayout">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -612,6 +656,9 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
         </property>
         <property name="toolTip">
          <string>Open the Gateway to your PC</string>
@@ -792,7 +839,7 @@ padding-left: 3px;
 padding-right: 3px;</string>
          </property>
          <property name="text">
-          <string>Recording</string>
+          <string notr="true">Recording</string>
          </property>
         </widget>
        </item>
@@ -959,5 +1006,22 @@ padding-right: 3px;</string>
  <resources>
   <include location="resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>openMenuCompact</sender>
+   <signal>clicked()</signal>
+   <receiver>openMenu</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>24</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>36</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -76,16 +76,20 @@ private slots:
 
     void on_blankerButton_clicked();
 
+    void on_highlightButton_clicked();
+
     private:
     Ui::screenshotWindow *ui;
 
     QPixmap originalPixmap;
     QPixmap screenshotPixmap;
     QPixmap savePixmap;
+    QPixmap beforeDrawPixmap;
     QRubberBand *band, *regionBand;
     QPoint bandOrigin;
     QRectF originalGeometry;
     QRect selectedRegion;
+    QPolygon currentLine;
     
     void keyPressEvent(QKeyEvent* event);
     void paintEvent(QPaintEvent* event);

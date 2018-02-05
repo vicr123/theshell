@@ -70,7 +70,11 @@ private slots:
 
     void on_exitStackedWidget_currentChanged(int arg1);
 
-private:
+    void on_enableCompactBarButton_clicked();
+
+    void on_disableCompactBarButton_clicked();
+
+    private:
     Ui::Onboarding *ui;
 
     void reject();

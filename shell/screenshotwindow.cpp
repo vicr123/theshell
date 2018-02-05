@@ -228,23 +228,49 @@ void screenshotWindow::on_saveButton_clicked()
 
 bool screenshotWindow::eventFilter(QObject *object, QEvent *event) {
     if (object == ui->label) {
+        qreal scaleFactor = ((originalGeometry.width() - 125 * getDPIScaling()) / originalGeometry.width());
         if (event->type() == QEvent::MouseButtonPress) {
             QMouseEvent* mouseEvent = (QMouseEvent*) event;
             bandOrigin = mouseEvent->pos();
-            band->setGeometry(QRect(bandOrigin, mouseEvent->pos()).normalized());
-            band->show();
 
-            if (ui->regionSelectButton->isChecked()) {
-                regionBand->hide();
+            currentLine.clear();
+            currentLine.append(mouseEvent->pos() / scaleFactor);
+
+            beforeDrawPixmap = screenshotPixmap;
+            if (!ui->highlightButton->isChecked()) {
+                band->setGeometry(QRect(bandOrigin, mouseEvent->pos()).normalized());
+                band->show();
+
+                if (ui->regionSelectButton->isChecked()) {
+                    regionBand->hide();
+                }
             }
         } else if (event->type() == QEvent::MouseMove) {
             QMouseEvent* mouseEvent = (QMouseEvent*) event;
             if (mouseEvent->button() != Qt::RightButton) {
-                band->setGeometry(QRect(bandOrigin, mouseEvent->pos()).normalized());
+                if (ui->highlightButton->isChecked()) {
+
+                    screenshotPixmap = beforeDrawPixmap;
+                    currentLine.append(mouseEvent->pos() / scaleFactor);
+
+                    QPainter p(&screenshotPixmap);
+                    //p.setRenderHint(QPainter::Antialiasing);
+
+                    QPen pen = QPen(QColor(255, 255, 0, 100));
+                    pen.setWidth(25);
+                    pen.setCapStyle(Qt::RoundCap);
+                    pen.setJoinStyle(Qt::RoundJoin);
+                    p.setPen(pen);
+                    p.drawPolyline(currentLine);
+                    ui->label->setPixmap(screenshotPixmap);
+                } else {
+                    band->setGeometry(QRect(bandOrigin, mouseEvent->pos()).normalized());
+                }
             }
         } else if (event->type() == QEvent::MouseButtonRelease) {
+            QMouseEvent* mouseEvent = (QMouseEvent*) event;
+
             QRect region;
-            qreal scaleFactor = ((originalGeometry.width() - 125 * getDPIScaling()) / originalGeometry.width());
             region.setLeft(band->geometry().left() / scaleFactor);
             region.setTop(band->geometry().top() / scaleFactor);
             region.setRight(band->geometry().right() / scaleFactor);
@@ -256,9 +282,23 @@ bool screenshotWindow::eventFilter(QObject *object, QEvent *event) {
                 regionBand->show();
             } else if (ui->blankerButton->isChecked()) {
                 QPainter p(&screenshotPixmap);
+                p.setRenderHint(QPainter::Antialiasing);
                 p.setBrush(Qt::black);
                 p.drawRect(region);
                 band->hide();
+            } else if (ui->highlightButton->isChecked()) {
+                screenshotPixmap = beforeDrawPixmap;
+                currentLine.append(mouseEvent->pos() / scaleFactor);
+
+                QPainter p(&screenshotPixmap);
+                p.setRenderHint(QPainter::Antialiasing);
+
+                QPen pen = QPen(QColor(255, 255, 0, 100));
+                pen.setWidth(25);
+                pen.setCapStyle(Qt::RoundCap);
+                pen.setJoinStyle(Qt::RoundJoin);
+                p.setPen(pen);
+                p.drawPolyline(currentLine);
             }
             savePixmap = screenshotPixmap.copy(selectedRegion);
             ui->label->setPixmap(screenshotPixmap);
@@ -284,9 +324,17 @@ void screenshotWindow::on_resetButton_clicked()
 void screenshotWindow::on_regionSelectButton_clicked()
 {
     ui->descriptionLabel->setText(tr("Select a region using the mouse."));
+    ui->label->setCursor(QCursor(Qt::CrossCursor));
 }
 
 void screenshotWindow::on_blankerButton_clicked()
 {
     ui->descriptionLabel->setText(tr("Redact a region using the mouse."));
+    ui->label->setCursor(QCursor(Qt::CrossCursor));
+}
+
+void screenshotWindow::on_highlightButton_clicked()
+{
+    ui->descriptionLabel->setText(tr("Highlight part of the image using the mouse."));
+    ui->label->setCursor(QCursor(Qt::ArrowCursor));
 }

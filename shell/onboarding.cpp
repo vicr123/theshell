@@ -24,7 +24,9 @@
 
 #define ChangelogOnbording \
     "New in theShell 7.2:\n"\
-    "Redshift can now be automatically timed according to the sunlight cycle based on your location\n"\
+    "- Redshift can now be automatically timed according to the sunlight cycle based on your location\n"\
+    "- Status Center panes have been updated\n"\
+    "- The Compact Bar has been added\n"\
     "\n"\
     "New in theShell 7.1:\n"\
     "- theWave has been discontinued.\n"\
@@ -185,6 +187,9 @@ void Onboarding::on_stackedWidget_currentChanged(int arg1)
             ui->nextButton->setEnabled(false);
             break;
         case 4:
+            ui->nextButton->setEnabled(false);
+            break;
+        case 5:
             ui->nextButton->setText(tr("Start"));
             break;
     }
@@ -192,7 +197,7 @@ void Onboarding::on_stackedWidget_currentChanged(int arg1)
 
 void Onboarding::on_nextButton_clicked()
 {
-    if (ui->stackedWidget->currentIndex() == 4) {
+    if (ui->stackedWidget->currentIndex() == 5) {
         onboardingDone = true;
         this->accept();
     } else {
@@ -367,4 +372,16 @@ void Onboarding::changeEvent(QEvent *event) {
         ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg(TS_VERSION));
     }
     QDialog::changeEvent(event);
+}
+
+void Onboarding::on_enableCompactBarButton_clicked()
+{
+    settings.setValue("bar/compact", true);
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
+}
+
+void Onboarding::on_disableCompactBarButton_clicked()
+{
+    settings.setValue("bar/compact", false);
+    ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
 }
