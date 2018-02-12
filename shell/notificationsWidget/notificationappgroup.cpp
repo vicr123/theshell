@@ -122,7 +122,7 @@ void NotificationAppGroup::updateCollapsedCounter() {
             ui->collapsedLabel->setText(tr("Collapse Notifications"));
             ui->expandNotificationsButton->setIcon(QIcon::fromTheme("go-up"));
         } else {
-            ui->collapsedLabel->setText(tr("+%n notifications collapsed", "", notifications.count()).arg(QString::number(notifications.count() - 5)));
+            ui->collapsedLabel->setText(tr("+%n notifications collapsed", "", notifications.count() - 5));
             ui->expandNotificationsButton->setIcon(QIcon::fromTheme("go-down"));
         }
         ui->collapsedFrame->setVisible(true);
