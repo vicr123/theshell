@@ -2315,13 +2315,15 @@ void InfoPaneDropdown::launchDateTimeService() {
         return;
     }
 
-    QDBusMessage launchMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "StartServiceByName");
+    /*QDBusMessage launchMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "StartServiceByName");
     QVariantList args;
     args.append("org.freedesktop.timedate1");
     args.append((uint) 0);
     launchMessage.setArguments(args);
 
-    QDBusConnection::systemBus().call(launchMessage);
+    QDBusConnection::systemBus().call(launchMessage);*/
+
+    QDBusConnection::systemBus().interface()->startService("org.freedesktop.timedate1");
 }
 
 void InfoPaneDropdown::on_dateTimeSetDateTimeButton_clicked()

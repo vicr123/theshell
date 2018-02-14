@@ -200,10 +200,10 @@ bool MouseScrollWidget::eventFilter(QObject *object, QEvent *event) {
 }*/
 
 void MouseScrollWidget::paintEvent(QPaintEvent *event) {
-    QPainter painter(this);
+    //QPainter painter(this);
     //painter.setBrush(this->palette().brush(QPalette::WindowText));
     //Check if we need to draw the left scroll indicator
-    if (this->horizontalScrollBar()->value() != 0) {
+    /*if (this->horizontalScrollBar()->value() != 0) {
         QGradient grad;
         grad.setColorAt(0, this->palette().color(QPalette::WindowText));
         QColor end = this->palette().color(QPalette::WindowText);
@@ -216,5 +216,5 @@ void MouseScrollWidget::paintEvent(QPaintEvent *event) {
     //Check if we need to draw the right scroll indicator
     if (this->horizontalScrollBar()->value() != this->horizontalScrollBar()->maximum()) {
         painter.drawRect(event->rect().left() + this->width() - 20, event->rect().top(), 20, this->height());
-    }
+    }*/
 }

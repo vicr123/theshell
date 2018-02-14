@@ -35,6 +35,7 @@
 #include <QPainter>
 #include <QMenu>
 #include <QAction>
+#include <QMutex>
 #include <math.h>
 #include "window.h"
 #include "menu.h"
@@ -236,6 +237,7 @@ private:
     QString mprisAlbum;
     bool mprisPlaying;
     bool pauseMprisMenuUpdate = false;
+    QMutex mprisUpdaterLocker;
 
     void closeEvent(QCloseEvent*);
     void paintEvent(QPaintEvent *event);
