@@ -92,6 +92,7 @@ private slots:
     QPolygon currentLine;
     
     void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
     void paintEvent(QPaintEvent* event);
     bool eventFilter(QObject *object, QEvent *event);
 };

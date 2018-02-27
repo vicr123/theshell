@@ -426,12 +426,14 @@ void Menu::on_commandLinkButton_5_clicked()
 
 void Menu::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(this->palette().color(QPalette::WindowText));
     if (QApplication::isRightToLeft()) {
         painter.drawLine(0, 0, 0, this->height());
     } else {
         painter.drawLine(this->width() - 1, 0, this->width() - 1, this->height());
     }
+
     event->accept();
 }
 

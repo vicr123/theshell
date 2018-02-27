@@ -365,7 +365,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -456,6 +456,54 @@
                  <property name="text">
                   <string notr="true">Sunday, 1 Janurary 1111</string>
                  </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QFrame" name="dstPanel">
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_39">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>20</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_6">
+                    <item>
+                     <widget class="QLabel" name="dstIcon">
+                      <property name="text">
+                       <string notr="true">Icon</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="dstLabel">
+                      <property name="text">
+                       <string>On Tableday, 1 April 2018, Daylight Savings Time will end. The clock will automatically adjust backwards by 1 hour.</string>
+                      </property>
+                      <property name="wordWrap">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </widget>
                </item>
                <item>
@@ -632,14 +680,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>30</day>
+                 <day>29</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>30</day>
+                 <day>29</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2486,7 +2534,7 @@
                  <item>
                   <widget class="QRadioButton" name="endSessionConfirmInMenu">
                    <property name="text">
-                    <string>Within Gateway</string>
+                    <string>Within &amp;Gateway</string>
                    </property>
                   </widget>
                  </item>
@@ -2625,8 +2673,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>854</width>
-                   <height>694</height>
+                   <width>372</width>
+                   <height>574</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_21">

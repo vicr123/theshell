@@ -49,6 +49,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     startTime.start();
 
     ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2018"));
+    ui->dstIcon->setPixmap(QIcon::fromTheme("chronometer").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
 
     connect(this, SIGNAL(flightModeChanged(bool)), ui->NetworkManager, SLOT(flightModeChanged(bool)));
     connect(this, SIGNAL(flightModeChanged(bool)), ui->networkManagerSettings, SLOT(flightModeChanged(bool)));
@@ -109,6 +110,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->pushButton_3->setVisible(false);
     ui->BatteryChargeScrollBar->setVisible(false);
     ui->appNotificationsConfigureLock->setVisible(false);
+    ui->dstPanel->setVisible(false);
     ui->quietModeExtras->setFixedHeight(0);
     //ui->networkKey->setVisible(false);
     //ui->networkConnect->setVisible(false);
@@ -487,8 +489,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->RemindersList->setModel(new RemindersListModel);
     ui->RemindersList->setItemDelegate(new RemindersDelegate);
 
-    slice1.setStartValue(this->width() - 250 * getDPIScaling());
-    slice1.setEndValue(this->width() - 300 * getDPIScaling());
+    slice1.setStartValue((float) (this->width() - 250 * getDPIScaling()));
+    slice1.setEndValue((float) (this->width() - 300 * getDPIScaling()));
     slice1.setEasingCurve(QEasingCurve::OutCubic);
     slice1.setDuration(15000);
     connect(&slice1, &tVariantAnimation::finished, [=] {
@@ -505,8 +507,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     slice1.start();
 
     QTimer::singleShot(2500, [=] {
-        slice2.setStartValue(this->width() - 300 * getDPIScaling());
-        slice2.setEndValue(this->width() - 350 * getDPIScaling());
+        slice2.setStartValue((float) (this->width() - 300 * getDPIScaling()));
+        slice2.setEndValue((float) (this->width() - 350 * getDPIScaling()));
         slice2.setEasingCurve(QEasingCurve::OutCubic);
         slice2.setDuration(15000);
         connect(&slice2, &tVariantAnimation::finished, [=] {
@@ -524,6 +526,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     updateStruts();
     updateAutostart();
+    updateDSTNotification();
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -3266,7 +3269,9 @@ void InfoPaneDropdown::on_setTimezoneButton_clicked()
     //Set the timezone
     launchDateTimeService();
     QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
-    dateTimeInterface.call(QDBus::NoBlock, "SetTimezone", ui->timezoneCityList->currentItem()->data(Qt::UserRole), true);
+    QDBusPendingCallWatcher* w = new QDBusPendingCallWatcher(dateTimeInterface.asyncCall("SetTimezone", ui->timezoneCityList->currentItem()->data(Qt::UserRole), true));
+    connect(w, SIGNAL(finished(QDBusPendingCallWatcher*)), w, SLOT(deleteLater()));
+    connect(w, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(updateDSTNotification()));
 }
 
 void InfoPaneDropdown::on_timezoneList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
@@ -3610,25 +3615,26 @@ bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
             QPainter p(ui->partFrame);
             QPalette pal = ui->partFrame->palette();
 
+            p.setRenderHint(QPainter::Antialiasing);
             p.setBrush(pal.color(QPalette::Window));
             p.setPen(Qt::transparent);
             p.drawRect(0, 0, ui->partFrame->width(), ui->partFrame->height());
 
-            QPolygon firstPoly;
+            QPolygonF firstPoly;
             //firstPoly.append(QPoint(ui->partFrame->width() * 0.8, 0));
-            firstPoly.append(QPoint(slice1.currentValue().toInt(), 0));
-            firstPoly.append(QPoint(slice2.currentValue().toInt(), ui->partFrame->height()));
+            firstPoly.append(QPointF(slice1.currentValue().toFloat(), 0));
+            firstPoly.append(QPointF(slice2.currentValue().toFloat(), ui->partFrame->height()));
             //firstPoly.append(QPoint(ui->partFrame->width() * 0.775, ui->partFrame->height()));
-            firstPoly.append(QPoint(ui->partFrame->width(), ui->partFrame->height()));
-            firstPoly.append(QPoint(ui->partFrame->width(), 0));
+            firstPoly.append(QPointF(ui->partFrame->width(), ui->partFrame->height()));
+            firstPoly.append(QPointF(ui->partFrame->width(), 0));
             p.setBrush(pal.color(QPalette::Window).lighter(110));
             p.drawPolygon(firstPoly);
 
-            QPolygon secondPoly;
-            secondPoly.append(QPoint(ui->partFrame->width() * 0.85, 0));
-            secondPoly.append(QPoint(ui->partFrame->width() * 0.825, ui->partFrame->height()));
-            secondPoly.append(QPoint(ui->partFrame->width(), ui->partFrame->height()));
-            secondPoly.append(QPoint(ui->partFrame->width(), 0));
+            QPolygonF secondPoly;
+            secondPoly.append(QPointF(ui->partFrame->width() * 0.85, 0));
+            secondPoly.append(QPointF(ui->partFrame->width() * 0.825, ui->partFrame->height()));
+            secondPoly.append(QPointF(ui->partFrame->width(), ui->partFrame->height()));
+            secondPoly.append(QPointF(ui->partFrame->width(), 0));
             p.setBrush(pal.color(QPalette::Window).lighter(120));
             p.drawPolygon(secondPoly);
             return true;
@@ -3668,4 +3674,106 @@ void InfoPaneDropdown::on_CompactBarSwitch_toggled(bool checked)
         connect(t, SIGNAL(dismissed()), t, SLOT(deleteLater()));
         t->show(this);
     }
+}
+
+void InfoPaneDropdown::keyPressEvent(QKeyEvent *event) {
+
+}
+
+void InfoPaneDropdown::updateDSTNotification() {
+    launchDateTimeService();
+
+    QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
+    QString currentTimezone = dateTimeInterface.property("Timezone").toString();
+
+    QString timezoneInfoPath = "/usr/share/zoneinfo/" + currentTimezone;
+    QProcess* timezoneProcess = new QProcess();
+    connect(timezoneProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
+        timezoneProcess->deleteLater();
+
+        struct Changeover {
+            QDateTime changeoverDate;
+            bool isDST;
+            int gmtOffset;
+        };
+
+        QList<Changeover> changeovers;
+
+        while (!timezoneProcess->atEnd()) {
+            QStringList parts = QString(timezoneProcess->readLine()).split(" ", QString::SkipEmptyParts);
+            if (parts.length() == 16) {
+                QStringList dateText;
+                dateText.append(parts.at(4));
+                //dateText.append(parts.at(2));
+
+                //I am so sorry :(
+                if (parts.at(2) == "Jan") {
+                    dateText.append("01");
+                } else if (parts.at(2) == "Feb") {
+                    dateText.append("02");
+                } else if (parts.at(2) == "Mar") {
+                    dateText.append("03");
+                } else if (parts.at(2) == "Apr") {
+                    dateText.append("04");
+                } else if (parts.at(2) == "May") {
+                    dateText.append("05");
+                } else if (parts.at(2) == "Jun") {
+                    dateText.append("06");
+                } else if (parts.at(2) == "Jul") {
+                    dateText.append("07");
+                } else if (parts.at(2) == "Aug") {
+                    dateText.append("08");
+                } else if (parts.at(2) == "Sep") {
+                    dateText.append("09");
+                } else if (parts.at(2) == "Oct") {
+                    dateText.append("10");
+                } else if (parts.at(2) == "Nov") {
+                    dateText.append("11");
+                } else if (parts.at(2) == "Dec") {
+                    dateText.append("12");
+                }
+
+                dateText.append(parts.at(5));
+                dateText.append(parts.at(3));
+
+                Changeover c;
+                QString dateConnectedText = dateText.join(" ");
+                c.changeoverDate = QDateTime::fromString(dateConnectedText, "hh:mm:ss MM yyyy d");
+                c.changeoverDate.setTimeSpec(Qt::UTC);
+                c.isDST = parts.at(14).endsWith("1");
+                c.gmtOffset = parts.at(15).mid(7).toInt();
+                changeovers.append(c);
+            }
+        }
+
+        bool showDaylightSavingsPanel = false;
+        Changeover changeover;
+        QDateTime current = QDateTime::currentDateTimeUtc();
+        QDateTime currentLocal = QDateTime::currentDateTime();
+
+        for (int i = 0; i < changeovers.count(); i++) {
+            Changeover c = changeovers.at(i);
+
+            int days = current.daysTo(c.changeoverDate);
+            if (days > 0 && days < 14) {
+                if ((currentLocal.isDaylightTime() && !c.isDST) || (!currentLocal.isDaylightTime() && c.isDST)) {
+                    showDaylightSavingsPanel = true;
+                    changeover = c;
+                }
+            }
+        }
+
+        if (showDaylightSavingsPanel) {
+            ui->dstPanel->setVisible(true);
+            ui->dstLabel->setText(tr("On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).", nullptr, 1)
+                                  .arg(QLocale().toString(changeover.changeoverDate.toLocalTime(), "ddd dd MMM yyyy"))
+                                  //: This is used during Daylight Savings notifications and will appear as "On [date], Daylight Savings Time will (begin|end)".
+                                  .arg(currentLocal.isDaylightTime() ? tr("end") : tr("begin"))
+                                  //: This is used during Daylight Savings notifications and will appear as "The clock will automatically adjust (forwards|backwards) by [hours] hour(s).".
+                                  .arg(currentLocal.isDaylightTime() ? tr("backwards") : tr("forwards")));
+        } else {
+            ui->dstPanel->setVisible(false);
+        }
+    });
+    timezoneProcess->start("zdump -v " + timezoneInfoPath);
 }

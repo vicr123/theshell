@@ -461,6 +461,8 @@ class InfoPaneDropdown : public QDialog
 
         void on_CompactBarSwitch_toggled(bool checked);
 
+        void updateDSTNotification();
+
     public slots:
         void getNetworks();
 
@@ -490,6 +492,7 @@ class InfoPaneDropdown : public QDialog
         void mousePressEvent(QMouseEvent *event);
         void mouseMoveEvent(QMouseEvent *event);
         void mouseReleaseEvent(QMouseEvent *event);
+        void keyPressEvent(QKeyEvent* event);
         void changeEvent(QEvent* event);
         void paintEvent(QPaintEvent* event);
         bool eventFilter(QObject *obj, QEvent *e);

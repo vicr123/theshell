@@ -75,7 +75,7 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
     }
 
     Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
     XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
                      XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
 
@@ -89,17 +89,36 @@ screenshotWindow::~screenshotWindow()
 void screenshotWindow::keyPressEvent(QKeyEvent* event) {
     switch (event->key()) {
         case Qt::Key_Escape:
-            //on ESC, close ui
+        case Qt::Key_D:
+            ui->discardButton->setDown(true);
+            break;
+        case Qt::Key_Enter: //We need to capture both Enter and Return since it can vary between keyboards
+        case Qt::Key_Return:
+        case Qt::Key_C:
+            ui->copyButton->setDown(true);
+            break;
+        case Qt::Key_S:
+            ui->saveButton->setDown(true);
+            break;
+    }
+}
+
+void screenshotWindow::keyReleaseEvent(QKeyEvent *event) {
+    switch (event->key()) {
+        case Qt::Key_Escape:
+        case Qt::Key_D:
+            ui->discardButton->setDown(false);
             ui->discardButton->click();
             break;
         case Qt::Key_Enter: //We need to capture both Enter and Return since it can vary between keyboards
         case Qt::Key_Return:
-            ui->saveButton->click();
+        case Qt::Key_C:
+            ui->copyButton->setDown(false);
+            ui->copyButton->click();
             break;
-        default:
-            if (Qt::Key_C && event->modifiers() & Qt::ControlModifier) {
-                ui->copyButton->click();
-            }
+        case Qt::Key_S:
+            ui->saveButton->setDown(false);
+            ui->saveButton->click();
             break;
     }
 }
@@ -112,7 +131,7 @@ void screenshotWindow::paintEvent(QPaintEvent *event) {
 }
 
 void screenshotWindow::show() {
-    QDialog::show();
+    QDialog::showFullScreen();
 
     originalGeometry = QRect(0, 0, this->width(), this->height());
     QRectF endGeometry = originalGeometry;
@@ -336,5 +355,18 @@ void screenshotWindow::on_blankerButton_clicked()
 void screenshotWindow::on_highlightButton_clicked()
 {
     ui->descriptionLabel->setText(tr("Highlight part of the image using the mouse."));
-    ui->label->setCursor(QCursor(Qt::ArrowCursor));
+    //ui->label->setCursor(QCursor(Qt::ArrowCursor));
+
+    QImage i(25, 25, QImage::Format_ARGB32);
+
+    {
+        QPainter p(&i);
+        p.setPen(Qt::transparent);
+        p.setRenderHint(QPainter::Antialiasing);
+        p.setBrush(QColor(255, 255, 0, 100));
+        p.drawEllipse(0, 0, 25, 25);
+    }
+
+    QCursor c(QPixmap::fromImage(i), 12, 12);
+    ui->label->setCursor(c);
 }
