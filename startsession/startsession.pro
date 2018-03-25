@@ -15,7 +15,8 @@ blueprint {
 
 TEMPLATE = app
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    errordialog.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -33,3 +34,12 @@ unix {
 
     INSTALLS += target
 }
+
+FORMS += \
+    errordialog.ui
+
+HEADERS += \
+    errordialog.h
+
+RESOURCES += \
+    resources.qrc

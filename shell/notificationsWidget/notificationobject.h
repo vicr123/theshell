@@ -68,6 +68,7 @@ private:
     QVariantMap hints;
     int timeout;
     uint id;
+    bool actionNamesAreIcons = false;
 
     NotificationPopup* dialog;
 

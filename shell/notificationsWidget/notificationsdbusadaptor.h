@@ -100,4 +100,15 @@ private:
     QSettings* applicationNotifications;
 };
 
+struct ImageData {
+    int width;
+    int height;
+    int rowstride;
+    bool alpha;
+    int bitsPerSample;
+    int channels;
+    QByteArray data;
+};
+Q_DECLARE_METATYPE(ImageData)
+
 #endif // NOTIFICATIONSDBUSADAPTOR_H

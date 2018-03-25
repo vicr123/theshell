@@ -2348,6 +2348,7 @@ void InfoPaneDropdown::on_dateTimeSetDateTimeButton_clicked()
     QDBusConnection::systemBus().call(setMessage);
 
     setupDateTimeSettingsPane();
+    updateDSTNotification();
 }
 
 void InfoPaneDropdown::on_DateTimeNTPSwitch_toggled(bool checked)
@@ -3308,7 +3309,7 @@ void InfoPaneDropdown::on_batteryScreenOff_valueChanged(int value)
     if (value == 121) {
         ui->batteryScreenOffLabel->setText(tr("Never"));
     } else {
-        ui->batteryScreenOffLabel->setText(tr("%1 min(s)", NULL, value).arg(QString::number(value)));
+        ui->batteryScreenOffLabel->setText(tr("%n min(s)", NULL, value).arg(QString::number(value)));
     }
 }
 
@@ -3318,7 +3319,7 @@ void InfoPaneDropdown::on_batterySuspend_valueChanged(int value)
     if (value == 121) {
         ui->batterySuspendLabel->setText(tr("Never"));
     } else {
-        ui->batterySuspendLabel->setText(tr("%1 min(s)", NULL, value).arg(QString::number(value)));
+        ui->batterySuspendLabel->setText(tr("%n min(s)", NULL, value).arg(QString::number(value)));
     }
 }
 
@@ -3328,7 +3329,7 @@ void InfoPaneDropdown::on_powerScreenOff_valueChanged(int value)
     if (value == 121) {
         ui->powerScreenOffLabel->setText(tr("Never"));
     } else {
-        ui->powerScreenOffLabel->setText(tr("%1 min(s)", NULL, value).arg(QString::number(value)));
+        ui->powerScreenOffLabel->setText(tr("%n min(s)", NULL, value).arg(QString::number(value)));
     }
 }
 
@@ -3338,7 +3339,7 @@ void InfoPaneDropdown::on_powerSuspend_valueChanged(int value)
     if (value == 121) {
         ui->powerSuspendLabel->setText(tr("Never"));
     } else {
-        ui->powerSuspendLabel->setText(tr("%1 min(s)", NULL, value).arg(QString::number(value)));
+        ui->powerSuspendLabel->setText(tr("%n min(s)", NULL, value).arg(QString::number(value)));
     }
 }
 
@@ -3768,12 +3769,22 @@ void InfoPaneDropdown::updateDSTNotification() {
             ui->dstLabel->setText(tr("On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).", nullptr, 1)
                                   .arg(QLocale().toString(changeover.changeoverDate.toLocalTime(), "ddd dd MMM yyyy"))
                                   //: This is used during Daylight Savings notifications and will appear as "On [date], Daylight Savings Time will (begin|end)".
-                                  .arg(currentLocal.isDaylightTime() ? tr("end") : tr("begin"))
+                                  .arg(currentLocal.isDaylightTime() ? tr("end", "Context: \"Daylight Savings Time will end.\"") : tr("begin", "Context: \"Daylight Savings Time will begin.\""))
                                   //: This is used during Daylight Savings notifications and will appear as "The clock will automatically adjust (forwards|backwards) by [hours] hour(s).".
-                                  .arg(currentLocal.isDaylightTime() ? tr("backwards") : tr("forwards")));
+                                  .arg(currentLocal.isDaylightTime() ? tr("backwards", "Context: \"The clock will automatically adjust backwards\"") : tr("forwards", "Context: \"The clock will automatically adjust forwards\"")));
         } else {
             ui->dstPanel->setVisible(false);
         }
     });
     timezoneProcess->start("zdump -v " + timezoneInfoPath);
+}
+
+void InfoPaneDropdown::on_blackColorThemeRadio_toggled(bool checked)
+{
+    if (checked) {
+        themeSettings->setValue("color/type", "black");
+        updateAccentColourBox();
+        resetStyle();
+        changeDropDown(Settings, false);
+    }
 }

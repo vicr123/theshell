@@ -262,6 +262,17 @@ void NotificationPopup::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setPen(this->palette().color(QPalette::WindowText));
     painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
+
+    if (urgency != 1) {
+        painter.setPen(Qt::transparent);
+        if (urgency == 0) {
+            painter.setBrush(QColor(0, 100, 255));
+        } else {
+            painter.setBrush(QColor(200, 0, 0));
+        }
+        painter.drawRect(0, 0, this->width(), 3 * getDPIScaling());
+        //painter.drawRect(0, 0, 3 * getDPIScaling(), this->height());
+    }
 }
 
 void NotificationPopup::setApp(QString appName, QIcon appIcon) {
@@ -318,9 +329,15 @@ void NotificationPopup::setBody(QString body) {
 
 void NotificationPopup::setHints(QVariantMap hints) {
     this->hints = hints;
+
+    if (hints.contains("urgency")) {
+        this->urgency = hints.value("urgency").toInt();
+    } else {
+        this->urgency = 1;
+    }
 }
 
-void NotificationPopup::setActions(QStringList actions) {
+void NotificationPopup::setActions(QStringList actions, bool actionNamesAreIcons) {
     if (actions.count() % 2 == 0) {
         for (int i = 0; i < actions.length(); i += 2) {
             QString key = actions.at(i);
@@ -328,6 +345,11 @@ void NotificationPopup::setActions(QStringList actions) {
 
             QPushButton* button = new QPushButton();
             button->setText(value);
+
+            if (actionNamesAreIcons) {
+                button->setIcon(QIcon::fromTheme(value));
+            }
+
             connect(button, &QPushButton::clicked, [=] {
                 emit actionClicked(key);
 

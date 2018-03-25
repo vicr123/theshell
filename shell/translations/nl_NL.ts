@@ -1733,46 +1733,46 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>U kunt geen meldingen configureren voor %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3308"/>
-        <location filename="../infopanedropdown.cpp" line="3318"/>
-        <location filename="../infopanedropdown.cpp" line="3328"/>
-        <location filename="../infopanedropdown.cpp" line="3338"/>
-        <source>Never</source>
-        <translation>Nooit</translation>
-    </message>
-    <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="3310"/>
         <location filename="../infopanedropdown.cpp" line="3320"/>
         <location filename="../infopanedropdown.cpp" line="3330"/>
         <location filename="../infopanedropdown.cpp" line="3340"/>
-        <source>%1 min(s)</source>
-        <translation>
-            <numerusform>%1 min</numerusform>
-            <numerusform>%1 mins</numerusform>
+        <source>Never</source>
+        <translation>Nooit</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../infopanedropdown.cpp" line="3312"/>
+        <location filename="../infopanedropdown.cpp" line="3322"/>
+        <location filename="../infopanedropdown.cpp" line="3332"/>
+        <location filename="../infopanedropdown.cpp" line="3342"/>
+        <source>%n min(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3656"/>
+        <location filename="../infopanedropdown.cpp" line="3658"/>
         <source>Log Out Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3659"/>
+        <location filename="../infopanedropdown.cpp" line="3661"/>
         <source>Logoff Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3662"/>
+        <location filename="../infopanedropdown.cpp" line="3664"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3664"/>
+        <location filename="../infopanedropdown.cpp" line="3666"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="3767"/>
+        <location filename="../infopanedropdown.cpp" line="3769"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1780,23 +1780,27 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3770"/>
+        <location filename="../infopanedropdown.cpp" line="3772"/>
         <source>end</source>
+        <comment>Context: &quot;Daylight Savings Time will end.&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3770"/>
+        <location filename="../infopanedropdown.cpp" line="3772"/>
         <source>begin</source>
+        <comment>Context: &quot;Daylight Savings Time will begin.&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3772"/>
+        <location filename="../infopanedropdown.cpp" line="3774"/>
         <source>backwards</source>
+        <comment>Context: &quot;The clock will automatically adjust backwards&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3772"/>
+        <location filename="../infopanedropdown.cpp" line="3774"/>
         <source>forwards</source>
+        <comment>Context: &quot;The clock will automatically adjust forwards&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2427,7 +2431,7 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="121"/>
         <location filename="../networkmanager/networkwidget.ui" line="1171"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="898"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="903"/>
         <source>Tethering</source>
         <translation>Tethering</translation>
     </message>
@@ -2719,13 +2723,13 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="166"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="741"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="746"/>
         <source>Wi-Fi</source>
         <translation>Wi-Fi</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="167"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="742"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="747"/>
         <source>Connecting to %1...</source>
         <translation>Verbinden met %1...</translation>
     </message>
@@ -2749,22 +2753,22 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>Vliegtuigmodus</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="732"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="737"/>
         <source>Connection Error</source>
         <translation>Verbindingsfout</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="752"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="757"/>
         <source>Enter the information to connect to a new network</source>
         <translation>Voer informatie in om met een nieuw netwerk te verbinden</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="889"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="894"/>
         <source>Tethering Error</source>
         <translation>Tethering-error</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="899"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="904"/>
         <source>Preparing Tethering</source>
         <translation>Tethering aan het voorbereiden</translation>
     </message>

@@ -18,6 +18,8 @@
  *
  * *************************************/
 
+#define UNW_LOCAL_ONLY
+
 #include "mainwindow.h"
 #include "background.h"
 #include "loginsplash.h"
@@ -47,6 +49,8 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/dpms.h>
 #include "locationservices.h"
+#include <libunwind.h>
+#include <cxxabi.h>
 
 #define EVENT() a.processEvents();
 
@@ -86,20 +90,63 @@ void raise_signal(QString message) {
     raise(SIGKILL);
 }
 
-void catch_signal(int signal) {
-    if (signal == SIGSEGV) {
-        qDebug() << "SEGFAULT! Quitting now!";
-        raise_signal("Signal: SIGSEGV (Segmentation Fault)");
-    } else if (signal == SIGBUS) {
-        qDebug() << "SIGBUS! Quitting now!";
-        raise_signal("Signal: SIGBUS (Bus Error)");
-    } else if (signal == SIGABRT) {
-        qDebug() << "SIGABRT! Quitting now!";
-        raise_signal("Signal: SIGABRT (Abort)");
-    } else if (signal == SIGILL) {
-        qDebug() << "SIGILL! Quitting now!";
-        raise_signal("Signal: SIGILL (Illegal Operation)");
+QString getCallLocation(long pc) {
+    QProcess p;
+    p.start("addr2line -s -e \"" + QApplication::applicationFilePath() + "\" 0x" + QString::number(pc, 16));
+    p.waitForFinished();
+    return p.readAll();
+}
+
+void export_backtrace(QString header) {
+    unw_cursor_t cur;
+    unw_context_t ctx;
+
+    unw_getcontext(&ctx);
+    unw_init_local(&cur, &ctx);
+
+    //Start unwinding
+
+    QFile f(QDir::homePath() + "/.tsbacktrace");
+    f.open(QFile::WriteOnly);
+    f.write(header.toUtf8());
+
+
+    while (unw_step(&cur) > 0) {
+        unw_word_t offset;
+        unw_word_t pc;
+        unw_get_reg(&cur, UNW_REG_IP, &pc);
+        if (pc == 0) break;
+
+        char sym[256];
+        if (unw_get_proc_name(&cur, sym, sizeof(sym), &offset) == 0) {
+            char* nameptr = sym;
+            int status;
+            char* demangled = abi::__cxa_demangle(sym, nullptr, nullptr, &status);
+            if (status == 0) nameptr = demangled;
+
+            f.write(QString("0x" + QString::number(pc, 16) + ": " + QString::fromLocal8Bit(nameptr) + " " + getCallLocation(pc)).toUtf8());
+
+            std::free(demangled);
+        } else {
+            f.write(QString("0x" + QString::number(pc, 16) + ": ??\n").toUtf8());
+        }
     }
+
+    f.close();
+}
+
+void catch_signal(int sig) {
+    if (sig == SIGSEGV) {
+        export_backtrace("Signal Received: SIGSEGV (Segmentation Fault)\n\n");
+    } else if (sig == SIGBUS) {
+        export_backtrace("Signal Received: SIGBUS (Bus Error)\n\n");
+    } else if (sig == SIGABRT) {
+        export_backtrace("Signal Received: SIGABRT (Aborted)\n\n");
+    } else if (sig == SIGILL) {
+        export_backtrace("Signal Received: SIGILL (Illegal Instruction)\n\n");
+    }
+    signal(sig, SIG_DFL);
+    raise(sig);
 }
 
 void QtHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg) {

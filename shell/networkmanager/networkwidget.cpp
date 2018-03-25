@@ -699,8 +699,13 @@ void NetworkWidget::on_SecurityConnectButton_clicked()
 
                     //fall through
                 case 3: //TTLS
-                    enterpriseSettings.insert("anonymous-identity", ui->EnterprisePEAPAnonymousIdentity->text());
-                    enterpriseSettings.insert("client-cert", QUrl::fromLocalFile(ui->EnterprisePEAPCaCertificate->text()).toEncoded());
+                    if (ui->EnterprisePEAPAnonymousIdentity->text() != "") {
+                        enterpriseSettings.insert("anonymous-identity", ui->EnterprisePEAPAnonymousIdentity->text());
+                    }
+
+                    if (ui->EnterprisePEAPCaCertificate->text() != "") {
+                        enterpriseSettings.insert("client-cert", QUrl::fromLocalFile(ui->EnterprisePEAPCaCertificate->text()).toEncoded());
+                    }
 
                     if (ui->EnterprisePEAPPhase2Auth->currentIndex() == 0) { //MSCHAPv2
                         enterpriseSettings.insert("phase2-auth", "mschapv2");

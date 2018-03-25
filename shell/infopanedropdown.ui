@@ -365,7 +365,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -680,14 +680,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>29</day>
+                 <day>28</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>29</day>
+                 <day>28</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1609,7 +1609,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>182</width>
+            <width>1165</width>
             <height>114</height>
            </rect>
           </property>
@@ -2156,7 +2156,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>4</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2673,8 +2673,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>372</width>
-                   <height>574</height>
+                   <width>813</width>
+                   <height>694</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_21">
@@ -3059,6 +3059,13 @@
                   <widget class="QRadioButton" name="darkColorThemeRadio">
                    <property name="text">
                     <string>Dar&amp;k</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="blackColorThemeRadio">
+                   <property name="text">
+                    <string>Black</string>
                    </property>
                   </widget>
                  </item>

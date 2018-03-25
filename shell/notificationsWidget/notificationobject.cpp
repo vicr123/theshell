@@ -23,6 +23,20 @@
 int NotificationObject::currentId = 0;
 extern AudioManager* AudioMan;
 
+const QDBusArgument &operator<<(QDBusArgument &argument, const ImageData &d) {
+    argument.beginStructure();
+    argument << d.width << d.height << d.rowstride << d.alpha << d.bitsPerSample << d.channels << d.data;
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, ImageData &d) {
+    argument.beginStructure();
+    argument >> d.width >> d.height >> d.rowstride >> d.alpha >> d.bitsPerSample >> d.channels >> d.data;
+    argument.endStructure();
+    return argument;
+}
+
 NotificationObject::NotificationObject(QString app_name, QString app_icon, QString summary, QString body, QStringList actions, QVariantMap hints, int expire_timeout, QObject *parent) : QObject(parent) {
     currentId++;
     this->id = currentId;
@@ -127,6 +141,43 @@ void NotificationObject::setParameters(QString &app_name, QString &app_icon, QSt
         }
     }
 
+    actionNamesAreIcons = hints.value("action-icons", false).toBool();
+
+    /*if (hints.contains("image-data")) {
+        QDBusArgument imageDataArg = hints.value("image-data").value<QDBusArgument>();
+        ImageData i;
+        imageDataArg >> i;
+        char* data = i.data.data();
+
+        /*QImage image(i.width, i.height, QImage::Format_ARGB32);
+        int lineWidth = i.bitsPerSample * i.channels * i.width;
+        for (int x = 0; x < i.height; x++) {
+            memcpy(image.scanLine(x), i.data.data() + (lineWidth * x), lineWidth);
+        }
+
+        bigIc = QIcon(QPixmap::fromImage(image));
+
+        QImage image(i.width, i.height, QImage::Format_ARGB32);
+
+        for (int y = 0; y < i.height; y++) {
+            for (int x = 0; x < i.width; x++) {
+                unsigned long a, r, g, b;
+
+                a = (data[(int) (y * i.width + x + 0)]);
+                r = (data[(int) (y * i.width + x + 1)]);
+                g = (data[(int) (y * i.width + x + 2)]);
+                b = (data[(int) (y * i.width + x + 3)]);
+
+                QColor col = QColor(r, g, b, a);
+
+                image.setPixelColor(x, y, col);
+            }
+        }
+
+        QPixmap iconPixmap(QPixmap::fromImage(image));//.scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+        bigIc = QIcon(iconPixmap);
+    }*/
+
     emit parametersUpdated();
 }
 
@@ -135,7 +186,7 @@ void NotificationObject::post() {
     dialog->setApp(appName, appIc);
     dialog->setSummary(summary);
     dialog->setBody(body);
-    dialog->setActions(actions);
+    dialog->setActions(actions, actionNamesAreIcons);
     dialog->setBigIcon(bigIc);
 
     if (timeout < 0) {

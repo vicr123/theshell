@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QSettings>
 #include <QDebug>
+#include "errordialog.h"
 
 void startupDesktopFile(QString path, QSettings::Format format) {
     QSettings desktopFile(path, format);
@@ -59,6 +60,10 @@ void startupDesktopFile(QString path, QSettings::Format format) {
     QProcess::startDetached(desktopFile.value("Exec").toString());
 }
 
+
+QProcess* tsProcess;
+int errorCount = 0;
+
 int main(int argc, char *argv[])
 {
     //Put environment variables
@@ -77,7 +82,7 @@ int main(int argc, char *argv[])
     //Set DPI
     QProcess::execute("xrandr --dpi " + QString::number(settings.value("screen/dpi", 96).toInt()));
 
-    QProcess* tsProcess = new QProcess();
+    tsProcess = new QProcess();
     #ifdef BLUEPRINT
         tsProcess->start("theshellb");
     #else
@@ -90,49 +95,59 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(0);
         } else {
             //Restart theShell
-            if (QMessageBox::question(NULL, "theShell crashed!", "theShell has crashed. Do you want to restart theShell?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes) {
+
+            errorCount++;
+            ErrorDialog* d = new ErrorDialog(errorCount);
+            ErrorDialog::connect(d, &ErrorDialog::restart, [=] {
+                d->deleteLater();
+
                 #ifdef BLUEPRINT
                     tsProcess->start("theshellb");
                 #else
                     tsProcess->start("theshell");
                 #endif
-            } else {
+            });
+            ErrorDialog::connect(d, &ErrorDialog::logout, [=] {
+                d->deleteLater();
                 QCoreApplication::exit(0);
-            }
+            });
+            d->showFullScreen();
         }
     });
 
-    QSettings::Format desktopFileFormat = QSettings::registerFormat("desktop", [](QIODevice &device, QSettings::SettingsMap &map) -> bool {
-        QString group;
-        while (!device.atEnd()) {
-            QString line = device.readLine().trimmed();
-            if (line == "") {
+    if (!a.arguments().contains("--no-autostart")) {
+        QSettings::Format desktopFileFormat = QSettings::registerFormat("desktop", [](QIODevice &device, QSettings::SettingsMap &map) -> bool {
+            QString group;
+            while (!device.atEnd()) {
+                QString line = device.readLine().trimmed();
+                if (line == "") {
 
-            } else if (line.startsWith("[") && line.endsWith("]")) {
-                group = line.mid(1, line.length() - 2);
-            } else {
-                QString key = line.left(line.indexOf("="));
-                QString value = line.mid(line.indexOf("=") + 1);
-                map.insert(group + "/" + key, value);
+                } else if (line.startsWith("[") && line.endsWith("]")) {
+                    group = line.mid(1, line.length() - 2);
+                } else {
+                    QString key = line.left(line.indexOf("="));
+                    QString value = line.mid(line.indexOf("=") + 1);
+                    map.insert(group + "/" + key, value);
+                }
             }
+            return true;
+        }, [](QIODevice &device, const QSettings::SettingsMap &map) -> bool {
+            return false;
+        }, Qt::CaseInsensitive);
+
+        //Start startup applications
+        QStringList knownFileNames;
+        QDir autostartDir(QDir::homePath() + "/.config/autostart");
+        for (QString fileName : autostartDir.entryList(QDir::NoDotAndDotDot | QDir::Files)) {
+            startupDesktopFile(QDir::homePath() + "/.config/autostart/" + fileName, desktopFileFormat);
+            knownFileNames.append(fileName);
         }
-        return true;
-    }, [](QIODevice &device, const QSettings::SettingsMap &map) -> bool {
-        return false;
-    }, Qt::CaseInsensitive);
 
-    //Start startup applications
-    QStringList knownFileNames;
-    QDir autostartDir(QDir::homePath() + "/.config/autostart");
-    for (QString fileName : autostartDir.entryList(QDir::NoDotAndDotDot | QDir::Files)) {
-        startupDesktopFile(QDir::homePath() + "/.config/autostart/" + fileName, desktopFileFormat);
-        knownFileNames.append(fileName);
-    }
-
-    autostartDir.cd("/etc/xdg/autostart");
-    for (QString fileName : autostartDir.entryList(QDir::NoDotAndDotDot | QDir::Files)) {
-        if (!knownFileNames.contains(fileName)) {
-            startupDesktopFile("/etc/xdg/autostart/" + fileName, desktopFileFormat);
+        autostartDir.cd("/etc/xdg/autostart");
+        for (QString fileName : autostartDir.entryList(QDir::NoDotAndDotDot | QDir::Files)) {
+            if (!knownFileNames.contains(fileName)) {
+                startupDesktopFile("/etc/xdg/autostart/" + fileName, desktopFileFormat);
+            }
         }
     }
 

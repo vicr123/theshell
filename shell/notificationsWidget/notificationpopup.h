@@ -53,7 +53,7 @@ public:
     void setApp(QString appName, QIcon appIcon);
     void setSummary(QString summary);
     void setBody(QString body);
-    void setActions(QStringList actions);
+    void setActions(QStringList actions, bool actionNamesAreIcons);
     void setTimeout(int timeout);
     void setHints(QVariantMap hints);
     void setBigIcon(QIcon bigIcon);
@@ -80,6 +80,7 @@ private:
     int timeoutLeft;
     QMap<QString, QString> actions;
     QVariantMap hints;
+    int urgency = 0;
 
     static NotificationPopup* currentlyShowingPopup;
     static QList<NotificationPopup*> pendingPopups;

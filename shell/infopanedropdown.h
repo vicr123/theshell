@@ -463,6 +463,8 @@ class InfoPaneDropdown : public QDialog
 
         void updateDSTNotification();
 
+        void on_blackColorThemeRadio_toggled(bool checked);
+
     public slots:
         void getNetworks();
 
