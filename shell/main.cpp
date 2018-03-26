@@ -144,6 +144,8 @@ void catch_signal(int sig) {
         export_backtrace("Signal Received: SIGABRT (Aborted)\n\n");
     } else if (sig == SIGILL) {
         export_backtrace("Signal Received: SIGILL (Illegal Instruction)\n\n");
+    } else if (sig = SIGFPE) {
+        export_backtrace("Signal Received: SIGFPE (Floating Point Exception)\n\n");
     }
     signal(sig, SIG_DFL);
     raise(sig);
@@ -169,6 +171,7 @@ int main(int argc, char *argv[])
     signal(SIGBUS, *catch_signal); //Catch SIGBUS
     signal(SIGABRT, *catch_signal); //Catch SIGABRT
     signal(SIGILL, *catch_signal); //Catch SIGILL
+    signal(SIGFPE, *catch_signal); //Catch SIGFPE
 
     QSettings settings("theSuite", "theShell");
     //qputenv("GTK_THEME", settings.value("theme/gtktheme", "Contemporary").toByteArray());

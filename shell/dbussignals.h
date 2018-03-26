@@ -29,11 +29,12 @@ class DBusSignals : public QObject
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.thesuite.theshell")
 
-public:
-    explicit DBusSignals(QObject *parent = 0);
+    public:
+        explicit DBusSignals(QObject *parent = 0);
 
-signals:
-    Q_SCRIPTABLE void ThemeChanged();
+    signals:
+        Q_SCRIPTABLE void ThemeChanged();
+        Q_SCRIPTABLE void Ready();
 };
 
 #endif // DBUSSIGNALS_H
