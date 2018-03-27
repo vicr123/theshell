@@ -306,16 +306,28 @@ void NotificationPopup::setApp(QString appName, QIcon appIcon) {
         }
     }
 
-    QColor c(red / totalPixels, green / totalPixels, blue / totalPixels);
-
+    QColor c;
     QPalette pal = coverWidget->palette();
-
     int averageCol = (pal.color(QPalette::Window).red() + pal.color(QPalette::Window).green() + pal.color(QPalette::Window).blue()) / 3;
-    if (averageCol < 127) {
-        pal.setColor(QPalette::Window, c.darker(200));
+
+    if (totalPixels == 0) {
+        if (averageCol < 127) {
+            c = pal.color(QPalette::Window).darker(200);
+        } else {
+            c = pal.color(QPalette::Window).lighter(200);
+        }
     } else {
-        pal.setColor(QPalette::Window, c.lighter(200));
+        c = QColor(red / totalPixels, green / totalPixels, blue / totalPixels);
+
+        if (averageCol < 127) {
+            c = c.darker(200);
+        } else {
+            c = c.lighter(200);
+        }
     }
+
+
+    pal.setColor(QPalette::Window, c);
     coverWidget->setPalette(pal);
 }
 

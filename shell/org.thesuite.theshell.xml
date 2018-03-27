@@ -3,5 +3,7 @@
   <interface name="org.thesuite.theshell">
     <signal name="ThemeChanged">
     </signal>
+    <signal name="Ready">
+    </signal>
   </interface>
 </node>

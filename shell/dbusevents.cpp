@@ -46,8 +46,8 @@ DbusEvents::DbusEvents(QObject *parent) : QObject(parent)
 
     QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager",
                                          "InterfacesAdded", this, SLOT(NewUdisksInterface(QDBusObjectPath)));
-    QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager",
-                                         "InterfacesRemoved", this, SLOT(RemoveUdisksInterface(QDBusObjectPath,QStringList)));
+    //QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager",
+    //                                     "InterfacesRemoved", this, SLOT(RemoveUdisksInterface(QDBusObjectPath,QStringList)));
 
     connect(ndbus, SIGNAL(ActionInvoked(uint,QString)), this, SLOT(NotificationAction(uint,QString)));
 
