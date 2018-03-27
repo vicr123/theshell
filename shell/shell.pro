@@ -62,7 +62,6 @@ SOURCES += main.cpp\
     upowerdbus.cpp \
     infopanedropdown.cpp \
     clickablelabel.cpp \
-    loginsplash.cpp \
     hoverframe.cpp \
     choosebackground.cpp \
     switch.cpp \
@@ -107,7 +106,6 @@ HEADERS  += mainwindow.h \
     upowerdbus.h \
     infopanedropdown.h \
     clickablelabel.h \
-    loginsplash.h \
     hoverframe.h \
     choosebackground.h \
     switch.h \
@@ -150,7 +148,6 @@ FORMS    += mainwindow.ui \
     endsessionwait.ui \
     background.ui \
     infopanedropdown.ui \
-    loginsplash.ui \
     choosebackground.ui \
     segfaultdialog.ui \
     hotkeyhud.ui \

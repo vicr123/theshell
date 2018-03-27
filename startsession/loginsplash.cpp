@@ -35,3 +35,21 @@ LoginSplash::~LoginSplash()
 {
     delete ui;
 }
+
+void LoginSplash::question(QString title, QString message) {
+    ui->questionTitle->setText(title);
+    ui->questionText->setText(message);
+    ui->stack->setCurrentIndex(1);
+}
+
+void LoginSplash::on_yesButton_clicked()
+{
+    emit response("yes\n");
+    ui->stack->setCurrentIndex(0);
+}
+
+void LoginSplash::on_noButton_clicked()
+{
+    emit response("no\n");
+    ui->stack->setCurrentIndex(0);
+}

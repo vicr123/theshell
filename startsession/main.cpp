@@ -25,7 +25,9 @@
 #include <QDir>
 #include <QSettings>
 #include <QDebug>
+#include <QDBusConnection>
 #include "errordialog.h"
+#include "startmonitor.h"
 
 void startupDesktopFile(QString path, QSettings::Format format) {
     QSettings desktopFile(path, format);
@@ -60,9 +62,9 @@ void startupDesktopFile(QString path, QSettings::Format format) {
     QProcess::startDetached(desktopFile.value("Exec").toString());
 }
 
-
 QProcess* tsProcess;
 int errorCount = 0;
+bool started = false;
 
 int main(int argc, char *argv[])
 {
@@ -78,15 +80,21 @@ int main(int argc, char *argv[])
     a.setQuitOnLastWindowClosed(false);
 
     QSettings settings;
+    QSettings tsSettings("theSuite", "theShell");
 
     //Set DPI
-    QProcess::execute("xrandr --dpi " + QString::number(settings.value("screen/dpi", 96).toInt()));
+    QProcess::execute("xrandr --dpi " + QString::number(tsSettings.value("screen/dpi", 96).toInt()));
 
+    StartMonitor* monitor = new StartMonitor;
+
+    QDBusConnection::sessionBus().connect("org.thesuite.theshell", "/org/thesuite/theshell", "org.thesuite.theshell", "Ready", monitor, SLOT(MarkStarted()));
+
+    monitor->ShowSplash();
     tsProcess = new QProcess();
     #ifdef BLUEPRINT
-        tsProcess->start("theshellb");
+        tsProcess->start("theshellb --session-starter-running");
     #else
-        tsProcess->start("theshell");
+        tsProcess->start("theshell --session-starter-running");
     #endif
 
     QObject::connect(tsProcess, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
@@ -96,15 +104,18 @@ int main(int argc, char *argv[])
         } else {
             //Restart theShell
 
+            monitor->HideSplash();
             errorCount++;
-            ErrorDialog* d = new ErrorDialog(errorCount);
+            ErrorDialog* d = new ErrorDialog(monitor->started(), errorCount);
             ErrorDialog::connect(d, &ErrorDialog::restart, [=] {
                 d->deleteLater();
+                monitor->MarkNotStarted();
+                monitor->ShowSplash();
 
                 #ifdef BLUEPRINT
-                    tsProcess->start("theshellb");
+                    tsProcess->start("theshellb --session-starter-running");
                 #else
-                    tsProcess->start("theshell");
+                    tsProcess->start("theshell --session-starter-running");
                 #endif
             });
             ErrorDialog::connect(d, &ErrorDialog::logout, [=] {
@@ -113,6 +124,22 @@ int main(int argc, char *argv[])
             });
             d->showFullScreen();
         }
+    });
+    QObject::connect(tsProcess, &QProcess::readyRead, [=] {
+        QString all = tsProcess->readAll();
+        for (QString line : all.split("\n")) {
+            if (!monitor->started()) {
+                if (line.startsWith("QUESTION:")) {
+                    QStringList split = line.split(":");
+                    QString title = split.at(1);
+                    QString message = split.at(2);
+                    monitor->SplashQuestion(title, message);
+                }
+            }
+        }
+    });
+    QObject::connect(monitor, &StartMonitor::questionResponse, [=](QString response) {
+        tsProcess->write(response.toLocal8Bit());
     });
 
     if (!a.arguments().contains("--no-autostart")) {

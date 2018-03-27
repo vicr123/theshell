@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
         <file>error.svg</file>
+        <file>icon.svg</file>
     </qresource>
 </RCC>

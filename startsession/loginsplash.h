@@ -25,6 +25,7 @@
 #include <QTimer>
 #include <QLabel>
 #include <QIcon>
+#include <QStackedWidget>
 
 namespace Ui {
 class LoginSplash;
@@ -34,12 +35,23 @@ class LoginSplash : public QDialog
 {
     Q_OBJECT
 
-public:
-    explicit LoginSplash(QWidget *parent = 0);
-    ~LoginSplash();
+    public:
+        explicit LoginSplash(QWidget *parent = 0);
+        ~LoginSplash();
 
-private:
-    Ui::LoginSplash *ui;
+    signals:
+        void response(QString response);
+
+    public slots:
+        void question(QString title, QString message);
+
+    private slots:
+        void on_yesButton_clicked();
+
+        void on_noButton_clicked();
+
+    private:
+        Ui::LoginSplash *ui;
 };
 
 #endif // LOGINSPLASH_H

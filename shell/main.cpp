@@ -22,7 +22,6 @@
 
 #include "mainwindow.h"
 #include "background.h"
-#include "loginsplash.h"
 #include "segfaultdialog.h"
 #include "globalfilter.h"
 #include "dbusevents.h"
@@ -51,8 +50,7 @@
 #include "locationservices.h"
 #include <libunwind.h>
 #include <cxxabi.h>
-
-#define EVENT() a.processEvents();
+#include <QFile>
 
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
@@ -144,7 +142,7 @@ void catch_signal(int sig) {
         export_backtrace("Signal Received: SIGABRT (Aborted)\n\n");
     } else if (sig == SIGILL) {
         export_backtrace("Signal Received: SIGILL (Illegal Instruction)\n\n");
-    } else if (sig = SIGFPE) {
+    } else if (sig == SIGFPE) {
         export_backtrace("Signal Received: SIGFPE (Floating Point Exception)\n\n");
     }
     signal(sig, SIG_DFL);
@@ -238,12 +236,12 @@ int main(int argc, char *argv[])
     tsTranslator.load(QLocale("vi_VN").name(), "/home/victor/Documents/theOSPack/theShell/translations/");
     a.installTranslator(&tsVnTranslator);*/
 
-    bool showSplash = true;
     bool autoStart = true;
     bool startKscreen = true;
     bool startOnboarding = false;
     bool startWm = true;
     bool tutorialDoSettings = false;
+    bool sessionStarter = false;
 
     QStringList args = a.arguments();
     args.removeFirst();
@@ -251,7 +249,6 @@ int main(int argc, char *argv[])
         if (arg == "--help" || arg == "-h") {
             qDebug() << "theShell";
             qDebug() << "Usage: theshell [OPTIONS]";
-            qDebug() << "  -s, --no-splash-screen       Don't show the splash screen";
             qDebug() << "  -a, --no-autostart           Don't autostart executables";
             qDebug() << "  -k, --no-kscreen             Don't autostart KScreen";
             qDebug() << "      --no-wm                  Don't autostart the window manager";
@@ -260,8 +257,6 @@ int main(int argc, char *argv[])
             qDebug() << "      --debug                  Allows you to quit theShell instead of powering off";
             qDebug() << "  -h, --help                   Show this help output";
             return 0;
-        } else if (arg == "-s" || arg == "--no-splash-screen") {
-            showSplash = false;
         } else if (arg == "-a" || arg == "--no-autostart") {
             autoStart = false;
         } else if (arg == "-k" || arg == "--no-kscreen") {
@@ -272,27 +267,37 @@ int main(int argc, char *argv[])
             startOnboarding = true;
         } else if (arg == "--tutorial") {
             tutorialDoSettings = true;
+        } else if (arg == "--session-starter-running") {
+            sessionStarter = true;
         }
     }
 
     QEventLoop waiter;
-    LoginSplash* splash = new LoginSplash();
-    if (showSplash) {
-        splash->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-        splash->showFullScreen();
-
-        EVENT();
-    }
 
     if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.thesuite.theshell")) {
-        if (QMessageBox::warning(0, a.translate("main", "theShell already running"), a.translate("main", "theShell seems to already be running. "
-                                                               "Do you wish to start theShell anyway?"),
-                             QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
-            return 0;
+        QString messageTitle = a.translate("main", "theShell already running");
+        QString messageBody = a.translate("main", "theShell seems to already be running. "
+                                                  "Do you wish to start theShell anyway?");
+        if (sessionStarter) {
+            QFile out;
+            out.open(stdout, QFile::WriteOnly);
+            out.write(QString("QUESTION:%1:%2").arg(messageTitle, messageBody).toLocal8Bit());
+            out.flush();
+            out.close();
+
+            std::string response;
+            std::cin >> response;
+
+            if (QString::fromStdString(response).trimmed() == "no") {
+                return 0;
+            }
+        } else {
+            if (QMessageBox::warning(0, messageTitle, messageBody,
+                                 QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
+                return 0;
+            }
         }
     }
-
-    EVENT();
 
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerService("org.thesuite.theshell");
@@ -305,8 +310,6 @@ int main(int argc, char *argv[])
 
     dbusSignals = new DBusSignals();
 
-    EVENT();
-
     if (startKscreen) {
         QDBusMessage kscreen = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
         QVariantList args;
@@ -314,8 +317,6 @@ int main(int argc, char *argv[])
         kscreen.setArguments(args);
         QDBusConnection::sessionBus().call(kscreen);
     }
-
-    EVENT();
 
     {
         QDBusMessage touchpad = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
@@ -325,8 +326,6 @@ int main(int argc, char *argv[])
         QDBusConnection::sessionBus().call(touchpad);
     }
 
-    EVENT();
-
     {
         QDBusMessage sni = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
         QVariantList args;
@@ -334,8 +333,6 @@ int main(int argc, char *argv[])
         sni.setArguments(args);
         QDBusConnection::sessionBus().call(sni);
     }
-
-    EVENT();
 
     QString windowManager = settings.value("startup/WindowManagerCommand", "kwin_x11").toString();
 
@@ -351,8 +348,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    EVENT();
-
     TutorialWin = new TutorialWindow(tutorialDoSettings);
     AudioMan = new AudioManager;
     screenRecorder = new ScreenRecorder;
@@ -361,8 +356,6 @@ int main(int argc, char *argv[])
         //Start KDE Connect if it is not running and it is existant on the PC
         QProcess::startDetached("/usr/lib/kdeconnectd");
     }
-
-    EVENT();
 
     QProcess polkitProcess;
     polkitProcess.start("/usr/lib/ts-polkitagent");
@@ -378,9 +371,8 @@ int main(int argc, char *argv[])
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
 
-    EVENT();
-
     if (settings.value("startup/lastOnboarding", 0) < ONBOARDING_VERSION || startOnboarding) {
+        emit dbusSignals->Ready();
         Onboarding* onboardingWindow = new Onboarding();
         onboardingWindow->showFullScreen();
         if (onboardingWindow->exec() == QDialog::Accepted) {
@@ -391,12 +383,8 @@ int main(int argc, char *argv[])
         }
     }
 
-    EVENT();
-
     updbus = new UPowerDBus();
     MainWin = new MainWindow();
-
-    EVENT();
 
     new GlobalFilter(&a);
 
@@ -409,9 +397,7 @@ int main(int argc, char *argv[])
     MainWin->setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width() + 1, MainWin->height());
     MainWin->show();
 
-    //QThread::sleep(1);
-    splash->close();
-    //splash->deleteLater();
+    emit dbusSignals->Ready();
 
     return a.exec();
 }

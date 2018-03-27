@@ -1,4 +1,4 @@
-QT += core gui
+QT += core gui dbus thelib
 CONFIG += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -16,7 +16,9 @@ blueprint {
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    errordialog.cpp
+    errordialog.cpp \
+    startmonitor.cpp \
+    loginsplash.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -36,10 +38,13 @@ unix {
 }
 
 FORMS += \
-    errordialog.ui
+    errordialog.ui \
+    loginsplash.ui
 
 HEADERS += \
-    errordialog.h
+    errordialog.h \
+    startmonitor.h \
+    loginsplash.h
 
 RESOURCES += \
     resources.qrc

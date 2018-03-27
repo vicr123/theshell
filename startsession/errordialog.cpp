@@ -1,7 +1,7 @@
 #include "errordialog.h"
 #include "ui_errordialog.h"
 
-ErrorDialog::ErrorDialog(int errorCount, QWidget *parent) :
+ErrorDialog::ErrorDialog(bool started, int errorCount, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ErrorDialog)
 {
@@ -23,14 +23,28 @@ ErrorDialog::ErrorDialog(int errorCount, QWidget *parent) :
     }
 
     ui->errorIcon->setPixmap(QIcon(":/icons/error.svg").pixmap(128, 128));
-    if (errorCount >= 3) {
-        ui->restartButton->setVisible(false);
-        ui->titleLabel->setText(tr("Unfortunately, theShell keeps running into errors."));
-        ui->repeatFrame->setVisible(true);
-        ui->errorLabel->setVisible(false);
-        //ui->errorLabel->setText(tr("theShell keeps running into errors."));
+    if (started) {
+        if (errorCount >= 3) {
+            ui->restartButton->setVisible(false);
+            ui->titleLabel->setText(tr("Unfortunately, theShell keeps running into errors."));
+            ui->repeatFrame->setVisible(true);
+            ui->errorLabel->setVisible(false);
+            //ui->errorLabel->setText(tr("theShell keeps running into errors."));
+        } else {
+            ui->repeatFrame->setVisible(false);
+        }
     } else {
-        ui->repeatFrame->setVisible(false);
+        if (errorCount >= 3) {
+            ui->restartButton->setVisible(false);
+            ui->titleLabel->setText(tr("theShell can't start"));
+            ui->repeatFrame->setVisible(true);
+            ui->errorLabel->setVisible(false);
+        } else {
+            ui->repeatFrame->setVisible(false);
+            ui->titleLabel->setText(tr("theShell failed to start"));
+            ui->errorLabel->setText(tr("theShell wasn't able to start properly."));
+            ui->restartButton->setText(tr("Try again"));
+        }
     }
 
     ui->logoutButton->setProperty("type", "destructive");
