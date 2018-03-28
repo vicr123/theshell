@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <loginsplash.h>
+#include <QApplication>
 
 class StartMonitor : public QObject
 {
@@ -21,6 +22,7 @@ class StartMonitor : public QObject
         void HideSplash();
 
         void SplashQuestion(QString title, QString msg);
+        void SplashPrompt(QString title, QString msg);
 
     private:
         bool s = false;

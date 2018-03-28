@@ -29,6 +29,9 @@ LoginSplash::LoginSplash(QWidget *parent) :
 
     ui->label_3->setPixmap(QIcon(":/icons/icon.svg").pixmap(128, 128));
     ui->label_3->setFixedSize(128, 128);
+
+    opacityEffect = new QGraphicsOpacityEffect();
+    ui->mainFrame->setGraphicsEffect(opacityEffect);
 }
 
 LoginSplash::~LoginSplash()
@@ -39,17 +42,80 @@ LoginSplash::~LoginSplash()
 void LoginSplash::question(QString title, QString message) {
     ui->questionTitle->setText(title);
     ui->questionText->setText(message);
+    ui->yesButton->setText(tr("Yes"));
+    ui->noButton->setText(tr("No"));
+    ui->promptLine->setVisible(false);
     ui->stack->setCurrentIndex(1);
+}
+
+void LoginSplash::prompt(QString title, QString message) {
+    ui->questionTitle->setText(title);
+    ui->questionText->setText(message);
+    ui->yesButton->setText(tr("OK"));
+    ui->noButton->setText(tr("Cancel"));
+    ui->promptLine->setVisible(true);
+    ui->stack->setCurrentIndex(1);
+
+    ui->promptLine->setFocus();
 }
 
 void LoginSplash::on_yesButton_clicked()
 {
-    emit response("yes\n");
+    if (ui->promptLine->isVisible()) {
+        emit response(ui->promptLine->text() + "\n");
+    } else {
+        emit response("yes\n");
+    }
     ui->stack->setCurrentIndex(0);
 }
 
 void LoginSplash::on_noButton_clicked()
 {
-    emit response("no\n");
+    if (ui->promptLine->isVisible()) {
+        emit response("[can]\n");
+    } else {
+        emit response("no\n");
+    }
     ui->stack->setCurrentIndex(0);
+}
+
+void LoginSplash::on_promptLine_returnPressed()
+{
+    ui->yesButton->click();
+}
+
+void LoginSplash::show() {
+    opacityEffect->setOpacity(1);
+    this->setWindowOpacity(1);
+    QDialog::show();
+
+    this->setGeometry(QApplication::primaryScreen()->geometry());
+    this->showFullScreen();
+}
+
+void LoginSplash::hide() {
+    if (this->isVisible()) {
+        tPropertyAnimation* anim = new tPropertyAnimation(opacityEffect, "opacity");
+        anim->setStartValue((float) 1);
+        anim->setEndValue((float) 0);
+        anim->setDuration(500);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        anim->start();
+        connect(anim, &tPropertyAnimation::finished, [=] {
+            anim->deleteLater();
+
+            tPropertyAnimation* anim = new tPropertyAnimation(this, "windowOpacity");
+            anim->setStartValue((float) 1);
+            anim->setEndValue((float) 0);
+            anim->setDuration(500);
+            anim->setEasingCurve(QEasingCurve::OutCubic);
+            anim->start();
+
+            connect(anim, &tPropertyAnimation::finished, [=] {
+                anim->deleteLater();
+
+                QDialog::hide();
+            });
+        });
+    }
 }

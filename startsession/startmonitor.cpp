@@ -3,7 +3,7 @@
 StartMonitor::StartMonitor(QObject *parent) : QObject(parent)
 {
     splash = new LoginSplash();
-    splash->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    splash->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
 
     connect(splash, SIGNAL(response(QString)), this, SIGNAL(questionResponse(QString)));
 }
@@ -22,7 +22,7 @@ void StartMonitor::MarkNotStarted() {
 }
 
 void StartMonitor::ShowSplash() {
-    splash->showFullScreen();
+    splash->show();
 }
 
 void StartMonitor::HideSplash() {
@@ -31,4 +31,8 @@ void StartMonitor::HideSplash() {
 
 void StartMonitor::SplashQuestion(QString title, QString msg) {
     splash->question(title, msg);
+}
+
+void StartMonitor::SplashPrompt(QString title, QString msg) {
+    splash->prompt(title, msg);
 }

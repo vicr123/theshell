@@ -134,6 +134,11 @@ int main(int argc, char *argv[])
                     QString title = split.at(1);
                     QString message = split.at(2);
                     monitor->SplashQuestion(title, message);
+                } else if (line.startsWith("PROMPT:")) {
+                    QStringList split = line.split(":");
+                    QString title = split.at(1);
+                    QString message = split.at(2);
+                    monitor->SplashPrompt(title, message.replace("[newln]", "\n"));
                 }
             }
         }
@@ -161,6 +166,10 @@ int main(int argc, char *argv[])
         }, [](QIODevice &device, const QSettings::SettingsMap &map) -> bool {
             return false;
         }, Qt::CaseInsensitive);
+
+        //Start system daemons
+        QProcess polkitProcess;
+        polkitProcess.start("/usr/lib/ts-polkitagent");
 
         //Start startup applications
         QStringList knownFileNames;

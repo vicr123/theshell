@@ -479,7 +479,7 @@
         </spacer>
        </item>
        <item row="1" column="1">
-        <widget class="QFrame" name="frame">
+        <widget class="QFrame" name="mainFrame">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -612,6 +612,9 @@
            </widget>
           </item>
           <item>
+           <widget class="QLineEdit" name="promptLine"/>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <property name="spacing">
              <number>0</number>
@@ -635,7 +638,8 @@
                <string>Yes</string>
               </property>
               <property name="icon">
-               <iconset theme="dialog-ok"/>
+               <iconset theme="dialog-ok">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -645,7 +649,8 @@
                <string>No</string>
               </property>
               <property name="icon">
-               <iconset theme="dialog-cancel"/>
+               <iconset theme="dialog-cancel">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>

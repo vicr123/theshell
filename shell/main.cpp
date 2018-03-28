@@ -338,11 +338,27 @@ int main(int argc, char *argv[])
 
     if (startWm) {
         while (!QProcess::startDetached(windowManager)) {
-            windowManager = QInputDialog::getText(0, a.translate("main", "Window Manager couldn't start"),
-                                  a.translate("main", "The window manager \"%1\" could not start. \n\n"
-                                  "Enter the name or path of a window manager to attempt to start a different window"
-                                  "manager, or hit 'Cancel' to start theShell without a window manager.").arg(windowManager));
-            if (windowManager == "") {
+
+            QString messageTitle = a.translate("main", "Window Manager couldn't start");
+            QString messageBody = a.translate("main", "The window manager \"%1\" could not start. \n\n"
+                                                      "Enter the name or path of a window manager to attempt to start a different window"
+                                                      "manager, or hit 'Cancel' to start theShell without a window manager.").arg(windowManager);
+            if (sessionStarter) {
+                QFile out;
+                out.open(stdout, QFile::WriteOnly);
+                out.write(QString("PROMPT:%1:%2").arg(messageTitle, messageBody.replace("\n", "[newln]")).toLocal8Bit());
+                out.flush();
+                out.close();
+
+                std::string response;
+                std::cin >> response;
+
+                windowManager = QString::fromStdString(response).trimmed();
+            } else {
+                windowManager = QInputDialog::getText(0, messageTitle, messageBody);
+            }
+
+            if (windowManager == "" || windowManager == "[can]") {
                 break;
             }
         }
@@ -356,9 +372,6 @@ int main(int argc, char *argv[])
         //Start KDE Connect if it is not running and it is existant on the PC
         QProcess::startDetached("/usr/lib/kdeconnectd");
     }
-
-    QProcess polkitProcess;
-    polkitProcess.start("/usr/lib/ts-polkitagent");
 
     QProcess btProcess;
     btProcess.start("ts-bt");
@@ -397,7 +410,7 @@ int main(int argc, char *argv[])
     MainWin->setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width() + 1, MainWin->height());
     MainWin->show();
 
-    emit dbusSignals->Ready();
+    QTimer::singleShot(0, dbusSignals, SIGNAL(Ready()));
 
     return a.exec();
 }

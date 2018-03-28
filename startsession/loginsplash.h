@@ -26,6 +26,11 @@
 #include <QLabel>
 #include <QIcon>
 #include <QStackedWidget>
+#include <QLineEdit>
+#include <QPushButton>
+#include <tpropertyanimation.h>
+#include <QGraphicsOpacityEffect>
+#include <QScreen>
 
 namespace Ui {
 class LoginSplash;
@@ -44,14 +49,22 @@ class LoginSplash : public QDialog
 
     public slots:
         void question(QString title, QString message);
+        void prompt(QString title, QString message);
+
+        void show();
+        void hide();
 
     private slots:
         void on_yesButton_clicked();
 
         void on_noButton_clicked();
 
+        void on_promptLine_returnPressed();
+
     private:
         Ui::LoginSplash *ui;
+
+        QGraphicsOpacityEffect* opacityEffect;
 };
 
 #endif // LOGINSPLASH_H
