@@ -345,8 +345,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_BarOnBottom_toggled(bool checked);
 
-        void updateStruts();
-
         void on_systemWidgetTheme_currentIndexChanged(int index);
 
         void resetStyle();
@@ -471,6 +469,7 @@ class InfoPaneDropdown : public QDialog
         void startTimer(QTime time);
 
         void on_WifiSwitch_toggled(bool checked);
+        void updateStruts();
 
     private:
         Ui::InfoPaneDropdown *ui;

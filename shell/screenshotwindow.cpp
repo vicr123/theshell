@@ -215,6 +215,8 @@ void screenshotWindow::on_copyButton_clicked()
     connect(animGroup, SIGNAL(finished()), animGroup, SLOT(deleteLater()));
     connect(animGroup, SIGNAL(finished()), this, SLOT(close()));
     animGroup->start();
+
+    clipboard->deleteLater();
 }
 
 void screenshotWindow::on_saveButton_clicked()

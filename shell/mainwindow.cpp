@@ -290,6 +290,7 @@ MainWindow::MainWindow(QWidget *parent) :
     #ifdef BLUEPRINT
         //Apply Blueprint branding
         ui->openMenu->setIcon(QIcon(":/icons/icon-bp.svg"));
+        ui->openMenuCompact->setIcon(QIcon(":/icons/icon-bp.svg"));
     #endif
 }
 
@@ -1184,6 +1185,9 @@ void MainWindow::doUpdate() {
             ui->ampmLabel->setText(QLocale().pmText());
             now = now.addSecs(-43200);
         }
+
+        if (now.hour() == 0) now = now.addSecs(43200);
+
         ui->time->setText(now.toString("hh:mm:ss"));
         ui->ampmLabel->setVisible(true);
     }
@@ -1951,8 +1955,10 @@ void MainWindow::updateStruts() {
 
     if (settings.value("bar/onTop", true).toBool()) {
         ui->StatusBarFrame->move(0, this->height() - 25 * getDPIScaling());
+        ui->openStatusCenterButton->setIcon(QIcon::fromTheme("go-down"));
     } else {
         ui->StatusBarFrame->move(0, 1);
+        ui->openStatusCenterButton->setIcon(QIcon::fromTheme("go-up"));
     }
 }
 
@@ -2094,22 +2100,22 @@ void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
     QMenu* menu = new QMenu();
     menu->addSection(tr("For Bar"));
     if (settings.value("bar/onTop").toBool()) {
-        menu->addAction(tr("Move to bottom"), [=] {
+        menu->addAction(QIcon::fromTheme("go-down"), tr("Move to bottom"), [=] {
             settings.setValue("bar/onTop", false);
-            this->updateStruts();
+            infoPane->updateStruts();
         });
     } else {
-        menu->addAction("Move to top", [=] {
+        menu->addAction(QIcon::fromTheme("go-up"), tr("Move to top"), [=] {
             settings.setValue("bar/onTop", true);
-            this->updateStruts();
+            infoPane->updateStruts();
         });
     }
 
     menu->addSection(tr("For System"));
-    menu->addAction(tr("Open Status Center"), [=] {
+    menu->addAction(QIcon::fromTheme("dialog-information"), tr("Open Status Center"), [=] {
         getInfoPane()->show(InfoPaneDropdown::Clock);
     });
-    menu->addAction(tr("Open System Settings"), [=] {
+    menu->addAction(QIcon::fromTheme("configure"), tr("Open System Settings"), [=] {
         getInfoPane()->show(InfoPaneDropdown::Settings);
     });
     menu->exec(this->mapToGlobal(pos));
@@ -2118,7 +2124,7 @@ void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
 void MainWindow::on_openMenu_customContextMenuRequested(const QPoint &pos)
 {
     QMenu* menu = new QMenu();
-    menu->addAction("Open Gateway", this, SLOT(openMenu()));
+    menu->addAction(ui->openMenu->icon(), tr("Open Gateway"), this, SLOT(openMenu()));
     menu->exec(ui->openMenu->mapToGlobal(pos));
 }
 

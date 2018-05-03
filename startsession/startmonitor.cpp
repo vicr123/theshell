@@ -3,7 +3,7 @@
 StartMonitor::StartMonitor(QObject *parent) : QObject(parent)
 {
     splash = new LoginSplash();
-    splash->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
+    splash->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::SubWindow);
 
     connect(splash, SIGNAL(response(QString)), this, SIGNAL(questionResponse(QString)));
 }

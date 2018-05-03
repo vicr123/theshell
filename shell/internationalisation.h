@@ -110,7 +110,7 @@ public:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-lt"), tr("Lithuanian") + " (Lietuvių)"));
                     break;
                 case inID:
-                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-in"), tr("Indonesian") + " (Bahasa Indonesia)"));
+                    //languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-in"), tr("Indonesian") + " (Bahasa Indonesia)"));
                     break;
                 case auAU:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-au"), tr("Australian") + " (Aussie)"));

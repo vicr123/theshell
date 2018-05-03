@@ -2850,10 +2850,12 @@ void InfoPaneDropdown::updateStruts() {
     if (settings.value("bar/onTop", true).toBool()) {
         ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::TopToBottom);
         ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::TopToBottom);
+        ((QBoxLayout*) ui->settingsFrame->layout())->setDirection(QBoxLayout::TopToBottom);
         ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     } else {
         ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::BottomToTop);
         ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::BottomToTop);
+        ((QBoxLayout*) ui->settingsFrame->layout())->setDirection(QBoxLayout::BottomToTop);
         ui->upArrow->setPixmap(QIcon::fromTheme("go-down").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     }
 }

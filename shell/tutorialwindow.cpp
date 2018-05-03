@@ -30,7 +30,7 @@ TutorialWindow::TutorialWindow(bool doSettings, QWidget *parent) :
     ui->setupUi(this);
 
     //this->setAttribute(Qt::WA_TransparentForMouseEvents);
-    this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus);\
+    this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus);
     this->setFocusPolicy(Qt::NoFocus);
     doMask();
 

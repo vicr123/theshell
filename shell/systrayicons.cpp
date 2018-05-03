@@ -137,6 +137,8 @@ SniIcon::SniIcon(QString service, QWidget *parent) : QLabel(parent) {
     path.insert(0, "/");
     interface = new QDBusInterface(service, path, "org.kde.StatusNotifierItem");
     this->title = interface->property("Title").toString();
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+
     QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewTitle", this, SLOT(ReloadIcon()));
     QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewIcon", this, SLOT(ReloadIcon()));
     QDBusConnection::sessionBus().connect(service, path, "org.kde.StatusNotifierItem", "NewAttentionIcon", this, SLOT(ReloadIcon()));

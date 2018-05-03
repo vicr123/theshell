@@ -30,6 +30,9 @@
    <property name="rightMargin">
     <number>0</number>
    </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QFrame" name="partFrame">
      <property name="autoFillBackground">
@@ -397,8 +400,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1169</width>
-            <height>1038</height>
+            <width>616</width>
+            <height>1062</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -680,14 +683,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>28</day>
+                 <day>27</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>28</day>
+                 <day>27</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1609,7 +1612,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1165</width>
+            <width>182</width>
             <height>114</height>
            </rect>
           </property>
@@ -1895,6 +1898,9 @@
        <property name="rightMargin">
         <number>0</number>
        </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QFrame" name="frame">
          <property name="frameShape">
@@ -2156,7 +2162,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>4</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2673,8 +2679,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>813</width>
-                   <height>694</height>
+                   <width>372</width>
+                   <height>574</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_21">
@@ -5224,6 +5230,22 @@ Items that will be kept if you choose to keep files:
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="verticalSpacer_16">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>9</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -5237,6 +5259,22 @@ Items that will be kept if you choose to keep files:
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_14">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>9</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
