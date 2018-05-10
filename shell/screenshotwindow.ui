@@ -80,7 +80,7 @@
          <string>Crop</string>
         </property>
         <property name="icon">
-         <iconset theme="edit-select-all">
+         <iconset theme="transform-crop">
           <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="checkable">
@@ -129,7 +129,8 @@
          <string>Highlight</string>
         </property>
         <property name="icon">
-         <iconset theme="draw-brush"/>
+         <iconset theme="draw-brush">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="checkable">
          <bool>true</bool>

@@ -88,6 +88,8 @@ int main(int argc, char *argv[])
     StartMonitor* monitor = new StartMonitor;
 
     QDBusConnection::sessionBus().connect("org.thesuite.theshell", "/org/thesuite/theshell", "org.thesuite.theshell", "Ready", monitor, SLOT(MarkStarted()));
+    QDBusConnection::sessionBus().connect("org.thesuite.theshell", "/org/thesuite/theshell", "org.thesuite.theshell", "ShowSplash", monitor, SLOT(ShowSplash()));
+    QDBusConnection::sessionBus().connect("org.thesuite.theshell", "/org/thesuite/theshell", "org.thesuite.theshell", "HideSplash", monitor, SLOT(HideSplash()));
 
     monitor->ShowSplash();
     tsProcess = new QProcess();

@@ -41,6 +41,10 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoPaneDropdown)
 {
+    if (false) {
+        Q_UNUSED(QT_TR_NOOP("Location"));
+    }
+
     ui->setupUi(this);
 
     ui->settingsList->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
@@ -1434,19 +1438,19 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     ui->settingsTabs->setCurrentIndex(currentRow);
 
     //Set up settings
-    if (currentRow == 5) { //Notifications
+    if (ui->settingsTabs->currentWidget() == ui->NotificationsSettings) { //Notifications
         setupNotificationsSettingsPane();
-    } else if (currentRow == 6) { //Location
+    /*} else if (currentRow == 6) { //Location
         if (locationServices->requiresAuthorization()) {
             ui->locationRequireAuthLabel->setVisible(true);
             ui->locationFrame->setEnabled(false);
         } else {
             ui->locationRequireAuthLabel->setVisible(false);
             ui->locationFrame->setEnabled(true);
-        }
-    } else if (currentRow == 10) { //Users
+        }*/
+    } else if (ui->settingsTabs->currentWidget() == ui->UserSettings) { //Users
         setupUsersSettingsPane();
-    } else if (currentRow == 11) { //Date and Time
+    } else if (ui->settingsTabs->currentWidget() == ui->DateTimeSettings) { //Date and Time
         setupDateTimeSettingsPane();
     }
 }
@@ -2377,6 +2381,9 @@ void InfoPaneDropdown::on_DateTimeNTPSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
 {
+    //Show the splash screen (if available)
+    emit dbusSignals->ShowSplash();
+
     switch (currentRow) {
         case Internationalisation::enUS:
             settings.setValue("locale/language", "en_US");
@@ -2463,6 +2470,12 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
 
     //Fill locale box
     Internationalisation::fillLanguageBox(ui->localeList);
+
+    //Process all events
+    QApplication::processEvents();
+
+    //Hide the splash screen since the language change is complete
+    emit dbusSignals->HideSplash();
 }
 
 void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)

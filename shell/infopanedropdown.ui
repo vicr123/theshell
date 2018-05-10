@@ -400,8 +400,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>616</width>
-            <height>1062</height>
+            <width>1169</width>
+            <height>1038</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -497,7 +497,7 @@
                     <item>
                      <widget class="QLabel" name="dstLabel">
                       <property name="text">
-                       <string>On Tableday, 1 April 2018, Daylight Savings Time will end. The clock will automatically adjust backwards by 1 hour.</string>
+                       <string notr="true">On Tableday, 1 April 2018, Daylight Savings Time will end. The clock will automatically adjust backwards by 1 hour.</string>
                       </property>
                       <property name="wordWrap">
                        <bool>true</bool>
@@ -683,14 +683,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>27</day>
+                 <day>25</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>27</day>
+                 <day>25</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2051,15 +2051,6 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>Location</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-system-geolocation">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
                   <string>Input</string>
                  </property>
                  <property name="icon">
@@ -2162,7 +2153,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2436,7 +2427,7 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="page">
+            <widget class="QWidget" name="GatewayBarSettings">
              <layout class="QGridLayout" name="gridLayout_9">
               <item row="3" column="0">
                <widget class="QLabel" name="label_15">
@@ -2998,7 +2989,7 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="page_3">
+            <widget class="QWidget" name="ThemeSettings">
              <layout class="QGridLayout" name="gridLayout_11">
               <item row="8" column="1" colspan="4">
                <widget class="QComboBox" name="systemGTK3Theme"/>
@@ -3482,73 +3473,6 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="page_18">
-             <layout class="QVBoxLayout" name="verticalLayout_17">
-              <item>
-               <widget class="QLabel" name="displayLabel_3">
-                <property name="font">
-                 <font>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Location</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="locationRequireAuthLabel">
-                <property name="text">
-                 <string>You'll need to allow theShell to manage location settings by whitelisting &quot;theshell&quot; in /etc/geoclue/geoclue.conf</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QFrame" name="locationFrame">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_23">
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_97">
-                   <property name="text">
-                    <string>Settings go here</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <spacer name="verticalSpacer_10">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-             </layout>
-            </widget>
             <widget class="QWidget" name="InputSettings">
              <layout class="QGridLayout" name="gridLayout_6">
               <item row="2" column="0">
@@ -3652,7 +3576,7 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="page_2">
+            <widget class="QWidget" name="PowerSettings">
              <layout class="QGridLayout" name="gridLayout_10">
               <item row="9" column="0" colspan="3">
                <widget class="Line" name="line_9">
@@ -4010,7 +3934,7 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="page_4">
+            <widget class="QWidget" name="UserSettings">
              <layout class="QVBoxLayout" name="verticalLayout_25">
               <property name="leftMargin">
                <number>0</number>
@@ -4442,7 +4366,7 @@ Items that will be kept if you choose to keep files:
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="page_8">
+            <widget class="QWidget" name="DateTimeSettings">
              <layout class="QVBoxLayout" name="verticalLayout_36">
               <item>
                <widget class="QLabel" name="displayLabel_10">

@@ -5,5 +5,9 @@
     </signal>
     <signal name="Ready">
     </signal>
+    <signal name="ShowSplash">
+    </signal>
+    <signal name="HideSplash">
+    </signal>
   </interface>
 </node>

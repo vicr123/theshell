@@ -50,7 +50,6 @@ public:
         ruRU,
         svSE,
         ltLT,
-        inID,
         auAU,
         // Unfinished languages follow
         plPL,
@@ -60,6 +59,7 @@ public:
         frFR,
         miNZ,
         ptBR,
+        inID,
         maxLanguage
     };
 

@@ -26,6 +26,8 @@ RunDialog::RunDialog(QWidget *parent) :
     ui(new Ui::RunDialog)
 {
     ui->setupUi(this);
+
+    ui->errorLabel->setVisible(false);
 }
 
 RunDialog::~RunDialog()
@@ -51,8 +53,12 @@ void RunDialog::on_cancelButton_clicked()
 
 void RunDialog::on_runButton_clicked()
 {
-    QProcess::startDetached(ui->command->text());
-    this->close();
+    if (QProcess::startDetached(ui->command->text())) {
+        this->close();
+    } else {
+        ui->errorLabel->setText(tr("Couldn't run that command."));
+        ui->errorLabel->setVisible(true);
+    }
 }
 
 void RunDialog::on_command_returnPressed()

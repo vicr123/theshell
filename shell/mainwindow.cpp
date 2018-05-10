@@ -2111,6 +2111,10 @@ void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
         });
     }
 
+    menu->addAction(QIcon::fromTheme("configure"), tr("Gateway and Bar Settings"), [=] {
+        getInfoPane()->show(InfoPaneDropdown::Settings);
+    });
+
     menu->addSection(tr("For System"));
     menu->addAction(QIcon::fromTheme("dialog-information"), tr("Open Status Center"), [=] {
         getInfoPane()->show(InfoPaneDropdown::Clock);

@@ -35,6 +35,8 @@ class DBusSignals : public QObject
     signals:
         Q_SCRIPTABLE void ThemeChanged();
         Q_SCRIPTABLE void Ready();
+        Q_SCRIPTABLE void ShowSplash();
+        Q_SCRIPTABLE void HideSplash();
 };
 
 #endif // DBUSSIGNALS_H

@@ -28,6 +28,7 @@
 #include <QPropertyAnimation>
 #include <QPainter>
 #include <QPaintEvent>
+#include <QLabel>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
