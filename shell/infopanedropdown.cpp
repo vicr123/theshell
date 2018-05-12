@@ -82,7 +82,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
     connect(timer, SIGNAL(timeout()), this, SLOT(updateSysInfo()));
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateKdeconnect()));
+    //connect(timer, SIGNAL(timeout()), this, SLOT(updateKdeconnect()));
     connect(timer, &QTimer::timeout, [=]() {
         //Run the timer faster when a stopwatch is running.
         if (stopwatchRunning) {
@@ -960,7 +960,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     if (changeTo == Clock) {
         ui->pushButton_5->setEnabled(false);
         ui->pushButton_6->setEnabled(true);
-    } else if (changeTo == KDEConnect) { //Print) {
+    } else if ((ui->kdeconnectLabel->isVisible() && changeTo == KDEConnect) || (changeTo == Notifications)) { //Print) {
         ui->pushButton_5->setEnabled(true);
         ui->pushButton_6->setEnabled(false);
     } else if (changeTo == Settings) {
@@ -1528,43 +1528,6 @@ void InfoPaneDropdown::on_kdeconnectLabel_clicked()
     changeDropDown(KDEConnect);
 }
 
-void InfoPaneDropdown::updateKdeconnect() {
-    if (!QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect")) {
-        ui->kdeconnectNotRunning->setVisible(true);
-        ui->kdeconnectArea->setVisible(false);
-    } else {
-        ui->kdeconnectNotRunning->setVisible(false);
-        ui->kdeconnectArea->setVisible(true);
-        int currentSelectedDevice = ui->kdeconnectDevices->currentRow();
-        QDBusInterface kdeconnectDaemon("org.kde.kdeconnect", "/modules/kdeconnect", "org.kde.kdeconnect.daemon");
-        QDBusReply<QStringList> foundDevices = kdeconnectDaemon.call("devices", false, true);
-
-        ui->kdeconnectDevices->clear();
-        for (QString device : foundDevices.value()) {
-            QDBusInterface deviceInterface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device");
-            bool isReachable = deviceInterface.property("isReachable").toBool();
-            QListWidgetItem* item = new QListWidgetItem;
-            item->setText(deviceInterface.property("name").toString());
-            item->setIcon(QIcon::fromTheme(deviceInterface.property("iconName").toString()));
-            item->setData(Qt::UserRole, device);
-            if (!isReachable) {
-                item->setForeground(ui->kdeconnectDevices->palette().brush(QPalette::Disabled, QPalette::Text));
-            }
-            ui->kdeconnectDevices->addItem(item);
-        }
-
-        if (currentSelectedDevice != -1 && ui->kdeconnectDevices->count() > currentSelectedDevice) {
-            ui->kdeconnectDevices->setCurrentRow(currentSelectedDevice);
-        }
-    }
-}
-
-void InfoPaneDropdown::on_startKdeconnect_clicked()
-{
-    //Start KDE Connect
-    QProcess::startDetached("/usr/lib/kdeconnectd");
-}
-
 void InfoPaneDropdown::on_endSessionConfirmFullScreen_toggled(bool checked)
 {
     if (checked) {
@@ -1691,26 +1654,6 @@ void InfoPaneDropdown::on_systemFont_currentFontChanged(const QFont &f)
     themeSettings->setValue("fonts/smallFamily", f.family());
     ui->systemFontSize->setValue(themeSettings->value("font/defaultSize", 10).toInt());
     //ui->systemFont->setFont(QFont(themeSettings->value("font/defaultFamily", defaultFont).toString(), themeSettings->value("font/defaultSize", 10).toInt()));
-}
-
-void InfoPaneDropdown::on_locateDeviceButton_clicked()
-{
-    if (ui->kdeconnectDevices->selectedItems().count() != 0) {
-        if (QMessageBox::question(this, tr("Locate Device"), tr("Your device will ring at full volume. Tap the button on the screen of the device to silence it."), QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok) == QMessageBox::Ok) {
-            QString device = ui->kdeconnectDevices->selectedItems().first()->data(Qt::UserRole).toString();
-            QDBusInterface findPhone("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device + "/findmyphone", "org.kde.kdeconnect.device.findmyphone");
-            findPhone.call("ring");
-        }
-    }
-}
-
-void InfoPaneDropdown::on_pingDeviceButton_clicked()
-{
-    if (ui->kdeconnectDevices->selectedItems().count() != 0) {
-        QString device = ui->kdeconnectDevices->selectedItems().first()->data(Qt::UserRole).toString();
-        QDBusInterface findPhone("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device + "/ping", "org.kde.kdeconnect.device.ping");
-        findPhone.call("sendPing");
-    }
 }
 
 void InfoPaneDropdown::on_batteryChartUpdateButton_clicked()
@@ -3802,4 +3745,8 @@ void InfoPaneDropdown::on_blackColorThemeRadio_toggled(bool checked)
         resetStyle();
         changeDropDown(Settings, false);
     }
+}
+
+void InfoPaneDropdown::changeSettingsPane(int pane) {
+    ui->settingsList->setCurrentRow(pane);
 }

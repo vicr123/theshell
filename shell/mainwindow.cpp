@@ -2113,6 +2113,7 @@ void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
 
     menu->addAction(QIcon::fromTheme("configure"), tr("Gateway and Bar Settings"), [=] {
         getInfoPane()->show(InfoPaneDropdown::Settings);
+        getInfoPane()->changeSettingsPane(1);
     });
 
     menu->addSection(tr("For System"));

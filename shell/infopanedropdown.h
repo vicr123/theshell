@@ -207,10 +207,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_kdeconnectLabel_clicked();
 
-        void updateKdeconnect();
-
-        void on_startKdeconnect_clicked();
-
         void on_endSessionConfirmFullScreen_toggled(bool checked);
 
         void on_endSessionConfirmInMenu_toggled(bool checked);
@@ -238,10 +234,6 @@ class InfoPaneDropdown : public QDialog
         void on_themeButtonColor_currentIndexChanged(int index);
 
         void on_systemFont_currentFontChanged(const QFont &f);
-
-        void on_locateDeviceButton_clicked();
-
-        void on_pingDeviceButton_clicked();
 
         void updateTimers();
 
@@ -470,6 +462,7 @@ class InfoPaneDropdown : public QDialog
 
         void on_WifiSwitch_toggled(bool checked);
         void updateStruts();
+        void changeSettingsPane(int pane);
 
     private:
         Ui::InfoPaneDropdown *ui;

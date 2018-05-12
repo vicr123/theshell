@@ -95,7 +95,7 @@ void AudioManager::setMasterVolume(int volume) {
             pa_context_set_sink_volume_by_index(pulseContext, defaultSinkIndex, &newVol, NULL, NULL);
         } else {
             //Get Current Limits
-            QProcess* mixer = new QProcess(this);
+            QProcess* mixer = new QProcess();
             mixer->start("amixer");
             mixer->waitForFinished();
             QString output(mixer->readAll());

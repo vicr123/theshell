@@ -96,7 +96,9 @@ SOURCES += main.cpp\
     apps/appslistmodel.cpp \
     apps/app.cpp \
     networkmanager/savednetworkslist.cpp \
-    screenrecorder.cpp
+    screenrecorder.cpp \
+    kdeconnect/kdeconnectwidget.cpp \
+    kdeconnect/kdeconnectdevicesmodel.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -141,7 +143,9 @@ HEADERS  += mainwindow.h \
     apps/appslistmodel.h \
     apps/app.h \
     networkmanager/savednetworkslist.h \
-    screenrecorder.h
+    screenrecorder.h \
+    kdeconnect/kdeconnectwidget.h \
+    kdeconnect/kdeconnectdevicesmodel.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -160,7 +164,8 @@ FORMS    += mainwindow.ui \
     notificationsWidget/notificationswidget.ui \
     notificationsWidget/notificationpopup.ui \
     notificationsWidget/notificationappgroup.ui \
-    notificationsWidget/notificationpanel.ui
+    notificationsWidget/notificationpanel.ui \
+    kdeconnect/kdeconnectwidget.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \
