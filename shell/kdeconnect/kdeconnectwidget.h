@@ -93,6 +93,8 @@ class KdeConnectWidget : public QWidget
 
         void on_startkdeConnectButton_clicked();
 
+        void on_encryptionButton_clicked();
+
     private:
         Ui::KdeConnectWidget *ui;
 

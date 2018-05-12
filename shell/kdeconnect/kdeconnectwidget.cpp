@@ -374,3 +374,9 @@ void KdeConnectWidget::on_startkdeConnectButton_clicked()
 {
     QProcess::startDetached("/usr/lib/kdeconnectd");
 }
+
+void KdeConnectWidget::on_encryptionButton_clicked()
+{
+    QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device");
+    QMessageBox::information(this, tr("Encryption Information"), interface.call("encryptionInfo").arguments().first().toString(), QMessageBox::Ok, QMessageBox::Ok);
+}
