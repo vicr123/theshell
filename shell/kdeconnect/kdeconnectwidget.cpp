@@ -46,12 +46,14 @@ void KdeConnectWidget::kdeConnectGone() {
     devicesModel->updateData();
     ui->announcedName->setText(tr("KDE Connect is not running"));
     ui->panes->setCurrentIndex(5);
+    ui->devicesView->clearSelection();
 }
 
 void KdeConnectWidget::selectedDeviceChanged(QModelIndex current, QModelIndex previous) {
     Q_UNUSED(previous)
 
     if (currentId != "") {
+        QDBusConnection::sessionBus().disconnect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device", "reachableChanged", this, SLOT(updateCurrentDevice()));
         QDBusConnection::sessionBus().disconnect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device", "pluginsChanged", this, SLOT(updateCurrentDevice()));
         QDBusConnection::sessionBus().disconnect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device", "trustedChanged", this, SLOT(updateCurrentDevice()));
         QDBusConnection::sessionBus().disconnect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device", "nameChanged", this, SLOT(updateCurrentDevice()));
@@ -62,6 +64,7 @@ void KdeConnectWidget::selectedDeviceChanged(QModelIndex current, QModelIndex pr
         ui->panes->setCurrentIndex(1);
         currentId = current.data(Qt::UserRole + 1).toString();
 
+        QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device", "reachableChanged", this, SLOT(updateCurrentDevice()));
         QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device", "pluginsChanged", this, SLOT(updateCurrentDevice()));
         QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device", "trustedChanged", this, SLOT(updateCurrentDevice()));
         QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device", "nameChanged", this, SLOT(updateCurrentDevice()));

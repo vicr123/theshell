@@ -9,16 +9,34 @@ KdeConnectDevicesModel::KdeConnectDevicesModel(QObject *parent)
 
     QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect", "org.kde.kdeconnect.daemon", "deviceAdded", this, SLOT(updateData()));
     QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect", "org.kde.kdeconnect.daemon", "deviceRemoved", this, SLOT(updateData()));
+    QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect", "org.kde.kdeconnect.daemon", "deviceRemoved", this, SLOT(deviceVisibilityChanged()));
 
     updateData();
 }
 
 void KdeConnectDevicesModel::updateData() {
+    for (QString device : devices) {
+        QDBusConnection::sessionBus().disconnect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device", "reachableChanged", this, SLOT(updateData()));
+        QDBusConnection::sessionBus().disconnect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device", "pluginsChanged", this, SLOT(updateData()));
+        QDBusConnection::sessionBus().disconnect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device", "trustedChanged", this, SLOT(updateData()));
+        QDBusConnection::sessionBus().disconnect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device", "nameChanged", this, SLOT(updateData()));
+        QDBusConnection::sessionBus().disconnect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device", "hasPairingRequestsChanged", this, SLOT(updateData()));
+    }
+
     if (daemon->isValid()) {
         devices = daemon->call("devices", false, false).arguments().first().toStringList();
     } else {
         devices.clear();
     }
+
+    for (QString device : devices) {
+        QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device", "reachableChanged", this, SLOT(updateData()));
+        QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device", "pluginsChanged", this, SLOT(updateData()));
+        QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device", "trustedChanged", this, SLOT(updateData()));
+        QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device", "nameChanged", this, SLOT(updateData()));
+        QDBusConnection::sessionBus().connect("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device", "hasPairingRequestsChanged", this, SLOT(updateData()));
+    }
+
     this->dataChanged(this->index(0), this->index(this->rowCount()));
 }
 
