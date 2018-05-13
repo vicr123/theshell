@@ -342,6 +342,11 @@ void KdeConnectWidget::on_smsMessage_textChanged()
     int numLeft = ui->smsMessage->toPlainText().length() % 160;
     int numMessages = (ui->smsMessage->toPlainText().length() / 160) + 1;
 
+    if (numLeft == 0) {
+        numLeft = 160;
+        numMessages--;
+    }
+
     if (numMessages > 1) {
         remaining += tr("Sending as %n messages", nullptr, numMessages);
     }
@@ -382,4 +387,27 @@ void KdeConnectWidget::on_encryptionButton_clicked()
 {
     QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device");
     QMessageBox::information(this, tr("Encryption Information"), interface.call("encryptionInfo").arguments().first().toString(), QMessageBox::Ok, QMessageBox::Ok);
+}
+
+void KdeConnectWidget::on_smsNumber_textEdited(const QString &arg1)
+{
+    //Remove invalid characters
+    QString s = arg1;
+    for (int i = 0; i < s.length(); i++) {
+        QChar c = s.at(i);
+        if (!c.isDigit() && c != '+' && c != ' ') {
+            s.remove(i, 1);
+        }
+    }
+    ui->smsNumber->setText(s);
+}
+
+void KdeConnectWidget::on_renameButton_clicked()
+{
+    bool ok;
+    QString oldName = daemon->call("announcedName").arguments().first().toString();
+    QString newName = QInputDialog::getText(this, tr("Rename Device"), tr("What do you want to call this device?"), QLineEdit::Normal, oldName, &ok);
+    if (ok) {
+        daemon->asyncCall("setAnnouncedName", newName);
+    }
 }

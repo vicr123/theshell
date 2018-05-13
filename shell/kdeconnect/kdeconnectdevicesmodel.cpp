@@ -65,6 +65,7 @@ QVariant KdeConnectDevicesModel::data(const QModelIndex &index, int role) const
     }
 
     QDBusInterface device("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + devices.value(index.row()), "org.kde.kdeconnect.device");
+    if (!device.isValid()) QTimer::singleShot(0, this, SLOT(updateData()));
     if (role == Qt::DisplayRole) {
         return device.property("name").toString();
     } else if (role == Qt::DecorationRole) {
@@ -190,7 +191,7 @@ void KdeConnectDevicesDelegate::paint(QPainter *painter, const QStyleOptionViewI
     bool trusted = device.property("isTrusted").toBool();
 
     if (reachable && trusted) {
-        painter->setBrush(option.palette.color(QPalette::Highlight));
+        painter->setBrush(QColor(0, 100, 0));
         painter->setPen(Qt::transparent);
         painter->drawRect(option.rect.left(), option.rect.top(), 6 * getDPIScaling(), option.rect.height());
     }

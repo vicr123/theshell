@@ -6,6 +6,7 @@
 #include <QStyledItemDelegate>
 #include <QListView>
 #include <QPainter>
+#include <QTimer>
 
 class KdeConnectDevicesModel : public QAbstractListModel
 {

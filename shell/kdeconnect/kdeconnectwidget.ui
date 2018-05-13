@@ -30,34 +30,6 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <pointsize>20</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>KDE Connect</string>
-     </property>
-     <property name="margin">
-      <number>9</number>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="Line" name="line_3">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>1</height>
-      </size>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
       <number>0</number>
@@ -105,7 +77,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Devices</string>
+             <string>KDE Connect</string>
             </property>
             <property name="margin">
              <number>9</number>
@@ -136,17 +108,49 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="announcedName">
-          <property name="text">
-           <string notr="true">This device is called %1</string>
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <property name="spacing">
+           <number>0</number>
           </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-          <property name="margin">
-           <number>9</number>
-          </property>
-         </widget>
+          <item>
+           <widget class="QLabel" name="announcedName">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string notr="true">This device is called %1</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+            <property name="margin">
+             <number>9</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="renameButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset theme="edit-rename"/>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -167,7 +171,7 @@
      <item>
       <widget class="QStackedWidget" name="panes">
        <property name="currentIndex">
-        <number>1</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="page_5">
         <layout class="QVBoxLayout" name="verticalLayout_4">

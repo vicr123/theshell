@@ -17,6 +17,7 @@
 #include <QLineEdit>
 #include <QDBusServiceWatcher>
 #include <QProcess>
+#include <QInputDialog>
 #include "kdeconnectdevicesmodel.h"
 
 namespace Ui {
@@ -94,6 +95,10 @@ class KdeConnectWidget : public QWidget
         void on_startkdeConnectButton_clicked();
 
         void on_encryptionButton_clicked();
+
+        void on_smsNumber_textEdited(const QString &arg1);
+
+        void on_renameButton_clicked();
 
     private:
         Ui::KdeConnectWidget *ui;
