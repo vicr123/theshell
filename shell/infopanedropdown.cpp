@@ -54,6 +54,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2018"));
     ui->dstIcon->setPixmap(QIcon::fromTheme("chronometer").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->usesLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
 
     connect(this, SIGNAL(flightModeChanged(bool)), ui->NetworkManager, SLOT(flightModeChanged(bool)));
     connect(this, SIGNAL(flightModeChanged(bool)), ui->networkManagerSettings, SLOT(flightModeChanged(bool)));
@@ -1440,14 +1441,13 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     //Set up settings
     if (ui->settingsTabs->currentWidget() == ui->NotificationsSettings) { //Notifications
         setupNotificationsSettingsPane();
-    /*} else if (currentRow == 6) { //Location
+    } else if (currentRow == 6) { //Location
         if (locationServices->requiresAuthorization()) {
-            ui->locationRequireAuthLabel->setVisible(true);
-            ui->locationFrame->setEnabled(false);
+            ui->locationStack->setCurrentIndex(0);
         } else {
-            ui->locationRequireAuthLabel->setVisible(false);
-            ui->locationFrame->setEnabled(true);
-        }*/
+            ui->locationStack->setCurrentIndex(1);
+            //ui->locationFrame->setEnabled(true);
+        }
     } else if (ui->settingsTabs->currentWidget() == ui->UserSettings) { //Users
         setupUsersSettingsPane();
     } else if (ui->settingsTabs->currentWidget() == ui->DateTimeSettings) { //Date and Time
@@ -3749,4 +3749,11 @@ void InfoPaneDropdown::on_blackColorThemeRadio_toggled(bool checked)
 
 void InfoPaneDropdown::changeSettingsPane(int pane) {
     ui->settingsList->setCurrentRow(pane);
+}
+
+void InfoPaneDropdown::on_allowGeoclueAgent_clicked()
+{
+    //Automatically edit the geoclue file
+    QProcess::execute("pkexec sed '/whitelist=.*/ s/$/;theshell/' -i /etc/geoclue/geoclue.conf");
+    on_settingsList_currentRowChanged(ui->settingsList->currentRow());
 }

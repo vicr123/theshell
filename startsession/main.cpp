@@ -171,7 +171,12 @@ int main(int argc, char *argv[])
 
         //Start system daemons
         QProcess polkitProcess;
+
+#ifdef BLUEPRINT
         polkitProcess.start("/usr/lib/ts-polkitagent");
+#else
+        polkitProcess.start("/usr/lib/ts-polkitagentb");
+#endif
 
         //Start startup applications
         QStringList knownFileNames;

@@ -46,8 +46,8 @@ QDBUSXML2CPP_ADAPTOR_SOURCE_FLAGS = -l NotificationDBus -i notificationdbus.h
 power.files = org.thesuite.power.xml
 
 location.files = org.freedesktop.GeoClue2.Agent.xml
-location.header_flags = -l LocationServices -i locationservices.h
-location.source_flags = -l LocationServices -i locationservices.h
+location.header_flags = -l LocationServices -i location/locationservices.h
+location.source_flags = -l LocationServices -i location/locationservices.h
 
 dsig.files = org.thesuite.theshell.xml
 
@@ -82,7 +82,6 @@ SOURCES += main.cpp\
     tutorialwindow.cpp \
     screenshotwindow.cpp \
     audiomanager.cpp \
-    locationservices.cpp \
     taskbarmanager.cpp \
     dbussignals.cpp \
     networkmanager/networkwidget.cpp \
@@ -98,7 +97,8 @@ SOURCES += main.cpp\
     networkmanager/savednetworkslist.cpp \
     screenrecorder.cpp \
     kdeconnect/kdeconnectwidget.cpp \
-    kdeconnect/kdeconnectdevicesmodel.cpp
+    kdeconnect/kdeconnectdevicesmodel.cpp \
+    location/locationservices.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -129,7 +129,6 @@ HEADERS  += mainwindow.h \
     screenshotwindow.h \
     audiomanager.h \
     internationalisation.h \
-    locationservices.h \
     taskbarmanager.h \
     dbussignals.h \
     networkmanager/networkwidget.h \
@@ -145,7 +144,8 @@ HEADERS  += mainwindow.h \
     networkmanager/savednetworkslist.h \
     screenrecorder.h \
     kdeconnect/kdeconnectwidget.h \
-    kdeconnect/kdeconnectdevicesmodel.h
+    kdeconnect/kdeconnectdevicesmodel.h \
+    location/locationservices.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -171,7 +171,8 @@ DISTFILES += \
     org.freedesktop.Notifications.xml \
     theshell.desktop \
     theshellb.desktop \
-    org.freedesktop.GeoClue2.Agent.xml
+    org.freedesktop.GeoClue2.Agent.xml \
+    polkit/org.thesuite.theshell.policy
 
 RESOURCES += \
     resources.qrc \
@@ -206,14 +207,17 @@ unix {
     blueprint {
         translations.path = /usr/share/theshellb/translations
         xsession.files = theshellb.desktop
-
         ringtones.path = /usr/share/sounds/theshellb/tones
     } else {
         translations.path = /usr/share/theshell/translations
         xsession.files = theshell.desktop
-
         ringtones.path = /usr/share/sounds/theshell/tones
+
+        #Install polkit files only on theShell stable
+        polkit.path = /usr/share/polkit-1/actions
+        polkit.files = polkit/org.thesuite.theshell.policy
+        INSTALLS += polkit
     }
 
-    INSTALLS += target translations xsession
+    INSTALLS += target translations xsession ringtones
 }

@@ -61,6 +61,7 @@ bool LocationServices::AuthorizeApp(QString desktop_id, uint req_accuracy_level,
 
 
 
+    allowed_accuracy_level = req_accuracy_level;
     return true;
 }
 

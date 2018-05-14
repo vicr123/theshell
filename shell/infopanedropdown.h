@@ -455,6 +455,8 @@ class InfoPaneDropdown : public QDialog
 
         void on_blackColorThemeRadio_toggled(bool checked);
 
+        void on_allowGeoclueAgent_clicked();
+
     public slots:
         void getNetworks();
 

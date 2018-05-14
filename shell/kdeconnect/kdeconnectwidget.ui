@@ -88,6 +88,12 @@
         </item>
         <item>
          <widget class="Line" name="line_2">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>1</height>
+           </size>
+          </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -1070,6 +1076,12 @@
          </item>
          <item>
           <widget class="Line" name="line_8">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>1</height>
+            </size>
+           </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>

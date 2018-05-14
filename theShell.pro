@@ -5,7 +5,8 @@ DISTFILES += \
 
 SUBDIRS += \
     shell \
-    startsession
+    startsession \
+    polkitagent
 
 blueprint {
     message(Configuring theShell to be built as blueprint)

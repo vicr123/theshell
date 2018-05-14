@@ -50,7 +50,7 @@
 #include "taskbarmanager.h"
 #include <systemd/sd-login.h>
 #include <systemd/sd-daemon.h>
-#include "locationservices.h"
+#include "location/locationservices.h"
 #include "screenrecorder.h"
 
 class Menu;

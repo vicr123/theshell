@@ -47,7 +47,6 @@
 #include <unistd.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/dpms.h>
-#include "locationservices.h"
 #include <libunwind.h>
 #include <cxxabi.h>
 #include <QFile>

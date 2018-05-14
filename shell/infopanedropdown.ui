@@ -368,7 +368,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>4</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -1945,6 +1945,14 @@
                 </item>
                 <item>
                  <property name="text">
+                  <string>Location</string>
+                 </property>
+                 <property name="icon">
+                  <iconset theme="preferences-system-geolocation"/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
                   <string>Input</string>
                  </property>
                  <property name="icon">
@@ -2047,7 +2055,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>6</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2564,8 +2572,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>372</width>
-                   <height>574</height>
+                   <width>813</width>
+                   <height>694</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_21">
@@ -2646,16 +2654,6 @@
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="10" column="1">
-                   <widget class="QCheckBox" name="sunlightRedshift">
-                    <property name="enabled">
-                     <bool>true</bool>
-                    </property>
-                    <property name="text">
-                     <string>Use Sunlight Cycle</string>
                     </property>
                    </widget>
                   </item>
@@ -2876,6 +2874,33 @@
                      <enum>Qt::Horizontal</enum>
                     </property>
                    </widget>
+                  </item>
+                  <item row="10" column="1">
+                   <layout class="QHBoxLayout" name="horizontalLayout_8">
+                    <item>
+                     <widget class="QLabel" name="usesLocation">
+                      <property name="text">
+                       <string>Uses Location</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QCheckBox" name="sunlightRedshift">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>Use Sunlight Cycle</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </item>
                  </layout>
                 </widget>
@@ -3363,6 +3388,192 @@
                 <property name="text">
                  <string notr="true">EmphasiseAppSwitch</string>
                 </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="LocationSettings">
+             <layout class="QVBoxLayout" name="verticalLayout_16">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="startupLabel_3">
+                <property name="font">
+                 <font>
+                  <pointsize>15</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Location</string>
+                </property>
+                <property name="margin">
+                 <number>9</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="line_27">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>1</height>
+                 </size>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QStackedWidget" name="locationStack">
+                <widget class="QWidget" name="page_2">
+                 <layout class="QVBoxLayout" name="verticalLayout_17">
+                  <item>
+                   <spacer name="verticalSpacer_19">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_40">
+                    <property name="font">
+                     <font>
+                      <pointsize>20</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Permission Required</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_41">
+                    <property name="text">
+                     <string>To manage location settings in theShell, you'll need to give us permission to be a geoclue agent.</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_9">
+                    <item>
+                     <spacer name="horizontalSpacer_15">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="allowGeoclueAgent">
+                      <property name="text">
+                       <string>Allow theShell to be a geoclue agent</string>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="arrow-right"/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_22">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_97">
+                    <property name="text">
+                     <string>Have your administrator password ready</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_27">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>100</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_104">
+                    <property name="text">
+                     <string>If you wish to manually configure theShell as a geoclue agent, you'll need to edit /etc/geoclue/geoclue.conf and append &quot;theshell&quot; to the end of the whitelist setting.</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_18">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="page_3"/>
                </widget>
               </item>
              </layout>

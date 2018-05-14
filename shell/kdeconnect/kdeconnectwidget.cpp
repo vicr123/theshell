@@ -397,6 +397,7 @@ void KdeConnectWidget::on_smsNumber_textEdited(const QString &arg1)
         QChar c = s.at(i);
         if (!c.isDigit() && c != '+' && c != ' ') {
             s.remove(i, 1);
+            i--;
         }
     }
     ui->smsNumber->setText(s);

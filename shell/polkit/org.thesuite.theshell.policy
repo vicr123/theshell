@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC "-//freedesktop//DTD polkit Policy Configuration 1.0//EN"
+"http://www.freedesktop.org/software/polkit/policyconfig-1.dtd">
+<policyconfig>
+
+  <vendor>Victor Tran</vendor>
+  <vendor_url>http://vicr123.github.io/</vendor_url>
+
+  <action id="org.thesuite.theshell.enable-geoclue-agent">
+    <description>Allow theShell to act as a GeoClue agent</description>
+    <message>Authentication is required to allow theShell to act as a GeoClue agent</message>
+    <icon_name>theshell</icon_name> 
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/sed</annotate>
+    <annotate key="org.freedesktop.policy.exec.argv1">'/whitelist=.*/ s/$/;theshell/'</annotate>
+  </action>
+
+</policyconfig>
