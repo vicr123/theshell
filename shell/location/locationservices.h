@@ -26,6 +26,10 @@
 #include <QDBusInterface>
 #include <QDBusPendingCall>
 #include <QDebug>
+#include <QSettings>
+#include "locationrequestdialog.h"
+#include "apps/appslistmodel.h"
+#include <QDBusServiceWatcher>
 
 class LocationServices : public QObject
 {
@@ -47,9 +51,11 @@ signals:
 
 public slots:
     void GeocluePropertiesChanged(QString interface, QVariantMap properties);
+    void reloadAuthorizationRequired();
 
 private:
-    bool reqAuth = false;
+    bool reqAuth = true;
+    QSettings* locationSettings = new QSettings("theSuite", "theShell-location", this);
 };
 
 #endif // LOCATIONSERVICES_H

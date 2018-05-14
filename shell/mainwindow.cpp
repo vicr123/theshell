@@ -91,7 +91,6 @@ MainWindow::MainWindow(QWidget *parent) :
     timer->start();
 
     infoPane = new InfoPaneDropdown(this->winId());
-    infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(infoPane, SIGNAL(networkLabelChanged(QString,QIcon)), this, SLOT(internetLabelChanged(QString,QIcon)));
     connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
     connect(infoPane, SIGNAL(timerChanged(QString)), this, SLOT(setTimer(QString)));

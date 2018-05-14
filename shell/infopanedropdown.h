@@ -104,6 +104,7 @@ class InfoPaneDropdown : public QDialog
         };
 
         void show(dropdownType showWith);
+        void showNoAnimation();
         void dragDown(dropdownType showWith, int y);
         void close();
         bool isTimerRunning();
@@ -252,6 +253,8 @@ class InfoPaneDropdown : public QDialog
         void on_notificationSoundBox_currentIndexChanged(int index);
 
         void setupUsersSettingsPane();
+
+        void setupLocationSettingsPane();
 
         void on_userSettingsNextButton_clicked();
 
@@ -457,6 +460,10 @@ class InfoPaneDropdown : public QDialog
 
         void on_allowGeoclueAgent_clicked();
 
+        void on_LocationMasterSwitch_toggled(bool checked);
+
+        void on_LocationAppsList_itemChanged(QListWidgetItem *item);
+
     public slots:
         void getNetworks();
 
@@ -514,6 +521,7 @@ class InfoPaneDropdown : public QDialog
         QSettings* sessionSettings = new QSettings("theSuite", "ts-startsession");
         QSettings* notificationAppSettings = new QSettings("theSuite", "theShell-notifications", this);
         QSettings* gtk3Settings = new QSettings(QDir::homePath() + "/.config/gtk-3.0/settings.ini", QSettings::IniFormat);
+        QSettings* locationSettings = new QSettings("theSuite", "theShell-location", this);
 
         QString editingUserPath;
 
@@ -561,6 +569,15 @@ public:
     RemindersDelegate(QWidget *parent = 0);
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+};
+
+class InfoPaneNotOnTopLocker {
+    public:
+        InfoPaneNotOnTopLocker(InfoPaneDropdown* infoPane);
+        ~InfoPaneNotOnTopLocker();
+
+    private:
+        InfoPaneDropdown* infoPane;
 };
 
 #endif // INFOPANEDROPDOWN_H

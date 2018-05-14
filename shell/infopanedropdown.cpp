@@ -37,6 +37,8 @@ extern NotificationsDBusAdaptor* ndbus;
 extern DBusSignals* dbusSignals;
 extern LocationServices* locationServices;
 
+#define LOWER_INFOPANE InfoPaneNotOnTopLocker locker(this);
+
 InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoPaneDropdown)
@@ -46,6 +48,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     }
 
     ui->setupUi(this);
+
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 
     ui->settingsList->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
     ui->settingsListStack->setFixedWidth(250 * getDPIScaling());
@@ -362,6 +366,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->sunlightRedshift->setChecked(settings.value("display/redshiftSunlightCycle", false).toBool());
     ui->EmphasiseAppSwitch->setChecked(settings.value("notifications/emphasiseApp", true).toBool());
     ui->CompactBarSwitch->setChecked(settings.value("bar/compact", false).toBool());
+    ui->LocationMasterSwitch->setChecked(locationSettings->value("general/master", true).toBool());
     updateAccentColourBox();
     updateRedshiftTime();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
@@ -537,6 +542,16 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 InfoPaneDropdown::~InfoPaneDropdown()
 {
     delete ui;
+}
+
+InfoPaneNotOnTopLocker::InfoPaneNotOnTopLocker(InfoPaneDropdown *infoPane) {
+    this->infoPane = infoPane;
+    infoPane->setWindowFlags(Qt::FramelessWindowHint);
+}
+
+InfoPaneNotOnTopLocker::~InfoPaneNotOnTopLocker() {
+    infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    infoPane->showNoAnimation();
 }
 
 void InfoPaneDropdown::DBusServiceRegistered(QString serviceName) {
@@ -873,6 +888,12 @@ void InfoPaneDropdown::show(dropdownType showWith) {
 
     //Update the reminders list
     ((RemindersListModel*) ui->RemindersList->model())->updateData();
+}
+
+void InfoPaneDropdown::showNoAnimation() {
+    QDialog::show();
+    previousDragY = -1;
+    completeDragDown();
 }
 
 void InfoPaneDropdown::close() {
@@ -1442,12 +1463,7 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     if (ui->settingsTabs->currentWidget() == ui->NotificationsSettings) { //Notifications
         setupNotificationsSettingsPane();
     } else if (currentRow == 6) { //Location
-        if (locationServices->requiresAuthorization()) {
-            ui->locationStack->setCurrentIndex(0);
-        } else {
-            ui->locationStack->setCurrentIndex(1);
-            //ui->locationFrame->setEnabled(true);
-        }
+        setupLocationSettingsPane();
     } else if (ui->settingsTabs->currentWidget() == ui->UserSettings) { //Users
         setupUsersSettingsPane();
     } else if (ui->settingsTabs->currentWidget() == ui->DateTimeSettings) { //Date and Time
@@ -2121,6 +2137,7 @@ void InfoPaneDropdown::on_userSettingsCancelButton_clicked()
 
 void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
 {
+    LOWER_INFOPANE
     if (ui->userSettingsPasswordCheck->text() != ui->userSettingsPassword->text()) {
         QMessageBox::warning(this, tr("Password Check"), tr("The passwords don't match."), QMessageBox::Ok, QMessageBox::Ok);
         return;
@@ -2215,6 +2232,7 @@ void InfoPaneDropdown::on_userSettingsCancelDeleteUser_clicked()
 
 void InfoPaneDropdown::on_userSettingsDeleteUserOnly_clicked()
 {
+    LOWER_INFOPANE
     QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
     qlonglong uid = interface.property("Uid").toLongLong();
 
@@ -2231,6 +2249,7 @@ void InfoPaneDropdown::on_userSettingsDeleteUserOnly_clicked()
 
 void InfoPaneDropdown::on_userSettingsDeleteUserAndData_clicked()
 {
+    LOWER_INFOPANE
     QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
     qlonglong uid = interface.property("Uid").toLongLong();
 
@@ -3226,6 +3245,7 @@ void InfoPaneDropdown::on_setTimezoneButton_clicked()
     ui->TimezoneStackedWidget->setCurrentIndex(0);
 
     //Set the timezone
+    LOWER_INFOPANE
     launchDateTimeService();
     QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
     QDBusPendingCallWatcher* w = new QDBusPendingCallWatcher(dateTimeInterface.asyncCall("SetTimezone", ui->timezoneCityList->currentItem()->data(Qt::UserRole), true));
@@ -3754,6 +3774,69 @@ void InfoPaneDropdown::changeSettingsPane(int pane) {
 void InfoPaneDropdown::on_allowGeoclueAgent_clicked()
 {
     //Automatically edit the geoclue file
-    QProcess::execute("pkexec sed '/whitelist=.*/ s/$/;theshell/' -i /etc/geoclue/geoclue.conf");
-    on_settingsList_currentRowChanged(ui->settingsList->currentRow());
+    LOWER_INFOPANE
+    QProcess::execute("pkexec sed \"/whitelist=.*/ s/$/;theshell/\" -i /etc/geoclue/geoclue.conf");
+    locationServices->reloadAuthorizationRequired();
+
+    QTimer::singleShot(500, [=] {
+        on_settingsList_currentRowChanged(6);
+    });
+}
+
+void InfoPaneDropdown::on_LocationMasterSwitch_toggled(bool checked)
+{
+    locationSettings->setValue("general/master", checked);
+}
+
+void InfoPaneDropdown::setupLocationSettingsPane() {
+    if (locationServices->requiresAuthorization()) {
+        ui->locationStack->setCurrentIndex(0);
+    } else {
+        ui->locationStack->setCurrentIndex(1);
+
+        ui->LocationAppsList->clear();
+        QStringList availableApps = locationSettings->childGroups();
+        availableApps.removeOne("General");
+        availableApps.removeOne("general");
+
+        for (QString app : availableApps) {
+            locationSettings->beginGroup(app);
+            bool allow = locationSettings->value("allow").toBool();
+
+            App a = App::invalidApp();
+            if (QFile("/usr/share/applications/" + app + ".desktop").exists()) {
+                a = AppsListModel::readAppFile("/usr/share/applications/" + app + ".desktop");
+            } else if (QFile(QDir::homePath() + "/.local/share/applications" + app + ".desktop").exists()) {
+                a = AppsListModel::readAppFile(QDir::homePath() + "/.local/share/applications" + app + ".desktop");
+            }
+
+            QListWidgetItem* i = new QListWidgetItem();
+            if (a.invalid()) {
+                i->setText(app);
+            } else {
+                i->setIcon(a.icon());
+                i->setText(a.name());
+            }
+
+            i->setFlags(i->flags() | Qt::ItemIsUserCheckable);
+            if (allow) {
+                i->setCheckState(Qt::Checked);
+            } else {
+                i->setCheckState(Qt::Unchecked);
+            }
+            i->setData(Qt::UserRole, app);
+            ui->LocationAppsList->addItem(i);
+
+            locationSettings->endGroup();
+        }
+    }
+}
+
+void InfoPaneDropdown::on_LocationAppsList_itemChanged(QListWidgetItem *item)
+{
+    if (item->checkState() == Qt::Checked) {
+        locationSettings->setValue(item->data(Qt::UserRole).toString() + "/allow", true);
+    } else {
+        locationSettings->setValue(item->data(Qt::UserRole).toString() + "/allow", false);
+    }
 }

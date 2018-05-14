@@ -9,17 +9,9 @@ Authenticate::Authenticate(QWidget *parent) :
 
     ui->errorIcon->setPixmap(QIcon::fromTheme("dialog-error").pixmap(16, 16));
     ui->errorFrame->setVisible(false);
+    ui->pushButton->setProperty("type", "destructive");
     fadeEffect = new QGraphicsOpacityEffect(this);
     ui->authFrame->setGraphicsEffect(fadeEffect);
-
-    //Set up clock
-    QTimer* clockTimer = new QTimer();
-    clockTimer->setInterval(1000);
-    connect(clockTimer, &QTimer::timeout, [=]() {
-        ui->dateLabel->setText(QDateTime::currentDateTime().toString("ddd dd MMM yyyy"));
-        ui->timeLabel->setText(QDateTime::currentDateTime().toString("hh:mm:ss"));
-    });
-    clockTimer->start();
 
     connect(tVirtualKeyboard::instance(), &tVirtualKeyboard::keyboardVisibleChanged, [=](bool visible) {
         if (visible) {
@@ -39,6 +31,9 @@ Authenticate::~Authenticate()
 }
 
 void Authenticate::showFullScreen(bool showError) {
+    XGrabKeyboard(QX11Info::display(), RootWindow(QX11Info::display(), 0), True, GrabModeAsync, GrabModeAsync, CurrentTime);
+    XGrabPointer(QX11Info::display(), RootWindow(QX11Info::display(), 0), True, 0, GrabModeAsync, GrabModeAsync, RootWindow(QX11Info::display(), 0), 0, CurrentTime);
+
     ui->errorFrame->setVisible(showError);
     ui->lineEdit->setText("");
 
@@ -50,6 +45,19 @@ void Authenticate::showFullScreen(bool showError) {
     a->start();
     connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
 
+    //QDialog::showFullScreen();
+    /*Atom DesktopWindowTypeAtom;
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type*/
+
+    unsigned long desktop = 0xFFFFFFFF;
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
+                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+
+    this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    this->show();
+
     //Show onscreen keyboard if it is running
     tVirtualKeyboard::instance()->showKeyboard();
 
@@ -57,22 +65,13 @@ void Authenticate::showFullScreen(bool showError) {
 
     QRect desktopRect = QApplication::desktop()->screenGeometry();
     desktopRect.setHeight(desktopRect.height() - tVirtualKeyboard::instance()->height());
-    this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 
-    //QDialog::showFullScreen();
-    Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
-                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
-
-    unsigned long desktop = 0xFFFFFFFF;
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
-                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
-
-    this->show();
-    this->setGeometry(desktopRect);
     ui->lineEdit->setFocus();
-    this->raise();
+
+    QTimer::singleShot(0, [=] {
+        this->setGeometry(desktopRect);
+        this->raise();
+    });
 }
 
 void Authenticate::setMessage(QString message) {
@@ -152,4 +151,10 @@ void Authenticate::on_keyboardButton_clicked()
 void Authenticate::on_authenticationUsers_currentIndexChanged(int index)
 {
     emit this->newUser(ui->authenticationUsers->itemData(index).value<PolkitQt1::Identity>());
+}
+
+void Authenticate::reject() {
+    QDialog::reject();
+    XUngrabKeyboard(QX11Info::display(), CurrentTime);
+    XUngrabPointer(QX11Info::display(), CurrentTime);
 }

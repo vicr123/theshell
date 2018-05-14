@@ -8,7 +8,11 @@ QT       += core gui dbus thelib x11extras
 CONFIG   += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-LIBS += -lpolkit-qt5-agent-1 -lpolkit-qt5-core-1 -lX11
+
+unix {
+    CONFIG += link_pkgconfig
+    PKGCONFIG += x11 polkit-qt5-1 polkit-qt5-agent-1
+}
 
 blueprint {
     TARGET = ts-polkitagentb

@@ -23,28 +23,24 @@
 
 LocationServices::LocationServices(QObject *parent) : QObject(parent)
 {
-    QDBusMessage activator = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "StartServiceByName");
-    activator.setArguments(QVariantList() << "org.freedesktop.GeoClue2");
-    QDBusConnection::systemBus().call(activator);
+    QDBusConnection::systemBus().interface()->startService("org.freedesktop.GeoClue2");
 
     new AgentAdaptor(this);
     QDBusConnection dbus = QDBusConnection::systemBus();
     dbus.registerObject("/org/freedesktop/GeoClue2/Agent", "org.freedesktop.GeoClue2.Agent", this);
 
-    QDBusMessage agentMessage = QDBusMessage::createMethodCall("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.GeoClue2.Manager", "AddAgent");
-    agentMessage.setArguments(QVariantList() << "theshell");
-    QDBusPendingCall message = QDBusConnection::systemBus().asyncCall(agentMessage);
-    QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(message);
-    connect(watcher, &QDBusPendingCallWatcher::finished, [=] {
-        qDebug() << message.error().name();
-        qDebug() << message.error().message();
+    reloadAuthorizationRequired();
+    QDBusServiceWatcher* watcher = new QDBusServiceWatcher("org.freedesktop.GeoClue2", QDBusConnection::systemBus());
+    connect(watcher, &QDBusServiceWatcher::serviceRegistered, [=] {
+        reqAuth = true;
+        reloadAuthorizationRequired();
+    });
+    connect(watcher, &QDBusServiceWatcher::serviceUnregistered, [=] {
+        //For some reason the agent gets deregistered every time the service becomes unregistered leading to tempermental AuthorizeApp calls
 
-        if (message.isError()) {
-            if (message.error().name() == "org.freedesktop.DBus.Error.AccessDenied") {
-                reqAuth = true;
-            }
+        if (!reqAuth) {
+            QDBusConnection::systemBus().interface()->startService("org.freedesktop.GeoClue2");
         }
-        watcher->deleteLater();
     });
 
     QDBusConnection::systemBus().connect("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(GeocluePropertiesChanged(QString,QVariantMap)));
@@ -54,15 +50,42 @@ bool LocationServices::AuthorizeApp(QString desktop_id, uint req_accuracy_level,
     qDebug() << desktop_id + " is accessing location";
     allowed_accuracy_level = req_accuracy_level;
 
+    if (!locationSettings->value("general/master", true).toBool()) {
+        //Master location switch is off
+        return false;
+    }
+
     if (desktop_id == "theshell") {
         //Allow theShell
         return true;
     }
 
+    App a = App::invalidApp();
+    if (QFile("/usr/share/applications/" + desktop_id + ".desktop").exists()) {
+        a = AppsListModel::readAppFile("/usr/share/applications/" + desktop_id + ".desktop");
+    } else if (QFile(QDir::homePath() + "/.local/share/applications" + desktop_id + ".desktop").exists()) {
+        a = AppsListModel::readAppFile(QDir::homePath() + "/.local/share/applications" + desktop_id + ".desktop");
+    }
 
+    if (a.invalid()) {
+        return false;
+    }
 
-    allowed_accuracy_level = req_accuracy_level;
-    return true;
+    if (locationSettings->contains(desktop_id + "/allow")) {
+        return locationSettings->value(desktop_id + "/allow").toBool();
+    }
+
+    LocationRequestDialog dialog;
+    dialog.setAppName(a.name());
+    dialog.setIcon(a.icon());
+    dialog.showFullScreen();
+    if (dialog.exec() == LocationRequestDialog::Accepted) {
+        locationSettings->setValue(desktop_id + "/allow", true);
+        return true;
+    } else {
+        locationSettings->setValue(desktop_id + "/allow", false);
+        return false;
+    }
 }
 
 uint LocationServices::MaxAccuracyLevel() {
@@ -79,4 +102,25 @@ void LocationServices::GeocluePropertiesChanged(QString interface, QVariantMap p
 
 bool LocationServices::requiresAuthorization() {
     return reqAuth;
+}
+
+void LocationServices::reloadAuthorizationRequired() {
+    if (reqAuth) {
+        QDBusMessage agentMessage = QDBusMessage::createMethodCall("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.GeoClue2.Manager", "AddAgent");
+        agentMessage.setArguments(QVariantList() << "theshell");
+        QDBusPendingCall message = QDBusConnection::systemBus().asyncCall(agentMessage);
+        QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(message);
+        connect(watcher, &QDBusPendingCallWatcher::finished, [=] {
+            watcher->deleteLater();
+
+            if (message.isError()) {
+                if (message.error().name() == "org.freedesktop.DBus.Error.AccessDenied") {
+                    reqAuth = true;
+                    return;
+                }
+            }
+
+            reqAuth = false;
+        });
+    }
 }

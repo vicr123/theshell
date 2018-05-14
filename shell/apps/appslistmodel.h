@@ -61,6 +61,8 @@ public:
 
     QString currentQuery = "";
 
+    static App readAppFile(QString appFile, QStringList pinnedAppsList = QStringList());
+
 public slots:
     void loadData();
 
@@ -71,8 +73,6 @@ private:
         QList<App> apps;
         int pinnedAppsCount;
     };
-
-    App readAppFile(QString appFile, QStringList pinnedAppsList);
 
     QSettings settings;
     QList<App> apps;

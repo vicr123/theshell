@@ -51,7 +51,7 @@ location.source_flags = -l LocationServices -i location/locationservices.h
 
 dsig.files = org.thesuite.theshell.xml
 
-DBUS_ADAPTORS += power dsig location
+DBUS_ADAPTORS += power dsig
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -98,7 +98,9 @@ SOURCES += main.cpp\
     screenrecorder.cpp \
     kdeconnect/kdeconnectwidget.cpp \
     kdeconnect/kdeconnectdevicesmodel.cpp \
-    location/locationservices.cpp
+    location/locationservices.cpp \
+    location/locationrequestdialog.cpp \
+    agent_adaptor.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -145,7 +147,9 @@ HEADERS  += mainwindow.h \
     screenrecorder.h \
     kdeconnect/kdeconnectwidget.h \
     kdeconnect/kdeconnectdevicesmodel.h \
-    location/locationservices.h
+    location/locationservices.h \
+    location/locationrequestdialog.h \
+    agent_adaptor.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -165,7 +169,8 @@ FORMS    += mainwindow.ui \
     notificationsWidget/notificationpopup.ui \
     notificationsWidget/notificationappgroup.ui \
     notificationsWidget/notificationpanel.ui \
-    kdeconnect/kdeconnectwidget.ui
+    kdeconnect/kdeconnectwidget.ui \
+    location/locationrequestdialog.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \
