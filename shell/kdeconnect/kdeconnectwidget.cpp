@@ -412,3 +412,10 @@ void KdeConnectWidget::on_renameButton_clicked()
         daemon->asyncCall("setAnnouncedName", newName);
     }
 }
+
+void KdeConnectWidget::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
+}

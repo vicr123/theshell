@@ -107,6 +107,8 @@ class KdeConnectWidget : public QWidget
         QDBusServiceWatcher* watcher;
         QString currentId;
         KdeConnectDevicesModel* devicesModel;
+
+        void changeEvent(QEvent* event);
 };
 
 #endif // KDECONNECTWIDGET_H

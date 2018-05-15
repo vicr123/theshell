@@ -81,17 +81,17 @@ QVariant KdeConnectDevicesModel::data(const QModelIndex &index, int role) const
         QStringList s;
         QString type = device.property("type").toString();
         if (type == "tablet") {
-            s.append("Tablet");
+            s.append(tr("Tablet"));
         } else if (type == "desktop") {
-            s.append("Computer");
+            s.append(tr("Computer"));
         } else if (type == "smartphone") {
-            s.append("Phone");
+            s.append(tr("Phone"));
         } else {
-            s.append("Device");
+            s.append(tr("Device"));
         }
 
         if (!device.property("isTrusted").toBool()) {
-            s.append("Ready to pair");
+            s.append(tr("Ready to pair"));
         }
         return s.join(" · ");
     } else if (role == Qt::UserRole + 1) {

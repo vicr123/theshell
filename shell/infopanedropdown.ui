@@ -360,6 +360,12 @@
    </item>
    <item>
     <widget class="Line" name="line_6">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>1</height>
+      </size>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -368,7 +374,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>5</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -683,14 +689,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>24</day>
+                 <day>23</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>24</day>
+                 <day>23</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1241,48 +1247,93 @@
        <bool>true</bool>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="leftMargin">
-        <number>18</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
-        <number>15</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>18</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>15</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QLabel" name="label_11">
          <property name="font">
           <font>
-           <pointsize>20</pointsize>
+           <pointsize>15</pointsize>
           </font>
          </property>
          <property name="text">
           <string>System Status</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="currentBattery">
-         <property name="text">
-          <string notr="true">Current Battery Power:</string>
+         <property name="margin">
+          <number>9</number>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="theshellUptime">
-         <property name="text">
-          <string notr="true">theShell Uptime:</string>
+        <widget class="Line" name="line_41">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>1</height>
+          </size>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="systemUptime">
-         <property name="text">
-          <string notr="true">System Uptime: </string>
+        <layout class="QVBoxLayout" name="verticalLayout_51">
+         <property name="spacing">
+          <number>6</number>
+         </property>
+         <property name="leftMargin">
+          <number>9</number>
+         </property>
+         <property name="topMargin">
+          <number>9</number>
+         </property>
+         <property name="rightMargin">
+          <number>9</number>
+         </property>
+         <property name="bottomMargin">
+          <number>9</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="currentBattery">
+           <property name="text">
+            <string notr="true">Current Battery Power:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="theshellUptime">
+           <property name="text">
+            <string notr="true">theShell Uptime:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="systemUptime">
+           <property name="text">
+            <string notr="true">System Uptime: </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_42">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
@@ -1295,7 +1346,7 @@
           </sizepolicy>
          </property>
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::NoFrame</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
@@ -1467,249 +1518,296 @@
        <bool>true</bool>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="leftMargin">
-        <number>18</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
-        <number>15</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>18</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>15</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QLabel" name="label_12">
          <property name="font">
           <font>
-           <pointsize>20</pointsize>
+           <pointsize>15</pointsize>
           </font>
          </property>
          <property name="text">
           <string>Notifications</string>
          </property>
+         <property name="margin">
+          <number>9</number>
+         </property>
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_16">
+        <widget class="Line" name="line_40">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>1</height>
+          </size>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_50">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>9</number>
+         </property>
          <property name="topMargin">
           <number>0</number>
          </property>
+         <property name="rightMargin">
+          <number>9</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
-          <widget class="QLabel" name="label_17">
-           <property name="text">
-            <string>Quiet Mode</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_38">
+          <layout class="QHBoxLayout" name="horizontalLayout_16">
            <property name="spacing">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QPushButton" name="quietModeSound">
-             <property name="text">
-              <string>Sound</string>
-             </property>
-             <property name="icon">
-              <iconset theme="audio-volume-high">
-               <normaloff>.</normaloff>.</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="quietModeNotification">
-             <property name="text">
-              <string>No Notifications</string>
-             </property>
-             <property name="icon">
-              <iconset theme="quiet-mode">
-               <normaloff>.</normaloff>.</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="quietModeMute">
-             <property name="text">
-              <string>Mute</string>
-             </property>
-             <property name="icon">
-              <iconset theme="audio-volume-muted">
-               <normaloff>.</normaloff>.</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="quietModeExpandButton">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset theme="go-down">
-               <normaloff>.</normaloff>.</iconset>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_10">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QScrollArea" name="quietModeExtras">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
-         </property>
-         <property name="horizontalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="quietModeExtrasContents">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>182</width>
-            <height>114</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_35">
-           <property name="leftMargin">
-            <number>0</number>
+            <number>6</number>
            </property>
            <property name="topMargin">
             <number>0</number>
            </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
            <item>
-            <widget class="QLabel" name="quietModeDescription">
+            <widget class="QLabel" name="label_17">
              <property name="text">
-              <string notr="true">Description of Quiet Mode</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
+              <string>Quiet Mode</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="quietModeForeverButton">
-             <property name="text">
-              <string>Fore&amp;ver</string>
+            <layout class="QHBoxLayout" name="horizontalLayout_38">
+             <property name="spacing">
+              <number>0</number>
              </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_50">
              <item>
-              <widget class="QRadioButton" name="quietModeTurnOffIn">
+              <widget class="QPushButton" name="quietModeSound">
                <property name="text">
-                <string>Turn off in</string>
+                <string>Sound</string>
+               </property>
+               <property name="icon">
+                <iconset theme="audio-volume-high">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QTimeEdit" name="quietModeTurnOffInTimer">
+              <widget class="QPushButton" name="quietModeNotification">
+               <property name="text">
+                <string>No Notifications</string>
+               </property>
+               <property name="icon">
+                <iconset theme="quiet-mode">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="quietModeMute">
+               <property name="text">
+                <string>Mute</string>
+               </property>
+               <property name="icon">
+                <iconset theme="audio-volume-muted">
+                 <normaloff>.</normaloff>.</iconset>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="quietModeExpandButton">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <property name="dateTime">
-                <datetime>
-                 <hour>1</hour>
-                 <minute>0</minute>
-                 <second>0</second>
-                 <year>2000</year>
-                 <month>1</month>
-                 <day>1</day>
-                </datetime>
+               <property name="text">
+                <string/>
                </property>
-               <property name="displayFormat">
-                <string>HH:mm</string>
+               <property name="icon">
+                <iconset theme="go-down">
+                 <normaloff>.</normaloff>.</iconset>
                </property>
               </widget>
              </item>
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_51">
-             <item>
-              <widget class="QRadioButton" name="quietModeTurnOffAt">
-               <property name="text">
-                <string>Turn off at</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QTimeEdit" name="quietModeTurnOffAtTimer">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="displayFormat">
-                <string>HH:mm:ss</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <spacer name="horizontalSpacer_10">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
-         </widget>
-        </widget>
+         </item>
+         <item>
+          <widget class="QScrollArea" name="quietModeExtras">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
+           </property>
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
+           </property>
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="quietModeExtrasContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>1183</width>
+              <height>132</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_35">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>9</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>9</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="quietModeDescription">
+               <property name="text">
+                <string notr="true">Description of Quiet Mode</string>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="quietModeForeverButton">
+               <property name="text">
+                <string>Fore&amp;ver</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_50">
+               <item>
+                <widget class="QRadioButton" name="quietModeTurnOffIn">
+                 <property name="text">
+                  <string>Turn off in</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTimeEdit" name="quietModeTurnOffInTimer">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="dateTime">
+                  <datetime>
+                   <hour>1</hour>
+                   <minute>0</minute>
+                   <second>0</second>
+                   <year>2000</year>
+                   <month>1</month>
+                   <day>1</day>
+                  </datetime>
+                 </property>
+                 <property name="displayFormat">
+                  <string>HH:mm</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_51">
+               <item>
+                <widget class="QRadioButton" name="quietModeTurnOffAt">
+                 <property name="text">
+                  <string>Turn off at</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTimeEdit" name="quietModeTurnOffAtTimer">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="displayFormat">
+                  <string notr="true">HH:mm:ss</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="Line" name="line_8">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>1</height>
+          </size>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -1756,22 +1854,6 @@
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_10">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>9</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -6069,25 +6151,25 @@ Items that will be kept if you choose to keep files:
          </property>
         </widget>
        </item>
-       <item>
-        <spacer name="verticalSpacer_16">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>9</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </widget>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_10">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>9</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="ClickableLabel" name="upArrow">

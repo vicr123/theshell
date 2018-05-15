@@ -352,6 +352,13 @@ App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
             desc.endGroup();
         }
     }
+
+
+    if (desc.contains("X-Geoclue-Reason[" + lang + "]")) {
+        app.setAdditionalProperty("geoclueReason", desc.value("X-Geoclue-Reason[" + lang + "]"));
+    } else if (desc.contains("X-Geoclue-Reason")) {
+        app.setAdditionalProperty("geoclueReason", desc.value("X-Geoclue-Reason"));
+    }
     desc.endGroup();
 
     if (pinnedAppsList.contains(appFile)) {

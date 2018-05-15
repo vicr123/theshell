@@ -94,3 +94,15 @@ App App::invalidApp() {
     app.isInvalid = true;
     return app;
 }
+
+QVariant App::additionalProperty(QString key) {
+    return additional.value(key);
+}
+
+void App::setAdditionalProperty(QString key, QVariant property) {
+    additional.insert(key, property);
+}
+
+bool App::hasAdditionalProperty(QString key) {
+    return additional.contains(key);
+}

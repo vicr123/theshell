@@ -20,6 +20,7 @@ class LocationRequestDialog : public QDialog
     public slots:
         void setAppName(QString appName);
         void setIcon(QIcon icon);
+        void setReason(QString reason);
 
     private slots:
         void on_denyButton_clicked();
@@ -28,7 +29,7 @@ class LocationRequestDialog : public QDialog
 
     private:
         Ui::LocationRequestDialog *ui;
-
+        QString appName;
 };
 
 #endif // LOCATIONREQUESTDIALOG_H

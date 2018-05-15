@@ -149,7 +149,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="edit-rename"/>
+             <iconset theme="edit-rename">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -177,7 +178,7 @@
      <item>
       <widget class="QStackedWidget" name="panes">
        <property name="currentIndex">
-        <number>4</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="page_5">
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -280,7 +281,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Device Name</string>
+              <string notr="true">Device Name</string>
              </property>
              <property name="margin">
               <number>9</number>
@@ -299,7 +300,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset theme="insert-link"/>
+              <iconset theme="insert-link">
+               <normaloff>.</normaloff>.</iconset>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -321,7 +323,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset theme="view-certificate"/>
+              <iconset theme="view-certificate">
+               <normaloff>.</normaloff>.</iconset>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -343,7 +346,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset theme="configure"/>
+              <iconset theme="configure">
+               <normaloff>.</normaloff>.</iconset>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -373,7 +377,7 @@
               <x>0</x>
               <y>0</y>
               <width>510</width>
-              <height>518</height>
+              <height>515</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -598,7 +602,8 @@
                      <string>Pair</string>
                     </property>
                     <property name="icon">
-                     <iconset theme="insert-link"/>
+                     <iconset theme="insert-link">
+                      <normaloff>.</normaloff>.</iconset>
                     </property>
                    </widget>
                   </item>
@@ -673,7 +678,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset theme="go-previous"/>
+              <iconset theme="go-previous">
+               <normaloff>.</normaloff>.</iconset>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -722,9 +728,9 @@
             <property name="geometry">
              <rect>
               <x>0</x>
-              <y>-45</y>
-              <width>510</width>
-              <height>483</height>
+              <y>0</y>
+              <width>524</width>
+              <height>492</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -1169,7 +1175,8 @@
               <string>Send</string>
              </property>
              <property name="icon">
-              <iconset theme="mail-send"/>
+              <iconset theme="mail-send">
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>
@@ -1241,7 +1248,8 @@
               <string>Start KDE Connect</string>
              </property>
              <property name="icon">
-              <iconset theme="kdeconnect"/>
+              <iconset theme="kdeconnect">
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>

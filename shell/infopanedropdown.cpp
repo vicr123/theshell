@@ -366,7 +366,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->sunlightRedshift->setChecked(settings.value("display/redshiftSunlightCycle", false).toBool());
     ui->EmphasiseAppSwitch->setChecked(settings.value("notifications/emphasiseApp", true).toBool());
     ui->CompactBarSwitch->setChecked(settings.value("bar/compact", false).toBool());
-    ui->LocationMasterSwitch->setChecked(locationSettings->value("general/master", true).toBool());
+    ui->LocationMasterSwitch->setChecked(locationSettings->value("master/master", true).toBool());
     updateAccentColourBox();
     updateRedshiftTime();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
@@ -1766,6 +1766,7 @@ void InfoPaneDropdown::updateBatteryChart() {
     } else {
         for (QAbstractAxis* axis : batteryChart->axes()) {
             batteryChart->removeAxis(axis);
+            axis->deleteLater();
         }
 
         QDBusMessage historyMessage = QDBusMessage::createMethodCall("org.freedesktop.UPower", updbus->defaultBattery().path(), "org.freedesktop.UPower.Device", "GetHistory");
@@ -1803,6 +1804,9 @@ void InfoPaneDropdown::updateBatteryChart() {
         QDateTime remainingTime = updbus->batteryTimeRemaining();
 
         int firstDateTime = QDateTime::currentSecsSinceEpoch() / 60;
+        qint64 msecsSinceFull = -1;
+        uint lastState = -1;
+        bool takeNextSinceLastFull = false;
         if (historyArgument.isValid()) {
             QDBusArgument arrayArgument = historyArgument.value();
             arrayArgument.beginArray();
@@ -1812,6 +1816,14 @@ void InfoPaneDropdown::updateBatteryChart() {
 
                 qint64 msecs = info.time;
                 msecs = msecs * 1000;
+
+                if (info.value >= 90 && info.state == 2 && lastState == 1 && msecsSinceFull < msecs) {
+                    takeNextSinceLastFull = true;
+                } else if (takeNextSinceLastFull) {
+                    takeNextSinceLastFull = false;
+                    msecsSinceFull = msecs;
+                }
+                lastState = info.state;
 
                 if (info.value != 0 && info.state != 0) {
                     batteryChartData->append(msecs, info.value);
@@ -1846,14 +1858,20 @@ void InfoPaneDropdown::updateBatteryChart() {
             } else {
                 xAxis->setMax(QDateTime::currentDateTime());
             }
-            xAxis->setMin(xAxis->max().addDays(-1));
+
+            QDateTime oneDay = xAxis->max().addDays(-1);
+            if (msecsSinceFull == -1 || msecsSinceFull < oneDay.toMSecsSinceEpoch()) {
+                xAxis->setMin(oneDay);
+            } else {
+                xAxis->setMin(QDateTime::fromMSecsSinceEpoch(msecsSinceFull));
+            }
         } else {
             xAxis->setMax(QDateTime::currentDateTime());
             xAxis->setMin(xAxis->max().addSecs(-43200)); //Half a day
         }
         batteryChart->addAxis(xAxis, Qt::AlignBottom);
         xAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
-        xAxis->setFormat("dd/MM/yy hh:mm");
+        xAxis->setFormat("hh:mm");
         xAxis->setTickCount(9);
         batteryChartData->attachAxis(xAxis);
         batteryChartTimeRemainingData->attachAxis(xAxis);
@@ -1871,7 +1889,6 @@ void InfoPaneDropdown::updateBatteryChart() {
         chartScrolling = false;
 
         QValueAxis* yAxis = new QValueAxis;
-
         if (ui->chargeGraphButton->isChecked()) {
             yAxis->setLabelFormat("%i%%");
             yAxis->setMax(100);
@@ -2826,11 +2843,13 @@ void InfoPaneDropdown::updateStruts() {
         ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::TopToBottom);
         ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::TopToBottom);
         ((QBoxLayout*) ui->settingsFrame->layout())->setDirection(QBoxLayout::TopToBottom);
+        ((QBoxLayout*) ui->kdeConnectFrame->layout())->setDirection(QBoxLayout::TopToBottom);
         ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     } else {
         ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::BottomToTop);
         ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::BottomToTop);
         ((QBoxLayout*) ui->settingsFrame->layout())->setDirection(QBoxLayout::BottomToTop);
+        ((QBoxLayout*) ui->kdeConnectFrame->layout())->setDirection(QBoxLayout::BottomToTop);
         ui->upArrow->setPixmap(QIcon::fromTheme("go-down").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     }
 }
@@ -3785,7 +3804,7 @@ void InfoPaneDropdown::on_allowGeoclueAgent_clicked()
 
 void InfoPaneDropdown::on_LocationMasterSwitch_toggled(bool checked)
 {
-    locationSettings->setValue("general/master", checked);
+    locationSettings->setValue("master/master", checked);
 }
 
 void InfoPaneDropdown::setupLocationSettingsPane() {
@@ -3796,8 +3815,7 @@ void InfoPaneDropdown::setupLocationSettingsPane() {
 
         ui->LocationAppsList->clear();
         QStringList availableApps = locationSettings->childGroups();
-        availableApps.removeOne("General");
-        availableApps.removeOne("general");
+        availableApps.removeOne("master");
 
         for (QString app : availableApps) {
             locationSettings->beginGroup(app);

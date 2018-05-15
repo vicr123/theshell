@@ -78,6 +78,16 @@
          </widget>
         </item>
         <item>
+         <widget class="QLabel" name="geoclueReason">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string notr="true">Reason</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="spacing">
            <number>0</number>
@@ -101,7 +111,8 @@
              <string>Deny</string>
             </property>
             <property name="icon">
-             <iconset theme="dialog-cancel"/>
+             <iconset theme="dialog-cancel">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -111,11 +122,19 @@
              <string>Allow</string>
             </property>
             <property name="icon">
-             <iconset theme="dialog-ok"/>
+             <iconset theme="dialog-ok">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Location access can be revoked at any time under Location in System Settings.</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

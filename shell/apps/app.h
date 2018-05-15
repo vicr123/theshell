@@ -23,6 +23,8 @@
 
 #include <QObject>
 #include <QIcon>
+#include <QMap>
+#include <QVariant>
 #include "app.h"
 
 class App
@@ -53,6 +55,11 @@ public:
     void setActions(QList<App> actions);
     void addAction(App action);
 
+    QVariant additionalProperty(QString key);
+    bool hasAdditionalProperty(QString key);
+    void setAdditionalProperty(QString key, QVariant property);
+
+
     bool invalid();
 
     static App invalidApp();
@@ -82,6 +89,7 @@ private:
     bool pin = false;
     bool isInvalid = false;
     QList<App> acts;
+    QMap<QString, QVariant> additional;
 };
 
 

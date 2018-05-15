@@ -39,7 +39,7 @@ LocationServices::LocationServices(QObject *parent) : QObject(parent)
         //For some reason the agent gets deregistered every time the service becomes unregistered leading to tempermental AuthorizeApp calls
 
         if (!reqAuth) {
-            QDBusConnection::systemBus().interface()->startService("org.freedesktop.GeoClue2");
+            //QDBusConnection::systemBus().interface()->startService("org.freedesktop.GeoClue2");
         }
     });
 
@@ -50,7 +50,7 @@ bool LocationServices::AuthorizeApp(QString desktop_id, uint req_accuracy_level,
     qDebug() << desktop_id + " is accessing location";
     allowed_accuracy_level = req_accuracy_level;
 
-    if (!locationSettings->value("general/master", true).toBool()) {
+    if (!locationSettings->value("master/master", true).toBool()) {
         //Master location switch is off
         return false;
     }
@@ -78,6 +78,11 @@ bool LocationServices::AuthorizeApp(QString desktop_id, uint req_accuracy_level,
     LocationRequestDialog dialog;
     dialog.setAppName(a.name());
     dialog.setIcon(a.icon());
+
+    if (a.hasAdditionalProperty("geoclueReason")) {
+        dialog.setReason(a.additionalProperty("geoclueReason").toString());
+    }
+
     dialog.showFullScreen();
     if (dialog.exec() == LocationRequestDialog::Accepted) {
         locationSettings->setValue(desktop_id + "/allow", true);
@@ -119,6 +124,9 @@ void LocationServices::reloadAuthorizationRequired() {
                     return;
                 }
             }
+
+            QDBusMessage clientMessage = QDBusMessage::createMethodCall("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.GeoClue2.Manager", "GetClient");
+            QDBusConnection::systemBus().asyncCall(clientMessage);
 
             reqAuth = false;
         });
