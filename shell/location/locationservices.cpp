@@ -39,7 +39,7 @@ LocationServices::LocationServices(QObject *parent) : QObject(parent)
         //For some reason the agent gets deregistered every time the service becomes unregistered leading to tempermental AuthorizeApp calls
 
         if (!reqAuth) {
-            //QDBusConnection::systemBus().interface()->startService("org.freedesktop.GeoClue2");
+            QDBusConnection::systemBus().interface()->startService("org.freedesktop.GeoClue2");
         }
     });
 
