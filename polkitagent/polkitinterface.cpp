@@ -39,6 +39,7 @@ void PolkitInterface::initiateAuthentication(const QString &actionId, const QStr
 
     //Show Authentication Window.
     authWin->setMessage(message);
+    authWin->setDetails(details);
     authWin->setIcon(QIcon::fromTheme(iconName, QIcon::fromTheme("dialog-password")));
     authWin->setUsers(identities);
     authWin->showFullScreen(false);

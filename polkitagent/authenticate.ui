@@ -139,16 +139,19 @@
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="message">
+       <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>TextLabel</string>
+         <string>An app needs elevated privileges to perform an action</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="message">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
-         <string>To do this, you'll need to authenticate.</string>
+         <string>TextLabel</string>
         </property>
        </widget>
       </item>

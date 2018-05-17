@@ -16,6 +16,8 @@
 #include "tvirtualkeyboard.h"
 #include <QX11Info>
 #include <polkit-qt5-1/PolkitQt1/Identity>
+#include <polkit-qt5-1/PolkitQt1/Details>
+#include <QDebug>
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -54,6 +56,8 @@ public slots:
     void setUsers(PolkitQt1::Identity::List users);
 
     void setIcon(QIcon icon);
+
+    void setDetails(const PolkitQt1::Details& details);
 
     void reject();
 

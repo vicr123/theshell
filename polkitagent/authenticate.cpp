@@ -158,3 +158,7 @@ void Authenticate::reject() {
     XUngrabKeyboard(QX11Info::display(), CurrentTime);
     XUngrabPointer(QX11Info::display(), CurrentTime);
 }
+
+void Authenticate::setDetails(const PolkitQt1::Details& details) {
+    qDebug() << details.keys();
+}

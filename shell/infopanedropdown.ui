@@ -689,14 +689,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>23</day>
+                 <day>22</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>23</day>
+                 <day>22</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1702,7 +1702,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1183</width>
+              <width>182</width>
               <height>132</height>
              </rect>
             </property>
@@ -2144,7 +2144,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>15</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2772,8 +2772,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>804</width>
-                   <height>671</height>
+                   <width>381</width>
+                   <height>564</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_21">
@@ -4741,6 +4741,9 @@
                   <bool>true</bool>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_22">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
                   <property name="leftMargin">
                    <number>0</number>
                   </property>
@@ -4748,6 +4751,9 @@
                    <number>0</number>
                   </property>
                   <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
                    <number>0</number>
                   </property>
                   <item>
@@ -4795,6 +4801,12 @@
                     </item>
                     <item>
                      <widget class="Line" name="line_22">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>1</height>
+                       </size>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -4805,10 +4817,10 @@
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_34">
                     <property name="leftMargin">
-                     <number>9</number>
+                     <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>9</number>
+                     <number>0</number>
                     </property>
                     <item>
                      <spacer name="horizontalSpacer_6">
@@ -4843,145 +4855,241 @@
                   <bool>true</bool>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_23">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
                   <item>
-                   <widget class="QLabel" name="userSettingsEditUserLabel">
-                    <property name="font">
-                     <font>
-                      <pointsize>15</pointsize>
-                     </font>
+                   <layout class="QHBoxLayout" name="horizontalLayout_17">
+                    <property name="spacing">
+                     <number>0</number>
                     </property>
-                    <property name="text">
-                     <string>Edit User</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <layout class="QGridLayout" name="gridLayout_13">
-                    <item row="3" column="0">
-                     <widget class="QLabel" name="label_60">
+                    <item>
+                     <widget class="QPushButton" name="userSettingsCancelButton">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
                       <property name="text">
-                       <string>Retype Password</string>
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="go-previous">
+                        <normaloff>.</normaloff>.</iconset>
+                      </property>
+                      <property name="flat">
+                       <bool>true</bool>
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="label_61">
+                    <item>
+                     <widget class="QLabel" name="userSettingsEditUserLabel">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>15</pointsize>
+                       </font>
+                      </property>
                       <property name="text">
-                       <string>Full Name</string>
+                       <string>Edit User</string>
+                      </property>
+                      <property name="margin">
+                       <number>9</number>
                       </property>
                      </widget>
-                    </item>
-                    <item row="3" column="1">
-                     <widget class="QLineEdit" name="userSettingsPasswordCheck">
-                      <property name="echoMode">
-                       <enum>QLineEdit::Password</enum>
-                      </property>
-                      <property name="placeholderText">
-                       <string>(unchanged)</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="label_62">
-                      <property name="text">
-                       <string>Username</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="1">
-                     <widget class="QLineEdit" name="userSettingsFullName"/>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QLineEdit" name="userSettingsUserName"/>
-                    </item>
-                    <item row="2" column="1">
-                     <widget class="QLineEdit" name="userSettingsPassword">
-                      <property name="echoMode">
-                       <enum>QLineEdit::Password</enum>
-                      </property>
-                      <property name="placeholderText">
-                       <string>(unchanged)</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="1">
-                     <widget class="QLineEdit" name="userSettingsPasswordHint"/>
-                    </item>
-                    <item row="2" column="0">
-                     <widget class="QLabel" name="label_63">
-                      <property name="text">
-                       <string>Password</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="0">
-                     <widget class="QLabel" name="label_64">
-                      <property name="text">
-                       <string>Password Hint</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="5" column="0">
-                     <widget class="QLabel" name="label_92">
-                      <property name="text">
-                       <string>Account Type</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="5" column="1">
-                     <layout class="QHBoxLayout" name="horizontalLayout_12">
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <item>
-                       <widget class="QPushButton" name="userSettingsStandardAccount">
-                        <property name="text">
-                         <string>Standard</string>
-                        </property>
-                        <property name="checkable">
-                         <bool>true</bool>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="userSettingsAdminAccount">
-                        <property name="text">
-                         <string>Administrator</string>
-                        </property>
-                        <property name="checkable">
-                         <bool>true</bool>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <spacer name="horizontalSpacer_9">
-                        <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                     </layout>
                     </item>
                    </layout>
                   </item>
                   <item>
-                   <spacer name="verticalSpacer_7">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
+                   <widget class="Line" name="line_44">
+                    <property name="maximumSize">
                      <size>
-                      <width>20</width>
-                      <height>40</height>
+                      <width>16777215</width>
+                      <height>1</height>
                      </size>
                     </property>
-                   </spacer>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_52">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>9</number>
+                    </property>
+                    <item>
+                     <layout class="QGridLayout" name="gridLayout_13">
+                      <item row="3" column="0">
+                       <widget class="QLabel" name="label_60">
+                        <property name="text">
+                         <string>Retype Password</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="label_61">
+                        <property name="text">
+                         <string>Full Name</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="1">
+                       <widget class="QLineEdit" name="userSettingsPasswordCheck">
+                        <property name="echoMode">
+                         <enum>QLineEdit::Password</enum>
+                        </property>
+                        <property name="placeholderText">
+                         <string>(unchanged)</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="label_62">
+                        <property name="text">
+                         <string>Username</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QLineEdit" name="userSettingsFullName"/>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QLineEdit" name="userSettingsUserName"/>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QLineEdit" name="userSettingsPassword">
+                        <property name="echoMode">
+                         <enum>QLineEdit::Password</enum>
+                        </property>
+                        <property name="placeholderText">
+                         <string>(unchanged)</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="4" column="1">
+                       <widget class="QLineEdit" name="userSettingsPasswordHint"/>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="label_63">
+                        <property name="text">
+                         <string>Password</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="4" column="0">
+                       <widget class="QLabel" name="label_64">
+                        <property name="text">
+                         <string>Password Hint</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="5" column="0">
+                       <widget class="QLabel" name="label_92">
+                        <property name="text">
+                         <string>Account Type</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="5" column="1">
+                       <layout class="QHBoxLayout" name="horizontalLayout_12">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <item>
+                         <widget class="QPushButton" name="userSettingsStandardAccount">
+                          <property name="text">
+                           <string>Standard</string>
+                          </property>
+                          <property name="checkable">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QPushButton" name="userSettingsAdminAccount">
+                          <property name="text">
+                           <string>Administrator</string>
+                          </property>
+                          <property name="checkable">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <spacer name="horizontalSpacer_9">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>40</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_7">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="Line" name="line_43">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>1</height>
+                     </size>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -5013,17 +5121,6 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="userSettingsCancelButton">
-                      <property name="text">
-                       <string>Cancel</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="dialog-cancel">
-                        <normaloff>.</normaloff>.</iconset>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
                      <widget class="QPushButton" name="userSettingsApplyButton">
                       <property name="text">
                        <string>Apply Changes</string>
@@ -5043,72 +5140,157 @@
                   <bool>true</bool>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_24">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
                   <item>
-                   <widget class="QLabel" name="label_65">
-                    <property name="font">
-                     <font>
-                      <pointsize>15</pointsize>
-                     </font>
+                   <layout class="QHBoxLayout" name="horizontalLayout_18">
+                    <property name="spacing">
+                     <number>0</number>
                     </property>
-                    <property name="text">
-                     <string>Delete User</string>
+                    <item>
+                     <widget class="QPushButton" name="userSettingsCancelDeleteUser">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset theme="go-previous">
+                        <normaloff>.</normaloff>.</iconset>
+                      </property>
+                      <property name="flat">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_65">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>15</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Delete User</string>
+                      </property>
+                      <property name="margin">
+                       <number>9</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="Line" name="line_45">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>1</height>
+                     </size>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_66">
-                    <property name="text">
-                     <string>Do you also want to keep files from this user?
+                   <layout class="QVBoxLayout" name="verticalLayout_53">
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>9</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_66">
+                      <property name="text">
+                       <string>Do you also want to keep files from this user?
 
 Items that will be kept if you choose to keep files:
 - Home directory
 - Mail Spool
 - Temporary Files</string>
-                    </property>
-                   </widget>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_93">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>This is the final step. The user will be deleted once you choose whether to keep or remove files.</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_21">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_93">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>This is the final step. The user will be deleted once you choose whether to keep or remove files.</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="verticalSpacer_21">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
+                   <widget class="Line" name="line_46">
+                    <property name="maximumSize">
                      <size>
-                      <width>20</width>
-                      <height>40</height>
+                      <width>16777215</width>
+                      <height>1</height>
                      </size>
                     </property>
-                   </spacer>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_35">
                     <property name="spacing">
                      <number>0</number>
                     </property>
-                    <item>
-                     <widget class="QPushButton" name="userSettingsCancelDeleteUser">
-                      <property name="text">
-                       <string>Cancel</string>
-                      </property>
-                      <property name="icon">
-                       <iconset theme="dialog-cancel">
-                        <normaloff>.</normaloff>.</iconset>
-                      </property>
-                     </widget>
-                    </item>
                     <item>
                      <spacer name="horizontalSpacer_24">
                       <property name="orientation">
@@ -5986,21 +6168,21 @@ Items that will be kept if you choose to keep files:
                    <property name="spacing">
                     <number>6</number>
                    </property>
-                   <item row="3" column="0">
+                   <item row="4" column="0">
                     <widget class="QLabel" name="label_81">
                      <property name="text">
                       <string>Available Swap</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="2" column="0">
+                   <item row="3" column="0">
                     <widget class="QLabel" name="label_82">
                      <property name="text">
                       <string>Available Memory</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="2" column="1">
+                   <item row="3" column="1">
                     <widget class="QLabel" name="availableMemory">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -6013,38 +6195,52 @@ Items that will be kept if you choose to keep files:
                      </property>
                     </widget>
                    </item>
-                   <item row="0" column="0">
+                   <item row="1" column="0">
                     <widget class="QLabel" name="label_83">
                      <property name="text">
                       <string>Kernel Version</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="3" column="1">
+                   <item row="4" column="1">
                     <widget class="QLabel" name="availableSwap">
                      <property name="text">
                       <string notr="true">8 GiB</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="0" column="1">
+                   <item row="1" column="1">
                     <widget class="QLabel" name="kernelVersion">
                      <property name="text">
                       <string notr="true">4.11</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="1" column="0">
+                   <item row="2" column="0">
                     <widget class="QLabel" name="label_84">
                      <property name="text">
                       <string>Qt Version</string>
                      </property>
                     </widget>
                    </item>
-                   <item row="1" column="1">
+                   <item row="2" column="1">
                     <widget class="QLabel" name="qtVersion">
                      <property name="text">
                       <string notr="true">5.9.0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_106">
+                     <property name="text">
+                      <string>Processor</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLabel" name="processorType">
+                     <property name="text">
+                      <string>Intel</string>
                      </property>
                     </widget>
                    </item>

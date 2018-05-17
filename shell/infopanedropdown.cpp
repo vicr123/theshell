@@ -455,6 +455,40 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
         ui->kernelVersion->setText(QSysInfo::kernelVersion());
         ui->qtVersion->setText(qVersion());
+
+        QFile cpuInfoFile("/proc/cpuinfo");
+        cpuInfoFile.open(QFile::ReadOnly);
+        QByteArray cpuInfoBuf = cpuInfoFile.readAll();
+        QBuffer cpuInfo(&cpuInfoBuf);
+        cpuInfo.open(QBuffer::ReadOnly);
+        QStringList knownCpus;
+        while (!cpuInfo.atEnd()) {
+            QString line = cpuInfo.readLine();
+            if (line.startsWith("model name")) {
+                QString cpu = line.mid(line.indexOf(":") + 1).trimmed();
+                knownCpus.append(cpu);
+            }
+        }
+
+        QStringList shownCpus;
+        while (knownCpus.length() > 0) {
+            QString cpu = knownCpus.value(0);
+            int numberOfThisCpu = knownCpus.count(cpu);
+
+            knownCpus.removeAll(cpu);
+
+            if (numberOfThisCpu == 1) {
+                shownCpus.append(cpu);
+            } else {
+                shownCpus.append(QString::number(numberOfThisCpu) + " × " + cpu);
+            }
+        }
+
+        if (shownCpus.length() == 0) {
+            ui->processorType->setText(tr("Unknown"));
+        } else {
+            ui->processorType->setText(shownCpus.join(" · "));
+        }
     }
 
     #ifdef BLUEPRINT
@@ -2105,6 +2139,19 @@ void InfoPaneDropdown::setupUsersSettingsPane() {
 void InfoPaneDropdown::on_userSettingsNextButton_clicked()
 {
     if (ui->availableUsersWidget->selectedItems().count() != 0) {
+        //Check Polkit authorization
+        PolkitQt1::Authority::Result r = PolkitQt1::Authority::instance()->checkAuthorizationSync("org.freedesktop.accounts.user-administration", PolkitQt1::UnixProcessSubject(QApplication::applicationPid()), PolkitQt1::Authority::None);
+        if (r == PolkitQt1::Authority::No) {
+            QMessageBox::warning(this, tr("Unauthorized"), tr("Polkit does not allow you to manage users on the system."), QMessageBox::Ok, QMessageBox::Ok);
+            return;
+        } else if (r == PolkitQt1::Authority::Challenge) {
+            LOWER_INFOPANE
+            PolkitQt1::Authority::Result r = PolkitQt1::Authority::instance()->checkAuthorizationSync("org.freedesktop.accounts.user-administration", PolkitQt1::UnixProcessSubject(QApplication::applicationPid()), PolkitQt1::Authority::AllowUserInteraction);
+            if (r != PolkitQt1::Authority::Yes) {
+                return;
+            }
+        }
+
         editingUserPath = ui->availableUsersWidget->selectedItems().first()->data(Qt::UserRole).toString();
         if (editingUserPath == "new") {
             ui->userSettingsEditUserLabel->setText(tr("New User"));
@@ -2154,7 +2201,6 @@ void InfoPaneDropdown::on_userSettingsCancelButton_clicked()
 
 void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
 {
-    LOWER_INFOPANE
     if (ui->userSettingsPasswordCheck->text() != ui->userSettingsPassword->text()) {
         QMessageBox::warning(this, tr("Password Check"), tr("The passwords don't match."), QMessageBox::Ok, QMessageBox::Ok);
         return;
@@ -2249,7 +2295,6 @@ void InfoPaneDropdown::on_userSettingsCancelDeleteUser_clicked()
 
 void InfoPaneDropdown::on_userSettingsDeleteUserOnly_clicked()
 {
-    LOWER_INFOPANE
     QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
     qlonglong uid = interface.property("Uid").toLongLong();
 
@@ -2266,7 +2311,6 @@ void InfoPaneDropdown::on_userSettingsDeleteUserOnly_clicked()
 
 void InfoPaneDropdown::on_userSettingsDeleteUserAndData_clicked()
 {
-    LOWER_INFOPANE
     QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
     qlonglong uid = interface.property("Uid").toLongLong();
 
@@ -2420,6 +2464,9 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
             break;
         case Internationalisation::auAU:
             settings.setValue("locale/language", "au_AU");
+            break;
+        case Internationalisation::nbNO:
+            settings.setValue("locale/language", "nb_NO");
             break;
     }
 

@@ -10,7 +10,7 @@ LIBS     += -lcrypt
 
 unix {
     CONFIG += link_pkgconfig
-    PKGCONFIG += glib-2.0 x11 x11-xcb xcb-keysyms xscrnsaver xext libpulse libpulse-mainloop-glib libsystemd libunwind
+    PKGCONFIG += glib-2.0 x11 x11-xcb xcb-keysyms xscrnsaver xext libpulse libpulse-mainloop-glib libsystemd libunwind polkit-qt5-1
 }
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -199,7 +199,9 @@ TRANSLATIONS += translations/vi_VN.ts \
     translations/de_DE.ts \
     translations/in_IN.ts \
     translations/au_AU.ts \
-    translations/it_IT.ts
+    translations/it_IT.ts \
+    translations/nb_NO.ts \
+    translations/no_NO.ts
 
 unix {
     target.path = /usr/bin/

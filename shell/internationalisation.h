@@ -46,6 +46,7 @@ public:
         deDE,
         viVN,
         daDK,
+        nbNO,
         esES,
         ruRU,
         svSE,
@@ -109,6 +110,9 @@ public:
                 case ltLT:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-lt"), tr("Lithuanian") + " (Lietuvių)"));
                     break;
+                case nbNO:
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-no"), tr("Norwegian") + " (Norsk Bokmål)"));
+                    break;
                 case inID:
                     //languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-in"), tr("Indonesian") + " (Bahasa Indonesia)"));
                     break;
@@ -161,7 +165,6 @@ public:
             Q_UNUSED(QT_TR_NOOP("Korean"));
             Q_UNUSED(QT_TR_NOOP("Latvian"));
             Q_UNUSED(QT_TR_NOOP("Māori"));
-            Q_UNUSED(QT_TR_NOOP("Norwegian"));
             Q_UNUSED(QT_TR_NOOP("Polish"));
             Q_UNUSED(QT_TR_NOOP("Portuguese"));
             Q_UNUSED(QT_TR_NOOP("Serbian"));
@@ -216,6 +219,8 @@ public:
             languageBox->setCurrentRow(inID);
         } else if (currentLocale == "au_AU") {
             languageBox->setCurrentRow(auAU);
+        } else if (currentLocale == "nb_NO") {
+            languageBox->setCurrentRow(nbNO);
         }
 
         //Unblock signals

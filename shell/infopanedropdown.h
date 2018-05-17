@@ -67,6 +67,7 @@
 #include <QGeoPositionInfoSource>
 #include "apps/appslistmodel.h"
 #include <QSpinBox>
+#include <polkit-qt5-1/PolkitQt1/Authority>
 
 class UPowerDBus;
 
