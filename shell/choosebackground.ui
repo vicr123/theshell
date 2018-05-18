@@ -188,7 +188,7 @@
          <item>
           <widget class="QSpinBox" name="waitTime">
            <property name="minimum">
-            <number>1</number>
+            <number>5</number>
            </property>
            <property name="maximum">
             <number>25200</number>
