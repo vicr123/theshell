@@ -2459,8 +2459,8 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
         case Internationalisation::ltLT:
             settings.setValue("locale/language", "lt_LT");
             break;
-        case Internationalisation::inID:
-            settings.setValue("locale/language", "in_ID");
+        case Internationalisation::idID:
+            settings.setValue("locale/language", "id_ID");
             break;
         case Internationalisation::auAU:
             settings.setValue("locale/language", "au_AU");

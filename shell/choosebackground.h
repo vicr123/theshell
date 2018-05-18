@@ -33,31 +33,41 @@ class ChooseBackground : public QDialog
 {
     Q_OBJECT
 
-public:
-    explicit ChooseBackground(QWidget *parent = 0);
-    ~ChooseBackground();
+    public:
+        explicit ChooseBackground(QWidget *parent = 0);
+        ~ChooseBackground();
 
-signals:
-    void reloadBackgrounds();
+    signals:
+        void reloadBackgrounds();
 
-private slots:
-    void on_lineEdit_textChanged(const QString &arg1);
+        void reloadTimer();
 
-    void on_radioButton_2_toggled(bool checked);
+    private slots:
+        void on_lineEdit_textChanged(const QString &arg1);
 
-    void on_radioButton_toggled(bool checked);
+        void on_listWidget_currentRowChanged(int currentRow);
 
-    void on_listWidget_currentRowChanged(int currentRow);
+        void on_pushButton_clicked();
 
-    void on_pushButton_clicked();
+        void on_pushButton_2_clicked();
 
-    void on_pushButton_2_clicked();
+        void on_inbuiltBackground_toggled(bool checked);
 
-private:
-    Ui::ChooseBackground *ui;
+        void on_community_toggled(bool checked);
 
-    QIcon getSvgIcon(QString filename);
-    QSettings settings;
+        void on_custom_toggled(bool checked);
+
+        void on_pushButton_3_clicked();
+
+        void on_waitTime_valueChanged(int arg1);
+
+        void on_showLabels_toggled(bool checked);
+
+    private:
+        Ui::ChooseBackground *ui;
+
+        QIcon getSvgIcon(QString filename);
+        QSettings settings;
 };
 
 #endif // CHOOSEBACKGROUND_H

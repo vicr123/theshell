@@ -60,7 +60,7 @@ public:
         frFR,
         miNZ,
         ptBR,
-        inID,
+        idID,
         maxLanguage
     };
 
@@ -113,7 +113,7 @@ public:
                 case nbNO:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-no"), tr("Norwegian") + " (Norsk Bokmål)"));
                     break;
-                case inID:
+                case idID:
                     //languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-in"), tr("Indonesian") + " (Bahasa Indonesia)"));
                     break;
                 case auAU:
@@ -215,8 +215,8 @@ public:
             languageBox->setCurrentRow(svSE);
         } else if (currentLocale == "lt_LT") {
             languageBox->setCurrentRow(ltLT);
-        } else if (currentLocale == "in_ID") {
-            languageBox->setCurrentRow(inID);
+        } else if (currentLocale == "id_ID") {
+            languageBox->setCurrentRow(idID);
         } else if (currentLocale == "au_AU") {
             languageBox->setCurrentRow(auAU);
         } else if (currentLocale == "nb_NO") {

@@ -83,7 +83,7 @@ void AppsListModel::search(QString query) {
                     App app;
                     app.setName(number);
                     app.setCommand("call:" + QString::number(i) + ":" + number);
-                    app.setDescription(tr("Place a call over ") + devices.at(i));
+                    app.setDescription(tr("Place a call over %1").arg(devices.at(i)));
                     app.setIcon(QIcon::fromTheme("call-start"));
                     appsShown.append(app);
                 }
@@ -106,19 +106,6 @@ void AppsListModel::search(QString query) {
             app.setCommand("::poweroff");
             app.setDescription(tr("Power off this device"));
             app.setIcon(QIcon::fromTheme("system-shutdown"));
-
-            /*App reboot;
-            reboot.setName(tr("Reboot"));
-            reboot.setCommand("::reboot");
-            reboot.setIcon(QIcon::fromTheme("system-reboot"));
-            app.addAction(reboot);
-
-            App logout;
-            logout.setName(tr("Log Out"));
-            logout.setCommand("::logout");
-            logout.setIcon(QIcon::fromTheme("system-log-out"));
-            app.addAction(logout);*/
-
             appsShown.append(app);
         } else if (QString("restart").contains(query, Qt::CaseInsensitive) || QString("reboot").contains(query, Qt::CaseInsensitive)) {
             App app;

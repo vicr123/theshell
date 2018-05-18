@@ -42,7 +42,7 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
     ui->listWidget->addItem(new QListWidgetItem(getSvgIcon(":/backgrounds/waves"), ""));
 
     if (backPath.startsWith("inbuilt:")) { //Inbuilt background
-        ui->radioButton->setChecked(true);
+        ui->inbuiltBackground->setChecked(true);
         QString selection = ":/backgrounds/" + backPath.split(":").at(1);
         if (selection == "triangles") {
             ui->listWidget->item(0)->setSelected(true);
@@ -67,14 +67,15 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
         } else if (selection == "waves") {
             ui->listWidget->item(10)->setSelected(true);
         }
-        ui->lineEdit->setEnabled(false);
-        ui->pushButton_2->setEnabled(false);
+    } else if (backPath.startsWith("community")) {
+        ui->community->setChecked(true);
     } else {
-        ui->radioButton_2->setChecked(true);
+        ui->custom->setChecked(true);
         ui->lineEdit->setText(backPath);
-        ui->listWidget->setEnabled(false);
     }
 
+    ui->waitTime->setValue(settings.value("desktop/waitTime", 30).toInt());
+    ui->showLabels->setChecked(settings.value("desktop/showLabels", true).toBool());
 }
 
 ChooseBackground::~ChooseBackground()
@@ -95,26 +96,6 @@ void ChooseBackground::on_lineEdit_textChanged(const QString &arg1)
     settings.setValue("desktop/background", arg1);
     emit reloadBackgrounds();
     this->setFocus();
-}
-
-void ChooseBackground::on_radioButton_2_toggled(bool checked)
-{
-    if (checked) {
-        ui->lineEdit->setEnabled(true);
-        ui->pushButton_2->setEnabled(true);
-    } else {
-        ui->lineEdit->setEnabled(false);
-        ui->pushButton_2->setEnabled(false);
-    }
-}
-
-void ChooseBackground::on_radioButton_toggled(bool checked)
-{
-    if (checked) {
-        ui->listWidget->setEnabled(true);
-    } else {
-        ui->listWidget->setEnabled(false);
-    }
 }
 
 void ChooseBackground::on_listWidget_currentRowChanged(int currentRow)
@@ -166,4 +147,47 @@ void ChooseBackground::on_pushButton_clicked()
 void ChooseBackground::on_pushButton_2_clicked()
 {
     ui->lineEdit->setText(QFileDialog::getOpenFileName(this, tr("Select Background"), "", "Images (*.png *.jpg *.jpeg *.bmp *.gif)"));
+}
+
+void ChooseBackground::on_inbuiltBackground_toggled(bool checked)
+{
+    if (checked) {
+        ui->backgroundType->setCurrentIndex(0);
+    }
+}
+
+void ChooseBackground::on_community_toggled(bool checked)
+{
+    if (checked) {
+        ui->backgroundType->setCurrentIndex(1);
+
+        settings.setValue("desktop/background", "community");
+        emit reloadBackgrounds();
+        this->setFocus();
+    }
+}
+
+void ChooseBackground::on_custom_toggled(bool checked)
+{
+    if (checked) {
+        ui->backgroundType->setCurrentIndex(2);
+    }
+}
+
+void ChooseBackground::on_pushButton_3_clicked()
+{
+
+}
+
+void ChooseBackground::on_waitTime_valueChanged(int arg1)
+{
+    settings.setValue("desktop/waitTime", arg1);
+    emit reloadTimer();
+}
+
+
+void ChooseBackground::on_showLabels_toggled(bool checked)
+{
+    settings.setValue("desktop/showLabels", checked);
+    emit reloadBackgrounds();
 }

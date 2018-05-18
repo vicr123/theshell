@@ -22,6 +22,8 @@
 
 extern void playSound(QUrl, bool = false);
 extern MainWindow* MainWin;
+
+Background* firstBackground;
 GlobalFilter::GlobalFilter(QApplication *application, QObject *parent) : QObject(parent)
 {
    application->installEventFilter(this);
@@ -53,12 +55,22 @@ void GlobalFilter::reloadScreens() {
 void GlobalFilter::reloadBackgrounds() {
     emit removeBackgrounds();
     for (int i = 0; i < QApplication::desktop()->screenCount(); i++) {
-        Background* w = new Background(MainWin, QApplication::desktop()->screenGeometry(i));
+        Background* w = new Background(MainWin, i == 0 ? true : false, QApplication::desktop()->screenGeometry(i));
         w->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint);
         w->setAttribute(Qt::WA_ShowWithoutActivating, true);
         w->show();
         w->setGeometry(QApplication::desktop()->screenGeometry(i));
         w->showFullScreen();
         connect(this, SIGNAL(removeBackgrounds()), w, SLOT(deleteLater()));
+        if (i == 0) {
+            firstBackground = w;
+            connect(w, SIGNAL(reloadBackground()), this, SLOT(reloadBackgrounds()));
+        } else {
+            connect(firstBackground, SIGNAL(newCommunityBackgroundDownloaded()), w, SLOT(setCommunityBackground()));
+        }
     }
+}
+
+void GlobalFilter::newCommunityImage() {
+    firstBackground->getNewCommunityBackground();
 }

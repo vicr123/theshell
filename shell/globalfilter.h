@@ -40,6 +40,7 @@ signals:
 public slots:
     void reloadScreens();
     void reloadBackgrounds();
+    void newCommunityImage();
 
 private:
     bool eventFilter(QObject *object, QEvent *event);

@@ -26,6 +26,12 @@
 #include <QMenu>
 #include <QDesktopWidget>
 #include <QSvgRenderer>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
 #include "mainwindow.h"
 #include "choosebackground.h"
 
@@ -41,29 +47,51 @@ class Background : public QDialog
 {
     Q_OBJECT
 
-public:
-    explicit Background(MainWindow* mainwindow, QRect screenGeometry, QWidget *parent = 0);
-    ~Background();
+    public:
+        explicit Background(MainWindow* mainwindow, bool imageGetter, QRect screenGeometry, QWidget *parent = 0);
+        ~Background();
 
-    void show();
+        void show();
 
-private slots:
-    void on_graphicsView_customContextMenuRequested(const QPoint &pos);
+    public slots:
+        void setCommunityBackground();
 
-    void on_actionOpen_Status_Center_triggered();
+        void getNewCommunityBackground();
 
-    void on_actionOpen_theShell_Settings_triggered();
+    signals:
+        void newCommunityBackgroundDownloaded();
 
-    void on_actionOpen_System_Settings_triggered();
+        void reloadBackground();
 
-    void on_actionChange_Background_triggered();
+    private slots:
+        void on_graphicsView_customContextMenuRequested(const QPoint &pos);
 
-private:
-    Ui::Background *ui;
+        void on_actionOpen_Status_Center_triggered();
 
-    void reject();
+        void on_actionOpen_theShell_Settings_triggered();
 
-    MainWindow* mainwindow;
+        void on_actionOpen_System_Settings_triggered();
+
+        void on_actionChange_Background_triggered();
+
+        void on_Background_customContextMenuRequested(const QPoint &pos);
+
+        void loadCommunityBackgroundMetadata();
+
+        void setTimer();
+
+    private:
+        Ui::Background *ui;
+
+        void reject();
+        bool imageGetter;
+        bool set = false;
+        QSettings settings;
+
+        MainWindow* mainwindow;
+        QNetworkAccessManager manager;
+        QPixmap background;
+        QTimer* timer = NULL;
 };
 
 #endif // BACKGROUND_H

@@ -15,7 +15,7 @@ unix {
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-DEFINES += TS_VERSION="7.2"
+DEFINES += TS_VERSION='\\"8.0\\"'
 
 unix {
     QT += thelib x11extras
@@ -197,7 +197,7 @@ TRANSLATIONS += translations/vi_VN.ts \
     translations/en_GB.ts \
     translations/en_NZ.ts \
     translations/de_DE.ts \
-    translations/in_IN.ts \
+    translations/id_ID.ts \
     translations/au_AU.ts \
     translations/it_IT.ts \
     translations/nb_NO.ts \

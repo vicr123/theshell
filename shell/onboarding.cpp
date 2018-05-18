@@ -23,7 +23,7 @@
 #include "internationalisation.h"
 
 #define ChangelogOnbording \
-    "New in theShell 7.2:\n"\
+    "New in theShell 8.0:\n"\
     "- Redshift can now be automatically timed according to the sunlight cycle based on your location\n"\
     "- Status Center panes have been updated\n"\
     "- The Compact Bar has been added\n"\
@@ -278,8 +278,8 @@ void Onboarding::on_localeList_currentRowChanged(int currentRow)
         case Internationalisation::ltLT:
             settings.setValue("locale/language", "lt_LT");
             break;
-        case Internationalisation::inID:
-            settings.setValue("locale/language", "in_ID");
+        case Internationalisation::idID:
+            settings.setValue("locale/language", "id_ID");
             break;
         case Internationalisation::auAU:
             settings.setValue("locale/language", "au_AU");
