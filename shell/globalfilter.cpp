@@ -49,10 +49,6 @@ bool GlobalFilter::eventFilter(QObject *object, QEvent *event) {
 
 void GlobalFilter::reloadScreens() {
     QThread::msleep(500); //Wait for KScreen to apply screen changes
-    reloadBackgrounds();
-}
-
-void GlobalFilter::reloadBackgrounds() {
     emit removeBackgrounds();
     for (int i = 0; i < QApplication::desktop()->screenCount(); i++) {
         Background* w = new Background(MainWin, i == 0 ? true : false, QApplication::desktop()->screenGeometry(i));
@@ -62,6 +58,7 @@ void GlobalFilter::reloadBackgrounds() {
         w->setGeometry(QApplication::desktop()->screenGeometry(i));
         w->showFullScreen();
         connect(this, SIGNAL(removeBackgrounds()), w, SLOT(deleteLater()));
+        connect(this, SIGNAL(changeBackgrounds()), w, SLOT(changeBackground()));
         if (i == 0) {
             firstBackground = w;
             connect(w, SIGNAL(reloadBackground()), this, SLOT(reloadBackgrounds()));
@@ -69,6 +66,10 @@ void GlobalFilter::reloadBackgrounds() {
             connect(firstBackground, SIGNAL(setAllBackgrounds(QString)), w, SLOT(setCommunityBackground(QString)));
         }
     }
+}
+
+void GlobalFilter::reloadBackgrounds() {
+    emit changeBackgrounds();
 }
 
 void GlobalFilter::newCommunityImage() {

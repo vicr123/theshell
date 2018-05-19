@@ -32,6 +32,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QPaintEvent>
 #include "mainwindow.h"
 #include "choosebackground.h"
 
@@ -57,6 +58,8 @@ class Background : public QDialog
         void setCommunityBackground(QString background);
 
         void getNewCommunityBackground();
+
+        void changeBackground();
 
     signals:
         void setAllBackgrounds(QString background);
@@ -91,11 +94,14 @@ class Background : public QDialog
         QSettings settings;
         int numberDone;
         QString currentBackground;
+        QRect screenGeometry;
 
         MainWindow* mainwindow;
         QNetworkAccessManager manager;
         QPixmap background;
         QTimer* timer = nullptr, *newBackgroundTimer = nullptr;
+
+        void paintEvent(QPaintEvent* event);
 };
 
 #endif // BACKGROUND_H

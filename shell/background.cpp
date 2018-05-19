@@ -33,50 +33,46 @@ Background::Background(MainWindow* mainwindow, bool imageGetter, QRect screenGeo
     this->mainwindow = mainwindow;
     this->imageGetter = imageGetter;
 
+    this->screenGeometry = screenGeometry;
     screenGeometry.moveTo(0, 0);
 
     background = QPixmap(screenGeometry.size());
     background.fill(Qt::black);
 
-    QString backPath = settings.value("desktop/background", "inbuilt:triangles").toString();
-
-    if (backPath.startsWith("inbuilt:")) { //Inbuilt background
-        QSvgRenderer renderer(QString(":/backgrounds/" + backPath.split(":").at(1)));
-        QPainter painter(&background);
-        renderer.render(&painter, background.rect());
-        ui->stackedWidget->setCurrentIndex(0);
-    } else if (backPath.startsWith("community")) {
-        QDir::home().mkpath(".theshell/backgrounds");
-        bool metadataExists = QFile(QDir::homePath() + "/.theshell/backgrounds.conf").exists();
-        //bool imageExists = QFile(QDir::homePath() + "/.theshell/background.jpeg").exists();
-        if (metadataExists) {
-            if (imageGetter) {
-                setNewBackgroundTimer();
-            }
-            loadCommunityBackgroundMetadata();
-        } else {
-            ui->stackedWidget->setCurrentIndex(1);
-            getNewCommunityBackground();
-        }
-        return;
-    } else {
-        background.load(backPath);
-        background = background.scaled(screenGeometry.size());
-        ui->stackedWidget->setCurrentIndex(0);
-    }
-
-    QGraphicsScene* scene = new QGraphicsScene();
-
-    scene->addPixmap(background);
-    scene->setSceneRect(screenGeometry);
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->setSceneRect(screenGeometry);
+    changeBackground();
     set = true;
 }
 
 Background::~Background()
 {
     delete ui;
+}
+
+void Background::changeBackground() {
+    QString backPath = settings.value("desktop/background", "inbuilt:triangles").toString();
+
+    if (backPath.startsWith("inbuilt:")) { //Inbuilt background
+        QSvgRenderer renderer(QString(":/backgrounds/" + backPath.split(":").at(1)));
+        QPainter painter(&background);
+        renderer.render(&painter, background.rect());
+    } else if (backPath.startsWith("community")) {
+        QDir::home().mkpath(".theshell/backgrounds");
+        bool metadataExists = QFile(QDir::homePath() + "/.theshell/backgrounds.conf").exists();
+        if (metadataExists) {
+            if (imageGetter) {
+                setNewBackgroundTimer();
+            }
+            loadCommunityBackgroundMetadata();
+        } else {
+            getNewCommunityBackground();
+        }
+        return;
+    } else {
+        background.load(backPath);
+        background = background.scaled(screenGeometry.size());
+    }
+
+    this->update();
 }
 
 void Background::getNewCommunityBackground() {
@@ -100,7 +96,7 @@ void Background::getNewCommunityBackground() {
                 setNewBackgroundTimer();
                 loadCommunityBackgroundMetadata();
             } else {
-                ui->label->setText(tr("Couldn't get community backgrounds!"));
+                //ui->label->setText(tr("Couldn't get community backgrounds!"));
             }
         } else {
             QJsonArray arr = doc.array();
@@ -211,7 +207,7 @@ void Background::loadCommunityBackgroundMetadata() {
                     if (set) {
                         emit reloadBackground();
                     } else {
-                        ui->stackedWidget->setCurrentIndex(0);
+                        //ui->stackedWidget->setCurrentIndex(0);
                         setCommunityBackground(background);
                         if (imageGetter) {
                             emit setAllBackgrounds(background);
@@ -233,10 +229,10 @@ void Background::loadCommunityBackgroundMetadata() {
 }
 
 void Background::setCommunityBackground(QString bg) {
-    if (set) {
+    /*if (set) {
         emit reloadBackground();
         return;
-    }
+    }*/
     QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + bg + "/metadata.json");
     QFile imageFile(QDir::homePath() + "/.theshell/backgrounds/" + bg + "/" + bg + ".jpeg");
     if (!metadataFile.exists()) {
@@ -251,8 +247,6 @@ void Background::setCommunityBackground(QString bg) {
     metadataFile.open(QFile::ReadOnly);
     QJsonDocument doc = QJsonDocument::fromJson(metadataFile.readAll());
     if (doc.isObject()) {
-        ui->stackedWidget->setCurrentIndex(0);
-
         QJsonObject metadata = doc.object();
         QImage image(imageFile.fileName());
         QPainter painter(&this->background);
@@ -301,14 +295,8 @@ void Background::setCommunityBackground(QString bg) {
             }
         }
 
-        QGraphicsScene* scene = new QGraphicsScene();
-
-        scene->addPixmap(background);
-        scene->setSceneRect(0, 0, background.width(), background.height());
-        ui->graphicsView->setScene(scene);
-        ui->graphicsView->setSceneRect(0, 0, background.width(), background.height());
-        set = true;
-        currentBackground = bg;
+        painter.end();
+        this->update();
 
         if (imageGetter) {
             settings.setValue("desktop/changed", QDateTime::currentDateTimeUtc());
@@ -417,5 +405,10 @@ void Background::on_Background_customContextMenuRequested(const QPoint &pos)
     menu->addAction(ui->actionOpen_theShell_Settings);
     menu->addAction(ui->actionOpen_Status_Center);
 
-    menu->exec(ui->graphicsView->mapToGlobal(pos));
+    menu->exec(this->mapToGlobal(pos));
+}
+
+void Background::paintEvent(QPaintEvent *event) {
+    QPainter p(this);
+    p.drawPixmap(0, 0, this->background);
 }

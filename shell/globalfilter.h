@@ -36,6 +36,7 @@ public:
 
 signals:
     void removeBackgrounds();
+    void changeBackgrounds();
 
 public slots:
     void reloadScreens();
