@@ -286,7 +286,7 @@ void Background::setCommunityBackground(QString bg) {
                 int width = painter.fontMetrics().width(location) + height;
 
                 painter.drawPixmap(currentX, baselineY - height, locationIcon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-                painter.drawText(currentX + height + 6 * getDPIScaling(), baselineY - 6 * getDPIScaling(), location);
+                painter.drawText(currentX + height + 6 * getDPIScaling(), baselineY - painter.fontMetrics().descent(), location);
 
                 currentX += width + 20 * getDPIScaling();
             }
