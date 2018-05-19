@@ -106,9 +106,13 @@ void Background::getNewCommunityBackground() {
             qsrand(QDateTime::currentMSecsSinceEpoch());
 
             for (int i = 0; i < 10; i++) {
-                QString url = arr.at(qrand() % arr.count()).toString();
-                if (!downloadImages.contains(url)) {
-                    downloadImages.append(url);
+                int index = qrand() % arr.count();
+                QString url = arr.at(index).toString();
+                downloadImages.append(url);
+                arr.removeAt(index);
+
+                if (arr.count() == 0) {
+                    i = 10;
                 }
             }
 
@@ -297,6 +301,7 @@ void Background::setCommunityBackground(QString bg) {
 
         painter.end();
         this->update();
+        currentBackground = bg;
 
         if (imageGetter) {
             settings.setValue("desktop/changed", QDateTime::currentDateTimeUtc());
