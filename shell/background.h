@@ -90,6 +90,7 @@ class Background : public QDialog
         bool set = false;
         QSettings settings;
         int numberDone;
+        QString currentBackground;
 
         MainWindow* mainwindow;
         QNetworkAccessManager manager;

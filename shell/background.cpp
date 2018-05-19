@@ -93,8 +93,11 @@ void Background::getNewCommunityBackground() {
             //error error
             if (QFile(QDir::homePath() + "/.theshell/background.conf").exists()) {
                 //We have a valid image we can use
-                //Try getting a new image later
-                settings.setValue("desktop/fetched", QDateTime::currentDateTimeUtc());
+                //Try getting a new image tomorrow
+                QDateTime oldFetchedValue = settings.value("desktop/fetched").toDateTime();
+                oldFetchedValue = oldFetchedValue.addDays(1);
+                settings.setValue("desktop/fetched", oldFetchedValue);
+                setNewBackgroundTimer();
                 loadCommunityBackgroundMetadata();
             } else {
                 ui->label->setText(tr("Couldn't get community backgrounds!"));
@@ -305,6 +308,7 @@ void Background::setCommunityBackground(QString bg) {
         ui->graphicsView->setScene(scene);
         ui->graphicsView->setSceneRect(0, 0, background.width(), background.height());
         set = true;
+        currentBackground = bg;
 
         if (imageGetter) {
             settings.setValue("desktop/changed", QDateTime::currentDateTimeUtc());
@@ -351,7 +355,7 @@ void Background::setTimer() {
 void Background::setNewBackgroundTimer() {
     if (!imageGetter) return;
 
-    if (timer != nullptr) timer->deleteLater();
+    if (newBackgroundTimer != nullptr) newBackgroundTimer->deleteLater();
     QDateTime fetchedTime = settings.value("desktop/fetched").toDateTime();
     QDateTime tickTime = fetchedTime.addDays(7);
     //QDateTime tickTime = fetchedTime.addSecs(120);
@@ -360,16 +364,16 @@ void Background::setNewBackgroundTimer() {
         //Get the next image now
         getNewCommunityBackground();
     } else {
-        timer = new QTimer();
+        newBackgroundTimer = new QTimer();
         if (tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch() > INT_MAX) {
-            timer->setInterval(INT_MAX);
-            connect(timer, SIGNAL(timeout()), this, SLOT(setNewBackgroundTimer()));
+            newBackgroundTimer->setInterval(INT_MAX);
+            connect(newBackgroundTimer, SIGNAL(timeout()), this, SLOT(setNewBackgroundTimer()));
         } else {
-            timer->setInterval(tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch());
-            connect(timer, SIGNAL(timeout()), this, SLOT(getNewCommunityBackground()));
+            newBackgroundTimer->setInterval(tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch());
+            connect(newBackgroundTimer, SIGNAL(timeout()), this, SLOT(getNewCommunityBackground()));
         }
-        timer->setSingleShot(true);
-        timer->start();
+        newBackgroundTimer->setSingleShot(true);
+        newBackgroundTimer->start();
     }
 }
 
@@ -394,7 +398,7 @@ void Background::on_actionOpen_System_Settings_triggered()
 
 void Background::on_actionChange_Background_triggered()
 {
-    ChooseBackground *background = new ChooseBackground();
+    ChooseBackground *background = new ChooseBackground(currentBackground);
     connect(background, SIGNAL(reloadBackgrounds()), mainwindow, SIGNAL(reloadBackgrounds()));
     connect(background, SIGNAL(reloadTimer()), firstBackground, SLOT(setTimer()));
     background->show();

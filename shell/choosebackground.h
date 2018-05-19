@@ -34,7 +34,7 @@ class ChooseBackground : public QDialog
     Q_OBJECT
 
     public:
-        explicit ChooseBackground(QWidget *parent = 0);
+        explicit ChooseBackground(QString currentCommunityBackground = "", QWidget *parent = 0);
         ~ChooseBackground();
 
     signals:
@@ -63,11 +63,15 @@ class ChooseBackground : public QDialog
 
         void on_showLabels_toggled(bool checked);
 
+        void on_licenseInfoButton_clicked();
+
     private:
         Ui::ChooseBackground *ui;
 
         QIcon getSvgIcon(QString filename);
         QSettings settings;
+
+        QString license;
 };
 
 #endif // CHOOSEBACKGROUND_H

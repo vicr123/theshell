@@ -21,7 +21,7 @@
 #include "choosebackground.h"
 #include "ui_choosebackground.h"
 
-ChooseBackground::ChooseBackground(QWidget *parent) :
+ChooseBackground::ChooseBackground(QString currentCommunityBackground, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ChooseBackground)
 {
@@ -76,6 +76,21 @@ ChooseBackground::ChooseBackground(QWidget *parent) :
 
     ui->waitTime->setValue(settings.value("desktop/waitTime", 30).toInt());
     ui->showLabels->setChecked(settings.value("desktop/showLabels", true).toBool());
+
+    if (currentCommunityBackground != "") {
+        QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + currentCommunityBackground + "/metadata.json");
+        metadataFile.open(QFile::ReadOnly);
+        QJsonDocument doc = QJsonDocument::fromJson(metadataFile.readAll());
+        metadataFile.close();
+
+        QJsonObject obj = doc.object();
+        ui->authorLabel->setText(tr("by %1").arg(obj.value("author").toString()));
+
+        license = obj.value("copyright").toString();
+        ui->license->setText(license);
+    } else {
+        ui->currentCommunityFrame->setVisible(false);
+    }
 }
 
 ChooseBackground::~ChooseBackground()
@@ -190,4 +205,15 @@ void ChooseBackground::on_showLabels_toggled(bool checked)
 {
     settings.setValue("desktop/showLabels", checked);
     emit reloadBackgrounds();
+}
+
+void ChooseBackground::on_licenseInfoButton_clicked()
+{
+    if (license == "CC BY-SA 4.0") {
+        QProcess::startDetached("xdg-open \"https://creativecommons.org/licenses/by-sa/4.0/\"");
+    } else if (license == "CC0") {
+        QProcess::startDetached("xdg-open \"https://creativecommons.org/publicdomain/zero/1.0/\"");
+    } else if (license == "WTFPL") {
+        QProcess::startDetached("xdg-open \"http://www.wtfpl.net/about/\"");
+    }
 }
