@@ -46,13 +46,13 @@ Background::Background(MainWindow* mainwindow, bool imageGetter, QRect screenGeo
         renderer.render(&painter, background.rect());
         ui->stackedWidget->setCurrentIndex(0);
     } else if (backPath.startsWith("community")) {
-        QDir::home().mkdir(".theshell");
-        bool metadataExists = QFile(QDir::homePath() + "/.theshell/background.json").exists();
-        bool imageExists = QFile(QDir::homePath() + "/.theshell/background.jpeg").exists();
-        if (metadataExists && imageExists) {
-            setCommunityBackground();
-        } else if (metadataExists && !imageExists) {
-            ui->stackedWidget->setCurrentIndex(1);
+        QDir::home().mkpath(".theshell/backgrounds");
+        bool metadataExists = QFile(QDir::homePath() + "/.theshell/backgrounds.conf").exists();
+        //bool imageExists = QFile(QDir::homePath() + "/.theshell/background.jpeg").exists();
+        if (metadataExists) {
+            if (imageGetter) {
+                setNewBackgroundTimer();
+            }
             loadCommunityBackgroundMetadata();
         } else {
             ui->stackedWidget->setCurrentIndex(1);
@@ -91,43 +91,74 @@ void Background::getNewCommunityBackground() {
         QJsonDocument doc = QJsonDocument::fromJson(data);
         if (!doc.isArray()) {
             //error error
-            if (QFile(QDir::homePath() + "/.theshell/background.jpeg").exists()) {
+            if (QFile(QDir::homePath() + "/.theshell/background.conf").exists()) {
                 //We have a valid image we can use
                 //Try getting a new image later
                 settings.setValue("desktop/fetched", QDateTime::currentDateTimeUtc());
-                setCommunityBackground();
+                loadCommunityBackgroundMetadata();
             } else {
                 ui->label->setText(tr("Couldn't get community backgrounds!"));
             }
         } else {
             QJsonArray arr = doc.array();
             arr.removeFirst();
+
+            QStringList downloadImages;
             qsrand(QDateTime::currentMSecsSinceEpoch());
-            QString url = arr.at(qrand() % arr.count()).toString();
 
-            QNetworkRequest req((QUrl("https://vicr123.github.io" + url)));
-            req.setHeader(QNetworkRequest::UserAgentHeader, QString("theShell/") + TS_VERSION);
-            req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-            QNetworkReply* metadata = manager.get(req);
-            connect(metadata, &QNetworkReply::finished, [=] {
-                QByteArray data = metadata->readAll();
-                QJsonDocument doc = QJsonDocument::fromJson(data);
-                if (doc.isObject()) {
-                    if (QFile(QDir::homePath() + "/.theshell/background.jpeg").exists()) {
-                        QFile(QDir::homePath() + "/.theshell/background.jpeg").remove();
-                    }
-
-                    QFile metadataFile(QDir::homePath() + "/.theshell/background.json");
-                    metadataFile.open(QFile::WriteOnly);
-                    metadataFile.write(data);
-                    metadataFile.close();
-                    loadCommunityBackgroundMetadata();
-                } else {
-                    //error
-                    ui->label->setText(tr("Couldn't get community backgrounds!"));
+            for (int i = 0; i < 10; i++) {
+                QString url = arr.at(qrand() % arr.count()).toString();
+                if (!downloadImages.contains(url)) {
+                    downloadImages.append(url);
                 }
-                metadata->deleteLater();
-            });
+            }
+
+            //Keep track of time when these images were retrieved
+            settings.setValue("desktop/fetched", QDateTime::currentDateTimeUtc());
+
+            //Delete list of known images
+            QFile(QDir::homePath() + "/.theshell/backgrounds.conf").remove();
+            QDir(QDir::homePath() + "/.theshell/backgrounds/").removeRecursively();
+            QDir::home().mkpath(".theshell/backgrounds/");
+
+            numberDone = 0;
+            for (QString url : downloadImages) {
+                QNetworkRequest req((QUrl("https://vicr123.github.io" + url)));
+                req.setHeader(QNetworkRequest::UserAgentHeader, QString("theShell/") + TS_VERSION);
+                req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+                QNetworkReply* metadata = manager.get(req);
+                connect(metadata, &QNetworkReply::finished, [=] {
+                    QByteArray data = metadata->readAll();
+                    QJsonDocument doc = QJsonDocument::fromJson(data);
+                    if (doc.isObject()) {
+                        QJsonObject obj = doc.object();
+
+                        QString fileName = obj.value("filename").toString();
+                        QString dirName = fileName.left(fileName.indexOf("."));
+
+                        QDir::home().mkpath(".theshell/backgrounds/" + dirName);
+                        QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + dirName + "/metadata.json");
+                        metadataFile.open(QFile::WriteOnly);
+                        metadataFile.write(data);
+                        metadataFile.close();
+
+                        QFile backgroundListConf(QDir::homePath() + "/.theshell/backgrounds.conf");
+                        backgroundListConf.open(QFile::Append);
+                        backgroundListConf.write(dirName.append("\n").toUtf8());
+                        backgroundListConf.close();
+                    }
+                    metadata->deleteLater();
+                    numberDone++;
+
+                    if (numberDone == downloadImages.count()) {
+                        numberDone = 0;
+                        setNewBackgroundTimer();
+
+                        //Load up a new background from the cache
+                        loadCommunityBackgroundMetadata();
+                    }
+                });
+            }
         }
         listOfBackgrounds->deleteLater();
     });
@@ -136,10 +167,23 @@ void Background::getNewCommunityBackground() {
 void Background::loadCommunityBackgroundMetadata() {
     if (!imageGetter) return;
 
-    if (QFile(QDir::homePath() + "/.theshell/background.jpeg").exists()) {
-        setCommunityBackground();
+    QFile backgroundListConf(QDir::homePath() + "/.theshell/backgrounds.conf");
+    backgroundListConf.open(QFile::ReadOnly);
+    QStringList allBackgrounds = QString(backgroundListConf.readAll()).split("\n");
+    backgroundListConf.close();
+
+    allBackgrounds.removeAll("");
+
+    qsrand(QDateTime::currentMSecsSinceEpoch());
+    QString background = allBackgrounds.at(qrand() % allBackgrounds.count());
+
+    if (QFile(QDir::homePath() + "/.theshell/backgrounds/" + background + "/" + background + ".jpeg").exists()) {
+        QTimer::singleShot(0, [=] {
+            emit setAllBackgrounds(background);
+            setCommunityBackground(background);
+        });;
     } else {
-        QFile metadataFile(QDir::homePath() + "/.theshell/background.json");
+        QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + background + "/metadata.json");
         metadataFile.open(QFile::ReadOnly);
         QJsonDocument doc = QJsonDocument::fromJson(metadataFile.readAll());
         metadataFile.close();
@@ -153,23 +197,28 @@ void Background::loadCommunityBackgroundMetadata() {
             req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
             QNetworkReply* image = manager.get(req);
             connect(image, &QNetworkReply::finished, [=] {
-                QByteArray data = image->readAll();
-                QFile imageFile(QDir::homePath() + "/.theshell/background.jpeg");
-                imageFile.open(QFile::WriteOnly);
-                imageFile.write(data);
-                imageFile.close();
-                image->deleteLater();
+                if (image->error() == QNetworkReply::NoError) {
+                    QByteArray data = image->readAll();
+                    QFile imageFile(QDir::homePath() + "/.theshell/backgrounds/" + background + "/" + background + ".jpeg");
+                    imageFile.open(QFile::WriteOnly);
+                    imageFile.write(data);
+                    imageFile.close();
+                    image->deleteLater();
 
-                settings.setValue("desktop/fetched", QDateTime::currentDateTimeUtc());
-
-                if (set) {
-                    emit reloadBackground();
-                } else {
-                    ui->stackedWidget->setCurrentIndex(0);
-                    QTimer::singleShot(0, this, SLOT(setCommunityBackground()));
-                    if (imageGetter) {
-                        emit newCommunityBackgroundDownloaded();
+                    if (set) {
+                        emit reloadBackground();
+                    } else {
+                        ui->stackedWidget->setCurrentIndex(0);
+                        setCommunityBackground(background);
+                        if (imageGetter) {
+                            emit setAllBackgrounds(background);
+                        }
                     }
+                } else {
+                    //Error retrieving image
+                    //Try another image
+                    loadCommunityBackgroundMetadata();
+                    image->deleteLater();
                 }
             });
         } else {
@@ -180,13 +229,13 @@ void Background::loadCommunityBackgroundMetadata() {
     }
 }
 
-void Background::setCommunityBackground() {
+void Background::setCommunityBackground(QString bg) {
     if (set) {
         emit reloadBackground();
         return;
     }
-    QFile metadataFile(QDir::homePath() + "/.theshell/background.json");
-    QFile imageFile(QDir::homePath() + "/.theshell/background.jpeg");
+    QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + bg + "/metadata.json");
+    QFile imageFile(QDir::homePath() + "/.theshell/backgrounds/" + bg + "/" + bg + ".jpeg");
     if (!metadataFile.exists()) {
         getNewCommunityBackground();
         return;
@@ -203,7 +252,7 @@ void Background::setCommunityBackground() {
 
         QJsonObject metadata = doc.object();
         QImage image(imageFile.fileName());
-        QPainter painter(&background);
+        QPainter painter(&this->background);
         painter.drawImage(0, 0, image.scaled(background.width(), background.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
         if (settings.value("desktop/showLabels", true).toBool()) {
@@ -258,6 +307,7 @@ void Background::setCommunityBackground() {
         set = true;
 
         if (imageGetter) {
+            settings.setValue("desktop/changed", QDateTime::currentDateTimeUtc());
             setTimer();
         }
     } else {
@@ -276,10 +326,35 @@ void Background::show() {
 void Background::setTimer() {
     if (!imageGetter) return;
 
-    if (timer != NULL) timer->deleteLater();
-    QDateTime fetchedTime = settings.value("desktop/fetched").toDateTime();
+    if (timer != nullptr) timer->deleteLater();
+    QDateTime fetchedTime = settings.value("desktop/changed").toDateTime();
     int waitTime = settings.value("desktop/waitTime", 30).toInt();
     QDateTime tickTime = fetchedTime.addSecs(waitTime * 60);
+
+    if (tickTime < QDateTime::currentDateTimeUtc()) {
+        //Get the next image now
+        loadCommunityBackgroundMetadata();
+    } else {
+        timer = new QTimer();
+        if (tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch() > INT_MAX) {
+            timer->setInterval(INT_MAX);
+            connect(timer, SIGNAL(timeout()), this, SLOT(setTimer()));
+        } else {
+            timer->setInterval(tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch());
+            connect(timer, SIGNAL(timeout()), this, SLOT(loadCommunityBackgroundMetadata()));
+        }
+        timer->setSingleShot(true);
+        timer->start();
+    }
+}
+
+void Background::setNewBackgroundTimer() {
+    if (!imageGetter) return;
+
+    if (timer != nullptr) timer->deleteLater();
+    QDateTime fetchedTime = settings.value("desktop/fetched").toDateTime();
+    QDateTime tickTime = fetchedTime.addDays(7);
+    //QDateTime tickTime = fetchedTime.addSecs(120);
 
     if (tickTime < QDateTime::currentDateTimeUtc()) {
         //Get the next image now
@@ -288,7 +363,7 @@ void Background::setTimer() {
         timer = new QTimer();
         if (tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch() > INT_MAX) {
             timer->setInterval(INT_MAX);
-            connect(timer, SIGNAL(timeout()), this, SLOT(setTimer()));
+            connect(timer, SIGNAL(timeout()), this, SLOT(setNewBackgroundTimer()));
         } else {
             timer->setInterval(tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch());
             connect(timer, SIGNAL(timeout()), this, SLOT(getNewCommunityBackground()));

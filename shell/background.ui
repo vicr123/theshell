@@ -39,7 +39,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -230,9 +230,6 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="tCircularSpinner" name="widget" native="true"/>
-          </item>
-          <item>
            <widget class="QLabel" name="label">
             <property name="text">
              <string>Getting a desktop background</string>
@@ -288,14 +285,6 @@
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>tCircularSpinner</class>
-   <extends>QWidget</extends>
-   <header location="global">tcircularspinner.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>

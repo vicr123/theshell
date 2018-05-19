@@ -66,7 +66,7 @@ void GlobalFilter::reloadBackgrounds() {
             firstBackground = w;
             connect(w, SIGNAL(reloadBackground()), this, SLOT(reloadBackgrounds()));
         } else {
-            connect(firstBackground, SIGNAL(newCommunityBackgroundDownloaded()), w, SLOT(setCommunityBackground()));
+            connect(firstBackground, SIGNAL(setAllBackgrounds(QString)), w, SLOT(setCommunityBackground(QString)));
         }
     }
 }

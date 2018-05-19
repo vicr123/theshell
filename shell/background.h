@@ -54,12 +54,12 @@ class Background : public QDialog
         void show();
 
     public slots:
-        void setCommunityBackground();
+        void setCommunityBackground(QString background);
 
         void getNewCommunityBackground();
 
     signals:
-        void newCommunityBackgroundDownloaded();
+        void setAllBackgrounds(QString background);
 
         void reloadBackground();
 
@@ -80,6 +80,8 @@ class Background : public QDialog
 
         void setTimer();
 
+        void setNewBackgroundTimer();
+
     private:
         Ui::Background *ui;
 
@@ -87,11 +89,12 @@ class Background : public QDialog
         bool imageGetter;
         bool set = false;
         QSettings settings;
+        int numberDone;
 
         MainWindow* mainwindow;
         QNetworkAccessManager manager;
         QPixmap background;
-        QTimer* timer = NULL;
+        QTimer* timer = nullptr, *newBackgroundTimer = nullptr;
 };
 
 #endif // BACKGROUND_H
