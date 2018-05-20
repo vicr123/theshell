@@ -498,6 +498,8 @@ class InfoPaneDropdown : public QDialog
         void updateStruts();
         void changeSettingsPane(int pane);
 
+        QString setNextKeyboardLayout();
+
     private:
         Ui::InfoPaneDropdown *ui;
 

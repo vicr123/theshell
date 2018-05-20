@@ -4107,6 +4107,7 @@ void InfoPaneDropdown::loadNewKeyboardLayoutMenu() {
         }
         emit newKeyboardLayoutMenuAvailable(menu);
     }
+    QApplication::processEvents();
 }
 
 void InfoPaneDropdown::setKeyboardLayout(QString layout) {
@@ -4114,4 +4115,20 @@ void InfoPaneDropdown::setKeyboardLayout(QString layout) {
     QProcess::startDetached("setxkbmap " + layout);
     loadNewKeyboardLayoutMenu();
     emit keyboardLayoutChanged(layout.split("(").first().toUpper());
+}
+
+QString InfoPaneDropdown::setNextKeyboardLayout() {
+    QString currentLayout = settings.value("input/currentLayout", "us(basic)").toString();
+    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    int currentIndex = currentLayouts.indexOf(currentLayout);
+    currentIndex++;
+    if (currentIndex == currentLayouts.count()) currentIndex = 0;
+
+    QString layout = currentLayouts.at(currentIndex);
+    setKeyboardLayout(layout);
+    for (int i = 0; i < ui->selectedLayouts->count(); i++) {
+        if (ui->selectedLayouts->item(i)->data(Qt::UserRole) == layout) {
+            return ui->selectedLayouts->item(i)->text();
+        }
+    }
 }
