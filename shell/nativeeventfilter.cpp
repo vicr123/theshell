@@ -314,11 +314,11 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 ignoreSuper = true;*/
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_space) && (button->state == Mod4Mask)) {
                 QString newKeyboardLayout = MainWin->getInfoPane()->setNextKeyboardLayout();
-                Hotkeys->show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout));
+                Hotkeys->show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout), 5000);
                 ignoreSuper = true;
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Return) && (button->state == Mod4Mask)) {
                 QString newKeyboardLayout = MainWin->getInfoPane()->setNextKeyboardLayout();
-                Hotkeys->show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout));
+                Hotkeys->show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout), 5000);
                 ignoreSuper = true;
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Num_Lock) || button->detail == XKeysymToKeycode(QX11Info::display(), XK_Caps_Lock)) {
                 if (themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool()) {
