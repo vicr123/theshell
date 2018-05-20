@@ -57,6 +57,7 @@ void BTHandsfree::detectDevices() {
         QStringList labelContent;
         QString labelOverride;
 
+        QEventLoop loop;
         QDBusMessage getDevices = QDBusMessage::createMethodCall("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", "handsfreeDevices");
         QDBusPendingReply<QStringList> reply = QDBusConnection::sessionBus().asyncCall(getDevices);
         while (!reply.isFinished()) {

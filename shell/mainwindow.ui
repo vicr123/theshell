@@ -240,16 +240,6 @@
            </widget>
           </item>
           <item>
-           <widget class="BTHandsfree" name="phonesWidget" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QFrame" name="batteryFrame">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -837,6 +827,25 @@
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="keyboardButton">
+            <property name="text">
+             <string>EN</string>
+            </property>
+            <property name="icon">
+             <iconset theme="input-keyboard"/>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="SysTrayIcons" name="SysTray">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1224,12 +1233,6 @@ padding-right: 3px;</string>
    <class>MouseScrollWidget</class>
    <extends>QScrollArea</extends>
    <header>mousescrollwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>BTHandsfree</class>
-   <extends>QWidget</extends>
-   <header>bthandsfree.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

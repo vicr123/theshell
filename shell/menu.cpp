@@ -29,7 +29,7 @@ extern TutorialWindow* TutorialWin;
 extern NativeEventFilter* NativeFilter;
 extern ScreenRecorder* screenRecorder;
 
-Menu::Menu(BTHandsfree* bt, QWidget *parent) :
+Menu::Menu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Menu)
 {
@@ -106,7 +106,7 @@ Menu::Menu(BTHandsfree* bt, QWidget *parent) :
     //ui->listWidget->setPalette(listPal);
 
     //populateAppList();
-    AppsListModel* appsListModel = new AppsListModel(bt);
+    AppsListModel* appsListModel = new AppsListModel();
 
     ui->appsListView->setModel(appsListModel);
     ui->appsListView->setItemDelegate(new AppsDelegate);
@@ -122,7 +122,7 @@ Menu::Menu(BTHandsfree* bt, QWidget *parent) :
     //ui->appsListView->setGridSize(QSize(128 * getDPIScaling(), 128 * getDPIScaling()));
     //ui->appsListView->setViewMode(QListView::IconMode);
 
-    this->bt = bt;
+    //this->bt = bt;
 }
 
 Menu::~Menu()

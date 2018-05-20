@@ -499,6 +499,79 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->compileDate->setVisible(false);
     #endif
 
+    //Update keyboard layouts
+    struct KeyboardLayoutReturn {
+        QMap<QString, QString> availableKeyboardLayout;
+        QStringList currentKeyboardLayout;
+    };
+    QFuture<KeyboardLayoutReturn> keyboardLayouts = QtConcurrent::run([=]() -> KeyboardLayoutReturn {
+        KeyboardLayoutReturn retval;
+
+        QDir xkbLayouts("/usr/share/X11/xkb/symbols");
+        for (QFileInfo layoutInfo : xkbLayouts.entryInfoList()) {
+            if (layoutInfo.isDir()) continue;
+
+            QString layout = layoutInfo.baseName();
+            QFile file(layoutInfo.filePath());
+            file.open(QFile::ReadOnly);
+
+            QString currentSubLayout = "";
+            while (!file.atEnd()) {
+                QString line = file.readLine().trimmed();
+                if (line.startsWith("xkb_symbols") && line.endsWith("{")) {
+                    QRegExp lineRx("\".+\"");
+                    lineRx.indexIn(line);
+
+                    if (lineRx.capturedTexts().count() != 0) {
+                        currentSubLayout = lineRx.capturedTexts().first().remove("\"");
+                    } else {
+                        currentSubLayout = "";
+                    }
+                } else if (line.startsWith("name")) {
+                    QRegExp lineRx("\".+\"");
+                    lineRx.indexIn(line);
+
+                    if (lineRx.capturedTexts().count() != 0 && currentSubLayout != "") {
+                        retval.availableKeyboardLayout.insert(layout + "(" + currentSubLayout + ")", lineRx.capturedTexts().first().remove("\""));
+                    } else {
+                        currentSubLayout = "";
+                    }
+                }
+            }
+
+            file.close();
+        }
+
+        retval.currentKeyboardLayout = settings.value("input/layout", "us(basic)").toString().split(",");
+        return retval;
+    });
+    QFutureWatcher<KeyboardLayoutReturn>* keyboardLayoutWatcher = new QFutureWatcher<KeyboardLayoutReturn>();
+    connect(keyboardLayoutWatcher, &QFutureWatcher<KeyboardLayoutReturn>::finished, [=] {
+        keyboardLayoutWatcher->deleteLater();
+
+        KeyboardLayoutReturn layouts = keyboardLayouts.result();
+        for (QString key : layouts.availableKeyboardLayout.keys()) {
+            QString value = layouts.availableKeyboardLayout.value(key);
+
+            QListWidgetItem* item = new QListWidgetItem();
+            item->setText(value);
+            item->setData(Qt::UserRole, key);
+            ui->availableKeyboardLayouts->addItem(item);
+        }
+
+        for (QString layout : layouts.currentKeyboardLayout) {
+            QListWidgetItem* item = new QListWidgetItem();
+            item->setText(layouts.availableKeyboardLayout.value(layout, layout));
+            item->setData(Qt::UserRole, layout);
+            ui->selectedLayouts->addItem(item);
+        }
+
+        ui->availableKeyboardLayouts->sortItems();
+        connect(ui->selectedLayouts->model(), SIGNAL(layoutChanged(QList<QPersistentModelIndex>,QAbstractItemModel::LayoutChangeHint)), this, SLOT(KeyboardLayoutsMoved()));
+        setKeyboardLayout(settings.value("input/currentLayout", "us(basic)").toString());
+    });
+    keyboardLayoutWatcher->setFuture(keyboardLayouts);
+
     //Set up timer ringtones
     ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
 
@@ -3904,4 +3977,141 @@ void InfoPaneDropdown::on_LocationAppsList_itemChanged(QListWidgetItem *item)
     } else {
         locationSettings->setValue(item->data(Qt::UserRole).toString() + "/allow", false);
     }
+}
+
+void InfoPaneDropdown::on_backInput_clicked()
+{
+    ui->InputStack->setCurrentIndex(0);
+}
+
+void InfoPaneDropdown::on_addLayout_clicked()
+{
+    ui->InputStack->setCurrentIndex(1);
+}
+
+void InfoPaneDropdown::on_addKeyboardLayout_clicked()
+{
+    QListWidgetItem* item = ui->availableKeyboardLayouts->currentItem();
+    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    currentLayouts.append(item->data(Qt::UserRole).toString());
+
+    QListWidgetItem* newItem = new QListWidgetItem();
+    newItem->setText(item->text());
+    newItem->setData(Qt::UserRole, item->data(Qt::UserRole));
+    ui->selectedLayouts->addItem(newItem);
+    settings.setValue("input/layout", currentLayouts.join(","));
+
+    ui->InputStack->setCurrentIndex(0);
+    loadNewKeyboardLayoutMenu();
+}
+
+void InfoPaneDropdown::on_removeLayout_clicked()
+{
+    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    int item = ui->selectedLayouts->currentRow();
+    currentLayouts.removeAt(item);
+    QListWidgetItem* i = ui->selectedLayouts->takeItem(item);
+    delete i;
+    settings.setValue("input/layout", currentLayouts.join(","));
+    loadNewKeyboardLayoutMenu();
+}
+
+void InfoPaneDropdown::on_selectedLayouts_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if (current == nullptr) {
+        ui->removeLayout->setEnabled(false);
+    } else if (ui->selectedLayouts->count() == 1) {
+        ui->removeLayout->setEnabled(false);
+    } else {
+        ui->removeLayout->setEnabled(true);
+    }
+}
+
+void InfoPaneDropdown::on_availableKeyboardLayouts_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if (current == nullptr) {
+        ui->addKeyboardLayout->setEnabled(false);
+    } else {
+        ui->addKeyboardLayout->setEnabled(true);
+    }
+}
+
+void InfoPaneDropdown::KeyboardLayoutsMoved()
+{
+    //Completely recreate the selected layouts
+    QStringList currentLayouts;
+    for (int i = 0; i < ui->selectedLayouts->count(); i++) {
+        QListWidgetItem* item = ui->selectedLayouts->item(i);
+        currentLayouts.append(item->data(Qt::UserRole).toString());
+    }
+    settings.setValue("input/layout", currentLayouts.join(","));
+    loadNewKeyboardLayoutMenu();
+}
+
+void InfoPaneDropdown::on_moveLayoutDown_clicked()
+{
+    int row = ui->selectedLayouts->currentRow();
+    if (row <= ui->selectedLayouts->count() - 1) {
+        ui->selectedLayouts->clearSelection();
+        QListWidgetItem* item = ui->selectedLayouts->takeItem(row);
+        ui->selectedLayouts->insertItem(row + 1, item);
+        item->setSelected(true);
+    }
+
+    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    QString layout = currentLayouts.takeAt(row);
+    currentLayouts.insert(row + 1, layout);
+    settings.setValue("input/layout", currentLayouts.join(","));
+    loadNewKeyboardLayoutMenu();
+}
+
+void InfoPaneDropdown::on_moveLayoutUp_clicked()
+{
+    int row = ui->selectedLayouts->currentRow();
+    if (row > 0) {
+        ui->selectedLayouts->clearSelection();
+        QListWidgetItem* item = ui->selectedLayouts->takeItem(row);
+        ui->selectedLayouts->insertItem(row - 1, item);
+        item->setSelected(true);
+    }
+
+    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    QString layout = currentLayouts.takeAt(row);
+    currentLayouts.insert(row - 1, layout);
+    settings.setValue("input/layout", currentLayouts.join(","));
+    loadNewKeyboardLayoutMenu();
+}
+
+void InfoPaneDropdown::loadNewKeyboardLayoutMenu() {
+    //Check to see if current keyboard layout is included in list, and if not, select first
+    QString currentLayout = settings.value("input/currentLayout", "us(basic)").toString();
+    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    if (!currentLayouts.contains(currentLayout)) {
+        setKeyboardLayout(currentLayouts.first());
+        return;
+    }
+
+    if (ui->selectedLayouts->count() == 1) {
+        emit newKeyboardLayoutMenuAvailable(nullptr);
+    } else {
+        QMenu* menu = new QMenu();
+        for (int i = 0; i < ui->selectedLayouts->count(); i++) {
+            QListWidgetItem* item = ui->selectedLayouts->item(i);
+            QAction* action = menu->addAction(item->text(), [=] {
+                setKeyboardLayout(item->data(Qt::UserRole).toString());
+            });
+            action->setCheckable(true);
+            if (item->data(Qt::UserRole) == currentLayout) {
+                action->setChecked(true);
+            }
+        }
+        emit newKeyboardLayoutMenuAvailable(menu);
+    }
+}
+
+void InfoPaneDropdown::setKeyboardLayout(QString layout) {
+    settings.setValue("input/currentLayout", layout);
+    QProcess::startDetached("setxkbmap " + layout);
+    loadNewKeyboardLayoutMenu();
+    emit keyboardLayoutChanged(layout.split("(").first().toUpper());
 }

@@ -46,7 +46,7 @@ class AppsListModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    AppsListModel(BTHandsfree* bt = NULL, QObject *parent = 0);
+    AppsListModel(QObject *parent = 0);
     ~AppsListModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

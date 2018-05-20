@@ -54,7 +54,7 @@ class Menu : public QDialog
     Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
     public:
-        explicit Menu(BTHandsfree* bt, QWidget *parent = 0);
+        explicit Menu(QWidget *parent = 0);
         ~Menu();
         void setGeometry(int x, int y, int w, int h);
         void setGeometry(QRect geometry);

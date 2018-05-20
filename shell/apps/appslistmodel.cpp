@@ -26,8 +26,8 @@ extern MainWindow* MainWin;
 extern QSettings::Format desktopFileFormat;
 extern void EndSession(EndSessionWait::shutdownType type);
 
-AppsListModel::AppsListModel(BTHandsfree* bt, QObject *parent) : QAbstractListModel(parent) {
-    this->bt = bt;
+AppsListModel::AppsListModel(QObject *parent) : QAbstractListModel(parent) {
+    //this->bt = bt;
     loadData();
 }
 
@@ -77,7 +77,7 @@ void AppsListModel::search(QString query) {
     } else {
         if (query.toLower().startsWith("call")) {
             QString number = query.mid(5);
-            if (number != "" && this->bt != NULL) {
+            /*if (number != "" && this->bt != NULL) {
                 QStringList devices = bt->getDevices();
                 for (int i = 0; i < devices.count(); i++) {
                     App app;
@@ -87,7 +87,7 @@ void AppsListModel::search(QString query) {
                     app.setIcon(QIcon::fromTheme("call-start"));
                     appsShown.append(app);
                 }
-            }
+            }*/
         }
 
         int i = 0;
@@ -477,14 +477,14 @@ QSize AppsDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 
 bool AppsListModel::launchApp(QModelIndex index) {
     QString command = appsShown.at(index.row()).command().remove("%u");
-    if (command.startsWith("call:")) {
+    /*if (command.startsWith("call:")) {
         QString callCommand = command.mid(5);
         QStringList parts = callCommand.split(":");
         int deviceIndex = parts.at(0).toInt();
         QString number = parts.at(1);
         bt->placeCall(deviceIndex, number);
         return true;
-    } else if (command == "::settings") {
+    } else */if (command == "::settings") {
         MainWin->getInfoPane()->show(InfoPaneDropdown::Settings);
         return true;
     } else if (command == "::poweroff") {

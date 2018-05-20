@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(QApplication::desktop(), SIGNAL(primaryScreenChanged()), this, SLOT(reloadScreens()));
 
     //Create the gateway and set required flags
-    gatewayMenu = new Menu(ui->phonesWidget, this);
+    gatewayMenu = new Menu(this);
     gatewayMenu->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(gatewayMenu, &Menu::menuClosing, [=]() {
         lockHide = false;
@@ -112,8 +112,20 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(infoPane, &InfoPaneDropdown::redshiftEnabledChanged, [=](bool enabled) {
         ui->StatusBarRedshift->setVisible(enabled);
     });
+    connect(infoPane, &InfoPaneDropdown::keyboardLayoutChanged, [=](QString code) {
+        ui->keyboardButton->setText(code);
+    });
+    connect(infoPane, &InfoPaneDropdown::newKeyboardLayoutMenuAvailable, [=](QMenu* menu) {
+        if (menu == nullptr) {
+            ui->keyboardButton->setVisible(false);
+        } else {
+            ui->keyboardButton->setVisible(true);
+            ui->keyboardButton->setMenu(menu);
+        }
+    });
     infoPane->getNetworks();
     ui->StatusBarRedshift->setVisible(false);
+    ui->keyboardButton->setVisible(false);
 
     connect(ui->openMenuCompact, SIGNAL(customContextMenuRequested(QPoint)), ui->openMenu, SIGNAL(customContextMenuRequested(QPoint)));
 
