@@ -376,8 +376,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1151</width>
-            <height>1038</height>
+            <width>616</width>
+            <height>1062</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -611,14 +611,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>9</month>
-                 <day>5</day>
+                 <day>4</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>9</month>
-                 <day>5</day>
+                 <day>4</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1504,7 +1504,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1165</width>
+            <width>182</width>
             <height>114</height>
            </rect>
           </property>
@@ -1947,7 +1947,7 @@
          <item>
           <widget class="QStackedWidget" name="settingsTabs">
            <property name="currentIndex">
-            <number>13</number>
+            <number>14</number>
            </property>
            <widget class="QWidget" name="StartupSettings">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -4896,7 +4896,8 @@ Items that will be kept if you choose to keep files:
                 <string>Reset Device</string>
                </property>
                <property name="icon">
-                <iconset theme="view-refresh"/>
+                <iconset theme="view-refresh">
+                 <normaloff>.</normaloff>.</iconset>
                </property>
               </widget>
              </item>
@@ -4920,7 +4921,7 @@ Items that will be kept if you choose to keep files:
              <item row="7" column="0">
               <widget class="QLabel" name="label_21">
                <property name="text">
-                <string>theShell is Copyright (c) Victor Tran 2017. Licensed under the terms of the GNU General Public License, version 3 or later.</string>
+                <string>theShell is Copyright (c) Victor Tran 2018. Licensed under the terms of the GNU General Public License, version 3 or later.</string>
                </property>
                <property name="wordWrap">
                 <bool>true</bool>

@@ -138,6 +138,33 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     updateBatteryChart();
 
+    //Check Redshift
+    QProcess* redshiftQuery = new QProcess;
+    redshiftQuery->start("redshift -V");
+    connect(redshiftQuery, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
+        QString output = redshiftQuery->readAll().trimmed();
+        output.remove("redshift ");
+
+        QStringList parts = output.split(".");
+        for (int i = 0; i < parts.count(); i++) {
+            int version = parts.at(i).toInt();
+            if (i == 0) {
+                if (version > 1) {
+                    break;
+                } else if (version < 1) {
+                    isNewRedshift = false;
+                    break;
+                }
+            } else if (i == 1) {
+                if (version < 11) {
+                    isNewRedshift = false;
+                }
+                break;
+            }
+        }
+        redshiftQuery->deleteLater();
+    });
+
     //Set up KDE Connect
     if (!QFile("/usr/lib/kdeconnectd").exists()) {
         //If KDE Connect is not installed, hide the KDE Connect option
@@ -523,9 +550,6 @@ void InfoPaneDropdown::processTimer() {
         int endMsecs = ui->endRedshift->time().msecsSinceStartOfDay();
         int endIntensity = ui->redshiftIntensity->value();
         const int oneHour = 3600000;
-        QProcess* redshiftQuery = new QProcess;
-        redshiftQuery->start("redshift -V");
-
         QString redshiftCommand;
 
         if (ui->redshiftPause->isChecked()) {
@@ -604,36 +628,14 @@ void InfoPaneDropdown::processTimer() {
                 emit redshiftEnabledChanged(false);
             }
         }
-        connect(redshiftQuery, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
-            QString runCommand = redshiftCommand;
 
-            QString output = redshiftQuery->readAll().trimmed();
-            output.remove("redshift ");
+        if (isNewRedshift) {
+            redshiftCommand += " -P";
+        }
 
-            QStringList parts = output.split(".");
-            for (int i = 0; i < parts.count(); i++) {
-                int version = parts.at(i).toInt();
-                if (i == 0) {
-                    if (version > 1) {
-                        runCommand += " -P";
-                        break;
-                    } else if (version < 1) {
-                        break;
-                    }
-                } else if (i == 1) {
-                    if (version > 11) {
-                        runCommand += " -P";
-                    }
-                    break;
-                }
-            }
-
-            redshiftQuery->deleteLater();
-
-            QProcess* redshiftAdjust = new QProcess();
-            redshiftAdjust->start(runCommand);
-            connect(redshiftAdjust, SIGNAL(finished(int)), redshiftAdjust, SLOT(deleteLater()));
-        });
+        QProcess* redshiftAdjust = new QProcess();
+        redshiftAdjust->start(redshiftCommand);
+        connect(redshiftAdjust, SIGNAL(finished(int)), redshiftAdjust, SLOT(deleteLater()));
     }
 
     /*{

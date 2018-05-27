@@ -447,6 +447,7 @@ private:
     Ui::InfoPaneDropdown *ui;
 
     bool isRedshiftOn = false;
+    bool isNewRedshift = true;
     dropdownType currentDropDown = Clock;
     void changeDropDown(dropdownType changeTo, bool doAnimation = true);
     int mouseClickPoint;
