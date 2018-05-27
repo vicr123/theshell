@@ -161,6 +161,33 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     updateBatteryChart();
 
+    //Check Redshift
+    QProcess* redshiftQuery = new QProcess;
+    redshiftQuery->start("redshift -V");
+    connect(redshiftQuery, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
+        QString output = redshiftQuery->readAll().trimmed();
+        output.remove("redshift ");
+
+        QStringList parts = output.split(".");
+        for (int i = 0; i < parts.count(); i++) {
+            int version = parts.at(i).toInt();
+            if (i == 0) {
+                if (version > 1) {
+                    break;
+                } else if (version < 1) {
+                    isNewRedshift = false;
+                    break;
+                }
+            } else if (i == 1) {
+                if (version < 11) {
+                    isNewRedshift = false;
+                }
+                break;
+            }
+        }
+        redshiftQuery->deleteLater();
+    });
+
     //Set up KDE Connect
     if (!QFile("/usr/lib/kdeconnectd").exists()) {
         //If KDE Connect is not installed, hide the KDE Connect option
@@ -721,8 +748,8 @@ void InfoPaneDropdown::processTimer() {
         int endMsecs = ui->endRedshift->time().msecsSinceStartOfDay();
         int endIntensity = ui->redshiftIntensity->value();
         const int oneHour = 3600000;
-        QProcess* redshiftAdjust = new QProcess;
-        connect(redshiftAdjust, SIGNAL(finished(int)), redshiftAdjust, SLOT(deleteLater()));
+        QString redshiftCommand;
+
         if (ui->redshiftPause->isChecked()) {
             //Calculate redshift value
             //Transition to redshift is 1 hour from the start.
@@ -777,7 +804,7 @@ void InfoPaneDropdown::processTimer() {
                 }
             }
 
-            redshiftAdjust->start("redshift -O " + QString::number(intensity));
+            redshiftCommand = "redshift -O " + QString::number(intensity);
 
             isRedshiftOn = true;
             if (intensity == 6500 && effectiveRedshiftOn) {
@@ -792,9 +819,9 @@ void InfoPaneDropdown::processTimer() {
         } else {
             //Check Redshift Override
             if (overrideRedshift == 2) {
-                redshiftAdjust->start("redshift -O " + QString::number(endIntensity));
+                redshiftCommand = "redshift -O " + QString::number(endIntensity);
             } else {
-                redshiftAdjust->start("redshift -O 6500");
+                redshiftCommand = "redshift -O 6500";
             }
 
             if (isRedshiftOn) {
@@ -804,6 +831,14 @@ void InfoPaneDropdown::processTimer() {
                 emit redshiftEnabledChanged(false);
             }
         }
+
+        if (isNewRedshift) {
+            redshiftCommand += " -P";
+        }
+
+        QProcess* redshiftAdjust = new QProcess();
+        redshiftAdjust->start(redshiftCommand);
+        connect(redshiftAdjust, SIGNAL(finished(int)), redshiftAdjust, SLOT(deleteLater()));
     }
 
     /*{
@@ -1336,13 +1371,21 @@ void InfoPaneDropdown::on_endRedshift_timeChanged(const QTime &time)
 
 void InfoPaneDropdown::on_redshiftIntensity_sliderMoved(int position)
 {
-    QProcess::startDetached("redshift -O " + QString::number(position));
+    if (isNewRedshift) {
+        QProcess::startDetached("redshift -P -O " + QString::number(position));
+    } else {
+        QProcess::startDetached("redshift -O " + QString::number(position));
+    }
 }
 
 void InfoPaneDropdown::on_redshiftIntensity_sliderReleased()
 {
     if (!isRedshiftOn) {
-        QProcess::startDetached("redshift -O 6500");
+        if (isNewRedshift) {
+            QProcess::startDetached("redshift -P -O 6500");
+        } else {
+            QProcess::startDetached("redshift -O 6500");
+        }
     }
 }
 
