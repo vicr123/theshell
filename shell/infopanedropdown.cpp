@@ -1131,13 +1131,21 @@ void InfoPaneDropdown::on_endRedshift_timeChanged(const QTime &time)
 
 void InfoPaneDropdown::on_redshiftIntensity_sliderMoved(int position)
 {
-    QProcess::startDetached("redshift -O " + QString::number(position));
+    if (isNewRedshift) {
+        QProcess::startDetached("redshift -P -O " + QString::number(position));
+    } else {
+        QProcess::startDetached("redshift -O " + QString::number(position));
+    }
 }
 
 void InfoPaneDropdown::on_redshiftIntensity_sliderReleased()
 {
     if (!isRedshiftOn) {
-        QProcess::startDetached("redshift -O 6500");
+        if (isNewRedshift) {
+            QProcess::startDetached("redshift -P -O 6500");
+        } else {
+            QProcess::startDetached("redshift -O 6500");
+        }
     }
 }
 
