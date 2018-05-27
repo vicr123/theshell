@@ -36,7 +36,7 @@ QStringList NotificationsDBusAdaptor::GetCapabilities()
 QString NotificationsDBusAdaptor::GetServerInformation(QString &vendor, QString &version, QString &spec_version)
 {
     vendor = "theSuite";
-    version = QString::number(TS_VERSION);
+    version = TS_VERSION;
     spec_version = "1.2";
     return "theShell";
 }

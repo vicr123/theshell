@@ -523,8 +523,11 @@ void InfoPaneDropdown::processTimer() {
         int endMsecs = ui->endRedshift->time().msecsSinceStartOfDay();
         int endIntensity = ui->redshiftIntensity->value();
         const int oneHour = 3600000;
-        QProcess* redshiftAdjust = new QProcess;
-        connect(redshiftAdjust, SIGNAL(finished(int)), redshiftAdjust, SLOT(deleteLater()));
+        QProcess* redshiftQuery = new QProcess;
+        redshiftQuery->start("redshift -V");
+
+        QString redshiftCommand;
+
         if (ui->redshiftPause->isChecked()) {
             //Calculate redshift value
             //Transition to redshift is 1 hour from the start.
@@ -579,7 +582,7 @@ void InfoPaneDropdown::processTimer() {
                 }
             }
 
-            redshiftAdjust->start("redshift -O " + QString::number(intensity));
+            redshiftCommand = "redshift -O " + QString::number(intensity);
 
             isRedshiftOn = true;
             if (intensity == 6500 && effectiveRedshiftOn) {
@@ -592,7 +595,7 @@ void InfoPaneDropdown::processTimer() {
                 emit redshiftEnabledChanged(true);
             }
         } else {
-            redshiftAdjust->start("redshift -O 6500");
+            redshiftCommand = "redshift -O 6500";
 
             if (isRedshiftOn) {
                 isRedshiftOn = false;
@@ -601,6 +604,36 @@ void InfoPaneDropdown::processTimer() {
                 emit redshiftEnabledChanged(false);
             }
         }
+        connect(redshiftQuery, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
+            QString runCommand = redshiftCommand;
+
+            QString output = redshiftQuery->readAll().trimmed();
+            output.remove("redshift ");
+
+            QStringList parts = output.split(".");
+            for (int i = 0; i < parts.count(); i++) {
+                int version = parts.at(i).toInt();
+                if (i == 0) {
+                    if (version > 1) {
+                        runCommand += " -P";
+                        break;
+                    } else if (version < 1) {
+                        break;
+                    }
+                } else if (i == 1) {
+                    if (version > 11) {
+                        runCommand += " -P";
+                    }
+                    break;
+                }
+            }
+
+            redshiftQuery->deleteLater();
+
+            QProcess* redshiftAdjust = new QProcess();
+            redshiftAdjust->start(runCommand);
+            connect(redshiftAdjust, SIGNAL(finished(int)), redshiftAdjust, SLOT(deleteLater()));
+        });
     }
 
     /*{

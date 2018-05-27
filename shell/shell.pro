@@ -12,7 +12,7 @@ INCLUDEPATH += /usr/include/glib-2.0/ /usr/lib/glib-2.0/include/
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-DEFINES += TS_VERSION="7.1"
+DEFINES += TS_VERSION='\\"7.1.1\\"'
 
 unix {
     QT += thelib x11extras
