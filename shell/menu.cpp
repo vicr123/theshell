@@ -333,7 +333,9 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
                     ((QPushButton*) object)->click();
                 }
             }
-        } else if (e->key() == Qt::Key_Right && ui->appsListView->model()->index(currentRow, 0).data(Qt::UserRole + 3).value<App>().actions().count() > 0) {
+        } else if ((QApplication::layoutDirection() == Qt::RightToLeft
+                   ? e->key() == Qt::Key_Left
+                   : e->key() == Qt::Key_Right) && ui->appsListView->model()->index(currentRow, 0).data(Qt::UserRole + 3).value<App>().actions().count() > 0) {
             showActionMenuByIndex(ui->appsListView->model()->index(currentRow, 0));
             return true;
         } else if (e->key() == Qt::Key_Down) {
@@ -380,7 +382,10 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
         }
 
         QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
-        if (acts.count() > 0 && e->pos().x() > ui->appsListView->viewport()->width() - 34 * getDPIScaling()) {
+        if (acts.count() > 0 &&
+                QApplication::layoutDirection() == Qt::RightToLeft
+                ?(e->pos().x() < 34 * getDPIScaling())
+                :(e->pos().x() > ui->appsListView->viewport()->width() - 34 * getDPIScaling())) {
             showActionMenuByIndex(index);
         } else {
             launchAppByIndex(index);
@@ -681,7 +686,10 @@ void Menu::showActionMenuByIndex(QModelIndex index) {
         });
     }
     QRect rect = ui->appsListView->visualRect(index);
-    menu->exec(ui->appsListView->mapToGlobal(rect.topRight()));
+
+    menu->exec(ui->appsListView->mapToGlobal(QApplication::layoutDirection() == Qt::RightToLeft
+                                             ? rect.topLeft()
+                                             : rect.topRight()));
 }
 
 void Menu::on_appsListView_customContextMenuRequested(const QPoint &pos)

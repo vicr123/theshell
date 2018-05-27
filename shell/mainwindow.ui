@@ -113,6 +113,9 @@
             <property name="contextMenuPolicy">
              <enum>Qt::CustomContextMenu</enum>
             </property>
+            <property name="toolTip">
+             <string>Open the Gateway to your PC</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -138,6 +141,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Open Status Center</string>
             </property>
             <property name="text">
              <string/>
@@ -349,6 +355,9 @@
                  <height>24</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>Screen Brightness</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -409,6 +418,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>You are in Flight Mode</string>
             </property>
             <property name="text">
              <string notr="true">Flight</string>
@@ -474,6 +486,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Your location is currently being used</string>
             </property>
             <property name="text">
              <string notr="true">Location</string>
@@ -551,6 +566,9 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="toolTip">
+                <string>Stop Screen Recording</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -619,6 +637,9 @@
                  <width>28</width>
                  <height>24</height>
                 </size>
+               </property>
+               <property name="toolTip">
+                <string>Quiet Mode</string>
                </property>
                <property name="text">
                 <string/>
@@ -730,6 +751,9 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="toolTip">
+                <string>Select Media Player</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -828,11 +852,15 @@
           </item>
           <item>
            <widget class="QToolButton" name="keyboardButton">
+            <property name="toolTip">
+             <string>Keyboard Layout</string>
+            </property>
             <property name="text">
-             <string>EN</string>
+             <string notr="true">EN</string>
             </property>
             <property name="icon">
-             <iconset theme="input-keyboard"/>
+             <iconset theme="input-keyboard">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="popupMode">
              <enum>QToolButton::InstantPopup</enum>

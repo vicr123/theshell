@@ -406,8 +406,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1169</width>
-            <height>1038</height>
+            <width>616</width>
+            <height>1062</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -689,14 +689,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>20</day>
+                 <day>19</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>20</day>
+                 <day>19</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2144,7 +2144,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>7</number>
+             <number>15</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -4261,7 +4261,8 @@
                          <string/>
                         </property>
                         <property name="icon">
-                         <iconset theme="go-up"/>
+                         <iconset theme="go-up">
+                          <normaloff>.</normaloff>.</iconset>
                         </property>
                        </widget>
                       </item>
@@ -4271,7 +4272,8 @@
                          <string/>
                         </property>
                         <property name="icon">
-                         <iconset theme="go-down"/>
+                         <iconset theme="go-down">
+                          <normaloff>.</normaloff>.</iconset>
                         </property>
                        </widget>
                       </item>
@@ -4450,7 +4452,8 @@
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset theme="go-previous"/>
+                       <iconset theme="go-previous">
+                        <normaloff>.</normaloff>.</iconset>
                       </property>
                       <property name="flat">
                        <bool>true</bool>
@@ -4534,7 +4537,8 @@
                        <string>Add</string>
                       </property>
                       <property name="icon">
-                       <iconset theme="list-add"/>
+                       <iconset theme="list-add">
+                        <normaloff>.</normaloff>.</iconset>
                       </property>
                      </widget>
                     </item>
@@ -6568,7 +6572,7 @@ Items that will be kept if you choose to keep files:
                    <item row="0" column="1">
                     <widget class="QLabel" name="processorType">
                      <property name="text">
-                      <string>Intel</string>
+                      <string notr="true">Intel</string>
                      </property>
                     </widget>
                    </item>
@@ -6738,18 +6742,18 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AnimatedStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header>animatedstackedwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>clickablelabel.h</header>
    <slots>
     <signal>clicked()</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>AnimatedStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>animatedstackedwidget.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>NetworkWidget</class>

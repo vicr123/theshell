@@ -57,9 +57,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mprisSelection->setMenu(mprisSelectionMenu);
     connect(mprisSelectionMenu, &QMenu::aboutToShow, [=]() {
         pauseMprisMenuUpdate = true;
+        lockHide = true;
     });
     connect(mprisSelectionMenu, &QMenu::aboutToHide, [=]() {
         pauseMprisMenuUpdate = false;
+        lockHide = false;
     });
 
     //Connect signals related to multiple monitor management
@@ -121,6 +123,13 @@ MainWindow::MainWindow(QWidget *parent) :
         } else {
             ui->keyboardButton->setVisible(true);
             ui->keyboardButton->setMenu(menu);
+
+            connect(menu, &QMenu::aboutToShow, [=] {
+                lockHide = true;
+            });
+            connect(menu, &QMenu::aboutToHide, [=] {
+                lockHide = false;
+            });
         }
     });
     infoPane->getNetworks();
@@ -258,6 +267,12 @@ MainWindow::MainWindow(QWidget *parent) :
     quietModeMenu->addAction(ui->actionNone);
     quietModeMenu->addAction(ui->actionNotifications);
     quietModeMenu->addAction(ui->actionMute);
+    connect(quietModeMenu, &QMenu::aboutToShow, [=] {
+        lockHide = true;
+    });
+    connect(quietModeMenu, &QMenu::aboutToHide, [=] {
+        lockHide = false;
+    });
     ui->volumeButton->setMenu(quietModeMenu);
 
     connect(AudioMan, &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {

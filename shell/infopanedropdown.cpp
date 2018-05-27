@@ -3738,23 +3738,40 @@ bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
             p.setPen(Qt::transparent);
             p.drawRect(0, 0, ui->partFrame->width(), ui->partFrame->height());
 
-            QPolygonF firstPoly;
-            //firstPoly.append(QPoint(ui->partFrame->width() * 0.8, 0));
-            firstPoly.append(QPointF(slice1.currentValue().toFloat(), 0));
-            firstPoly.append(QPointF(slice2.currentValue().toFloat(), ui->partFrame->height()));
-            //firstPoly.append(QPoint(ui->partFrame->width() * 0.775, ui->partFrame->height()));
-            firstPoly.append(QPointF(ui->partFrame->width(), ui->partFrame->height()));
-            firstPoly.append(QPointF(ui->partFrame->width(), 0));
-            p.setBrush(pal.color(QPalette::Window).lighter(110));
-            p.drawPolygon(firstPoly);
+            if (QApplication::layoutDirection() == Qt::RightToLeft) {
+                int width = ui->partFrame->width();
+                QPolygonF firstPoly;
+                firstPoly.append(QPointF(width - slice1.currentValue().toFloat(), 0));
+                firstPoly.append(QPointF(width - slice2.currentValue().toFloat(), ui->partFrame->height()));
+                firstPoly.append(QPointF(0, ui->partFrame->height()));
+                firstPoly.append(QPointF(0, 0));
+                p.setBrush(pal.color(QPalette::Window).lighter(110));
+                p.drawPolygon(firstPoly);
 
-            QPolygonF secondPoly;
-            secondPoly.append(QPointF(ui->partFrame->width() * 0.85, 0));
-            secondPoly.append(QPointF(ui->partFrame->width() * 0.825, ui->partFrame->height()));
-            secondPoly.append(QPointF(ui->partFrame->width(), ui->partFrame->height()));
-            secondPoly.append(QPointF(ui->partFrame->width(), 0));
-            p.setBrush(pal.color(QPalette::Window).lighter(120));
-            p.drawPolygon(secondPoly);
+                QPolygonF secondPoly;
+                secondPoly.append(QPointF(width - ui->partFrame->width() * 0.85, 0));
+                secondPoly.append(QPointF(width - ui->partFrame->width() * 0.825, ui->partFrame->height()));
+                secondPoly.append(QPointF(0, ui->partFrame->height()));
+                secondPoly.append(QPointF(0, 0));
+                p.setBrush(pal.color(QPalette::Window).lighter(120));
+                p.drawPolygon(secondPoly);
+            } else {
+                QPolygonF firstPoly;
+                firstPoly.append(QPointF(slice1.currentValue().toFloat(), 0));
+                firstPoly.append(QPointF(slice2.currentValue().toFloat(), ui->partFrame->height()));
+                firstPoly.append(QPointF(ui->partFrame->width(), ui->partFrame->height()));
+                firstPoly.append(QPointF(ui->partFrame->width(), 0));
+                p.setBrush(pal.color(QPalette::Window).lighter(110));
+                p.drawPolygon(firstPoly);
+
+                QPolygonF secondPoly;
+                secondPoly.append(QPointF(ui->partFrame->width() * 0.85, 0));
+                secondPoly.append(QPointF(ui->partFrame->width() * 0.825, ui->partFrame->height()));
+                secondPoly.append(QPointF(ui->partFrame->width(), ui->partFrame->height()));
+                secondPoly.append(QPointF(ui->partFrame->width(), 0));
+                p.setBrush(pal.color(QPalette::Window).lighter(120));
+                p.drawPolygon(secondPoly);
+            }
             return true;
         }
     }
@@ -4095,6 +4112,7 @@ void InfoPaneDropdown::loadNewKeyboardLayoutMenu() {
         emit newKeyboardLayoutMenuAvailable(nullptr);
     } else {
         QMenu* menu = new QMenu();
+        menu->addSection(tr("Keyboard Layout"));
         for (int i = 0; i < ui->selectedLayouts->count(); i++) {
             QListWidgetItem* item = ui->selectedLayouts->item(i);
             QAction* action = menu->addAction(item->text(), [=] {
@@ -4125,7 +4143,9 @@ QString InfoPaneDropdown::setNextKeyboardLayout() {
     if (currentIndex == currentLayouts.count()) currentIndex = 0;
 
     QString layout = currentLayouts.at(currentIndex);
-    setKeyboardLayout(layout);
+    QTimer::singleShot(0, [=] {
+        setKeyboardLayout(layout);
+    });
     for (int i = 0; i < ui->selectedLayouts->count(); i++) {
         if (ui->selectedLayouts->item(i)->data(Qt::UserRole) == layout) {
             return ui->selectedLayouts->item(i)->text();

@@ -173,9 +173,9 @@ int main(int argc, char *argv[])
         QProcess polkitProcess;
 
 #ifdef BLUEPRINT
-        polkitProcess.start("/usr/lib/ts-polkitagent");
-#else
         polkitProcess.start("/usr/lib/ts-polkitagentb");
+#else
+        polkitProcess.start("/usr/lib/ts-polkitagent");
 #endif
 
         //Start startup applications

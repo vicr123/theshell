@@ -49,21 +49,16 @@ void Switch::paintEvent(QPaintEvent *event) {
     painter.setBrush(this->palette().brush(IsActiveColorRole(), QPalette::Highlight));
     painter.setPen(this->palette().color(IsActiveColorRole(), QPalette::WindowText));
     painter.drawRect(0, 0, innerRect.left(), this->height());
-    //painter.fillRect(0, 0, this->width(), this->height(), this->palette().brush(QPalette::Active, QPalette::Highlight));
 
     painter.setBrush(this->palette().brush(IsActiveColorRole(), QPalette::HighlightedText));
     painter.drawRect(innerRect);
 
-    //painter.drawStaticText(metrics.height() / 2, (this->height() / 2 - metrics.height() / 2), QStaticText("I"));
-
     if (iText == "") {
         painter.drawPixmap(innerRect.left() - 10 - this->height() / 2, (this->height() / 2 - 16 / 2), 16, 16, this->iIcon.pixmap(16, 16));
-
     } else {
         painter.drawStaticText(innerRect.left() - metrics.width(iText) - this->height() / 2, (this->height() / 2 - metrics.height() / 2), QStaticText(iText));
     }
     painter.setBrush(this->palette().brush(IsActiveColorRole(), QPalette::WindowText));
-    //painter.drawStaticText(this->height() + metrics.height() / 2, (this->height() / 2 - metrics.height() / 2), QStaticText("O"));
     painter.drawStaticText(innerRect.right() + this->height() / 2, (this->height() / 2 - metrics.height() / 2), QStaticText(oText));
 
     painter.setPen(this->palette().color(IsActiveColorRole(), QPalette::WindowText));

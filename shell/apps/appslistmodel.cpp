@@ -362,6 +362,7 @@ AppsDelegate::AppsDelegate(QWidget *parent, bool drawArrows) : QStyledItemDelega
 
 void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
     painter->setFont(option.font);
+    painter->setLayoutDirection(option.direction);
 
     QRect iconRect;
     if (((QListView*) option.widget)->viewMode() == QListView::IconMode) {
@@ -376,13 +377,18 @@ void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
         textRect.setBottom(option.rect.bottom());
         textRect.setRight(option.rect.right());
 
+        if (option.direction == Qt::RightToLeft) {
+            iconRect.moveRight(option.rect.right() - 32 * getDPIScaling());
+            textRect.moveRight(option.rect.right() - 6 * getDPIScaling());
+        }
+
         if (option.state & QStyle::State_Selected) {
             painter->setPen(Qt::transparent);
             painter->setBrush(option.palette.color(QPalette::Highlight));
             painter->drawRect(option.rect);
             painter->setBrush(Qt::transparent);
             painter->setPen(option.palette.color(QPalette::HighlightedText));
-            painter->drawText(textRect, index.data().toString());
+            painter->drawText(textRect, Qt::AlignLeading, index.data().toString());
         } else if (option.state & QStyle::State_MouseOver) {
             QColor col = option.palette.color(QPalette::Highlight);
             col.setAlpha(127);
@@ -391,10 +397,10 @@ void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
             painter->drawRect(option.rect);
             painter->setBrush(Qt::transparent);
             painter->setPen(option.palette.color(QPalette::WindowText));
-            painter->drawText(textRect, index.data().toString());
+            painter->drawText(textRect, Qt::AlignLeading, index.data().toString());
         } else {
             painter->setPen(option.palette.color(QPalette::WindowText));
-            painter->drawText(textRect, index.data().toString());
+            painter->drawText(textRect, Qt::AlignLeading, index.data().toString());
         }
     } else {
         iconRect.setLeft(option.rect.left() + 6 * getDPIScaling());
@@ -414,14 +420,20 @@ void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
         descRect.setBottom(option.rect.top() + option.fontMetrics.height() * 2 + 6 * getDPIScaling());
         descRect.setRight(option.rect.right());
 
+        if (option.direction == Qt::RightToLeft) {
+            iconRect.moveRight(option.rect.right() - 6 * getDPIScaling());
+            textRect.moveRight(iconRect.left() - 6 * getDPIScaling());
+            descRect.moveRight(iconRect.left() - 6 * getDPIScaling());
+        }
+
         if (option.state & QStyle::State_Selected) {
             painter->setPen(Qt::transparent);
             painter->setBrush(option.palette.color(QPalette::Highlight));
             painter->drawRect(option.rect);
             painter->setBrush(Qt::transparent);
             painter->setPen(option.palette.color(QPalette::HighlightedText));
-            painter->drawText(textRect, index.data().toString());
-            painter->drawText(descRect, index.data(Qt::UserRole).toString());
+            painter->drawText(textRect, Qt::AlignLeading, index.data().toString());
+            painter->drawText(descRect, Qt::AlignLeading, index.data(Qt::UserRole).toString());
         } else if (option.state & QStyle::State_MouseOver) {
             QColor col = option.palette.color(QPalette::Highlight);
             col.setAlpha(127);
@@ -430,14 +442,14 @@ void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
             painter->drawRect(option.rect);
             painter->setBrush(Qt::transparent);
             painter->setPen(option.palette.color(QPalette::WindowText));
-            painter->drawText(textRect, index.data().toString());
+            painter->drawText(textRect, Qt::AlignLeading, index.data().toString());
             painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
-            painter->drawText(descRect, index.data(Qt::UserRole).toString());
+            painter->drawText(descRect, Qt::AlignLeading, index.data(Qt::UserRole).toString());
         } else {
             painter->setPen(option.palette.color(QPalette::WindowText));
-            painter->drawText(textRect, index.data().toString());
+            painter->drawText(textRect, Qt::AlignLeading, index.data().toString());
             painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
-            painter->drawText(descRect, index.data(Qt::UserRole).toString());
+            painter->drawText(descRect, Qt::AlignLeading, index.data(Qt::UserRole).toString());
         }
     }
     painter->drawPixmap(iconRect, index.data(Qt::DecorationRole).value<QPixmap>());
@@ -450,6 +462,10 @@ void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
             actionsRect.setHeight(16 * getDPIScaling());
             actionsRect.moveRight(option.rect.right() - 9 * getDPIScaling());
             actionsRect.moveTop(option.rect.top() + option.rect.height() / 2 - 8 * getDPIScaling());
+
+            if (option.direction == Qt::RightToLeft) {
+                actionsRect.moveLeft(option.rect.left() + 9 * getDPIScaling());
+            }
 
             painter->drawPixmap(actionsRect, QIcon::fromTheme("arrow-right").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
         }
