@@ -100,7 +100,8 @@ SOURCES += main.cpp\
     kdeconnect/kdeconnectdevicesmodel.cpp \
     location/locationservices.cpp \
     location/locationrequestdialog.cpp \
-    agent_adaptor.cpp
+    agent_adaptor.cpp \
+    locktypes/mousepassword.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -149,7 +150,8 @@ HEADERS  += mainwindow.h \
     kdeconnect/kdeconnectdevicesmodel.h \
     location/locationservices.h \
     location/locationrequestdialog.h \
-    agent_adaptor.h
+    agent_adaptor.h \
+    locktypes/mousepassword.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -170,7 +172,8 @@ FORMS    += mainwindow.ui \
     notificationsWidget/notificationappgroup.ui \
     notificationsWidget/notificationpanel.ui \
     kdeconnect/kdeconnectwidget.ui \
-    location/locationrequestdialog.ui
+    location/locationrequestdialog.ui \
+    locktypes/mousepassword.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

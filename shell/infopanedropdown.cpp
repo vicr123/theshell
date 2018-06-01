@@ -398,6 +398,12 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     updateRedshiftTime();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
 
+    if (QFile(QDir::homePath() + "/.theshell/mousepassword").exists()) {
+        ui->removeMousePassword->setVisible(true);
+    } else {
+        ui->removeMousePassword->setVisible(false);
+    }
+
     QString defaultFont;
     if (QFontDatabase().families().contains("Contemporary")) {
         defaultFont = "Contemporary";
@@ -4193,5 +4199,48 @@ QString InfoPaneDropdown::setNextKeyboardLayout() {
         if (ui->selectedLayouts->item(i)->data(Qt::UserRole) == layout) {
             return ui->selectedLayouts->item(i)->text();
         }
+    }
+}
+
+void InfoPaneDropdown::on_setupMousePassword_clicked()
+{
+    //Check Polkit authorization
+    PolkitQt1::Authority::Result r = PolkitQt1::Authority::instance()->checkAuthorizationSync("org.thesuite.theshell.configure-mouse-password", PolkitQt1::UnixProcessSubject(QApplication::applicationPid()), PolkitQt1::Authority::None);
+
+    if (r == PolkitQt1::Authority::No) {
+        QMessageBox::warning(this, tr("Unauthorized"), tr("Polkit does not allow you to set up a mouse password."), QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    } else if (r == PolkitQt1::Authority::Challenge) {
+        LOWER_INFOPANE
+        PolkitQt1::Authority::Result r = PolkitQt1::Authority::instance()->checkAuthorizationSync("org.thesuite.theshell.configure-mouse-password", PolkitQt1::UnixProcessSubject(QApplication::applicationPid()), PolkitQt1::Authority::AllowUserInteraction);
+        if (r != PolkitQt1::Authority::Yes) {
+            return;
+        }
+    }
+
+    ui->lockScreenStack->setCurrentIndex(1);
+}
+
+void InfoPaneDropdown::on_removeMousePassword_clicked()
+{
+    if (QMessageBox::question(this, tr("Remove Mouse Password?"), tr("Do you want to remove the Mouse Password for this account?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+        QFile(QDir::homePath() + "/.theshell/mousepassword").remove();
+        ui->removeMousePassword->setVisible(false);
+
+        tToast* toast = new tToast();
+        toast->setTitle(tr("Mouse Password"));
+        toast->setText(tr("Mouse Password was removed successfully"));
+        connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
+        toast->show(this);
+    }
+}
+
+void InfoPaneDropdown::on_MousePasswordSetup_exit()
+{
+    ui->lockScreenStack->setCurrentIndex(0);
+    if (QFile(QDir::homePath() + "/.theshell/mousepassword").exists()) {
+        ui->removeMousePassword->setVisible(true);
+    } else {
+        ui->removeMousePassword->setVisible(false);
     }
 }

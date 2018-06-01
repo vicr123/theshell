@@ -489,6 +489,12 @@ class InfoPaneDropdown : public QDialog
 
         void setKeyboardLayout(QString layout);
 
+        void on_setupMousePassword_clicked();
+
+        void on_removeMousePassword_clicked();
+
+        void on_MousePasswordSetup_exit();
+
     public slots:
         void getNetworks();
 

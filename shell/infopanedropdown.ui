@@ -406,8 +406,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>616</width>
-            <height>1062</height>
+            <width>1169</width>
+            <height>1038</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -689,14 +689,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>19</day>
+                 <day>18</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>19</day>
+                 <day>18</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2144,7 +2144,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>15</number>
+             <number>9</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2803,8 +2803,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>381</width>
-                   <height>547</height>
+                   <width>804</width>
+                   <height>671</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_54">
@@ -4924,125 +4924,241 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QLabel" name="displayLabel_7">
-                <property name="font">
-                 <font>
-                  <pointsize>15</pointsize>
-                 </font>
+               <widget class="QStackedWidget" name="lockScreenStack">
+                <property name="currentIndex">
+                 <number>0</number>
                 </property>
-                <property name="text">
-                 <string>Lock Screen</string>
-                </property>
-                <property name="margin">
-                 <number>9</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line_34">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>1</height>
-                 </size>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QGridLayout" name="gridLayout_10">
-                <property name="leftMargin">
-                 <number>9</number>
-                </property>
-                <property name="topMargin">
-                 <number>9</number>
-                </property>
-                <property name="rightMargin">
-                 <number>9</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>9</number>
-                </property>
-                <property name="spacing">
-                 <number>6</number>
-                </property>
-                <item row="1" column="1">
-                 <widget class="Switch" name="SuspendLockScreen">
-                  <property name="text">
-                   <string>SuspendLockScreenSwitch</string>
+                <widget class="QWidget" name="page_8">
+                 <layout class="QVBoxLayout" name="verticalLayout_57">
+                  <property name="spacing">
+                   <number>0</number>
                   </property>
-                  <property name="checkable">
-                   <bool>true</bool>
+                  <property name="leftMargin">
+                   <number>0</number>
                   </property>
-                  <property name="checked">
-                   <bool>true</bool>
+                  <property name="topMargin">
+                   <number>0</number>
                   </property>
-                 </widget>
-                </item>
-                <item row="0" column="1" colspan="2">
-                 <layout class="QHBoxLayout" name="horizontalLayout_41">
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
                   <item>
-                   <widget class="QLineEdit" name="lockScreenBackground"/>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="lockScreenBackgroundBrowse">
+                   <widget class="QLabel" name="displayLabel_7">
+                    <property name="font">
+                     <font>
+                      <pointsize>15</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
-                     <string>Browse...</string>
+                     <string>Lock Screen</string>
+                    </property>
+                    <property name="margin">
+                     <number>9</number>
                     </property>
                    </widget>
                   </item>
+                  <item>
+                   <widget class="Line" name="line_51">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>1</height>
+                     </size>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QGridLayout" name="gridLayout_10">
+                    <property name="leftMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item row="1" column="1">
+                     <widget class="Switch" name="SuspendLockScreen">
+                      <property name="text">
+                       <string>SuspendLockScreenSwitch</string>
+                      </property>
+                      <property name="checkable">
+                       <bool>true</bool>
+                      </property>
+                      <property name="checked">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1" colspan="2">
+                     <layout class="QHBoxLayout" name="horizontalLayout_41">
+                      <item>
+                       <widget class="QLineEdit" name="lockScreenBackground"/>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="lockScreenBackgroundBrowse">
+                        <property name="text">
+                         <string>Browse...</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="1" column="2">
+                     <spacer name="horizontalSpacer_29">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_31">
+                      <property name="text">
+                       <string>Background</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_74">
+                      <property name="text">
+                       <string>Lock screen after returning from suspend</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0" colspan="3">
+                     <widget class="QLabel" name="label_47">
+                      <property name="text">
+                       <string>To change your password, go to User settings</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="Line" name="line_34">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>1</height>
+                     </size>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QGridLayout" name="gridLayout_21">
+                    <property name="leftMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>9</number>
+                    </property>
+                    <property name="spacing">
+                     <number>6</number>
+                    </property>
+                    <item row="0" column="1">
+                     <layout class="QHBoxLayout" name="horizontalLayout_24">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QPushButton" name="setupMousePassword">
+                        <property name="text">
+                         <string>Set Up</string>
+                        </property>
+                        <property name="icon">
+                         <iconset theme="configure"/>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="removeMousePassword">
+                        <property name="text">
+                         <string>Remove Mouse Password</string>
+                        </property>
+                        <property name="icon">
+                         <iconset theme="delete"/>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_40">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_108">
+                      <property name="text">
+                       <string>Mouse Password</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QLabel" name="label_109">
+                      <property name="text">
+                       <string>A mouse password trades security for convenience on the lock screen by substituting your password with a sequence of mouse buttons. &lt;b&gt;This can only be used on the lock screen, not while logging in.&lt;/b&gt;</string>
+                      </property>
+                      <property name="wordWrap">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_15">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>284</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
                  </layout>
-                </item>
-                <item row="1" column="2">
-                 <spacer name="horizontalSpacer_29">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_31">
-                  <property name="text">
-                   <string>Background</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_74">
-                  <property name="text">
-                   <string>Lock screen after returning from suspend</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0" colspan="3">
-                 <widget class="QLabel" name="label_47">
-                  <property name="text">
-                   <string>To change your password, go to User settings</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_15">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>284</height>
-                 </size>
-                </property>
-               </spacer>
+                </widget>
+                <widget class="MousePassword" name="MousePasswordSetup"/>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -6780,6 +6896,15 @@ Items that will be kept if you choose to keep files:
    <extends>QWidget</extends>
    <header>kdeconnect/kdeconnectwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MousePassword</class>
+   <extends>QWidget</extends>
+   <header>locktypes/mousepassword.h</header>
+   <container>1</container>
+   <slots>
+    <signal>exit()</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources>
