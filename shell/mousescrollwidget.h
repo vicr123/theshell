@@ -56,6 +56,8 @@ private:
     void setEventFilter(QWidget* widget);
     void setEventFilter(QLayout* layout);
 
+    QSize sizeHint() const;
+
     QWidget* vp;
     QSettings settings;
 

@@ -34,6 +34,9 @@
     </sizepolicy>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="sizeConstraint">
      <enum>QLayout::SetMaximumSize</enum>
     </property>
@@ -68,6 +71,9 @@
       </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
       </property>
       <property name="widgetResizable">
        <bool>true</bool>

@@ -197,7 +197,6 @@ void AudioManager::pulseGetSinks(pa_context *c, const pa_sink_info *i, int eol, 
 
 void AudioManager::pulseServerInfo(pa_context *c, const pa_server_info *i, void *userdata) {
     pa_context_get_sink_info_by_name(c, i->default_sink_name, &AudioManager::pulseGetDefaultSink, userdata);
-
 }
 
 void AudioManager::pulseGetDefaultSink(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {

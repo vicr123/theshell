@@ -170,12 +170,12 @@ int main(int argc, char *argv[])
         }, Qt::CaseInsensitive);
 
         //Start system daemons
-        QProcess polkitProcess;
+        QProcess* polkitProcess = new QProcess();
 
 #ifdef BLUEPRINT
-        polkitProcess.start("/usr/lib/ts-polkitagentb");
+        polkitProcess->start("/usr/lib/ts-polkitagentb");
 #else
-        polkitProcess.start("/usr/lib/ts-polkitagent");
+        polkitProcess->start("/usr/lib/ts-polkitagent");
 #endif
 
         //Start startup applications

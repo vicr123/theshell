@@ -193,11 +193,11 @@ bool MouseScrollWidget::eventFilter(QObject *object, QEvent *event) {
     return false;
 }
 
-/*QSize MouseScrollWidget::sizeHint() const {
+QSize MouseScrollWidget::sizeHint() const {
     QSize hint = QScrollArea::sizeHint();
-    //hint.setHeight(hint.height() - QApplication::style()->pixelMetric(QStyle::PM_ScrollBarExtent));
+    hint.setHeight(widget()->sizeHint().height());
     return hint;
-}*/
+}
 
 void MouseScrollWidget::paintEvent(QPaintEvent *event) {
     //QPainter painter(this);

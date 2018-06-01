@@ -3645,7 +3645,7 @@ Tập tin này có thể giữ lại:
     <message>
         <location filename="../upowerdbus.cpp" line="269"/>
         <source>Power Stretch on</source>
-        <translation>Pin tiết kiệm bật</translation>
+        <translation>Đang tiết kiệm pin</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="119"/>

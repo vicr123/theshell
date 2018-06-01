@@ -1297,6 +1297,9 @@
        </item>
        <item>
         <widget class="QTreeWidget" name="InformationTable">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
          <property name="columnCount">
           <number>2</number>
          </property>

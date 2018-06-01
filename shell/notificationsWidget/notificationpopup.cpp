@@ -332,7 +332,7 @@ void NotificationPopup::setApp(QString appName, QIcon appIcon) {
 }
 
 void NotificationPopup::setSummary(QString summary) {
-    ui->summaryLabel->setText(summary);
+    ui->summaryLabel->setText(ui->summaryLabel->fontMetrics().elidedText(summary, Qt::ElideRight, 300 * getDPIScaling()));
 }
 
 void NotificationPopup::setBody(QString body) {

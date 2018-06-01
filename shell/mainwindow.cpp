@@ -313,6 +313,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarFrame->setVisible(false);
     ui->StatusBarHoverFrame->setVisible(false);
 
+    //ui->infoScrollArea->setFixedHeight(ui->InfoScrollWidget->height());
+
     #ifdef BLUEPRINT
         //Apply Blueprint branding
         ui->openMenu->setIcon(QIcon(":/icons/icon-bp.svg"));
