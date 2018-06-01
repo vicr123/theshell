@@ -66,6 +66,11 @@ void MousePassword::mousePressEvent(QMouseEvent *event) {
     setMousePasswordLabel();
 }
 
+void MousePassword::mouseDoubleClickEvent(QMouseEvent *event) {
+    //Treat this as a normal click
+    mousePressEvent(event);
+}
+
 void MousePassword::mouseReleaseEvent(QMouseEvent *event) {
     /*
      * Mouse buttons:

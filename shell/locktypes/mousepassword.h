@@ -42,6 +42,7 @@ class MousePassword : public QWidget
         Ui::MousePassword *ui;
 
         void mousePressEvent(QMouseEvent* event);
+        void mouseDoubleClickEvent(QMouseEvent* event);
         void mouseReleaseEvent(QMouseEvent* event);
 
         QByteArray currentMousePassword, tentativeMousePassword;
