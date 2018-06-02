@@ -6,7 +6,8 @@ DISTFILES += \
 SUBDIRS += \
     shell \
     startsession \
-    polkitagent
+    polkitagent \
+    mousepass
 
 blueprint {
     message(Configuring theShell to be built as blueprint)

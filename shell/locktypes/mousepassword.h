@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <polkit-qt5-1/PolkitQt1/Authority>
 #include <QMessageBox>
+#include <QProcess>
 #include <ttoast.h>
 
 namespace Ui {

@@ -4224,14 +4224,42 @@ void InfoPaneDropdown::on_setupMousePassword_clicked()
 void InfoPaneDropdown::on_removeMousePassword_clicked()
 {
     if (QMessageBox::question(this, tr("Remove Mouse Password?"), tr("Do you want to remove the Mouse Password for this account?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
-        QFile(QDir::homePath() + "/.theshell/mousepassword").remove();
-        ui->removeMousePassword->setVisible(false);
+        //Check Polkit authorization
+        PolkitQt1::Authority::Result r = PolkitQt1::Authority::instance()->checkAuthorizationSync("org.thesuite.theshell.configure-mouse-password", PolkitQt1::UnixProcessSubject(QApplication::applicationPid()), PolkitQt1::Authority::None);
 
-        tToast* toast = new tToast();
-        toast->setTitle(tr("Mouse Password"));
-        toast->setText(tr("Mouse Password was removed successfully"));
-        connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
-        toast->show(this);
+        if (r == PolkitQt1::Authority::No) {
+            QMessageBox::warning(this, tr("Unauthorized"), tr("Polkit does not allow you to set up a mouse password."), QMessageBox::Ok, QMessageBox::Ok);
+            return;
+        } else if (r == PolkitQt1::Authority::Challenge) {
+            LOWER_INFOPANE
+            PolkitQt1::Authority::Result r = PolkitQt1::Authority::instance()->checkAuthorizationSync("org.thesuite.theshell.configure-mouse-password", PolkitQt1::UnixProcessSubject(QApplication::applicationPid()), PolkitQt1::Authority::AllowUserInteraction);
+            if (r != PolkitQt1::Authority::Yes) {
+                return;
+            }
+        }
+
+
+        //Remove the mouse password
+        QProcess* proc = new QProcess();
+        QDir::home().mkdir(".theshell");
+        proc->start("/usr/lib/ts-mousepass-change --remove --passfile=" + QDir::homePath() + "/.theshell/mousepassword");
+        proc->waitForFinished();
+
+        if (proc->exitCode() == 0) {
+            tToast* toast = new tToast();
+            toast->setTitle(tr("Mouse Password"));
+            toast->setText(tr("Mouse Password was removed successfully"));
+            connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
+            toast->show(this);
+        } else {
+            tToast* toast = new tToast();
+            toast->setTitle(tr("Mouse Password"));
+            toast->setText(tr("Mouse Password couldn't be removed"));
+            connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
+            toast->show(this);
+        }
+
+        proc->deleteLater();
     }
 }
 

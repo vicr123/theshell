@@ -204,20 +204,18 @@ void MousePassword::on_nextButton_clicked()
             }
 
             //Save the mouse password
-            QByteArray salt = "$1$";
-
-            const char* saltCharacters = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-            for (int i = 0; i < 8; i++) {
-                salt.append(saltCharacters[QRandomGenerator::securelySeeded().bounded(0, strlen(saltCharacters))]);
-            }
-
-            QString hashedPassword = QString::fromLocal8Bit(crypt(currentMousePassword.data(), salt.data()));
+            QProcess* proc = new QProcess();
             QDir::home().mkdir(".theshell");
-            QFile mousepassfile(QDir::homePath() + "/.theshell/mousepassword");
-            mousepassfile.open(QFile::WriteOnly);
-            mousepassfile.write(hashedPassword.toUtf8());
-            mousepassfile.close();
+            proc->start("/usr/lib/ts-mousepass-change --set=" + currentMousePassword + " --passfile=" + QDir::homePath() + "/.theshell/mousepassword");
+            proc->waitForFinished();
+
+            if (proc->exitCode() == 1) {
+                proc->deleteLater();
+
+                QMessageBox::critical(this->window(), tr("Mouse Password"), tr("Mouse Password couldn't be saved."), QMessageBox::Ok, QMessageBox::Ok);
+                return;
+            }
+            proc->deleteLater();
 
             exit();
             currentMousePassword.clear();
