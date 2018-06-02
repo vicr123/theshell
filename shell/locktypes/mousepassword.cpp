@@ -207,14 +207,14 @@ void MousePassword::on_nextButton_clicked()
             QProcess* proc = new QProcess();
             QDir::home().mkdir(".theshell");
 
-            QString executable = "/usr/lib/ts-mousepas-change";
+            QString executable = "/usr/lib/ts-mousepass-change";
             #ifdef BLUEPRINT
                 executable += "b";
             #endif
             proc->start(executable + " --set=" + currentMousePassword + " --passfile=" + QDir::homePath() + "/.theshell/mousepassword");
             proc->waitForFinished();
 
-            if (proc->exitCode() == 1) {
+            if (proc->exitCode() != 0) {
                 proc->deleteLater();
 
                 QMessageBox::critical(this->window(), tr("Mouse Password"), tr("Mouse Password couldn't be saved."), QMessageBox::Ok, QMessageBox::Ok);

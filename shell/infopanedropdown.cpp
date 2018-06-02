@@ -4243,7 +4243,7 @@ void InfoPaneDropdown::on_removeMousePassword_clicked()
         QProcess* proc = new QProcess();
         QDir::home().mkdir(".theshell");
 
-        QString executable = "/usr/lib/ts-mousepas-change";
+        QString executable = "/usr/lib/ts-mousepass-change";
         #ifdef BLUEPRINT
             executable += "b";
         #endif
