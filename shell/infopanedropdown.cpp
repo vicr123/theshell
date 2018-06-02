@@ -4242,7 +4242,12 @@ void InfoPaneDropdown::on_removeMousePassword_clicked()
         //Remove the mouse password
         QProcess* proc = new QProcess();
         QDir::home().mkdir(".theshell");
-        proc->start("/usr/lib/ts-mousepass-change --remove --passfile=" + QDir::homePath() + "/.theshell/mousepassword");
+
+        QString executable = "/usr/lib/ts-mousepas-change";
+        #ifdef BLUEPRINT
+            executable += "b";
+        #endif
+        proc->start(executable + " --remove --passfile=" + QDir::homePath() + "/.theshell/mousepassword");
         proc->waitForFinished();
 
         if (proc->exitCode() == 0) {

@@ -25,13 +25,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp
 
-TARGET = ts-mousepass-change
+
+blueprint {
+    TARGET = ts-mousepass-changeb
+
+    DEFINES += "BLUEPRINT"
+} else {
+    TARGET = ts-mousepass-change
+}
 
 unix {
     target.path = /usr/lib
 
     suid.path = /usr/lib
-    suid.extra = chmod u+s $(INSTALL_ROOT)/usr/lib/ts-mousepass-change
+
+    blueprint {
+        suid.extra = chmod u+s $(INSTALL_ROOT)/usr/lib/ts-mousepass-changeb
+    } else {
+        suid.extra = chmod u+s $(INSTALL_ROOT)/usr/lib/ts-mousepass-change
+    }
 
     INSTALLS += target suid
 }
