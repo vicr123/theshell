@@ -101,6 +101,14 @@ void Background::changeBackground() {
             case 3: //Tile
                 painter.drawTiledPixmap(0, 0, background.width(), background.height(), image);
                 break;
+            case 4: { //Zoom and Fit
+                QRect rect;
+                rect.setSize(image.size().scaled(background.width(), background.height(), Qt::KeepAspectRatio));
+                rect.moveLeft(background.width() / 2 - rect.width() / 2);
+                rect.moveTop(background.height() / 2 - rect.height() / 2);
+                painter.drawPixmap(rect, image);
+                break;
+            }
         }
         //background = background.scaled(screenGeometry.size());
     }
@@ -285,9 +293,50 @@ void Background::setCommunityBackground(QString bg) {
     QJsonDocument doc = QJsonDocument::fromJson(metadataFile.readAll());
     if (doc.isObject()) {
         QJsonObject metadata = doc.object();
-        QImage image(imageFile.fileName());
+        QPixmap image;
+        image.load(imageFile.fileName());
+
         QPainter painter(&this->background);
-        painter.drawImage(0, 0, image.scaled(background.width(), background.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+
+        //Clear background
+        painter.setBrush(QColor(0, 0, 0));
+        painter.setPen(Qt::transparent);
+        painter.drawRect(0, 0, background.width(), background.height());
+
+        //Draw background
+        switch (settings.value("desktop/stretchStyle", 0).toInt()) {
+            case 0: //Stretch
+                painter.drawPixmap(0, 0, background.width(), background.height(), image);
+                break;
+            case 1: { //Zoom and Crop
+                QRect rect;
+                rect.setSize(image.size().scaled(background.width(), background.height(), Qt::KeepAspectRatioByExpanding));
+                rect.moveLeft(background.width() / 2 - rect.width() / 2);
+                rect.moveTop(background.height() / 2 - rect.height() / 2);
+                painter.drawPixmap(rect, image);
+                break;
+            }
+            case 2: { //Center
+                QRect rect;
+                rect.setSize(image.size());
+                rect.moveLeft(background.width() / 2 - rect.width() / 2);
+                rect.moveTop(background.height() / 2 - rect.height() / 2);
+                painter.drawPixmap(rect, image);
+                break;
+            }
+            case 3: //Tile
+                painter.drawTiledPixmap(0, 0, background.width(), background.height(), image);
+                break;
+            case 4: { //Zoom and Fit
+                QRect rect;
+                rect.setSize(image.size().scaled(background.width(), background.height(), Qt::KeepAspectRatio));
+                rect.moveLeft(background.width() / 2 - rect.width() / 2);
+                rect.moveTop(background.height() / 2 - rect.height() / 2);
+                painter.drawPixmap(rect, image);
+                break;
+            }
+        }
+        //painter.drawImage(0, 0, image.scaled(background.width(), background.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
         if (settings.value("desktop/showLabels", true).toBool()) {
             QLinearGradient darkener;
