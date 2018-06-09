@@ -293,14 +293,27 @@ void Background::setCommunityBackground(QString bg) {
             QLinearGradient darkener;
             darkener.setColorAt(0, QColor::fromRgb(0, 0, 0, 0));
             darkener.setColorAt(1, QColor::fromRgb(0, 0, 0, 200));
-            darkener.setStart(0, 0);
-            darkener.setFinalStop(0, background.height());
+
+            if (settings.value("bar/onTop").toBool()) {
+                darkener.setStart(0, 0);
+                darkener.setFinalStop(0, background.height());
+            } else {
+                darkener.setStart(0, background.height());
+                darkener.setFinalStop(0, 0);
+            }
             painter.setBrush(darkener);
             painter.drawRect(0, 0, background.width(), background.height());
 
             painter.setPen(Qt::white);
             int currentX = 30 * getDPIScaling();
-            int baselineY = background.height() - 30 * getDPIScaling();
+            int baselineY;
+
+            if (settings.value("bar/onTop").toBool()) {
+                baselineY = background.height() - 30 * getDPIScaling();
+            } else {
+                baselineY = 30 * getDPIScaling() + QFontMetrics(QFont(this->font().family(), 20)).ascent();
+            }
+
             if (metadata.contains("name")) {
                 painter.setFont(QFont(this->font().family(), 20));
                 QString name = metadata.value("name").toString();
