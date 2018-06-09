@@ -18,6 +18,9 @@
 #include <polkit-qt5-1/PolkitQt1/Identity>
 #include <polkit-qt5-1/PolkitQt1/Details>
 #include <QDebug>
+#include <QStackedWidget>
+#include <QListWidget>
+#include <ttoast.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -53,6 +56,8 @@ public slots:
 
     void setUser(QString user);
 
+    void setUser(PolkitQt1::Identity user);
+
     void setUsers(PolkitQt1::Identity::List users);
 
     void setIcon(QIcon icon);
@@ -70,9 +75,13 @@ private slots:
 
     void on_keyboardButton_clicked();
 
-    void on_authenticationUsers_currentIndexChanged(int index);
+    void on_backToMain_clicked();
 
-private:
+    void on_switchUser_clicked();
+
+    void on_authenticationUsers_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+    private:
     Ui::Authenticate *ui;
     QGraphicsOpacityEffect *fadeEffect;
 };

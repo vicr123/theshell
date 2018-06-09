@@ -7,9 +7,6 @@ Authenticate::Authenticate(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->errorIcon->setPixmap(QIcon::fromTheme("dialog-error").pixmap(16, 16));
-    ui->errorFrame->setVisible(false);
-    ui->pushButton->setProperty("type", "destructive");
     fadeEffect = new QGraphicsOpacityEffect(this);
     ui->authFrame->setGraphicsEffect(fadeEffect);
 
@@ -34,7 +31,13 @@ void Authenticate::showFullScreen(bool showError) {
     XGrabKeyboard(QX11Info::display(), RootWindow(QX11Info::display(), 0), True, GrabModeAsync, GrabModeAsync, CurrentTime);
     XGrabPointer(QX11Info::display(), RootWindow(QX11Info::display(), 0), True, 0, GrabModeAsync, GrabModeAsync, RootWindow(QX11Info::display(), 0), 0, CurrentTime);
 
-    ui->errorFrame->setVisible(showError);
+    if (showError) {
+        tToast* toast = new tToast();
+        toast->setTitle(tr("Incorrect Password"));
+        toast->setText(tr("The password you entered was incorrect. Please enter your password again."));
+        connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
+        toast->show(this);
+    }
     ui->lineEdit->setText("");
 
     ui->authFrame->setVisible(true);
@@ -102,8 +105,19 @@ void Authenticate::setUser(QString user) {
     //ui->authenticationUser->setText(user);
 
     for (int i = 0; i < ui->authenticationUsers->count(); i++) {
-        if (ui->authenticationUsers->itemText(i) == user) {
-            ui->authenticationUsers->setCurrentIndex(i);
+        if (ui->authenticationUsers->item(i)->text() == user) {
+            ui->authenticationUsers->setCurrentIndex(ui->authenticationUsers->model()->index(i, 0));
+            ui->userLabel->setText(tr("Authenticating as %1").arg(user));
+            break;
+        }
+    }
+}
+
+void Authenticate::setUser(PolkitQt1::Identity user) {
+    for (int i = 0; i < ui->authenticationUsers->count(); i++) {
+        if (ui->authenticationUsers->item(i)->data(Qt::UserRole).value<PolkitQt1::Identity>().toString() == user.toString()) {
+            ui->authenticationUsers->setCurrentIndex(ui->authenticationUsers->model()->index(i, 0));
+            ui->userLabel->setText(tr("Authenticating as %1").arg(user.toString().remove("unix-user:")));
             break;
         }
     }
@@ -112,7 +126,11 @@ void Authenticate::setUser(QString user) {
 void Authenticate::setUsers(PolkitQt1::Identity::List users) {
     ui->authenticationUsers->clear();
     for (PolkitQt1::Identity identity : users) {
-        ui->authenticationUsers->addItem(identity.toString().remove("unix-user:"), QVariant::fromValue(identity));
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(identity.toString().remove("unix-user:"));
+        item->setData(Qt::UserRole, QVariant::fromValue(identity));
+        ui->authenticationUsers->addItem(item);
+        //ui->authenticationUsers->addItem(identity.toString().remove("unix-user:"), QVariant::fromValue(identity));
     }
 }
 
@@ -148,11 +166,6 @@ void Authenticate::on_keyboardButton_clicked()
     tVirtualKeyboard::instance()->showKeyboard();
 }
 
-void Authenticate::on_authenticationUsers_currentIndexChanged(int index)
-{
-    emit this->newUser(ui->authenticationUsers->itemData(index).value<PolkitQt1::Identity>());
-}
-
 void Authenticate::reject() {
     QDialog::reject();
     XUngrabKeyboard(QX11Info::display(), CurrentTime);
@@ -161,4 +174,22 @@ void Authenticate::reject() {
 
 void Authenticate::setDetails(const PolkitQt1::Details& details) {
     qDebug() << details.keys();
+}
+
+void Authenticate::on_backToMain_clicked()
+{
+    ui->mainStack->setCurrentIndex(0);
+}
+
+void Authenticate::on_switchUser_clicked()
+{
+    ui->mainStack->setCurrentIndex(1);
+}
+
+void Authenticate::on_authenticationUsers_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if (current != nullptr) {
+        emit this->newUser(current->data(Qt::UserRole).value<PolkitQt1::Identity>());
+        ui->mainStack->setCurrentIndex(0);
+    }
 }

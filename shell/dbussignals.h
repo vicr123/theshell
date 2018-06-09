@@ -37,6 +37,9 @@ class DBusSignals : public QObject
         Q_SCRIPTABLE void Ready();
         Q_SCRIPTABLE void ShowSplash();
         Q_SCRIPTABLE void HideSplash();
+
+    public Q_SLOTS:
+        Q_SCRIPTABLE void NextKeyboard();
 };
 
 #endif // DBUSSIGNALS_H

@@ -495,6 +495,16 @@ class InfoPaneDropdown : public QDialog
 
         void on_MousePasswordSetup_exit();
 
+        void on_websiteButton_clicked();
+
+        void on_bugButton_clicked();
+
+        void on_distroWebpage_clicked();
+
+        void on_distroSupport_clicked();
+
+        void on_sourcesButton_clicked();
+
     public slots:
         void getNetworks();
 

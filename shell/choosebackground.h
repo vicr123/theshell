@@ -65,6 +65,8 @@ class ChooseBackground : public QDialog
 
         void on_licenseInfoButton_clicked();
 
+        void on_stretchStyle_currentIndexChanged(int index);
+
     private:
         Ui::ChooseBackground *ui;
 

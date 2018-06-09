@@ -68,8 +68,41 @@ void Background::changeBackground() {
         }
         return;
     } else {
-        background.load(backPath);
-        background = background.scaled(screenGeometry.size());
+        QPixmap image;
+        image.load(backPath);
+        QPainter painter(&background);
+
+        //Clear background
+        painter.setBrush(QColor(0, 0, 0));
+        painter.setPen(Qt::transparent);
+        painter.drawRect(0, 0, background.width(), background.height());
+
+        //Draw background
+        switch (settings.value("desktop/stretchStyle", 0).toInt()) {
+            case 0: //Stretch
+                painter.drawPixmap(0, 0, background.width(), background.height(), image);
+                break;
+            case 1: { //Zoom and Crop
+                QRect rect;
+                rect.setSize(image.size().scaled(background.width(), background.height(), Qt::KeepAspectRatioByExpanding));
+                rect.moveLeft(background.width() / 2 - rect.width() / 2);
+                rect.moveTop(background.height() / 2 - rect.height() / 2);
+                painter.drawPixmap(rect, image);
+                break;
+            }
+            case 2: { //Center
+                QRect rect;
+                rect.setSize(image.size());
+                rect.moveLeft(background.width() / 2 - rect.width() / 2);
+                rect.moveTop(background.height() / 2 - rect.height() / 2);
+                painter.drawPixmap(rect, image);
+                break;
+            }
+            case 3: //Tile
+                painter.drawTiledPixmap(0, 0, background.width(), background.height(), image);
+                break;
+        }
+        //background = background.scaled(screenGeometry.size());
     }
 
     this->update();

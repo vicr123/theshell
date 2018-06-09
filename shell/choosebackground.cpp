@@ -76,6 +76,7 @@ ChooseBackground::ChooseBackground(QString currentCommunityBackground, QWidget *
 
     ui->waitTime->setValue(settings.value("desktop/waitTime", 30).toInt());
     ui->showLabels->setChecked(settings.value("desktop/showLabels", true).toBool());
+    ui->stretchStyle->setCurrentIndex(settings.value("desktop/stretchStyle", 0).toInt());
 
     if (currentCommunityBackground != "") {
         QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + currentCommunityBackground + "/metadata.json");
@@ -216,4 +217,10 @@ void ChooseBackground::on_licenseInfoButton_clicked()
     } else if (license == "WTFPL") {
         QProcess::startDetached("xdg-open \"http://www.wtfpl.net/about/\"");
     }
+}
+
+void ChooseBackground::on_stretchStyle_currentIndexChanged(int index)
+{
+    settings.setValue("desktop/stretchStyle", index);
+    emit reloadBackgrounds();
 }

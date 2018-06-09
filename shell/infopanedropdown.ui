@@ -689,14 +689,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>18</day>
+                 <day>17</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>18</day>
+                 <day>17</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2144,7 +2144,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>9</number>
+             <number>15</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2803,8 +2803,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>804</width>
-                   <height>671</height>
+                   <width>381</width>
+                   <height>547</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_54">
@@ -5094,7 +5094,8 @@
                          <string>Set Up</string>
                         </property>
                         <property name="icon">
-                         <iconset theme="configure"/>
+                         <iconset theme="configure">
+                          <normaloff>.</normaloff>.</iconset>
                         </property>
                        </widget>
                       </item>
@@ -5104,7 +5105,8 @@
                          <string>Remove Mouse Password</string>
                         </property>
                         <property name="icon">
-                         <iconset theme="delete"/>
+                         <iconset theme="delete">
+                          <normaloff>.</normaloff>.</iconset>
                         </property>
                        </widget>
                       </item>
@@ -6570,14 +6572,20 @@ Items that will be kept if you choose to keep files:
                     </widget>
                    </item>
                    <item row="1" column="1">
-                    <widget class="QLabel" name="distroWebpage">
+                    <widget class="ClickableLabel" name="distroWebpage">
+                     <property name="cursor">
+                      <cursorShape>PointingHandCursor</cursorShape>
+                     </property>
                      <property name="text">
                       <string notr="true">http://www.distro.org/</string>
                      </property>
                     </widget>
                    </item>
                    <item row="2" column="1">
-                    <widget class="QLabel" name="distroSupport">
+                    <widget class="ClickableLabel" name="distroSupport">
+                     <property name="cursor">
+                      <cursorShape>PointingHandCursor</cursorShape>
+                     </property>
                      <property name="text">
                       <string notr="true">http://www.distro.org/</string>
                      </property>
@@ -6752,6 +6760,56 @@ Items that will be kept if you choose to keep files:
                    <string notr="true">You compiled theShell on %1</string>
                   </property>
                  </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_25">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QPushButton" name="websiteButton">
+                    <property name="text">
+                     <string>Website</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="text-html"/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="bugButton">
+                    <property name="text">
+                     <string>File Bug</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="tools-report-bug"/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="sourcesButton">
+                    <property name="text">
+                     <string>Sources</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="commit"/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_41">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </item>

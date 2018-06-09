@@ -700,7 +700,8 @@ color: #FFF;</string>
             <string>Cancel</string>
            </property>
            <property name="icon">
-            <iconset theme="dialog-cancel"/>
+            <iconset theme="dialog-cancel">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -723,7 +724,8 @@ color: #FFF;</string>
             <string>Start a new session</string>
            </property>
            <property name="icon">
-            <iconset theme="system-switch-user"/>
+            <iconset theme="system-switch-user">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>

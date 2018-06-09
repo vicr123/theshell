@@ -649,7 +649,7 @@ void Menu::on_helpButton_clicked()
 
 void Menu::on_reportBugButton_clicked()
 {
-    QProcess::startDetached("ts-bugreport");
+    QProcess::startDetached("xdg-open https://github.com/vicr123/theshell/issues");
     this->close();
 }
 

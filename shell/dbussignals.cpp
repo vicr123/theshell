@@ -20,6 +20,9 @@
 
 #include "dbussignals.h"
 #include "theshell_adaptor.h"
+#include "mainwindow.h"
+
+extern MainWindow* MainWin;
 
 DBusSignals::DBusSignals(QObject *parent) : QObject(parent)
 {
@@ -27,4 +30,9 @@ DBusSignals::DBusSignals(QObject *parent) : QObject(parent)
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/org/thesuite/theshell", this);
     dbus.registerService("org.thesuite.theshell");
+}
+
+void DBusSignals::NextKeyboard() {
+    MainWin->getInfoPane()->setNextKeyboardLayout();
+    //Hotkeys->show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout), 5000);
 }

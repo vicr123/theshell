@@ -9,5 +9,7 @@
     </signal>
     <signal name="HideSplash">
     </signal>
+    <method name="NextKeyboard">
+    </method>
   </interface>
 </node>

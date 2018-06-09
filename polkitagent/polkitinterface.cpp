@@ -42,6 +42,7 @@ void PolkitInterface::initiateAuthentication(const QString &actionId, const QStr
     authWin->setDetails(details);
     authWin->setIcon(QIcon::fromTheme(iconName, QIcon::fromTheme("dialog-password")));
     authWin->setUsers(identities);
+    authWin->setUser(identities.first());
     authWin->showFullScreen(false);
 
     isAuthenticating = true;
@@ -62,7 +63,7 @@ void PolkitInterface::sessionComplete(bool ok) {
 
 void PolkitInterface::finish() {
     if (authenticatedOk || dialogCanceled) {
-        if (session == NULL) {
+        if (session == nullptr) {
             this->asyncResult->setCompleted();
         } else {
             session->result()->setCompleted();
@@ -76,6 +77,7 @@ void PolkitInterface::finish() {
         isAuthenticating = true;
         authWin->showFullScreen(true);
     }
+    session = nullptr;
 }
 
 void PolkitInterface::sessionRequest(QString request, bool echo) {

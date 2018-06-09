@@ -4277,3 +4277,33 @@ void InfoPaneDropdown::on_MousePasswordSetup_exit()
         ui->removeMousePassword->setVisible(false);
     }
 }
+
+void InfoPaneDropdown::on_websiteButton_clicked()
+{
+    QProcess::startDetached("xdg-open https://vicr123.github.io/theshell");
+    this->close();
+}
+
+void InfoPaneDropdown::on_bugButton_clicked()
+{
+    QProcess::startDetached("xdg-open https://github.com/vicr123/theshell/issues");
+    this->close();
+}
+
+void InfoPaneDropdown::on_distroWebpage_clicked()
+{
+    QProcess::startDetached("xdg-open " + ui->distroWebpage->text());
+    this->close();
+}
+
+void InfoPaneDropdown::on_distroSupport_clicked()
+{
+    QProcess::startDetached("xdg-open " + ui->distroSupport->text());
+    this->close();
+}
+
+void InfoPaneDropdown::on_sourcesButton_clicked()
+{
+    QProcess::startDetached("xdg-open https://github.com/vicr123/theshell");
+    this->close();
+}
