@@ -528,6 +528,7 @@ class InfoPaneDropdown : public QDialog
         bool mouseMovedUp = false;
         QRect dragRect;
         bool effectiveRedshiftOn = false;
+        bool draggingInfoPane = false;
         int overrideRedshift;
 
         QMap<int, QFrame*> notificationFrames;

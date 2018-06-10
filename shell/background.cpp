@@ -274,10 +274,6 @@ void Background::loadCommunityBackgroundMetadata() {
 }
 
 void Background::setCommunityBackground(QString bg) {
-    /*if (set) {
-        emit reloadBackground();
-        return;
-    }*/
     QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + bg + "/metadata.json");
     QFile imageFile(QDir::homePath() + "/.theshell/backgrounds/" + bg + "/" + bg + ".jpeg");
     if (!metadataFile.exists()) {

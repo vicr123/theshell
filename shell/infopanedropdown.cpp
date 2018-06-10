@@ -1532,55 +1532,46 @@ void InfoPaneDropdown::mousePressEvent(QMouseEvent *event) {
     initialPoint = mouseClickPoint;
     dragRect = this->geometry();
     mouseMovedUp = false;
+    draggingInfoPane = true;
     event->accept();
 }
 
 void InfoPaneDropdown::mouseMoveEvent(QMouseEvent *event) {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    if (draggingInfoPane) {
+        QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    if (event->globalY() < mouseClickPoint) {
-        mouseMovedUp = true;
-    } else {
-        mouseMovedUp = false;
-    }
-
-    //dragRect.translate(0, event->localPos().toPoint().y() - mouseClickPoint + this->y());
-    dragRect = screenGeometry;
-    dragRect.translate(0, event->globalY() - (initialPoint + screenGeometry.top()));
-
-    //innerRect.translate(event->localPos().toPoint().y() - mouseClickPoint, 0);
-
-    if (settings.value("bar/onTop", true).toBool()) {
-        if (dragRect.bottom() >= screenGeometry.bottom()) {
-            dragRect.moveTo(screenGeometry.left(), screenGeometry.top());
+        if (event->globalY() < mouseClickPoint) {
+            mouseMovedUp = true;
+        } else {
+            mouseMovedUp = false;
         }
-    } else {
-        if (dragRect.top() <= screenGeometry.top() - 1) {
-            dragRect.moveTo(screenGeometry.left(), screenGeometry.top() - 1);
-        }
-    }
-    this->setGeometry(dragRect);
 
-    mouseClickPoint = event->globalY();
-    event->accept();
+        //dragRect.translate(0, event->localPos().toPoint().y() - mouseClickPoint + this->y());
+        dragRect = screenGeometry;
+        dragRect.translate(0, event->globalY() - (initialPoint + screenGeometry.top()));
+
+        //innerRect.translate(event->localPos().toPoint().y() - mouseClickPoint, 0);
+
+        if (settings.value("bar/onTop", true).toBool()) {
+            if (dragRect.bottom() >= screenGeometry.bottom()) {
+                dragRect.moveTo(screenGeometry.left(), screenGeometry.top());
+            }
+        } else {
+            if (dragRect.top() <= screenGeometry.top() - 1) {
+                dragRect.moveTo(screenGeometry.left(), screenGeometry.top() - 1);
+            }
+        }
+        this->setGeometry(dragRect);
+
+        mouseClickPoint = event->globalY();
+        event->accept();
+    }
 }
 
 void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    if (initialPoint - 5 > mouseClickPoint && initialPoint + 5 < mouseClickPoint) {
-        tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
-        a->setStartValue(this->geometry());
-        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), this->height()));
-        a->setEasingCurve(QEasingCurve::OutCubic);
-        a->setDuration(500);
-        connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
-        a->start();
-    } else {
-        /*if ((mouseMovedUp && settings.value("bar/onTop", true).toBool()) ||
-                (!mouseMovedUp && !settings.value("bar/onTop", true).toBool())) {*/
-        if (mouseMovedUp == settings.value("bar/onTop", true).toBool()) {
-            this->close();
-        } else {
+    if (draggingInfoPane) {
+        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        if (initialPoint - 5 > mouseClickPoint && initialPoint + 5 < mouseClickPoint) {
             tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
             a->setStartValue(this->geometry());
             a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), this->height()));
@@ -1588,10 +1579,25 @@ void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
             a->setDuration(500);
             connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
             a->start();
+        } else {
+            /*if ((mouseMovedUp && settings.value("bar/onTop", true).toBool()) ||
+                    (!mouseMovedUp && !settings.value("bar/onTop", true).toBool())) {*/
+            if (mouseMovedUp == settings.value("bar/onTop", true).toBool()) {
+                this->close();
+            } else {
+                tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
+                a->setStartValue(this->geometry());
+                a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), this->height()));
+                a->setEasingCurve(QEasingCurve::OutCubic);
+                a->setDuration(500);
+                connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
+                a->start();
+            }
         }
+        event->accept();
+        initialPoint = 0;
+        draggingInfoPane = false;
     }
-    event->accept();
-    initialPoint = 0;
 }
 
 void InfoPaneDropdown::on_TouchFeedbackSwitch_toggled(bool checked)
