@@ -161,17 +161,17 @@
         <translation>Åben Status Center</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="296"/>
+        <location filename="../background.cpp" line="387"/>
         <source>by %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="407"/>
+        <location filename="../background.cpp" line="498"/>
         <source>For desktop</source>
         <translation>Til skrivebord</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="409"/>
+        <location filename="../background.cpp" line="500"/>
         <source>For system</source>
         <translation>Til system</translation>
     </message>
@@ -239,32 +239,62 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../choosebackground.ui" line="349"/>
+        <location filename="../choosebackground.ui" line="350"/>
         <source>by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../choosebackground.ui" line="378"/>
+        <location filename="../choosebackground.ui" line="379"/>
         <source>Select a file to display as your desktop background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../choosebackground.ui" line="444"/>
+        <location filename="../choosebackground.ui" line="453"/>
+        <source>Image Sizing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../choosebackground.ui" line="461"/>
+        <source>Stretch to Fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../choosebackground.ui" line="466"/>
+        <source>Zoom and Crop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../choosebackground.ui" line="471"/>
+        <source>Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../choosebackground.ui" line="476"/>
+        <source>Tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../choosebackground.ui" line="481"/>
+        <source>Zoom and Fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../choosebackground.ui" line="506"/>
         <source>Done</source>
         <translation>Udført</translation>
     </message>
     <message>
-        <location filename="../choosebackground.ui" line="390"/>
+        <location filename="../choosebackground.ui" line="391"/>
         <source>Browse...</source>
         <translation>Søg...</translation>
     </message>
     <message>
-        <location filename="../choosebackground.cpp" line="87"/>
+        <location filename="../choosebackground.cpp" line="88"/>
         <source>by %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../choosebackground.cpp" line="164"/>
+        <location filename="../choosebackground.cpp" line="165"/>
         <source>Select Background</source>
         <translation>Vælg Baggrund</translation>
     </message>
@@ -583,7 +613,7 @@
         <location filename="../infopanedropdown.ui" line="889"/>
         <location filename="../infopanedropdown.cpp" line="1192"/>
         <location filename="../infopanedropdown.cpp" line="1332"/>
-        <location filename="../infopanedropdown.cpp" line="1770"/>
+        <location filename="../infopanedropdown.cpp" line="1776"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
@@ -641,7 +671,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1371"/>
-        <location filename="../infopanedropdown.cpp" line="2829"/>
+        <location filename="../infopanedropdown.cpp" line="2835"/>
         <source>Charge History</source>
         <translation>Opladnings Historik</translation>
     </message>
@@ -696,6 +726,21 @@
         <location filename="../infopanedropdown.ui" line="2270"/>
         <source>Autostart with</source>
         <translation>Autostart med</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="6772"/>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="6782"/>
+        <source>File Bug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="6792"/>
+        <source>Sources</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1976"/>
@@ -845,42 +890,42 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2102"/>
-        <location filename="../infopanedropdown.ui" line="6363"/>
+        <location filename="../infopanedropdown.ui" line="6365"/>
         <source>Advanced</source>
         <translation>Advanceret</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6508"/>
+        <location filename="../infopanedropdown.ui" line="6510"/>
         <source>System Information</source>
         <translation>System Information</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6548"/>
+        <location filename="../infopanedropdown.ui" line="6550"/>
         <source>You&apos;re using</source>
         <translation>Du bruger</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6589"/>
+        <location filename="../infopanedropdown.ui" line="6597"/>
         <source>Support</source>
         <translation>Support</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6622"/>
+        <location filename="../infopanedropdown.ui" line="6630"/>
         <source>Available Swap</source>
         <translation>Tilgængelig Swap</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6629"/>
+        <location filename="../infopanedropdown.ui" line="6637"/>
         <source>Available Memory</source>
         <translation>Tilgængelig Hukommelse</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6649"/>
+        <location filename="../infopanedropdown.ui" line="6657"/>
         <source>Kernel Version</source>
         <translation>Kerne Version</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6670"/>
+        <location filename="../infopanedropdown.ui" line="6678"/>
         <source>Qt Version</source>
         <translation>Qt Version</translation>
     </message>
@@ -1002,7 +1047,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2311"/>
         <location filename="../infopanedropdown.ui" line="2375"/>
-        <location filename="../infopanedropdown.ui" line="6080"/>
+        <location filename="../infopanedropdown.ui" line="6082"/>
         <source>Back</source>
         <translation type="unfinished">Tilbage</translation>
     </message>
@@ -1311,7 +1356,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4246"/>
-        <location filename="../infopanedropdown.cpp" line="4164"/>
+        <location filename="../infopanedropdown.cpp" line="4170"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1332,91 +1377,91 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5104"/>
+        <location filename="../infopanedropdown.ui" line="5105"/>
         <source>Remove Mouse Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5129"/>
-        <location filename="../infopanedropdown.cpp" line="4255"/>
+        <location filename="../infopanedropdown.ui" line="5131"/>
         <location filename="../infopanedropdown.cpp" line="4261"/>
+        <location filename="../infopanedropdown.cpp" line="4267"/>
         <source>Mouse Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5136"/>
+        <location filename="../infopanedropdown.ui" line="5138"/>
         <source>A mouse password trades security for convenience on the lock screen by substituting your password with a sequence of mouse buttons. &lt;b&gt;This can only be used on the lock screen, not while logging in.&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5220"/>
+        <location filename="../infopanedropdown.ui" line="5222"/>
         <source>Select a user</source>
         <translation>Vælg en bruger</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5289"/>
+        <location filename="../infopanedropdown.ui" line="5291"/>
         <source>Next</source>
         <translation>Næste</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5360"/>
-        <location filename="../infopanedropdown.cpp" line="2288"/>
+        <location filename="../infopanedropdown.ui" line="5362"/>
+        <location filename="../infopanedropdown.cpp" line="2294"/>
         <source>Edit User</source>
         <translation>Redigér Bruger</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5404"/>
+        <location filename="../infopanedropdown.ui" line="5406"/>
         <source>Retype Password</source>
         <translation>Genskriv Adgangskode</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5411"/>
+        <location filename="../infopanedropdown.ui" line="5413"/>
         <source>Full Name</source>
         <translation>Fulde Navn</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5421"/>
-        <location filename="../infopanedropdown.ui" line="5444"/>
-        <location filename="../infopanedropdown.cpp" line="2292"/>
-        <location filename="../infopanedropdown.cpp" line="2293"/>
+        <location filename="../infopanedropdown.ui" line="5423"/>
+        <location filename="../infopanedropdown.ui" line="5446"/>
+        <location filename="../infopanedropdown.cpp" line="2298"/>
+        <location filename="../infopanedropdown.cpp" line="2299"/>
         <source>(unchanged)</source>
         <translation>(uændret)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5428"/>
-        <location filename="../infopanedropdown.cpp" line="2332"/>
-        <location filename="../infopanedropdown.cpp" line="2337"/>
+        <location filename="../infopanedropdown.ui" line="5430"/>
+        <location filename="../infopanedropdown.cpp" line="2338"/>
+        <location filename="../infopanedropdown.cpp" line="2343"/>
         <source>Username</source>
         <translation>Brugernavn</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5454"/>
+        <location filename="../infopanedropdown.ui" line="5456"/>
         <source>Password</source>
         <translation>Adgangskode</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5461"/>
+        <location filename="../infopanedropdown.ui" line="5463"/>
         <source>Password Hint</source>
         <translation>Adgangskode Tip</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5468"/>
+        <location filename="../infopanedropdown.ui" line="5470"/>
         <source>Account Type</source>
         <translation>Bruger Type</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5480"/>
+        <location filename="../infopanedropdown.ui" line="5482"/>
         <source>Standard</source>
         <translation>Standart</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5490"/>
+        <location filename="../infopanedropdown.ui" line="5492"/>
         <source>Administrator</source>
         <translation>Adminstrator</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5563"/>
-        <location filename="../infopanedropdown.ui" line="5645"/>
+        <location filename="../infopanedropdown.ui" line="5565"/>
+        <location filename="../infopanedropdown.ui" line="5647"/>
         <source>Delete User</source>
         <translation>Slet Bruger</translation>
     </message>
@@ -1427,54 +1472,54 @@
         <translation>Annullér</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5574"/>
+        <location filename="../infopanedropdown.ui" line="5576"/>
         <source>Apply Changes</source>
         <translation>Anvend Ændringer</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5758"/>
+        <location filename="../infopanedropdown.ui" line="5760"/>
         <source>Delete user only</source>
         <translation>Slet kun bruger</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5769"/>
+        <location filename="../infopanedropdown.ui" line="5771"/>
         <source>Delete user and all files</source>
         <translation>Slet bruger og alle filer</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2075"/>
-        <location filename="../infopanedropdown.ui" line="5810"/>
+        <location filename="../infopanedropdown.ui" line="5812"/>
         <source>Date and Time</source>
         <translation>Dato og Tid</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5885"/>
+        <location filename="../infopanedropdown.ui" line="5887"/>
         <source>Set</source>
         <translation>Sæt</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5926"/>
+        <location filename="../infopanedropdown.ui" line="5928"/>
         <source>Use network to sync date and time</source>
         <translation>Synkronisér tid og dato via internettet</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5957"/>
+        <location filename="../infopanedropdown.ui" line="5959"/>
         <source>Use 24 hour time</source>
         <translation>Brug 24 timers tid (anbefalet)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5964"/>
+        <location filename="../infopanedropdown.ui" line="5966"/>
         <source>TwentyFourHourSwitch</source>
         <translation>TwentyFourHourSwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2084"/>
-        <location filename="../infopanedropdown.ui" line="6145"/>
+        <location filename="../infopanedropdown.ui" line="6147"/>
         <source>Language</source>
         <translation>Sprog</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5687"/>
+        <location filename="../infopanedropdown.ui" line="5689"/>
         <source>Do you also want to keep files from this user?
 
 Items that will be kept if you choose to keep files:
@@ -1490,130 +1535,130 @@ Ting der vil blive beholdt vis du vælger at beholde dem:
 - Midlertidige filer </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5705"/>
+        <location filename="../infopanedropdown.ui" line="5707"/>
         <source>This is the final step. The user will be deleted once you choose whether to keep or remove files.</source>
         <translation>Dette er det sidste trin. Brugeren vil blive slettet så snart du vælger om du vil beholde filer, eller ej.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6007"/>
+        <location filename="../infopanedropdown.ui" line="6009"/>
         <source>Set System Timezone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6041"/>
+        <location filename="../infopanedropdown.ui" line="6043"/>
         <source>Where are you located?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6104"/>
+        <location filename="../infopanedropdown.ui" line="6106"/>
         <source>Set Timezone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6169"/>
+        <location filename="../infopanedropdown.ui" line="6171"/>
         <source>Changing this setting requires you to log in and then log out.</source>
         <translation>Dansk oversættelse lavet af Theis Nielsen (https://github.com/Member1221)
 At ændre denne indstilling kræver at du logger ud og ind.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6294"/>
+        <location filename="../infopanedropdown.ui" line="6296"/>
         <source>HighContrastSwitch</source>
         <translation>HøjKontrastKontakt</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6257"/>
+        <location filename="../infopanedropdown.ui" line="6259"/>
         <source>System Animations</source>
         <translation>System Animationer</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6304"/>
+        <location filename="../infopanedropdown.ui" line="6306"/>
         <source>SystemAnimationsAccessibilitySwitch</source>
         <translation>SystemAnimationerTilgængelighedKontakt</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6250"/>
+        <location filename="../infopanedropdown.ui" line="6252"/>
         <source>High Contrast</source>
         <translation>Høj Kontrast</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6243"/>
+        <location filename="../infopanedropdown.ui" line="6245"/>
         <source>Large Text</source>
         <translation>Større Tekst</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6277"/>
+        <location filename="../infopanedropdown.ui" line="6279"/>
         <source>LargeTextSwitch</source>
         <translation>StørreTekstKontakt</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6287"/>
+        <location filename="../infopanedropdown.ui" line="6289"/>
         <source>Tone on Caps Lock and Num Lock</source>
         <translation>Afspil tone ved tryk på Caps Lock og Num Lock</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6317"/>
+        <location filename="../infopanedropdown.ui" line="6319"/>
         <source>CapsNumLockBellSwitch</source>
         <translation>CapsNumLockKlokkeKontakt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2093"/>
-        <location filename="../infopanedropdown.ui" line="6203"/>
+        <location filename="../infopanedropdown.ui" line="6205"/>
         <source>Accessibility</source>
         <translation>Tilgængelighed</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6403"/>
+        <location filename="../infopanedropdown.ui" line="6405"/>
         <source>Window Manager Command</source>
         <translation>Vindue Håndterings Kommando</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6438"/>
+        <location filename="../infopanedropdown.ui" line="6440"/>
         <source>The items under here can do some bad things. Make sure you know what you&apos;re doing.</source>
         <translation>Elementerne under her kan gøre nogen slemme ting. Vær sikker på hvad du gør.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6427"/>
+        <location filename="../infopanedropdown.ui" line="6429"/>
         <location filename="../infopanedropdown.cpp" line="1513"/>
         <source>Reset theShell</source>
         <translation>Nulstil theShell</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6416"/>
+        <location filename="../infopanedropdown.ui" line="6418"/>
         <source>Reset Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6684"/>
+        <location filename="../infopanedropdown.ui" line="6692"/>
         <source>Processor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6745"/>
+        <location filename="../infopanedropdown.ui" line="6753"/>
         <source>Desktop Environment</source>
         <translation>Skrivebords Miljø</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3064"/>
+        <location filename="../infopanedropdown.cpp" line="3070"/>
         <source>Blue</source>
         <translation>Blå</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3065"/>
+        <location filename="../infopanedropdown.cpp" line="3071"/>
         <source>Green</source>
         <translation>Grøn</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3066"/>
+        <location filename="../infopanedropdown.cpp" line="3072"/>
         <source>Orange</source>
         <translation>Orange</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3067"/>
+        <location filename="../infopanedropdown.cpp" line="3073"/>
         <source>Pink</source>
         <translation>Pink</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3068"/>
+        <location filename="../infopanedropdown.cpp" line="3074"/>
         <source>Turquoise</source>
         <translation>Turkis</translation>
     </message>
@@ -1733,129 +1778,129 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <translation>Alle indstillinger vil blive nulstillet, du vil derefter blive logget ud. Er du sikker på at du vil gøre det her?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1777"/>
+        <location filename="../infopanedropdown.cpp" line="1783"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2062"/>
+        <location filename="../infopanedropdown.cpp" line="2068"/>
         <source>Last updated %1</source>
         <translation>Sidst opdateret %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2100"/>
+        <location filename="../infopanedropdown.cpp" line="2106"/>
         <source>Log in to network</source>
         <translation>Log ind til netværk</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2106"/>
+        <location filename="../infopanedropdown.cpp" line="2112"/>
         <source>Network Login</source>
         <translation>Netværks Login</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2107"/>
+        <location filename="../infopanedropdown.cpp" line="2113"/>
         <source>Your connection to the internet is blocked by a login page.</source>
         <translation>Din forbindelse til internettet er blokeret af en log-ind side.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2255"/>
+        <location filename="../infopanedropdown.cpp" line="2261"/>
         <source>Add New User</source>
         <translation>Tilføj Ny Bruger</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2267"/>
-        <location filename="../infopanedropdown.cpp" line="4211"/>
-        <location filename="../infopanedropdown.cpp" line="4231"/>
+        <location filename="../infopanedropdown.cpp" line="2273"/>
+        <location filename="../infopanedropdown.cpp" line="4217"/>
+        <location filename="../infopanedropdown.cpp" line="4237"/>
         <source>Unauthorized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2267"/>
+        <location filename="../infopanedropdown.cpp" line="2273"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2279"/>
+        <location filename="../infopanedropdown.cpp" line="2285"/>
         <source>New User</source>
         <translation>Ny Bruger</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2282"/>
-        <location filename="../infopanedropdown.cpp" line="2283"/>
-        <location filename="../infopanedropdown.cpp" line="2298"/>
-        <location filename="../infopanedropdown.cpp" line="2299"/>
+        <location filename="../infopanedropdown.cpp" line="2288"/>
+        <location filename="../infopanedropdown.cpp" line="2289"/>
+        <location filename="../infopanedropdown.cpp" line="2304"/>
+        <location filename="../infopanedropdown.cpp" line="2305"/>
         <source>(none)</source>
         <translation>(intet)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2295"/>
-        <location filename="../infopanedropdown.cpp" line="2296"/>
+        <location filename="../infopanedropdown.cpp" line="2301"/>
+        <location filename="../infopanedropdown.cpp" line="2302"/>
         <source>(set at next login)</source>
         <translation>(Set ved næste log-ind)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2327"/>
+        <location filename="../infopanedropdown.cpp" line="2333"/>
         <source>Password Check</source>
         <translation>Adgangskode Check</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2327"/>
+        <location filename="../infopanedropdown.cpp" line="2333"/>
         <source>The passwords don&apos;t match.</source>
         <translation>Adgangskoderne er ikke ens.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2332"/>
+        <location filename="../infopanedropdown.cpp" line="2338"/>
         <source>The username must not contain spaces.</source>
         <translation>Brugernavnet må ikke indeholde mellemrum.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2337"/>
+        <location filename="../infopanedropdown.cpp" line="2343"/>
         <source>The username must not contain capital letters.</source>
         <translation>Brugernavnet må ikke indeholde store bogstaver.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2840"/>
+        <location filename="../infopanedropdown.cpp" line="2846"/>
         <source>Rate History</source>
         <translation>Rate Historik</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2851"/>
+        <location filename="../infopanedropdown.cpp" line="2857"/>
         <source>Application Power Usage</source>
         <translation>Applikations Strøm Forbrug</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3060"/>
+        <location filename="../infopanedropdown.cpp" line="3066"/>
         <source>Oxygen</source>
         <translation>Oxygen Tema</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3061"/>
+        <location filename="../infopanedropdown.cpp" line="3067"/>
         <source>Breeze</source>
         <translation>Breeze Tema</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3331"/>
+        <location filename="../infopanedropdown.cpp" line="3337"/>
         <source>Notifications for %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3339"/>
+        <location filename="../infopanedropdown.cpp" line="3345"/>
         <source>You can&apos;t configure notifications for %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3476"/>
-        <location filename="../infopanedropdown.cpp" line="3486"/>
-        <location filename="../infopanedropdown.cpp" line="3496"/>
-        <location filename="../infopanedropdown.cpp" line="3506"/>
+        <location filename="../infopanedropdown.cpp" line="3482"/>
+        <location filename="../infopanedropdown.cpp" line="3492"/>
+        <location filename="../infopanedropdown.cpp" line="3502"/>
+        <location filename="../infopanedropdown.cpp" line="3512"/>
         <source>Never</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="3478"/>
-        <location filename="../infopanedropdown.cpp" line="3488"/>
-        <location filename="../infopanedropdown.cpp" line="3498"/>
-        <location filename="../infopanedropdown.cpp" line="3508"/>
+        <location filename="../infopanedropdown.cpp" line="3484"/>
+        <location filename="../infopanedropdown.cpp" line="3494"/>
+        <location filename="../infopanedropdown.cpp" line="3504"/>
+        <location filename="../infopanedropdown.cpp" line="3514"/>
         <source>%n min(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1863,27 +1908,27 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3841"/>
+        <location filename="../infopanedropdown.cpp" line="3847"/>
         <source>Log Out Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3844"/>
+        <location filename="../infopanedropdown.cpp" line="3850"/>
         <source>Logoff Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3847"/>
+        <location filename="../infopanedropdown.cpp" line="3853"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3849"/>
+        <location filename="../infopanedropdown.cpp" line="3855"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="3952"/>
+        <location filename="../infopanedropdown.cpp" line="3958"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1891,52 +1936,52 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3955"/>
+        <location filename="../infopanedropdown.cpp" line="3961"/>
         <source>end</source>
         <comment>Context: &quot;Daylight Savings Time will end.&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3955"/>
+        <location filename="../infopanedropdown.cpp" line="3961"/>
         <source>begin</source>
         <comment>Context: &quot;Daylight Savings Time will begin.&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3957"/>
+        <location filename="../infopanedropdown.cpp" line="3963"/>
         <source>backwards</source>
         <comment>Context: &quot;The clock will automatically adjust backwards&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3957"/>
+        <location filename="../infopanedropdown.cpp" line="3963"/>
         <source>forwards</source>
         <comment>Context: &quot;The clock will automatically adjust forwards&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="4211"/>
-        <location filename="../infopanedropdown.cpp" line="4231"/>
+        <location filename="../infopanedropdown.cpp" line="4217"/>
+        <location filename="../infopanedropdown.cpp" line="4237"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="4226"/>
+        <location filename="../infopanedropdown.cpp" line="4232"/>
         <source>Remove Mouse Password?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="4226"/>
+        <location filename="../infopanedropdown.cpp" line="4232"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="4256"/>
+        <location filename="../infopanedropdown.cpp" line="4262"/>
         <source>Mouse Password was removed successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="4262"/>
+        <location filename="../infopanedropdown.cpp" line="4268"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation type="unfinished"></translation>
     </message>
