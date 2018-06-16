@@ -28,6 +28,7 @@
 #include "notificationappgroup.h"
 #include <QScrollArea>
 #include "nativeeventfilter.h"
+#include "mediaplayernotification.h"
 
 namespace Ui {
 class NotificationsWidget;
@@ -61,6 +62,7 @@ private:
 
     QMap<int, NotificationObject*> notifications;
     QList<NotificationAppGroup*> notificationGroups;
+    QMap<QString, MediaPlayerNotification*> mediaPlayers;
 };
 
 #endif // NOTIFICATIONSWIDGET_H

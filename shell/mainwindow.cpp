@@ -1346,7 +1346,7 @@ void MainWindow::setMprisCurrentApp(QString app) {
         QDBusConnection::sessionBus().disconnect(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(updateMpris(QString,QMap<QString, QVariant>,QStringList)));
     }
     mprisCurrentAppName = app;
-    qDebug() << QDBusConnection::sessionBus().connect(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(updateMpris(QString,QMap<QString, QVariant>,QStringList)));
+    QDBusConnection::sessionBus().connect(mprisCurrentAppName, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(updateMpris(QString,QMap<QString, QVariant>,QStringList)));
     updateMpris();
 }
 

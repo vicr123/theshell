@@ -33,6 +33,39 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
     ndbus->setParentWidget(this);
 
     ui->scrollArea->installEventFilter(this);
+
+    QTimer* t = new QTimer();
+    t->setInterval(1000);
+    connect(t, &QTimer::timeout, [=] {
+        QStringList knownServices;
+        for (QString service : QDBusConnection::sessionBus().interface()->registeredServiceNames().value()) {
+            if (service.startsWith("org.mpris.MediaPlayer2")) {
+                knownServices.append(service);
+                if (!mediaPlayers.keys().contains(service)) {
+                    MediaPlayerNotification* n = new MediaPlayerNotification(service);
+                    mediaPlayers.insert(service, n);
+                    ((QBoxLayout*) ui->notificationGroups->layout())->insertWidget(0, n);
+                    ui->noNotificationsFrame->setVisible(false);
+                    connect(n, &MediaPlayerNotification::destroyed, [=] {
+                        mediaPlayers.remove(service);
+                        ui->notificationGroups->layout()->removeWidget(n);
+
+                        if (notifications.count() == 0 && mediaPlayers.count() == 0) {
+                            ui->noNotificationsFrame->setVisible(true);
+                        }
+                    });
+                }
+            }
+        }
+
+        for (QString service : mediaPlayers.keys()) {
+            if (!knownServices.contains(service)) {
+                mediaPlayers.value(service)->deleteLater();
+            }
+        }
+
+    });
+    t->start();
 }
 
 NotificationsWidget::~NotificationsWidget()
@@ -52,7 +85,7 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
         emit ndbus->NotificationClosed(object->getId(), reason);
         notifications.remove(object->getId());
 
-        if (notifications.count() == 0) {
+        if (notifications.count() == 0 && mediaPlayers.count() == 0) {
             ui->noNotificationsFrame->setVisible(true);
         }
     });
@@ -68,7 +101,7 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
 
     if (nGroup == NULL) {
         nGroup = new NotificationAppGroup(object->getAppIdentifier(), object->getAppIcon(), object->getAppName());
-        ((QBoxLayout*) ui->notificationGroups->layout())->insertWidget(0, nGroup);
+        ((QBoxLayout*) ui->notificationGroups->layout())->insertWidget(mediaPlayers.count(), nGroup);
 
         connect(nGroup, SIGNAL(notificationCountChanged()), this, SLOT(updateNotificationCount()));
 
