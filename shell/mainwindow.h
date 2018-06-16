@@ -142,6 +142,8 @@ private slots:
 
     void DBusNewService(QString name);
 
+    void setMprisCurrentApp(QString app);
+
     void on_mprisPause_clicked();
 
     void on_mprisBack_clicked();
@@ -163,6 +165,8 @@ private slots:
     void on_mprisSelection_triggered(QAction *arg1);
 
     void updateMpris();
+
+    void updateMpris(QString interfaceName, QMap<QString, QVariant> properties, QStringList changedProperties);
 
     void on_time_dragging(int , int );
 

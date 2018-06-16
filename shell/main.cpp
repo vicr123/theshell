@@ -184,6 +184,9 @@ int main(int argc, char *argv[])
     a.setOrganizationDomain("");
     a.setApplicationName("theShell");
 
+    qDBusRegisterMetaType<QMap<QString, QVariant>>();
+    qDBusRegisterMetaType<QStringList>();
+
     QLocale defaultLocale(localeName);
     QLocale::setDefault(defaultLocale);
 
