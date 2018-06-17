@@ -12,6 +12,8 @@
 #include <QDirIterator>
 #include <QFileInfo>
 #include <QFile>
+#include <QTimer>
+#include <QSlider>
 
 namespace Ui {
     class MediaPlayerNotification;
@@ -38,10 +40,18 @@ class MediaPlayerNotification : public QFrame
 
         void on_closeButton_clicked();
 
+        void updatePosition();
+
+        void updatePosition(qint64 position);
+
     private:
         Ui::MediaPlayerNotification *ui;
         QString service;
         QNetworkAccessManager mgr;
+        double rate;
+        QString playbackStatus;
+
+        QPalette defaultPal;
 };
 
 #endif // MEDIAPLAYERNOTIFICATION_H

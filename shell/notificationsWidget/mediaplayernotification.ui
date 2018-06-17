@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>552</width>
-    <height>103</height>
+    <height>128</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -148,6 +148,17 @@
        </property>
        <property name="flat">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QSlider" name="position">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>

@@ -7,7 +7,10 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
 {
     ui->setupUi(this);
 
+    this->defaultPal = this->palette();
+
     QDBusConnection::sessionBus().connect(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(updateMpris(QString,QMap<QString, QVariant>,QStringList)));
+    QDBusConnection::sessionBus().connect(service, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "Seeked", this, SLOT(updatePosition(qint64)));
     this->service = service;
 
     //Get Quit Capability
@@ -115,6 +118,10 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
         albumArt = replyData.value("mpris:artUrl").toString();
     }
 
+    if (replyData.contains("mpris:length")) {
+        ui->position->setMaximum(replyData.value("mpris:length").toUInt());
+    }
+
     setDetails(title, artist, album, albumArt);
 
 
@@ -123,11 +130,31 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
     PlayStatRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "PlaybackStatus");
 
     QDBusReply<QVariant> PlayStat(QDBusConnection::sessionBus().call(PlayStatRequest));
-    if (PlayStat.value().toString() == "Playing") {
+    playbackStatus = PlayStat.value().toString();
+    if (playbackStatus == "Playing") {
         ui->playPauseButton->setIcon(QIcon::fromTheme("media-playback-pause"));
     } else {
         ui->playPauseButton->setIcon(QIcon::fromTheme("media-playback-start"));
     }
+
+    //Get Rate
+    QDBusMessage RateRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
+    RateRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Rate");
+
+    QDBusReply<QVariant> RateReply(QDBusConnection::sessionBus().call(RateRequest));
+    rate = RateReply.value().toDouble();
+
+    //Get Position
+    QDBusMessage PosRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
+    PosRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Position");
+
+    QDBusReply<qint64> PosReply(QDBusConnection::sessionBus().call(PosRequest));
+    ui->position->setValue(PosReply.value());
+
+    QTimer* t = new QTimer();
+    t->setInterval(1000);
+    connect(t, SIGNAL(timeout()), this, SLOT(updatePosition()));
+    t->start();
 }
 
 MediaPlayerNotification::~MediaPlayerNotification()
@@ -172,22 +199,35 @@ void MediaPlayerNotification::updateMpris(QString interfaceName, QMap<QString, Q
                 albumArt = replyData.value("mpris:artUrl").toString();
             }
 
+            if (replyData.contains("mpris:length")) {
+                ui->position->setMaximum(replyData.value("mpris:length").toUInt());
+            }
+
             setDetails(title, artist, album, albumArt);
         }
 
         if (properties.keys().contains("PlaybackStatus")) {
-            if (properties.value("PlaybackStatus").toString() == "Playing") {
+            playbackStatus = properties.value("PlaybackStatus").toString();
+            if (playbackStatus == "Playing") {
                 ui->playPauseButton->setIcon(QIcon::fromTheme("media-playback-pause"));
             } else {
                 ui->playPauseButton->setIcon(QIcon::fromTheme("media-playback-start"));
             }
+        }
+
+
+        if (properties.keys().contains("Rate")) {
+            rate = properties.value("Rate").toDouble();
         }
     }
 
 }
 
 void MediaPlayerNotification::setDetails(QString title, QString artist, QString album, QString albumArt) {
-    ui->detailsLabel->setText(title);
+    if (ui->detailsLabel->text() != title) {
+        updatePosition(0);
+        ui->detailsLabel->setText(title);
+    }
 
     if (artist == "" && album == "") {
         ui->supplementaryLabel->setVisible(false);
@@ -203,6 +243,7 @@ void MediaPlayerNotification::setDetails(QString title, QString artist, QString 
     }
 
     ui->albumArt->setPixmap(QIcon::fromTheme("audio").pixmap(48, 48));
+    this->setPalette(defaultPal);
     if (albumArt != "") {
         QNetworkRequest req((QUrl(albumArt)));
         QNetworkReply* reply = mgr.get(req);
@@ -210,6 +251,46 @@ void MediaPlayerNotification::setDetails(QString title, QString artist, QString 
             if (reply->error() == QNetworkReply::NoError) {
                 QImage image = QImage::fromData(reply->readAll());
                 if (!image.isNull()) {
+                    image = image.scaled(48, 48, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+                    qulonglong red = 0, green = 0, blue = 0;
+
+                    QPalette pal = this->defaultPal;
+                    int totalPixels = 0;
+                    for (int i = 0; i < image.width(); i++) {
+                        for (int j = 0; j < image.height(); j++) {
+                            QColor c = image.pixelColor(i, j);
+                            if (c.alpha() != 0) {
+                                red += c.red();
+                                green += c.green();
+                                blue += c.blue();
+                                totalPixels++;
+                            }
+                        }
+                    }
+
+                    QColor c;
+                    int averageCol = (pal.color(QPalette::Window).red() + pal.color(QPalette::Window).green() + pal.color(QPalette::Window).blue()) / 3;
+
+                    if (totalPixels == 0) {
+                        if (averageCol < 127) {
+                            c = pal.color(QPalette::Window).darker(200);
+                        } else {
+                            c = pal.color(QPalette::Window).lighter(200);
+                        }
+                    } else {
+                        c = QColor(red / totalPixels, green / totalPixels, blue / totalPixels);
+
+                        if (averageCol < 127) {
+                            c = c.darker(200);
+                        } else {
+                            c = c.lighter(200);
+                        }
+                    }
+
+                    pal.setColor(QPalette::Window, c);
+                    this->setPalette(pal);
+
                     ui->albumArt->setPixmap(QPixmap::fromImage(image).scaled(48, 48, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
                 }
             }
@@ -236,4 +317,15 @@ void MediaPlayerNotification::on_nextButton_clicked()
 void MediaPlayerNotification::on_closeButton_clicked()
 {
     QDBusConnection::sessionBus().call(QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2", "Quit"), QDBus::NoBlock);
+}
+
+void MediaPlayerNotification::updatePosition() {
+    if (playbackStatus == "Playing") {
+        int currentValue = ui->position->value();
+        ui->position->setValue(currentValue + (rate * 1000000));
+    }
+}
+
+void MediaPlayerNotification::updatePosition(qint64 position) {
+    ui->position->setValue(position);
 }
