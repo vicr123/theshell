@@ -64,6 +64,7 @@ void NotificationAppGroup::AddNotification(NotificationObject *object) {
             anim->setEndValue(0);
             anim->setEasingCurve(QEasingCurve::OutCubic);
             anim->setDuration(500);
+            connect(anim, SIGNAL(finished()), this, SLOT(deleteLater()));
             connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
             connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
                 this->setFixedHeight(value.toInt());

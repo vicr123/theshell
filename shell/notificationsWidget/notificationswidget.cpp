@@ -104,6 +104,10 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
         ((QBoxLayout*) ui->notificationGroups->layout())->insertWidget(mediaPlayers.count(), nGroup);
 
         connect(nGroup, SIGNAL(notificationCountChanged()), this, SLOT(updateNotificationCount()));
+        connect(nGroup, &NotificationAppGroup::destroyed, [=] {
+            ui->notificationGroups->layout()->removeWidget(nGroup);
+            notificationGroups.removeOne(nGroup);
+        });
 
         notificationGroups.append(nGroup);
     }
