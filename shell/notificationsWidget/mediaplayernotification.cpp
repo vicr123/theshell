@@ -122,6 +122,10 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
         ui->position->setMaximum(replyData.value("mpris:length").toUInt());
     }
 
+    if (replyData.contains("mpris:trackid")) {
+        trackId = replyData.value("mpris:trackid").value<QDBusObjectPath>();
+    }
+
     setDetails(title, artist, album, albumArt);
 
 
@@ -148,12 +152,21 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
     QDBusMessage PosRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     PosRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Position");
 
-    QDBusReply<qint64> PosReply(QDBusConnection::sessionBus().call(PosRequest));
-    ui->position->setValue(PosReply.value());
+    QDBusReply<QVariant> PosReply(QDBusConnection::sessionBus().call(PosRequest));
+    ui->position->setValue(PosReply.value().toInt());
+
+    //Get Seekable
+    QDBusMessage SeekableRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
+    SeekableRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "CanSeek");
+
+    QDBusReply<bool> SeekableReply(QDBusConnection::sessionBus().call(SeekableRequest));
+    ui->position->setEnabled(SeekableReply.value());
 
     QTimer* t = new QTimer();
     t->setInterval(1000);
     connect(t, SIGNAL(timeout()), this, SLOT(updatePosition()));
+    connect(this, SIGNAL(destroyed(QObject*)), t, SLOT(stop()));
+    connect(this, SIGNAL(destroyed(QObject*)), t, SLOT(deleteLater()));
     t->start();
 }
 
@@ -203,6 +216,10 @@ void MediaPlayerNotification::updateMpris(QString interfaceName, QMap<QString, Q
                 ui->position->setMaximum(replyData.value("mpris:length").toUInt());
             }
 
+            if (replyData.contains("mpris:trackid")) {
+                trackId = replyData.value("mpris:trackid").value<QDBusObjectPath>();
+            }
+
             setDetails(title, artist, album, albumArt);
         }
 
@@ -215,9 +232,12 @@ void MediaPlayerNotification::updateMpris(QString interfaceName, QMap<QString, Q
             }
         }
 
-
         if (properties.keys().contains("Rate")) {
             rate = properties.value("Rate").toDouble();
+        }
+
+        if (properties.keys().contains("CanSeek")) {
+            ui->position->setEnabled(properties.value("CanSeek").toBool());
         }
     }
 
@@ -321,11 +341,22 @@ void MediaPlayerNotification::on_closeButton_clicked()
 
 void MediaPlayerNotification::updatePosition() {
     if (playbackStatus == "Playing") {
+        ui->position->blockSignals(true);
         int currentValue = ui->position->value();
         ui->position->setValue(currentValue + (rate * 1000000));
+        ui->position->blockSignals(false);
     }
 }
 
 void MediaPlayerNotification::updatePosition(qint64 position) {
+    ui->position->blockSignals(true);
     ui->position->setValue(position);
+    ui->position->blockSignals(false);
+}
+
+void MediaPlayerNotification::on_position_valueChanged(int value)
+{
+    QDBusMessage changeMessage = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player", "SetPosition");
+    changeMessage.setArguments(QList<QVariant>() << QVariant::fromValue(trackId) << (qint64) value);
+    QDBusConnection::sessionBus().call(changeMessage, QDBus::NoBlock);
 }

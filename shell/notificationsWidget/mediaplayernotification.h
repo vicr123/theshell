@@ -44,12 +44,15 @@ class MediaPlayerNotification : public QFrame
 
         void updatePosition(qint64 position);
 
+        void on_position_valueChanged(int value);
+
     private:
         Ui::MediaPlayerNotification *ui;
         QString service;
         QNetworkAccessManager mgr;
         double rate;
         QString playbackStatus;
+        QDBusObjectPath trackId;
 
         QPalette defaultPal;
 };
