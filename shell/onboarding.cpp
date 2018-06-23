@@ -25,8 +25,28 @@
 #define ChangelogOnbording \
     "New in theShell 8.0:\n"\
     "- Redshift can now be automatically timed according to the sunlight cycle based on your location\n"\
-    "- Status Center panes have been updated\n"\
+    "- Status Center panes now have a completely new and updated look\n"\
     "- The Compact Bar has been added\n"\
+    "- Screen Recording is now built into theShell. Use SHIFT+PRTSCR or SUPER+ALT+O to start recording your screen.\n"\
+    "- Switching users has now been made easier.\n"\
+    "- Configuration of GTK3 themes have been added into the Theme section of System Settings.\n"\
+    "- New Daylight Savings Time Changeover Notifications\n"\
+    "- theShell will now be able to act as a geoclue agent and provide prompts when an app requests access to your location\n"\
+    "- In the event of a crash, a new error screen with more information is displayed\n"\
+    "- Startup and power off experience improved\n"\
+    "- Right clicking on the bar is now possible\n"\
+    "- Improved experience when switching between languages\n"\
+    "- KDE Connect integration has been overhauled, with a new and more consistent interface\n"\
+    "- Redesigned Desktop Background Selection dialog\n"\
+    "- New Community Wallpapers with photos taken by the theShell community that are automatically cycled through for the desktop background\n"\
+    "- Wallpapers now have sizing options\n"\
+    "- Keyboard Layout is now configurable in theShell\n"\
+    "- Updated design for authentication dialog when an app requiring authentication is required\n"\
+    "- New Mouse Password! Use your mouse to unlock your computer so you don't have to type in your password every time\n"\
+    "- New media player controls! Find them in the Notifications pane of the Status Center while a media player is open\n"\
+    "- Notifications now show the time since the notification was posted\n"\
+    "- Fixed a bug relating to DPI settings\n"\
+    "- Fixed a bug relating to old autostarted apps starting up\n"\
     "\n"\
     "New in theShell 7.1:\n"\
     "- theWave has been discontinued.\n"\
