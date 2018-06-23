@@ -176,7 +176,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset theme="system-switch-user"/>
+               <iconset theme="system-switch-user">
+                <normaloff>.</normaloff>.</iconset>
               </property>
               <property name="flat">
                <bool>true</bool>
@@ -297,6 +298,9 @@
            <property name="icon">
             <iconset theme="go-previous">
              <normaloff>.</normaloff>.</iconset>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
            </property>
            <property name="flat">
             <bool>true</bool>
