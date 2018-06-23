@@ -35,11 +35,30 @@ NotificationPanel::NotificationPanel(NotificationObject* object, QWidget *parent
 
     updateParameters();
     this->setFixedHeight(0);
+
+    QTimer* t = new QTimer();
+    t->setInterval(60000);
+    connect(t, SIGNAL(timeout()), this, SLOT(updateTime()));
+    t->start();
 }
 
 NotificationPanel::~NotificationPanel()
 {
     delete ui;
+}
+
+void NotificationPanel::updateTime() {
+    QDateTime elapsed = QDateTime::fromMSecsSinceEpoch(object->getDate().msecsTo(QDateTime::currentDateTimeUtc()), Qt::UTC);
+
+    if (elapsed.date().day() > 1) {
+        ui->timeLabel->setText(tr("%n d", nullptr, elapsed.date().day() - 1));
+    } else if (elapsed.time().hour() >= 1) {
+        ui->timeLabel->setText(tr("%n hr", nullptr, elapsed.time().hour()));
+    } else if (elapsed.time().minute() >= 1) {
+        ui->timeLabel->setText(tr("%n min", nullptr, elapsed.time().minute()));
+    } else  {
+        ui->timeLabel->setText(tr("just now"));
+    }
 }
 
 void NotificationPanel::mouseReleaseEvent(QMouseEvent *event) {
@@ -49,6 +68,7 @@ void NotificationPanel::mouseReleaseEvent(QMouseEvent *event) {
 void NotificationPanel::updateParameters() {
     ui->summaryLabel->setText(object->getSummary());
     ui->bodyLabel->setText(object->getBody());
+    updateTime();
 }
 
 void NotificationPanel::on_closeButton_clicked()

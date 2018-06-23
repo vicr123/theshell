@@ -1,6 +1,8 @@
 #include "mediaplayernotification.h"
 #include "ui_mediaplayernotification.h"
 
+extern float getDPIScaling();
+
 MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *parent) :
     QFrame(parent),
     ui(new Ui::MediaPlayerNotification)
@@ -17,14 +19,14 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
     QDBusMessage QuitRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     QuitRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2" << "CanQuit");
 
-    QDBusReply<QVariant> quit(QDBusConnection::sessionBus().call(QuitRequest));
+    QDBusReply<QVariant> quit(QDBusConnection::sessionBus().call(QuitRequest, QDBus::Block, 1000));
     ui->closeButton->setEnabled(quit.value().toBool());
 
     //Get app name
     QDBusMessage IdentityRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     IdentityRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2" << "Identity");
 
-    QDBusReply<QDBusVariant> nameReply(QDBusConnection::sessionBus().call(IdentityRequest));
+    QDBusReply<QDBusVariant> nameReply(QDBusConnection::sessionBus().call(IdentityRequest, QDBus::Block, 1000));
     QString appName = nameReply.value().variant().toString();
     ui->appName->setText(appName);
 
@@ -32,7 +34,7 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
     QDBusMessage DesktopRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     DesktopRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2" << "DesktopEntry");
 
-    QDBusReply<QDBusVariant> DesktopReply(QDBusConnection::sessionBus().call(DesktopRequest));
+    QDBusReply<QDBusVariant> DesktopReply(QDBusConnection::sessionBus().call(DesktopRequest, QDBus::Block, 1000));
     QString icon = DesktopReply.value().variant().toString();
 
     QIcon appIc = QIcon::fromTheme("generic-app");
@@ -85,7 +87,7 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
     QDBusMessage MetadataRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     MetadataRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Metadata");
 
-    QDBusReply<QDBusVariant> reply(QDBusConnection::sessionBus().call(MetadataRequest));
+    QDBusReply<QDBusVariant> reply(QDBusConnection::sessionBus().call(MetadataRequest, QDBus::Block, 1000));
     QVariantMap replyData;
     QDBusArgument arg(reply.value().variant().value<QDBusArgument>());
 
@@ -133,7 +135,7 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
     QDBusMessage PlayStatRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     PlayStatRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "PlaybackStatus");
 
-    QDBusReply<QVariant> PlayStat(QDBusConnection::sessionBus().call(PlayStatRequest));
+    QDBusReply<QVariant> PlayStat(QDBusConnection::sessionBus().call(PlayStatRequest, QDBus::Block, 1000));
     playbackStatus = PlayStat.value().toString();
     if (playbackStatus == "Playing") {
         ui->playPauseButton->setIcon(QIcon::fromTheme("media-playback-pause"));
@@ -145,21 +147,21 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
     QDBusMessage RateRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     RateRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Rate");
 
-    QDBusReply<QVariant> RateReply(QDBusConnection::sessionBus().call(RateRequest));
+    QDBusReply<QVariant> RateReply(QDBusConnection::sessionBus().call(RateRequest, QDBus::Block, 1000));
     rate = RateReply.value().toDouble();
 
     //Get Position
     QDBusMessage PosRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     PosRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Position");
 
-    QDBusReply<QVariant> PosReply(QDBusConnection::sessionBus().call(PosRequest));
+    QDBusReply<QVariant> PosReply(QDBusConnection::sessionBus().call(PosRequest, QDBus::Block, 1000));
     ui->position->setValue(PosReply.value().toInt());
 
     //Get Seekable
     QDBusMessage SeekableRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     SeekableRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "CanSeek");
 
-    QDBusReply<bool> SeekableReply(QDBusConnection::sessionBus().call(SeekableRequest));
+    QDBusReply<bool> SeekableReply(QDBusConnection::sessionBus().call(SeekableRequest, QDBus::Block, 1000));
     ui->position->setEnabled(SeekableReply.value());
 
     QTimer* t = new QTimer();
@@ -271,7 +273,7 @@ void MediaPlayerNotification::setDetails(QString title, QString artist, QString 
             if (reply->error() == QNetworkReply::NoError) {
                 QImage image = QImage::fromData(reply->readAll());
                 if (!image.isNull()) {
-                    image = image.scaled(48, 48, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+                    image = image.scaled(48 * getDPIScaling(), 48 * getDPIScaling(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
                     qulonglong red = 0, green = 0, blue = 0;
 
@@ -311,7 +313,15 @@ void MediaPlayerNotification::setDetails(QString title, QString artist, QString 
                     pal.setColor(QPalette::Window, c);
                     this->setPalette(pal);
 
-                    ui->albumArt->setPixmap(QPixmap::fromImage(image).scaled(48, 48, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                    QImage rounded(48 * getDPIScaling(), 48 * getDPIScaling(), QImage::Format_ARGB32);
+                    rounded.fill(Qt::transparent);
+                    QPainter p(&rounded);
+                    p.setRenderHint(QPainter::Antialiasing);
+                    p.setBrush(QBrush(image));
+                    p.setPen(Qt::transparent);
+                    p.drawRoundedRect(0, 0, 48 * getDPIScaling(), 48 * getDPIScaling(), 40, 40, Qt::RelativeSize);
+
+                    ui->albumArt->setPixmap(QPixmap::fromImage(rounded));
                 }
             }
             reply->deleteLater();

@@ -2656,7 +2656,7 @@ Zawartość która pozostanie po wybraniu opcji zachowania plików:-
         <translation>Tryb cichy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="519"/>
+        <location filename="../mainwindow.cpp" line="585"/>
         <source>Desktop %1</source>
         <translation>Pulpit %1</translation>
     </message>
@@ -2681,12 +2681,12 @@ Zawartość która pozostanie po wybraniu opcji zachowania plików:-
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1668"/>
+        <location filename="../mainwindow.cpp" line="1748"/>
         <source>No notifications</source>
         <translation>Brak powiadomień</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="1672"/>
+        <location filename="../mainwindow.cpp" line="1752"/>
         <source>%n notification(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -2695,43 +2695,43 @@ Zawartość która pozostanie po wybraniu opcji zachowania plików:-
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2129"/>
+        <location filename="../mainwindow.cpp" line="2209"/>
         <source>For Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2131"/>
+        <location filename="../mainwindow.cpp" line="2211"/>
         <source>Move to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2136"/>
+        <location filename="../mainwindow.cpp" line="2216"/>
         <source>Move to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2142"/>
+        <location filename="../mainwindow.cpp" line="2222"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2147"/>
+        <location filename="../mainwindow.cpp" line="2227"/>
         <source>For System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="2148"/>
+        <location filename="../mainwindow.cpp" line="2228"/>
         <source>Open Status Center</source>
         <translation type="unfinished">Otwórz centrum statusów</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2151"/>
+        <location filename="../mainwindow.cpp" line="2231"/>
         <source>Open System Settings</source>
         <translation type="unfinished">Otwórz ustawienia systemowe</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2160"/>
+        <location filename="../mainwindow.cpp" line="2240"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3499,18 +3499,53 @@ Zawartość która pozostanie po wybraniu opcji zachowania plików:-
 <context>
     <name>NotificationAppGroup</name>
     <message>
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="122"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="123"/>
         <source>Collapse Notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="125"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="126"/>
         <source>+%n notifications collapsed</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>NotificationPanel</name>
+    <message numerus="yes">
+        <location filename="../notificationsWidget/notificationpanel.cpp" line="54"/>
+        <source>%n d</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../notificationsWidget/notificationpanel.cpp" line="56"/>
+        <source>%n hr</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../notificationsWidget/notificationpanel.cpp" line="58"/>
+        <source>%n min</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../notificationsWidget/notificationpanel.cpp" line="60"/>
+        <source>just now</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3974,22 +4009,22 @@ Zawartość która pozostanie po wybraniu opcji zachowania plików:-
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="277"/>
+        <location filename="../main.cpp" line="280"/>
         <source>theShell already running</source>
         <translation>theShell już pracuje</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="278"/>
+        <location filename="../main.cpp" line="281"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell wydaje się już pracować. Mimo to nadal chcesz uruchomić theShell?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="341"/>
+        <location filename="../main.cpp" line="344"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Menedżer okien nie mógł zostać uruchomiony</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="342"/>
+        <location filename="../main.cpp" line="345"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

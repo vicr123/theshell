@@ -358,6 +358,7 @@ void screenshotWindow::on_highlightButton_clicked()
     //ui->label->setCursor(QCursor(Qt::ArrowCursor));
 
     QImage i(25, 25, QImage::Format_ARGB32);
+    i.fill(Qt::transparent);
 
     {
         QPainter p(&i);

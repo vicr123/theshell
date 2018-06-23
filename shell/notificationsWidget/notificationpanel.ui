@@ -112,6 +112,16 @@
          </item>
         </layout>
        </item>
+       <item>
+        <widget class="QLabel" name="timeLabel">
+         <property name="text">
+          <string notr="true">Time</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>

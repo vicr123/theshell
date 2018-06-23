@@ -23,6 +23,7 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include <QTimer>
 #include "notificationobject.h"
 #include "tpropertyanimation.h"
 
@@ -44,6 +45,7 @@ public slots:
     void collapseHide();
     void expandHide();
     void toggleExpandNormal();
+    void updateTime();
 
 private slots:
     void updateParameters();

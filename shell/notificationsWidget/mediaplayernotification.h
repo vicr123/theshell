@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QTimer>
 #include <QSlider>
+#include <QPainter>
 
 namespace Ui {
     class MediaPlayerNotification;

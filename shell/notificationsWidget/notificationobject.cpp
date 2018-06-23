@@ -48,6 +48,7 @@ NotificationObject::NotificationObject(QString app_name, QString app_icon, QStri
     });
 
     setParameters(app_name, app_icon, summary, body, actions, hints, expire_timeout);
+    this->date = QDateTime::currentDateTimeUtc();
 }
 
 void NotificationObject::setParameters(QString &app_name, QString &app_icon, QString &summary, QString &body, QStringList &actions, QVariantMap &hints, int expire_timeout) {
@@ -276,4 +277,8 @@ QString NotificationObject::getSummary() {
 
 QString NotificationObject::getBody() {
     return this->body;
+}
+
+QDateTime NotificationObject::getDate() {
+    return this->date;
 }

@@ -50,6 +50,7 @@ public:
     QIcon getAppIcon();
     QString getSummary();
     QString getBody();
+    QDateTime getDate();
 
 signals:
     void parametersUpdated();
@@ -69,6 +70,7 @@ private:
     int timeout;
     uint id;
     bool actionNamesAreIcons = false;
+    QDateTime date;
 
     NotificationPopup* dialog;
 
