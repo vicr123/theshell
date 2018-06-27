@@ -163,7 +163,7 @@
     <message>
         <location filename="../background.cpp" line="387"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>av %1</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="498"/>
@@ -186,97 +186,97 @@
     <message>
         <location filename="../choosebackground.ui" line="44"/>
         <source>Inbuilt</source>
-        <translation type="unfinished"></translation>
+        <translation>Inbyggt</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="57"/>
         <source>Community</source>
-        <translation type="unfinished"></translation>
+        <translation>Gemenskap</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="70"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassad</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="184"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder från theShell-gemenskapen kommer att bli cyklad genom ibland.</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="194"/>
         <source>Show Image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa bildinformation</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="203"/>
         <source>Change image after</source>
-        <translation type="unfinished"></translation>
+        <translation>Byt bild efter</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="226"/>
         <source>minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>minuter</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="279"/>
         <source>Current Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuvarande bakgrundsbild</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="325"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildtext</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="332"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licens</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="339"/>
         <source>More Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Mer information</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="350"/>
         <source>by</source>
-        <translation type="unfinished"></translation>
+        <translation>av</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="379"/>
         <source>Select a file to display as your desktop background</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj en fil som din bakgrundsbild</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="453"/>
         <source>Image Sizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildstorlek</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="461"/>
         <source>Stretch to Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sträck för att få plats</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="466"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Zooma och beskära</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="471"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrera</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="476"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Kakel</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="481"/>
         <source>Zoom and Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Zooma för att få plats</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="506"/>
@@ -291,7 +291,7 @@
     <message>
         <location filename="../choosebackground.cpp" line="88"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>av %1</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="165"/>
@@ -730,17 +730,17 @@
     <message>
         <location filename="../infopanedropdown.ui" line="6772"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Webbsida</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6782"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Filbugg</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6792"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Källor</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1976"/>
@@ -1095,7 +1095,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2606"/>
         <source>Within &amp;Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>Inom &amp;Dörren</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2667"/>
@@ -1170,7 +1170,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3300"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Svart</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3314"/>
@@ -1317,7 +1317,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3060"/>
         <source>Uses Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Använder platstjänster</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3307"/>
@@ -1327,71 +1327,71 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3954"/>
         <source>Permission Required</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillstånd krävs</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3964"/>
         <source>To manage location settings in theShell, you&apos;ll need to give us permission to be a geoclue agent.</source>
-        <translation type="unfinished"></translation>
+        <translation>För att hantera platstjänster i theShell måste du ge oss tillstånd att vara en platsagent.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3989"/>
         <source>Allow theShell to be a geoclue agent</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillåt theShell att vara en platsagent</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4015"/>
         <source>Have your administrator password ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Ha ditt administratorlösenord redo</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4041"/>
         <source>If you wish to manually configure theShell as a geoclue agent, you&apos;ll need to edit /etc/geoclue/geoclue.conf and append &quot;theshell&quot; to the end of the whitelist setting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Om du vill manuellt konfigurera theShell som en platsagent måste du redigera /etc/geoclue/geoclue.conf och lägga till &quot;theShell&quot; till slutet av vitlisteinställningen.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4103"/>
         <source>Allow apps to access your physical location</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillåt appar att komma åt din fysiska plats</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4246"/>
         <location filename="../infopanedropdown.cpp" line="4170"/>
         <source>Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangentbordslayout</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4307"/>
         <location filename="../infopanedropdown.ui" line="4537"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4477"/>
         <source>Select Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj Tangentbordslayout</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5094"/>
         <source>Set Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Fixa</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5105"/>
         <source>Remove Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort muslösenord</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5131"/>
         <location filename="../infopanedropdown.cpp" line="4261"/>
         <location filename="../infopanedropdown.cpp" line="4267"/>
         <source>Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Muslösenord</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5138"/>
         <source>A mouse password trades security for convenience on the lock screen by substituting your password with a sequence of mouse buttons. &lt;b&gt;This can only be used on the lock screen, not while logging in.&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ett muslösenord är lättare men mindre säkert. &lt;b&gt;Detta kan endast användas på låsskärmen, inte när du loggar in.&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5222"/>
@@ -1628,7 +1628,7 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../infopanedropdown.ui" line="6692"/>
         <source>Processor</source>
-        <translation type="unfinished"></translation>
+        <translation>Processor</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6753"/>
@@ -1750,7 +1750,7 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../infopanedropdown.cpp" line="521"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Okänd</translation>
     </message>
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="1495"/>
@@ -1810,12 +1810,12 @@ Saker som kommer sparas ifall du väljer att spara filer
         <location filename="../infopanedropdown.cpp" line="4217"/>
         <location filename="../infopanedropdown.cpp" line="4237"/>
         <source>Unauthorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Obehörig</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2273"/>
         <source>Polkit does not allow you to manage users on the system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Polkit tillåter inte dig att hantera användare på systemet.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2285"/>
@@ -1900,9 +1900,9 @@ Saker som kommer sparas ifall du väljer att spara filer
         <location filename="../infopanedropdown.cpp" line="3504"/>
         <location filename="../infopanedropdown.cpp" line="3514"/>
         <source>%n min(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n minut</numerusform>
+            <numerusform>%n minuter</numerusform>
         </translation>
     </message>
     <message>
@@ -1928,60 +1928,60 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="3958"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>På %1 kommer sommartid %2. Klockan kommer automatiskt ställa om sig %3 med %n timme.</numerusform>
+            <numerusform>På %1 kommer sommartid %2. Klockan kommer automatiskt ställa om sig %3 med %n timmar.</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3961"/>
         <source>end</source>
         <comment>Context: &quot;Daylight Savings Time will end.&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>sluta</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3961"/>
         <source>begin</source>
         <comment>Context: &quot;Daylight Savings Time will begin.&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>börja</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3963"/>
         <source>backwards</source>
         <comment>Context: &quot;The clock will automatically adjust backwards&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>bakåt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3963"/>
         <source>forwards</source>
         <comment>Context: &quot;The clock will automatically adjust forwards&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>framåt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="4217"/>
         <location filename="../infopanedropdown.cpp" line="4237"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Polkit tillåter dig inte att ställa in ett muslösenord.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="4232"/>
         <source>Remove Mouse Password?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort muslösenord?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="4232"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du tabort muslösenordet för detta konto?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="4262"/>
         <source>Mouse Password was removed successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Muslösenordet var lyckat borttaget</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="4268"/>
         <source>Mouse Password couldn&apos;t be removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Muslösenordet kunde ej tas bort</translation>
     </message>
 </context>
 <context>
@@ -2196,27 +2196,27 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="84"/>
         <source>Tablet</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="86"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Dator</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="88"/>
         <source>Phone</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefon</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="90"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="94"/>
         <source>Ready to pair</source>
-        <translation type="unfinished"></translation>
+        <translation>Redo att paras</translation>
     </message>
 </context>
 <context>
@@ -2224,313 +2224,314 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="80"/>
         <source>KDE Connect</source>
-        <translation type="unfinished">KDE Connect</translation>
+        <translation>KDE Connect</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="206"/>
         <source>No Device Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingeb enhet vald</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="216"/>
         <source>If you have an Android device, you can install the KDE Connect Android app on Google Play or on F-Droid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Om du har en Android-enhet kan du installera appen KDE Connect på Google Play eller F-Droid.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="242"/>
         <source>Google Play and the Google Play logo are trademarks of Google LLC.</source>
-        <translation type="unfinished"></translation>
+        <translation>Google Play och Google Play logotypen ärett varumärke av Google LLC.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="320"/>
         <source>Encryption Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Krypteringsinformation</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="343"/>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="703"/>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="929"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="431"/>
         <source>Available Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillgängliga handlingar</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="441"/>
         <source>Ping Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Pinga enhet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="444"/>
         <source>Sends a notification to the device to see if KDE Connect is working properly</source>
-        <translation type="unfinished"></translation>
+        <translation>Skickar en avisering till enheten för att se om KDE Connect fungerar korrekt</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="451"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="131"/>
         <source>Locate Device</source>
-        <translation type="unfinished">Hitta Enhet</translation>
+        <translation>Hitta Enhet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="454"/>
         <source>If you&apos;ve lost your phone, you can locate your device by making it play a sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Om du var tappat din telefon så kan du lokalisera din enhet genom att göra så att den spelar ett ljud</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="461"/>
         <source>Send File</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka fil</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="464"/>
         <source>Send a file to the other device</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka en fil till den andra enheten</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="471"/>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1074"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="370"/>
         <source>Send SMS</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka SMS</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="474"/>
         <source>Send a text message</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka ett text meddelande</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="511"/>
         <source>Device Unreachable</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhet otillgänglig</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="521"/>
         <source>Can&apos;t get to this device. Is it connected to the same network and powered on?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte kontakta enheten. Är den ansluten till samma nätverk och påslagen?</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="567"/>
         <source>Device Unpaired</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhet bortkopplad</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="577"/>
         <source>You&apos;ll need to pair this device before you can use it with KDE Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Du måste para denna enhet innan du kan använda den med KDE Connect</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="602"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="167"/>
         <source>Pair</source>
-        <translation type="unfinished"></translation>
+        <translation>Para</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="745"/>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="752"/>
         <source>Battery Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Batteriövervakare</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="759"/>
         <source>Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Urklipp</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="766"/>
         <source>Inhibit screensaver</source>
-        <translation type="unfinished"></translation>
+        <translation>Hindra skärmsläckare</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="773"/>
         <source>Multimedia control receiver</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimediakontrollmottagare</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="780"/>
         <source>Pause media during calls</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausa media medans samtal</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="787"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="122"/>
         <source>Ping</source>
-        <translation type="unfinished">Pinga</translation>
+        <translation>Pinga</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="794"/>
         <source>Receive Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta emot aviseringar</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="801"/>
         <source>Remote filesystem browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjärrfilsystembläddrare</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="808"/>
         <source>Remote keyboard from the desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjärrstyr tangentbort från skrivbordet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="815"/>
         <source>Ring my phone</source>
-        <translation type="unfinished"></translation>
+        <translation>Ring min telefon</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="822"/>
         <source>Run commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Kör kommandon</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="829"/>
         <source>Send notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka aviseringar</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="836"/>
         <source>Send and receive</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka och ta emot</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="843"/>
         <source>Telephony integration</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>it is supposed to be 2 i&apos;s there</translatorcomment>
+        <translation>Telefoniintegration</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="850"/>
         <source>Virtual input</source>
-        <translation type="unfinished"></translation>
+        <translation>Virtuell inmatning</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1113"/>
         <source>Send to</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka till</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1123"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Meddelande</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1175"/>
         <source>Send</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1210"/>
         <source>KDE Connect not running</source>
-        <translation type="unfinished"></translation>
+        <translation>KDE Connect körs inte</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1220"/>
         <source>You can attempt to start KDE Connect again</source>
-        <translation type="unfinished"></translation>
+        <translation>Du kan försöka att starta KDE Connect igen</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1248"/>
         <source>Start KDE Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta KDE Connect</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1274"/>
         <source>If you&apos;re still getting this error, KDE Connect might not be installed properly on this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Om du fortfarande får detta errormeddelande, så kanske KDE Connect inte är korrekt installerat.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="36"/>
         <source>This device is called &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Denna enhet heter &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="47"/>
         <source>KDE Connect is not running</source>
-        <translation type="unfinished"></translation>
+        <translation>KDE Connect körs inte</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="88"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="149"/>
         <source>Unpair Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort enhet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="91"/>
         <source>Pair Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Para enhet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="123"/>
         <source>Ping sent to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pingning skickat till %1</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="131"/>
         <source>Your device will play its ringtone at full volume. To stop it ringing, tap the button on the device&apos;s screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Din enhet kommer spela sin ringsignal på högsta volym. För att få den att sluta ringa, klicka på knappen på enhetens skärm.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="137"/>
         <source>Locate</source>
-        <translation type="unfinished">Lokalisera</translation>
+        <translation>Lokalisera</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="138"/>
         <source>The request to play a sound has been sent to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Förfrågan att spela ett ljud har blivit skickat till %1</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="149"/>
         <source>Do you want to unpair this device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du ta bort denna enhet?</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="155"/>
         <source>Unpair</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="156"/>
         <source>%1 has been unpaired from this device. To use KDE Connect between these devices again, you&apos;ll need to pair them.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 har blivit borttagen från denna enhet. För att använda KDE Connect mellan dessa enheter igen måste du para dem.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="168"/>
         <source>A pairing request has been sent to %1. To complete pairing, you&apos;ll need to respond on %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>En parningsförfrågan har blivit skickad till %1. För att slutföra parning måste du svara på %1.</translation>
     </message>
     <message numerus="yes">
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="351"/>
         <source>Sending as %n messages</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Skickar som meddelande</numerusform>
+            <numerusform>Skickar som %n meddelanden</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="371"/>
         <source>Your SMS has been sent to your device and is on its way!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ditt SMS har blivit skickat till din enhet och är på väg!</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="389"/>
         <source>Encryption Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Krypteringsinformation</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="410"/>
         <source>Rename Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Byt namn på enhet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="410"/>
         <source>What do you want to call this device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vad vill du kalla denna enhet?</translation>
     </message>
 </context>
 <context>
@@ -2538,27 +2539,27 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../location/locationrequestdialog.ui" line="69"/>
         <source>Location</source>
-        <translation type="unfinished">Plats</translation>
+        <translation>Plats</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.ui" line="111"/>
         <source>Deny</source>
-        <translation type="unfinished"></translation>
+        <translation>Neka</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.ui" line="122"/>
         <source>Allow</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillåt</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.ui" line="135"/>
         <source>Location access can be revoked at any time under Location in System Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Platsåtkomst kan bli borttaget när som helst under Plats i Systeminställningar.</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.cpp" line="27"/>
         <source>Allow &lt;b&gt;%1&lt;/b&gt; to use your physical location?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillåt &lt;b&gt;%1&lt;/b&gt; att använda din fysiska plats?</translation>
     </message>
 </context>
 <context>
@@ -2593,32 +2594,32 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../mainwindow.ui" line="365"/>
         <source>Screen Brightness</source>
-        <translation type="unfinished">Skärmljusstyrka</translation>
+        <translation>Skärmljusstyrka</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="429"/>
         <source>You are in Flight Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Du är i flygläge</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="497"/>
         <source>Your location is currently being used</source>
-        <translation type="unfinished"></translation>
+        <translation>Din plats används för tillfället</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="576"/>
         <source>Stop Screen Recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta skärminspelning</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="761"/>
         <source>Select Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj Mediaspelare</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="862"/>
         <source>Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangentbordslayout</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="993"/>
@@ -2702,12 +2703,12 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../mainwindow.cpp" line="2216"/>
         <source>Move to top</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta till toppen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2222"/>
         <source>Gateway and Bar Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Dörr och Barinställningar</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2227"/>
@@ -2728,7 +2729,7 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../mainwindow.cpp" line="2240"/>
         <source>Open Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna Dörren</translation>
     </message>
 </context>
 <context>
@@ -2955,90 +2956,90 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../locktypes/mousepassword.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="70"/>
         <source>Set up Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Ställ in muslösenord</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="112"/>
         <source>A Mouse Password trades security for convenience when unlocking your computer from the lock screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ett muslösenord är lättare men mindre säkert när du låser upp den dator från startskärmen.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="149"/>
         <location filename="../locktypes/mousepassword.cpp" line="128"/>
         <source>Go for it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kör på!</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="193"/>
         <source>Reset</source>
-        <translation type="unfinished">Nollställ</translation>
+        <translation>Nollställ</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="203"/>
         <location filename="../locktypes/mousepassword.cpp" line="228"/>
         <source>Next</source>
-        <translation type="unfinished">Fortsätt</translation>
+        <translation>Fortsätt</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="176"/>
         <source>Your Mouse Password needs to contain at least 5 events.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ditt muslösenord måste innehålla minst 5 event.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="188"/>
         <source>Unfortunately that wasn&apos;t correct. Please try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyvärr var det där fel. Försök igen.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="194"/>
         <source>Set Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Ställ in Muslösenord</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="202"/>
         <source>Unauthorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Obehörig</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="202"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Polkit tillåter dig inte att ställa in ett muslösenord.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="220"/>
         <location filename="../locktypes/mousepassword.cpp" line="234"/>
         <source>Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Muslösenord</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="220"/>
         <source>Mouse Password couldn&apos;t be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Muslösenordet kunde inte sparas.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="235"/>
         <source>Mouse Password was set successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Muslösenordet var satt lyckat</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.h" line="54"/>
         <source>To get started, use the mouse to input a sequence of button events now.</source>
-        <translation type="unfinished"></translation>
+        <translation>För att komma igång, använd musen för att mata in en sekvens av knapptryck nu.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.h" line="55"/>
         <source>Now, confirm the Mouse Password you chose by entering it again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu, konfirmera muslösenordet genom att utföra det igen.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.h" line="56"/>
         <source>Your Mouse Password is ready to be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ditt muslösenord är redo att sparas.</translation>
     </message>
 </context>
 <context>
@@ -3061,7 +3062,7 @@ Saker som kommer sparas ifall du väljer att spara filer
         <location filename="../nativeeventfilter.cpp" line="165"/>
         <location filename="../nativeeventfilter.cpp" line="185"/>
         <source>Quiet Mode is set to Mute.</source>
-        <translation>Tysta Läget är satt på tyst</translation>
+        <translation>Tysta Läget är satt på tyst.</translation>
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="205"/>
@@ -3097,12 +3098,12 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../nativeeventfilter.cpp" line="315"/>
         <source>Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangentbordslayout</translation>
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="315"/>
         <source>Keyboard Layout set to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangentbordslayout satt till %1</translation>
     </message>
 </context>
 <context>
@@ -3512,31 +3513,31 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="54"/>
         <source>%n d</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n dag</numerusform>
+            <numerusform>%n dagar</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="56"/>
         <source>%n hr</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n timme</numerusform>
+            <numerusform>%n timmar</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="58"/>
         <source>%n min</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n minut</numerusform>
+            <numerusform>%n minuter</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../notificationsWidget/notificationpanel.cpp" line="60"/>
         <source>just now</source>
-        <translation type="unfinished"></translation>
+        <translation>Just nu</translation>
     </message>
 </context>
 <context>
@@ -3576,7 +3577,7 @@ Saker som kommer sparas ifall du väljer att spara filer
     </message>
     <message>
         <location filename="../onboarding.ui" line="1042"/>
-        <location filename="../onboarding.cpp" line="177"/>
+        <location filename="../onboarding.cpp" line="197"/>
         <source>Next</source>
         <translation>Fortsätt</translation>
     </message>
@@ -3661,13 +3662,13 @@ Saker som kommer sparas ifall du väljer att spara filer
         <translation>Tillbaka</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="123"/>
-        <location filename="../onboarding.cpp" line="375"/>
+        <location filename="../onboarding.cpp" line="143"/>
+        <location filename="../onboarding.cpp" line="395"/>
         <source>Welcome to theShell %1!</source>
         <translation>Välkommen till theShell %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="193"/>
+        <location filename="../onboarding.cpp" line="213"/>
         <source>Start</source>
         <translation>Starta</translation>
     </message>
@@ -3693,7 +3694,7 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../rundialog.cpp" line="59"/>
         <source>Couldn&apos;t run that command.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte köra det kommandot.</translation>
     </message>
 </context>
 <context>

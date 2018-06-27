@@ -164,7 +164,7 @@
     <message>
         <location filename="../background.cpp" line="387"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>von %1</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="498"/>
@@ -187,97 +187,97 @@
     <message>
         <location filename="../choosebackground.ui" line="44"/>
         <source>Inbuilt</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingebaut</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="57"/>
         <source>Community</source>
-        <translation type="unfinished"></translation>
+        <translation>Gemeinschaft</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="70"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerdefiniert</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="184"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder aus der theShell Community werden von Zeit zu Zeit gewechselt.</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="194"/>
         <source>Show Image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Bild Informationen</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="203"/>
         <source>Change image after</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechel Bild nach</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="226"/>
         <source>minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>minuten</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="279"/>
         <source>Current Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Derzeitiger Hintergrund</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="325"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="332"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Lizenz</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="339"/>
         <source>More Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Mehr Informationen</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="350"/>
         <source>by</source>
-        <translation type="unfinished"></translation>
+        <translation>von</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="379"/>
         <source>Select a file to display as your desktop background</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle eine Datei aus, die als Desktophintergrund angezeigt werden soll</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="453"/>
         <source>Image Sizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildgröße</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="461"/>
         <source>Stretch to Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Zur Anpassung dehnen</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="466"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomen und Zuschneiden</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="471"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Mitte</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="476"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Kacheln</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="481"/>
         <source>Zoom and Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Zommen und Anpassen</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="506"/>
@@ -292,7 +292,7 @@
     <message>
         <location filename="../choosebackground.cpp" line="88"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>von %1</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="165"/>
@@ -424,12 +424,12 @@
     <message>
         <location filename="../endsessionwait.ui" line="146"/>
         <source>Waiting for apps to close...</source>
-        <translation type="unfinished"></translation>
+        <translation>Warten auf das Schließen von Apps ...</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="206"/>
         <source>End Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Jetzt beenden</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="300"/>
@@ -529,7 +529,7 @@
         <location filename="../endsessionwait.cpp" line="97"/>
         <location filename="../endsessionwait.cpp" line="797"/>
         <source>Dummy</source>
-        <translation type="unfinished"></translation>
+        <translation>Dummy</translation>
     </message>
 </context>
 <context>
@@ -586,7 +586,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="311"/>
         <source>Power Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation>Energiesparmodus</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="332"/>
@@ -917,27 +917,27 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2653"/>
         <source>Use Compact Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutze die Kompakteleiste</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6772"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Internetseite</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6782"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei Fehler</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6792"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Quellen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2606"/>
         <source>Within &amp;Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>innerhalb &amp;Gateway</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2677"/>
@@ -1238,47 +1238,47 @@
         <location filename="../infopanedropdown.ui" line="3906"/>
         <location filename="../infopanedropdown.cpp" line="47"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Standort</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2667"/>
         <source>The Status Bar is a shown when a window is maximised.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Statusleiste wird angezeigtwenn ein Fenster maximiert ist.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2534"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Kompakteleiste ist eine kleinere Version der Normalenleiste, bei der alle Elemente in einer Reihe angeordnet sind, um vertikalen Platz zu sparen.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3076"/>
         <source>Use Sunlight Cycle</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutze den Sonnenlicht Zyklus</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3041"/>
         <source>We&apos;ll send your current location to https://sunrise-sunset.org/ to determine sunlight times if you enable this option.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn sie diese Option aktivieren, werden wir ihren jetzigen Standtort an https://sunrise-sunset.org/ senden um die Sonnenzeiten zu bestimmen.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3473"/>
         <source>GTK3 Font</source>
-        <translation type="unfinished"></translation>
+        <translation>GTK3 Schriftart</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3480"/>
         <source>GTK3 Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>GTK3 Thema</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3300"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3403"/>
         <source>Use for GTK</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwenden Sie für GTK</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3761"/>
@@ -1288,104 +1288,105 @@
     <message>
         <location filename="../infopanedropdown.ui" line="4811"/>
         <source>Power Button</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein- / Ausschalter</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4888"/>
         <source>When I press the</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>The press comes after the word after &quot;die&quot; (Press in this case = drücke)</translatorcomment>
+        <translation>Wenn ich die</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4822"/>
         <source>Ask me what to do</source>
-        <translation type="unfinished"></translation>
+        <translation>Frag mich, was ich machen soll</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3060"/>
         <source>Uses Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwendet Standort</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3954"/>
         <source>Permission Required</source>
-        <translation type="unfinished"></translation>
+        <translation>Erlaubnis erforderlich</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3964"/>
         <source>To manage location settings in theShell, you&apos;ll need to give us permission to be a geoclue agent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um die Standorteinstellungen in theShell zu verwalten, müssen Sie uns die Erlaubnis geben, ein Geoclue-Agent zu sein.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3989"/>
         <source>Allow theShell to be a geoclue agent</source>
-        <translation type="unfinished"></translation>
+        <translation>Erlaube theShell ein Geoclue-Agent zu sein</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4015"/>
         <source>Have your administrator password ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Halte dein Admin Passwort bereit</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4041"/>
         <source>If you wish to manually configure theShell as a geoclue agent, you&apos;ll need to edit /etc/geoclue/geoclue.conf and append &quot;theshell&quot; to the end of the whitelist setting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie theShell manuell als Geoclue-Agent konfigurieren möchten, müssen Sie /etc/geoclue/geoclue.conf bearbeiten und &quot;theshell&quot; an das Ende der Whitelist-Einstellung einfügen.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4103"/>
         <source>Allow apps to access your physical location</source>
-        <translation type="unfinished"></translation>
+        <translation>Apps den Zugriff auf deinen physischen Standort erlauben</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4246"/>
         <location filename="../infopanedropdown.cpp" line="4170"/>
         <source>Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur Layout</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4307"/>
         <location filename="../infopanedropdown.ui" line="4537"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Hinzufügen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4477"/>
         <source>Select Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur Layout auswählen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4831"/>
         <source>Power Off</source>
-        <translation type="unfinished">Ausschalten</translation>
+        <translation>Ausschalten</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4840"/>
         <source>Reboot</source>
-        <translation type="unfinished">Neu starten</translation>
+        <translation>Neu starten</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4849"/>
         <source>Log Out</source>
-        <translation type="unfinished">Abmelden</translation>
+        <translation>Abmelden</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4858"/>
         <source>Suspend</source>
-        <translation type="unfinished">Energie sparen</translation>
+        <translation>Energie sparen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4867"/>
         <source>Lock</source>
-        <translation type="unfinished">Sperren</translation>
+        <translation>Sperren</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4876"/>
         <source>Turn Off Screen</source>
-        <translation type="unfinished">Bildschirm ausschalten</translation>
+        <translation>Bildschirm ausschalten</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4996"/>
         <source>SuspendLockScreenSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>SuspendLockScreenSwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5014"/>
@@ -1400,24 +1401,24 @@
     <message>
         <location filename="../infopanedropdown.ui" line="5094"/>
         <source>Set Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurieren</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5105"/>
         <source>Remove Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus Passwort entfernen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5131"/>
         <location filename="../infopanedropdown.cpp" line="4261"/>
         <location filename="../infopanedropdown.cpp" line="4267"/>
         <source>Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus Passwort</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5138"/>
         <source>A mouse password trades security for convenience on the lock screen by substituting your password with a sequence of mouse buttons. &lt;b&gt;This can only be used on the lock screen, not while logging in.&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Mauskennwort tauscht die Sicherheit aus Gründen der Bequemlichkeit auf dem Sperrbildschirm aus, indem das Kennwort durch eine Reihe von Maustasten ersetzt wird. &lt;b&gt; Dies kann nur auf dem Sperrbildschirm verwendet werden, nicht während der Anmeldung. &lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5222"/>
@@ -1544,7 +1545,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../infopanedropdown.ui" line="5966"/>
         <source>TwentyFourHourSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>TwentyFourHourSwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6009"/>
@@ -1569,7 +1570,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../infopanedropdown.ui" line="6296"/>
         <source>HighContrastSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>HighContrastSwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6259"/>
@@ -1579,7 +1580,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../infopanedropdown.ui" line="6306"/>
         <source>SystemAnimationsAccessibilitySwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>SystemAnimationsAccessibilitySwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6252"/>
@@ -1594,7 +1595,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../infopanedropdown.ui" line="6279"/>
         <source>LargeTextSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>LargeTextSwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6289"/>
@@ -1604,7 +1605,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../infopanedropdown.ui" line="6319"/>
         <source>CapsNumLockBellSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>CapsNumLockBellSwitch</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6405"/>
@@ -1625,7 +1626,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../infopanedropdown.ui" line="6418"/>
         <source>Reset Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät zurücksetzen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6510"/>
@@ -1665,7 +1666,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../infopanedropdown.ui" line="6692"/>
         <source>Processor</source>
-        <translation type="unfinished"></translation>
+        <translation>Prozessor</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6753"/>
@@ -1721,12 +1722,12 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../infopanedropdown.cpp" line="59"/>
         <source>Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright © Victor Tran %1. Lizenziert unter den Bedingungen der GNU General Public License, Version 3 oder höher.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="521"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannt</translation>
     </message>
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="1495"/>
@@ -1786,12 +1787,12 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
         <location filename="../infopanedropdown.cpp" line="4217"/>
         <location filename="../infopanedropdown.cpp" line="4237"/>
         <source>Unauthorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Unautorisiert</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2273"/>
         <source>Polkit does not allow you to manage users on the system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mit Polkit können Sie keine Benutzer auf dem System verwalten.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2285"/>
@@ -1804,13 +1805,13 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
         <location filename="../infopanedropdown.cpp" line="2304"/>
         <location filename="../infopanedropdown.cpp" line="2305"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(keine)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2301"/>
         <location filename="../infopanedropdown.cpp" line="2302"/>
         <source>(set at next login)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Als nächste Anmeldung festlegen)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2333"/>
@@ -1835,7 +1836,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../infopanedropdown.cpp" line="2846"/>
         <source>Rate History</source>
-        <translation type="unfinished"></translation>
+        <translation>Kursverlauf</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2857"/>
@@ -1901,88 +1902,88 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
         <location filename="../infopanedropdown.cpp" line="3504"/>
         <location filename="../infopanedropdown.cpp" line="3514"/>
         <source>%n min(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Minute</numerusform>
+            <numerusform>%n Minuten</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3847"/>
         <source>Log Out Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Jetzt Abmelden</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3850"/>
         <source>Logoff Required</source>
-        <translation type="unfinished"></translation>
+        <translation>Abmeldung erforderlich</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3853"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um die Kompakteleiste zu aktivieren, müssen Sie sich abmelden und dann erneut anmelden.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3855"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um die Kompakteleiste zu deaktivieren, müssen Sie sich abmelden und dann erneut anmelden.</translation>
     </message>
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="3958"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Am %1 wird die Zeitverschiebung %2. Die Uhr wird automatisch um %n Stunde %3.</numerusform>
+            <numerusform>Am %1 wird die Zeitverschiebung %2. Die Uhr wird automatisch um %n Stunden %3.</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3961"/>
         <source>end</source>
         <comment>Context: &quot;Daylight Savings Time will end.&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>enden</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3961"/>
         <source>begin</source>
         <comment>Context: &quot;Daylight Savings Time will begin.&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>beginnen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3963"/>
         <source>backwards</source>
         <comment>Context: &quot;The clock will automatically adjust backwards&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>zurückgestellt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3963"/>
         <source>forwards</source>
         <comment>Context: &quot;The clock will automatically adjust forwards&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>vorgestellt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="4217"/>
         <location filename="../infopanedropdown.cpp" line="4237"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
-        <translation type="unfinished"></translation>
+        <translation>In Polkit können Sie kein Mauspasswort einrichten.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="4232"/>
         <source>Remove Mouse Password?</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus Passwort entfernen?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="4232"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten sie das Maus Passwort für diesen Benutzer entfernen?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="4262"/>
         <source>Mouse Password was removed successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus Passwort wurde erfolgreich entfernt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="4268"/>
         <source>Mouse Password couldn&apos;t be removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus Passwort konnte nicht entfernt werden</translation>
     </message>
 </context>
 <context>
@@ -2197,27 +2198,27 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="84"/>
         <source>Tablet</source>
-        <translation type="unfinished"></translation>
+        <translation>Tablet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="86"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Computer</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="88"/>
         <source>Phone</source>
-        <translation type="unfinished"></translation>
+        <translation>Handy</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="90"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="94"/>
         <source>Ready to pair</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereit zum verbinden</translation>
     </message>
 </context>
 <context>
@@ -2225,313 +2226,313 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="80"/>
         <source>KDE Connect</source>
-        <translation type="unfinished">KDE Connect</translation>
+        <translation>KDE Connect</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="206"/>
         <source>No Device Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Gerät ausgewählt</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="216"/>
         <source>If you have an Android device, you can install the KDE Connect Android app on Google Play or on F-Droid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn du ein Android Gerät hast, können sie sich die KDE Connect App im Google Play Store oder auf F-Droid holen.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="242"/>
         <source>Google Play and the Google Play logo are trademarks of Google LLC.</source>
-        <translation type="unfinished"></translation>
+        <translation>Google Play und das Google Play-Logo sind Marken von Google LLC.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="320"/>
         <source>Encryption Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschlüsselungsinfo</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="343"/>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="703"/>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="929"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="431"/>
         <source>Available Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Mögliche Aktionen</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="441"/>
         <source>Ping Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät Pingen</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="444"/>
         <source>Sends a notification to the device to see if KDE Connect is working properly</source>
-        <translation type="unfinished"></translation>
+        <translation>Sendet eine Benachrichtigung an das Gerät, um zu überprüfen, ob KDE Connect ordnungsgemäß funktioniert</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="451"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="131"/>
         <source>Locate Device</source>
-        <translation type="unfinished">Orte Gerät</translation>
+        <translation>Orte Gerät</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="454"/>
         <source>If you&apos;ve lost your phone, you can locate your device by making it play a sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn sie ihr Telefon verloren haben, können sie ihr Gerät orten, indem sie einen Ton abspielen</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="461"/>
         <source>Send File</source>
-        <translation type="unfinished"></translation>
+        <translation>Sende Datei</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="464"/>
         <source>Send a file to the other device</source>
-        <translation type="unfinished"></translation>
+        <translation>Sene eine Datei zu einem anderen Gerät</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="471"/>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1074"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="370"/>
         <source>Send SMS</source>
-        <translation type="unfinished"></translation>
+        <translation>Sende SMS</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="474"/>
         <source>Send a text message</source>
-        <translation type="unfinished"></translation>
+        <translation>Sende eine Text Nachricht</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="511"/>
         <source>Device Unreachable</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät unerreichbar</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="521"/>
         <source>Can&apos;t get to this device. Is it connected to the same network and powered on?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht zu diesem Gerät gelangen. Ist es mit demselben Netzwerk verbunden und eingeschaltet?</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="567"/>
         <source>Device Unpaired</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät nicht gekoppelt</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="577"/>
         <source>You&apos;ll need to pair this device before you can use it with KDE Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Du musst dieses Gerät erst koppeln bevor sie KDE Connect benutzen können</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="602"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="167"/>
         <source>Pair</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppeln</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="745"/>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="752"/>
         <source>Battery Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Batteriemonitor</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="759"/>
         <source>Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Zwichenablage</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="766"/>
         <source>Inhibit screensaver</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmschoner unterdrücken</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="773"/>
         <source>Multimedia control receiver</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedia-Steuerempfänger</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="780"/>
         <source>Pause media during calls</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausiere Medien bei Anrufen</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="787"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="122"/>
         <source>Ping</source>
-        <translation type="unfinished">Ping</translation>
+        <translation>Ping</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="794"/>
         <source>Receive Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen erhalten</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="801"/>
         <source>Remote filesystem browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Remote-Dateisystem-Browser</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="808"/>
         <source>Remote keyboard from the desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Remote-Tastatur vom Desktop</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="815"/>
         <source>Ring my phone</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruf mein Telefon an</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="822"/>
         <source>Run commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Befehle ausführen</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="829"/>
         <source>Send notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen senden</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="836"/>
         <source>Send and receive</source>
-        <translation type="unfinished"></translation>
+        <translation>Senden und Empfangen</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="843"/>
         <source>Telephony integration</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefonintegration</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="850"/>
         <source>Virtual input</source>
-        <translation type="unfinished"></translation>
+        <translation>Virtuelle Eingabe</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1113"/>
         <source>Send to</source>
-        <translation type="unfinished"></translation>
+        <translation>Senden an</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1123"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nachricht</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1175"/>
         <source>Send</source>
-        <translation type="unfinished"></translation>
+        <translation>Senden</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1210"/>
         <source>KDE Connect not running</source>
-        <translation type="unfinished"></translation>
+        <translation>KDE Connect läuft nicht</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1220"/>
         <source>You can attempt to start KDE Connect again</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie können versuchen, KDE Connect erneut zu starten</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1248"/>
         <source>Start KDE Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Starte KDE Connect</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1274"/>
         <source>If you&apos;re still getting this error, KDE Connect might not be installed properly on this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn dieser Fehler weiterhin auftritt, ist KDE Connect auf diesem Gerät möglicherweise nicht ordnungsgemäß installiert.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="36"/>
         <source>This device is called &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Gerät heist &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="47"/>
         <source>KDE Connect is not running</source>
-        <translation type="unfinished"></translation>
+        <translation>KDE Connect läuft nicht</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="88"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="149"/>
         <source>Unpair Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät entkoppeln</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="91"/>
         <source>Pair Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät koppeln</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="123"/>
         <source>Ping sent to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ping wurde zu %1 gesendet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="131"/>
         <source>Your device will play its ringtone at full volume. To stop it ringing, tap the button on the device&apos;s screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Gerät spielt seinen Klingelton mit voller Lautstärke ab. Um das Klingeln zu beenden, tippen Sie auf die Schaltfläche auf dem Gerätebildschirm.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="137"/>
         <source>Locate</source>
-        <translation type="unfinished">Orten</translation>
+        <translation>Orten</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="138"/>
         <source>The request to play a sound has been sent to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Anforderung, einen Sound abzuspielen, wurde an%1 gesendet</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="149"/>
         <source>Do you want to unpair this device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten sie dieses Gerät entkoppeln?</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="155"/>
         <source>Unpair</source>
-        <translation type="unfinished"></translation>
+        <translation>Entkoppeln</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="156"/>
         <source>%1 has been unpaired from this device. To use KDE Connect between these devices again, you&apos;ll need to pair them.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 wurde von diesem Gerät getrennt. Um KDE Connect erneut zwischen diesen Geräten zu verwenden, müssen Sie sie koppeln.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="168"/>
         <source>A pairing request has been sent to %1. To complete pairing, you&apos;ll need to respond on %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Kopplungsanfrage wurde an %1 gesendet. Um die Kopplung abzuschließen, müssen Sie auf %1 antworten.</translation>
     </message>
     <message numerus="yes">
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="351"/>
         <source>Sending as %n messages</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Senden als %n Nachricht</numerusform>
+            <numerusform>Senden als %n Nachrichten</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="371"/>
         <source>Your SMS has been sent to your device and is on its way!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihre SMS wurde an Ihr Gerät gesendet und ist unterwegs!</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="389"/>
         <source>Encryption Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschlüsselungsinformationen</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="410"/>
         <source>Rename Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät umbenennen</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="410"/>
         <source>What do you want to call this device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie möchten sie dieses Gerät nennen?</translation>
     </message>
 </context>
 <context>
@@ -2539,27 +2540,27 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../location/locationrequestdialog.ui" line="69"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Standort</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.ui" line="111"/>
         <source>Deny</source>
-        <translation type="unfinished"></translation>
+        <translation>verweigern</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.ui" line="122"/>
         <source>Allow</source>
-        <translation type="unfinished"></translation>
+        <translation>Erlauben</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.ui" line="135"/>
         <source>Location access can be revoked at any time under Location in System Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Standortzugriff kann unter Standort in den Systemeinstellungen jederzeit widerrufen werden.</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.cpp" line="27"/>
         <source>Allow &lt;b&gt;%1&lt;/b&gt; to use your physical location?</source>
-        <translation type="unfinished"></translation>
+        <translation>Lassen Sie &lt;b&gt;%1&lt;/b&gt; physichen Standort verwenden?</translation>
     </message>
 </context>
 <context>
@@ -2594,32 +2595,32 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../mainwindow.ui" line="365"/>
         <source>Screen Brightness</source>
-        <translation type="unfinished">Bildschirmhelligkeit</translation>
+        <translation>Bildschirmhelligkeit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="429"/>
         <source>You are in Flight Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie sind im Flugmodus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="497"/>
         <source>Your location is currently being used</source>
-        <translation type="unfinished"></translation>
+        <translation>Dein Standort wird gerade verwendet</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="576"/>
         <source>Stop Screen Recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmaufnahme stoppen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="761"/>
         <source>Select Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Media Player auswählen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="862"/>
         <source>Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur Layout</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="993"/>
@@ -2655,12 +2656,12 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../mainwindow.cpp" line="298"/>
         <source>Recording Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirm aufnehmen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="304"/>
         <source>Processing Screen Recording...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmnahme verarbeiten...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="345"/>
@@ -2693,43 +2694,43 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../mainwindow.cpp" line="2209"/>
         <source>For Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Für die Leiste</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2211"/>
         <source>Move to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach unten bewegen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2216"/>
         <source>Move to top</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach oben bewegen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2222"/>
         <source>Gateway and Bar Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Gateway und Leisten Einstellungen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2227"/>
         <source>For System</source>
-        <translation type="unfinished"></translation>
+        <translation>Für das System</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
         <location filename="../mainwindow.cpp" line="2228"/>
         <source>Open Status Center</source>
-        <translation type="unfinished">Statuscenter öffnen</translation>
+        <translation>Statuscenter öffnen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2231"/>
         <source>Open System Settings</source>
-        <translation type="unfinished">Systemeinstellungen öffnen</translation>
+        <translation>Systemeinstellungen öffnen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2240"/>
         <source>Open Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>Gateway öffnen</translation>
     </message>
 </context>
 <context>
@@ -2887,17 +2888,17 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../menu.ui" line="595"/>
         <source>Before you end your session, here are some things you might want to know</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevor Sie Ihre Sitzung beenden, sind hier einige Dinge, die Sie vielleicht wissen möchten</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="688"/>
         <source>Who are you switching to?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zu wem wechseln Sie?</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="724"/>
         <source>Start a new session</source>
-        <translation type="unfinished"></translation>
+        <translation>Starten Sie eine neue Sitzung</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="75"/>
@@ -2908,37 +2909,37 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../menu.cpp" line="274"/>
         <source>Power Off Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Trotzdem Ausschalten</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="286"/>
         <source>Reboot Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Trotzdem Neustarten</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="298"/>
         <source>Log Out Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Trotzdem Abmelden</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="539"/>
         <source>%1 on X11 display %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 auf X11 display %2</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="541"/>
         <source>on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>auf %1</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="543"/>
         <source>%1 on VT #%2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 auf VT #%2</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="545"/>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Sitzung</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="665"/>
@@ -2956,90 +2957,90 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../locktypes/mousepassword.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="70"/>
         <source>Set up Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus Passwort einrichten</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="112"/>
         <source>A Mouse Password trades security for convenience when unlocking your computer from the lock screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Maus Passwort handelt aus Sicherheitsgründen, wenn Sie Ihren Computer vom Sperrbildschirm aus entsperren.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="149"/>
         <location filename="../locktypes/mousepassword.cpp" line="128"/>
         <source>Go for it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Tue es!</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="193"/>
         <source>Reset</source>
-        <translation type="unfinished">Zurücksetzen</translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="203"/>
         <location filename="../locktypes/mousepassword.cpp" line="228"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="176"/>
         <source>Your Mouse Password needs to contain at least 5 events.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Mauspasswort muss mindestens 5 Ereignisse enthalten.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="188"/>
         <source>Unfortunately that wasn&apos;t correct. Please try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Leider war das nicht richtig. Bitte versuche es nochmal.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="194"/>
         <source>Set Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Setze das Maus Passwort</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="202"/>
         <source>Unauthorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Unautorisiert</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="202"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Polkit erlaubt ihnen nicht ein Mauspasswort einrichten.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="220"/>
         <location filename="../locktypes/mousepassword.cpp" line="234"/>
         <source>Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus Passwort</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="220"/>
         <source>Mouse Password couldn&apos;t be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus Passwort konnte nicht gespeichert werden.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="235"/>
         <source>Mouse Password was set successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus Passwort wurde erfolgreich gesetzt</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.h" line="54"/>
         <source>To get started, use the mouse to input a sequence of button events now.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um zu beginnen, benutzen Sie die Maus, um jetzt eine Folge von Tastenereignissen einzugeben.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.h" line="55"/>
         <source>Now, confirm the Mouse Password you chose by entering it again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestätigen Sie nun das von Ihnen gewählte Mauspasswort, indem Sie es erneut eingeben.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.h" line="56"/>
         <source>Your Mouse Password is ready to be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Mauspasswort ist bereit zum Speichern.</translation>
     </message>
 </context>
 <context>
@@ -3098,12 +3099,12 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../nativeeventfilter.cpp" line="315"/>
         <source>Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur Layout</translation>
     </message>
     <message>
         <location filename="../nativeeventfilter.cpp" line="315"/>
         <source>Keyboard Layout set to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur Layout wurde zu %1 gesetzt</translation>
     </message>
 </context>
 <context>
@@ -3247,7 +3248,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="727"/>
         <source>Subject Match</source>
-        <translation type="unfinished"></translation>
+        <translation>Betreff-Übereinstimmung</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="734"/>
@@ -3257,7 +3258,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="741"/>
         <source>Alternative Subject Matches</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternative Betreff-Übereinstimmungen</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="748"/>
@@ -3502,7 +3503,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationappgroup.cpp" line="126"/>
         <source>+%n notifications collapsed</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>+%n benachrichtigung minimiert</numerusform>
             <numerusform>+%n benachrichtigungen minimiert</numerusform>
         </translation>
@@ -3513,31 +3514,31 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="54"/>
         <source>%n d</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Tag</numerusform>
+            <numerusform>%n Tage</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="56"/>
         <source>%n hr</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Stunde</numerusform>
+            <numerusform>%n Stunden</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="58"/>
         <source>%n min</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Minute</numerusform>
+            <numerusform>%n Minuten</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../notificationsWidget/notificationpanel.cpp" line="60"/>
         <source>just now</source>
-        <translation type="unfinished"></translation>
+        <translation>gerade eben</translation>
     </message>
 </context>
 <context>
@@ -3573,22 +3574,22 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../onboarding.ui" line="360"/>
         <source>Compact Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompaktleiste</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="400"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Kompakteleiste ist eine kleinere Version der Normalenleiste, bei der alle Elemente in einer Reihe angeordnet sind, um vertikalen Platz zu sparen.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="458"/>
         <source>Use the Compact Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutze dei Kompakteleiste</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="465"/>
         <source>Don&apos;t use the Compact Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutze die Kompakteleiste nicht</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="521"/>
@@ -3657,18 +3658,18 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     </message>
     <message>
         <location filename="../onboarding.ui" line="1042"/>
-        <location filename="../onboarding.cpp" line="177"/>
+        <location filename="../onboarding.cpp" line="197"/>
         <source>Next</source>
         <translation>Weiter</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="123"/>
-        <location filename="../onboarding.cpp" line="375"/>
+        <location filename="../onboarding.cpp" line="143"/>
+        <location filename="../onboarding.cpp" line="395"/>
         <source>Welcome to theShell %1!</source>
         <translation>Willkommen zu theShell %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="193"/>
+        <location filename="../onboarding.cpp" line="213"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
@@ -3694,7 +3695,7 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
     <message>
         <location filename="../rundialog.cpp" line="59"/>
         <source>Couldn&apos;t run that command.</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte dieses Kommando nicht finden</translation>
     </message>
 </context>
 <context>
@@ -3713,27 +3714,27 @@ Wenn Sie auswählen, Dateien zu behalten, werden folgende Objekte verbleiben:
         <location filename="../screenrecorder.cpp" line="76"/>
         <location filename="../screenrecorder.cpp" line="87"/>
         <source>Screen Recorder</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirm Recorder</translation>
     </message>
     <message>
         <location filename="../screenrecorder.cpp" line="16"/>
         <source>To record your screen, you&apos;ll need to install ffmpeg</source>
-        <translation type="unfinished"></translation>
+        <translation>Um deinen Bildschirm aufzunehmen musst du ffmpeg installieren</translation>
     </message>
     <message>
         <location filename="../screenrecorder.cpp" line="41"/>
         <source>Couldn&apos;t start screen recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte keine Bildschirmaufnahme starten</translation>
     </message>
     <message>
         <location filename="../screenrecorder.cpp" line="76"/>
         <source>Screen Recording saved in Recordings folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmaufnahme wurde im Aufnahmen Ordner gespeichert</translation>
     </message>
     <message>
         <location filename="../screenrecorder.cpp" line="87"/>
         <source>Screen Recording failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmaufnahme gescheitert</translation>
     </message>
 </context>
 <context>
@@ -4032,22 +4033,22 @@ Geben Sie den Namen oder den Pfad einer Fensterverwaltung ein, um zu versuchen, 
         <location filename="../screenshotwindow.ui" line="46"/>
         <location filename="../screenshotwindow.cpp" line="345"/>
         <source>Select a region using the mouse.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie eine Region mit der Maus aus.</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="80"/>
         <source>Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Zuschneiden</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="106"/>
         <source>Redact</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernen</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="129"/>
         <source>Highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Markieren</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="162"/>
@@ -4067,17 +4068,17 @@ Geben Sie den Namen oder den Pfad einer Fensterverwaltung ein, um zu versuchen, 
     <message>
         <location filename="../screenshotwindow.ui" line="223"/>
         <source>Reset Modificiations</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifikationen zurücksetzten</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.cpp" line="351"/>
         <source>Redact a region using the mouse.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entferne eine Reigion mit der Maus aus.</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.cpp" line="357"/>
         <source>Highlight part of the image using the mouse.</source>
-        <translation type="unfinished"></translation>
+        <translation>Markieren sie einen Teil des Bildes mithilfe der Maus.</translation>
     </message>
 </context>
 </TS>

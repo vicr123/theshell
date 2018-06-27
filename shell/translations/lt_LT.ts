@@ -3586,7 +3586,7 @@ Daiktai kurie bus palikti:
     </message>
     <message>
         <location filename="../onboarding.ui" line="1042"/>
-        <location filename="../onboarding.cpp" line="177"/>
+        <location filename="../onboarding.cpp" line="197"/>
         <source>Next</source>
         <translation>Toliau</translation>
     </message>
@@ -3671,13 +3671,13 @@ Daiktai kurie bus palikti:
         <translation>Grįžti</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="123"/>
-        <location filename="../onboarding.cpp" line="375"/>
+        <location filename="../onboarding.cpp" line="143"/>
+        <location filename="../onboarding.cpp" line="395"/>
         <source>Welcome to theShell %1!</source>
         <translation>Sveiki į theShell %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="193"/>
+        <location filename="../onboarding.cpp" line="213"/>
         <source>Start</source>
         <translation>Pradėti</translation>
     </message>

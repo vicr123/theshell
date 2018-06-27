@@ -163,7 +163,7 @@
     <message>
         <location filename="../background.cpp" line="387"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>bởi %1</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="498"/>
@@ -291,7 +291,7 @@
     <message>
         <location filename="../choosebackground.cpp" line="88"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">bởi %1</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="165"/>
@@ -2977,7 +2977,7 @@ Tập tin này có thể giữ lại:
         <location filename="../locktypes/mousepassword.ui" line="203"/>
         <location filename="../locktypes/mousepassword.cpp" line="228"/>
         <source>Next</source>
-        <translation type="unfinished">Tiếp</translation>
+        <translation>Tiếp</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="176"/>
@@ -2997,7 +2997,7 @@ Tập tin này có thể giữ lại:
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="202"/>
         <source>Unauthorized</source>
-        <translation type="unfinished">Không được phép</translation>
+        <translation>Không được phép</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="202"/>
@@ -3506,28 +3506,28 @@ Tập tin này có thể giữ lại:
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="54"/>
         <source>%n d</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n ng</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="56"/>
         <source>%n hr</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n giờ</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="58"/>
         <source>%n min</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n ph</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../notificationsWidget/notificationpanel.cpp" line="60"/>
         <source>just now</source>
-        <translation type="unfinished"></translation>
+        <translation>vừa báo</translation>
     </message>
 </context>
 <context>
@@ -3567,7 +3567,7 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../onboarding.ui" line="1042"/>
-        <location filename="../onboarding.cpp" line="177"/>
+        <location filename="../onboarding.cpp" line="197"/>
         <source>Next</source>
         <translation>Tiếp</translation>
     </message>
@@ -3652,13 +3652,13 @@ Tập tin này có thể giữ lại:
         <translation>Lại</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="123"/>
-        <location filename="../onboarding.cpp" line="375"/>
+        <location filename="../onboarding.cpp" line="143"/>
+        <location filename="../onboarding.cpp" line="395"/>
         <source>Welcome to theShell %1!</source>
         <translation>Chào mừng bạn đến theShell %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="193"/>
+        <location filename="../onboarding.cpp" line="213"/>
         <source>Start</source>
         <translation>Bắt đầu</translation>
     </message>

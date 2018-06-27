@@ -3578,7 +3578,7 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="1042"/>
-        <location filename="../onboarding.cpp" line="177"/>
+        <location filename="../onboarding.cpp" line="197"/>
         <source>Next</source>
         <translation>Næste</translation>
     </message>
@@ -3663,13 +3663,13 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
         <translation>Tilbage</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="123"/>
-        <location filename="../onboarding.cpp" line="375"/>
+        <location filename="../onboarding.cpp" line="143"/>
+        <location filename="../onboarding.cpp" line="395"/>
         <source>Welcome to theShell %1!</source>
         <translation>Velkommen til theShell %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="193"/>
+        <location filename="../onboarding.cpp" line="213"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>

@@ -146,7 +146,7 @@ void KdeConnectWidget::on_pairButton_clicked()
 {
     QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + currentId, "org.kde.kdeconnect.device");
     if (interface.property("isTrusted").toBool()) {
-        if (QMessageBox::question(this, tr("Unpair Device"), tr("Do you want to unpair this device?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No) {
+        if (QMessageBox::question(this, tr("Unpair Device"), tr("Do you want to unpair this device?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
             QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(interface.asyncCall("unpair"));
             connect(watcher, &QDBusPendingCallWatcher::finished, [=] {
                 watcher->deleteLater();

@@ -3605,7 +3605,7 @@ Zawartość która pozostanie po wybraniu opcji zachowania plików:-
     </message>
     <message>
         <location filename="../onboarding.ui" line="1042"/>
-        <location filename="../onboarding.cpp" line="177"/>
+        <location filename="../onboarding.cpp" line="197"/>
         <source>Next</source>
         <translation>Dalej</translation>
     </message>
@@ -3670,13 +3670,13 @@ Zawartość która pozostanie po wybraniu opcji zachowania plików:-
         <translation>Wstecz</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="123"/>
-        <location filename="../onboarding.cpp" line="375"/>
+        <location filename="../onboarding.cpp" line="143"/>
+        <location filename="../onboarding.cpp" line="395"/>
         <source>Welcome to theShell %1!</source>
         <translation>Witamy w theShell, %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="193"/>
+        <location filename="../onboarding.cpp" line="213"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
