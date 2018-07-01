@@ -139,9 +139,8 @@ Onboarding::Onboarding(QWidget *parent) :
     //ui->buttonBox->setVisible(false);
     ui->backButton->setVisible(false);
     ui->changelog->setText(ChangelogOnbording);
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(0, false);
     ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg(TS_VERSION));
-    ui->tsLogo->setPixmap(QIcon::fromTheme("theshell").pixmap(256, 256));
     ui->tsLogo_2->setPixmap(QIcon::fromTheme("theshell").pixmap(256, 256));
     ui->iconLabel->setPixmap(QIcon(":/icons/icon.svg").pixmap(32 * getDPIScaling(), 32 * getDPIScaling()));
 
@@ -407,4 +406,97 @@ void Onboarding::on_disableCompactBarButton_clicked()
 {
     settings.setValue("bar/compact", false);
     ui->stackedWidget->setCurrentIndex(ui->stackedWidget->currentIndex() + 1);
+}
+
+void Onboarding::showFullScreen() {
+    QPalette normalPalette = this->palette();
+
+    QPalette blackPalette = normalPalette;
+    blackPalette.setColor(QPalette::Window, Qt::black);
+    this->setPalette(blackPalette);
+
+    this->setWindowOpacity(0);
+
+    QGraphicsOpacityEffect* buttonBoxOpacity = new QGraphicsOpacityEffect();
+    buttonBoxOpacity->setOpacity(0);
+    ui->buttonBox->setGraphicsEffect(buttonBoxOpacity);
+
+    QGraphicsOpacityEffect* welcomeOpacity = new QGraphicsOpacityEffect();
+    welcomeOpacity->setOpacity(0);
+    ui->welcomeLabel->setGraphicsEffect(welcomeOpacity);
+
+    QGraphicsOpacityEffect* optionsOpacity = new QGraphicsOpacityEffect();
+    optionsOpacity->setOpacity(0);
+    ui->optionsBox->setGraphicsEffect(optionsOpacity);
+
+    QGraphicsOpacityEffect* iconOpacity = new QGraphicsOpacityEffect();
+    iconOpacity->setOpacity(0);
+    ui->tsLogo->setGraphicsEffect(iconOpacity);
+
+    QDialog::showFullScreen();
+
+    QTimer::singleShot(500, [=] {
+        //Wait for window to load
+        tPropertyAnimation* anim = new tPropertyAnimation(this, "windowOpacity");
+        anim->setStartValue((float) 0);
+        anim->setEndValue((float) 1);
+        anim->setDuration(500);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        connect(anim, &tPropertyAnimation::finished, [=] {
+            anim->deleteLater();
+
+            tVariantAnimation* iconAnim = new tVariantAnimation();
+            iconAnim->setStartValue(QSize(200, 200));
+            iconAnim->setEndValue(QSize(256, 256));
+            iconAnim->setDuration(1000);
+            iconAnim->setEasingCurve(QEasingCurve::OutCubic);
+            connect(iconAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                ui->tsLogo->setPixmap(QIcon::fromTheme("theshell").pixmap(value.toSize()));
+            });
+            QTimer::singleShot(800, [=] {
+                tPropertyAnimation* buttonBoxAnim = new tPropertyAnimation(buttonBoxOpacity, "opacity");
+                buttonBoxAnim->setStartValue((float) 0);
+                buttonBoxAnim->setEndValue((float) 1);
+                buttonBoxAnim->setDuration(500);
+                buttonBoxAnim->setEasingCurve(QEasingCurve::OutCubic);
+                buttonBoxAnim->start(tPropertyAnimation::DeleteWhenStopped);
+
+                tPropertyAnimation* textAnim = new tPropertyAnimation(welcomeOpacity, "opacity");
+                textAnim->setStartValue((float) 0);
+                textAnim->setEndValue((float) 1);
+                textAnim->setDuration(500);
+                textAnim->setEasingCurve(QEasingCurve::OutCubic);
+                textAnim->start(tPropertyAnimation::DeleteWhenStopped);
+
+                tPropertyAnimation* optAnim = new tPropertyAnimation(optionsOpacity, "opacity");
+                optAnim->setStartValue((float) 0);
+                optAnim->setEndValue((float) 1);
+                optAnim->setDuration(500);
+                optAnim->setEasingCurve(QEasingCurve::OutCubic);
+                optAnim->start(tPropertyAnimation::DeleteWhenStopped);
+
+                tVariantAnimation* palAnim = new tVariantAnimation();
+                palAnim->setStartValue(blackPalette.color(QPalette::Window));
+                palAnim->setEndValue(normalPalette.color(QPalette::Window));
+                palAnim->setDuration(500);
+                palAnim->setEasingCurve(QEasingCurve::OutCubic);
+                connect(palAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                    QPalette pal = this->palette();
+                    pal.setColor(QPalette::Window, value.value<QColor>());
+                    this->setPalette(pal);
+                });
+                palAnim->start(tPropertyAnimation::DeleteWhenStopped);
+            });
+            iconAnim->start(tVariantAnimation::DeleteWhenStopped);
+
+            tPropertyAnimation* opacityAnim = new tPropertyAnimation(iconOpacity, "opacity");
+            opacityAnim->setStartValue((float) 0);
+            opacityAnim->setEndValue((float) 1);
+            opacityAnim->setDuration(1000);
+            opacityAnim->setEasingCurve(QEasingCurve::OutCubic);
+            opacityAnim->start(tPropertyAnimation::DeleteWhenStopped);
+        });
+        anim->start();
+
+    });
 }

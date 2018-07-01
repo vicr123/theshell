@@ -39,50 +39,53 @@ class Onboarding : public QDialog
 {
     Q_OBJECT
 
-public:
-    explicit Onboarding(QWidget *parent = 0);
-    ~Onboarding();
+    public:
+        explicit Onboarding(QWidget *parent = 0);
+        ~Onboarding();
 
-private slots:
-    void on_closeButton_clicked();
+    public slots:
+        void showFullScreen();
 
-    void on_stackedWidget_currentChanged(int arg1);
+    private slots:
+        void on_closeButton_clicked();
 
-    void on_nextButton_clicked();
+        void on_stackedWidget_currentChanged(int arg1);
 
-    void on_backButton_clicked();
+        void on_nextButton_clicked();
 
-    void on_beginButton_clicked();
+        void on_backButton_clicked();
 
-    void on_changeLanguageButton_clicked();
+        void on_beginButton_clicked();
 
-    void on_localeList_currentRowChanged(int currentRow);
+        void on_changeLanguageButton_clicked();
 
-    void on_enableStatusBarButton_clicked();
+        void on_localeList_currentRowChanged(int currentRow);
 
-    void on_disableStatusBarButton_clicked();
+        void on_enableStatusBarButton_clicked();
 
-    void on_backToSetupButton_clicked();
+        void on_disableStatusBarButton_clicked();
 
-    void on_logoutButton_clicked();
+        void on_backToSetupButton_clicked();
 
-    void on_powerOffButton_clicked();
+        void on_logoutButton_clicked();
 
-    void on_exitStackedWidget_currentChanged(int arg1);
+        void on_powerOffButton_clicked();
 
-    void on_enableCompactBarButton_clicked();
+        void on_exitStackedWidget_currentChanged(int arg1);
 
-    void on_disableCompactBarButton_clicked();
+        void on_enableCompactBarButton_clicked();
+
+        void on_disableCompactBarButton_clicked();
 
     private:
-    Ui::Onboarding *ui;
+        Ui::Onboarding *ui;
 
-    void reject();
-    void changeEvent(QEvent* event);
+        void reject();
+        void changeEvent(QEvent* event);
 
-    int buttonCurrentLanguage = 0;
-    QSettings settings;
-    bool onboardingDone = false;
+        int buttonCurrentLanguage = 0;
+        QSettings settings;
+        bool onboardingDone = false;
 };
 
 #endif // ONBOARDING_H
