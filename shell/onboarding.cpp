@@ -446,8 +446,8 @@ void Onboarding::showFullScreen() {
             anim->deleteLater();
 
             tVariantAnimation* iconAnim = new tVariantAnimation();
-            iconAnim->setStartValue(QSize(200, 200));
-            iconAnim->setEndValue(QSize(256, 256));
+            iconAnim->setStartValue(QSize(200 * getDPIScaling(), 200 * getDPIScaling()));
+            iconAnim->setEndValue(QSize(256 * getDPIScaling(), 256 * getDPIScaling()));
             iconAnim->setDuration(1000);
             iconAnim->setEasingCurve(QEasingCurve::OutCubic);
             connect(iconAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
