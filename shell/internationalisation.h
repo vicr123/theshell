@@ -46,7 +46,6 @@ public:
         deDE,
         viVN,
         daDK,
-        nbNO,
         esES,
         ruRU,
         svSE,
@@ -61,6 +60,7 @@ public:
         miNZ,
         ptBR,
         idID,
+        nbNO,
         maxLanguage
     };
 
@@ -111,7 +111,7 @@ public:
                     languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-lt"), tr("Lithuanian") + " (Lietuvių)"));
                     break;
                 case nbNO:
-                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-no"), tr("Norwegian") + " (Norsk Bokmål)"));
+                    //languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-no"), tr("Norwegian") + " (Norsk Bokmål)"));
                     break;
                 case idID:
                     //languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-in"), tr("Indonesian") + " (Bahasa Indonesia)"));
