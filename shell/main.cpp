@@ -66,7 +66,7 @@ DBusSignals* dbusSignals = NULL;
 QSettings::Format desktopFileFormat;
 ScreenRecorder* screenRecorder = nullptr;
 
-#define ONBOARDING_VERSION 5
+#define ONBOARDING_VERSION 6
 
 void raise_signal(QString message) {
     //Clean up required stuff

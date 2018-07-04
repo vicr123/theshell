@@ -118,42 +118,46 @@
           </widget>
          </item>
          <item>
-          <widget class="ClickableLabel" name="clockLabel">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>Clock</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="ClickableLabel" name="batteryLabel">
-           <property name="text">
-            <string>System Status</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="ClickableLabel" name="networkLabel">
-           <property name="text">
-            <string>Network</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="ClickableLabel" name="notificationsLabel">
-           <property name="text">
-            <string>Notifications</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="ClickableLabel" name="kdeconnectLabel">
-           <property name="text">
-            <string>KDE Connect</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="InformationalPluginsLayout">
+           <item>
+            <widget class="ClickableLabel" name="clockLabel">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Clock</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ClickableLabel" name="batteryLabel">
+             <property name="text">
+              <string>System Status</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ClickableLabel" name="networkLabel">
+             <property name="text">
+              <string>Network</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ClickableLabel" name="notificationsLabel">
+             <property name="text">
+              <string>Notifications</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="ClickableLabel" name="kdeconnectLabel">
+             <property name="text">
+              <string>KDE Connect</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_6">
@@ -689,14 +693,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>17</day>
+                 <day>14</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>17</day>
+                 <day>14</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2099,6 +2103,14 @@
                 </item>
                 <item>
                  <property name="text">
+                  <string>Unavailable Panes</string>
+                 </property>
+                 <property name="icon">
+                  <iconset theme="dialog-warning"/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
                   <string>Advanced</string>
                  </property>
                  <property name="icon">
@@ -2144,7 +2156,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>15</number>
+             <number>14</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -6337,6 +6349,86 @@ Items that will be kept if you choose to keep files:
               </item>
              </layout>
             </widget>
+            <widget class="QWidget" name="UnavailablePanesPage">
+             <layout class="QVBoxLayout" name="verticalLayout_58">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_110">
+                <property name="font">
+                 <font>
+                  <pointsize>15</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Unavailable Panes</string>
+                </property>
+                <property name="margin">
+                 <number>9</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="line_52">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>1</height>
+                 </size>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_111">
+                <property name="text">
+                 <string>There were errors loading the following items:</string>
+                </property>
+                <property name="margin">
+                 <number>9</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="Line" name="line_53">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>1</height>
+                 </size>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="settingsUnavailableTable">
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+             </layout>
+            </widget>
             <widget class="QWidget" name="DangerSettings">
              <layout class="QVBoxLayout" name="verticalLayout_48">
               <property name="spacing">
@@ -6772,7 +6864,8 @@ Items that will be kept if you choose to keep files:
                      <string>Website</string>
                     </property>
                     <property name="icon">
-                     <iconset theme="text-html"/>
+                     <iconset theme="text-html">
+                      <normaloff>.</normaloff>.</iconset>
                     </property>
                    </widget>
                   </item>
@@ -6782,7 +6875,8 @@ Items that will be kept if you choose to keep files:
                      <string>File Bug</string>
                     </property>
                     <property name="icon">
-                     <iconset theme="tools-report-bug"/>
+                     <iconset theme="tools-report-bug">
+                      <normaloff>.</normaloff>.</iconset>
                     </property>
                    </widget>
                   </item>
@@ -6792,7 +6886,8 @@ Items that will be kept if you choose to keep files:
                      <string>Sources</string>
                     </property>
                     <property name="icon">
-                     <iconset theme="commit"/>
+                     <iconset theme="commit">
+                      <normaloff>.</normaloff>.</iconset>
                     </property>
                    </widget>
                   </item>
@@ -6916,14 +7011,6 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>clickablelabel.h</header>
-   <slots>
-    <signal>clicked()</signal>
-   </slots>
-  </customwidget>
-  <customwidget>
    <class>AnimatedStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>animatedstackedwidget.h</header>
@@ -6936,6 +7023,14 @@ Items that will be kept if you choose to keep files:
    <container>1</container>
    <slots>
     <signal>networkAvailable(bool)</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>clickablelabel.h</header>
+   <slots>
+    <signal>clicked()</signal>
    </slots>
   </customwidget>
   <customwidget>

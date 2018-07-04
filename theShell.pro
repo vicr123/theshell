@@ -7,7 +7,10 @@ SUBDIRS += \
     shell \
     startsession \
     polkitagent \
-    mousepass
+    mousepass \
+    statuscenter
+
+statuscenter.depends = shell
 
 blueprint {
     message(Configuring theShell to be built as blueprint)

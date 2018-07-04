@@ -674,6 +674,76 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         slice2.start();
     });
 
+    //Load plugins
+    #ifdef BLUEPRINT
+        QDir pluginsDir("/usr/lib/theshellb/panes");
+    #else
+        QDir pluginsDir("/usr/lib/theshell/panes");
+    #endif
+
+    QDirIterator pluginsIterator(pluginsDir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+
+    QJsonArray errors;
+
+    while (pluginsIterator.hasNext()) {
+        pluginsIterator.next();
+        if (pluginsIterator.fileInfo().suffix() != "so" && pluginsIterator.fileInfo().suffix() != "a") continue;
+        QPluginLoader loader(pluginsIterator.filePath());
+        QObject* plugin = loader.instance();
+        if (plugin == nullptr) {
+            QJsonObject metadata = loader.metaData();
+            if (!metadata.contains("name")) {
+                metadata.insert("name", pluginsIterator.fileName());
+            }
+            metadata.insert("error", loader.errorString());
+            errors.append(metadata);
+        } else {
+            StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
+            if (p) {
+                for (StatusCenterPaneObject* pane : p->availablePanes()) {
+                    if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+                        ClickableLabel* label = new ClickableLabel(this);
+                        label->setText(pane->name());
+                        ui->InformationalPluginsLayout->addWidget(label);
+
+                        ui->pageStack->insertWidget(ui->pageStack->count() - 1, pane->mainWidget());
+                        pane->mainWidget()->setAutoFillBackground(true);
+
+                        connect(label, &ClickableLabel::clicked, [=] {
+                            ui->pageStack->setCurrentWidget(pane->mainWidget());
+                        });
+                    }
+
+                    if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
+                        QListWidgetItem* item = new QListWidgetItem();
+                        item->setText(pane->name());
+                        item->setIcon(pane->settingAttributes.icon);
+                        ui->settingsList->insertItem(ui->settingsList->count() - 3, item);
+
+                        ui->settingsTabs->insertWidget(ui->settingsTabs->count() - 3, pane->mainWidget());
+                        pane->mainWidget()->setAutoFillBackground(true);
+                    }
+                }
+            }
+        }
+    }
+
+    if (errors.count() == 0) {
+        ui->settingsTabs->removeWidget(ui->UnavailablePanesPage);
+        delete ui->settingsList->takeItem(ui->settingsList->count() - 3);
+    } else {
+        ui->settingsUnavailableTable->setColumnCount(2);
+        ui->settingsUnavailableTable->setRowCount(errors.count());
+        ui->settingsUnavailableTable->setHorizontalHeaderLabels(QStringList() << "Name" << "Reason");
+        ui->settingsUnavailableTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+        ui->settingsUnavailableTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+        for (int i = 0; i < errors.count(); i++) {
+            QJsonObject o = errors.at(i).toObject();
+            ui->settingsUnavailableTable->setItem(i, 0, new QTableWidgetItem(o.value("name").toString()));
+            ui->settingsUnavailableTable->setItem(i, 1, new QTableWidgetItem(o.value("error").toString()));
+        }
+    }
+
     updateStruts();
     updateAutostart();
     updateDSTNotification();

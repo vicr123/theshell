@@ -68,6 +68,8 @@
 #include "apps/appslistmodel.h"
 #include <QSpinBox>
 #include <polkit-qt5-1/PolkitQt1/Authority>
+#include <QPluginLoader>
+#include "statuscenter/statuscenterpane.h"
 
 class UPowerDBus;
 

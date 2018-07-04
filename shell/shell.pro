@@ -15,7 +15,7 @@ unix {
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-DEFINES += TS_VERSION='\\"8.0\\"'
+DEFINES += TS_VERSION='\\"8.1\\"'
 
 unix {
     QT += thelib x11extras
@@ -153,7 +153,9 @@ HEADERS  += mainwindow.h \
     location/locationrequestdialog.h \
     agent_adaptor.h \
     locktypes/mousepassword.h \
-    notificationsWidget/mediaplayernotification.h
+    notificationsWidget/mediaplayernotification.h \
+    statuscenter/statuscenterpane.h \
+    statuscenter/statuscenterpaneobject.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
