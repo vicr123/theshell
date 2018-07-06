@@ -28,7 +28,11 @@ QVariant TransfersListModel::data(const QModelIndex &index, int role) const
     BluezQt::ObexTransferPtr transfer = transfers.at(index.row());
     switch (role) {
         case Qt::DisplayRole:
-            return QFileInfo(transfer.data()->fileName()).baseName();
+            if (transfer.data()->fileName() == "") {
+                return transfer.data()->name();
+            } else {
+                return QFileInfo(transfer.data()->fileName()).baseName();
+            }
         case Qt::DecorationRole:
             return QIcon::fromTheme("document-new");
         case Qt::UserRole:
@@ -38,13 +42,37 @@ QVariant TransfersListModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void TransfersListModel::pushTransfer(BluezQt::ObexTransferPtr transfer) {
+void TransfersListModel::pushTransfer(BluezQt::ObexTransferPtr transfer, bool incoming) {
     transfers.prepend(transfer);
     connect(transfer.data(), &BluezQt::ObexTransfer::transferredChanged, [=] {
         emit dataChanged(index(transfers.indexOf(transfer)), index(transfers.indexOf(transfer)));
     });
-    connect(transfer.data(), &BluezQt::ObexTransfer::statusChanged, [=] {
+    connect(transfer.data(), &BluezQt::ObexTransfer::statusChanged, [=](BluezQt::ObexTransfer::Status status) {
         emit dataChanged(index(transfers.indexOf(transfer)), index(transfers.indexOf(transfer)));
+
+        if (status == BluezQt::ObexTransfer::Complete) {
+            tNotification* n = new tNotification();
+            n->setAppName("Bluetooth");
+            n->setAppIcon("preferences-system-bluetooth");
+            n->setSummary(tr("Transfer Complete"));
+            if (incoming) {
+                n->setText(tr("<b>%1</b> has been successfully received and placed inside Downloads > Bluetooth.").arg(transfer.data()->name()));
+            } else {
+                n->setText(tr("<b>%1</b> has been sent successfully.").arg(transfer.data()->name()));
+            }
+            n->post();
+        } else if (status == BluezQt::ObexTransfer::Error) {
+            tNotification* n = new tNotification();
+            n->setAppName("Bluetooth");
+            n->setAppIcon("preferences-system-bluetooth");
+            n->setSummary(tr("Transfer Failure"));
+            if (incoming) {
+                n->setText(tr("There was a problem while receiving <b>%1</b>.").arg(transfer.data()->name()));
+            } else {
+                n->setText(tr("There was a problem while sending <b>%1</b>.").arg(transfer.data()->name()));
+            }
+            n->post();
+        }
     });
     emit dataChanged(index(0), index(rowCount()));
 }

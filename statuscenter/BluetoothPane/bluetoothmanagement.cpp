@@ -38,7 +38,10 @@ BluetoothManagement::BluetoothManagement(QWidget *parent) :
     ui->pairDeviceList->setModel(new DevicesListModel(mgr, DevicesListModel::Unpaired));
     ui->pairDeviceList->setItemDelegate(new DevicesDelegate(this));
 
-    obexAgent = new BTObexAgent(obexMgr, this);
+    obexAgent = new BTObexAgent(obexMgr, mgr, this);
+    connect(obexAgent, &BTObexAgent::newTransfer, [=](BluezQt::ObexTransferPtr transfer) {
+        obexTransferModel->pushTransfer(transfer, true);
+    });
     obexTransferModel = new TransfersListModel(obexMgr, this);
     ui->transfersList->setModel(obexTransferModel);
     ui->transfersList->setItemDelegate(new TransfersDelegate);
@@ -333,7 +336,7 @@ void BluetoothManagement::on_sendFilesButton_clicked()
                 connect(FileSend, &BluezQt::PendingCall::finished, [=] {
                     if (FileSend->error() == BluezQt::PendingCall::NoError) {
                         BluezQt::ObexTransferPtr transfer = FileSend->value().value<BluezQt::ObexTransferPtr>();
-                        obexTransferModel->pushTransfer(transfer);
+                        obexTransferModel->pushTransfer(transfer, false);
                     } else {
                         tToast* toast = new tToast();
                         toast->setTitle(tr("Send Error"));

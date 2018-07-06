@@ -11,6 +11,7 @@
 #include <QStyledItemDelegate>
 #include <QPainter>
 #include <QFileInfo>
+#include <tnotification.h>
 
 class TransfersListModel : public QAbstractListModel
 {
@@ -24,7 +25,7 @@ class TransfersListModel : public QAbstractListModel
 
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-        void pushTransfer(BluezQt::ObexTransferPtr transfer);
+        void pushTransfer(BluezQt::ObexTransferPtr transfer, bool incoming);
 
     private:
         BluezQt::ObexManager* mgr;
