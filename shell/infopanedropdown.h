@@ -507,6 +507,10 @@ class InfoPaneDropdown : public QDialog
 
         void on_sourcesButton_clicked();
 
+        void pluginMessage(QString message, QVariantList args);
+
+        void on_settingsList_itemActivated(QListWidgetItem *item);
+
     public slots:
         void getNetworks();
 

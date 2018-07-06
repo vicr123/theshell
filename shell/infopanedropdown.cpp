@@ -52,7 +52,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 
     ui->settingsList->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
-    ui->settingsListStack->setFixedWidth(250 * getDPIScaling());
+    ui->settingsListContainer->setFixedWidth(250 * getDPIScaling());
 
     startTime.start();
 
@@ -718,11 +718,22 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                         QListWidgetItem* item = new QListWidgetItem();
                         item->setText(pane->name());
                         item->setIcon(pane->settingAttributes.icon);
+                        item->setData(Qt::UserRole, -1);
                         ui->settingsList->insertItem(ui->settingsList->count() - 3, item);
+
+                        if (pane->settingAttributes.menuWidget != nullptr) {
+                            int settingNumber = ui->settingsListStack->addWidget(pane->settingAttributes.menuWidget);
+                            pane->settingAttributes.menuWidget->setAutoFillBackground(true);
+                            item->setData(Qt::UserRole, settingNumber);
+                        }
 
                         ui->settingsTabs->insertWidget(ui->settingsTabs->count() - 3, pane->mainWidget());
                         pane->mainWidget()->setAutoFillBackground(true);
                     }
+
+                    pane->sendMessage = [=](QString message, QVariantList args) {
+                        this->pluginMessage(message, args);
+                    };
                 }
             }
         }
@@ -4382,4 +4393,39 @@ void InfoPaneDropdown::on_sourcesButton_clicked()
 {
     QProcess::startDetached("xdg-open https://github.com/vicr123/theshell");
     this->close();
+}
+
+void InfoPaneDropdown::pluginMessage(QString message, QVariantList args) {
+    if (message == "main-menu") {
+        if (ui->settingsListContainer->width() == 0) pluginMessage("show-menu", QVariantList());
+        ui->settingsListStack->setCurrentIndex(0);
+    } else if (message == "hide-menu") {
+        tVariantAnimation* anim = new tVariantAnimation();
+        anim->setStartValue(ui->settingsListContainer->width());
+        anim->setEndValue(0);
+        anim->setDuration(500);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+            ui->settingsListContainer->setFixedWidth(value.toInt());
+        });
+        anim->start(tVariantAnimation::DeleteWhenStopped);
+    } else if (message == "show-menu") {
+        tVariantAnimation* anim = new tVariantAnimation();
+        anim->setStartValue(ui->settingsListContainer->width());
+        anim->setEndValue((int) (250 * getDPIScaling()));
+        anim->setDuration(500);
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+            ui->settingsListContainer->setFixedWidth(value.toInt());
+        });
+        anim->start(tVariantAnimation::DeleteWhenStopped);
+    }
+}
+
+void InfoPaneDropdown::on_settingsList_itemActivated(QListWidgetItem *item)
+{
+    QVariant setting = item->data(Qt::UserRole);
+    if (!setting.isNull() && setting.toInt() != -1) {
+        ui->settingsListStack->setCurrentIndex(setting.toInt());
+    }
 }

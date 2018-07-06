@@ -220,16 +220,19 @@ unix {
     translations.files = translations/*
     xsession.path = /usr/share/xsessions
 
+    headers.files = statuscenter/statuscenterpane.h statuscenter/statuscenterpaneobject.h
     ringtones.files = tones/*
 
     blueprint {
         translations.path = /usr/share/theshellb/translations
         xsession.files = theshellb.desktop
         ringtones.path = /usr/share/sounds/theshellb/tones
+        headers.path = /usr/include/theshellb
     } else {
         translations.path = /usr/share/theshell/translations
         xsession.files = theshell.desktop
         ringtones.path = /usr/share/sounds/theshell/tones
+        headers.path = /usr/include/theshell
 
         #Install polkit files only on theShell stable
         polkit.path = /usr/share/polkit-1/actions
@@ -237,5 +240,5 @@ unix {
         INSTALLS += polkit
     }
 
-    INSTALLS += target translations xsession ringtones
+    INSTALLS += target translations xsession ringtones headers
 }

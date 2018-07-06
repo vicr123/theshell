@@ -410,8 +410,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1169</width>
-            <height>1038</height>
+            <width>616</width>
+            <height>1062</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -693,14 +693,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>14</day>
+                 <day>13</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>14</day>
+                 <day>13</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1906,245 +1906,269 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="AnimatedStackedWidget" name="settingsListStack">
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
-            <widget class="QWidget" name="page_21">
-             <layout class="QVBoxLayout" name="verticalLayout_13">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="label_102">
-                <property name="font">
-                 <font>
-                  <pointsize>15</pointsize>
-                 </font>
+           <widget class="QWidget" name="settingsListContainer" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_28">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="AnimatedStackedWidget" name="settingsListStack">
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <widget class="QWidget" name="page_21">
+                <property name="autoFillBackground">
+                 <bool>true</bool>
                 </property>
-                <property name="text">
-                 <string>System Settings</string>
-                </property>
-                <property name="margin">
-                 <number>9</number>
-                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_13">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_102">
+                   <property name="font">
+                    <font>
+                     <pointsize>15</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>System Settings</string>
+                   </property>
+                   <property name="margin">
+                    <number>9</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="Line" name="line_23">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>1</height>
+                    </size>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QListWidget" name="settingsList">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="editTriggers">
+                    <set>QAbstractItemView::NoEditTriggers</set>
+                   </property>
+                   <property name="showDropIndicator" stdset="0">
+                    <bool>false</bool>
+                   </property>
+                   <property name="defaultDropAction">
+                    <enum>Qt::IgnoreAction</enum>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Startup</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-system-login">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Gateway and Bar</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-desktop-gateway">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Networks</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-system-network">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Display</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-desktop-display">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Theme</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-desktop-theme">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Sounds and Notifications</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-system-notifications">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Location</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-system-geolocation">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Input</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-desktop-input">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Power</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-system-power">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Lock Screen</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-system-lock">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Users</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-desktop-user">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Date and Time</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-system-time">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Language</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-system-locale">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Accessibility</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-desktop-accessibility">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Unavailable Panes</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="dialog-warning">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Advanced</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-system-danger">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>About</string>
+                    </property>
+                    <property name="icon">
+                     <iconset theme="preferences-desktop-about">
+                      <normaloff>.</normaloff>.</iconset>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line_23">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>1</height>
-                 </size>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QListWidget" name="settingsList">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="editTriggers">
-                 <set>QAbstractItemView::NoEditTriggers</set>
-                </property>
-                <property name="showDropIndicator" stdset="0">
-                 <bool>false</bool>
-                </property>
-                <property name="defaultDropAction">
-                 <enum>Qt::IgnoreAction</enum>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>Startup</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-system-login">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Gateway and Bar</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-desktop-gateway">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Networks</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-system-network">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Display</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-desktop-display">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Theme</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-desktop-theme">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Sounds and Notifications</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-system-notifications">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Location</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-system-geolocation">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Input</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-desktop-input">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Power</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-system-power">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Lock Screen</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-system-lock">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Users</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-desktop-user">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Date and Time</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-system-time">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Language</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-system-locale">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Accessibility</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-desktop-accessibility">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Unavailable Panes</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="dialog-warning"/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Advanced</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-system-danger">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>About</string>
-                 </property>
-                 <property name="icon">
-                  <iconset theme="preferences-desktop-about">
-                   <normaloff>.</normaloff>.</iconset>
-                 </property>
-                </item>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="page_22"/>
-           </widget>
-          </item>
-          <item>
-           <widget class="Line" name="line_19">
-            <property name="maximumSize">
-             <size>
-              <width>1</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line_19">
+               <property name="maximumSize">
+                <size>
+                 <width>1</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>

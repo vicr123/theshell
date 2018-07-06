@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QIcon>
+#include <functional>
 
 struct InformationalStatusCenterPaneObjectAttributes {
     QColor lightColor;
@@ -12,14 +13,16 @@ struct InformationalStatusCenterPaneObjectAttributes {
 
 struct SettingStatusCenterPaneObjectAttributes {
     QIcon icon;
+    bool providesLeftPane;
+    QWidget* menuWidget = nullptr;
 };
 
 class StatusCenterPaneObject
 {
     public:
         enum StatusPaneType {
-            Informational,
-            Setting
+            Informational = 0x1,
+            Setting = 0x2
         };
         Q_DECLARE_FLAGS(StatusPaneTypes, StatusPaneType)
 
@@ -29,8 +32,12 @@ class StatusCenterPaneObject
         virtual QString name() = 0;
         virtual StatusPaneTypes type() = 0;
         virtual int position() = 0;
+        virtual void message(QString name, QVariantList args) = 0;
+
         InformationalStatusCenterPaneObjectAttributes informationalAttributes;
         SettingStatusCenterPaneObjectAttributes settingAttributes;
+
+        std::function<void(QString, QVariantList)> sendMessage;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(StatusCenterPaneObject::StatusPaneTypes)
