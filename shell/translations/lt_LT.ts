@@ -2129,11 +2129,6 @@ Daiktai kurie bus palikti:
         <translation>Latvių</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="114"/>
-        <source>Norwegian</source>
-        <translation>Norvergų</translation>
-    </message>
-    <message>
         <location filename="../internationalisation.h" line="169"/>
         <source>Portuguese</source>
         <translation>Portugalų</translation>
@@ -3575,109 +3570,109 @@ Daiktai kurie bus palikti:
         <translation>Pasirinkite kalbą</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="728"/>
+        <location filename="../onboarding.ui" line="742"/>
         <source>Thank you.</source>
         <translation>Ačiū.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="745"/>
+        <location filename="../onboarding.ui" line="759"/>
         <source>You&apos;re ready to start using theShell.</source>
         <translation>Jūs esate pasiruošę naudoti theShell.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="1042"/>
-        <location filename="../onboarding.cpp" line="197"/>
+        <location filename="../onboarding.ui" line="1056"/>
+        <location filename="../onboarding.cpp" line="196"/>
         <source>Next</source>
         <translation>Toliau</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="296"/>
+        <location filename="../onboarding.ui" line="310"/>
         <source>What&apos;s New?</source>
         <translation>Kas naujo?</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="360"/>
+        <location filename="../onboarding.ui" line="374"/>
         <source>Compact Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="400"/>
+        <location filename="../onboarding.ui" line="414"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="458"/>
+        <location filename="../onboarding.ui" line="472"/>
         <source>Use the Compact Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="465"/>
+        <location filename="../onboarding.ui" line="479"/>
         <source>Don&apos;t use the Compact Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="521"/>
+        <location filename="../onboarding.ui" line="535"/>
         <source>Status Bar</source>
         <translation>Būsenos juostelė</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="561"/>
+        <location filename="../onboarding.ui" line="575"/>
         <source>The Status Bar is a smaller version of the bar that is always visible and shows system status icons.</source>
         <translation>Būsenos juostelė yra mažesnė versija iš juostos kuri yra visada matoma ir rodo sistemos būsenos piktogramas.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="610"/>
+        <location filename="../onboarding.ui" line="624"/>
         <source>The Status Bar will appear once the bar moves far enough out of the way.</source>
         <translation>Būsenos juostelė atsiras kai juosta dings pakankamai toli iš kelio.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="642"/>
+        <location filename="../onboarding.ui" line="656"/>
         <source>Use the Status Bar</source>
         <translation>Naudoti būsenos juostelę</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="649"/>
+        <location filename="../onboarding.ui" line="663"/>
         <source>Don&apos;t use the Status Bar</source>
         <translation>Nenaudoti būsenos juostelės</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="815"/>
+        <location filename="../onboarding.ui" line="829"/>
         <source>Cancel Setup</source>
         <translation>Atšaukti sąrankos vedlį</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="846"/>
+        <location filename="../onboarding.ui" line="860"/>
         <source>You haven&apos;t finished setting up theShell. What would you like to do?</source>
         <translation>Jūs nebaigėte nustatyti theShell. Ką norėtumėte daryti?</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="888"/>
+        <location filename="../onboarding.ui" line="902"/>
         <source>Return to theShell Setup</source>
         <translation>Grįžti į theShell sąrankos vedlį</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="895"/>
+        <location filename="../onboarding.ui" line="909"/>
         <source>Log Out</source>
         <translation>Atsijungti</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="909"/>
+        <location filename="../onboarding.ui" line="923"/>
         <source>Power Off</source>
         <translation>Išjungti</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="1031"/>
+        <location filename="../onboarding.ui" line="1045"/>
         <source>Back</source>
         <translation>Grįžti</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="143"/>
-        <location filename="../onboarding.cpp" line="395"/>
+        <location filename="../onboarding.cpp" line="394"/>
         <source>Welcome to theShell %1!</source>
         <translation>Sveiki į theShell %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="213"/>
+        <location filename="../onboarding.cpp" line="212"/>
         <source>Start</source>
         <translation>Pradėti</translation>
     </message>

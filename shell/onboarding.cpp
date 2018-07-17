@@ -303,8 +303,8 @@ void Onboarding::on_localeList_currentRowChanged(int currentRow)
         case Internationalisation::auAU:
             settings.setValue("locale/language", "au_AU");
             break;
-        case Internationalisation::nbNO:
-            settings.setValue("locale/language", "nb_NO");
+        case Internationalisation::arEG:
+            settings.setValue("locale/language", "ar_EG");
             break;
     }
 
@@ -314,13 +314,7 @@ void Onboarding::on_localeList_currentRowChanged(int currentRow)
     QLocale defaultLocale(localeName);
     QLocale::setDefault(defaultLocale);
 
-    if (defaultLocale.language() == QLocale::Arabic || defaultLocale.language() == QLocale::Hebrew) {
-        //Reverse the layout direction
-        QApplication::setLayoutDirection(Qt::RightToLeft);
-    } else {
-        //Set normal layout direction
-        QApplication::setLayoutDirection(Qt::LeftToRight);
-    }
+    QApplication::setLayoutDirection(defaultLocale.textDirection());
 
     qtTranslator->load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     QApplication::installTranslator(qtTranslator);

@@ -2138,11 +2138,6 @@ Items that will be kept if you choose to keep files:
         <translation></translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="114"/>
-        <source>Norwegian</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../internationalisation.h" line="168"/>
         <source>Polish</source>
         <translation></translation>
@@ -3562,110 +3557,110 @@ Items that will be kept if you choose to keep files:
         <translation>Select what ya can read in</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="296"/>
+        <location filename="../onboarding.ui" line="310"/>
         <source>What&apos;s New?</source>
         <translation>What was added?</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="360"/>
+        <location filename="../onboarding.ui" line="374"/>
         <source>Compact Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="400"/>
+        <location filename="../onboarding.ui" line="414"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="458"/>
+        <location filename="../onboarding.ui" line="472"/>
         <source>Use the Compact Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="465"/>
+        <location filename="../onboarding.ui" line="479"/>
         <source>Don&apos;t use the Compact Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="521"/>
+        <location filename="../onboarding.ui" line="535"/>
         <source>Status Bar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="561"/>
+        <location filename="../onboarding.ui" line="575"/>
         <source>The Status Bar is a smaller version of the bar that is always visible and shows system status icons.</source>
         <translation>The Status Bar is a fancy lil&apos; thing and it&apos;s basically just a smaller version of the bar that&apos;s always visible and it&apos;s just good.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="610"/>
+        <location filename="../onboarding.ui" line="624"/>
         <source>The Status Bar will appear once the bar moves far enough out of the way.</source>
         <translation>The Status Bar will appear once the bar moves outta the way because it&apos;s fat.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="642"/>
+        <location filename="../onboarding.ui" line="656"/>
         <source>Use the Status Bar</source>
         <translation>Yeah this seems cool use it</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="649"/>
+        <location filename="../onboarding.ui" line="663"/>
         <source>Don&apos;t use the Status Bar</source>
         <translation>Nah I&apos;m good</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="728"/>
+        <location filename="../onboarding.ui" line="742"/>
         <source>Thank you.</source>
         <translation>Awesome thanks mate</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="745"/>
+        <location filename="../onboarding.ui" line="759"/>
         <source>You&apos;re ready to start using theShell.</source>
         <translatorcomment>hehehehehe</translatorcomment>
         <translation>Let&apos;s chuck one on the barbie, shall we?</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="815"/>
+        <location filename="../onboarding.ui" line="829"/>
         <source>Cancel Setup</source>
         <translation>Actually just stuff this</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="846"/>
+        <location filename="../onboarding.ui" line="860"/>
         <source>You haven&apos;t finished setting up theShell. What would you like to do?</source>
         <translation>Hang on a sec mate whoa you aren&apos;t even done yet! What do you wanna do?</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="888"/>
+        <location filename="../onboarding.ui" line="902"/>
         <source>Return to theShell Setup</source>
         <translation>Go back sorry</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="895"/>
+        <location filename="../onboarding.ui" line="909"/>
         <source>Log Out</source>
         <translation>Bail out</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="909"/>
+        <location filename="../onboarding.ui" line="923"/>
         <source>Power Off</source>
         <translation>Turn &apos;er off</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="1031"/>
+        <location filename="../onboarding.ui" line="1045"/>
         <source>Back</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="1042"/>
-        <location filename="../onboarding.cpp" line="197"/>
+        <location filename="../onboarding.ui" line="1056"/>
+        <location filename="../onboarding.cpp" line="196"/>
         <source>Next</source>
         <translation>Alright</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="143"/>
-        <location filename="../onboarding.cpp" line="395"/>
+        <location filename="../onboarding.cpp" line="394"/>
         <source>Welcome to theShell %1!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="213"/>
+        <location filename="../onboarding.cpp" line="212"/>
         <source>Start</source>
         <translation>Boom</translation>
     </message>

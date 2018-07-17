@@ -190,13 +190,7 @@ int main(int argc, char *argv[])
     QLocale defaultLocale(localeName);
     QLocale::setDefault(defaultLocale);
 
-    if (defaultLocale.language() == QLocale::Arabic || defaultLocale.language() == QLocale::Hebrew) {
-        //Reverse the layout direction
-        a.setLayoutDirection(Qt::RightToLeft);
-    } else {
-        //Set normal layout direction
-        a.setLayoutDirection(Qt::LeftToRight);
-    }
+    a.setLayoutDirection(defaultLocale.textDirection());
 
     qtTranslator = new QTranslator;
     qtTranslator->load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));

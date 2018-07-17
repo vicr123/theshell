@@ -210,7 +210,8 @@ TRANSLATIONS += translations/vi_VN.ts \
     translations/no_NO.ts \
     translations/ro_RO.ts \
     translations/cy_GB.ts \
-    translations/fr_FR.ts
+    translations/fr_FR.ts \
+    translations/ar_EG.ts
 
 unix {
     target.path = /usr/bin/

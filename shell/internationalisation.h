@@ -50,6 +50,7 @@ public:
         ruRU,
         svSE,
         ltLT,
+        arEG,
         auAU,
         // Unfinished languages follow
         plPL,
@@ -124,6 +125,9 @@ public:
                     break;
                 case arSA:
                     //languageBox->addItem("[SA] " + tr("Arabic") + " (العربية) ");
+                    break;
+                case arEG:
+                    languageBox->addItem(new QListWidgetItem(QIcon::fromTheme("flag-eg"), tr("Arabic") + " (العربية) "));
                     break;
                 case ptBR:
                     //languageBox->addItem("[BR] " + tr("Portuguese") + " (Português) ");
@@ -221,6 +225,8 @@ public:
             languageBox->setCurrentRow(auAU);
         } else if (currentLocale == "nb_NO") {
             languageBox->setCurrentRow(nbNO);
+        } else if (currentLocale == "ar_EG") {
+            languageBox->setCurrentRow(arEG);
         }
 
         //Unblock signals

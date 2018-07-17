@@ -2153,11 +2153,6 @@ Sommerzeit = Daylight Savings Time</translatorcomment>
         <translation>Māori</translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="114"/>
-        <source>Norwegian</source>
-        <translation>Norwegisch</translation>
-    </message>
-    <message>
         <location filename="../internationalisation.h" line="169"/>
         <source>Portuguese</source>
         <translation>Portugiesisch</translation>
@@ -3583,110 +3578,110 @@ bereit, gespeichert zu werden = ready to be saved</translatorcomment>
         <translation>Sprache wählen</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="296"/>
+        <location filename="../onboarding.ui" line="310"/>
         <source>What&apos;s New?</source>
         <translation>Was ist neu?</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="360"/>
+        <location filename="../onboarding.ui" line="374"/>
         <source>Compact Bar</source>
         <translation>Kompaktleiste</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="400"/>
+        <location filename="../onboarding.ui" line="414"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
         <translation>Die Kompakteleiste ist eine kleinere Version der normalen Leiste, bei der alle Elemente in einer Reihe angeordnet sind, um vertikalen Platz zu sparen.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="458"/>
+        <location filename="../onboarding.ui" line="472"/>
         <source>Use the Compact Bar</source>
         <translation>Kompaktleiste verwenden</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="465"/>
+        <location filename="../onboarding.ui" line="479"/>
         <source>Don&apos;t use the Compact Bar</source>
         <translation>Kompaktleiste nicht verwenden</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="521"/>
+        <location filename="../onboarding.ui" line="535"/>
         <source>Status Bar</source>
         <translation>Statusleiste</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="561"/>
+        <location filename="../onboarding.ui" line="575"/>
         <source>The Status Bar is a smaller version of the bar that is always visible and shows system status icons.</source>
         <translation>Die Statusleiste ist eine kleinere Version der Leiste, welche immer sichtbar ist und Systemstatussymbole anzeigt.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="610"/>
+        <location filename="../onboarding.ui" line="624"/>
         <source>The Status Bar will appear once the bar moves far enough out of the way.</source>
         <translation>Die Statusleiste wird angezeigt, sobald sich die Leiste weit genug entfernt hat.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="642"/>
+        <location filename="../onboarding.ui" line="656"/>
         <source>Use the Status Bar</source>
         <translation>Statusleiste verwenden</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="649"/>
+        <location filename="../onboarding.ui" line="663"/>
         <source>Don&apos;t use the Status Bar</source>
         <translation>Statusleiste nicht verwenden</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="728"/>
+        <location filename="../onboarding.ui" line="742"/>
         <source>Thank you.</source>
         <translatorcomment>&quot;Danke dir.&quot; would be the inpolite form, the polite form &quot;Danke Ihnen.&quot; on the other hand would sound awkward, so it&apos;s just &quot;Thanks.&quot;</translatorcomment>
         <translation>Danke.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="745"/>
+        <location filename="../onboarding.ui" line="759"/>
         <source>You&apos;re ready to start using theShell.</source>
         <translation>Sie sind bereit, theShell zu verwenden.</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="815"/>
+        <location filename="../onboarding.ui" line="829"/>
         <source>Cancel Setup</source>
         <translation>Einrichtung abbrechen</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="846"/>
+        <location filename="../onboarding.ui" line="860"/>
         <source>You haven&apos;t finished setting up theShell. What would you like to do?</source>
         <translation>Sie haben die Einrichtung von theShell noch nicht abgeschlossen. Was möchten Sie tun?</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="888"/>
+        <location filename="../onboarding.ui" line="902"/>
         <source>Return to theShell Setup</source>
         <translation>Zurück zur theShell-Einrichtung</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="895"/>
+        <location filename="../onboarding.ui" line="909"/>
         <source>Log Out</source>
         <translation>Abmelden</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="909"/>
+        <location filename="../onboarding.ui" line="923"/>
         <source>Power Off</source>
         <translation>Ausschalten</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="1031"/>
+        <location filename="../onboarding.ui" line="1045"/>
         <source>Back</source>
         <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="../onboarding.ui" line="1042"/>
-        <location filename="../onboarding.cpp" line="197"/>
+        <location filename="../onboarding.ui" line="1056"/>
+        <location filename="../onboarding.cpp" line="196"/>
         <source>Next</source>
         <translation>Weiter</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="143"/>
-        <location filename="../onboarding.cpp" line="395"/>
+        <location filename="../onboarding.cpp" line="394"/>
         <source>Welcome to theShell %1!</source>
         <translation>Willkommen zu theShell %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="213"/>
+        <location filename="../onboarding.cpp" line="212"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>

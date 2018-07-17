@@ -2596,6 +2596,9 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
         case Internationalisation::nbNO:
             settings.setValue("locale/language", "nb_NO");
             break;
+        case Internationalisation::arEG:
+            settings.setValue("locale/language", "ar_EG");
+            break;
     }
 
     QString localeName = settings.value("locale/language", "en_US").toString();
@@ -2604,13 +2607,7 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
     QLocale defaultLocale(localeName);
     QLocale::setDefault(defaultLocale);
 
-    if (defaultLocale.language() == QLocale::Arabic || defaultLocale.language() == QLocale::Hebrew) {
-        //Reverse the layout direction
-        QApplication::setLayoutDirection(Qt::RightToLeft);
-    } else {
-        //Set normal layout direction
-        QApplication::setLayoutDirection(Qt::LeftToRight);
-    }
+    QApplication::setLayoutDirection(defaultLocale.textDirection());
 
     qtTranslator->load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     QApplication::installTranslator(qtTranslator);
