@@ -1,6 +1,8 @@
 #include "mediaplayernotification.h"
 #include "ui_mediaplayernotification.h"
 
+#include <QDBusPendingCallWatcher>
+
 extern float getDPIScaling();
 
 MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *parent) :
@@ -26,109 +28,117 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
     QDBusMessage IdentityRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     IdentityRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2" << "Identity");
 
-    QDBusReply<QDBusVariant> nameReply(QDBusConnection::sessionBus().call(IdentityRequest, QDBus::Block, 1000));
-    QString appName = nameReply.value().variant().toString();
-    ui->appName->setText(appName);
+    QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(QDBusConnection::sessionBus().asyncCall(IdentityRequest));
+    connect(watcher, &QDBusPendingCallWatcher::finished, [=] {
+        QString appName = watcher->reply().arguments().first().value<QDBusVariant>().variant().toString();
+        ui->appName->setText(appName);
 
-    //Get app icon
-    QDBusMessage DesktopRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
-    DesktopRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2" << "DesktopEntry");
+        //Get app icon
+        QDBusMessage DesktopRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
+        DesktopRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2" << "DesktopEntry");
 
-    QDBusReply<QDBusVariant> DesktopReply(QDBusConnection::sessionBus().call(DesktopRequest, QDBus::Block, 1000));
-    QString icon = DesktopReply.value().variant().toString();
+        QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(QDBusConnection::sessionBus().asyncCall(DesktopRequest));
+        connect(watcher, &QDBusPendingCallWatcher::finished, [=] {
+            QString icon = watcher->reply().arguments().first().value<QDBusVariant>().variant().toString();
 
-    QIcon appIc = QIcon::fromTheme("generic-app");
+            QIcon appIc = QIcon::fromTheme("generic-app");
+            if (QIcon::hasThemeIcon(appName.toLower().replace(" ", "-"))) {
+                appIc = QIcon::fromTheme(appName.toLower().replace(" ", "-"));
+            } else if (QIcon::hasThemeIcon(appName.toLower().replace(" ", ""))) {
+                appIc = QIcon::fromTheme(appName.toLower().replace(" ", ""));
+            } else {
+                QDir appFolder("/usr/share/applications/");
+                QDirIterator iterator(appFolder, QDirIterator::Subdirectories);
 
-    if (QIcon::hasThemeIcon(appName.toLower().replace(" ", "-"))) {
-        appIc = QIcon::fromTheme(appName.toLower().replace(" ", "-"));
-    } else if (QIcon::hasThemeIcon(appName.toLower().replace(" ", ""))) {
-        appIc = QIcon::fromTheme(appName.toLower().replace(" ", ""));
-    } else {
-        QDir appFolder("/usr/share/applications/");
-        QDirIterator iterator(appFolder, QDirIterator::Subdirectories);
+                while (iterator.hasNext()) {
+                    iterator.next();
+                    QFileInfo info = iterator.fileInfo();
+                    if (info.fileName() == icon || info.baseName().toLower() == appName.toLower()) {
+                        QFile file(info.filePath());
+                        file.open(QFile::ReadOnly);
+                        QString appinfo(file.readAll());
 
-        while (iterator.hasNext()) {
-            iterator.next();
-            QFileInfo info = iterator.fileInfo();
-            if (info.fileName() == icon || info.baseName().toLower() == appName.toLower()) {
-                QFile file(info.filePath());
-                file.open(QFile::ReadOnly);
-                QString appinfo(file.readAll());
-
-                QStringList desktopLines;
-                QString currentDesktopLine;
-                for (QString desktopLine : appinfo.split("\n")) {
-                    if (desktopLine.startsWith("[") && currentDesktopLine != "") {
+                        QStringList desktopLines;
+                        QString currentDesktopLine;
+                        for (QString desktopLine : appinfo.split("\n")) {
+                            if (desktopLine.startsWith("[") && currentDesktopLine != "") {
+                                desktopLines.append(currentDesktopLine);
+                                currentDesktopLine = "";
+                            }
+                            currentDesktopLine.append(desktopLine + "\n");
+                        }
                         desktopLines.append(currentDesktopLine);
-                        currentDesktopLine = "";
-                    }
-                    currentDesktopLine.append(desktopLine + "\n");
-                }
-                desktopLines.append(currentDesktopLine);
 
-                for (QString desktopPart : desktopLines) {
-                    for (QString line : desktopPart.split("\n")) {
-                        if (line.startsWith("icon=", Qt::CaseInsensitive)) {
-                            QString iconname = line.split("=")[1];
-                            if (QFile(iconname).exists()) {
-                                appIc = QIcon(iconname);
-                            } else {
-                                appIc = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
+                        for (QString desktopPart : desktopLines) {
+                            for (QString line : desktopPart.split("\n")) {
+                                if (line.startsWith("icon=", Qt::CaseInsensitive)) {
+                                    QString iconname = line.split("=")[1];
+                                    if (QFile(iconname).exists()) {
+                                        appIc = QIcon(iconname);
+                                    } else {
+                                        appIc = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-    }
-    ui->appIcon->setPixmap(appIc.pixmap(24, 24));
+            ui->appIcon->setPixmap(appIc.pixmap(24, 24));
 
-    //Get Current Song Metadata
-    QDBusMessage MetadataRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
-    MetadataRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Metadata");
+            watcher->deleteLater();
+        });
 
-    QDBusReply<QDBusVariant> reply(QDBusConnection::sessionBus().call(MetadataRequest, QDBus::Block, 1000));
-    QVariantMap replyData;
-    QDBusArgument arg(reply.value().variant().value<QDBusArgument>());
+        //Get Current Song Metadata
+        QDBusMessage MetadataRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
+        MetadataRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "Metadata");
 
-    arg >> replyData;
+        QDBusPendingCallWatcher* metadata = new QDBusPendingCallWatcher(QDBusConnection::sessionBus().asyncCall(MetadataRequest));
+        connect(metadata, &QDBusPendingCallWatcher::finished, [=] {
+            QVariantMap replyData;
+            QDBusArgument arg(metadata->reply().arguments().first().value<QDBusVariant>().variant().value<QDBusArgument>());
 
-    QString album = "";
-    QString artist = "";
-    QString title = "";
-    QString albumArt;
+            arg >> replyData;
 
-    if (replyData.contains("xesam:title")) {
-        title = replyData.value("xesam:title").toString();
-    } else {
-        title = appName;
-    }
+            QString album = "";
+            QString artist = "";
+            QString title = "";
+            QString albumArt;
 
-    if (replyData.contains("xesam:artist")) {
-        QStringList artists = replyData.value("xesam:artist").toStringList();
-        for (QString art : artists) {
-            artist.append(art + ", ");
-        }
-        artist.remove(artist.length() - 2, 2);
-    }
+            if (replyData.contains("xesam:title")) {
+                title = replyData.value("xesam:title").toString();
+            } else {
+                title = appName;
+            }
 
-    if (replyData.contains("xesam:album")) {
-        album = replyData.value("xesam:album").toString();
-    }
+            if (replyData.contains("xesam:artist")) {
+                QStringList artists = replyData.value("xesam:artist").toStringList();
+                for (QString art : artists) {
+                    artist.append(art + ", ");
+                }
+                artist.remove(artist.length() - 2, 2);
+            }
 
-    if (replyData.contains("mpris:artUrl")) {
-        albumArt = replyData.value("mpris:artUrl").toString();
-    }
+            if (replyData.contains("xesam:album")) {
+                album = replyData.value("xesam:album").toString();
+            }
 
-    if (replyData.contains("mpris:length")) {
-        ui->position->setMaximum(replyData.value("mpris:length").toUInt());
-    }
+            if (replyData.contains("mpris:artUrl")) {
+                albumArt = replyData.value("mpris:artUrl").toString();
+            }
 
-    if (replyData.contains("mpris:trackid")) {
-        trackId = replyData.value("mpris:trackid").value<QDBusObjectPath>();
-    }
+            if (replyData.contains("mpris:length")) {
+                ui->position->setMaximum(replyData.value("mpris:length").toUInt());
+            }
 
-    setDetails(title, artist, album, albumArt);
+            if (replyData.contains("mpris:trackid")) {
+                trackId = replyData.value("mpris:trackid").value<QDBusObjectPath>();
+            }
+
+            setDetails(title, artist, album, albumArt);
+        });
+    });
+
 
 
     //Get Playback Status
