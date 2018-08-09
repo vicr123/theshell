@@ -319,6 +319,10 @@ MainWindow::MainWindow(QWidget *parent) :
         //Apply Blueprint branding
         ui->openMenu->setIcon(QIcon(":/icons/icon-bp.svg"));
         ui->openMenuCompact->setIcon(QIcon(":/icons/icon-bp.svg"));
+    #elif defined(CONSTRUCTION)
+        //Apply Construction branding
+        ui->openMenu->setIcon(QIcon(":/icons/icon-ct.svg"));
+        ui->openMenuCompact->setIcon(QIcon(":/icons/icon-ct.svg"));
     #endif
 }
 

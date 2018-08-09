@@ -210,6 +210,8 @@ void MousePassword::on_nextButton_clicked()
             QString executable = "/usr/lib/ts-mousepass-change";
             #ifdef BLUEPRINT
                 executable += "b";
+            #elif defined(CONSTRUCTION)
+                executable += "c";
             #endif
             proc->start(executable + " --set=" + currentMousePassword + " --passfile=" + QDir::homePath() + "/.theshell/mousepassword");
             proc->waitForFinished();

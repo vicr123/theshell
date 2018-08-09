@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=XSession
+Exec=/usr/bin/ts-startsessionc
+TryExec=/usr/bin/ts-startsessionc
+DesktopNames=theShell
+Name=theShell Construction
+Comment=Desktop Shell for theShell OS

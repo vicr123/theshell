@@ -22,7 +22,6 @@
 
 #include "mainwindow.h"
 #include "background.h"
-#include "segfaultdialog.h"
 #include "globalfilter.h"
 #include "dbusevents.h"
 #include "onboarding.h"
@@ -67,25 +66,6 @@ QSettings::Format desktopFileFormat;
 ScreenRecorder* screenRecorder = nullptr;
 
 #define ONBOARDING_VERSION 5
-
-void raise_signal(QString message) {
-    //Clean up required stuff
-
-    //Delete the Native Event Filter so that keyboard bindings are cleared
-    if (NativeFilter != NULL) {
-        NativeFilter->deleteLater();
-        NativeFilter = NULL;
-    }
-
-    SegfaultDialog* dialog;
-    dialog = new SegfaultDialog(message);
-    if (MainWin != NULL) {
-        MainWin->close();
-        MainWin->deleteLater();
-    }
-    dialog->exec();
-    raise(SIGKILL);
-}
 
 QString getCallLocation(long pc) {
     QProcess p;
@@ -158,7 +138,7 @@ void QtHandler(QtMsgType type, const QMessageLogContext &context, const QString 
         break;
     case QtFatalMsg:
         std::cerr << msg.toStdString() + "\n";
-        raise_signal(msg);
+        export_backtrace(msg);
     }
 }
 

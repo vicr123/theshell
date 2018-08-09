@@ -527,6 +527,9 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     #ifdef BLUEPRINT
         ui->tsVersion->setText(tr("theShell %1 - Blueprint").arg(TS_VERSION));
         ui->compileDate->setText(tr("You compiled theShell on %1").arg(__DATE__));
+    #elif defined(CONSTRUCTION)
+        ui->tsVersion->setText(tr("theShell %1 - Construction").arg(TS_VERSION));
+        ui->compileDate->setText(tr("You compiled theShell on %1").arg(__DATE__));
     #else
         ui->tsVersion->setText(tr("theShell %1").arg(TS_VERSION));
         ui->compileDate->setVisible(false);
@@ -1240,6 +1243,8 @@ void InfoPaneDropdown::startTimer(QTime time) {
 
                 #ifdef BLUEPRINT
                     QString ringtonesPath = "/usr/share/sounds/theshellb/tones/";
+                #elif defined(CONSTRUCTION)
+                    QString ringtonesPath = "/usr/share/sounds/theshellc/tones/";
                 #else
                     QString ringtonesPath = "/usr/share/sounds/theshell/tones/";
                 #endif
@@ -4249,6 +4254,8 @@ void InfoPaneDropdown::on_removeMousePassword_clicked()
         QString executable = "/usr/lib/ts-mousepass-change";
         #ifdef BLUEPRINT
             executable += "b";
+        #elif defined(CONSTRUCTION)
+            executable += "c";
         #endif
         proc->start(executable + " --remove --passfile=" + QDir::homePath() + "/.theshell/mousepassword");
         proc->waitForFinished();

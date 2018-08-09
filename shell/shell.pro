@@ -15,7 +15,7 @@ unix {
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-DEFINES += TS_VERSION='\\"8.0\\"'
+DEFINES += TS_VERSION='\\"8.0.1\\"'
 
 unix {
     QT += thelib x11extras
@@ -26,6 +26,11 @@ blueprint {
     DEFINES += "BLUEPRINT"
 
     DEFINES += "SHAREDIR=\\\"/usr/share/theshellb/\\\""
+} else: construction {
+    TARGET = theshellc
+    DEFINES += "CONSTRUCTION"
+
+    DEFINES += "SHAREDIR=\\\"/usr/share/theshellc/\\\""
 } else {
     TARGET = theshell
 
@@ -66,7 +71,6 @@ SOURCES += main.cpp\
     choosebackground.cpp \
     switch.cpp \
     FlowLayout/flowlayout.cpp \
-    segfaultdialog.cpp \
     globalfilter.cpp \
     systrayicons.cpp \
     nativeeventfilter.cpp \
@@ -116,7 +120,6 @@ HEADERS  += mainwindow.h \
     choosebackground.h \
     switch.h \
     FlowLayout/flowlayout.h \
-    segfaultdialog.h \
     globalfilter.h \
     systrayicons.h \
     nativeeventfilter.h \
@@ -161,7 +164,6 @@ FORMS    += mainwindow.ui \
     background.ui \
     infopanedropdown.ui \
     choosebackground.ui \
-    segfaultdialog.ui \
     hotkeyhud.ui \
     rundialog.ui \
     onboarding.ui \
@@ -183,7 +185,8 @@ DISTFILES += \
     theshell.desktop \
     theshellb.desktop \
     org.freedesktop.GeoClue2.Agent.xml \
-    polkit/org.thesuite.theshell.policy
+    polkit/org.thesuite.theshell.policy \
+    theshellc.desktop
 
 RESOURCES += \
     resources.qrc \
@@ -225,6 +228,10 @@ unix {
         translations.path = /usr/share/theshellb/translations
         xsession.files = theshellb.desktop
         ringtones.path = /usr/share/sounds/theshellb/tones
+    } else: construction {
+        translations.path = /usr/share/theshellc/translations
+        xsession.files = theshellc.desktop
+        ringtones.path = /usr/share/sounds/theshellc/tones
     } else {
         translations.path = /usr/share/theshell/translations
         xsession.files = theshell.desktop

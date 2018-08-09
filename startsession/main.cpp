@@ -95,6 +95,8 @@ int main(int argc, char *argv[])
     tsProcess = new QProcess();
     #ifdef BLUEPRINT
         tsProcess->start("theshellb --session-starter-running");
+    #elif defined(CONSTRUCTION)
+        tsProcess->start("theshellc --session-starter-running");
     #else
         tsProcess->start("theshell --session-starter-running");
     #endif
@@ -116,6 +118,8 @@ int main(int argc, char *argv[])
 
                 #ifdef BLUEPRINT
                     tsProcess->start("theshellb --session-starter-running");
+                #elif defined(CONSTRUCTION)
+                    tsProcess->start("theshellc --session-starter-running");
                 #else
                     tsProcess->start("theshell --session-starter-running");
                 #endif
@@ -174,6 +178,8 @@ int main(int argc, char *argv[])
 
 #ifdef BLUEPRINT
         polkitProcess->start("/usr/lib/ts-polkitagentb");
+#elif defined(CONSTRUCTION)
+        polkitProcess->start("/usr/lib/ts-polkitagentc");
 #else
         polkitProcess->start("/usr/lib/ts-polkitagent");
 #endif

@@ -18,7 +18,11 @@ blueprint {
     TARGET = ts-polkitagentb
 
     DEFINES += "BLUEPRINT"
-} else {
+} else: construction {
+    TARGET = ts-polkitagentc
+
+    DEFINES += "CONSTRUCTION"
+} else  {
     TARGET = ts-polkitagent
 }
 

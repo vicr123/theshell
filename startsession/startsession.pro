@@ -7,6 +7,10 @@ blueprint {
     TARGET = ts-startsessionb
 
     DEFINES += "BLUEPRINT"
+} else: construction {
+    TARGET = ts-startsessionc
+
+    DEFINES += "CONSTRUCTION"
 } else {
     TARGET = ts-startsession
 }

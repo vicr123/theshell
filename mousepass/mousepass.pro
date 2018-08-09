@@ -30,6 +30,10 @@ blueprint {
     TARGET = ts-mousepass-changeb
 
     DEFINES += "BLUEPRINT"
+} else: construction {
+    TARGET = ts-mousepass-changec
+
+    DEFINES += "CONSTRUCTION"
 } else {
     TARGET = ts-mousepass-change
 }
