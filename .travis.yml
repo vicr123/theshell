@@ -23,6 +23,7 @@ arch:
   - kscreen
   - ts-bt
   - ts-bugreport
+  - base-devel
   script:
   - "./travis/build.sh"
 
