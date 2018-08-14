@@ -265,6 +265,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMenu* quietModeMenu = new QMenu();
     quietModeMenu->addSection(tr("Quiet Mode"));
     quietModeMenu->addAction(ui->actionNone);
+    quietModeMenu->addAction(ui->actionCriticalOnly);
     quietModeMenu->addAction(ui->actionNotifications);
     quietModeMenu->addAction(ui->actionMute);
     connect(quietModeMenu, &QMenu::aboutToShow, [=] {
@@ -276,17 +277,32 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->volumeButton->setMenu(quietModeMenu);
 
     connect(AudioMan, &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
+        switch (mode) {
+            case AudioManager::none:
+                ui->volumeButton->setIcon(QIcon::fromTheme("audio-volume-high"));
+                ui->StatusBarQuietMode->setVisible(false);
+                break;
+            case AudioManager::critical:
+                ui->volumeButton->setIcon(QIcon::fromTheme("quiet-mode-critical-only"));
+                ui->StatusBarQuietMode->setPixmap(QIcon::fromTheme("quiet-mode-critical-only").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+                ui->StatusBarQuietMode->setVisible(true);
+                break;
+            case AudioManager::notifications:
+                ui->volumeButton->setIcon(QIcon::fromTheme("quiet-mode"));
+                ui->StatusBarQuietMode->setPixmap(QIcon::fromTheme("quiet-mode").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+                ui->StatusBarQuietMode->setVisible(true);
+                break;
+            case AudioManager::mute:
+                ui->volumeButton->setIcon(QIcon::fromTheme("audio-volume-muted"));
+                ui->StatusBarQuietMode->setPixmap(QIcon::fromTheme("audio-volume-muted").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+                ui->StatusBarQuietMode->setVisible(true);
+                break;
+        }
         if (mode == AudioManager::none) {
-            ui->volumeButton->setIcon(QIcon::fromTheme("audio-volume-high"));
-            ui->StatusBarQuietMode->setVisible(false);
         } else if (mode == AudioManager::notifications) {
-            ui->volumeButton->setIcon(QIcon::fromTheme("quiet-mode"));
-            ui->StatusBarQuietMode->setPixmap(QIcon::fromTheme("quiet-mode").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-            ui->StatusBarQuietMode->setVisible(true);
+        } else if (mode == AudioManager::critical) {
+
         } else {
-            ui->volumeButton->setIcon(QIcon::fromTheme("audio-volume-muted"));
-            ui->StatusBarQuietMode->setPixmap(QIcon::fromTheme("audio-volume-muted").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-            ui->StatusBarQuietMode->setVisible(true);
         }
     });
     connect(screenRecorder, &ScreenRecorder::stateChanged, [=](ScreenRecorder::State state) {
@@ -2275,4 +2291,9 @@ void MainWindow::reloadBar() {
 void MainWindow::on_openStatusCenterButton_clicked()
 {
     getInfoPane()->show(InfoPaneDropdown::Clock);
+}
+
+void MainWindow::on_actionCriticalOnly_triggered()
+{
+    AudioMan->setQuietMode(AudioManager::critical);
 }

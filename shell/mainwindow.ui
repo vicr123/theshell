@@ -1236,6 +1236,14 @@ padding-right: 3px;</string>
     <string>Mute</string>
    </property>
   </action>
+  <action name="actionCriticalOnly">
+   <property name="icon">
+    <iconset theme="quiet-mode-critical-only"/>
+   </property>
+   <property name="text">
+    <string>Critical Only</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

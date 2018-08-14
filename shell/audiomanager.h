@@ -43,6 +43,7 @@ public:
 
     enum quietMode {
         none,
+        critical,
         notifications,
         mute
     };

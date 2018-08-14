@@ -109,6 +109,11 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
                 postNotification = false;
                 emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
             }
+        } else if (AudioMan->QuietMode() == AudioManager::critical && !applicationNotifications->value(app_name + "/bypassQuiet", false).toBool()) {
+            if (hints.value("urgency", 1).toInt() != 2) {
+                postNotification = false;
+                emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
+            }
         } else if (AudioMan->QuietMode() == AudioManager::mute) {
             postNotification = false;
             emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
