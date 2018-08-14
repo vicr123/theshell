@@ -172,10 +172,10 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
 
                             //Check if the user has feedback sound on
                             if (settings.value("sound/feedbackSound", true).toBool()) {
-                            QSoundEffect* volumeSound = new QSoundEffect();
-                            volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
-                            volumeSound->play();
-                            connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
+                                QSoundEffect* volumeSound = new QSoundEffect();
+                                volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
+                                volumeSound->play();
+                                connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
                             }
 
                             Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
@@ -201,6 +201,10 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioMute)) { //Toggle Quiet Mode
                     switch (AudioMan->QuietMode()) {
                         case AudioManager::none:
+                            AudioMan->setQuietMode(AudioManager::critical);
+                            Hotkeys->show(QIcon::fromTheme("quiet-mode-critical-only"), tr("Critical Only"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                            break;
+                        case AudioManager::critical:
                             AudioMan->setQuietMode(AudioManager::notifications);
                             Hotkeys->show(QIcon::fromTheme("quiet-mode"), tr("No Notifications"), AudioMan->getCurrentQuietModeDescription(), 5000);
                             break;

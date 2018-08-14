@@ -210,6 +210,8 @@ private slots:
 
     void on_openStatusCenterButton_clicked();
 
+    void on_actionCriticalOnly_triggered();
+
     signals:
     void reloadBackgrounds();
 

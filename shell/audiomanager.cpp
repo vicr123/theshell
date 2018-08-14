@@ -346,6 +346,8 @@ QString AudioManager::getCurrentQuietModeDescription() {
     switch (this->currentQuietMode) {
         case none:
             return tr("Allows all sounds from all apps, and notifications from all apps.");
+        case critical:
+            return tr("Ignores all notifications not marked as critical and those set to bypass Quiet Mode. Normal sounds will still be played.");
         case notifications:
             return tr("Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won't play sounds.");
         case mute:
