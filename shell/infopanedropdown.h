@@ -511,6 +511,8 @@ class InfoPaneDropdown : public QDialog
 
         void on_settingsList_itemActivated(QListWidgetItem *item);
 
+        void on_quietModeCriticalOnly_clicked();
+
     public slots:
         void getNetworks();
 

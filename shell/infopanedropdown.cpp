@@ -610,6 +610,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     connect(AudioMan, &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
         ui->quietModeSound->setChecked(false);
+        ui->quietModeCriticalOnly->setChecked(false);
         ui->quietModeNotification->setChecked(false);
         ui->quietModeMute->setChecked(false);
         ui->quietModeForeverButton->setEnabled(true);
@@ -625,6 +626,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             ui->quietModeForeverButton->setChecked(true);
         } else if (mode == AudioManager::notifications) {
             ui->quietModeNotification->setChecked(true);
+        } else if (mode == AudioManager::critical) {
+            ui->quietModeCriticalOnly->setChecked(true);
         } else {
             ui->quietModeMute->setChecked(true);
         }
@@ -4428,4 +4431,10 @@ void InfoPaneDropdown::on_settingsList_itemActivated(QListWidgetItem *item)
     if (!setting.isNull() && setting.toInt() != -1) {
         ui->settingsListStack->setCurrentIndex(setting.toInt());
     }
+}
+
+void InfoPaneDropdown::on_quietModeCriticalOnly_clicked()
+{
+    AudioMan->setQuietMode(AudioManager::critical);
+    ui->quietModeCriticalOnly->setChecked(true);
 }

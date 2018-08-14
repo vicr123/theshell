@@ -378,7 +378,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>5</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -693,14 +693,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>13</day>
+                 <day>12</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>13</day>
+                 <day>12</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1620,6 +1620,19 @@
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="quietModeCriticalOnly">
+               <property name="text">
+                <string>Critical Only</string>
+               </property>
+               <property name="icon">
+                <iconset theme="quiet-mode-critical-only"/>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="quietModeNotification">
                <property name="text">
                 <string>No Notifications</string>
@@ -1706,7 +1719,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>182</width>
+              <width>1183</width>
               <height>132</height>
              </rect>
             </property>
@@ -7035,6 +7048,14 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header>clickablelabel.h</header>
+   <slots>
+    <signal>clicked()</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
    <class>AnimatedStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>animatedstackedwidget.h</header>
@@ -7047,14 +7068,6 @@ Items that will be kept if you choose to keep files:
    <container>1</container>
    <slots>
     <signal>networkAvailable(bool)</signal>
-   </slots>
-  </customwidget>
-  <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>clickablelabel.h</header>
-   <slots>
-    <signal>clicked()</signal>
    </slots>
   </customwidget>
   <customwidget>
