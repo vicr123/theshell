@@ -47,6 +47,15 @@ void KdeConnectWidget::kdeConnectGone() {
     ui->announcedName->setText(tr("KDE Connect is not running"));
     ui->panes->setCurrentIndex(5);
     ui->devicesView->clearSelection();
+
+    //Set up KDE Connect
+    if (!QFile("/usr/lib/kdeconnectd").exists()) {
+        ui->kdeConnectNotRunningResolution->setText(tr("Install KDE Connect for KDE Connect integration with theShell"));
+        ui->startKdeConnectPane->setVisible(false);
+    } else {
+        ui->kdeConnectNotRunningResolution->setText(tr("You can attempt to start KDE Connect again"));
+        ui->startKdeConnectPane->setVisible(true);
+    }
 }
 
 void KdeConnectWidget::selectedDeviceChanged(QModelIndex current, QModelIndex previous) {

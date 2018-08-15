@@ -178,7 +178,7 @@
      <item>
       <widget class="QStackedWidget" name="panes">
        <property name="currentIndex">
-        <number>0</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="page_5">
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -376,8 +376,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>510</width>
-              <height>515</height>
+              <width>435</width>
+              <height>560</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -729,8 +729,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>524</width>
-              <height>492</height>
+              <width>256</width>
+              <height>483</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -1215,9 +1215,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_14">
+          <widget class="QLabel" name="kdeConnectNotRunningResolution">
            <property name="text">
-            <string>You can attempt to start KDE Connect again</string>
+            <string notr="true">You can attempt to start KDE Connect again</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -1228,57 +1228,75 @@
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_9">
-           <item>
-            <spacer name="horizontalSpacer_6">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="startkdeConnectButton">
-             <property name="text">
-              <string>Start KDE Connect</string>
-             </property>
-             <property name="icon">
-              <iconset theme="kdeconnect">
-               <normaloff>.</normaloff>.</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_7">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_15">
-           <property name="text">
-            <string>If you're still getting this error, KDE Connect might not be installed properly on this device.</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
+          <widget class="QWidget" name="startKdeConnectPane" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <spacer name="horizontalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="startkdeConnectButton">
+                <property name="text">
+                 <string>Start KDE Connect</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="kdeconnect">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_7">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_15">
+              <property name="text">
+               <string>If you're still getting this error, KDE Connect might not be installed properly on this device.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>

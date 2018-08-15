@@ -3,7 +3,7 @@
 Plugin::Plugin(QObject *parent) :
     QObject(parent)
 {
-    panes.append(new BluetoothManagement());
+    panes.append(new Overview());
 }
 
 QList<StatusCenterPaneObject*> Plugin::availablePanes() {

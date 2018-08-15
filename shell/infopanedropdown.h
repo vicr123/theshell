@@ -70,6 +70,7 @@
 #include <polkit-qt5-1/PolkitQt1/Authority>
 #include <QPluginLoader>
 #include "statuscenter/statuscenterpane.h"
+#include "clickablelabel.h"
 
 class UPowerDBus;
 
@@ -529,8 +530,8 @@ class InfoPaneDropdown : public QDialog
 
         bool isRedshiftOn = false;
         bool isNewRedshift = true;
-        dropdownType currentDropDown = Clock;
         void changeDropDown(dropdownType changeTo, bool doAnimation = true);
+        void changeDropDown(QWidget* changeTo, ClickableLabel* label, bool doAnimation = true);
         int mouseClickPoint;
         int initialPoint;
         bool mouseMovedUp = false;

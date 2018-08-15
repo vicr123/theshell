@@ -193,6 +193,7 @@ MainWindow::MainWindow(QWidget *parent) :
                 }
             }
 
+
             ui->StatusBarBattery->setPixmap(QIcon::fromTheme(iconName).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
             ui->batteryIcon->setPixmap(QIcon::fromTheme(iconName).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
         } else {

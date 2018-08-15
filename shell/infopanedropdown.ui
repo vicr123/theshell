@@ -125,7 +125,7 @@
               <bool>true</bool>
              </property>
              <property name="text">
-              <string>Clock</string>
+              <string>Overview</string>
              </property>
             </widget>
            </item>
@@ -378,7 +378,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -410,8 +410,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>616</width>
-            <height>1062</height>
+            <width>1169</width>
+            <height>1038</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -693,14 +693,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>12</day>
+                 <day>10</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>12</day>
+                 <day>10</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1625,7 +1625,8 @@
                 <string>Critical Only</string>
                </property>
                <property name="icon">
-                <iconset theme="quiet-mode-critical-only"/>
+                <iconset theme="quiet-mode-critical-only">
+                 <normaloff>.</normaloff>.</iconset>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -2193,7 +2194,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>14</number>
+             <number>5</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -3751,7 +3752,7 @@
                    <item>
                     <widget class="QLabel" name="label_27">
                      <property name="text">
-                      <string>Allow this app's notifications to show when Quiet Mode is set to No Notifications</string>
+                      <string>Allow this app's notifications to show when Quiet Mode is not set to Mute</string>
                      </property>
                      <property name="wordWrap">
                       <bool>true</bool>

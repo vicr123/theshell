@@ -188,12 +188,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         redshiftQuery->deleteLater();
     });
 
-    //Set up KDE Connect
-    if (!QFile("/usr/lib/kdeconnectd").exists()) {
-        //If KDE Connect is not installed, hide the KDE Connect option
-        ui->kdeconnectLabel->setVisible(false);
-    }
-
     if (!QFile("/usr/bin/scallop").exists()) {
         ui->resetDeviceButton->setVisible(false);
     }
@@ -678,65 +672,77 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     });
 
     //Load plugins
-    #ifdef BLUEPRINT
-        QDir pluginsDir("/usr/lib/theshellb/panes");
-    #else
-        QDir pluginsDir("/usr/lib/theshell/panes");
-    #endif
-
-    QDirIterator pluginsIterator(pluginsDir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
-
+    QList<QDir> searchDirs;
     QJsonArray errors;
+    searchDirs.append(QApplication::applicationDirPath() + "/../statuscenter/");
+    #ifdef BLUEPRINT
+        searchDirs.append(QDir("/usr/lib/theshellb/panes"));
+    #else
+        searchDirs.append(QDir("/usr/lib/theshell/panes"));
+    #endif
+    QStringList loadedPanes;
+    for (QDir pluginsDir : searchDirs) {
+        QDirIterator pluginsIterator(pluginsDir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
-    while (pluginsIterator.hasNext()) {
-        pluginsIterator.next();
-        if (pluginsIterator.fileInfo().suffix() != "so" && pluginsIterator.fileInfo().suffix() != "a") continue;
-        QPluginLoader loader(pluginsIterator.filePath());
-        QObject* plugin = loader.instance();
-        if (plugin == nullptr) {
-            QJsonObject metadata = loader.metaData();
-            if (!metadata.contains("name")) {
-                metadata.insert("name", pluginsIterator.fileName());
-            }
-            metadata.insert("error", loader.errorString());
-            errors.append(metadata);
-        } else {
-            StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
-            if (p) {
-                for (StatusCenterPaneObject* pane : p->availablePanes()) {
-                    if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
-                        ClickableLabel* label = new ClickableLabel(this);
-                        label->setText(pane->name());
-                        ui->InformationalPluginsLayout->addWidget(label);
+        while (pluginsIterator.hasNext()) {
+            pluginsIterator.next();
+            if (pluginsIterator.fileInfo().suffix() != "so" && pluginsIterator.fileInfo().suffix() != "a") continue;
+            QPluginLoader loader(pluginsIterator.filePath());
+            QObject* plugin = loader.instance();
+            if (plugin == nullptr) {
+                QJsonObject metadata = loader.metaData();
+                if (!metadata.contains("name")) {
+                    metadata.insert("name", pluginsIterator.fileName());
+                }
+                metadata.insert("error", loader.errorString());
+                errors.append(metadata);
+            } else {
+                StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
+                if (p) {
+                    for (StatusCenterPaneObject* pane : p->availablePanes()) {
+                        //Only load the pane once
+                        if (!loadedPanes.contains(pane->name())) {
+                            loadedPanes.append(pane->name());
+                            if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+                                ClickableLabel* label = new ClickableLabel(this);
+                                label->setText(pane->name());
+                                ui->InformationalPluginsLayout->addWidget(label);
 
-                        ui->pageStack->insertWidget(ui->pageStack->count() - 1, pane->mainWidget());
-                        pane->mainWidget()->setAutoFillBackground(true);
+                                ui->pageStack->insertWidget(ui->pageStack->count() - 1, pane->mainWidget());
+                                pane->mainWidget()->setAutoFillBackground(true);
 
-                        connect(label, &ClickableLabel::clicked, [=] {
-                            ui->pageStack->setCurrentWidget(pane->mainWidget());
-                        });
-                    }
+                                connect(label, &ClickableLabel::clicked, [=] {
+                                    changeDropDown(pane->mainWidget(), label);
+                                    if (ui->lightColorThemeRadio->isChecked()) {
+                                        setHeaderColour(pane->informationalAttributes.lightColor);
+                                    } else {
+                                        setHeaderColour(pane->informationalAttributes.darkColor);
+                                    }
+                                });
+                            }
 
-                    if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
-                        QListWidgetItem* item = new QListWidgetItem();
-                        item->setText(pane->name());
-                        item->setIcon(pane->settingAttributes.icon);
-                        item->setData(Qt::UserRole, -1);
-                        ui->settingsList->insertItem(ui->settingsList->count() - 3, item);
+                            if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
+                                QListWidgetItem* item = new QListWidgetItem();
+                                item->setText(pane->name());
+                                item->setIcon(pane->settingAttributes.icon);
+                                item->setData(Qt::UserRole, -1);
+                                ui->settingsList->insertItem(ui->settingsList->count() - 3, item);
 
-                        if (pane->settingAttributes.menuWidget != nullptr) {
-                            int settingNumber = ui->settingsListStack->addWidget(pane->settingAttributes.menuWidget);
-                            pane->settingAttributes.menuWidget->setAutoFillBackground(true);
-                            item->setData(Qt::UserRole, settingNumber);
+                                if (pane->settingAttributes.menuWidget != nullptr) {
+                                    int settingNumber = ui->settingsListStack->addWidget(pane->settingAttributes.menuWidget);
+                                    pane->settingAttributes.menuWidget->setAutoFillBackground(true);
+                                    item->setData(Qt::UserRole, settingNumber);
+                                }
+
+                                ui->settingsTabs->insertWidget(ui->settingsTabs->count() - 3, pane->mainWidget());
+                                pane->mainWidget()->setAutoFillBackground(true);
+                            }
+
+                            pane->sendMessage = [=](QString message, QVariantList args) {
+                                this->pluginMessage(message, args);
+                            };
                         }
-
-                        ui->settingsTabs->insertWidget(ui->settingsTabs->count() - 3, pane->mainWidget());
-                        pane->mainWidget()->setAutoFillBackground(true);
                     }
-
-                    pane->sendMessage = [=](QString message, QVariantList args) {
-                        this->pluginMessage(message, args);
-                    };
                 }
             }
         }
@@ -1152,73 +1158,131 @@ void InfoPaneDropdown::close() {
 }
 
 void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
-    this->currentDropDown = changeTo;
-
     //Switch to the requested frame
     switch (changeTo) {
-    case Clock:
-        ui->pageStack->setCurrentWidget(ui->clockFrame, doAnimation);
+        case Clock:
+            changeDropDown(ui->clockFrame, ui->clockLabel, doAnimation);
 
+            if (ui->lightColorThemeRadio->isChecked()) {
+                setHeaderColour(QColor(0, 150, 0));
+            } else {
+                setHeaderColour(QColor(0, 50, 0));
+            }
+            break;
+        case Battery:
+            changeDropDown(ui->statusFrame, ui->batteryLabel, doAnimation);
+            updateBatteryChart();
+            if (ui->lightColorThemeRadio->isChecked()) {
+                setHeaderColour(QColor(200, 150, 0));
+            } else {
+                setHeaderColour(QColor(100, 50, 0));
+            }
+            break;
+        case Notifications:
+            changeDropDown(ui->notificationsFrame, ui->notificationsLabel, doAnimation);
+            if (ui->lightColorThemeRadio->isChecked()) {
+                setHeaderColour(QColor(200, 50, 100));
+            } else {
+                setHeaderColour(QColor(100, 25, 50));
+            }
+            break;
+        case Network:
+            changeDropDown(ui->networkFrame, ui->networkLabel, doAnimation);
+            if (ui->lightColorThemeRadio->isChecked()) {
+                setHeaderColour(QColor(100, 100, 255));
+            } else {
+                setHeaderColour(QColor(50, 50, 100));
+            }
+            break;
+        case KDEConnect:
+            changeDropDown(ui->kdeConnectFrame, ui->kdeconnectLabel, doAnimation);
+            if (ui->lightColorThemeRadio->isChecked()) {
+                setHeaderColour(QColor(200, 100, 255));
+            } else {
+                setHeaderColour(QColor(50, 0, 100));
+            }
+            break;
+        case Settings:
+            changeDropDown(ui->settingsFrame, nullptr, doAnimation);
+            if (ui->lightColorThemeRadio->isChecked()) {
+                setHeaderColour(QColor(0, 150, 255));
+            } else {
+                setHeaderColour(QColor(0, 50, 100));
+            }
+            break;
+    }
+}
+
+void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, bool doAnimation) {
+    //Switch to the requested frame
+    ui->pageStack->setCurrentWidget(changeTo, doAnimation);
+    if (changeTo == ui->clockFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
             setHeaderColour(QColor(0, 150, 0));
         } else {
             setHeaderColour(QColor(0, 50, 0));
         }
-        break;
-    case Battery:
-        ui->pageStack->setCurrentWidget(ui->statusFrame, doAnimation);
+    } else if (changeTo == ui->statusFrame) {
         updateBatteryChart();
         if (ui->lightColorThemeRadio->isChecked()) {
             setHeaderColour(QColor(200, 150, 0));
         } else {
             setHeaderColour(QColor(100, 50, 0));
         }
-        break;
-    case Notifications:
-        ui->pageStack->setCurrentWidget(ui->notificationsFrame, doAnimation);
+    } else if (changeTo == ui->notificationsFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
             setHeaderColour(QColor(200, 50, 100));
         } else {
             setHeaderColour(QColor(100, 25, 50));
         }
-        break;
-    case Network:
-        ui->pageStack->setCurrentWidget(ui->networkFrame, doAnimation);
+    } else if (changeTo == ui->networkFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
             setHeaderColour(QColor(100, 100, 255));
         } else {
             setHeaderColour(QColor(50, 50, 100));
         }
-        break;
-    case KDEConnect:
-        ui->pageStack->setCurrentWidget(ui->kdeConnectFrame, doAnimation);
+    } else if (changeTo == ui->kdeConnectFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
             setHeaderColour(QColor(200, 100, 255));
         } else {
             setHeaderColour(QColor(50, 0, 100));
         }
-        break;
-    /*case Print:
-        ui->pageStack->setCurrentWidget(ui->printFrame, doAnimation);
-        break;*/
-    case Settings:
-        ui->pageStack->setCurrentWidget(ui->settingsFrame, doAnimation);
+    } else if (changeTo == ui->settingsFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
             setHeaderColour(QColor(0, 150, 255));
         } else {
             setHeaderColour(QColor(0, 50, 100));
         }
-        break;
+    }
+    //Plugin'd panes are handled in the click handler for the label
+
+    //Set the correct label
+    for (int i = 0; i < ui->InformationalPluginsLayout->count(); i++) {
+        ((ClickableLabel*) ui->InformationalPluginsLayout->itemAt(i)->widget())->setShowDisabled(true);
     }
 
-    if (changeTo == Clock) {
+    if (label != nullptr) {
+        label->setShowDisabled(false);
+    }
+
+    //Determine the last frame
+    int lastFrame = 0;
+    for (int i = ui->pageStack->count() - 1; i >= 0; i--) {
+        QWidget* w = ui->pageStack->widget(i);
+        if (w != ui->settingsFrame) {
+            lastFrame = i;
+            break;
+        }
+    }
+
+    if (changeTo == ui->settingsFrame) {
+        ui->pushButton_5->setEnabled(false);
+        ui->pushButton_6->setEnabled(false);
+    } else if (ui->pageStack->indexOf(changeTo) == 0) { //First item
         ui->pushButton_5->setEnabled(false);
         ui->pushButton_6->setEnabled(true);
-    } else if ((ui->kdeconnectLabel->isVisible() && changeTo == KDEConnect) || (changeTo == Notifications)) { //Print) {
+    } else if (ui->pageStack->indexOf(changeTo) == lastFrame) { //Last item
         ui->pushButton_5->setEnabled(true);
-        ui->pushButton_6->setEnabled(false);
-    } else if (changeTo == Settings) {
-        ui->pushButton_5->setEnabled(false);
         ui->pushButton_6->setEnabled(false);
     } else {
         ui->pushButton_5->setEnabled(true);
@@ -1237,12 +1301,14 @@ void InfoPaneDropdown::getNetworks() {
 
 void InfoPaneDropdown::on_pushButton_5_clicked()
 {
-    changeDropDown(dropdownType(currentDropDown - 1));
+    int change = ui->pageStack->currentIndex() - 1;
+    changeDropDown(ui->pageStack->widget(change), (ClickableLabel*) ui->InformationalPluginsLayout->itemAt(change)->widget());
 }
 
 void InfoPaneDropdown::on_pushButton_6_clicked()
 {
-    changeDropDown(dropdownType(currentDropDown + 1));
+    int change = ui->pageStack->currentIndex() + 1;
+    changeDropDown(ui->pageStack->widget(change), (ClickableLabel*) ui->InformationalPluginsLayout->itemAt(change)->widget());
 }
 
 void InfoPaneDropdown::on_clockLabel_clicked()
@@ -2557,14 +2623,6 @@ void InfoPaneDropdown::launchDateTimeService() {
         return;
     }
 
-    /*QDBusMessage launchMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "StartServiceByName");
-    QVariantList args;
-    args.append("org.freedesktop.timedate1");
-    args.append((uint) 0);
-    launchMessage.setArguments(args);
-
-    QDBusConnection::systemBus().call(launchMessage);*/
-
     QDBusConnection::systemBus().interface()->startService("org.freedesktop.timedate1");
 }
 
@@ -3855,11 +3913,10 @@ void InfoPaneDropdown::setHeaderColour(QColor col) {
             pal.setColor(QPalette::Window, col.lighter(120));
             ui->pushButton_7->setPalette(pal);
 
-            ui->clockLabel->setShowDisabled(ui->clockLabel->showDisabled());
-            ui->batteryLabel->setShowDisabled(ui->batteryLabel->showDisabled());
-            ui->networkLabel->setShowDisabled(ui->networkLabel->showDisabled());
-            ui->notificationsLabel->setShowDisabled(ui->notificationsLabel->showDisabled());
-            ui->kdeconnectLabel->setShowDisabled(ui->kdeconnectLabel->showDisabled());
+            for (int i = 0; i < ui->InformationalPluginsLayout->count(); i++) {
+                ClickableLabel* l = (ClickableLabel*) ui->InformationalPluginsLayout->itemAt(i)->widget();
+                l->setShowDisabled(l->showDisabled());
+            }
         });
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
         anim->start();

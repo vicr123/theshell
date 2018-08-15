@@ -9,4 +9,5 @@ if (exists("/usr/lib/libcups.so") | enable-print-module) {
 }
 
 SUBDIRS += \
-    BluetoothPane
+    BluetoothPane \
+    OverviewPane
