@@ -13,6 +13,7 @@
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDBusInterface>
+#include <QVariantAnimation>
 
 Overview::Overview(QWidget *parent) :
     QWidget(parent),
@@ -56,7 +57,7 @@ Overview::Overview(QWidget *parent) :
             ui->greetingLabel->setText(tr("Hi %1!").arg(fullname));
         } else if (now.hour() < 12) {
             ui->greetingLabel->setText(tr("Good morning %1!").arg(fullname));
-        } else if (now.hour() < 5) {
+        } else if (now.hour() < 17) {
             ui->greetingLabel->setText(tr("Good afternoon %1!").arg(fullname));
         } else {
             ui->greetingLabel->setText(tr("Good evening %1!").arg(fullname));
@@ -112,7 +113,25 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
                 bottom = QColor(64, 149, 185);
                 newTextColor = QColor(Qt::black);
             } else { //Calculate interpolation
+                int interpolation;
+                //From 4-8 interpolate sunrise
+                if (now.hour() > 4 && now.hour() < 8) {
+                    interpolation = now.msecsSinceStartOfDay() - 14400000; //4 hours in milliseconds
+                } else {
+                    interpolation = 14400000 - (now.msecsSinceStartOfDay() - 57600000); //16 hours in milliseconds
+                }
 
+                QVariantAnimation a;
+                a.setDuration(14400000);
+                a.setCurrentTime(interpolation);
+                a.setStartValue(QColor(0, 36, 85));
+                a.setKeyValueAt(0.5, QColor(255, 140, 0));
+                a.setEndValue(QColor(126, 195, 255));
+                top = a.currentValue().value<QColor>();
+                a.setStartValue(QColor(0, 17, 40));
+                a.setKeyValueAt(0.5, QColor(167, 70, 25));
+                a.setEndValue(QColor(64, 149, 185));
+                bottom = a.currentValue().value<QColor>();
             }
 
             QLinearGradient mainBackground;
@@ -145,15 +164,15 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
             if (daySegmentPassed >= 0) {
                 float percentageThroughArc = (float) daySegmentPassed / (float) 28800000; //8 hours in milliseconds
 
-                float cosArg = percentageThroughArc * M_PI;
-                float heightDisplacement = abs(cos(cosArg));
+                float sinArg = percentageThroughArc * M_PI;
+                float heightDisplacement = -sin(sinArg) + 1;
 
-                int top = (heightDisplacement * 100) + 50;
-                int left = ui->overviewLeftPaneScrollArea->width() * percentageThroughArc;
+                int top = (heightDisplacement * 100) + 70;
+                int left = (ui->overviewLeftPaneScrollArea->width() + 100) * percentageThroughArc - 50;
 
                 QPoint center(left, top);
                 if (isMoon) {
-                    p.drawEllipse(center, 20, 20);
+                    p.drawEllipse(center, 30, 30);
                 } else {
                     p.drawEllipse(center, 50, 50);
                 }
