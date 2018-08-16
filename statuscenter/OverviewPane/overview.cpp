@@ -14,6 +14,7 @@
 #include <QDBusConnectionInterface>
 #include <QDBusInterface>
 #include <QVariantAnimation>
+#include <QRandomGenerator>
 
 Overview::Overview(QWidget *parent) :
     QWidget(parent),
@@ -65,6 +66,11 @@ Overview::Overview(QWidget *parent) :
     });
     timer->start();
 
+    /*QTimer* t = new QTimer();
+    t->setInterval(50);
+    connect(t, SIGNAL(timeout()), ui->overviewLeftPane, SLOT(repaint()));
+    t->start();*/
+
     updateDSTNotification();
 }
 
@@ -104,7 +110,13 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
 
             QColor top, bottom;
             QTime now = QTime::currentTime();
-            if (now.hour() <= 4 || now.hour() >= 20) { //Assume night
+
+            bool cloudy = false;
+            if (cloudy) {
+                top = QColor(150, 150, 150);
+                bottom = QColor(100, 100, 100);
+                newTextColor = QColor(Qt::black);
+            } else if (now.hour() <= 4 || now.hour() >= 20) { //Assume night
                 top = QColor(0, 36, 85);
                 bottom = QColor(0, 17, 40);
                 newTextColor = QColor(Qt::white);
@@ -132,6 +144,13 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
                 a.setKeyValueAt(0.5, QColor(167, 70, 25));
                 a.setEndValue(QColor(64, 149, 185));
                 bottom = a.currentValue().value<QColor>();
+
+                bool dark = ((top.red() + top.green() + top.blue()) / 3) < 127;
+                if (dark) {
+                    newTextColor = QColor(Qt::white);
+                } else {
+                    newTextColor = QColor(Qt::black);
+                }
             }
 
             QLinearGradient mainBackground;
@@ -144,25 +163,32 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
             p.setPen(Qt::transparent);
             p.drawRect(0, 0, ui->overviewLeftPane->width(), ui->overviewLeftPane->height());
 
+            //Draw background objects if neccessary
+            if (cloudy) {
+                drawRaindrops(&p);
+            }
+
             //Draw celestial object if neccessary
             int daySegmentPassed = -1;
             bool isMoon = true;
-            if (now.hour() <= 4) { //Assume night
-                daySegmentPassed = now.msecsSinceStartOfDay() + 14400000; //4 hours in milliseconds
-            } else if (now.hour() >= 20) {
-                daySegmentPassed = now.msecsSinceStartOfDay() - 72000000; //20 hours in milliseconds
-            } else if (now.hour() >= 8 && now.hour() <= 16) { //Assume day
-                daySegmentPassed = now.msecsSinceStartOfDay() - 28800000; //8 hours in milliseconds
+
+            if (now.hour() < 5 || (now.hour() == 5 && now.minute() <= 30)) { //Draw moon
+                daySegmentPassed = now.msecsSinceStartOfDay() + 19800000; //5.5 hours in milliseconds
+            } else if (now.hour() > 18 || (now.hour() == 18 && now.minute() >= 30)) { //Draw moon
+                daySegmentPassed = now.msecsSinceStartOfDay() - 66600000; //18.5 hours in milliseconds
+            } else if ((now.hour() > 6 && now.hour() < 17) || (now.hour() == 6 && now.minute() >= 30) || (now.hour() == 17 && now.minute() <= 30)) { //Draw sun
+                daySegmentPassed = now.msecsSinceStartOfDay() - 23400000; //6.5 hours in milliseconds
                 isMoon = false;
             }
 
             if (isMoon) {
                 p.setBrush(QColor(127, 127, 127));
             } else {
-                p.setBrush(QColor(255, 140, 0));
+                //p.setBrush(QColor(255, 140, 0));
+                p.setBrush(QColor(255, 224, 130));
             }
             if (daySegmentPassed >= 0) {
-                float percentageThroughArc = (float) daySegmentPassed / (float) 28800000; //8 hours in milliseconds
+                float percentageThroughArc = (float) daySegmentPassed / (float) 39600000; //11 hours in milliseconds
 
                 float sinArg = percentageThroughArc * M_PI;
                 float heightDisplacement = -sin(sinArg) + 1;
@@ -177,6 +203,7 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
                     p.drawEllipse(center, 50, 50);
                 }
             }
+
 
             QPalette pal = ui->overviewLeftPane->palette();
             pal.setColor(QPalette::WindowText, newTextColor);
@@ -301,4 +328,48 @@ void Overview::updateDSTNotification() {
         }
     });
     timezoneProcess->start("zdump -v " + timezoneInfoPath);
+}
+
+void Overview::drawRaindrops(QPainter* p) {
+    while (raindrops.count() < 500) {
+        Raindrop* r = new Raindrop();
+        r->location.setY(0);
+        r->location.setX(QRandomGenerator::global()->bounded(ui->overviewLeftPane->width() * 2));
+        r->velocity = QRandomGenerator::global()->bounded(5, 20);
+        /*r->horizontalDisplacement = 0;
+        while (r->horizontalDisplacement == 0) {
+            r->horizontalDisplacement = QRandomGenerator::global()->bounded(-5, 5);
+        }*/
+        r->horizontalDisplacement = -3;
+
+        raindrops.append(r);
+    }
+
+    for (Raindrop* r : raindrops) {
+        if (r->advance(ui->overviewLeftPane->height())) {
+            r->paint(p);
+        } else {
+            raindrops.removeOne(r);
+            QTimer::singleShot(0, [=] {
+                delete r;
+            });
+        }
+    }
+}
+
+bool Raindrop::advance(int maxHeight) {
+    horizontalDisplacement = velocity * tan(-0.26);
+    this->location += QPoint(horizontalDisplacement, velocity);
+    if (this->location.y() > maxHeight) {
+        return false;
+    }
+    return true;
+}
+
+void Raindrop::paint(QPainter *p) {
+    QPen pen;
+    pen.setColor(QColor(0, 100, 255, 100));
+    pen.setWidth(3);
+    p->setPen(pen);
+    p->drawLine(this->location, this->location - (QPoint(horizontalDisplacement, velocity) / 2));
 }
