@@ -741,6 +741,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                             pane->sendMessage = [=](QString message, QVariantList args) {
                                 this->pluginMessage(message, args);
                             };
+                            pluginObjects.insert(pane->mainWidget(), pane);
                         }
                     }
                 }
@@ -1146,7 +1147,11 @@ void InfoPaneDropdown::close() {
     }
     a->setEasingCurve(QEasingCurve::OutCubic);
     a->setDuration(500);
-    connect(a, &tPropertyAnimation::finished, [=]() {
+    connect(a, &tPropertyAnimation::finished, [=] {
+        for (StatusCenterPaneObject* plugin : pluginObjects.values()) {
+            plugin->message("hide");
+            plugin->showing = false;
+        }
         QDialog::hide();
     });
     connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
@@ -1215,6 +1220,8 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
 
 void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, bool doAnimation) {
     //Switch to the requested frame
+    if (ui->pageStack->currentWidget() == changeTo) return; //Do nothing
+
     ui->pageStack->setCurrentWidget(changeTo, doAnimation);
     if (changeTo == ui->clockFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
@@ -1287,6 +1294,15 @@ void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, 
     } else {
         ui->pushButton_5->setEnabled(true);
         ui->pushButton_6->setEnabled(true);
+    }
+
+    for (StatusCenterPaneObject* plugin : pluginObjects.values()) {
+        plugin->message("hide");
+        plugin->showing = false;
+    }
+    if (pluginObjects.contains(changeTo)) {
+        pluginObjects.value(changeTo)->message("show");
+        pluginObjects.value(changeTo)->showing = true;
     }
 }
 

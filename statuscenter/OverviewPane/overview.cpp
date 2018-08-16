@@ -15,6 +15,14 @@
 #include <QDBusInterface>
 #include <QVariantAnimation>
 #include <QRandomGenerator>
+#include <the-libs_global.h>
+#include <QApplication>
+#include <QDesktopWidget>
+
+float getDPIScaling() {
+    float currentDPI = QApplication::desktop()->logicalDpiX();
+    return currentDPI / (float) 96;
+}
 
 Overview::Overview(QWidget *parent) :
     QWidget(parent),
@@ -57,19 +65,48 @@ Overview::Overview(QWidget *parent) :
         if (now.hour() < 6) {
             ui->greetingLabel->setText(tr("Hi %1!").arg(fullname));
         } else if (now.hour() < 12) {
-            ui->greetingLabel->setText(tr("Good morning %1!").arg(fullname));
+            ui->greetingLabel->setText(tr("Good morning, %1!").arg(fullname));
         } else if (now.hour() < 17) {
-            ui->greetingLabel->setText(tr("Good afternoon %1!").arg(fullname));
+            ui->greetingLabel->setText(tr("Good afternoon, %1!").arg(fullname));
         } else {
-            ui->greetingLabel->setText(tr("Good evening %1!").arg(fullname));
+            ui->greetingLabel->setText(tr("Good evening, %1!").arg(fullname));
         }
     });
     timer->start();
 
-    /*QTimer* t = new QTimer();
-    t->setInterval(50);
-    connect(t, SIGNAL(timeout()), ui->overviewLeftPane, SLOT(repaint()));
-    t->start();*/
+    animationTimer = new QTimer();
+    animationTimer->setInterval(50);
+    connect(animationTimer, SIGNAL(timeout()), ui->overviewLeftPane, SLOT(repaint()));
+
+    randomObjectTimer = new QTimer();
+    randomObjectTimer->setInterval(2000);
+    connect(randomObjectTimer, &QTimer::timeout, [=] {
+        if (QRandomGenerator::global()->bounded(20) == 3) {
+            //Create a new plane
+            Aircraft* a = new Aircraft();
+            a->velocity = QRandomGenerator::global()->bounded(1, 3);
+            a->location.setY(QRandomGenerator::global()->bounded(50));
+            if (QRandomGenerator::global()->bounded(2)) {
+                a->location.setX(ui->overviewLeftPane->width());
+                a->velocity *= -1;
+            } else {
+                a->location.setX(0);
+            }
+            objects.append(a);
+        }
+    });
+
+    connect(theLibsGlobal::instance(), &theLibsGlobal::powerStretchChanged, [=](bool isOn) {
+        if (showing) {
+            if (isOn) {
+                animationTimer->stop();
+                randomObjectTimer->stop();
+            } else {
+                animationTimer->start();
+                randomObjectTimer->start();
+            }
+        }
+    });
 
     updateDSTNotification();
 }
@@ -96,7 +133,15 @@ int Overview::position() {
 }
 
 void Overview::message(QString name, QVariantList args) {
-
+    if (name == "show") {
+        if (!theLibsGlobal::instance()->powerStretchEnabled()) {
+            animationTimer->start();
+            randomObjectTimer->start();
+        }
+    } else if (name == "hide") {
+        animationTimer->stop();
+        randomObjectTimer->stop();
+    }
 }
 
 bool Overview::eventFilter(QObject *watched, QEvent *event) {
@@ -116,11 +161,11 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
                 top = QColor(150, 150, 150);
                 bottom = QColor(100, 100, 100);
                 newTextColor = QColor(Qt::black);
-            } else if (now.hour() <= 4 || now.hour() >= 20) { //Assume night
+            } else if (now.hour() < 4 || now.hour() > 20) { //Assume night
                 top = QColor(0, 36, 85);
                 bottom = QColor(0, 17, 40);
                 newTextColor = QColor(Qt::white);
-            } else if (now.hour() >= 8 && now.hour() <= 16) { //Assume day
+            } else if (now.hour() > 8 && now.hour() < 16) { //Assume day
                 top = QColor(126, 195, 255);
                 bottom = QColor(64, 149, 185);
                 newTextColor = QColor(Qt::black);
@@ -167,6 +212,7 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
             if (cloudy) {
                 drawRaindrops(&p);
             }
+            drawObjects(&p);
 
             //Draw celestial object if neccessary
             int daySegmentPassed = -1;
@@ -230,7 +276,6 @@ void Overview::launchDateTimeService() {
 
     QDBusConnection::systemBus().interface()->startService("org.freedesktop.timedate1");
 }
-
 
 void Overview::updateDSTNotification() {
     launchDateTimeService();
@@ -331,6 +376,7 @@ void Overview::updateDSTNotification() {
 }
 
 void Overview::drawRaindrops(QPainter* p) {
+    p->save();
     while (raindrops.count() < 500) {
         Raindrop* r = new Raindrop();
         r->location.setY(0);
@@ -345,31 +391,83 @@ void Overview::drawRaindrops(QPainter* p) {
         raindrops.append(r);
     }
 
+    QList<Raindrop*> done;
     for (Raindrop* r : raindrops) {
-        if (r->advance(ui->overviewLeftPane->height())) {
-            r->paint(p);
-        } else {
-            raindrops.removeOne(r);
-            QTimer::singleShot(0, [=] {
-                delete r;
-            });
-        }
+        r->advance(ui->overviewLeftPane->height(), ui->overviewLeftPane->width());
+        r->paint(p);
+        if (r->done) done.append(r);
     }
+
+    for (Raindrop* r : done) {
+        raindrops.removeAll(r);
+        delete r;
+    }
+    p->restore();
 }
 
-bool Raindrop::advance(int maxHeight) {
+void Overview::drawObjects(QPainter* p) {
+    p->save();
+    QList<BgObject*> done;
+    for (BgObject* o : objects) {
+        o->advance(ui->overviewLeftPane->height(), ui->overviewLeftPane->width());
+        o->paint(p);
+        if (o->done) done.append(o);
+    }
+
+    for (BgObject* r : done) {
+        objects.removeAll(r);
+        delete r;
+    }
+    p->restore();
+}
+
+void Raindrop::advance(int maxHeight, int maxWidth) {
     horizontalDisplacement = velocity * tan(-0.26);
     this->location += QPoint(horizontalDisplacement, velocity);
-    if (this->location.y() > maxHeight) {
-        return false;
-    }
-    return true;
+    if (this->location.y() > maxHeight) done = true;
 }
 
 void Raindrop::paint(QPainter *p) {
     QPen pen;
     pen.setColor(QColor(0, 100, 255, 100));
-    pen.setWidth(3);
+    pen.setWidth(2);
     p->setPen(pen);
     p->drawLine(this->location, this->location - (QPoint(horizontalDisplacement, velocity) / 2));
+}
+
+void Aircraft::advance(int maxHeight, int maxWidth) {
+    this->location.rx() += this->velocity;
+    if (this->location.x() > maxWidth + 60 * getDPIScaling() || this->location.x() < -60 * getDPIScaling()) done = true;
+}
+
+void Aircraft::paint(QPainter *p) {
+    QPen pen;
+    pen.setColor(QColor(Qt::white));
+    pen.setWidth(5);
+    pen.setCapStyle(Qt::RoundCap);
+
+    QLinearGradient g;
+    g.setColorAt(0, QColor(255, 255, 255, 127));
+    g.setColorAt(1, QColor(255, 255, 255, 0));
+
+    p->setPen(pen);
+    if (velocity < 0) {
+        p->drawLine(this->location, this->location + QPoint(20, 0) * getDPIScaling());
+        p->drawLine(this->location + QPoint(8, 0) * getDPIScaling(), this->location + QPoint(18, -4) * getDPIScaling());
+
+        g.setStart(this->location + QPoint(25, 0) * getDPIScaling());
+        g.setFinalStop(this->location + QPoint(60, 0) * getDPIScaling());
+        pen.setBrush(g);
+        p->setPen(pen);
+        p->drawLine(this->location + QPoint(25, 0) * getDPIScaling(), this->location + QPoint(60, 0) * getDPIScaling());
+    } else {
+        p->drawLine(this->location, this->location + QPoint(-20, 0) * getDPIScaling());
+        p->drawLine(this->location + QPoint(-8, 0) * getDPIScaling(), this->location + QPoint(-18, -4) * getDPIScaling());
+
+        g.setStart(this->location + QPoint(-25, 0) * getDPIScaling());
+        g.setFinalStop(this->location + QPoint(-60, 0) * getDPIScaling());
+        pen.setBrush(g);
+        p->setPen(pen);
+        p->drawLine(this->location + QPoint(-25, 0) * getDPIScaling(), this->location + QPoint(-60, 0) * getDPIScaling());
+    }
 }

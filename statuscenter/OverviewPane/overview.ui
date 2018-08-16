@@ -46,9 +46,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-29</y>
-          <width>438</width>
-          <height>624</height>
+          <y>0</y>
+          <width>468</width>
+          <height>623</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -127,14 +127,8 @@
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="dstPanel">
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_39">
+          <widget class="QWidget" name="widget" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_6">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -148,34 +142,54 @@
              <number>0</number>
             </property>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
-               <widget class="QLabel" name="dstIcon">
-                <property name="text">
-                 <string notr="true">Icon</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="dstLabel">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string notr="true">On Tableday, 1 April 2018, Daylight Savings Time will end. The clock will automatically adjust backwards by 1 hour.</string>
-                </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QFrame" name="dstPanel">
+              <property name="frameShape">
+               <enum>QFrame::NoFrame</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>9</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="dstIcon">
+                 <property name="text">
+                  <string notr="true">Icon</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="dstLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string notr="true">On Tableday, 1 April 2018, Daylight Savings Time will end. The clock will automatically adjust backwards by 1 hour.</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -212,10 +226,34 @@
             </spacer>
            </item>
            <item>
-            <widget class="QCalendarWidget" name="calendarWidget">
-             <property name="autoFillBackground">
-              <bool>false</bool>
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
              </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QCalendarWidget" name="calendarWidget">
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
@@ -285,7 +323,8 @@
             <string>Timers</string>
            </property>
            <property name="icon">
-            <iconset theme="chronometer"/>
+            <iconset theme="chronometer">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -310,7 +349,8 @@
             <string>Stopwatch</string>
            </property>
            <property name="icon">
-            <iconset theme="chronometer"/>
+            <iconset theme="chronometer">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -332,7 +372,8 @@
             <string>Reminders</string>
            </property>
            <property name="icon">
-            <iconset theme="reminder"/>
+            <iconset theme="reminder">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="checkable">
             <bool>true</bool>

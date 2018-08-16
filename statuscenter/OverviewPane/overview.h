@@ -8,12 +8,26 @@ namespace Ui {
     class Overview;
 }
 
-struct Raindrop {
+struct BgObject {
     QPoint location;
+    bool done = false;
+
+    virtual void advance(int maxHeight, int maxWidth) = 0;
+    virtual void paint(QPainter* p) = 0;
+};
+
+struct Raindrop : public BgObject {
     int velocity;
     int horizontalDisplacement;
 
-    bool advance(int maxHeight);
+    void advance(int maxHeight, int maxWidth);
+    void paint(QPainter* p);
+};
+
+struct Aircraft : public BgObject {
+    int velocity;
+
+    void advance(int maxHeight, int maxWidth);
     void paint(QPainter* p);
 };
 
@@ -41,8 +55,11 @@ class Overview : public QWidget, public StatusCenterPaneObject
 
         bool eventFilter(QObject *watched, QEvent *event);
         void drawRaindrops(QPainter* p);
+        void drawObjects(QPainter* p);
+        QTimer *animationTimer, *randomObjectTimer;
 
         QList<Raindrop*> raindrops;
+        QList<BgObject*> objects;
 };
 
 #endif // OVERVIEW_H

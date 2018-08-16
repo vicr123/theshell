@@ -545,6 +545,7 @@ class InfoPaneDropdown : public QDialog
         QMap<QString, QLabel*> printersStats;
         QMap<QString, QFrame*> printersStatFrames;
         QMap<QString, QString> connectedNetworks;
+        QMap<QWidget*, StatusCenterPaneObject*> pluginObjects;
 
         void mousePressEvent(QMouseEvent *event);
         void mouseMoveEvent(QMouseEvent *event);

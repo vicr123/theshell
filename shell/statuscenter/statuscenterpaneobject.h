@@ -32,12 +32,13 @@ class StatusCenterPaneObject
         virtual QString name() = 0;
         virtual StatusPaneTypes type() = 0;
         virtual int position() = 0;
-        virtual void message(QString name, QVariantList args) = 0;
+        virtual void message(QString name, QVariantList args = QVariantList()) = 0;
 
         InformationalStatusCenterPaneObjectAttributes informationalAttributes;
         SettingStatusCenterPaneObjectAttributes settingAttributes;
 
         std::function<void(QString, QVariantList)> sendMessage;
+        bool showing = false;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(StatusCenterPaneObject::StatusPaneTypes)
