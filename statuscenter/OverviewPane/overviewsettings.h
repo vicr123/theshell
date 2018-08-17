@@ -26,6 +26,10 @@ class OverviewSettings : public QWidget, public StatusCenterPaneObject
     private slots:
         void on_weatherCheckBox_toggled(bool checked);
 
+        void on_celsiusRadio_toggled(bool checked);
+
+        void on_fahrenheitRadio_toggled(bool checked);
+
     private:
         Ui::OverviewSettings *ui;
 

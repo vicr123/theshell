@@ -539,9 +539,16 @@ void Overview::updateGeoclueLocation() {
     double latitude = locationInterface.property("Latitude").toDouble();
     double longitude = locationInterface.property("Longitude").toDouble();
 
+    QString temperatureUnitQuery;
+    if (settings.value("overview/weatherInCelsius", true).toBool()) {
+        temperatureUnitQuery = "c";
+    } else {
+        temperatureUnitQuery = "f";
+    }
+
     //Request weather data
     QUrlQuery query;
-    query.addQueryItem("q", QString("SELECT * FROM weather.forecast WHERE woeid IN (SELECT woeid FROM geo.places WHERE text=\"(%1,%2)\") AND u=\"c\"").arg(latitude).arg(longitude));
+    query.addQueryItem("q", QString("SELECT * FROM weather.forecast WHERE woeid IN (SELECT woeid FROM geo.places WHERE text=\"(%1,%2)\") AND u=\"%3\"").arg(latitude).arg(longitude).arg(temperatureUnitQuery));
     query.addQueryItem("format", "json");
 
     QUrl url;
@@ -589,7 +596,13 @@ void Overview::updateGeoclueLocation() {
         }
 
         this->currentWeather = WeatherCondition(item.value("condition").toObject().value("code").toString().toInt());
-        ui->weatherInfo->setText(tr("%2°%3 in %1 %4.").arg(city, currentTemp, tempUnit, currentWeather.explanation));
+        QString weatherText = tr("%2°%3 in %1 %4.").arg(city, currentTemp, tempUnit, currentWeather.explanation);
+
+        if (highTemp != "") {
+            weatherText.append(" ").append(tr("Expect a high of %1°%2 and a low of %3°%2").arg(highTemp, tempUnit, lowTemp));
+        }
+
+        ui->weatherInfo->setText(weatherText);
         weatherAvailable = true;
     });
     /*connect(reply, &QNetworkReply::error, [=] {

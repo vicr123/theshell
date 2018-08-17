@@ -2,6 +2,7 @@
 #include "ui_overviewsettings.h"
 
 #include <QCheckBox>
+#include <QRadioButton>
 
 OverviewSettings::OverviewSettings(QWidget *parent) :
     QWidget(parent),
@@ -13,6 +14,11 @@ OverviewSettings::OverviewSettings(QWidget *parent) :
     this->settingAttributes.icon = QIcon::fromTheme("preferences-desktop-overview");
 
     ui->weatherCheckBox->setChecked(settings.value("overview/enableWeather", false).toBool());
+    if (settings.value("overview/weatherInCelsius", true).toBool()) {
+        ui->celsiusRadio->setChecked(true);
+    } else {
+        ui->fahrenheitRadio->setChecked(true);
+    }
 }
 
 OverviewSettings::~OverviewSettings()
@@ -43,4 +49,18 @@ void OverviewSettings::message(QString name, QVariantList args) {
 void OverviewSettings::on_weatherCheckBox_toggled(bool checked)
 {
     settings.setValue("overview/enableWeather", checked);
+}
+
+void OverviewSettings::on_celsiusRadio_toggled(bool checked)
+{
+    if (checked) {
+        settings.setValue("overview/weatherInCelsius", true);
+    }
+}
+
+void OverviewSettings::on_fahrenheitRadio_toggled(bool checked)
+{
+    if (checked) {
+        settings.setValue("overview/weatherInCelsius", false);
+    }
 }

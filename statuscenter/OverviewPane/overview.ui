@@ -46,7 +46,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-5</y>
+          <y>-95</y>
           <width>470</width>
           <height>690</height>
          </rect>
@@ -240,6 +240,9 @@
                    </property>
                    <property name="text">
                     <string notr="true">Weather Information</string>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
