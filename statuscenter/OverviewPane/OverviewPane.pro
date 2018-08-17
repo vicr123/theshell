@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets dbus thelib
+QT       += core gui widgets dbus thelib positioning network
 
 TARGET = tsoverview
 TEMPLATE = lib
@@ -37,12 +37,15 @@ unix {
 
 HEADERS += \
     plugin.h \
-    overview.h
+    overview.h \
+    overviewsettings.h
 
 SOURCES += \
     plugin.cpp \
-    overview.cpp
+    overview.cpp \
+    overviewsettings.cpp
 
 FORMS += \
-    overview.ui
+    overview.ui \
+    overviewsettings.ui
 

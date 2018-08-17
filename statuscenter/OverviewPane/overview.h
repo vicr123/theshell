@@ -3,6 +3,11 @@
 
 #include <QWidget>
 #include <statuscenterpaneobject.h>
+#include <QSettings>
+#include <QGeoPositionInfoSource>
+#include <QDBusObjectPath>
+#include <QNetworkAccessManager>
+#include <QApplication>
 
 namespace Ui {
     class Overview;
@@ -31,6 +36,22 @@ struct Aircraft : public BgObject {
     void paint(QPainter* p);
 };
 
+struct WeatherCondition {
+    Q_DECLARE_TR_FUNCTIONS(WeatherCondition)
+
+public:
+    WeatherCondition();
+    WeatherCondition(int code);
+
+    QString explanation;
+    QIcon icon;
+
+    bool isCloudy = false;
+    bool isRainy = false;
+    bool isSnowy = false;
+    bool isNull = true;
+};
+
 class Overview : public QWidget, public StatusCenterPaneObject
 {
         Q_OBJECT
@@ -50,6 +71,12 @@ class Overview : public QWidget, public StatusCenterPaneObject
 
         void launchDateTimeService();
 
+        void updateWeather();
+
+        void updateGeoclueLocation();
+
+        void setAttribution(int attrib);
+
     private:
         Ui::Overview *ui;
 
@@ -58,8 +85,19 @@ class Overview : public QWidget, public StatusCenterPaneObject
         void drawObjects(QPainter* p);
         QTimer *animationTimer, *randomObjectTimer;
 
+        QGeoPositionInfoSource* geolocationSource;
+        QDBusObjectPath geoclueClientPath;
+        QNetworkAccessManager networkMgr;
+        bool weatherAvailable = false;
+
+        WeatherCondition currentWeather;
+        int currentYahooAttrib = 0;
+
         QList<Raindrop*> raindrops;
         QList<BgObject*> objects;
+        QSettings settings;
+
+        QPixmap yahooAttribLight, yahooAttribDark;
 };
 
 #endif // OVERVIEW_H

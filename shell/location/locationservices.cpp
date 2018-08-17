@@ -55,7 +55,7 @@ bool LocationServices::AuthorizeApp(QString desktop_id, uint req_accuracy_level,
         return false;
     }
 
-    if (desktop_id == "theshell") {
+    if (desktop_id == "theshell" || desktop_id == "theshell-weather") {
         //Allow theShell
         return true;
     }
@@ -68,6 +68,7 @@ bool LocationServices::AuthorizeApp(QString desktop_id, uint req_accuracy_level,
     }
 
     if (a.invalid()) {
+        //Invalid app
         return false;
     }
 

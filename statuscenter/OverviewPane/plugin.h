@@ -3,6 +3,7 @@
 
 #include <statuscenterpane.h>
 #include "overview.h"
+#include "overviewsettings.h"
 
 class Plugin : public QObject, public StatusCenterPane
 {
