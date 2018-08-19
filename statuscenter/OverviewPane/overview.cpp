@@ -226,6 +226,8 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
             //Draw background objects if neccessary
             if (currentWeather.isRainy) {
                 drawRaindrops(&p);
+            } else if (currentWeather.isWindy) {
+                drawWind(&p);
             }
             drawObjects(&p);
 
@@ -416,6 +418,35 @@ void Overview::drawRaindrops(QPainter* p) {
     for (Raindrop* r : done) {
         raindrops.removeAll(r);
         delete r;
+    }
+    p->restore();
+}
+
+void Overview::drawWind(QPainter* p) {
+    p->save();
+
+    for (int i = 0; i < 3; i++) {
+        if (QRandomGenerator::global()->bounded(4) == 2) {
+            Wind* w = new Wind();
+            w->location.setY(QRandomGenerator::global()->bounded(ui->overviewLeftPane->height()));
+            w->location.setX(QRandomGenerator::global()->bounded(ui->overviewLeftPane->width() * 2) - ui->overviewLeftPane->width() / 2);
+            w->scale = QRandomGenerator::global()->bounded((double) 3);
+            w->timeScale = QRandomGenerator::global()->bounded(5) + 1;
+
+            winds.append(w);
+        }
+    }
+
+    QList<Wind*> done;
+    for (Wind* w : winds) {
+        w->advance(ui->overviewLeftPane->height(), ui->overviewLeftPane->width());
+        w->paint(p);
+        if (w->done) done.append(w);
+    }
+
+    for (Wind* w : done) {
+        winds.removeAll(w);
+        delete w;
     }
     p->restore();
 }
@@ -683,6 +714,9 @@ WeatherCondition::WeatherCondition(int code) {
         case 21:
             explanation = tr("and smoky");
             break;
+        case 23:
+            explanation = tr("and breezy");
+            break;
         case 24:
             explanation = tr("and windy");
             break;
@@ -733,7 +767,7 @@ WeatherCondition::WeatherCondition(int code) {
     }
 
     int cloudyArray[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-                         20, 21, 22, 23, 27, 28, 35, 37, 38, 39, 40, 41, 42, 43, 45, 46, 47};
+                         20, 21, 22, 27, 28, 35, 37, 38, 39, 40, 41, 42, 43, 45, 46, 47};
     isCloudy = (std::find(std::begin(cloudyArray), std::end(cloudyArray), code) != std::end(cloudyArray));
 
     int rainyArray[] = {0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 17, 35, 37, 38, 39, 40, 45, 47};
@@ -741,6 +775,9 @@ WeatherCondition::WeatherCondition(int code) {
 
     int snowyArray[] = {5, 7, 14, 15, 16, 41, 42, 43, 46};
     isSnowy = (std::find(std::begin(snowyArray), std::end(snowyArray), code) != std::end(snowyArray));
+
+    int windyArray[] = {0, 1, 2, 15, 23, 24};
+    isWindy = (std::find(std::begin(windyArray), std::end(windyArray), code) != std::end(windyArray));
 
     isNull = false;
 }
@@ -759,4 +796,16 @@ void Overview::setAttribution(int attrib) {
             currentYahooAttrib = 2;
         }
     }
+}
+
+void Wind::advance(int maxHeight, int maxWidth) {
+    progress += timeScale;
+    if (progress >= 100) {
+        done = true;
+    }
+}
+
+void Wind::paint(QPainter *p) {
+    p->setPen(QColor(255, 255, 255, 255 - ((float) qBound(0, progress, 100) / 100 * 255)));
+    p->drawLine(location.x() + progress * scale, location.y(), location.x() + progress * scale + progress * scale, location.y());
 }

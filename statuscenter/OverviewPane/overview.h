@@ -36,6 +36,15 @@ struct Aircraft : public BgObject {
     void paint(QPainter* p);
 };
 
+struct Wind : public BgObject {
+    float scale;
+    int timeScale;
+    int progress;
+
+    void advance(int maxHeight, int maxWidth);
+    void paint(QPainter *p);
+};
+
 struct WeatherCondition {
     Q_DECLARE_TR_FUNCTIONS(WeatherCondition)
 
@@ -49,6 +58,7 @@ public:
     bool isCloudy = false;
     bool isRainy = false;
     bool isSnowy = false;
+    bool isWindy = false;
     bool isNull = true;
 };
 
@@ -82,6 +92,7 @@ class Overview : public QWidget, public StatusCenterPaneObject
 
         bool eventFilter(QObject *watched, QEvent *event);
         void drawRaindrops(QPainter* p);
+        void drawWind(QPainter* p);
         void drawObjects(QPainter* p);
         QTimer *animationTimer, *randomObjectTimer;
 
@@ -94,6 +105,7 @@ class Overview : public QWidget, public StatusCenterPaneObject
         int currentYahooAttrib = 0;
 
         QList<Raindrop*> raindrops;
+        QList<Wind*> winds;
         QList<BgObject*> objects;
         QSettings settings;
 
