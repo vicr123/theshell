@@ -3238,28 +3238,28 @@ void InfoPaneDropdown::updateAccentColourBox() {
 void InfoPaneDropdown::on_dpi100_toggled(bool checked)
 {
     if (checked) {
-        sessionSettings->setValue("screen/dpi", 96);
+        settings->setValue("screen/dpi", 96);
     }
 }
 
 void InfoPaneDropdown::on_dpi150_toggled(bool checked)
 {
     if (checked) {
-        sessionSettings->setValue("screen/dpi", 144);
+        settings->setValue("screen/dpi", 144);
     }
 }
 
 void InfoPaneDropdown::on_dpi200_toggled(bool checked)
 {
     if (checked) {
-        sessionSettings->setValue("screen/dpi", 192);
+        settings->setValue("screen/dpi", 192);
     }
 }
 
 void InfoPaneDropdown::on_dpi300_toggled(bool checked)
 {
     if (checked) {
-        sessionSettings->setValue("screen/dpi", 288);
+        settings->setValue("screen/dpi", 288);
     }
 }
 
