@@ -345,6 +345,9 @@
          </widget>
         </item>
         <item>
+         <layout class="QHBoxLayout" name="customSwitches"/>
+        </item>
+        <item>
          <spacer name="horizontalSpacer_11">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -410,8 +413,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1169</width>
-            <height>1038</height>
+            <width>1173</width>
+            <height>849</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_26">
@@ -693,14 +696,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>10</day>
+                 <day>9</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>10</day>
+                 <day>9</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -1720,8 +1723,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1183</width>
-              <height>132</height>
+              <width>145</width>
+              <height>108</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_35">
@@ -2853,8 +2856,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>381</width>
-                   <height>547</height>
+                   <width>299</width>
+                   <height>462</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_54">

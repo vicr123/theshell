@@ -8,7 +8,8 @@ SUBDIRS += \
     startsession \
     polkitagent \
     mousepass \
-    statuscenter
+    statuscenter \
+    daemons
 
 statuscenter.depends = shell
 

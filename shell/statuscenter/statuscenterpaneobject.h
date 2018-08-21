@@ -21,6 +21,7 @@ class StatusCenterPaneObject
 {
     public:
         enum StatusPaneType {
+            None = 0x0,
             Informational = 0x1,
             Setting = 0x2
         };
