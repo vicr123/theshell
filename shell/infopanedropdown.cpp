@@ -677,8 +677,10 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     searchDirs.append(QApplication::applicationDirPath() + "/../statuscenter/");
     #ifdef BLUEPRINT
         searchDirs.append(QDir("/usr/lib/theshellb/panes"));
+        searchDirs.append(QDir("/usr/lib/theshellb/daemons"));
     #else
         searchDirs.append(QDir("/usr/lib/theshell/panes"));
+        searchDirs.append(QDir("/usr/lib/theshell/daemons"));
     #endif
     QStringList loadedPanes;
     for (QDir pluginsDir : searchDirs) {
@@ -739,7 +741,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                             }
 
                             pane->sendMessage = [=](QString message, QVariantList args) {
-                                this->pluginMessage(message, args);
+                                this->pluginMessage(message, args, pane);
                             };
                             pluginObjects.insert(pane->mainWidget(), pane);
                         }
@@ -4471,9 +4473,9 @@ void InfoPaneDropdown::on_sourcesButton_clicked()
     this->close();
 }
 
-void InfoPaneDropdown::pluginMessage(QString message, QVariantList args) {
+void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusCenterPaneObject* caller) {
     if (message == "main-menu") {
-        if (ui->settingsListContainer->width() == 0) pluginMessage("show-menu", QVariantList());
+        if (ui->settingsListContainer->width() == 0) pluginMessage("show-menu", QVariantList(), caller);
         ui->settingsListStack->setCurrentIndex(0);
     } else if (message == "hide-menu") {
         tVariantAnimation* anim = new tVariantAnimation();
@@ -4495,6 +4497,35 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args) {
             ui->settingsListContainer->setFixedWidth(value.toInt());
         });
         anim->start(tVariantAnimation::DeleteWhenStopped);
+    } else if (message == "register-switch") {
+        uint thisSwitchId = pluginSwitches.count();
+        QBoxLayout* layout = new QBoxLayout(QBoxLayout::LeftToRight);
+
+        QFrame* line = new QFrame();
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+        layout->addWidget(line);
+
+        QLabel* switchLabel = new QLabel();
+        switchLabel->setText(args.first().toString());
+        layout->addWidget(switchLabel);
+
+        Switch* s = new Switch();
+        connect(s, &Switch::toggled, [=](bool checked) {
+            caller->message("switch-toggled", QVariantList() << thisSwitchId << checked);
+        });
+        if (args.count() >= 2) {
+            s->setChecked(args.at(1).toBool());
+        }
+        layout->addWidget(s);
+        pluginSwitches.append(s);
+
+        ui->customSwitches->addLayout(layout);
+
+        caller->message("switch-registered", QVariantList() << thisSwitchId << args.first().toString());
+    } else if (message == "toggle-switch") {
+        Switch* s = pluginSwitches.value(args.first().toUInt());
+        s->setChecked(args.last().toBool());
     }
 }
 

@@ -71,6 +71,7 @@
 #include <QPluginLoader>
 #include "statuscenter/statuscenterpane.h"
 #include "clickablelabel.h"
+#include "switch.h"
 
 class UPowerDBus;
 
@@ -508,7 +509,7 @@ class InfoPaneDropdown : public QDialog
 
         void on_sourcesButton_clicked();
 
-        void pluginMessage(QString message, QVariantList args);
+        void pluginMessage(QString message, QVariantList args, StatusCenterPaneObject* caller);
 
         void on_settingsList_itemActivated(QListWidgetItem *item);
 
@@ -588,6 +589,8 @@ class InfoPaneDropdown : public QDialog
         QDateTimeAxis* xAxis;
         bool chartScrolling = false;
         int startValue;
+
+        QList<Switch*> pluginSwitches;
 
         int previousDragY;
         WId MainWindowId;
