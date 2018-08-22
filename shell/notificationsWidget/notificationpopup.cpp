@@ -36,11 +36,14 @@ NotificationPopup::NotificationPopup(int id, QWidget *parent) :
     ui->setupUi(this);
 
     this->setAttribute(Qt::WA_X11NetWmWindowTypeNotification, true);
+    this->setAttribute(Qt::WA_AcceptTouchEvents, true);
     this->setWindowFlag(Qt::WindowStaysOnTopHint);
     ui->buttonsWidget->setFixedHeight(0);
     ui->downArrow->setPixmap(QIcon::fromTheme("go-down").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     ui->ContentsWidget->setFixedHeight(ui->bodyLabel->fontMetrics().height() + ui->ContentsWidget->layout()->contentsMargins().top());
     this->id = id;
+
+    this->layout()->removeWidget(ui->mainWidget);
 
     dismisser = new QTimer();
     dismisser->setInterval(500);
@@ -81,7 +84,7 @@ NotificationPopup::~NotificationPopup()
 }
 
 void NotificationPopup::show() {
-    if (currentlyShowingPopup != NULL) {
+    if (currentlyShowingPopup != nullptr) {
         currentlyShowingPopup->close();
         emit currentlyShowingPopup->notificationClosed(NotificationObject::Undefined);
         pendingPopups.append(this);
@@ -102,7 +105,7 @@ void NotificationPopup::show() {
         }
         ui->downContainer->setVisible(showDownArrow);
 
-        this->setFixedHeight(this->sizeHint().height());
+        this->setFixedHeight(ui->mainWidget->sizeHint().height());
         QDialog::show();
 
         tPropertyAnimation* anim = new tPropertyAnimation(this, "geometry");
@@ -130,6 +133,8 @@ void NotificationPopup::show() {
                 connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
                     QRegion r(QRect(origin.x() - value.toInt(), origin.y() - value.toInt(), value.toInt() * 2, value.toInt() * 2), QRegion::Ellipse);
                     coverWidget->setMask(r);
+                    this->repaint();
+                    ui->mainWidget->repaint();
                 });
                 connect(anim, &tVariantAnimation::finished, [=] {
                     coverWidget->setVisible(false);
@@ -159,7 +164,7 @@ void NotificationPopup::close() {
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
     connect(anim, &tPropertyAnimation::finished, [=] {
         QDialog::close();
-        currentlyShowingPopup = NULL;
+        currentlyShowingPopup = nullptr;
 
         if (pendingPopups.count() > 0) {
             pendingPopups.takeFirst()->show();
@@ -182,7 +187,7 @@ void NotificationPopup::enterEvent(QEvent *event) {
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
         connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
             ui->buttonsWidget->setFixedHeight(value.toInt());
-            this->setFixedHeight(this->sizeHint().height());
+            this->setFixedHeight(ui->mainWidget->sizeHint().height());
         });
         anim->start();
 
@@ -208,7 +213,7 @@ void NotificationPopup::enterEvent(QEvent *event) {
         });
         anim3->start();
 
-        dismisser->stop();
+        stopDismisser();
     }
 }
 
@@ -225,7 +230,7 @@ void NotificationPopup::leaveEvent(QEvent *event) {
             connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
             connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
                 ui->buttonsWidget->setFixedHeight(value.toInt());
-                this->setFixedHeight(this->sizeHint().height());
+                this->setFixedHeight(ui->mainWidget->sizeHint().height());
             });
             anim->start();
 
@@ -251,7 +256,7 @@ void NotificationPopup::leaveEvent(QEvent *event) {
             });
             anim3->start();
 
-            dismisser->start();
+            startDismisser();
         }
     }
 }
@@ -263,6 +268,38 @@ void NotificationPopup::paintEvent(QPaintEvent *event) {
     painter.setPen(this->palette().color(QPalette::WindowText));
     painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
 
+    if (currentTouch == 0) { //Dismissing by swiping to the right
+        painter.setPen(Qt::transparent);
+        painter.setBrush(QColor(200, 0, 0));
+        painter.drawRect(0, 0, this->width(), this->height() - 1);
+
+        QFont font = this->font();
+        font.setPointSize(15);
+        painter.setFont(font);
+
+        QFontMetrics metrics(font);
+
+        QRect textRect;
+        textRect.setTop(0);
+        textRect.setHeight(this->height() - 1);
+        textRect.setWidth(metrics.width(tr("Dismiss")));
+        if (ui->mainWidget->geometry().left() > textRect.width() + 40 * getDPIScaling()) {
+            textRect.moveRight(ui->mainWidget->geometry().left() - 20 * getDPIScaling());
+        } else {
+            textRect.moveLeft(20 * getDPIScaling());
+        }
+
+        QRect iconRect;
+        iconRect.setWidth(16 * getDPIScaling());
+        iconRect.setHeight(16 * getDPIScaling());
+        iconRect.moveRight(textRect.left() - 9 * getDPIScaling());
+        iconRect.moveTop(this->height() / 2 - iconRect.height() / 2);
+
+        painter.setPen(Qt::white);
+        painter.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, tr("Dismiss"));
+        painter.drawPixmap(iconRect, QIcon::fromTheme("arrow-right").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    }
+
     if (urgency != 1) {
         painter.setPen(Qt::transparent);
         if (urgency == 0) {
@@ -273,6 +310,8 @@ void NotificationPopup::paintEvent(QPaintEvent *event) {
         painter.drawRect(0, 0, this->width(), 3 * getDPIScaling());
         //painter.drawRect(0, 0, 3 * getDPIScaling(), this->height());
     }
+
+
 }
 
 void NotificationPopup::setApp(QString appName, QIcon appIcon) {
@@ -392,4 +431,112 @@ void NotificationPopup::on_dismissButton_clicked()
 
 void NotificationPopup::setBigIcon(QIcon bigIcon) {
     ui->bigIconLabel->setPixmap(bigIcon.pixmap(32 * getDPIScaling(), 32 * getDPIScaling()));
+}
+
+bool NotificationPopup::event(QEvent* event) {
+    if (event->type() == QEvent::TouchBegin) {
+        QTouchEvent* e = (QTouchEvent*) event;
+
+        touchStart = e->touchPoints().first().pos().toPoint();
+        event->accept();
+        stopDismisser();
+        return true;
+    } else if (event->type() == QEvent::TouchUpdate) {
+        QTouchEvent* e = (QTouchEvent*) event;
+        if (currentTouch == -1) {
+            QPoint adjusted = e->touchPoints().first().pos().toPoint() - touchStart;
+            if (adjusted.manhattanLength() > 5) {
+                //Determine what's going on
+                int angle;
+                if (adjusted.x() == 0) {
+                    if (adjusted.y() > 0) {
+                        angle = 270;
+                    } else {
+                        angle = 90;
+                    }
+                } else {
+                    float gradient = (float) -adjusted.y() / (float) adjusted.x();
+                    angle = qRadiansToDegrees(atan(gradient));
+
+                    if (adjusted.x() < 0) {
+                        angle = 180 + angle;
+                    } else if (angle < 0) {
+                        angle = 360 + angle;
+                    }
+                }
+                if (angle < 0) qDebug() << "Negative angle!!!!!! :(";
+
+
+                if (angle < 30 || angle > 330) { //Swiping to the right to dismiss
+                    qDebug() << "Swiping to dismiss";
+                    currentTouch = 0;
+                    touchStart = e->touchPoints().first().pos().toPoint();
+                } else if (angle > 60 && angle < 120) { //Swiping up to hide
+                    qDebug() << "Swiping to hide";
+                    currentTouch = 1;
+                    touchStart = e->touchPoints().first().pos().toPoint();
+                }
+            }
+        } else if (currentTouch == 0) { //Swipe to dismiss
+            QPoint adjusted = e->touchPoints().first().pos().toPoint() - touchStart;
+
+            int left = adjusted.x();
+            if (left < 0) left = 0;
+            ui->mainWidget->move(left, 0);
+            this->update();
+        }
+    } else if (event->type() == QEvent::TouchEnd) {
+        if (currentTouch == 0) { //Swipe to dismiss
+            if (ui->mainWidget->geometry().left() > this->width() / 4) {
+                tVariantAnimation* anim = new tVariantAnimation();
+                anim->setStartValue(ui->mainWidget->geometry().left());
+                anim->setEndValue(ui->mainWidget->geometry().left() + this->width());
+                anim->setDuration(500);
+                anim->setEasingCurve(QEasingCurve::OutCubic);
+                connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                    ui->mainWidget->move(value.toInt(), 0);
+                    this->update();
+                });
+                connect(anim, &tVariantAnimation::finished, [=] {
+                    anim->deleteLater();
+                    ui->dismissButton->click();
+                });
+                anim->start();
+            } else {
+                tVariantAnimation* anim = new tVariantAnimation();
+                anim->setStartValue(ui->mainWidget->geometry().left());
+                anim->setEndValue(0);
+                anim->setDuration(500);
+                anim->setEasingCurve(QEasingCurve::OutCubic);
+                connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                    ui->mainWidget->move(value.toInt(), 0);
+                    this->update();
+                });
+                connect(anim, &tVariantAnimation::finished, [=] {
+                    currentTouch = -1;
+                    anim->deleteLater();
+                });
+                anim->start();
+            }
+        }
+        startDismisser();
+    } else if (event->type() == QEvent::TouchCancel) {
+        currentTouch = -1;
+        startDismisser();
+    }
+    return QDialog::event(event);
+}
+
+void NotificationPopup::resizeEvent(QResizeEvent* event) {
+    ui->mainWidget->setFixedSize(this->size().width(), this->size().height() - 1);
+}
+
+void NotificationPopup::startDismisser() {
+    dismisserStopCount--;
+    if (dismisserStopCount == 0) dismisser->start();
+}
+
+void NotificationPopup::stopDismisser() {
+    dismisserStopCount++;
+    dismisser->stop();
 }

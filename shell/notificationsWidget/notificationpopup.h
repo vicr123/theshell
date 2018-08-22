@@ -44,7 +44,7 @@ class NotificationPopup : public QDialog
     Q_OBJECT
 
 public:
-    explicit NotificationPopup(int id, QWidget *parent = 0);
+    explicit NotificationPopup(int id, QWidget *parent = nullptr);
     ~NotificationPopup();
 
     void show();
@@ -60,6 +60,8 @@ public:
 
 private slots:
     void on_dismissButton_clicked();
+    void startDismisser();
+    void stopDismisser();
 
 signals:
     void actionClicked(QString key);
@@ -75,8 +77,10 @@ private:
     void enterEvent(QEvent* event);
     void leaveEvent(QEvent* event);
     void paintEvent(QPaintEvent* event);
+    void resizeEvent(QResizeEvent* resizeEvent);
+    bool event(QEvent* event);
 
-    QTimer* dismisser = NULL;
+    QTimer* dismisser = nullptr;
     int timeoutLeft;
     QMap<QString, QString> actions;
     QVariantMap hints;
@@ -88,6 +92,11 @@ private:
     QWidget* coverWidget;
     QLabel *coverAppIcon, *coverAppName;
     QSettings settings;
+
+    int currentTouch = -1;
+    int dismisserStopCount = 0;
+
+    QPoint touchStart;
 };
 
 #endif // NOTIFICATIONPOPUP_H
