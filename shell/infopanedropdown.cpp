@@ -22,6 +22,8 @@
 #include "ui_infopanedropdown.h"
 #include "internationalisation.h"
 
+#include <QScroller>
+
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern void EndSession(EndSessionWait::shutdownType type);
@@ -766,6 +768,13 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             ui->settingsUnavailableTable->setItem(i, 1, new QTableWidgetItem(o.value("error").toString()));
         }
     }
+
+    QScroller::grabGesture(ui->settingsList, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->availableKeyboardLayouts, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->timezoneCityList, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->timezoneList, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->appsGraph, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(ui->autostartAppList, QScroller::LeftMouseButtonGesture);
 
     updateStruts();
     updateAutostart();

@@ -40,6 +40,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setAttribute(Qt::WA_AcceptTouchEvents, true);
+    ui->StatusBarFrame->setAttribute(Qt::WA_AcceptTouchEvents, true);
+
     ui->openMenu->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
     ui->openMenuCompact->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
     QSize ic16(16 * getDPIScaling(), 16 * getDPIScaling());
@@ -57,11 +60,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mprisSelection->setMenu(mprisSelectionMenu);
     connect(mprisSelectionMenu, &QMenu::aboutToShow, [=]() {
         pauseMprisMenuUpdate = true;
-        lockHide = true;
+        lockMovement();
     });
     connect(mprisSelectionMenu, &QMenu::aboutToHide, [=]() {
         pauseMprisMenuUpdate = false;
-        lockHide = false;
+        unlockMovement();
     });
 
     //Connect signals related to multiple monitor management
@@ -73,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
     gatewayMenu = new Menu(this);
     gatewayMenu->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(gatewayMenu, &Menu::menuClosing, [=]() {
-        lockHide = false;
+        unlockMovement();
     });
 
     this->setAttribute(Qt::WA_AlwaysShowToolTips, true);
@@ -125,10 +128,10 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->keyboardButton->setMenu(menu);
 
             connect(menu, &QMenu::aboutToShow, [=] {
-                lockHide = true;
+                lockMovement();
             });
             connect(menu, &QMenu::aboutToHide, [=] {
-                lockHide = false;
+                unlockMovement();
             });
         }
     });
@@ -270,10 +273,10 @@ MainWindow::MainWindow(QWidget *parent) :
     quietModeMenu->addAction(ui->actionNotifications);
     quietModeMenu->addAction(ui->actionMute);
     connect(quietModeMenu, &QMenu::aboutToShow, [=] {
-        lockHide = true;
+        lockMovement();
     });
     connect(quietModeMenu, &QMenu::aboutToHide, [=] {
-        lockHide = false;
+        unlockMovement();
     });
     ui->volumeButton->setMenu(quietModeMenu);
 
@@ -393,9 +396,9 @@ void MainWindow::updateWindow(WmWindow window) {
                 }
             }*/
 
-            lockHide = true;
+            lockMovement();
             menu->exec(button->mapToGlobal(pos));
-            lockHide = false;
+            unlockMovement();
         });
         connect(button, SIGNAL(clicked(bool)), this, SLOT(ActivateWindow()));
     }
@@ -544,12 +547,12 @@ void MainWindow::pullDownGesture() {
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
         anim->start();
 
-        lockHide = true;
+        lockMovement();
         QTimer* timer = new QTimer();
         timer->setSingleShot(true);
         timer->setInterval(3000);
         connect(timer, &QTimer::timeout, [=]() {
-            lockHide = false;
+            unlockMovement();
             timer->deleteLater();
         });
         timer->start();
@@ -1047,7 +1050,12 @@ void MainWindow::doUpdate() {
             if (settings.value("bar/statusBar", false).toBool()) {
                 dockTop = screenGeometry.y() + 24 * getDPIScaling();
             } else {
-                dockTop = screenGeometry.y();
+                if (QTouchDevice::devices().count() > 0) {
+                    //Leave a pixel to detect touch devices
+                    dockTop = screenGeometry.y() + 1;
+                } else {
+                    dockTop = screenGeometry.y();
+                }
             }
 
             highestWindow = screenGeometry.bottom();
@@ -1154,7 +1162,6 @@ void MainWindow::doUpdate() {
 
 
             if (settings.value("bar/statusBar", false).toBool()) {
-                //if (finalTop == dockTop - this->height() || finalTop == screenGeometry.height() - dockTop) {
                 if (finalTop == dockTop - this->height() || finalTop == dockTop) {
                     if (!statusBarVisible) {
                         ui->StatusBarFrame->setVisible(true);
@@ -1186,89 +1193,6 @@ void MainWindow::doUpdate() {
         } else {
             anim->deleteLater();
         }
-
-        /*
-        if (hideTop < dockTop - this->height()) {
-            if (attentionDemandingWindows > 0 && !settings.value("bar/statusBar", false).toBool()) {
-                hideTop = dockTop - this->height() + 2;
-            } else {
-                hideTop = dockTop - this->height();
-            }
-        }
-
-        if (hideTop != this->hideTop || forceWindowMove) { //Check if we need to move out of the way
-            this->hideTop = hideTop;
-            tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
-            anim->setStartValue(this->geometry());
-            anim->setEndValue(QRect(screenGeometry.x(), hideTop, screenGeometry.width() + 1, this->height()));
-            anim->setDuration(500);
-            anim->setEasingCurve(QEasingCurve::OutCubic);
-            connect(anim, &tPropertyAnimation::finished, [=]() {
-                int adjustLeft = 0;
-                adjustLeft = adjustLeft + ui->openMenu->width();
-                if (ui->desktopsFrame->isVisible()) {
-                    adjustLeft = adjustLeft + ui->openMenu->width();
-                }
-            });
-            connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-            anim->start();
-
-            if (hideTop == screenGeometry.y()) {
-                hiding = false;
-
-                //Hide the tutorial for the bar
-                TutorialWin->hideScreen(TutorialWindow::BarLocation);
-            } else {
-                hiding = true;
-
-                //Show the tutorial for the bar
-                TutorialWin->showScreen(TutorialWindow::BarLocation);
-            }
-        }
-
-        if (hideTop != screenGeometry.y()) {
-            if (hiding) {
-                if (QCursor::pos().y() <= this->y() + this->height() &&
-                        QCursor::pos().x() > screenGeometry.x() &&
-                        QCursor::pos().x() < screenGeometry.x() + screenGeometry.width()) {
-                    //Move away from the whole screen.
-                    tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
-                    anim->setStartValue(this->geometry());
-
-                    anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width() + 1, this->height()));
-                    anim->setDuration(500);
-                    anim->setEasingCurve(QEasingCurve::OutCubic);
-
-                    connect(anim, &tPropertyAnimation::finished, [=]() {
-                        int adjustLeft = 0;
-                        adjustLeft = adjustLeft + ui->openMenu->width();
-                        if (ui->desktopsFrame->isVisible()) {
-                            adjustLeft = adjustLeft + ui->openMenu->width();
-                        }
-                        hiding = false;
-                    });
-                    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-                    anim->start();
-
-                    //Hide the tutorial for the bar
-                    TutorialWin->hideScreen(TutorialWindow::BarLocation);
-                }
-            } else {
-                if (QCursor::pos().y() > screenGeometry.y() + this->height() ||
-                        QCursor::pos().x() < screenGeometry.x() ||
-                        QCursor::pos().x() > screenGeometry.x() + screenGeometry.width()) {
-                    hiding = true;
-                    tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
-                    anim->setStartValue(this->geometry());
-
-                    anim->setEndValue(QRect(screenGeometry.x(), hideTop, screenGeometry.width() + 1, this->height()));
-                    anim->setDuration(500);
-                    anim->setEasingCurve(QEasingCurve::OutCubic);
-                    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-                    anim->start();
-                }
-            }
-        }*/
     }
 
     if (settings.value("bar/onTop", true).toBool()) {
@@ -1329,7 +1253,6 @@ void MainWindow::doUpdate() {
                 action->setText(app.remove("org.mpris.MediaPlayer2."));
                 menu->addAction(action);
             }
-            //ui->mprisSelection->setMenu(menu);
             ui->mprisSelection->setVisible(true);
         } else {
             ui->mprisSelection->setVisible(false);
@@ -1367,6 +1290,16 @@ void MainWindow::setMprisCurrentApp(QString app) {
     updateMpris();
 }
 
+void MainWindow::lockMovement() {
+    lockHideCount++;
+    lockHide = true;
+}
+
+void MainWindow::unlockMovement() {
+    if (lockHideCount > 0) lockHideCount--;
+    if (lockHideCount == 0) lockHide = false;
+}
+
 void MainWindow::updateMpris() {
     if (!mprisUpdaterLocker.tryLock()) {
         return;
@@ -1382,7 +1315,6 @@ void MainWindow::updateMpris() {
     connect(&watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), &loop, SLOT(quit()));
     loop.exec();
 
-    //QDBusReply<QDBusVariant> reply(QDBusConnection::sessionBus().call(MetadataRequest));
     QVariantMap replyData;
     QDBusArgument arg(watcher.reply().arguments().first().value<QDBusVariant>().variant().value<QDBusArgument>());
 
@@ -1519,53 +1451,6 @@ void MainWindow::on_date_clicked()
 }
 
 void MainWindow::internetLabelChanged(QString text, QIcon icon) {
-    /*ui->networkLabel->setText(display);
-    if (signalStrength == -1) {
-        ui->networkStrength->setVisible(false);
-        ui->StatusBarNetwork->setVisible(false);
-    } else {
-        QIcon icon;
-        switch (signalStrength) {
-            case -5:
-                icon = QIcon::fromTheme("network-wired-error");
-                break;
-            case -4:
-                icon = QIcon::fromTheme("network-wired-unavailable");
-                break;
-            case -3:
-                icon = QIcon::fromTheme("network-wireless-disconnected");
-                break;
-            case -2:
-                icon = QIcon::fromTheme("network-wireless-error");
-                break;
-            case 0:
-                icon = QIcon::fromTheme("network-wireless-connected-00");
-                break;
-            case 1:
-                icon = QIcon::fromTheme("network-wireless-connected-25");
-                break;
-            case 2:
-                icon = QIcon::fromTheme("network-wireless-connected-50");
-                break;
-            case 3:
-                icon = QIcon::fromTheme("network-wireless-connected-75");
-                break;
-            case 4:
-                icon = QIcon::fromTheme("network-wireless-connected-100");
-                break;
-            case 5:
-                icon = QIcon::fromTheme("network-wired-activated");
-                break;
-            case 6:
-                icon = QIcon::fromTheme("bluetooth-connected");
-                break;
-        }
-
-        ui->networkStrength->setVisible(true);
-        ui->networkStrength->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-        ui->StatusBarNetwork->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-    }*/
-
     if (icon.isNull()) {
         ui->networkStrength->setVisible(false);
         ui->StatusBarNetwork->setVisible(false);
@@ -1826,6 +1711,7 @@ void MainWindow::on_mprisSongName_clicked()
 void MainWindow::reloadScreens() {
     forceWindowMove = true;
     updateStruts();
+    ui->StatusBarFrame->setFixedWidth(this->width());
 }
 
 void MainWindow::show() {
@@ -1895,7 +1781,7 @@ void MainWindow::on_desktopBack_clicked()
 }
 
 void MainWindow::openMenu() {
-    lockHide = true;
+    lockMovement();
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     QRect availableGeometry = QApplication::desktop()->availableGeometry();
@@ -2060,7 +1946,11 @@ void MainWindow::updateStruts() {
     } else {
         struts[0] = 0;
         struts[1] = 0;
-        struts[2] = 0;
+        if (QTouchDevice::devices().count() > 0) {
+            struts[2] = screenGeometry.top() + 1;
+        } else {
+            struts[2] = 0;
+        }
         struts[3] = 0;
         struts[4] = 0;
         struts[5] = 0;
@@ -2293,4 +2183,60 @@ void MainWindow::on_openStatusCenterButton_clicked()
 void MainWindow::on_actionCriticalOnly_triggered()
 {
     AudioMan->setQuietMode(AudioManager::critical);
+}
+
+bool MainWindow::event(QEvent* event) {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    if (event->type() == QEvent::TouchBegin) {
+        QTouchEvent* e = (QTouchEvent*) event;
+        QPoint p = e->touchPoints().first().pos().toPoint();
+        lastTouchPoint = this->geometry().topLeft();
+        lastTouchScreenPoint = mapToGlobal(p);
+
+        if (this->geometry().top() == screenGeometry.top()) {
+            if (p.y() == 0) {
+                currentTouch = 1; //Drag down Status Center
+                lockMovement();
+                e->accept();
+                return true;
+            }
+        } else {
+            currentTouch = 0; //Move Info Pane
+            lockMovement();
+            e->accept();
+            return true;
+        }
+    } else if (event->type() == QEvent::TouchUpdate) {
+        QTouchEvent* e = (QTouchEvent*) event;
+        if (currentTouch == 0) { //Move Info Pane
+            QPoint p = e->touchPoints().first().pos().toPoint();
+            QPoint screenPoint = mapToGlobal(p);
+            QPoint moveTo = (screenPoint - lastTouchScreenPoint) + lastTouchPoint;
+
+            int top = moveTo.y();
+            if (top > screenGeometry.top()) top = screenGeometry.top();
+            if (settings.value("bar/statusBar", false).toBool()) {
+                if (top < screenGeometry.top() - this->height() + 24 * getDPIScaling()) top = screenGeometry.top() - this->height() + 24 * getDPIScaling();
+            } else {
+                if (top < screenGeometry.top() - this->height() + 1) top = screenGeometry.top() - this->height() + 1;
+            }
+            this->move(screenGeometry.left(), top);
+        } else if (currentTouch == 1) {
+            infoPane->dragDown(InfoPaneDropdown::Clock, mapToGlobal(e->touchPoints().first().pos().toPoint()).y() - screenGeometry.top());
+        }
+    } else if (event->type() == QEvent::TouchEnd) {
+        QTouchEvent* e = (QTouchEvent*) event;
+        if (currentTouch == 0) {
+            currentTouch = -1;
+            QTimer::singleShot(1000, this, SLOT(unlockMovement()));
+        } else if (currentTouch == 1) {
+            currentTouch = -1;
+            infoPane->completeDragDown();
+            unlockMovement();
+        }
+
+    } else if (event->type() == QEvent::TouchCancel) {
+
+    }
+    return QMainWindow::event(event);
 }

@@ -381,7 +381,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -696,14 +696,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>9</day>
+                 <day>8</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>9</day>
+                 <day>8</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2197,7 +2197,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>5</number>
+             <number>7</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -7052,18 +7052,18 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
+   <class>AnimatedStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>animatedstackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>clickablelabel.h</header>
    <slots>
     <signal>clicked()</signal>
    </slots>
-  </customwidget>
-  <customwidget>
-   <class>AnimatedStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header>animatedstackedwidget.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>NetworkWidget</class>

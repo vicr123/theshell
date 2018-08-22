@@ -67,7 +67,7 @@ class MainWindow : public QMainWindow
     Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
@@ -212,6 +212,10 @@ private slots:
 
     void on_actionCriticalOnly_triggered();
 
+    void lockMovement();
+
+    void unlockMovement();
+
     signals:
     void reloadBackgrounds();
 
@@ -228,6 +232,7 @@ private:
     int hideTop = 0;
     bool hiding = false;
     bool lockHide = false;
+    int lockHideCount = 0;
     int attentionDemandingWindows = 0;
     int oldDesktop = 0;
     Window oldActiveWindow = 0;
@@ -250,8 +255,13 @@ private:
     bool eventFilter(QObject *watched, QEvent *event);
     void enterEvent(QEvent* event);
     void changeEvent(QEvent* event);
+    bool event(QEvent* event);
 
     InfoPaneDropdown *infoPane;
+
+    QPoint lastTouchPoint;
+    QPoint lastTouchScreenPoint;
+    int currentTouch = -1;
 
     QGraphicsOpacityEffect* statusBarOpacityEffect;
     bool statusBarVisible = false;

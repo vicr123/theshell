@@ -50,6 +50,7 @@
 #include <libunwind.h>
 #include <cxxabi.h>
 #include <QFile>
+#include <QScrollerProperties>
 
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
@@ -211,6 +212,10 @@ int main(int argc, char *argv[])
         tsTranslator->load(defaultLocale.name(), QString(SHAREDIR) + "translations");
     }
     a.installTranslator(tsTranslator);
+
+    QScrollerProperties scrollerProperties;
+    scrollerProperties.setScrollMetric(QScrollerProperties::OvershootDragResistanceFactor, 0.1);
+    QScrollerProperties::setDefaultScrollerProperties(scrollerProperties);
 
     desktopFileFormat = QSettings::registerFormat("desktop", [](QIODevice &device, QSettings::SettingsMap &map) -> bool {
         QString group;

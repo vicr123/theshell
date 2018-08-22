@@ -21,6 +21,8 @@
 #include "menu.h"
 #include "ui_menu.h"
 
+#include <QScroller>
+
 extern void EndSession(EndSessionWait::shutdownType type);
 extern float getDPIScaling();
 extern MainWindow* MainWin;
@@ -116,6 +118,8 @@ Menu::Menu(QWidget *parent) :
     connect(appsWatcher, SIGNAL(fileChanged(QString)), appsListModel, SLOT(loadData()));
     connect(appsWatcher, SIGNAL(directoryChanged(QString)), appsListModel, SLOT(loadData()));
     appsWatcher->addPath("/usr/share/applications/");
+
+    QScroller::grabGesture(ui->appsListView, QScroller::LeftMouseButtonGesture);
 
     //ui->appsListView->setFlow(QListView::LeftToRight);
     //ui->appsListView->setResizeMode(QListView::Adjust);
