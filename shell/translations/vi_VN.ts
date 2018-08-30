@@ -241,7 +241,7 @@
     <message>
         <location filename="../choosebackground.ui" line="350"/>
         <source>by</source>
-        <translation type="unfinished"></translation>
+        <translation>Bởi</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="379"/>
@@ -291,7 +291,7 @@
     <message>
         <location filename="../choosebackground.cpp" line="88"/>
         <source>by %1</source>
-        <translation type="unfinished">bởi %1</translation>
+        <translation>bởi %1</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="165"/>
@@ -461,7 +461,7 @@
     <message>
         <location filename="../endsessionwait.ui" line="526"/>
         <source>Fake Exit</source>
-        <translation></translation>
+        <translation>Thoát giả</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="395"/>
@@ -2301,7 +2301,7 @@ Tập tin này có thể giữ lại:
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="521"/>
         <source>Can&apos;t get to this device. Is it connected to the same network and powered on?</source>
-        <translation type="unfinished">Không kết nối đến thiết bị được. Có được kết nối với cùng mạng và bật không?</translation>
+        <translation>Không kết nối đến thiết bị được. Có được kết nối với cùng mạng và bật không?</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="567"/>
@@ -2966,7 +2966,7 @@ Tập tin này có thể giữ lại:
     <message>
         <location filename="../locktypes/mousepassword.ui" line="193"/>
         <source>Reset</source>
-        <translation type="unfinished">Đặt lại</translation>
+        <translation>Đặt lại</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="203"/>
