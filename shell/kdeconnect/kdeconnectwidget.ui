@@ -35,7 +35,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QFrame" name="frame">
+      <widget class="QFrame" name="leftPane">
        <property name="maximumSize">
         <size>
          <width>300</width>
@@ -376,8 +376,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>435</width>
-              <height>560</height>
+              <width>332</width>
+              <height>469</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -729,8 +729,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>256</width>
-              <height>483</height>
+              <width>195</width>
+              <height>380</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">

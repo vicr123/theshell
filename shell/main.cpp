@@ -50,7 +50,6 @@
 #include <libunwind.h>
 #include <cxxabi.h>
 #include <QFile>
-#include <QScrollerProperties>
 
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
@@ -171,6 +170,8 @@ int main(int argc, char *argv[])
     signal(SIGILL, *catch_signal); //Catch SIGILL
     signal(SIGFPE, *catch_signal); //Catch SIGFPE
 
+    qputenv("QT_IM_MODULE", QByteArray("ts-kbd")); //Set up keyboard
+
     QSettings settings("theSuite", "theShell");
     //qputenv("GTK_THEME", settings.value("theme/gtktheme", "Contemporary").toByteArray());
 
@@ -212,10 +213,6 @@ int main(int argc, char *argv[])
         tsTranslator->load(defaultLocale.name(), QString(SHAREDIR) + "translations");
     }
     a.installTranslator(tsTranslator);
-
-    QScrollerProperties scrollerProperties;
-    scrollerProperties.setScrollMetric(QScrollerProperties::OvershootDragResistanceFactor, 0.1);
-    QScrollerProperties::setDefaultScrollerProperties(scrollerProperties);
 
     desktopFileFormat = QSettings::registerFormat("desktop", [](QIODevice &device, QSettings::SettingsMap &map) -> bool {
         QString group;

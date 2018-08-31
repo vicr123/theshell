@@ -147,6 +147,9 @@
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit">
+           <property name="inputMethodHints">
+            <set>Qt::ImhNoPredictiveText</set>
+           </property>
            <property name="frame">
             <bool>true</bool>
            </property>

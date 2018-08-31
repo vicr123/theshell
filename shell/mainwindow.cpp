@@ -60,11 +60,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mprisSelection->setMenu(mprisSelectionMenu);
     connect(mprisSelectionMenu, &QMenu::aboutToShow, [=]() {
         pauseMprisMenuUpdate = true;
-        lockMovement();
+        lockMovement("MPRIS");
     });
     connect(mprisSelectionMenu, &QMenu::aboutToHide, [=]() {
         pauseMprisMenuUpdate = false;
-        unlockMovement();
+        unlockMovement("MPRIS");
     });
 
     //Connect signals related to multiple monitor management
@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
     gatewayMenu = new Menu(this);
     gatewayMenu->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     connect(gatewayMenu, &Menu::menuClosing, [=]() {
-        unlockMovement();
+        unlockMovement("Gateway closing");
     });
 
     this->setAttribute(Qt::WA_AlwaysShowToolTips, true);
@@ -128,10 +128,10 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->keyboardButton->setMenu(menu);
 
             connect(menu, &QMenu::aboutToShow, [=] {
-                lockMovement();
+                lockMovement("Keyboard Layout");
             });
             connect(menu, &QMenu::aboutToHide, [=] {
-                unlockMovement();
+                unlockMovement("Keyboard Layout");
             });
         }
     });
@@ -273,10 +273,10 @@ MainWindow::MainWindow(QWidget *parent) :
     quietModeMenu->addAction(ui->actionNotifications);
     quietModeMenu->addAction(ui->actionMute);
     connect(quietModeMenu, &QMenu::aboutToShow, [=] {
-        lockMovement();
+        lockMovement("Quiet Mode");
     });
     connect(quietModeMenu, &QMenu::aboutToHide, [=] {
-        unlockMovement();
+        unlockMovement("Quiet Mode");
     });
     ui->volumeButton->setMenu(quietModeMenu);
 
@@ -396,9 +396,9 @@ void MainWindow::updateWindow(WmWindow window) {
                 }
             }*/
 
-            lockMovement();
+            lockMovement("Window Menu");
             menu->exec(button->mapToGlobal(pos));
-            unlockMovement();
+            unlockMovement("Window Menu");
         });
         connect(button, SIGNAL(clicked(bool)), this, SLOT(ActivateWindow()));
     }
@@ -547,12 +547,12 @@ void MainWindow::pullDownGesture() {
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
         anim->start();
 
-        lockMovement();
+        lockMovement("Pull Down");
         QTimer* timer = new QTimer();
         timer->setSingleShot(true);
         timer->setInterval(3000);
         connect(timer, &QTimer::timeout, [=]() {
-            unlockMovement();
+            unlockMovement("Pull Down");
             timer->deleteLater();
         });
         timer->start();
@@ -1290,14 +1290,16 @@ void MainWindow::setMprisCurrentApp(QString app) {
     updateMpris();
 }
 
-void MainWindow::lockMovement() {
+void MainWindow::lockMovement(QString reason) {
     lockHideCount++;
     lockHide = true;
+    qDebug() << "Locking movement @" << lockHideCount << reason;
 }
 
-void MainWindow::unlockMovement() {
+void MainWindow::unlockMovement(QString reason) {
     if (lockHideCount > 0) lockHideCount--;
     if (lockHideCount == 0) lockHide = false;
+    qDebug() << "Unlocking movement @" << lockHideCount << reason;
 }
 
 void MainWindow::updateMpris() {
@@ -1781,7 +1783,7 @@ void MainWindow::on_desktopBack_clicked()
 }
 
 void MainWindow::openMenu() {
-    lockMovement();
+    lockMovement("Gateway");
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     QRect availableGeometry = QApplication::desktop()->availableGeometry();
@@ -2193,18 +2195,20 @@ bool MainWindow::event(QEvent* event) {
         lastTouchPoint = this->geometry().topLeft();
         lastTouchScreenPoint = mapToGlobal(p);
 
-        if (this->geometry().top() == screenGeometry.top()) {
-            if (p.y() == 0) {
-                currentTouch = 1; //Drag down Status Center
-                lockMovement();
+        if (e->touchPoints().count() == 1) {
+            if (this->geometry().top() == screenGeometry.top()) {
+                if (p.y() == 0) {
+                    currentTouch = 1; //Drag down Status Center
+                    lockMovement("Touch Status Center");
+                    e->accept();
+                    return true;
+                }
+            } else {
+                currentTouch = 0; //Move Info Pane
+                lockMovement("Touch Bar");
                 e->accept();
                 return true;
             }
-        } else {
-            currentTouch = 0; //Move Info Pane
-            lockMovement();
-            e->accept();
-            return true;
         }
     } else if (event->type() == QEvent::TouchUpdate) {
         QTouchEvent* e = (QTouchEvent*) event;
@@ -2228,15 +2232,17 @@ bool MainWindow::event(QEvent* event) {
         QTouchEvent* e = (QTouchEvent*) event;
         if (currentTouch == 0) {
             currentTouch = -1;
-            QTimer::singleShot(1000, this, SLOT(unlockMovement()));
+            QTimer::singleShot(1000, [=] {
+                unlockMovement("Touch Bar");
+            });
         } else if (currentTouch == 1) {
             currentTouch = -1;
             infoPane->completeDragDown();
-            unlockMovement();
+            unlockMovement("Touch Status Center");
         }
 
     } else if (event->type() == QEvent::TouchCancel) {
-
+        unlockMovement("Touch Cancel");
     }
     return QMainWindow::event(event);
 }

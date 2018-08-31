@@ -46,9 +46,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-95</y>
-          <width>470</width>
-          <height>690</height>
+          <y>0</y>
+          <width>443</width>
+          <height>595</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -482,64 +482,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QStackedWidget" name="stackedWidget">
-         <widget class="QWidget" name="page_3">
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <spacer name="verticalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_2">
-             <property name="font">
-              <font>
-               <pointsize>20</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Coming soon!</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_3">
-             <property name="text">
-              <string>Use the old Overview panel for now</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="page_4"/>
-        </widget>
+        <widget class="QStackedWidget" name="rightStack"/>
        </item>
       </layout>
      </item>

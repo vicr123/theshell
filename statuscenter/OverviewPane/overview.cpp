@@ -24,6 +24,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <Timers/timerpage.h>
 
 float getDPIScaling() {
     float currentDPI = QApplication::desktop()->logicalDpiX();
@@ -116,6 +117,8 @@ Overview::Overview(QWidget *parent) :
             }
         }
     });
+
+    ui->rightStack->addWidget(new TimerPage);
 
     updateDSTNotification();
     updateWeather();
@@ -808,4 +811,11 @@ void Wind::advance(int maxHeight, int maxWidth) {
 void Wind::paint(QPainter *p) {
     p->setPen(QColor(255, 255, 255, 255 - ((float) qBound(0, progress, 100) / 100 * 255)));
     p->drawLine(location.x() + progress * scale, location.y(), location.x() + progress * scale + progress * scale, location.y());
+}
+
+void Overview::on_timersButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->rightStack->setCurrentIndex(0);
+    }
 }

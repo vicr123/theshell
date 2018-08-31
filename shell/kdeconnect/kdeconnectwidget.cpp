@@ -1,6 +1,8 @@
 #include "kdeconnectwidget.h"
 #include "ui_kdeconnectwidget.h"
 
+extern float getDPIScaling();
+
 KdeConnectWidget::KdeConnectWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::KdeConnectWidget)
@@ -17,6 +19,7 @@ KdeConnectWidget::KdeConnectWidget(QWidget *parent) :
     devicesModel = new KdeConnectDevicesModel();
     ui->devicesView->setModel(devicesModel);
     ui->devicesView->setItemDelegate(new KdeConnectDevicesDelegate());
+    ui->leftPane->setFixedWidth(300 * getDPIScaling());
 
     connect(ui->devicesView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(selectedDeviceChanged(QModelIndex,QModelIndex)));
 

@@ -152,7 +152,7 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="menuStackedWidgetPage1" native="true">
+      <widget class="QWidget" name="menuStackedWidgetPage1">
        <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
          <number>0</number>
@@ -230,7 +230,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="document-new"/>
+             <iconset theme="document-new">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -1211,7 +1212,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="dialog-ok"/>
+                    <iconset theme="dialog-ok">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="flat">
                     <bool>true</bool>
@@ -1569,7 +1571,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="dialog-cancel"/>
+             <iconset theme="dialog-cancel">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="flat">
              <bool>true</bool>

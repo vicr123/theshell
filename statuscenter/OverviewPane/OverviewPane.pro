@@ -38,14 +38,17 @@ unix {
 HEADERS += \
     plugin.h \
     overview.h \
-    overviewsettings.h
+    overviewsettings.h \
+    Timers/timerpage.h
 
 SOURCES += \
     plugin.cpp \
     overview.cpp \
-    overviewsettings.cpp
+    overviewsettings.cpp \
+    Timers/timerpage.cpp
 
 FORMS += \
     overview.ui \
-    overviewsettings.ui
+    overviewsettings.ui \
+    Timers/timerpage.ui
 

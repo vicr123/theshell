@@ -16,6 +16,8 @@ QString calculateSize(quint64 size) {
     return ret;
 }
 
+extern float getDPIScaling();
+
 BluetoothManagement::BluetoothManagement(QWidget *parent) :
     QStackedWidget(parent),
     ui(new Ui::BluetoothManagement)
@@ -59,6 +61,8 @@ BluetoothManagement::BluetoothManagement(QWidget *parent) :
     connect(mgr, &BluezQt::Manager::deviceChanged, [=](BluezQt::DevicePtr device) {
         if (currentDevice == device) loadCurrentDevice();
     });
+
+    ui->menuStackedWidget->setFixedWidth(250 * getDPIScaling());
 }
 
 BluetoothManagement::~BluetoothManagement()

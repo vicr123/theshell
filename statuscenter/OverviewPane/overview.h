@@ -87,6 +87,9 @@ class Overview : public QWidget, public StatusCenterPaneObject
 
         void setAttribution(int attrib);
 
+    private slots:
+        void on_timersButton_toggled(bool checked);
+
     private:
         Ui::Overview *ui;
 

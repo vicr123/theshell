@@ -23,6 +23,7 @@
 #include "internationalisation.h"
 
 #include <QScroller>
+#include <tvirtualkeyboard.h>
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
@@ -776,6 +777,15 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QScroller::grabGesture(ui->appsGraph, QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->autostartAppList, QScroller::LeftMouseButtonGesture);
 
+    connect(tVirtualKeyboard::instance(), &tVirtualKeyboard::keyboardVisibleChanged, [=](bool visible) {
+        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        if (visible) {
+            this->setFixedHeight(screenGeometry.height() - tVirtualKeyboard::instance()->height());
+        } else {
+            this->setFixedHeight(screenGeometry.height() + 1);
+        }
+    });
+
     updateStruts();
     updateAutostart();
     updateDSTNotification();
@@ -1117,7 +1127,12 @@ void InfoPaneDropdown::show(dropdownType showWith) {
 
         QDialog::show();
         this->setFixedWidth(screenGeometry.width());
-        this->setFixedHeight(screenGeometry.height() + 1);
+
+        if (tVirtualKeyboard::instance()->keyboardVisible()) {
+            this->setFixedHeight(screenGeometry.height() - tVirtualKeyboard::instance()->height());
+        } else {
+            this->setFixedHeight(screenGeometry.height() + 1);
+        }
 
         if (settings.value("bar/onTop", true).toBool()) {
             previousDragY = -1;
@@ -2361,7 +2376,12 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
     QDialog::show();
 
     this->setFixedWidth(screenGeometry.width());
-    this->setFixedHeight(screenGeometry.height());
+
+    if (tVirtualKeyboard::instance()->keyboardVisible()) {
+        this->setFixedHeight(screenGeometry.height() - tVirtualKeyboard::instance()->height());
+    } else {
+        this->setFixedHeight(screenGeometry.height() + 1);
+    }
 
     //Get Current Brightness
     QProcess* backlight = new QProcess(this);

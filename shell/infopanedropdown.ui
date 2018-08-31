@@ -381,7 +381,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -686,6 +686,9 @@
                  <pointsize>50</pointsize>
                 </font>
                </property>
+               <property name="inputMethodHints">
+                <set>Qt::ImhPreferNumbers</set>
+               </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
@@ -696,14 +699,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>8</day>
+                 <day>6</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>8</day>
+                 <day>6</day>
                 </date>
                </property>
                <property name="displayFormat">

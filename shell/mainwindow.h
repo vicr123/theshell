@@ -212,9 +212,9 @@ private slots:
 
     void on_actionCriticalOnly_triggered();
 
-    void lockMovement();
+    void lockMovement(QString reason);
 
-    void unlockMovement();
+    void unlockMovement(QString reason);
 
     signals:
     void reloadBackgrounds();
