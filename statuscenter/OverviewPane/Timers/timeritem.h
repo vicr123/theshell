@@ -20,6 +20,9 @@ class TimerItem : public QWidget
     signals:
         void elapsed(QString timerName);
 
+    private slots:
+        void on_pauseButton_clicked();
+
     private:
         Ui::TimerItem *ui;
 

@@ -2,6 +2,7 @@
 #include "ui_timeritem.h"
 
 #include <QTime>
+#include <QTimer>
 #include <tnotification.h>
 
 TimerItem::TimerItem(QString timerName, int seconds, QWidget *parent) :
@@ -17,7 +18,7 @@ TimerItem::TimerItem(QString timerName, int seconds, QWidget *parent) :
     progressAnim->setStartValue(0);
     progressAnim->setEndValue(this->width());
     progressAnim->setDuration(seconds * 1000);
-    connect(progressAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(progressAnim, &tVariantAnimation::valueChanged, [=] {
         int msecsElapsed = progressAnim->currentTime();
 
         QTime time = QTime::fromMSecsSinceStartOfDay(progressAnim->duration() - msecsElapsed);
@@ -79,6 +80,21 @@ TimerItem::TimerItem(QString timerName, int seconds, QWidget *parent) :
         //}
     });
     progressAnim->start();
+
+    QTimer* timer = new QTimer();
+    timer->setInterval(1000);
+    connect(timer, &QTimer::timeout, [=] {
+        int msecsElapsed = progressAnim->currentTime();
+
+        QTime time = QTime::fromMSecsSinceStartOfDay(progressAnim->duration() - msecsElapsed);
+
+        ui->timeLeftLabel->setText(time.toString("HH:mm:ss"));
+    });
+    timer->start();
+
+    QTime time = QTime::fromMSecsSinceStartOfDay(progressAnim->duration());
+    ui->timeLeftLabel->setText(time.toString("HH:mm:ss"));
+
 }
 
 TimerItem::~TimerItem()
@@ -95,4 +111,17 @@ void TimerItem::paintEvent(QPaintEvent* event) {
 
 void TimerItem::resizeEvent(QResizeEvent* event) {
     progressAnim->setEndValue(this->width());
+}
+
+void TimerItem::on_pauseButton_clicked()
+{
+    if (progressAnim->state() == tVariantAnimation::Running) {
+        progressAnim->pause();
+        ui->timeLeftLabel->setEnabled(false);
+        ui->pauseButton->setIcon(QIcon::fromTheme("media-playback-start"));
+    } else {
+        progressAnim->start();
+        ui->timeLeftLabel->setEnabled(true);
+        ui->pauseButton->setIcon(QIcon::fromTheme("media-playback-pause"));
+    }
 }
