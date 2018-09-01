@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets dbus thelib positioning network
+QT       += core gui widgets dbus thelib positioning network multimedia
 
 TARGET = tsoverview
 TEMPLATE = lib
@@ -40,18 +40,24 @@ HEADERS += \
     overview.h \
     overviewsettings.h \
     Timers/timerpage.h \
-    Timers/timeritem.h
+    Timers/timeritem.h \
+    Stopwatch/stopwatchpage.h \
+    Reminders/reminderspage.h
 
 SOURCES += \
     plugin.cpp \
     overview.cpp \
     overviewsettings.cpp \
     Timers/timerpage.cpp \
-    Timers/timeritem.cpp
+    Timers/timeritem.cpp \
+    Stopwatch/stopwatchpage.cpp \
+    Reminders/reminderspage.cpp
 
 FORMS += \
     overview.ui \
     overviewsettings.ui \
     Timers/timerpage.ui \
-    Timers/timeritem.ui
+    Timers/timeritem.ui \
+    Stopwatch/stopwatchpage.ui \
+    Reminders/reminderspage.ui
 

@@ -2,6 +2,7 @@
 #define TIMERPAGE_H
 
 #include <QStackedWidget>
+#include <QMediaPlayer>
 #include "timeritem.h"
 
 namespace Ui {
@@ -25,7 +26,7 @@ class TimerPage : public QStackedWidget
 
         void on_newTimerButtonTop_clicked();
 
-        void timerElapsed(QString timerName);
+        void timerElapsed(QString timerName, QString ringtone);
 
         void notificationClosed(uint id, uint reason);
 
@@ -35,6 +36,8 @@ class TimerPage : public QStackedWidget
         int timersCreated = 0;
         uint currentTimerId = 0;
         QStringList timersElapsed;
+
+        QMediaPlayer* ringtone;
 
         QDBusInterface* notificationInterface;
 };

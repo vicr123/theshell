@@ -14,11 +14,11 @@ class TimerItem : public QWidget
         Q_OBJECT
 
     public:
-        explicit TimerItem(QString timerName, int seconds, QWidget *parent = nullptr);
+        explicit TimerItem(QString timerName, int seconds, QString ringtone, QWidget *parent = nullptr);
         ~TimerItem();
 
     signals:
-        void elapsed(QString timerName);
+        void elapsed(QString timerName, QString ringtone);
 
     private slots:
         void on_pauseButton_clicked();
