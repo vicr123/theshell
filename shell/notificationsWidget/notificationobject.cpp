@@ -195,7 +195,7 @@ void NotificationObject::post() {
     }
     dialog->setTimeout(timeout);
 
-    if (notificationAppSettings->value(appName + "/popup", true).toBool()) {
+    if (notificationAppSettings->value(appName + "/popup", true).toBool() && !dialog->isVisible()) {
         dialog->show();
     }
 

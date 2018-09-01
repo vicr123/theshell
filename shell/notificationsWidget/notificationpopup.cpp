@@ -389,6 +389,16 @@ void NotificationPopup::setHints(QVariantMap hints) {
 }
 
 void NotificationPopup::setActions(QStringList actions, bool actionNamesAreIcons) {
+    QBoxLayout* layout = (QBoxLayout*) ui->actionsWidget->layout();
+
+    QLayoutItem* item = layout->takeAt(0);
+    while (item != nullptr) {
+        item->widget()->deleteLater();
+        delete item;
+
+        item = layout->takeAt(0);
+    }
+
     if (actions.count() % 2 == 0) {
         for (int i = 0; i < actions.length(); i += 2) {
             QString key = actions.at(i);
@@ -408,7 +418,7 @@ void NotificationPopup::setActions(QStringList actions, bool actionNamesAreIcons
                     this->close();
                 }
             });
-            ((QBoxLayout*) ui->actionsWidget->layout())->addWidget(button);
+            layout->addWidget(button);
 
             this->actions.insert(key, value);
         }

@@ -63,7 +63,7 @@ QString NotificationsDBusAdaptor::GetServerInformation(QString &vendor, QString 
 
 uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id, const QString &app_icon, const QString &summary, const QString &body, const QStringList &actions, const QVariantMap &hints, int expire_timeout)
 {
-    if (this->parentWidget() != NULL) {
+    if (this->parentWidget() != nullptr) {
         QStringList knownApplications;
         int amount = applicationNotifications->beginReadArray("notifications/knownApplications");
         for (int i = 0; i < amount; i++) {
@@ -94,10 +94,18 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
         NotificationObject* notification;
         if (this->parentWidget()->hasNotificationId(replaces_id)) {
             notification = this->parentWidget()->getNotification(replaces_id);
+            QString name = app_name;
+            QString icon = app_icon;
+            QString sum = summary;
+            QString bod = body;
+            QStringList ac = actions;
+            QVariantMap h = hints;
+            int expire = expire_timeout;
+            notification->setParameters(name, icon, sum, bod, ac, h, expire);
         } else {
             notification = new NotificationObject(app_name, app_icon, summary, body, actions, hints, expire_timeout);
+            this->parentWidget()->addNotification(notification);
         }
-        this->parentWidget()->addNotification(notification);
 
         bool postNotification = true;
         if (AudioMan->QuietMode() == AudioManager::notifications && !applicationNotifications->value(app_name + "/bypassQuiet", false).toBool()) {
