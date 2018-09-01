@@ -39,16 +39,19 @@ HEADERS += \
     plugin.h \
     overview.h \
     overviewsettings.h \
-    Timers/timerpage.h
+    Timers/timerpage.h \
+    Timers/timeritem.h
 
 SOURCES += \
     plugin.cpp \
     overview.cpp \
     overviewsettings.cpp \
-    Timers/timerpage.cpp
+    Timers/timerpage.cpp \
+    Timers/timeritem.cpp
 
 FORMS += \
     overview.ui \
     overviewsettings.ui \
-    Timers/timerpage.ui
+    Timers/timerpage.ui \
+    Timers/timeritem.ui
 

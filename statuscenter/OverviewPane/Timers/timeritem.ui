@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TimerItem</class>
+ <widget class="QWidget" name="TimerItem">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>229</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="timerName">
+     <property name="text">
+      <string notr="true">Timer 1</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="timeLeftLabel">
+     <property name="font">
+      <font>
+       <pointsize>50</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string notr="true">TextLabel</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
