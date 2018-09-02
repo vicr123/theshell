@@ -114,6 +114,8 @@ void TimerPage::timerElapsed(QString timerName, QString ringtone) {
         playlist->setPlaybackMode(QMediaPlaylist::Loop);
         this->ringtone->setPlaylist(playlist);
         this->ringtone->play();
+
+        emit attenuate();
     }
 }
 
@@ -122,6 +124,7 @@ void TimerPage::notificationClosed(uint id, uint reason) {
         currentTimerId = 0;
         timersElapsed.clear();
         ringtone->stop();
+        emit deattenuate();
     }
 }
 

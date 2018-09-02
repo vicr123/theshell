@@ -120,7 +120,15 @@ Overview::Overview(QWidget *parent) :
         }
     });
 
-    ui->rightStack->addWidget(new TimerPage);
+    TimerPage* timerPage = new TimerPage;
+    connect(timerPage, &TimerPage::attenuate, [=] {
+        sendMessage("attenuate", QVariantList() << true);
+    });
+    connect(timerPage, &TimerPage::deattenuate, [=] {
+        sendMessage("attenuate", QVariantList() << false);
+    });
+
+    ui->rightStack->addWidget(timerPage);
     ui->rightStack->addWidget(new StopwatchPage);
     ui->rightStack->addWidget(new RemindersPage);
 

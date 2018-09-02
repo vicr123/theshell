@@ -30,6 +30,10 @@ class TimerPage : public QStackedWidget
 
         void notificationClosed(uint id, uint reason);
 
+    signals:
+        void attenuate();
+        void deattenuate();
+
     private:
         Ui::TimerPage *ui;
 
