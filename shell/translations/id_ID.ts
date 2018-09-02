@@ -6,67 +6,67 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="52"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikasi</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="105"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Matikan</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="107"/>
         <source>Power off this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Matikan perangkat ini</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="112"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>Mulai Ulang</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="114"/>
         <source>Reboot this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Mulai ulang perangkat ini</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="119"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Keluar</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="121"/>
         <source>End your session</source>
-        <translation type="unfinished"></translation>
+        <translation>Selesaikan sesimu</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="132"/>
         <source>Run Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Jalankan komando</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="143"/>
         <source>Open webpage</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka halaman web</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="151"/>
         <source>Open Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka folder</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="158"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka file</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="204"/>
         <source>System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengaturan Sistem</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="205"/>
         <source>System Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurasi Sistem</translation>
     </message>
 </context>
 <context>
@@ -74,17 +74,17 @@
     <message>
         <location filename="../audiomanager.cpp" line="348"/>
         <source>Allows all sounds from all apps, and notifications from all apps.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izinkan semua suara dari semua aplikasi, dan notifikasi dari semua aplikasi.</translation>
     </message>
     <message>
         <location filename="../audiomanager.cpp" line="350"/>
         <source>Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Abaikan semua notifikasi dari semua aplikasi, kecuali yang disetel untuk menerobos Mode Diam. Suara biasa tetap diputar, dan pewaktu dan pengingat tetap memberitahu kamu, tetapi, mereka tidak memutar suara.</translation>
     </message>
     <message>
         <location filename="../audiomanager.cpp" line="352"/>
         <source>Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selesaikan untuk mematikan semua suara dan notifikasi dari semua aplikasi, termasuk yang disetel untuk menerobos Mode Diam. Bahkan pewaktu dan pengingat tidak akan memberitahu kamu.</translation>
     </message>
 </context>
 <context>
@@ -92,42 +92,42 @@
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="176"/>
         <source>Saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Tersimpan</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="180"/>
         <source>Secured with WPA2-PSK</source>
-        <translation type="unfinished"></translation>
+        <translation>Diamankan dengan WPA2-PSK</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="182"/>
         <source>Secured with WPA-PSK</source>
-        <translation type="unfinished"></translation>
+        <translation>Diamankan dengan WPA-PSK</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="184"/>
         <source>Secured with WPA Enterprise</source>
-        <translation type="unfinished"></translation>
+        <translation>Diamankan dengan WPA Enterprise</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="186"/>
         <source>Secured with WPA2 Enterprise</source>
-        <translation type="unfinished"></translation>
+        <translation>Diamankan dengan WPA2 Enterprise</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="188"/>
         <source>Secured with Dynamic WEP</source>
-        <translation type="unfinished"></translation>
+        <translation>Diamankan dengan WEP Dinamik</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="190"/>
         <source>Secured with Static WEP</source>
-        <translation type="unfinished"></translation>
+        <translation>Diamankan dengan WEP Statik</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="192"/>
         <source>Not Secured</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak diamankan</translation>
     </message>
 </context>
 <context>
@@ -135,12 +135,12 @@
     <message>
         <location filename="../bthandsfree.cpp" line="89"/>
         <source>In call</source>
-        <translation type="unfinished"></translation>
+        <translation>Dalam panggilan</translation>
     </message>
     <message>
         <location filename="../bthandsfree.cpp" line="93"/>
         <source>Dialling...</source>
-        <translation type="unfinished"></translation>
+        <translation>Memanggil...</translation>
     </message>
 </context>
 <context>
@@ -148,22 +148,22 @@
     <message>
         <location filename="../background.ui" line="29"/>
         <source>Change Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Ubah Latar Belakang</translation>
     </message>
     <message>
         <location filename="../background.ui" line="38"/>
         <source>Open Status Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka Pusat Status</translation>
     </message>
     <message>
         <location filename="../background.ui" line="47"/>
         <source>Open System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka Pengaturan Sistem</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="387"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>dengan %1</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="498"/>
