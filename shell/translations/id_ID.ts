@@ -168,12 +168,12 @@
     <message>
         <location filename="../background.cpp" line="498"/>
         <source>For desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Untuk desktop</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="500"/>
         <source>For system</source>
-        <translation type="unfinished"></translation>
+        <translation>Untuk sistem</translation>
     </message>
 </context>
 <context>
@@ -181,7 +181,7 @@
     <message>
         <location filename="../choosebackground.ui" line="14"/>
         <source>Choose Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Memilih Wallpaper</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="44"/>
@@ -281,12 +281,12 @@
     <message>
         <location filename="../choosebackground.ui" line="506"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Selesai</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="391"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Memilih...</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="88"/>
@@ -296,7 +296,7 @@
     <message>
         <location filename="../choosebackground.cpp" line="165"/>
         <source>Select Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Memilih Wallpaper</translation>
     </message>
 </context>
 <context>
@@ -304,29 +304,29 @@
     <message>
         <location filename="../dbusevents.cpp" line="100"/>
         <source>Perform Action...</source>
-        <translation type="unfinished"></translation>
+        <translation>Melakukan Tindakan...</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="105"/>
         <location filename="../dbusevents.cpp" line="170"/>
         <source>%1 Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Disambungkan</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="105"/>
         <location filename="../dbusevents.cpp" line="170"/>
         <source>%1 has been connected to this PC.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 yang disambungkan kepada komputer ini.</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="127"/>
         <source>%1 was just connected. What do you want to do?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 baru saja disambungkan. Apa yang ingin Anda lakukan?</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="163"/>
         <source>iOS Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesawat iOS</translation>
     </message>
 </context>
 <context>
@@ -335,32 +335,32 @@
         <location filename="../networkmanager/networkwidget.cpp" line="372"/>
         <location filename="../networkmanager/networkwidget.cpp" line="390"/>
         <source>Wired Connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Sambungan Kabel</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="373"/>
         <location filename="../networkmanager/networkwidget.cpp" line="422"/>
         <location filename="../networkmanager/networkwidget.cpp" line="482"/>
         <source>Disconnected</source>
-        <translation type="unfinished"></translation>
+        <translation>Terputus</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="377"/>
         <source>To connect to this network, try plugging a cable in.</source>
-        <translation type="unfinished"></translation>
+        <translation>Untuk menyambungkan kepada jaringan ini, mencoba menyambungkan kabel.</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="381"/>
         <location filename="../networkmanager/networkwidget.cpp" line="485"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Menyambungkan</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="391"/>
         <location filename="../networkmanager/networkwidget.cpp" line="443"/>
         <location filename="../networkmanager/networkwidget.cpp" line="506"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Sudah menyambungkan</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="394"/>
@@ -368,48 +368,48 @@
         <location filename="../networkmanager/networkwidget.cpp" line="497"/>
         <location filename="../networkmanager/networkwidget.cpp" line="509"/>
         <source>Disconnect</source>
-        <translation type="unfinished"></translation>
+        <translation>Memputus</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="412"/>
         <source>Wi-Fi</source>
-        <translation type="unfinished"></translation>
+        <translation>Wi-Fi</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="415"/>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimatikan</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="418"/>
         <source>To connect to a network, try switching on Wi-Fi.</source>
-        <translation type="unfinished"></translation>
+        <translation>Untuk menyambungkan kepada jaringan, mencoba menghidupkan Wi-Fi.</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="445"/>
         <location filename="../networkmanager/networkwidget.cpp" line="494"/>
         <source>Connecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyambungkan</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="447"/>
         <source>Requires Attention</source>
-        <translation type="unfinished"></translation>
+        <translation>Perlu Perhatian</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="449"/>
         <source>Disconnecting</source>
-        <translation type="unfinished"></translation>
+        <translation>Putuskan</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="465"/>
         <source>Choose Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Memilih Jaringan</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="492"/>
         <source>Unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Tak bersedia</translation>
     </message>
 </context>
 <context>
@@ -492,7 +492,7 @@
     <message>
         <location filename="../endsessionwait.ui" line="626"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Terminating an app will allow the app to clean up and then exit. If that doesn&apos;t work, you can kill the app, however, killing an app won&apos;t let it finish what it&apos;s doing. &lt;span style=&quot; font-weight:600;&quot;&gt;If you kill an app, you&apos;ll lose all unsaved work in that app.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="663"/>
