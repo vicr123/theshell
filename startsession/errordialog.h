@@ -23,7 +23,7 @@ class ErrorDialog : public QDialog
         Q_OBJECT
 
     public:
-        explicit ErrorDialog(bool started, int errorCount, QWidget *parent = 0);
+        explicit ErrorDialog(bool started, int errorCount, QString output, QWidget *parent = 0);
         ~ErrorDialog();
 
     private slots:
