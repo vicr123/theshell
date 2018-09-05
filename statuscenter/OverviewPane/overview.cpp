@@ -24,7 +24,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <Timers/timerpage.h>
+#include "Timers/timerpage.h"
+#include "Stopwatch/stopwatchpage.h"
+#include "Reminders/reminderspage.h"
 
 float getDPIScaling() {
     float currentDPI = QApplication::desktop()->logicalDpiX();
@@ -118,7 +120,17 @@ Overview::Overview(QWidget *parent) :
         }
     });
 
-    ui->rightStack->addWidget(new TimerPage);
+    TimerPage* timerPage = new TimerPage;
+    connect(timerPage, &TimerPage::attenuate, [=] {
+        sendMessage("attenuate", QVariantList() << true);
+    });
+    connect(timerPage, &TimerPage::deattenuate, [=] {
+        sendMessage("attenuate", QVariantList() << false);
+    });
+
+    ui->rightStack->addWidget(timerPage);
+    ui->rightStack->addWidget(new StopwatchPage);
+    ui->rightStack->addWidget(new RemindersPage);
 
     updateDSTNotification();
     updateWeather();
@@ -817,5 +829,19 @@ void Overview::on_timersButton_toggled(bool checked)
 {
     if (checked) {
         ui->rightStack->setCurrentIndex(0);
+    }
+}
+
+void Overview::on_stopwatchButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->rightStack->setCurrentIndex(1);
+    }
+}
+
+void Overview::on_remindersButton_toggled(bool checked)
+{
+    if (checked) {
+        ui->rightStack->setCurrentIndex(2);
     }
 }

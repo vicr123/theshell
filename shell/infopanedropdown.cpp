@@ -4555,6 +4555,12 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
     } else if (message == "toggle-switch") {
         Switch* s = pluginSwitches.value(args.first().toUInt());
         s->setChecked(args.last().toBool());
+    } else if (message == "attenuate") {
+        if (args.first() == true) {
+            AudioMan->attenuateStreams();
+        } else {
+            AudioMan->restoreStreams();
+        }
     }
 }
 

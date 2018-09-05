@@ -3,6 +3,7 @@
 
 #include <QScroller>
 #include <QDBusInterface>
+#include <QMediaPlaylist>
 
 TimerPage::TimerPage(QWidget *parent) :
     QStackedWidget(parent),
@@ -15,6 +16,8 @@ TimerPage::TimerPage(QWidget *parent) :
 
     notificationInterface = new QDBusInterface("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications");
     QDBusConnection::sessionBus().connect(notificationInterface->service(), notificationInterface->path(), notificationInterface->interface(), "NotificationClosed", this, SLOT(notificationClosed(uint,uint)));
+
+    ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
 }
 
 TimerPage::~TimerPage()
@@ -42,14 +45,23 @@ void TimerPage::on_newTimerButton_clicked()
 
 void TimerPage::on_setTimerButton_clicked()
 {
-    TimerItem* item = new TimerItem(ui->newTimerName->text(), ui->newTimerBox->time().msecsSinceStartOfDay() / 1000, this);
+    QString ringtone;
+    switch (ui->ringtoneBox->currentIndex()) {
+        case 0: ringtone = "Happy Bee"; break;
+        case 1: ringtone = "Playing in the Dark"; break;
+        case 2: ringtone = "Ice Cream Truck"; break;
+        case 3: ringtone = "Party Complex"; break;
+        case 4: ringtone = "Salty Ditty"; break;
+    }
+
+    TimerItem* item = new TimerItem(ui->newTimerName->text(), ui->newTimerBox->time().msecsSinceStartOfDay() / 1000, ringtone, this);
     ui->timersLayout->addWidget(item);
-    connect(item, SIGNAL(elapsed(QString)), this, SLOT(timerElapsed(QString)));
+    connect(item, SIGNAL(elapsed(QString,QString)), this, SLOT(timerElapsed(QString,QString)));
     this->setCurrentWidget(ui->timersList);
     timersCreated++;
 }
 
-void TimerPage::timerElapsed(QString timerName) {
+void TimerPage::timerElapsed(QString timerName, QString ringtone) {
     timersElapsed.append(timerName);
 
     if (timersElapsed.count() > 1) {
@@ -78,6 +90,32 @@ void TimerPage::timerElapsed(QString timerName) {
         connect(watcher, &QDBusPendingCallWatcher::finished, [=] {
             currentTimerId = watcher->reply().arguments().first().toUInt();
         });
+
+
+        QMediaPlaylist* playlist = new QMediaPlaylist();
+
+        #ifdef BLUEPRINT
+            QString ringtonesPath = "/usr/share/sounds/theshellb/tones/";
+        #else
+            QString ringtonesPath = "/usr/share/sounds/theshell/tones/";
+        #endif
+
+        if (ringtone == "Happy Bee") {
+            playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "happybee.ogg")));
+        } else if (ringtone == "Playing in the Dark") {
+            playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "playinginthedark.ogg")));
+        } else if (ringtone == "Ice Cream Truck") {
+            playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "icecream.ogg")));
+        } else if (ringtone == "Party Complex") {
+            playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "party.ogg")));
+        } else if (ringtone == "Salty Ditty") {
+            playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "saltyditty.ogg")));
+        }
+        playlist->setPlaybackMode(QMediaPlaylist::Loop);
+        this->ringtone->setPlaylist(playlist);
+        this->ringtone->play();
+
+        emit attenuate();
     }
 }
 
@@ -85,6 +123,8 @@ void TimerPage::notificationClosed(uint id, uint reason) {
     if (id == currentTimerId) {
         currentTimerId = 0;
         timersElapsed.clear();
+        ringtone->stop();
+        emit deattenuate();
     }
 }
 

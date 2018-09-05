@@ -90,6 +90,10 @@ class Overview : public QWidget, public StatusCenterPaneObject
     private slots:
         void on_timersButton_toggled(bool checked);
 
+        void on_stopwatchButton_toggled(bool checked);
+
+        void on_remindersButton_toggled(bool checked);
+
     private:
         Ui::Overview *ui;
 

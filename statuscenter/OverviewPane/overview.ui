@@ -402,6 +402,12 @@
        <property name="spacing">
         <number>0</number>
        </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QStackedWidget" name="rightStack"/>
+       </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
@@ -480,9 +486,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QStackedWidget" name="rightStack"/>
        </item>
       </layout>
      </item>
