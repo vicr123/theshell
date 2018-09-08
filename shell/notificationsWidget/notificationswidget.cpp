@@ -21,6 +21,8 @@
 #include "notificationswidget.h"
 #include "ui_notificationswidget.h"
 
+#include <QScroller>
+
 extern NotificationsDBusAdaptor* ndbus;
 extern NativeEventFilter* NativeFilter;
 
@@ -66,6 +68,8 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
 
     });
     t->start();
+
+    QScroller::grabGesture(ui->scrollArea->viewport(), QScroller::LeftMouseButtonGesture);
 }
 
 NotificationsWidget::~NotificationsWidget()

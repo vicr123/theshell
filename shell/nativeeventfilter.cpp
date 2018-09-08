@@ -160,43 +160,68 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
 
                     Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioRaiseVolume)) { //Increase Volume by 5%
-                    if (AudioMan->QuietMode() == AudioManager::mute) {
-                        Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
+                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioRaiseVolume)) {
+                    if (button->state & Mod4Mask) {
+                        //Increase brightness
+                        currentBrightness = currentBrightness + 10;
+                        if (currentBrightness > 100) currentBrightness = 100;
+
+                        QProcess* backlightAdj = new QProcess(this);
+                        backlightAdj->start("xbacklight -set " + QString::number(currentBrightness));
+                        connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
+
+                        Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
                     } else {
-                            volume = volume + 5;
-                            if (volume - 5 < 100 && volume > 100) {
-                                volume = 100;
-                            }
-                            AudioMan->changeVolume(5);
+                        //Increase volume
+                        if (AudioMan->QuietMode() == AudioManager::mute) {
+                            Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
+                        } else {
+                                volume = volume + 5;
+                                if (volume - 5 < 100 && volume > 100) {
+                                    volume = 100;
+                                }
+                                AudioMan->changeVolume(5);
+
+                                //Check if the user has feedback sound on
+                                if (settings.value("sound/feedbackSound", true).toBool()) {
+                                    QSoundEffect* volumeSound = new QSoundEffect();
+                                    volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
+                                    volumeSound->play();
+                                    connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
+                                }
+
+                                Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
+                        }
+                    }
+                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume)) { //Decrease Volume by 5%
+                    if (button->state & Mod4Mask) {
+                        //Decrease brightness
+                        currentBrightness = currentBrightness - 10;
+                        if (currentBrightness < 0) currentBrightness = 0;
+
+                        QProcess* backlightAdj = new QProcess(this);
+                        backlightAdj->start("xbacklight -set " + QString::number(currentBrightness));
+                        connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
+
+                        Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
+                    } else {
+                        if (AudioMan->QuietMode() == AudioManager::mute) {
+                            Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
+                        } else {
+                            volume = volume - 5;
+                            if (volume < 0) volume = 0;
+                            AudioMan->changeVolume(-5);
 
                             //Check if the user has feedback sound on
                             if (settings.value("sound/feedbackSound", true).toBool()) {
-                                QSoundEffect* volumeSound = new QSoundEffect();
-                                volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
-                                volumeSound->play();
-                                connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
+                            QSoundEffect* volumeSound = new QSoundEffect();
+                            volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
+                            volumeSound->play();
+                            connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
                             }
 
                             Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
-                    }
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume)) { //Decrease Volume by 5%
-                    if (AudioMan->QuietMode() == AudioManager::mute) {
-                        Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
-                    } else {
-                        volume = volume - 5;
-                        if (volume < 0) volume = 0;
-                        AudioMan->changeVolume(-5);
-
-                        //Check if the user has feedback sound on
-                        if (settings.value("sound/feedbackSound", true).toBool()) {
-                        QSoundEffect* volumeSound = new QSoundEffect();
-                        volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
-                        volumeSound->play();
-                        connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
                         }
-
-                        Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
                     }
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioMute)) { //Toggle Quiet Mode
                     switch (AudioMan->QuietMode()) {
