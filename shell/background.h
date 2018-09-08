@@ -67,13 +67,9 @@ class Background : public QDialog
         void reloadBackground();
 
     private slots:
-        void on_graphicsView_customContextMenuRequested(const QPoint &pos);
-
         void on_actionOpen_Status_Center_triggered();
 
         void on_actionOpen_theShell_Settings_triggered();
-
-        void on_actionOpen_System_Settings_triggered();
 
         void on_actionChange_Background_triggered();
 

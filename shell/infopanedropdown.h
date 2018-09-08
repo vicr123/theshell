@@ -153,8 +153,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_pushButton_7_clicked();
 
-        void on_lineEdit_2_editingFinished();
-
         void on_resolutionButton_clicked();
 
         void on_startRedshift_timeChanged(const QTime &time);
@@ -173,11 +171,7 @@ class InfoPaneDropdown : public QDialog
 
         void removeNotification(int id);
 
-        void on_clearAllNotifications_clicked();
-
         void on_redshiftPause_toggled(bool checked);
-
-        void on_printLabel_clicked();
 
         void on_resetButton_clicked();
 

@@ -461,10 +461,6 @@ void Background::setNewBackgroundTimer() {
     }
 }
 
-void Background::on_graphicsView_customContextMenuRequested(const QPoint &pos)
-{
-}
-
 void Background::on_actionOpen_Status_Center_triggered()
 {
     mainwindow->getInfoPane()->show(InfoPaneDropdown::Clock);
@@ -473,11 +469,6 @@ void Background::on_actionOpen_Status_Center_triggered()
 void Background::on_actionOpen_theShell_Settings_triggered()
 {
     mainwindow->getInfoPane()->show(InfoPaneDropdown::Settings);
-}
-
-void Background::on_actionOpen_System_Settings_triggered()
-{
-    QProcess::startDetached("systemsettings5");
 }
 
 void Background::on_actionChange_Background_triggered()

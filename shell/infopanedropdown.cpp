@@ -1544,11 +1544,6 @@ void InfoPaneDropdown::setGeometry(QRect geometry) {
     this->setGeometry(geometry.x(), geometry.y(), geometry.width(), geometry.height());
 }
 
-void InfoPaneDropdown::on_lineEdit_2_editingFinished()
-{
-    //settings.setValue("startup/autostart", ui->lineEdit_2->text());
-}
-
 void InfoPaneDropdown::on_resolutionButton_clicked()
 {
     QProcess::startDetached("kcmshell5 kcm_kscreen");
@@ -1632,7 +1627,6 @@ void InfoPaneDropdown::newNotificationReceived(int id, QString summary, QString 
 
         //ui->notificationsList->layout()->addWidget(frame);
         //ui->noNotifications->setVisible(false);
-        //ui->clearAllNotifications->setVisible(true);
         frame->setProperty("summaryLabel", QVariant::fromValue(sumLabel));
         frame->setProperty("bodyLabel", QVariant::fromValue(bodyLabel));
 
@@ -1652,14 +1646,6 @@ void InfoPaneDropdown::removeNotification(int id) {
 
     if (notificationFrames.count() == 0) {
         //ui->noNotifications->setVisible(true);
-        //ui->clearAllNotifications->setVisible(false);
-    }
-}
-
-void InfoPaneDropdown::on_clearAllNotifications_clicked()
-{
-    for (int id : notificationFrames.keys()) {
-        emit closeNotification(id);
     }
 }
 
@@ -1693,11 +1679,6 @@ void InfoPaneDropdown::updateSysInfo() {
         ui->systemUptime->setText(tr("Couldn't get system uptime"));
     }
     delete info;
-}
-
-void InfoPaneDropdown::on_printLabel_clicked()
-{
-    //changeDropDown(Print);
 }
 
 void InfoPaneDropdown::on_resetButton_clicked()
@@ -3670,7 +3651,7 @@ void InfoPaneDropdown::on_batteryScreenOff_valueChanged(int value)
     if (value == 121) {
         ui->batteryScreenOffLabel->setText(tr("Never"));
     } else {
-        ui->batteryScreenOffLabel->setText(tr("%n min(s)", NULL, value).arg(QString::number(value)));
+        ui->batteryScreenOffLabel->setText(tr("%n min(s)", NULL, value));
     }
 }
 
@@ -3680,7 +3661,7 @@ void InfoPaneDropdown::on_batterySuspend_valueChanged(int value)
     if (value == 121) {
         ui->batterySuspendLabel->setText(tr("Never"));
     } else {
-        ui->batterySuspendLabel->setText(tr("%n min(s)", NULL, value).arg(QString::number(value)));
+        ui->batterySuspendLabel->setText(tr("%n min(s)", NULL, value));
     }
 }
 
@@ -3690,7 +3671,7 @@ void InfoPaneDropdown::on_powerScreenOff_valueChanged(int value)
     if (value == 121) {
         ui->powerScreenOffLabel->setText(tr("Never"));
     } else {
-        ui->powerScreenOffLabel->setText(tr("%n min(s)", NULL, value).arg(QString::number(value)));
+        ui->powerScreenOffLabel->setText(tr("%n min(s)", NULL, value));
     }
 }
 
@@ -3700,7 +3681,7 @@ void InfoPaneDropdown::on_powerSuspend_valueChanged(int value)
     if (value == 121) {
         ui->powerSuspendLabel->setText(tr("Never"));
     } else {
-        ui->powerSuspendLabel->setText(tr("%n min(s)", NULL, value).arg(QString::number(value)));
+        ui->powerSuspendLabel->setText(tr("%n min(s)", NULL, value));
     }
 }
 

@@ -311,6 +311,7 @@ App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
     }
 
     if (desc.contains("Actions")) {
+        QString currentGroup = desc.group();
         QStringList availableActions = desc.value("Actions").toString().split(";", QString::SkipEmptyParts);
         desc.endGroup();
 
@@ -338,6 +339,7 @@ App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
 
             desc.endGroup();
         }
+        desc.beginGroup(currentGroup);
     }
 
 
@@ -526,7 +528,7 @@ bool AppsListModel::launchApp(QModelIndex index) {
         commandSpace.removeAll("");
         //process->setEnvironment(environment);
         QString finalCommand = commandSpace.join(" ");
-        qDebug() << finalCommand;
+        qDebug() << "Starting command:" << finalCommand;
         process->start(finalCommand);
         connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
         return true;
