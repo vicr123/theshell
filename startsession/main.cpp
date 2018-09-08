@@ -65,6 +65,7 @@ void startupDesktopFile(QString path, QSettings::Format format) {
 QProcess* tsProcess;
 int errorCount = 0;
 bool started = false;
+QString theShellStdOut;
 
 int main(int argc, char *argv[])
 {
@@ -108,9 +109,10 @@ int main(int argc, char *argv[])
 
             monitor->HideSplash();
             errorCount++;
-            ErrorDialog* d = new ErrorDialog(monitor->started(), errorCount);
+            ErrorDialog* d = new ErrorDialog(monitor->started(), errorCount, theShellStdOut);
             ErrorDialog::connect(d, &ErrorDialog::restart, [=] {
                 d->deleteLater();
+
                 monitor->MarkNotStarted();
                 monitor->ShowSplash();
 
@@ -125,10 +127,11 @@ int main(int argc, char *argv[])
                 QCoreApplication::exit(0);
             });
             d->showFullScreen();
+            theShellStdOut.clear();
         }
     });
-    QObject::connect(tsProcess, &QProcess::readyRead, [=] {
-        QString all = tsProcess->readAll();
+    QObject::connect(tsProcess, &QProcess::readyReadStandardOutput, [=] {
+        QString all = tsProcess->readAllStandardOutput();
         for (QString line : all.split("\n")) {
             if (!monitor->started()) {
                 if (line.startsWith("QUESTION:")) {
@@ -144,6 +147,11 @@ int main(int argc, char *argv[])
                 }
             }
         }
+        theShellStdOut.append(all);
+    });
+    QObject::connect(tsProcess, &QProcess::readyReadStandardError, [=] {
+        QString out = tsProcess->readAllStandardError();
+        theShellStdOut.append(out);
     });
     QObject::connect(monitor, &StartMonitor::questionResponse, [=](QString response) {
         tsProcess->write(response.toLocal8Bit());

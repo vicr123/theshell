@@ -1,7 +1,7 @@
 #include "errordialog.h"
 #include "ui_errordialog.h"
 
-ErrorDialog::ErrorDialog(bool started, int errorCount, QWidget *parent) :
+ErrorDialog::ErrorDialog(bool started, int errorCount, QString output, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ErrorDialog)
 {
@@ -12,14 +12,18 @@ ErrorDialog::ErrorDialog(bool started, int errorCount, QWidget *parent) :
     QFile backtrace(QDir::homePath() + "/.tsbacktrace");
     if (backtrace.exists()) {
         backtrace.open(QFile::ReadOnly);
-        this->backtrace = backtrace.readAll();
+        this->backtrace.append(backtrace.readAll());
         backtrace.close();
         backtrace.remove();
+    }
 
+    this->backtrace.append("\n\nStandard Output from the main process follows:\n" + output);
+
+    if (this->backtrace == "") {
+        ui->debugButton->setVisible(false);
+    } else {
         ui->backtrace->setPlainText(this->backtrace);
         ui->backtrace->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-    } else {
-        ui->debugButton->setVisible(false);
     }
 
     ui->errorIcon->setPixmap(QIcon(":/icons/error.svg").pixmap(128, 128));

@@ -172,7 +172,8 @@
                   <string>Reset theShell</string>
                  </property>
                  <property name="icon">
-                  <iconset theme="view-refresh"/>
+                  <iconset theme="view-refresh">
+                   <normaloff>.</normaloff>.</iconset>
                  </property>
                 </widget>
                </item>
@@ -300,7 +301,8 @@
             <string>View Debugging Information</string>
            </property>
            <property name="icon">
-            <iconset theme="go-next"/>
+            <iconset theme="go-next">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -342,7 +344,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset theme="go-previous"/>
+            <iconset theme="go-previous">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -374,6 +377,12 @@
        </item>
        <item>
         <widget class="Line" name="line">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>1</height>
+          </size>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -384,7 +393,9 @@
          <property name="text">
           <string>This debugging information can help the developer fix issues in theShell. You can save this debugging information to a file for later reference, or to attach it to a bug report.
 
-When reporting a bug, if any debugging information is available, please attach it to the bug report.</string>
+When reporting a bug, if any debugging information is available, please attach it to the bug report.
+
+It's a good idea to check through the contents of the available debugging information here for any personal information and redact it before you attach it to a bug report.</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -396,6 +407,12 @@ When reporting a bug, if any debugging information is available, please attach i
        </item>
        <item>
         <widget class="Line" name="line_3">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>1</height>
+          </size>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -413,6 +430,12 @@ When reporting a bug, if any debugging information is available, please attach i
        </item>
        <item>
         <widget class="Line" name="line_2">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>1</height>
+          </size>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -439,7 +462,8 @@ When reporting a bug, if any debugging information is available, please attach i
             <string>Save to file</string>
            </property>
            <property name="icon">
-            <iconset theme="document-save"/>
+            <iconset theme="document-save">
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
