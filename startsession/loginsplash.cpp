@@ -27,8 +27,8 @@ LoginSplash::LoginSplash(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->label_3->setPixmap(QIcon(":/icons/icon.svg").pixmap(128, 128));
-    ui->label_3->setFixedSize(128, 128);
+    ui->label_3->setPixmap(QIcon(":/icons/icon.svg").pixmap(128 * theLibsGlobal::instance()->getDPIScaling(), 128 * theLibsGlobal::instance()->getDPIScaling()));
+    ui->label_3->setFixedSize(128 * theLibsGlobal::instance()->getDPIScaling(), 128 * theLibsGlobal::instance()->getDPIScaling());
 
     opacityEffect = new QGraphicsOpacityEffect();
     ui->mainFrame->setGraphicsEffect(opacityEffect);

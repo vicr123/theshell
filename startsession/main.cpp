@@ -26,6 +26,7 @@
 #include <QSettings>
 #include <QDebug>
 #include <QDBusConnection>
+#include <QDesktopWidget>
 #include "errordialog.h"
 #include "startmonitor.h"
 
@@ -75,16 +76,16 @@ int main(int argc, char *argv[])
     qputenv("KDE_SESSION_VERSION", "5");
     qputenv("QT_QPA_PLATFORMTHEME", "ts");
 
+    //Set DPI
+    QSettings tsSettings("theSuite", "theShell");
+    QProcess::execute("xrandr --dpi " + QString::number(tsSettings.value("screen/dpi", 96).toInt()));
+
     QApplication a(argc, argv);
     a.setOrganizationName("theSuite");
     a.setApplicationName("ts-startsession");
     a.setQuitOnLastWindowClosed(false);
 
     QSettings settings;
-    QSettings tsSettings("theSuite", "theShell");
-
-    //Set DPI
-    QProcess::execute("xrandr --dpi " + QString::number(tsSettings.value("screen/dpi", 96).toInt()));
 
     StartMonitor* monitor = new StartMonitor;
 

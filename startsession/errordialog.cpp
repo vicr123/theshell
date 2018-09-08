@@ -1,6 +1,8 @@
 #include "errordialog.h"
 #include "ui_errordialog.h"
 
+#include <the-libs_global.h>
+
 ErrorDialog::ErrorDialog(bool started, int errorCount, QString output, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ErrorDialog)
@@ -26,7 +28,7 @@ ErrorDialog::ErrorDialog(bool started, int errorCount, QString output, QWidget *
         ui->backtrace->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     }
 
-    ui->errorIcon->setPixmap(QIcon(":/icons/error.svg").pixmap(128, 128));
+    ui->errorIcon->setPixmap(QIcon(":/icons/error.svg").pixmap(128 * theLibsGlobal::instance()->getDPIScaling(), 128 * theLibsGlobal::instance()->getDPIScaling()));
     if (started) {
         if (errorCount >= 3) {
             ui->restartButton->setVisible(false);
