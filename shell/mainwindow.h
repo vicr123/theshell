@@ -230,7 +230,6 @@ private:
     QSettings settings;
 
     int hideTop = 0;
-    bool hiding = false;
     bool lockHide = false;
     int lockHideCount = 0;
     int attentionDemandingWindows = 0;
@@ -262,6 +261,8 @@ private:
     QPoint lastTouchPoint;
     QPoint lastTouchScreenPoint;
     int currentTouch = -1;
+
+    tPropertyAnimation* barAnim;
 
     QGraphicsOpacityEffect* statusBarOpacityEffect;
     bool statusBarVisible = false;

@@ -72,6 +72,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(reloadScreens()));
     connect(QApplication::desktop(), SIGNAL(primaryScreenChanged()), this, SLOT(reloadScreens()));
 
+    //Set up bar movement
+    barAnim = new tPropertyAnimation(this, "geometry");
+    barAnim->setDuration(500);
+    barAnim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(barAnim, &tPropertyAnimation::stateChanged, [=](tPropertyAnimation::State state) {
+        //if (state == tPropertyAnimation::Running) barAnim->setStartValue(this->geometry());
+    });
+
     //Create the gateway and set required flags
     gatewayMenu = new Menu(this);
     gatewayMenu->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -533,19 +541,9 @@ void MainWindow::pullDownGesture() {
         on_notifications_clicked();
     } else {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
-        tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
-
-        anim->setStartValue(this->geometry());
-
-        anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width() + 1, this->height()));
-        anim->setDuration(500);
-        anim->setEasingCurve(QEasingCurve::OutCubic);
-
-        connect(anim, &tPropertyAnimation::finished, [=]() {
-            hiding = false;
-        });
-        connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-        anim->start();
+        barAnim->setStartValue(this->geometry());
+        barAnim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width() + 1, this->height()));
+        barAnim->start();
 
         lockMovement("Pull Down");
         QTimer* timer = new QTimer();
@@ -1044,7 +1042,7 @@ void MainWindow::doUpdate() {
     oldDesktop = currentDesktop; //Keep the current desktop for tracking purposes
     oldActiveWindow = active;*/
 
-    if (!lockHide && !this->property("animating").toBool()) { //Check for move lock
+    if (!lockHide && barAnim->state() != tPropertyAnimation::Running) { //Check for move lock
         int highestWindow, dockTop;
         if (settings.value("bar/onTop", true).toBool()) {
             if (settings.value("bar/statusBar", false).toBool()) {
@@ -1088,11 +1086,6 @@ void MainWindow::doUpdate() {
         }
 
         bool doAnim = true;
-
-        tPropertyAnimation* anim = new tPropertyAnimation(this, "geometry");
-        anim->setStartValue(this->geometry());
-        anim->setDuration(500);
-        anim->setEasingCurve(QEasingCurve::OutCubic);
 
         int finalTop;
         if (settings.value("bar/onTop", true).toBool()) {
@@ -1149,15 +1142,11 @@ void MainWindow::doUpdate() {
 
         if (doAnim) {
             if (finalTop == this->y()) {
-                anim->deleteLater();
+                //barAnim->stop();
             } else {
-                anim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
-                anim->start();
-                connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-                connect(anim, &tPropertyAnimation::finished, [=] {
-                    this->setProperty("animating", false);
-                });
-                this->setProperty("animating", true);
+                barAnim->setStartValue(this->geometry());
+                barAnim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
+                barAnim->start();
             }
 
 
@@ -1191,7 +1180,7 @@ void MainWindow::doUpdate() {
                 ui->StatusBarFrame->setVisible(false);
             }
         } else {
-            anim->deleteLater();
+            //barAnim->stop();
         }
     }
 
@@ -1999,11 +1988,6 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
     if (watched == ui->StatusBarFrame || watched == ui->StatusBarHoverFrame) {
         if (event->type() == QEvent::MouseButtonPress) {
             gatewayMenu->close();
-            tPropertyAnimation* anim = new tPropertyAnimation(this, "geometry");
-            anim->setStartValue(this->geometry());
-            anim->setDuration(500);
-            anim->setEasingCurve(QEasingCurve::OutCubic);
-
             //Completely extend the bar
             int finalTop;
             if (settings.value("bar/onTop", true).toBool()) {
@@ -2012,13 +1996,9 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
                 finalTop = screenGeometry.bottom() - this->height() + 1;
             }
 
-            anim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
-            anim->start();
-            connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-            connect(anim, &tPropertyAnimation::finished, [=] {
-                this->setProperty("animating", false);
-            });
-            this->setProperty("animating", true);
+            barAnim->setStartValue(this->geometry());
+            barAnim->setEndValue(QRect(screenGeometry.x(), finalTop, screenGeometry.width(), this->height()));
+            barAnim->start();
 
             //Hide the tutorial for the bar
             TutorialWin->hideScreen(TutorialWindow::BarLocation);
@@ -2206,6 +2186,7 @@ bool MainWindow::event(QEvent* event) {
             } else {
                 currentTouch = 0; //Move Info Pane
                 lockMovement("Touch Bar");
+                barAnim->pause(); //Stop bar animation
                 e->accept();
                 return true;
             }
