@@ -5,7 +5,7 @@ services:
 
 arch:
   repos:
-  - theapps=https://vicr123.github.io/repo/arch/$arch/
+  - theapps=https://packages.vicr123.com/arch/$arch/
   packages:
   - git
   - kwidgetsaddons
