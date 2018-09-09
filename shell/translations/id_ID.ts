@@ -191,12 +191,12 @@
     <message>
         <location filename="../choosebackground.ui" line="57"/>
         <source>Community</source>
-        <translation type="unfinished"></translation>
+        <translation>Komunitas</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="70"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Kustom</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="184"/>
@@ -206,77 +206,77 @@
     <message>
         <location filename="../choosebackground.ui" line="194"/>
         <source>Show Image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Munculkan informasi gambar</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="203"/>
         <source>Change image after</source>
-        <translation type="unfinished"></translation>
+        <translation>Ubah gambar setelah</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="226"/>
         <source>minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>menit</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="279"/>
         <source>Current Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Latar belakang terkini</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="325"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>LabelTeks</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="332"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisensi</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="339"/>
         <source>More Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Lebih banyak Informasi</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="350"/>
         <source>by</source>
-        <translation type="unfinished"></translation>
+        <translation>oleh</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="379"/>
         <source>Select a file to display as your desktop background</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih file untuk ditampilkan sebagai latar belakang desktop kamu</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="453"/>
         <source>Image Sizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengukur Gambar</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="461"/>
         <source>Stretch to Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bentangkan untuk Memuatkan</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="466"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Perbesar dan Potong</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="471"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Tengah</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="476"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Ubin</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="481"/>
         <source>Zoom and Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Perbesar untuk Memuatkan</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="506"/>
@@ -291,7 +291,7 @@
     <message>
         <location filename="../choosebackground.cpp" line="88"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>oleh %1</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="165"/>
@@ -417,28 +417,28 @@
     <message>
         <location filename="../endsessionwait.ui" line="146"/>
         <source>Waiting for apps to close...</source>
-        <translation type="unfinished"></translation>
+        <translation>Menunggu aplikasi untuk menutup...</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="180"/>
         <location filename="../endsessionwait.ui" line="770"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="206"/>
         <source>End Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Selesaikan Sekarang</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="300"/>
         <source>End Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Selesaikan sesi</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="310"/>
         <source>You&apos;re about to power off your PC. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kau ingin mematikan PC-mu. Apakah kamu yakin?</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="347"/>
@@ -448,35 +448,35 @@
         <location filename="../endsessionwait.cpp" line="490"/>
         <location filename="../endsessionwait.cpp" line="868"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Mematikan</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="395"/>
         <source>If you don&apos;t do anything, we&apos;ll power off for you in 30 seconds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Apabila kamu tidak melakukan apapun, kami akan mematikannya untukmu dalam 30 detik.</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="430"/>
         <location filename="../endsessionwait.cpp" line="89"/>
         <location filename="../endsessionwait.cpp" line="497"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>Memulai Ulang</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="462"/>
         <location filename="../endsessionwait.cpp" line="504"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Keluar</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="494"/>
         <source>Suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>Istirahat</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="526"/>
         <source>Fake Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bukan Asli Keluar</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="593"/>
