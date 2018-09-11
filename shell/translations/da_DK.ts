@@ -3117,70 +3117,70 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
 <context>
     <name>NativeEventFilter</name>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="221"/>
-        <location filename="../nativeeventfilter.cpp" line="230"/>
-        <location filename="../nativeeventfilter.cpp" line="241"/>
-        <location filename="../nativeeventfilter.cpp" line="274"/>
+        <location filename="../nativeeventfilter.cpp" line="158"/>
+        <location filename="../nativeeventfilter.cpp" line="167"/>
+        <location filename="../nativeeventfilter.cpp" line="178"/>
+        <location filename="../nativeeventfilter.cpp" line="211"/>
         <source>Brightness</source>
         <translation>Lysstyrke</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="245"/>
-        <location filename="../nativeeventfilter.cpp" line="261"/>
-        <location filename="../nativeeventfilter.cpp" line="277"/>
-        <location filename="../nativeeventfilter.cpp" line="291"/>
+        <location filename="../nativeeventfilter.cpp" line="182"/>
+        <location filename="../nativeeventfilter.cpp" line="198"/>
+        <location filename="../nativeeventfilter.cpp" line="219"/>
+        <location filename="../nativeeventfilter.cpp" line="233"/>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="245"/>
-        <location filename="../nativeeventfilter.cpp" line="277"/>
+        <location filename="../nativeeventfilter.cpp" line="182"/>
+        <location filename="../nativeeventfilter.cpp" line="219"/>
         <source>Quiet Mode is set to Mute.</source>
         <translation>Stille Tilstand er set til Stum.</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="298"/>
+        <location filename="../nativeeventfilter.cpp" line="240"/>
         <source>Critical Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="302"/>
+        <location filename="../nativeeventfilter.cpp" line="244"/>
         <source>No Notifications</source>
         <translation>Ingen Notifikationer</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="306"/>
+        <location filename="../nativeeventfilter.cpp" line="248"/>
         <source>Mute</source>
         <translation>Stum</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="310"/>
+        <location filename="../nativeeventfilter.cpp" line="252"/>
         <source>Sound</source>
         <translation>Lyd</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="318"/>
-        <location filename="../nativeeventfilter.cpp" line="324"/>
+        <location filename="../nativeeventfilter.cpp" line="260"/>
+        <location filename="../nativeeventfilter.cpp" line="266"/>
         <source>Keyboard Brightness</source>
         <translation>Tastatur Lysstyrke</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="342"/>
+        <location filename="../nativeeventfilter.cpp" line="282"/>
         <source>Eject</source>
         <translation>Skub Ud</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="342"/>
+        <location filename="../nativeeventfilter.cpp" line="282"/>
         <source>Attempting to eject disc...</source>
         <translation>Prøver at skubbe disk ud...</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="422"/>
+        <location filename="../nativeeventfilter.cpp" line="366"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="422"/>
+        <location filename="../nativeeventfilter.cpp" line="366"/>
         <source>Keyboard Layout set to %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4117,7 +4117,7 @@ Skriv navnet eller stien til en vindues håndtering for at prøve at starte en a
     <name>screenshotWindow</name>
     <message>
         <location filename="../screenshotwindow.ui" line="46"/>
-        <location filename="../screenshotwindow.cpp" line="345"/>
+        <location filename="../screenshotwindow.cpp" line="395"/>
         <source>Select a region using the mouse.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4157,12 +4157,12 @@ Skriv navnet eller stien til en vindues håndtering for at prøve at starte en a
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../screenshotwindow.cpp" line="351"/>
+        <location filename="../screenshotwindow.cpp" line="401"/>
         <source>Redact a region using the mouse.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../screenshotwindow.cpp" line="357"/>
+        <location filename="../screenshotwindow.cpp" line="407"/>
         <source>Highlight part of the image using the mouse.</source>
         <translation type="unfinished"></translation>
     </message>

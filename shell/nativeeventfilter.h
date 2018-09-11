@@ -62,6 +62,7 @@ signals:
     void SysTrayEvent(long opcode, long data2, long data3, long data4);
 
 public slots:
+    void handlePowerButton();
 
 private:
     bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
@@ -76,7 +77,6 @@ private:
     QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
 
     QTimer* powerButtonTimer = nullptr;
-    int powerButtonCounter = 0;
     bool powerPressed = false;
 };
 

@@ -29,7 +29,8 @@ HotkeyHud::HotkeyHud(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->resize(this->width() * getDPIScaling(), this->height() * getDPIScaling());
+    this->setFixedHeight(this->height() * getDPIScaling());
+    this->resize(this->width() * getDPIScaling(), this->height());
 }
 
 HotkeyHud::~HotkeyHud()

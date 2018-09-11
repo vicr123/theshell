@@ -2227,3 +2227,7 @@ bool MainWindow::event(QEvent* event) {
     }
     return QMainWindow::event(event);
 }
+
+void MainWindow::resizeEvent(QResizeEvent* event) {
+    ui->StatusBarFrame->setFixedWidth(this->width());
+}

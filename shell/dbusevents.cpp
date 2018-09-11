@@ -66,18 +66,18 @@ DbusEvents::DbusEvents(QObject *parent) : QObject(parent)
 }
 
 void DbusEvents::LockScreen() {
-    if (LockScreenProcess == NULL) {
+    if (LockScreenProcess == nullptr) {
         LockScreenProcess = new QProcess();
         connect(LockScreenProcess, (void(QProcess::*)(int, QProcess::ExitStatus)) &QProcess::finished, [=] {
             LockScreenProcess->deleteLater();
-            LockScreenProcess = NULL; //Delete Process
+            LockScreenProcess = nullptr; //Delete Process
         });
         LockScreenProcess->start("/usr/lib/tsscreenlock"); //Lock Screen
     }
 }
 
 void DbusEvents::UnlockScreen() {
-    if (LockScreenProcess != NULL) {
+    if (LockScreenProcess != nullptr) {
         LockScreenProcess->terminate(); //Kill Process
         //Process will be deleted in the finished() signal
     }

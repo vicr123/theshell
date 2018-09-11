@@ -465,8 +465,8 @@ void EndSession(EndSessionWait::shutdownType type) {
                     break;
                 }
                 case 1: { //Turn off the screen
-                    DBusEvents->LockScreen();
                     EndSession(EndSessionWait::screenOff);
+                    DBusEvents->LockScreen();
                     break;
                 }
                 case 2: { //Hibernate
@@ -495,7 +495,16 @@ void EndSession(EndSessionWait::shutdownType type) {
                 if (mode == DPMSModeOff) {
                     DPMSForceLevel(QX11Info::display(), DPMSModeOn);
                 } else {
-                    DPMSForceLevel(QX11Info::display(), DPMSModeOff);
+                    QEventLoop* l = new QEventLoop;
+                    screenshotWindow* s = new screenshotWindow(false);
+                    s->show();
+                    QObject::connect(s, &screenshotWindow::readyForScreenOff, [=] {
+                        DPMSForceLevel(QX11Info::display(), DPMSModeOff);
+                        l->quit();
+                    });
+                    l->exec();
+                    l->deleteLater();
+                    //The window will delete itself once it is done
                 }
             }
             break;

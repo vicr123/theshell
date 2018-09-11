@@ -254,6 +254,7 @@ private:
     bool eventFilter(QObject *watched, QEvent *event);
     void enterEvent(QEvent* event);
     void changeEvent(QEvent* event);
+    void resizeEvent(QResizeEvent* event);
     bool event(QEvent* event);
 
     InfoPaneDropdown *infoPane;

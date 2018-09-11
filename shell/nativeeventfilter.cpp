@@ -35,71 +35,8 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
 
     powerButtonTimer = new QTimer();
     powerButtonTimer->setInterval(500);
-    connect(powerButtonTimer, &QTimer::timeout, [=] {
-        powerButtonTimer->stop();
-        qDebug() << powerButtonCounter;
-        if (!isEndSessionBoxShowing && powerButtonCounter == 1 && !powerPressed) {
-            //Perform an action depending on what the user wants
-            switch (settings.value("power/onPowerButtonPressed", 0).toInt()) {
-                case 0: { //Ask what to do
-                    isEndSessionBoxShowing = true;
-
-                    EndSessionWait* endSession;
-                    if (settings.value("input/touch", false).toBool()) {
-                        endSession = new EndSessionWait(EndSessionWait::slideOff);
-                    } else {
-                        endSession = new EndSessionWait(EndSessionWait::ask);
-                    }
-                    endSession->showFullScreen();
-                    endSession->exec();
-
-                    isEndSessionBoxShowing = false;
-                    break;
-                }
-                case 1: { //Power Off
-                    EndSession(EndSessionWait::powerOff);
-                    break;
-                }
-                case 2: { //Reboot
-                    EndSession(EndSessionWait::reboot);
-                    break;
-                }
-                case 3: { //Log Out
-                    EndSession(EndSessionWait::logout);
-                    break;
-                }
-                case 4: { //Suspend
-                    EndSession(EndSessionWait::suspend);
-                    break;
-                }
-                case 5: { //Lock
-                    DBusEvents->LockScreen();
-                    break;
-                }
-                case 6: { //Turn off screen
-                    EndSession(EndSessionWait::screenOff);
-                    break;
-                }
-                case 7: { //Hibernate
-                    EndSession(EndSessionWait::hibernate);
-                    break;
-                }
-            }
-        } else {
-            isEndSessionBoxShowing = true;
-
-            EndSessionWait* endSession;
-            if (settings.value("input/touch", false).toBool()) {
-                endSession = new EndSessionWait(EndSessionWait::slideOff);
-            } else {
-                endSession = new EndSessionWait(EndSessionWait::ask);
-            }
-            endSession->showFullScreen();
-            endSession->exec();
-
-            isEndSessionBoxShowing = false;
-        }
-    });
+    powerButtonTimer->setSingleShot(true);
+    connect(powerButtonTimer, SIGNAL(timeout()), this, SLOT(handlePowerButton()));
 
     //Capture required keys
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessUp), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
@@ -272,6 +209,11 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                         connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
 
                         Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
+                    } else if (powerPressed) {
+                        //Take a screenshot
+                        screenshotWindow* screenshot = new screenshotWindow;
+                        screenshot->show();
+                        powerButtonTimer->stop();
                     } else {
                         if (AudioMan->QuietMode() == AudioManager::mute) {
                             Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
@@ -324,9 +266,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     Hotkeys->show(QIcon::fromTheme("keyboard-brightness"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
                 } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff))) {
                     powerPressed = true;
-                    powerButtonCounter++;
                     if (!powerButtonTimer->isActive()) {
-                        powerButtonCounter = 1;
                         powerButtonTimer->start();
                     }
                 }
@@ -366,6 +306,10 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 ignoreSuper = true;
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff)) { //Power Off
                 powerPressed = false;
+                if (powerButtonTimer->isActive()) {
+                    powerButtonTimer->stop();
+                    handlePowerButton();
+                }
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Delete) && (button->state == (ControlMask | Mod1Mask))) {
                 if (!isEndSessionBoxShowing) {
                     isEndSessionBoxShowing = true;
@@ -439,4 +383,68 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
         }*/
     }
     return false;
+}
+
+void NativeEventFilter::handlePowerButton() {
+    if (!isEndSessionBoxShowing && !powerPressed) {
+        //Perform an action depending on what the user wants
+        switch (settings.value("power/onPowerButtonPressed", 0).toInt()) {
+            case 0: { //Ask what to do
+                isEndSessionBoxShowing = true;
+
+                EndSessionWait* endSession;
+                if (settings.value("input/touch", false).toBool()) {
+                    endSession = new EndSessionWait(EndSessionWait::slideOff);
+                } else {
+                    endSession = new EndSessionWait(EndSessionWait::ask);
+                }
+                endSession->showFullScreen();
+                endSession->exec();
+
+                isEndSessionBoxShowing = false;
+                break;
+            }
+            case 1: { //Power Off
+                EndSession(EndSessionWait::powerOff);
+                break;
+            }
+            case 2: { //Reboot
+                EndSession(EndSessionWait::reboot);
+                break;
+            }
+            case 3: { //Log Out
+                EndSession(EndSessionWait::logout);
+                break;
+            }
+            case 4: { //Suspend
+                EndSession(EndSessionWait::suspend);
+                break;
+            }
+            case 5: { //Lock
+                DBusEvents->LockScreen();
+                break;
+            }
+            case 6: { //Turn off screen
+                EndSession(EndSessionWait::screenOff);
+                break;
+            }
+            case 7: { //Hibernate
+                EndSession(EndSessionWait::hibernate);
+                break;
+            }
+        }
+    } else {
+        isEndSessionBoxShowing = true;
+
+        EndSessionWait* endSession;
+        if (settings.value("input/touch", false).toBool()) {
+            endSession = new EndSessionWait(EndSessionWait::slideOff);
+        } else {
+            endSession = new EndSessionWait(EndSessionWait::ask);
+        }
+        endSession->showFullScreen();
+        endSession->exec();
+
+        isEndSessionBoxShowing = false;
+    }
 }

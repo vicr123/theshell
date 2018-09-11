@@ -55,7 +55,7 @@ class screenshotWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit screenshotWindow(QWidget *parent = 0);
+    explicit screenshotWindow(bool screenshotMode = true, QWidget *parent = 0);
     ~screenshotWindow();
 
 public slots:
@@ -78,6 +78,9 @@ private slots:
 
     void on_highlightButton_clicked();
 
+    signals:
+    void readyForScreenOff();
+
     private:
     Ui::screenshotWindow *ui;
 
@@ -90,6 +93,7 @@ private slots:
     QRectF originalGeometry;
     QRect selectedRegion;
     QPolygon currentLine;
+    bool screenshotMode;
     
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);

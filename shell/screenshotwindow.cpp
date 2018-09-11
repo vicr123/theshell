@@ -21,9 +21,10 @@
 #include "screenshotwindow.h"
 #include "ui_screenshotwindow.h"
 
+#include <QTimer>
 extern float getDPIScaling();
 
-screenshotWindow::screenshotWindow(QWidget *parent) :
+screenshotWindow::screenshotWindow(bool screenshotMode, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::screenshotWindow)
 {
@@ -34,6 +35,8 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
 
+    this->screenshotMode = screenshotMode;
+
     ui->label->setParent(this);
     this->layout()->removeWidget(ui->label);
     ui->label->raise();
@@ -42,30 +45,38 @@ screenshotWindow::screenshotWindow(QWidget *parent) :
     bandOrigin = QPoint(0, 0);
     band->setGeometry(QRect(bandOrigin, ui->label->size()));
 
+    if (!screenshotMode) {
+        this->setCursor(QCursor(Qt::BlankCursor));
+        ui->buttonFrame->setVisible(false);
+        ui->descriptionLabel->setVisible(false);
+    }
+
     regionBand = new QRubberBand(QRubberBand::Rectangle, ui->label);
     QPalette regionBandPal = regionBand->palette();
     regionBandPal.setColor(QPalette::Highlight, QColor(0, 150, 255));
     regionBand->setPalette(regionBandPal);
     regionBand->hide();
 
-    QScreen* currentScreen = NULL;
+    QScreen* currentScreen = nullptr;
     for (QScreen* screen : QApplication::screens()) {
         if (screen->geometry().contains(QCursor::pos())) {
             currentScreen = screen;
         }
     }
 
-    if (currentScreen != NULL) {
+    if (currentScreen != nullptr) {
         originalPixmap = currentScreen->grabWindow(0); //, currentScreen->geometry().x(), currentScreen->geometry().y(), currentScreen->geometry().width(), currentScreen->geometry().height());
         screenshotPixmap = originalPixmap;
         ui->label->setPixmap(screenshotPixmap);
         savePixmap = screenshotPixmap;
         selectedRegion.setCoords(0, 0, originalPixmap.width(), originalPixmap.height());
 
-        QSoundEffect* takeScreenshot = new QSoundEffect();
-        takeScreenshot->setSource(QUrl("qrc:/sounds/screenshot.wav"));
-        takeScreenshot->play();
-        connect(takeScreenshot, SIGNAL(playingChanged()), takeScreenshot, SLOT(deleteLater()));
+        if (screenshotMode) {
+            QSoundEffect* takeScreenshot = new QSoundEffect();
+            takeScreenshot->setSource(QUrl("qrc:/sounds/screenshot.wav"));
+            takeScreenshot->play();
+            connect(takeScreenshot, SIGNAL(playingChanged()), takeScreenshot, SLOT(deleteLater()));
+        }
 
 
         this->setGeometry(currentScreen->geometry());
@@ -125,8 +136,13 @@ void screenshotWindow::keyReleaseEvent(QKeyEvent *event) {
 
 void screenshotWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    painter.setBrush(QColor(0, 0, 0, 150));
-    painter.setPen(QColor(0, 0, 0, 0));
+
+    painter.setPen(Qt::transparent);
+    if (screenshotMode) {
+        painter.setBrush(QColor(0, 0, 0, 150));
+    } else {
+        painter.setBrush(Qt::black);
+    }
     painter.drawRect(0, 0, this->width(), this->height());
 }
 
@@ -134,6 +150,7 @@ void screenshotWindow::show() {
     QDialog::showFullScreen();
 
     originalGeometry = QRect(0, 0, this->width(), this->height());
+
     QRectF endGeometry = originalGeometry;
     //qreal scaleFactor = endGeometry.width() - (endGeometry.width() - 50);
     //endGeometry.adjust(50, endGeometry.height() * scaleFactor, -50, -endGeometry.height() * scaleFactor);
@@ -143,23 +160,56 @@ void screenshotWindow::show() {
     endGeometry.setWidth(endGeometry.width() - 125 * getDPIScaling());
     endGeometry.moveTo(100 * getDPIScaling() / 2, ((ui->label->height() - newHeight) / 2) - 35 * getDPIScaling());*/
 
-    qreal scaleFactor = (endGeometry.width() - 125 * getDPIScaling()) / endGeometry.width();
-    endGeometry.setHeight(endGeometry.height() * scaleFactor);
-    endGeometry.setWidth(endGeometry.width() * scaleFactor);
-    endGeometry.moveLeft(this->width() / 2 - endGeometry.width() / 2);
-    endGeometry.moveTop(ui->descriptionLabel->geometry().y() / 2 - endGeometry.height() / 2);
+    if (screenshotMode) {
+        qreal scaleFactor = (endGeometry.width() - 125 * getDPIScaling()) / endGeometry.width();
+        endGeometry.setHeight(endGeometry.height() * scaleFactor);
+        endGeometry.setWidth(endGeometry.width() * scaleFactor);
+        endGeometry.moveLeft(this->width() / 2 - endGeometry.width() / 2);
+        endGeometry.moveTop(ui->descriptionLabel->geometry().y() / 2 - endGeometry.height() / 2);
+    } else {
+        endGeometry.moveTop(endGeometry.height() * 3 / 4);
+    }
 
     tVariantAnimation* anim = new tVariantAnimation();
     anim->setStartValue(QRectF(0, 0, this->width(), this->height()));
     anim->setEndValue(endGeometry);
     anim->setDuration(500);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
+    if (screenshotMode) {
+        anim->setEasingCurve(QEasingCurve::OutCubic);
+    } else {
+        anim->setEasingCurve(QEasingCurve::InCubic);
+    }
     connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
         ui->label->setGeometry(value.toRect());
         ui->label->setFixedSize(value.toRect().size());
     });
-    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+    connect(anim, &tVariantAnimation::finished, [=] {
+        anim->deleteLater();
+        if (!screenshotMode) {
+            QTimer::singleShot(500, this, SIGNAL(readyForScreenOff()));
+            QTimer::singleShot(1000, this, SLOT(close()));
+        }
+    });
     anim->start();
+
+    if (!screenshotMode) {tVariantAnimation* anim = new tVariantAnimation();
+        anim->setStartValue(QRectF(0, 0, this->width(), this->height()));
+        anim->setEndValue(QRectF(0, this->height(), this->width(), this->height()));
+        anim->setDuration(500);
+        anim->setEasingCurve(QEasingCurve::InCubic);
+        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+            QRegion mask(value.toRect());
+            ui->label->setMask(mask);
+        });
+        connect(anim, &tVariantAnimation::finished, [=] {
+            anim->deleteLater();
+            if (!screenshotMode) {
+                QTimer::singleShot(500, this, SIGNAL(readyForScreenOff()));
+                QTimer::singleShot(1000, this, SLOT(close()));
+            }
+        });
+        anim->start();
+    }
 }
 
 void screenshotWindow::on_discardButton_clicked()
