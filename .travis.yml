@@ -24,6 +24,7 @@ arch:
   - ts-bt
   - ts-bugreport
   - base-devel
+  - qt5-tools
   script:
   - "./travis/build.sh"
   - "./travis/publish.sh"
