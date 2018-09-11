@@ -381,7 +381,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="clockFrame">
       <property name="autoFillBackground">
@@ -699,14 +699,14 @@
                  <second>0</second>
                  <year>1969</year>
                  <month>8</month>
-                 <day>6</day>
+                 <day>5</day>
                 </datetime>
                </property>
                <property name="date">
                 <date>
                  <year>1969</year>
                  <month>8</month>
-                 <day>6</day>
+                 <day>5</day>
                 </date>
                </property>
                <property name="displayFormat">
@@ -2200,7 +2200,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>7</number>
+             <number>8</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -2859,8 +2859,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>299</width>
-                   <height>462</height>
+                   <width>683</width>
+                   <height>687</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_54">
@@ -4739,6 +4739,12 @@
               </item>
               <item>
                <widget class="Line" name="line_7">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>1</height>
+                 </size>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -4839,6 +4845,12 @@
               </item>
               <item>
                <widget class="Line" name="line_9">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>1</height>
+                 </size>
+                </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -4871,7 +4883,13 @@
                 <item row="1" column="1">
                  <widget class="QComboBox" name="powerButtonPressed">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
                   <item>
                    <property name="text">
@@ -4936,6 +4954,14 @@
                      <normaloff>.</normaloff>.</iconset>
                    </property>
                   </item>
+                  <item>
+                   <property name="text">
+                    <string>Hibernate</string>
+                   </property>
+                   <property name="icon">
+                    <iconset theme="system-suspend-hibernate"/>
+                   </property>
+                  </item>
                  </widget>
                 </item>
                 <item row="0" column="0" colspan="2">
@@ -4943,6 +4969,111 @@
                   <property name="text">
                    <string>When I press the</string>
                   </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line_54">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>1</height>
+                 </size>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QGridLayout" name="gridLayout_25">
+                <property name="leftMargin">
+                 <number>9</number>
+                </property>
+                <property name="topMargin">
+                 <number>9</number>
+                </property>
+                <property name="rightMargin">
+                 <number>9</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>9</number>
+                </property>
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_112">
+                  <property name="text">
+                   <string>When suspending this device</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QWidget" name="widget_2" native="true">
+                  <layout class="QVBoxLayout" name="verticalLayout_59">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QRadioButton" name="powerSuspendNormally">
+                     <property name="text">
+                      <string>Suspend nor&amp;mally</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_113">
+                     <property name="text">
+                      <string>This will save power, but stop everything that you're doing until you wake your device. Recommended for most users</string>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QRadioButton" name="powerSuspendTurnOffScreen">
+                     <property name="text">
+                      <string>&amp;Just turn off the screen</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_114">
+                     <property name="text">
+                      <string>This will save a little power but continue to run any tasks you were doing. For example, music will continue playing. When you wake this device, it will wake immediately. Not recommended if you don't have a solid state drive as the drive will not be turned off while you're moving it around. Recommended for tablets and tablet PCs.</string>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QRadioButton" name="powerSuspendHibernate">
+                     <property name="text">
+                      <string>Hibernate instead</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_115">
+                     <property name="text">
+                      <string>This will save a lot of power but will take a while to wake up again. Everything stops while your device is hibernating.</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </widget>
                 </item>
                </layout>

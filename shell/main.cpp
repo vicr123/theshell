@@ -452,12 +452,29 @@ void EndSession(EndSessionWait::shutdownType type) {
             break;
         }
         case EndSessionWait::suspend: {
-            QList<QVariant> arguments;
-            arguments.append(true);
+            //Depending on the suspend mode, do different things
+            QSettings settings;
+            switch (settings.value("power/suspendMode", 0).toInt()) {
+                case 0: { //Suspend Normally
+                    QList<QVariant> arguments;
+                    arguments.append(true);
 
-            QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Suspend");
-            message.setArguments(arguments);
-            QDBusConnection::systemBus().send(message);
+                    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Suspend");
+                    message.setArguments(arguments);
+                    QDBusConnection::systemBus().send(message);
+                    break;
+                }
+                case 1: { //Turn off the screen
+                    DBusEvents->LockScreen();
+                    EndSession(EndSessionWait::screenOff);
+                    break;
+                }
+                case 2: { //Hibernate
+                    EndSession(EndSessionWait::hibernate);
+                    break;
+                }
+            }
+
             break;
         }
         case EndSessionWait::hibernate: {
@@ -470,7 +487,17 @@ void EndSession(EndSessionWait::shutdownType type) {
             break;
         }
         case EndSessionWait::screenOff: {
-            DPMSForceLevel(QX11Info::display(), DPMSModeOff);
+            CARD16 mode;
+            BOOL isDpmsOn;
+            DPMSInfo(QX11Info::display(), &mode, &isDpmsOn);
+
+            if (isDpmsOn) {
+                if (mode == DPMSModeOff) {
+                    DPMSForceLevel(QX11Info::display(), DPMSModeOn);
+                } else {
+                    DPMSForceLevel(QX11Info::display(), DPMSModeOff);
+                }
+            }
             break;
         }
     }

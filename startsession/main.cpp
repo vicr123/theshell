@@ -107,6 +107,7 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(0);
         } else {
             //Restart theShell
+            theShellStdOut.append(tsProcess->readAllStandardError());
 
             monitor->HideSplash();
             errorCount++;

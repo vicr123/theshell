@@ -214,10 +214,18 @@ TRANSLATIONS += translations/vi_VN.ts \
     translations/cy_GB.ts \
     translations/fr_FR.ts
 
+qtPrepareTool(LUPDATE, lupdate)
+genlang.commands = "$$LUPDATE -no-obsolete -source-language en_US $$_PRO_FILE_"
+
+qtPrepareTool(LRELEASE, lrelease)
+rellang.commands = "$$LRELEASE -removeidentical $$_PRO_FILE_"
+QMAKE_EXTRA_TARGETS = genlang rellang
+PRE_TARGETDEPS = genlang rellang
+
 unix {
     target.path = /usr/bin/
 
-    translations.files = translations/*
+    translations.files = translations/*.qm
     xsession.path = /usr/share/xsessions
 
     headers.files = statuscenter/statuscenterpane.h statuscenter/statuscenterpaneobject.h

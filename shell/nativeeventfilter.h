@@ -74,6 +74,10 @@ private:
 
     QSettings settings;
     QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
+
+    QTimer* powerButtonTimer = nullptr;
+    int powerButtonCounter = 0;
+    bool powerPressed = false;
 };
 
 #endif // NATIVEEVENTFILTER_H

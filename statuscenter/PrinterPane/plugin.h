@@ -14,6 +14,7 @@ class Plugin : public QObject, public StatusCenterPane
         explicit Plugin(QObject* parent = nullptr);
 
         QList<StatusCenterPaneObject*> availablePanes();
+        void loadLanguage(QString language);
     private:
         QList<StatusCenterPaneObject*> panes;
 };

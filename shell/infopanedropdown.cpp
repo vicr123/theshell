@@ -391,6 +391,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->EmphasiseAppSwitch->setChecked(settings.value("notifications/emphasiseApp", true).toBool());
     ui->CompactBarSwitch->setChecked(settings.value("bar/compact", false).toBool());
     ui->LocationMasterSwitch->setChecked(locationSettings->value("master/master", true).toBool());
+    ui->powerButtonPressed->setCurrentIndex(settings.value("power/onPowerButtonPressed", 0).toInt());
     updateAccentColourBox();
     updateRedshiftTime();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
@@ -415,6 +416,18 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QString gtk3FontSize = gtk3FontString.mid(gtk3FontString.lastIndexOf(" ") + 1);
     ui->systemGTK3Font->setCurrentFont(QFont(gtk3FontFamily, gtk3FontSize.toInt()));
     ui->systemGTK3FontSize->setValue(gtk3FontSize.toInt());
+
+    switch (settings.value("power/suspendMode", 0).toInt()) {
+        case 0:
+            ui->powerSuspendNormally->setChecked(true);
+            break;
+        case 1:
+            ui->powerSuspendTurnOffScreen->setChecked(true);
+            break;
+        case 2:
+            ui->powerSuspendHibernate->setChecked(true);
+            break;
+    }
 
     eventTimer = new QTimer(this);
     eventTimer->setInterval(1000);
@@ -704,6 +717,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             } else {
                 StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
                 if (p) {
+                    //p->loadLanguage(QLocale().name());
                     for (StatusCenterPaneObject* pane : p->availablePanes()) {
                         //Only load the pane once
                         if (!loadedPanes.contains(pane->name())) {
@@ -3789,6 +3803,10 @@ void InfoPaneDropdown::on_resetDeviceButton_clicked()
 void InfoPaneDropdown::changeEvent(QEvent *event) {
     if (event->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
+
+        for (StatusCenterPaneObject* pane : pluginObjects.values()) {
+            pane->message("retranslate");
+        }
     }
     QDialog::changeEvent(event);
 }
@@ -4557,4 +4575,30 @@ void InfoPaneDropdown::on_quietModeCriticalOnly_clicked()
 {
     AudioMan->setQuietMode(AudioManager::critical);
     ui->quietModeCriticalOnly->setChecked(true);
+}
+
+void InfoPaneDropdown::on_powerSuspendNormally_toggled(bool checked)
+{
+    if (checked) {
+        settings.setValue("power/suspendMode", 0);
+    }
+}
+
+void InfoPaneDropdown::on_powerSuspendTurnOffScreen_toggled(bool checked)
+{
+    if (checked) {
+        settings.setValue("power/suspendMode", 1);
+    }
+}
+
+void InfoPaneDropdown::on_powerSuspendHibernate_toggled(bool checked)
+{
+    if (checked) {
+        settings.setValue("power/suspendMode", 2);
+    }
+}
+
+void InfoPaneDropdown::on_powerButtonPressed_currentIndexChanged(int index)
+{
+    settings.setValue("power/onPowerButtonPressed", index);
 }

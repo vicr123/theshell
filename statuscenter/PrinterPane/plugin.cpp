@@ -9,3 +9,7 @@ Plugin::Plugin(QObject* parent) : QObject(parent)
 QList<StatusCenterPaneObject*> Plugin::availablePanes() {
     return panes;
 }
+
+void Plugin::loadLanguage(QString language) {
+
+}

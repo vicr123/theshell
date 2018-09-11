@@ -509,6 +509,14 @@ class InfoPaneDropdown : public QDialog
 
         void on_quietModeCriticalOnly_clicked();
 
+        void on_powerSuspendNormally_toggled(bool checked);
+
+        void on_powerSuspendTurnOffScreen_toggled(bool checked);
+
+        void on_powerSuspendHibernate_toggled(bool checked);
+
+        void on_powerButtonPressed_currentIndexChanged(int index);
+
     public slots:
         void getNetworks();
 

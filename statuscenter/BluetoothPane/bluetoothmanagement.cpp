@@ -87,7 +87,10 @@ int BluetoothManagement::position() {
 }
 
 void BluetoothManagement::message(QString name, QVariantList args) {
-
+    if (name == "retranslate") {
+        qDebug() << "Retranslating";
+        ui->retranslateUi(this);
+    }
 }
 
 void BluetoothManagement::updateAdapters() {
@@ -393,3 +396,4 @@ void BluetoothManagement::on_cancelTransferButton_clicked()
 {
     currentTransfer.data()->cancel();
 }
+
