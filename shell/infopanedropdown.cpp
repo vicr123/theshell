@@ -673,7 +673,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         searchDirs.append(QDir("/usr/lib/theshell/panes"));
         searchDirs.append(QDir("/usr/lib/theshell/daemons"));
     #endif
-    QStringList loadedPanes;
+    QStringList loadedPanes, loadedSettings;
     for (QDir pluginsDir : searchDirs) {
         QDirIterator pluginsIterator(pluginsDir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
@@ -692,19 +692,20 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             } else {
                 StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
                 if (p) {
-                    //p->loadLanguage(QLocale().name());
+                    p->loadLanguage(QLocale().name());
                     for (StatusCenterPaneObject* pane : p->availablePanes()) {
-                        //Only load the pane once
-                        if (!loadedPanes.contains(pane->name())) {
-                            loadedPanes.append(pane->name());
-
-                            if (pane->name() == "Overview") {
+                        if (pane->name() == "Overview" && pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+                            if (!loadedPanes.contains("Overview")) {
                                 //Special handling for Overview pane
                                 overviewFrame = pane->mainWidget();
                                 overviewFrame->setAutoFillBackground(true);
                                 ui->pageStack->insertWidget(0, overviewFrame);
-                            } else {
-                                if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+
+                                loadedPanes.append(pane->name());
+                            }
+                        } else {
+                            if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+                                if (!loadedPanes.contains(pane->name())) {
                                     ClickableLabel* label = new ClickableLabel(this);
                                     label->setText(pane->name());
                                     ui->InformationalPluginsLayout->addWidget(label);
@@ -720,9 +721,13 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                                             setHeaderColour(pane->informationalAttributes.darkColor);
                                         }
                                     });
-                                }
 
-                                if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
+                                    loadedPanes.append(pane->name());
+                                }
+                            }
+
+                            if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
+                                if (!loadedSettings.contains(pane->name())) {
                                     QListWidgetItem* item = new QListWidgetItem();
                                     item->setText(pane->name());
                                     item->setIcon(pane->settingAttributes.icon);
@@ -737,15 +742,18 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
                                     ui->settingsTabs->insertWidget(ui->settingsTabs->count() - 3, pane->mainWidget());
                                     pane->mainWidget()->setAutoFillBackground(true);
+
+                                    loadedSettings.append(pane->name());
                                 }
                             }
-
-                            pane->sendMessage = [=](QString message, QVariantList args) {
-                                this->pluginMessage(message, args, pane);
-                            };
-                            pluginObjects.insert(pane->mainWidget(), pane);
                         }
+
+                        pane->sendMessage = [=](QString message, QVariantList args) {
+                            this->pluginMessage(message, args, pane);
+                        };
+                        pluginObjects.insert(pane->mainWidget(), pane);
                     }
+                    loadedPlugins.append(p);
                 }
             }
         }
@@ -2533,6 +2541,11 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
         tsTranslator->load(defaultLocale.name(), QString(SHAREDIR) + "translations");
     }
     QApplication::installTranslator(tsTranslator);
+
+    //Tell all plugins to update translator
+    for (StatusCenterPane* plugin : loadedPlugins) {
+        plugin->loadLanguage(defaultLocale.name());
+    }
 
     //Fill locale box
     Internationalisation::fillLanguageBox(ui->localeList);

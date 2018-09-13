@@ -331,6 +331,84 @@
     </message>
 </context>
 <context>
+    <name>DevicesListModel</name>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="76"/>
+        <source>Mobile Phone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="78"/>
+        <source>Computer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="80"/>
+        <source>AV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="83"/>
+        <source>Speaker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="85"/>
+        <source>Camera</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="87"/>
+        <source>Health</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="89"/>
+        <source>Imaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="91"/>
+        <source>Keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="93"/>
+        <source>Mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="95"/>
+        <source>Joypad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="97"/>
+        <source>Peripheral</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="99"/>
+        <source>Printer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="101"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="103"/>
+        <source>Modem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceslistmodel.cpp" line="105"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TransfersDelegate</name>
     <message>
         <location filename="../transferslistmodel.cpp" line="116"/>

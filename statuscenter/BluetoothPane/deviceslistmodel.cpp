@@ -73,36 +73,36 @@ QVariant DevicesListModel::data(const QModelIndex &index, int role) const
         case Qt::UserRole:
             switch (device.data()->type()) {
                 case BluezQt::Device::Phone:
-                    return "Mobile Phone";
+                    return tr("Mobile Phone");
                 case BluezQt::Device::Computer:
-                    return "Computer";
+                    return tr("Computer");
                 case BluezQt::Device::AudioVideo:
-                    return "AV";
+                    return tr("AV");
                 case BluezQt::Device::Headphones:
                 case BluezQt::Device::Headset:
-                    return "Speaker";
+                    return tr("Speaker");
                 case BluezQt::Device::Camera:
-                    return "Camera";
+                    return tr("Camera");
                 case BluezQt::Device::Health:
-                    return "Health";
+                    return tr("Health");
                 case BluezQt::Device::Imaging:
-                    return "Imaging";
+                    return tr("Imaging");
                 case BluezQt::Device::Keyboard:
-                    return "Keyboard";
+                    return tr("Keyboard");
                 case BluezQt::Device::Mouse:
-                    return "Mouse";
+                    return tr("Mouse");
                 case BluezQt::Device::Joypad:
-                    return "Joypad";
+                    return tr("Joypad");
                 case BluezQt::Device::Peripheral:
-                    return "Peripheral";
+                    return tr("Peripheral");
                 case BluezQt::Device::Printer:
-                    return "Printer";
+                    return tr("Printer");
                 case BluezQt::Device::Network:
-                    return "Network";
+                    return tr("Network");
                 case BluezQt::Device::Modem:
-                    return "Modem";
+                    return tr("Modem");
                 default:
-                    return "Unknown";
+                    return tr("Unknown");
             }
         case Qt::DecorationRole:
             return QIcon::fromTheme(device.data()->icon());
