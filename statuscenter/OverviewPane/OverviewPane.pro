@@ -42,7 +42,8 @@ HEADERS += \
     Timers/timerpage.h \
     Timers/timeritem.h \
     Stopwatch/stopwatchpage.h \
-    Reminders/reminderspage.h
+    Reminders/reminderspage.h \
+    Reminders/reminderslistmodel.h
 
 SOURCES += \
     plugin.cpp \
@@ -51,7 +52,8 @@ SOURCES += \
     Timers/timerpage.cpp \
     Timers/timeritem.cpp \
     Stopwatch/stopwatchpage.cpp \
-    Reminders/reminderspage.cpp
+    Reminders/reminderspage.cpp \
+    Reminders/reminderslistmodel.cpp
 
 FORMS += \
     overview.ui \

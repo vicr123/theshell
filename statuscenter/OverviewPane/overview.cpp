@@ -146,7 +146,7 @@ QWidget* Overview::mainWidget() {
 }
 
 QString Overview::name() {
-    return "O'erview";
+    return "Overview";
 }
 
 StatusCenterPaneObject::StatusPaneTypes Overview::type() {
