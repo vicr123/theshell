@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="spacing">
@@ -47,8 +47,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>443</width>
-          <height>595</height>
+          <width>470</width>
+          <height>691</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -223,7 +223,7 @@
                  <item>
                   <widget class="QLabel" name="weatherIcon">
                    <property name="text">
-                    <string>Icon</string>
+                    <string notr="true">Icon</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

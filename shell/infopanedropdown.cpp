@@ -3294,10 +3294,6 @@ void InfoPaneDropdown::on_resetDeviceButton_clicked()
 void InfoPaneDropdown::changeEvent(QEvent *event) {
     if (event->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
-
-        for (StatusCenterPaneObject* pane : pluginObjects.values()) {
-            pane->message("retranslate");
-        }
     }
     QDialog::changeEvent(event);
 }

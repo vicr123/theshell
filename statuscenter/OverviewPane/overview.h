@@ -116,6 +116,8 @@ class Overview : public QWidget, public StatusCenterPaneObject
         QList<BgObject*> objects;
         QSettings settings;
 
+        void changeEvent(QEvent* event);
+
         QPixmap yahooAttribLight, yahooAttribDark;
 };
 

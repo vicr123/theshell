@@ -845,3 +845,10 @@ void Overview::on_remindersButton_toggled(bool checked)
         ui->rightStack->setCurrentIndex(2);
     }
 }
+
+void Overview::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        qDebug() << "Retranslating Overview";
+        ui->retranslateUi(this);
+    }
+}

@@ -132,3 +132,9 @@ void TimerPage::on_newTimerButtonTop_clicked()
 {
     ui->newTimerButton->click();
 }
+
+void TimerPage::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

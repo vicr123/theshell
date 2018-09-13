@@ -36,6 +36,8 @@ class RemindersPage : public QStackedWidget
     private:
         Ui::RemindersPage *ui;
 
+        void changeEvent(QEvent* event);
+
         RemindersListModel* model;
         QDBusInterface* notificationInterface;
 };

@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>434</width>
     <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -103,7 +103,8 @@
         <string>Reset</string>
        </property>
        <property name="icon">
-        <iconset theme="chronometer-reset"/>
+        <iconset theme="chronometer-reset">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -113,7 +114,8 @@
         <string>Start</string>
        </property>
        <property name="icon">
-        <iconset theme="chronometer-start"/>
+        <iconset theme="chronometer-start">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>

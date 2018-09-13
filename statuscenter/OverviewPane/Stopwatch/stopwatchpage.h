@@ -25,6 +25,8 @@ class StopwatchPage : public QWidget
     private:
         Ui::StopwatchPage *ui;
 
+        void changeEvent(QEvent* event);
+
         QDateTime startTime;
         int msecsPadding = 0;
         QTimer* timer;

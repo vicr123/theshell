@@ -48,3 +48,9 @@ void StopwatchPage::on_resetButton_clicked()
     ui->startButton->setIcon(QIcon::fromTheme("chronometer-start"));
     msecsPadding = 0;
 }
+
+void StopwatchPage::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

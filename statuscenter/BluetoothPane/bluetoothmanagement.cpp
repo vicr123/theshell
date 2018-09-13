@@ -87,8 +87,11 @@ int BluetoothManagement::position() {
 }
 
 void BluetoothManagement::message(QString name, QVariantList args) {
-    if (name == "retranslate") {
-        qDebug() << "Retranslating";
+
+}
+
+void BluetoothManagement::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
     }
 }

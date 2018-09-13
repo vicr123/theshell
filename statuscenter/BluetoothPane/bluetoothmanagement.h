@@ -108,6 +108,8 @@ class BluetoothManagement : public QStackedWidget, public StatusCenterPaneObject
         TransfersListModel* obexTransferModel;
         QMetaObject::Connection transferTransferredSignal, transferStateChangedSignal;
 
+        void changeEvent(QEvent* event);
+
         void connectAllProfiles(int profileIndex, BluezQt::DevicePtr device);
 };
 

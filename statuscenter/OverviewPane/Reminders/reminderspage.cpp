@@ -89,6 +89,8 @@ void RemindersPage::on_addReminderButton_clicked()
 
 void RemindersPage::on_deleteButton_clicked()
 {
+    if (ui->remindersList->selectionModel()->selectedIndexes().count() == 0) return;
+
     QList<QPair<QString, QDateTime>> ReminderData;
 
     QSettings reminders("theSuite/theShell.reminders");
@@ -199,5 +201,11 @@ void RemindersPage::checkReminders() {
         reminders.endGroup();
 
         model->updateData();
+    }
+}
+
+void RemindersPage::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
     }
 }

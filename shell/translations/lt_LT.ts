@@ -1285,11 +1285,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2247"/>
-        <source>Uses Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="2494"/>
         <source>&amp;Gray</source>
         <translation>&amp;Pilka</translation>
@@ -1326,7 +1321,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3433"/>
-        <location filename="../infopanedropdown.cpp" line="3750"/>
+        <location filename="../infopanedropdown.cpp" line="3746"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1363,8 +1358,8 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4450"/>
-        <location filename="../infopanedropdown.cpp" line="3841"/>
-        <location filename="../infopanedropdown.cpp" line="3847"/>
+        <location filename="../infopanedropdown.cpp" line="3837"/>
+        <location filename="../infopanedropdown.cpp" line="3843"/>
         <source>Mouse Password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1725,8 +1720,8 @@ Daiktai kurie bus palikti:
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2202"/>
-        <location filename="../infopanedropdown.cpp" line="3797"/>
-        <location filename="../infopanedropdown.cpp" line="3817"/>
+        <location filename="../infopanedropdown.cpp" line="3793"/>
+        <location filename="../infopanedropdown.cpp" line="3813"/>
         <source>Unauthorized</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1825,48 +1820,48 @@ Daiktai kurie bus palikti:
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3525"/>
+        <location filename="../infopanedropdown.cpp" line="3521"/>
         <source>Log Out Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3528"/>
+        <location filename="../infopanedropdown.cpp" line="3524"/>
         <source>Logoff Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3531"/>
+        <location filename="../infopanedropdown.cpp" line="3527"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3533"/>
+        <location filename="../infopanedropdown.cpp" line="3529"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3797"/>
-        <location filename="../infopanedropdown.cpp" line="3817"/>
+        <location filename="../infopanedropdown.cpp" line="3793"/>
+        <location filename="../infopanedropdown.cpp" line="3813"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3812"/>
+        <location filename="../infopanedropdown.cpp" line="3808"/>
         <source>Remove Mouse Password?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3812"/>
+        <location filename="../infopanedropdown.cpp" line="3808"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3842"/>
+        <location filename="../infopanedropdown.cpp" line="3838"/>
         <source>Mouse Password was removed successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3848"/>
+        <location filename="../infopanedropdown.cpp" line="3844"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation type="unfinished"></translation>
     </message>

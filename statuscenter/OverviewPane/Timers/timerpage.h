@@ -43,6 +43,8 @@ class TimerPage : public QStackedWidget
 
         QMediaPlayer* ringtone;
 
+        void changeEvent(QEvent* event);
+
         QDBusInterface* notificationInterface;
 };
 

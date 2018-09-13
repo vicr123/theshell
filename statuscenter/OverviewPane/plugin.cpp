@@ -3,6 +3,8 @@
 Plugin::Plugin(QObject *parent) :
     QObject(parent)
 {
+    translator = new QTranslator;
+
     panes.append(new Overview());
     panes.append(new OverviewSettings());
 }
@@ -12,5 +14,10 @@ QList<StatusCenterPaneObject*> Plugin::availablePanes() {
 }
 
 void Plugin::loadLanguage(QString language) {
+    translator->load(language, QString(SHAREDIR) + "translations");
+    QApplication::instance()->installTranslator(translator);
 
+    for (StatusCenterPaneObject* pane : panes) {
+        pane->message("retranslate");
+    }
 }

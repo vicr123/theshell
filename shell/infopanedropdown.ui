@@ -381,7 +381,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="statusFrame">
       <property name="autoFillBackground">
@@ -857,8 +857,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>145</width>
-              <height>108</height>
+              <width>182</width>
+              <height>132</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_35">
@@ -1331,7 +1331,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>8</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1990,8 +1990,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>299</width>
-                   <height>462</height>
+                   <width>804</width>
+                   <height>671</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_54">
@@ -2244,7 +2244,7 @@
                       <item>
                        <widget class="QLabel" name="usesLocation">
                         <property name="text">
-                         <string>Uses Location</string>
+                         <string notr="true">Uses Location</string>
                         </property>
                        </widget>
                       </item>
@@ -3113,7 +3113,7 @@
               <item>
                <widget class="QStackedWidget" name="locationStack">
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="page_2">
                  <layout class="QVBoxLayout" name="verticalLayout_17">

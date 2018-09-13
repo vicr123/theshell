@@ -1,6 +1,7 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include <QTranslator>
 #include <statuscenterpane.h>
 #include "overview.h"
 #include "overviewsettings.h"
@@ -18,6 +19,8 @@ class Plugin : public QObject, public StatusCenterPane
         void loadLanguage(QString language);
     private:
         QList<StatusCenterPaneObject*> panes;
+
+        QTranslator* translator;
 };
 
 #endif // PLUGIN_H

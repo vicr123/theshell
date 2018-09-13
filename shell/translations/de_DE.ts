@@ -1236,11 +1236,6 @@ There is no way of forming this sentence to have the object at the end</translat
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2247"/>
-        <source>Uses Location</source>
-        <translation>Verwendet Standort</translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="3141"/>
         <source>Permission Required</source>
         <translation>Erlaubnis erforderlich</translation>
@@ -1272,7 +1267,7 @@ There is no way of forming this sentence to have the object at the end</translat
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3433"/>
-        <location filename="../infopanedropdown.cpp" line="3750"/>
+        <location filename="../infopanedropdown.cpp" line="3746"/>
         <source>Keyboard Layout</source>
         <translation>Tastaturlayout</translation>
     </message>
@@ -1354,8 +1349,8 @@ There is no way of forming this sentence to have the object at the end</translat
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4450"/>
-        <location filename="../infopanedropdown.cpp" line="3841"/>
-        <location filename="../infopanedropdown.cpp" line="3847"/>
+        <location filename="../infopanedropdown.cpp" line="3837"/>
+        <location filename="../infopanedropdown.cpp" line="3843"/>
         <source>Mouse Password</source>
         <translation>Mauspasswort</translation>
     </message>
@@ -1702,8 +1697,8 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2202"/>
-        <location filename="../infopanedropdown.cpp" line="3797"/>
-        <location filename="../infopanedropdown.cpp" line="3817"/>
+        <location filename="../infopanedropdown.cpp" line="3793"/>
+        <location filename="../infopanedropdown.cpp" line="3813"/>
         <source>Unauthorized</source>
         <translation>Unautorisiert</translation>
     </message>
@@ -1826,48 +1821,48 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3525"/>
+        <location filename="../infopanedropdown.cpp" line="3521"/>
         <source>Log Out Now</source>
         <translation>Jetzt abmelden</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3528"/>
+        <location filename="../infopanedropdown.cpp" line="3524"/>
         <source>Logoff Required</source>
         <translation>Abmeldung erforderlich</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3531"/>
+        <location filename="../infopanedropdown.cpp" line="3527"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation>Um die Kompakteleiste zu aktivieren, müssen Sie sich abmelden und dann erneut anmelden.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3533"/>
+        <location filename="../infopanedropdown.cpp" line="3529"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation>Um die Kompakteleiste zu deaktivieren, müssen Sie sich abmelden und dann erneut anmelden.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3797"/>
-        <location filename="../infopanedropdown.cpp" line="3817"/>
+        <location filename="../infopanedropdown.cpp" line="3793"/>
+        <location filename="../infopanedropdown.cpp" line="3813"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation>Polkit erlaubt Ihnen nicht, ein Mauspasswort einzurichten.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3812"/>
+        <location filename="../infopanedropdown.cpp" line="3808"/>
         <source>Remove Mouse Password?</source>
         <translation>Mauspasswort entfernen?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3812"/>
+        <location filename="../infopanedropdown.cpp" line="3808"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation>Möchten Sie das Mauspasswort für diesen Benutzer entfernen?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3842"/>
+        <location filename="../infopanedropdown.cpp" line="3838"/>
         <source>Mouse Password was removed successfully</source>
         <translation>Mauspasswort wurde erfolgreich entfernt</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3848"/>
+        <location filename="../infopanedropdown.cpp" line="3844"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation>Mauspasswort konnte nicht entfernt werden</translation>
     </message>
