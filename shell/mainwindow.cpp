@@ -106,8 +106,6 @@ MainWindow::MainWindow(QWidget *parent) :
     infoPane = new InfoPaneDropdown(this->winId());
     connect(infoPane, SIGNAL(networkLabelChanged(QString,QIcon)), this, SLOT(internetLabelChanged(QString,QIcon)));
     connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
-    connect(infoPane, SIGNAL(timerChanged(QString)), this, SLOT(setTimer(QString)));
-    connect(infoPane, SIGNAL(timerVisibleChanged(bool)), this, SLOT(setTimerVisible(bool)));
     connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
     connect(infoPane, &InfoPaneDropdown::batteryStretchChanged, [=](bool isOn) {
         if (isOn) {
