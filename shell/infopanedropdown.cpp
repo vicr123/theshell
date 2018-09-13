@@ -60,7 +60,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     startTime.start();
 
     ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2018"));
-    ui->dstIcon->setPixmap(QIcon::fromTheme("chronometer").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     ui->usesLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
 
     connect(this, SIGNAL(flightModeChanged(bool)), ui->NetworkManager, SLOT(flightModeChanged(bool)));
@@ -88,17 +87,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     connect(dbusServiceWatcherSystem, SIGNAL(serviceUnregistered(QString)), this, SLOT(DBusServiceUnregistered(QString)));
 
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
     connect(timer, SIGNAL(timeout()), this, SLOT(updateSysInfo()));
-    //connect(timer, SIGNAL(timeout()), this, SLOT(updateKdeconnect()));
-    connect(timer, &QTimer::timeout, [=]() {
-        //Run the timer faster when a stopwatch is running.
-        if (stopwatchRunning) {
-            timer->setInterval(100);
-        } else {
-            timer->setInterval(1000);
-        }
-    });
     timer->setInterval(1000);
     timer->start();
 
@@ -118,11 +107,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->PowerStretchSwitch->setChecked(updbus->powerStretch());
     emit batteryStretchChanged(updbus->powerStretch());
 
-    ui->label_7->setVisible(false);
-    ui->pushButton_3->setVisible(false);
     ui->BatteryChargeScrollBar->setVisible(false);
     ui->appNotificationsConfigureLock->setVisible(false);
-    ui->dstPanel->setVisible(false);
     ui->quietModeExtras->setFixedHeight(0);
     //ui->networkKey->setVisible(false);
     //ui->networkConnect->setVisible(false);
@@ -649,9 +635,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->quietModeTurnOffIn->setEnabled(false);
     ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
 
-    ui->RemindersList->setModel(new RemindersListModel);
-    ui->RemindersList->setItemDelegate(new RemindersDelegate);
-
     slice1.setStartValue((float) (this->width() - 250 * getDPIScaling()));
     slice1.setEndValue((float) (this->width() - 300 * getDPIScaling()));
     slice1.setEasingCurve(QEasingCurve::OutCubic);
@@ -722,39 +705,47 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                         //Only load the pane once
                         if (!loadedPanes.contains(pane->name())) {
                             loadedPanes.append(pane->name());
-                            if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
-                                ClickableLabel* label = new ClickableLabel(this);
-                                label->setText(pane->name());
-                                ui->InformationalPluginsLayout->addWidget(label);
 
-                                ui->pageStack->insertWidget(ui->pageStack->count() - 1, pane->mainWidget());
-                                pane->mainWidget()->setAutoFillBackground(true);
+                            if (pane->name() == "Overview") {
+                                //Special handling for Overview pane
+                                overviewFrame = pane->mainWidget();
+                                overviewFrame->setAutoFillBackground(true);
+                                ui->pageStack->insertWidget(0, overviewFrame);
+                            } else {
+                                if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+                                    ClickableLabel* label = new ClickableLabel(this);
+                                    label->setText(pane->name());
+                                    ui->InformationalPluginsLayout->addWidget(label);
 
-                                connect(label, &ClickableLabel::clicked, [=] {
-                                    changeDropDown(pane->mainWidget(), label);
-                                    if (ui->lightColorThemeRadio->isChecked()) {
-                                        setHeaderColour(pane->informationalAttributes.lightColor);
-                                    } else {
-                                        setHeaderColour(pane->informationalAttributes.darkColor);
-                                    }
-                                });
-                            }
+                                    ui->pageStack->insertWidget(ui->pageStack->count() - 1, pane->mainWidget());
+                                    pane->mainWidget()->setAutoFillBackground(true);
 
-                            if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
-                                QListWidgetItem* item = new QListWidgetItem();
-                                item->setText(pane->name());
-                                item->setIcon(pane->settingAttributes.icon);
-                                item->setData(Qt::UserRole, -1);
-                                ui->settingsList->insertItem(ui->settingsList->count() - 3, item);
-
-                                if (pane->settingAttributes.menuWidget != nullptr) {
-                                    int settingNumber = ui->settingsListStack->addWidget(pane->settingAttributes.menuWidget);
-                                    pane->settingAttributes.menuWidget->setAutoFillBackground(true);
-                                    item->setData(Qt::UserRole, settingNumber);
+                                    connect(label, &ClickableLabel::clicked, [=] {
+                                        changeDropDown(pane->mainWidget(), label);
+                                        if (ui->lightColorThemeRadio->isChecked()) {
+                                            setHeaderColour(pane->informationalAttributes.lightColor);
+                                        } else {
+                                            setHeaderColour(pane->informationalAttributes.darkColor);
+                                        }
+                                    });
                                 }
 
-                                ui->settingsTabs->insertWidget(ui->settingsTabs->count() - 3, pane->mainWidget());
-                                pane->mainWidget()->setAutoFillBackground(true);
+                                if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
+                                    QListWidgetItem* item = new QListWidgetItem();
+                                    item->setText(pane->name());
+                                    item->setIcon(pane->settingAttributes.icon);
+                                    item->setData(Qt::UserRole, -1);
+                                    ui->settingsList->insertItem(ui->settingsList->count() - 3, item);
+
+                                    if (pane->settingAttributes.menuWidget != nullptr) {
+                                        int settingNumber = ui->settingsListStack->addWidget(pane->settingAttributes.menuWidget);
+                                        pane->settingAttributes.menuWidget->setAutoFillBackground(true);
+                                        item->setData(Qt::UserRole, settingNumber);
+                                    }
+
+                                    ui->settingsTabs->insertWidget(ui->settingsTabs->count() - 3, pane->mainWidget());
+                                    pane->mainWidget()->setAutoFillBackground(true);
+                                }
                             }
 
                             pane->sendMessage = [=](QString message, QVariantList args) {
@@ -766,6 +757,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                 }
             }
         }
+    }
+
+    if (!loadedPanes.contains("Overview")) {
+        qWarning() << "Could not load Overview pane";
+        qWarning() << "theShell may not work properly";
     }
 
     if (errors.count() == 0) {
@@ -802,7 +798,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     updateStruts();
     updateAutostart();
-    updateDSTNotification();
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -1056,69 +1051,6 @@ void InfoPaneDropdown::processTimer() {
     }*/
 }
 
-void InfoPaneDropdown::timerTick() {
-    ui->date->setText(QLocale().toString(QDateTime::currentDateTime(), "ddd dd MMM yyyy"));
-    ui->time->setText(QDateTime::currentDateTime().toString("hh:mm:ss"));
-
-    //Also update the stopwatch
-    QTime stopwatchTime = QTime::fromMSecsSinceStartOfDay(0);
-    stopwatchTime = stopwatchTime.addMSecs(stopwatchTimeAdd);
-    if (stopwatchRunning) {
-        stopwatchTime = stopwatchTime.addMSecs(this->stopwatchTime.elapsed());
-    }
-    ui->stopwatchLabel->setText(stopwatchTime.toString("hh:mm:ss.zzz"));
-    updateTimers();
-
-    //Also check for reminders
-    {
-        QList<QPair<QString, QDateTime>> ReminderData;
-
-        QSettings reminders("theSuite/theShell.reminders");
-        reminders.beginGroup("reminders");
-        int count = reminders.beginReadArray("reminders");
-
-        for (int i = 0; i < count; i++) {
-            reminders.setArrayIndex(i);
-            QPair<QString, QDateTime> data;
-            data.first = reminders.value("title").toString();
-            data.second = reminders.value("date").toDateTime();
-            ReminderData.append(data);
-        }
-
-        reminders.endArray();
-
-        bool dataChanged = false;
-        for (int i = 0; i < ReminderData.count(); i++) {
-            QPair<QString, QDateTime> data = ReminderData.at(i);
-            if (data.second.msecsTo(QDateTime::currentDateTime()) > 0) {
-                QVariantMap hints;
-                hints.insert("category", "reminder.activate");
-                hints.insert("sound-file", "qrc:/sounds/notifications/reminder.wav");
-                ndbus->Notify("theShell", 0, "theshell", "Reminder", data.first, QStringList(), hints, 30000);
-                ReminderData.removeAt(i);
-                i--;
-                dataChanged = true;
-            }
-        }
-
-
-        if (dataChanged) {
-            reminders.beginWriteArray("reminders");
-            int i = 0;
-            for (QPair<QString, QDateTime> data : ReminderData) {
-                reminders.setArrayIndex(i);
-                reminders.setValue("title", data.first);
-                reminders.setValue("date", data.second);
-                i++;
-            }
-            reminders.endArray();
-            reminders.endGroup();
-
-            ((RemindersListModel*) ui->RemindersList->model())->updateData();
-        }
-    }
-}
-
 void InfoPaneDropdown::show(dropdownType showWith) {
     changeDropDown(showWith, false);
     if (!this->isVisible()) {
@@ -1164,9 +1096,6 @@ void InfoPaneDropdown::show(dropdownType showWith) {
     delete backlight;
 
     ui->brightnessSlider->setValue((int) output);
-
-    //Update the reminders list
-    ((RemindersListModel*) ui->RemindersList->model())->updateData();
 }
 
 void InfoPaneDropdown::showNoAnimation() {
@@ -1206,7 +1135,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     //Switch to the requested frame
     switch (changeTo) {
         case Clock:
-            changeDropDown(ui->clockFrame, ui->clockLabel, doAnimation);
+            changeDropDown(overviewFrame, ui->clockLabel, doAnimation);
 
             if (ui->lightColorThemeRadio->isChecked()) {
                 setHeaderColour(QColor(0, 150, 0));
@@ -1263,7 +1192,7 @@ void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, 
     if (ui->pageStack->currentWidget() == changeTo) return; //Do nothing
 
     ui->pageStack->setCurrentWidget(changeTo, doAnimation);
-    if (changeTo == ui->clockFrame) {
+    if (changeTo == overviewFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
             setHeaderColour(QColor(0, 150, 0));
         } else {
@@ -1385,161 +1314,6 @@ void InfoPaneDropdown::on_networkLabel_clicked()
 void InfoPaneDropdown::on_notificationsLabel_clicked()
 {
     changeDropDown(Notifications);
-}
-
-void InfoPaneDropdown::startTimer(QTime time) {
-    if (timer != NULL) { //Check for already running timer
-        timer->stop();
-        delete timer;
-        timer = NULL;
-        ui->timeEdit->setVisible(true);
-        ui->label_7->setVisible(false);
-        ui->label_7->setEnabled(true);
-        ui->pushButton_2->setText(tr("Start"));
-        ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-start"));
-        ui->pushButton_3->setVisible(false);
-        emit timerVisibleChanged(false);
-        emit timerEnabledChanged(true);
-    }
-
-    ui->pushButton_2->setText(tr("Pause"));
-    ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-pause"));
-    timeUntilTimeout = time;
-    lastTimer = time;
-    ui->label_7->setText(ui->timeEdit->text());
-    ui->timeEdit->setVisible(false);
-    ui->label_7->setVisible(true);
-    timer = new QTimer();
-    timer->setInterval(1000);
-    connect(timer, &QTimer::timeout, [=]() {
-        timeUntilTimeout = timeUntilTimeout.addSecs(-1);
-        if (timeUntilTimeout == QTime(0, 0, 0)) {
-            if (timerNotificationId != 0) {
-                ndbus->CloseNotification(timerNotificationId);
-            }
-
-            timer->stop();
-            delete timer;
-            timer = NULL;
-
-            if (AudioMan->QuietMode() != AudioManager::notifications && AudioMan->QuietMode() != AudioManager::mute) { //Check if we should show the notification so the user isn't stuck listening to the tone
-                QStringList actions;
-                actions << "restart" << "Restart Timer";
-                actions << "+0.5" << "+30 sec";
-                actions << "+1" << "+1 min";
-                actions << "+2" << "+2 min";
-                actions << "+5" << "+5 min";
-                actions << "+10" << "+10 min";
-
-                QVariantMap hints;
-                hints.insert("x-thesuite-timercomplete", true);
-                hints.insert("suppress-sound", true);
-                timerNotificationId = ndbus->Notify("theShell", 0, "", tr("Timer Elapsed"),
-                                          tr("Your timer has completed."),
-                                          actions, hints, 0);
-                ui->timeEdit->setVisible(true);
-                ui->label_7->setVisible(false);
-                ui->pushButton_2->setText("Start");
-                ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-start"));
-
-                QMediaPlaylist* playlist = new QMediaPlaylist();
-
-                #ifdef BLUEPRINT
-                    QString ringtonesPath = "/usr/share/sounds/theshellb/tones/";
-                #else
-                    QString ringtonesPath = "/usr/share/sounds/theshell/tones/";
-                #endif
-
-                if (ui->timerToneSelect->currentText() == tr("Happy Bee")) {
-                    playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "happybee.ogg")));
-                } else if (ui->timerToneSelect->currentText() == tr("Playing in the Dark")) {
-                    playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "playinginthedark.ogg")));
-                } else if (ui->timerToneSelect->currentText() == tr("Ice Cream Truck")) {
-                    playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "icecream.ogg")));
-                } else if (ui->timerToneSelect->currentText() == tr("Party Complex")) {
-                    playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "party.ogg")));
-                } else if (ui->timerToneSelect->currentText() == tr("Salty Ditty")) {
-                    playlist->addMedia(QMediaContent(QUrl::fromLocalFile(ringtonesPath + "saltyditty.ogg")));
-                }
-                playlist->setPlaybackMode(QMediaPlaylist::Loop);
-                ringtone->setPlaylist(playlist);
-                ringtone->play();
-
-                AudioMan->attenuateStreams();
-            }
-            updateTimers();
-        } else {
-            ui->label_7->setText(timeUntilTimeout.toString("HH:mm:ss"));
-            updateTimers();
-        }
-    });
-    timer->start();
-    updateTimers();
-}
-
-void InfoPaneDropdown::updateTimers() {
-    QStringList parts;
-    if (timer != NULL) {
-        parts.append(timeUntilTimeout.toString("HH:mm:ss"));
-    }
-
-    if (stopwatchRunning) {
-        QTime stopwatchTime = QTime::fromMSecsSinceStartOfDay(0);
-        stopwatchTime = stopwatchTime.addMSecs(stopwatchTimeAdd);
-        stopwatchTime = stopwatchTime.addMSecs(this->stopwatchTime.elapsed());
-        parts.append(stopwatchTime.toString("hh:mm:ss"));
-    }
-
-    if (parts.count() != 0) {
-        emit timerVisibleChanged(true);
-        emit timerChanged(parts.join(" · "));
-    } else {
-        emit timerVisibleChanged(false);
-    }
-}
-
-void InfoPaneDropdown::notificationClosed(uint id, uint reason) {
-    Q_UNUSED(reason)
-    if (id == timerNotificationId) {
-        ringtone->stop();
-        AudioMan->restoreStreams();
-        timerNotificationId = 0;
-    }
-}
-
-void InfoPaneDropdown::on_pushButton_2_clicked()
-{
-    if (timer == NULL) {
-        startTimer(ui->timeEdit->time());
-    } else {
-        if (timer->isActive()) {
-            timer->stop();
-            ui->pushButton_3->setVisible(true);
-            ui->label_7->setEnabled(false);
-            ui->pushButton_2->setText(tr("Resume"));
-            ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-start"));
-        } else {
-            timer->start();
-            ui->pushButton_3->setVisible(false);
-            ui->label_7->setEnabled(true);
-            ui->pushButton_2->setText(tr("Pause"));
-            ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-pause"));
-        }
-    }
-}
-
-void InfoPaneDropdown::on_pushButton_3_clicked()
-{
-    delete timer;
-    timer = NULL;
-    ui->timeEdit->setVisible(true);
-    ui->label_7->setVisible(false);
-    ui->label_7->setEnabled(true);
-    ui->pushButton_2->setText(tr("Start"));
-    ui->pushButton_2->setIcon(QIcon::fromTheme("chronometer-start"));
-    ui->pushButton_3->setVisible(false);
-    emit timerVisibleChanged(false);
-    emit timerEnabledChanged(true);
 }
 
 void InfoPaneDropdown::on_pushButton_7_clicked()
@@ -1703,14 +1477,6 @@ void InfoPaneDropdown::on_resetButton_clicked()
                              QMessageBox::No) == QMessageBox::Yes) {
         settings.clear();
         EndSession(EndSessionWait::logout);
-    }
-}
-
-bool InfoPaneDropdown::isTimerRunning() {
-    if (timer == NULL) {
-        return false;
-    } else {
-        return true;
     }
 }
 
@@ -1917,7 +1683,7 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
     //ui->printLabel->setShowDisabled(true);
     ui->kdeconnectLabel->setShowDisabled(true);
 
-    if (switchingWidget == ui->clockFrame) {
+    if (switchingWidget == overviewFrame) {
         ui->clockLabel->setShowDisabled(false);
     } else if (switchingWidget == ui->statusFrame) {
         ui->batteryLabel->setShowDisabled(false);
@@ -1951,35 +1717,6 @@ void InfoPaneDropdown::on_showNotificationsNo_toggled(bool checked)
     if (checked) {
         settings.setValue("notifications/lockScreen", "none");
     }
-}
-
-void InfoPaneDropdown::on_stopwatchStart_clicked()
-{
-    if (stopwatchRunning) {
-        stopwatchRunning = false;
-        stopwatchTimeAdd += stopwatchTime.elapsed();
-
-        ui->stopwatchReset->setVisible(true);
-        ui->stopwatchStart->setText(tr("Start"));
-        ui->stopwatchStart->setIcon(QIcon::fromTheme("chronometer-start"));
-    } else {
-        stopwatchTime.restart();
-        stopwatchRunning = true;
-
-        ui->stopwatchReset->setVisible(false);
-        ui->stopwatchStart->setText(tr("Stop"));
-        ui->stopwatchStart->setIcon(QIcon::fromTheme("chronometer-pause"));
-    }
-}
-
-void InfoPaneDropdown::on_stopwatchReset_clicked()
-{
-    stopwatchTimeAdd = 0;
-}
-
-void InfoPaneDropdown::on_calendarTodayButton_clicked()
-{
-    ui->calendarWidget->setSelectedDate(QDate::currentDate());
 }
 
 void InfoPaneDropdown::on_MediaSwitch_toggled(bool checked)
@@ -2687,7 +2424,6 @@ void InfoPaneDropdown::on_dateTimeSetDateTimeButton_clicked()
     QDBusConnection::systemBus().call(setMessage);
 
     setupDateTimeSettingsPane();
-    updateDSTNotification();
 }
 
 void InfoPaneDropdown::on_DateTimeNTPSwitch_toggled(bool checked)
@@ -2849,152 +2585,6 @@ void InfoPaneDropdown::on_quietModeMute_clicked()
     ui->quietModeMute->setChecked(true);
 }
 
-RemindersListModel::RemindersListModel(QObject *parent) : QAbstractListModel(parent) {
-    RemindersData = new QSettings("theSuite/theShell.reminders");
-    RemindersData->beginGroup("reminders");
-}
-
-RemindersListModel::~RemindersListModel() {
-    RemindersData->endGroup();
-    RemindersData->deleteLater();
-}
-
-int RemindersListModel::rowCount(const QModelIndex &parent) const {
-    Q_UNUSED(parent)
-    int count = RemindersData->beginReadArray("reminders");
-    RemindersData->endArray();
-    return count;
-}
-
-QVariant RemindersListModel::data(const QModelIndex &index, int role) const {
-    QVariant returnValue;
-
-    RemindersData->beginReadArray("reminders");
-    RemindersData->setArrayIndex(index.row());
-    if (role == Qt::DisplayRole) {
-        returnValue = RemindersData->value("title");
-    } else if (role == Qt::UserRole) {
-        QDateTime activation = RemindersData->value("date").toDateTime();
-        if (activation.daysTo(QDateTime::currentDateTime()) == 0) {
-            returnValue = activation.toString("hh:mm");
-        } else if (activation.daysTo(QDateTime::currentDateTime()) < 7) {
-            returnValue = activation.toString("dddd");
-        } else {
-            returnValue = activation.toString("ddd, dd MMM yyyy");
-        }
-    }
-
-    RemindersData->endArray();
-    return returnValue;
-}
-
-void RemindersListModel::updateData() {
-    emit dataChanged(index(0), index(rowCount()));
-}
-
-RemindersDelegate::RemindersDelegate(QWidget *parent) : QStyledItemDelegate(parent) {
-
-}
-
-void RemindersDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    painter->setFont(option.font);
-
-    QRect textRect;
-    textRect.setLeft(6 * getDPIScaling());
-    textRect.setTop(option.rect.top() + 6 * getDPIScaling());
-    textRect.setBottom(option.rect.top() + option.fontMetrics.height() + 6 * getDPIScaling());
-    textRect.setRight(option.rect.right());
-
-    QRect dateRect;
-    dateRect.setLeft(6 * getDPIScaling());
-    dateRect.setTop(option.rect.top() + option.fontMetrics.height() + 8 * getDPIScaling());
-    dateRect.setBottom(option.rect.top() + option.fontMetrics.height() * 2 + 6 * getDPIScaling());
-    dateRect.setRight(option.rect.right());
-
-    if (option.state & QStyle::State_Selected) {
-        painter->setPen(Qt::transparent);
-        painter->setBrush(option.palette.color(QPalette::Highlight));
-        painter->drawRect(option.rect);
-        painter->setBrush(Qt::transparent);
-        painter->setPen(option.palette.color(QPalette::HighlightedText));
-        painter->drawText(textRect, index.data().toString());
-        painter->drawText(dateRect, index.data(Qt::UserRole).toString());
-    } else if (option.state & QStyle::State_MouseOver) {
-        QColor col = option.palette.color(QPalette::Highlight);
-        col.setAlpha(127);
-        painter->setBrush(col);
-        painter->setPen(Qt::transparent);
-        painter->drawRect(option.rect);
-        painter->setBrush(Qt::transparent);
-        painter->setPen(option.palette.color(QPalette::WindowText));
-        painter->drawText(textRect, index.data().toString());
-        painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
-        painter->drawText(dateRect, index.data(Qt::UserRole).toString());
-    } else {
-        painter->setPen(option.palette.color(QPalette::WindowText));
-        painter->drawText(textRect, index.data().toString());
-        painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
-        painter->drawText(dateRect, index.data(Qt::UserRole).toString());
-    }
-}
-
-QSize RemindersDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    return QSize(option.fontMetrics.width(index.data().toString()), option.fontMetrics.height() * 2 + 14 * getDPIScaling());
-}
-
-void InfoPaneDropdown::on_ReminderCancel_clicked()
-{
-    ui->RemindersStackedWidget->setCurrentIndex(0);
-}
-
-void InfoPaneDropdown::on_ReminderNew_clicked()
-{
-    ui->ReminderTitle->setText("");
-    ui->ReminderDate->setDateTime(QDateTime::currentDateTime().addSecs(3600)); //Current date + 1 hour
-    ui->RemindersStackedWidget->setCurrentIndex(1);
-}
-
-void InfoPaneDropdown::on_ReminderCreate_clicked()
-{
-    if (ui->ReminderTitle->text() == "") {
-        return;
-    }
-
-    QList<QPair<QString, QDateTime>> ReminderData;
-
-    QSettings reminders("theSuite/theShell.reminders");
-    reminders.beginGroup("reminders");
-    int count = reminders.beginReadArray("reminders");
-
-    for (int i = 0; i < count; i++) {
-        reminders.setArrayIndex(i);
-        QPair<QString, QDateTime> data;
-        data.first = reminders.value("title").toString();
-        data.second = reminders.value("date").toDateTime();
-        ReminderData.append(data);
-    }
-
-    QPair<QString, QDateTime> newData;
-    newData.first = ui->ReminderTitle->text();
-    newData.second = ui->ReminderDate->dateTime().addSecs(-ui->ReminderDate->dateTime().time().second());
-    ReminderData.append(newData);
-
-    reminders.endArray();
-    reminders.beginWriteArray("reminders");
-    int i = 0;
-    for (QPair<QString, QDateTime> data : ReminderData) {
-        reminders.setArrayIndex(i);
-        reminders.setValue("title", data.first);
-        reminders.setValue("date", data.second);
-        i++;
-    }
-    reminders.endArray();
-    reminders.endGroup();
-
-    ((RemindersListModel*) ui->RemindersList->model())->updateData();
-    ui->RemindersStackedWidget->setCurrentIndex(0);
-}
-
 void InfoPaneDropdown::on_SuspendLockScreen_toggled(bool checked)
 {
     settings.setValue("lockScreen/showOnSuspend", checked);
@@ -3104,84 +2694,6 @@ void InfoPaneDropdown::on_TwentyFourHourSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_systemIconTheme_currentIndexChanged(int index)
 {
     themeSettings->setValue("icons/theme", ui->systemIconTheme->itemData(index).toString());
-}
-
-void InfoPaneDropdown::on_ReminderDelete_clicked()
-{
-    if (ui->RemindersList->selectionModel()->selectedRows().count() != 0) {
-        //Show delete screen
-        ui->RemindersStackedWidget->setCurrentIndex(2);
-
-        ui->deleteReminderText->setText(ui->RemindersList->model()->data(ui->RemindersList->selectionModel()->selectedRows().first()).toString());
-        ui->deleteReminderTime->setText(ui->RemindersList->model()->data(ui->RemindersList->selectionModel()->selectedRows().first(), Qt::UserRole).toString());
-    }
-}
-
-void InfoPaneDropdown::on_RemindersStackedWidget_currentChanged(int arg1)
-{
-    tVariantAnimation* height = new tVariantAnimation();
-    height->setDuration(250);
-    height->setEasingCurve(QEasingCurve::InOutCubic);
-    height->setStartValue(ui->RemindersStackedWidget->height());
-    if (arg1 == 0) {
-        height->setEndValue((int) (300 * getDPIScaling() - 10));
-        //ui->ClockScrollArea->verticalScrollBar()->setEnabled(true);
-        ui->ClockScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    } else {
-        height->setEndValue(ui->ClockScrollArea->height() - 10);
-        //ui->ClockScrollArea->verticalScrollBar()->setEnabled(false);
-        ui->ClockScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    }
-    connect(height, &tVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->RemindersStackedWidget->setFixedHeight(value.toInt());
-        ui->ClockScrollArea->verticalScrollBar()->setValue(ui->ClockScrollArea->verticalScrollBar()->maximum());
-    });
-    connect(height, &tVariantAnimation::finished, [=] {
-        ui->ClockScrollArea->verticalScrollBar()->setValue(ui->ClockScrollArea->verticalScrollBar()->maximum());
-    });
-    connect(height, SIGNAL(finished()), height, SLOT(deleteLater()));
-    height->start();
-}
-
-void InfoPaneDropdown::on_ReminderDeleteCancel_clicked()
-{
-    //Go back to normal screen
-    ui->RemindersStackedWidget->setCurrentIndex(0);
-}
-
-void InfoPaneDropdown::on_ReminderDeleteButton_clicked()
-{
-    QList<QPair<QString, QDateTime>> ReminderData;
-
-    QSettings reminders("theSuite/theShell.reminders");
-    reminders.beginGroup("reminders");
-    int count = reminders.beginReadArray("reminders");
-
-    for (int i = 0; i < count; i++) {
-        reminders.setArrayIndex(i);
-        QPair<QString, QDateTime> data;
-        data.first = reminders.value("title").toString();
-        data.second = reminders.value("date").toDateTime();
-        ReminderData.append(data);
-    }
-
-    reminders.endArray();
-
-    ReminderData.removeAt(ui->RemindersList->selectionModel()->selectedIndexes().at(0).row());
-
-    reminders.beginWriteArray("reminders");
-    int i = 0;
-    for (QPair<QString, QDateTime> data : ReminderData) {
-        reminders.setArrayIndex(i);
-        reminders.setValue("title", data.first);
-        reminders.setValue("date", data.second);
-        i++;
-    }
-    reminders.endArray();
-    reminders.endGroup();
-
-    ((RemindersListModel*) ui->RemindersList->model())->updateData();
-    ui->RemindersStackedWidget->setCurrentIndex(0);
 }
 
 void InfoPaneDropdown::on_AttenuateSwitch_toggled(bool checked)
@@ -3307,32 +2819,6 @@ void InfoPaneDropdown::on_userSettingsStandardAccount_toggled(bool checked)
     if (checked) {
         ui->userSettingsStandardAccount->setChecked(true);
         ui->userSettingsAdminAccount->setChecked(false);
-    }
-}
-
-void InfoPaneDropdown::notificationAction(uint id, QString action) {
-    if (id == timerNotificationId) {
-        //Preserve old timer in case user wants to restart it
-        QTime lastTimer = this->lastTimer;
-
-        ringtone->stop();
-        AudioMan->restoreStreams();
-        timerNotificationId = 0;
-
-        if (action == "+0.5") {
-            startTimer(QTime(0, 0, 30));
-        } else if (action == "+1") {
-            startTimer(QTime(0, 1));
-        } else if (action == "+2") {
-            startTimer(QTime(0, 2));
-        } else if (action == "+5") {
-            startTimer(QTime(0, 5));
-        } else if (action == "+10") {
-            startTimer(QTime(0, 10));
-        } else if (action == "restart") {
-            startTimer(lastTimer);
-        }
-        this->lastTimer = lastTimer;
     }
 }
 
@@ -4055,104 +3541,6 @@ void InfoPaneDropdown::on_CompactBarSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::keyPressEvent(QKeyEvent *event) {
 
-}
-
-void InfoPaneDropdown::updateDSTNotification() {
-    launchDateTimeService();
-
-    QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
-    QString currentTimezone = dateTimeInterface.property("Timezone").toString();
-
-    QString timezoneInfoPath = "/usr/share/zoneinfo/" + currentTimezone;
-    QProcess* timezoneProcess = new QProcess();
-    connect(timezoneProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
-        timezoneProcess->deleteLater();
-
-        struct Changeover {
-            QDateTime changeoverDate;
-            bool isDST;
-            int gmtOffset;
-        };
-
-        QList<Changeover> changeovers;
-
-        while (!timezoneProcess->atEnd()) {
-            QStringList parts = QString(timezoneProcess->readLine()).split(" ", QString::SkipEmptyParts);
-            if (parts.length() == 16) {
-                QStringList dateText;
-                dateText.append(parts.at(4));
-                //dateText.append(parts.at(2));
-
-                //I am so sorry :(
-                if (parts.at(2) == "Jan") {
-                    dateText.append("01");
-                } else if (parts.at(2) == "Feb") {
-                    dateText.append("02");
-                } else if (parts.at(2) == "Mar") {
-                    dateText.append("03");
-                } else if (parts.at(2) == "Apr") {
-                    dateText.append("04");
-                } else if (parts.at(2) == "May") {
-                    dateText.append("05");
-                } else if (parts.at(2) == "Jun") {
-                    dateText.append("06");
-                } else if (parts.at(2) == "Jul") {
-                    dateText.append("07");
-                } else if (parts.at(2) == "Aug") {
-                    dateText.append("08");
-                } else if (parts.at(2) == "Sep") {
-                    dateText.append("09");
-                } else if (parts.at(2) == "Oct") {
-                    dateText.append("10");
-                } else if (parts.at(2) == "Nov") {
-                    dateText.append("11");
-                } else if (parts.at(2) == "Dec") {
-                    dateText.append("12");
-                }
-
-                dateText.append(parts.at(5));
-                dateText.append(parts.at(3));
-
-                Changeover c;
-                QString dateConnectedText = dateText.join(" ");
-                c.changeoverDate = QDateTime::fromString(dateConnectedText, "hh:mm:ss MM yyyy d");
-                c.changeoverDate.setTimeSpec(Qt::UTC);
-                c.isDST = parts.at(14).endsWith("1");
-                c.gmtOffset = parts.at(15).mid(7).toInt();
-                changeovers.append(c);
-            }
-        }
-
-        bool showDaylightSavingsPanel = false;
-        Changeover changeover;
-        QDateTime current = QDateTime::currentDateTimeUtc();
-        QDateTime currentLocal = QDateTime::currentDateTime();
-
-        for (int i = 0; i < changeovers.count(); i++) {
-            Changeover c = changeovers.at(i);
-
-            int days = current.daysTo(c.changeoverDate);
-            if (days > 0 && days < 14) {
-                if ((currentLocal.isDaylightTime() && !c.isDST) || (!currentLocal.isDaylightTime() && c.isDST)) {
-                    showDaylightSavingsPanel = true;
-                    changeover = c;
-                }
-            }
-        }
-
-        if (showDaylightSavingsPanel) {
-            ui->dstPanel->setVisible(true);
-            ui->dstLabel->setText(tr("On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).", nullptr, 1)
-                                  .arg(QLocale().toString(changeover.changeoverDate.toLocalTime(), "ddd dd MMM yyyy"))
-                                  //: This is used during Daylight Savings notifications and will appear as "On [date], Daylight Savings Time will (begin|end)".
-                                  .arg(currentLocal.isDaylightTime() ? tr("end", "Context: \"Daylight Savings Time will end.\"") : tr("begin", "Context: \"Daylight Savings Time will begin.\""))
-                                  //: This is used during Daylight Savings notifications and will appear as "The clock will automatically adjust (forwards|backwards) by [hours] hour(s).".
-                                  .arg(currentLocal.isDaylightTime() ? tr("backwards", "Context: \"The clock will automatically adjust backwards\"") : tr("forwards", "Context: \"The clock will automatically adjust forwards\"")));
-        } else {
-            ui->dstPanel->setVisible(false);
-        }
-    });
-    timezoneProcess->start("zdump -v " + timezoneInfoPath);
 }
 
 void InfoPaneDropdown::on_blackColorThemeRadio_toggled(bool checked)

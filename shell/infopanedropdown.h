@@ -112,15 +112,12 @@ class InfoPaneDropdown : public QDialog
         void showNoAnimation();
         void dragDown(dropdownType showWith, int y);
         void close();
-        bool isTimerRunning();
         void completeDragDown();
 
     signals:
         void networkLabelChanged(QString label, QIcon icon);
         void closeNotification(int id);
         void numNotificationsChanged(int notifications);
-        void timerChanged(QString timer);
-        void timerVisibleChanged(bool timerVisible);
         void timerEnabledChanged(bool timerEnabled);
         void batteryStretchChanged(bool isOn);
         void flightModeChanged(bool flight);
@@ -144,12 +141,6 @@ class InfoPaneDropdown : public QDialog
         void on_networkLabel_clicked();
 
         void on_notificationsLabel_clicked();
-
-        void on_pushButton_2_clicked();
-
-        void on_pushButton_3_clicked();
-
-        void timerTick();
 
         void on_pushButton_7_clicked();
 
@@ -189,8 +180,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_lockScreenBackground_textEdited(const QString &arg1);
 
-        void notificationClosed(uint id, uint reason);
-
         void newNetworkDevice(QDBusObjectPath device);
 
         void on_TextSwitch_toggled(bool checked);
@@ -221,12 +210,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_showNotificationsNo_toggled(bool checked);
 
-        void on_stopwatchStart_clicked();
-
-        void on_stopwatchReset_clicked();
-
-        void on_calendarTodayButton_clicked();
-
         void on_MediaSwitch_toggled(bool checked);
 
         void on_lightColorThemeRadio_toggled(bool checked);
@@ -236,8 +219,6 @@ class InfoPaneDropdown : public QDialog
         void on_themeButtonColor_currentIndexChanged(int index);
 
         void on_systemFont_currentFontChanged(const QFont &f);
-
-        void updateTimers();
 
         void updateBatteryChart();
 
@@ -295,12 +276,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_quietModeMute_clicked();
 
-        void on_ReminderCancel_clicked();
-
-        void on_ReminderNew_clicked();
-
-        void on_ReminderCreate_clicked();
-
         void on_SuspendLockScreen_toggled(bool checked);
 
         void on_BatteryChargeScrollBar_valueChanged(int value);
@@ -328,14 +303,6 @@ class InfoPaneDropdown : public QDialog
         void on_TwentyFourHourSwitch_toggled(bool checked);
 
         void on_systemIconTheme_currentIndexChanged(int index);
-
-        void on_ReminderDelete_clicked();
-
-        void on_RemindersStackedWidget_currentChanged(int arg1);
-
-        void on_ReminderDeleteCancel_clicked();
-
-        void on_ReminderDeleteButton_clicked();
 
         void on_AttenuateSwitch_toggled(bool checked);
 
@@ -366,8 +333,6 @@ class InfoPaneDropdown : public QDialog
         void on_userSettingsStandardAccount_toggled(bool checked);
 
         void on_userSettingsAdminAccount_toggled(bool checked);
-
-        void notificationAction(uint id, QString action);
 
         void updateAutostart();
 
@@ -455,8 +420,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_CompactBarSwitch_toggled(bool checked);
 
-        void updateDSTNotification();
-
         void on_blackColorThemeRadio_toggled(bool checked);
 
         void on_allowGeoclueAgent_clicked();
@@ -520,8 +483,6 @@ class InfoPaneDropdown : public QDialog
     public slots:
         void getNetworks();
 
-        void startTimer(QTime time);
-
         void on_WifiSwitch_toggled(bool checked);
         void updateStruts();
         void changeSettingsPane(int pane);
@@ -558,20 +519,12 @@ class InfoPaneDropdown : public QDialog
         void paintEvent(QPaintEvent* event);
         bool eventFilter(QObject *obj, QEvent *e);
 
-        QTimer* timer = NULL;
-        int timerNotificationId = 0;
         QTimer* eventTimer;
-        QTime timeUntilTimeout;
-        QTime lastTimer = QTime(0, 0);
         QTime startTime;
         void reject();
 
         QTimer* networkCheckTimer;
         networkAvailability networkOk = Ok;
-
-        QTime stopwatchTime;
-        int stopwatchTimeAdd = 0;
-        bool stopwatchRunning = false;
 
         QSettings settings;
         QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);
@@ -580,6 +533,8 @@ class InfoPaneDropdown : public QDialog
         QSettings* notificationAppSettings = new QSettings("theSuite", "theShell-notifications", this);
         QSettings* gtk3Settings = new QSettings(QDir::homePath() + "/.config/gtk-3.0/settings.ini", QSettings::IniFormat);
         QSettings* locationSettings = new QSettings("theSuite", "theShell-location", this);
+
+        QWidget* overviewFrame = nullptr;
 
         QString editingUserPath;
 
@@ -602,33 +557,6 @@ class InfoPaneDropdown : public QDialog
         QVariantAnimation slice1, slice2, slice3, slice4;
 
         QJsonObject timezoneData;
-};
-
-class RemindersListModel : public QAbstractListModel
-{
-    Q_OBJECT
-
-public:
-    RemindersListModel(QObject *parent = 0);
-    ~RemindersListModel();
-
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-    void updateData();
-
-private:
-    QSettings* RemindersData;
-};
-
-class RemindersDelegate : public QStyledItemDelegate
-{
-    Q_OBJECT
-
-public:
-    RemindersDelegate(QWidget *parent = 0);
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 class InfoPaneNotOnTopLocker {

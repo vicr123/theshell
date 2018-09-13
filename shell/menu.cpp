@@ -237,12 +237,12 @@ void Menu::on_pushButton_clicked()
         ui->stackedWidget->setCurrentIndex(1);
 
         ui->endSessionWarnings->clear();
-        if (MainWin->getInfoPane()->isTimerRunning()) {
+        /*if (MainWin->getInfoPane()->isTimerRunning()) {
             QListWidgetItem* item = new QListWidgetItem;
             item->setText("A timer is currently running");
             item->setIcon(QIcon::fromTheme("chronometer"));
             ui->endSessionWarnings->addItem(item);
-        }
+        }*/
 
         if (screenRecorder->recording()) {
             QListWidgetItem* item = new QListWidgetItem;
