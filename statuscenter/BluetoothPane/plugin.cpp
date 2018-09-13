@@ -18,8 +18,4 @@ QList<StatusCenterPaneObject*> Plugin::availablePanes() {
 void Plugin::loadLanguage(QString language) {
     translator->load(language, QString(SHAREDIR) + "translations");
     QApplication::instance()->installTranslator(translator);
-
-    for (StatusCenterPaneObject* pane : panes) {
-        pane->message("retranslate");
-    }
 }

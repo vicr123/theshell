@@ -681,17 +681,19 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             pluginsIterator.next();
             if (pluginsIterator.fileInfo().suffix() != "so" && pluginsIterator.fileInfo().suffix() != "a") continue;
             QPluginLoader loader(pluginsIterator.filePath());
+            QJsonObject metadata = loader.metaData();
+            if (!metadata.contains("name")) {
+                metadata.insert("name", pluginsIterator.fileName());
+            }
+
             QObject* plugin = loader.instance();
             if (plugin == nullptr) {
-                QJsonObject metadata = loader.metaData();
-                if (!metadata.contains("name")) {
-                    metadata.insert("name", pluginsIterator.fileName());
-                }
                 metadata.insert("error", loader.errorString());
                 errors.append(metadata);
             } else {
                 StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
                 if (p) {
+                    qDebug() << "Loading" << metadata.value("name").toString();
                     p->loadLanguage(QLocale().name());
                     for (StatusCenterPaneObject* pane : p->availablePanes()) {
                         if (pane->name() == "Overview" && pane->type().testFlag(StatusCenterPaneObject::Informational)) {
