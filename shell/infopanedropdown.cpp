@@ -1188,6 +1188,15 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
 }
 
 void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, bool doAnimation) {
+    for (StatusCenterPaneObject* plugin : pluginObjects.values()) {
+        plugin->message("hide");
+        plugin->showing = false;
+    }
+    if (pluginObjects.contains(changeTo)) {
+        pluginObjects.value(changeTo)->message("show");
+        pluginObjects.value(changeTo)->showing = true;
+    }
+
     //Switch to the requested frame
     if (ui->pageStack->currentWidget() == changeTo) return; //Do nothing
 
@@ -1263,15 +1272,6 @@ void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, 
     } else {
         ui->pushButton_5->setEnabled(true);
         ui->pushButton_6->setEnabled(true);
-    }
-
-    for (StatusCenterPaneObject* plugin : pluginObjects.values()) {
-        plugin->message("hide");
-        plugin->showing = false;
-    }
-    if (pluginObjects.contains(changeTo)) {
-        pluginObjects.value(changeTo)->message("show");
-        pluginObjects.value(changeTo)->showing = true;
     }
 }
 
