@@ -857,8 +857,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>182</width>
-              <height>132</height>
+              <width>145</width>
+              <height>108</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_35">
@@ -1331,7 +1331,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>3</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1851,7 +1851,7 @@
                 <item row="5" column="1" colspan="2">
                  <widget class="QLabel" name="label_103">
                   <property name="text">
-                   <string>The Status Bar is a shown when a window is maximised.</string>
+                   <string>The Status Bar is shown when a window is maximised.</string>
                   </property>
                   <property name="wordWrap">
                    <bool>true</bool>
@@ -1990,8 +1990,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>804</width>
-                   <height>671</height>
+                   <width>683</width>
+                   <height>687</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_54">
