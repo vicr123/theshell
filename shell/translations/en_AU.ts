@@ -1242,7 +1242,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2667"/>
         <source>The Status Bar is a shown when a window is maximised.</source>
-        <translation type="unfinished"></translation>
+        <translation>The Status Bar is shown when a window is maximised.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2534"/>
