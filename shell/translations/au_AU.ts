@@ -51,7 +51,7 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="151"/>
         <source>Open Folder</source>
-        <translation></translation>
+        <translation>Open holder</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="158"/>
@@ -93,7 +93,7 @@
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="176"/>
         <source>Saved</source>
-        <translation></translation>
+        <translation>Got it down</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="180"/>
@@ -136,7 +136,7 @@
     <message>
         <location filename="../bthandsfree.cpp" line="89"/>
         <source>In call</source>
-        <translation></translation>
+        <translation>On the cellular</translation>
     </message>
     <message>
         <location filename="../bthandsfree.cpp" line="93"/>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../background.ui" line="29"/>
         <source>Change Background</source>
-        <translation>Change ya grill</translation>
+        <translation>Change the scene</translation>
     </message>
     <message>
         <location filename="../background.ui" line="38"/>
@@ -164,7 +164,7 @@
     <message>
         <location filename="../background.cpp" line="387"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>by the incredible %1</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="498"/>
@@ -187,32 +187,32 @@
     <message>
         <location filename="../choosebackground.ui" line="44"/>
         <source>Inbuilt</source>
-        <translation type="unfinished"></translation>
+        <translation>It&apos;s in there</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="57"/>
         <source>Community</source>
-        <translation type="unfinished"></translation>
+        <translation>By the lovely people</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="70"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Let&apos;s try something different</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="184"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>Some of the lovely images from those community people will appear on the thing.</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="194"/>
         <source>Show Image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Get some info on this thing</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="203"/>
         <source>Change image after</source>
-        <translation type="unfinished"></translation>
+        <translation>Change the image afterwards thanks</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="226"/>
@@ -222,7 +222,7 @@
     <message>
         <location filename="../choosebackground.ui" line="279"/>
         <source>Current Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Current scene</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="325"/>
@@ -237,7 +237,7 @@
     <message>
         <location filename="../choosebackground.ui" line="339"/>
         <source>More Information</source>
-        <translation type="unfinished"></translation>
+        <translation>More info</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="350"/>
@@ -247,7 +247,7 @@
     <message>
         <location filename="../choosebackground.ui" line="379"/>
         <source>Select a file to display as your desktop background</source>
-        <translation type="unfinished"></translation>
+        <translation>Let&apos;s get a file on your background</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="453"/>
@@ -257,27 +257,27 @@
     <message>
         <location filename="../choosebackground.ui" line="461"/>
         <source>Stretch to Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Streeetch it out real good</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="466"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Get that sucker in real close</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="471"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Put it in the middle</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="476"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Keep it going until it stops</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="481"/>
         <source>Zoom and Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Get it close but make sure it fits</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="506"/>
@@ -343,7 +343,7 @@
         <location filename="../networkmanager/networkwidget.cpp" line="422"/>
         <location filename="../networkmanager/networkwidget.cpp" line="482"/>
         <source>Disconnected</source>
-        <translation></translation>
+        <translation>Off the hook</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="377"/>
@@ -424,12 +424,12 @@
     <message>
         <location filename="../endsessionwait.ui" line="146"/>
         <source>Waiting for apps to close...</source>
-        <translation type="unfinished"></translation>
+        <translation>Waiting for those pesky buggers...</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="206"/>
         <source>End Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop it and stop it now</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="300"/>
@@ -472,7 +472,7 @@
     <message>
         <location filename="../endsessionwait.ui" line="494"/>
         <source>Suspend</source>
-        <translation></translation>
+        <translation>Nigh nigh</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="526"/>
@@ -498,7 +498,7 @@
     <message>
         <location filename="../endsessionwait.ui" line="663"/>
         <source>Terminate</source>
-        <translation></translation>
+        <translation>End it</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="680"/>
@@ -659,7 +659,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="838"/>
         <source>Stopwatch</source>
-        <translation></translation>
+        <translation>Time stoppa</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="938"/>
@@ -738,7 +738,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1419"/>
         <source>Apps</source>
-        <translation></translation>
+        <translation>Appies</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1592"/>
@@ -843,7 +843,7 @@
         <location filename="../infopanedropdown.ui" line="2075"/>
         <location filename="../infopanedropdown.ui" line="5812"/>
         <source>Date and Time</source>
-        <translation></translation>
+        <translation>Time and Date</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2084"/>
@@ -920,12 +920,12 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2442"/>
         <source>Only autostart this app in theShell</source>
-        <translation></translation>
+        <translation>Unless it&apos;s in theShell, don&apos;t autostart this baby</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2653"/>
         <source>Use Compact Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Use the smaller bar</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6772"/>
@@ -935,7 +935,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="6782"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>File something wrong</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6792"/>
@@ -1080,7 +1080,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3245"/>
         <source>Accent Color</source>
-        <translation></translation>
+        <translation>The color that matches the walls</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3327"/>
@@ -1140,7 +1140,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3801"/>
         <source>Volume change sound</source>
-        <translation></translation>
+        <translation>Blast the speakers</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3822"/>
@@ -1222,7 +1222,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="4778"/>
         <source>Drag the slider to the right to turn off power management</source>
-        <translation></translation>
+        <translation>Drag the slider off to ya right to turn off power management</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5036"/>
@@ -1244,12 +1244,12 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2667"/>
         <source>The Status Bar is a shown when a window is maximised.</source>
-        <translation type="unfinished"></translation>
+        <translation>The ah status a bar is a shown when a uh window is ah... maximised.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2534"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeah the compact bar is just a smaller squished version of the bar what else do you need.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3076"/>
@@ -1274,7 +1274,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3300"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Dark</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3403"/>
@@ -1284,32 +1284,32 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3761"/>
         <source>Emphasise sending app</source>
-        <translation type="unfinished"></translation>
+        <translation>Make that app drop some notifs on your screen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4811"/>
         <source>Power Button</source>
-        <translation type="unfinished"></translation>
+        <translation>Turny offy button</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4888"/>
         <source>When I press the</source>
-        <translation type="unfinished"></translation>
+        <translation>Look when I press the bloomin&apos;</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4822"/>
         <source>Ask me what to do</source>
-        <translation type="unfinished"></translation>
+        <translation>What&apos;s up</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3060"/>
         <source>Uses Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Uses the location</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3954"/>
         <source>Permission Required</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeah you&apos;re not good enough to do that</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3964"/>
@@ -1319,7 +1319,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3989"/>
         <source>Allow theShell to be a geoclue agent</source>
-        <translation type="unfinished"></translation>
+        <translation>Can we be a secret spy</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4015"/>
@@ -1334,7 +1334,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="4103"/>
         <source>Allow apps to access your physical location</source>
-        <translation type="unfinished"></translation>
+        <translation>Allow apps to hack ya</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4246"/>
@@ -1346,7 +1346,7 @@
         <location filename="../infopanedropdown.ui" line="4307"/>
         <location filename="../infopanedropdown.ui" line="4537"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Boom</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4477"/>
@@ -1356,32 +1356,32 @@
     <message>
         <location filename="../infopanedropdown.ui" line="4831"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Turn it off</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4840"/>
         <source>Reboot</source>
-        <translation type="unfinished">Switch it off and back on</translation>
+        <translation>Switch it off and back on</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4849"/>
         <source>Log Out</source>
-        <translation type="unfinished">Bail out</translation>
+        <translation>Bail out</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4858"/>
         <source>Suspend</source>
-        <translation type="unfinished">Stop it</translation>
+        <translation>Stop it</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4867"/>
         <source>Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Lock it up</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4876"/>
         <source>Turn Off Screen</source>
-        <translation type="unfinished">Cark the screen</translation>
+        <translation>Cark the screen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4996"/>
@@ -1406,19 +1406,19 @@
     <message>
         <location filename="../infopanedropdown.ui" line="5105"/>
         <source>Remove Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove the fancy movement password</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5131"/>
         <location filename="../infopanedropdown.cpp" line="4261"/>
         <location filename="../infopanedropdown.cpp" line="4267"/>
         <source>Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Movey password</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5138"/>
         <source>A mouse password trades security for convenience on the lock screen by substituting your password with a sequence of mouse buttons. &lt;b&gt;This can only be used on the lock screen, not while logging in.&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeah you can move your mouse to log in it&apos;s pretty sweet but &lt;b&gt;this can only be used on the lock screen, not while logging in.&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5222"/>
@@ -1505,7 +1505,12 @@ Items that will be kept if you choose to keep files:
 - Home directory
 - Mail Spool
 - Temporary Files</source>
-        <translation></translation>
+        <translation>Aye aye, do we wanna keep the files from that user?
+
+If you say yeah, we&apos;re gonna keep the following from them:
+- Home directory
+- Mail Spool
+- Temporary Files</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5707"/>
@@ -1621,7 +1626,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../infopanedropdown.ui" line="6418"/>
         <source>Reset Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Start over seriously</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6510"/>
@@ -1661,12 +1666,12 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../infopanedropdown.ui" line="6692"/>
         <source>Processor</source>
-        <translation type="unfinished"></translation>
+        <translation>ya mini computer</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6753"/>
         <source>Desktop Environment</source>
-        <translation></translation>
+        <translation>what are you using seriously</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="528"/>
@@ -1692,7 +1697,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../infopanedropdown.cpp" line="1231"/>
         <source>Timer Elapsed</source>
-        <translation></translation>
+        <translation>the thing is finished</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1232"/>
@@ -1722,7 +1727,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../infopanedropdown.cpp" line="521"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>What</translation>
     </message>
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="1495"/>
@@ -1782,12 +1787,12 @@ Items that will be kept if you choose to keep files:
         <location filename="../infopanedropdown.cpp" line="4217"/>
         <location filename="../infopanedropdown.cpp" line="4237"/>
         <source>Unauthorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Not allowed mate</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2273"/>
         <source>Polkit does not allow you to manage users on the system.</source>
-        <translation type="unfinished"></translation>
+        <translation>What are you doing come on Polkit is keeping you from managing users on the system.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2285"/>
@@ -1831,12 +1836,12 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../infopanedropdown.cpp" line="2846"/>
         <source>Rate History</source>
-        <translation></translation>
+        <translation>yeehaw we&apos;re going fast</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2857"/>
         <source>Application Power Usage</source>
-        <translation></translation>
+        <translation>How much energy are those stinkers using</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3066"/>
@@ -1851,7 +1856,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../infopanedropdown.cpp" line="3070"/>
         <source>Blue</source>
-        <translation></translation>
+        <translation>True blue</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3071"/>
@@ -1905,12 +1910,12 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../infopanedropdown.cpp" line="3847"/>
         <source>Log Out Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Get me outta here right now</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3850"/>
         <source>Logoff Required</source>
-        <translation type="unfinished"></translation>
+        <translation>You&apos;re gonna need to get out</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3853"/>
@@ -2188,22 +2193,22 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="84"/>
         <source>Tablet</source>
-        <translation type="unfinished"></translation>
+        <translation>The mini computer thing</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="86"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeah the big one</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="88"/>
         <source>Phone</source>
-        <translation type="unfinished"></translation>
+        <translation>The not so big one</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="90"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>What you&apos;re using</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="94"/>
@@ -2216,7 +2221,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="80"/>
         <source>KDE Connect</source>
-        <translation type="unfinished">Hookin&apos; up ya KDE</translation>
+        <translation>Hookin&apos; up ya KDE</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="206"/>
@@ -2264,7 +2269,7 @@ Items that will be kept if you choose to keep files:
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="451"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="131"/>
         <source>Locate Device</source>
-        <translation type="unfinished">Find device</translation>
+        <translation>Find device</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="454"/>
@@ -2353,7 +2358,7 @@ Items that will be kept if you choose to keep files:
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="787"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="122"/>
         <source>Ping</source>
-        <translation type="unfinished">Bong</translation>
+        <translation>Ping</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="794"/>
@@ -2469,7 +2474,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="137"/>
         <source>Locate</source>
-        <translation type="unfinished">Find</translation>
+        <translation>Find</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="138"/>
@@ -2585,7 +2590,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../mainwindow.ui" line="365"/>
         <source>Screen Brightness</source>
-        <translation type="unfinished">Lighten up ya screen</translation>
+        <translation>Lighten up ya screen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="429"/>
@@ -2710,12 +2715,12 @@ Items that will be kept if you choose to keep files:
         <location filename="../mainwindow.ui" line="152"/>
         <location filename="../mainwindow.cpp" line="2228"/>
         <source>Open Status Center</source>
-        <translation type="unfinished">Open ya stuff</translation>
+        <translation>Open ya stuff</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2231"/>
         <source>Open System Settings</source>
-        <translation type="unfinished">Open ya settings</translation>
+        <translation>Open ya settings</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2240"/>
@@ -2825,7 +2830,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../menu.ui" line="413"/>
         <source>Puts your computer in a low power state so that it opens up quickly</source>
-        <translation></translation>
+        <translation>We&apos;re gonna put you&apos;re computer in a bit of a coma so it&apos;ll open up a bit quicker next time, maybe</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="423"/>
@@ -2845,7 +2850,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../menu.ui" line="456"/>
         <source>Turns off the screen, but keeps everything else running in the background</source>
-        <translation></translation>
+        <translation>Turn the lights off, but everything is still going</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="472"/>
@@ -2856,7 +2861,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../menu.ui" line="485"/>
         <source>Switches to the logon screen and keeps your session in the background</source>
-        <translation></translation>
+        <translation>We&apos;ll send you off to the login screen but we&apos;ll keep this session going</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="495"/>
@@ -2866,14 +2871,14 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../menu.ui" line="511"/>
         <source>Powers off your computer, but when powered back on, restores the session.</source>
-        <translation></translation>
+        <translation>Say goodbye to the computer, but not really because when you turn it on again we&apos;ll put it back the way it was</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="548"/>
         <location filename="../menu.ui" line="620"/>
         <location filename="../menu.ui" line="700"/>
         <source>Cancel</source>
-        <translation></translation>
+        <translation>none of that</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="595"/>
@@ -3102,7 +3107,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="62"/>
         <source>Network Devices</source>
-        <translation></translation>
+        <translation>fancy connected dongles</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="127"/>
@@ -3129,7 +3134,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="289"/>
         <source>Edit</source>
-        <translation></translation>
+        <translation>Change it up</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="360"/>
@@ -3145,7 +3150,7 @@ Items that will be kept if you choose to keep files:
         <location filename="../networkmanager/networkwidget.ui" line="473"/>
         <location filename="../networkmanager/networkwidget.ui" line="1444"/>
         <source>Security</source>
-        <translation></translation>
+        <translation>No messin&apos; around</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="516"/>
@@ -3301,7 +3306,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="942"/>
         <source>Authenticated</source>
-        <translation></translation>
+        <translation>We&apos;re in</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="965"/>
@@ -3363,7 +3368,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1316"/>
         <source>Value</source>
-        <translation></translation>
+        <translation>what&apos;dya want</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1418"/>
@@ -3388,19 +3393,19 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="139"/>
         <source>Connect to %1?</source>
-        <translation></translation>
+        <translation>Are we gonna hook up with %1?</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="144"/>
         <location filename="../networkmanager/networkwidget.cpp" line="148"/>
         <location filename="../networkmanager/networkwidget.cpp" line="153"/>
         <source>To connect to %1, you&apos;ll need to provide a key.</source>
-        <translation></translation>
+        <translation>Look we can&apos;t just let you connect to %1 all willy nilly without a key</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="158"/>
         <source>To connect to %1, you&apos;ll need to provide authentication details.</source>
-        <translation></translation>
+        <translation>Again look you can&apos;t just connect to %1 without the right authentication details like what are you doing come on mate</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="166"/>
@@ -3426,7 +3431,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="559"/>
         <source>Wired</source>
-        <translation></translation>
+        <translation>It&apos;s on there</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="608"/>
@@ -3436,12 +3441,12 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="737"/>
         <source>Connection Error</source>
-        <translation></translation>
+        <translation>Christ we&apos;ve hit an error</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="757"/>
         <source>Enter the information to connect to a new network</source>
-        <translation></translation>
+        <translation>can you put some deets to connect to the new one</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="894"/>
@@ -3645,7 +3650,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../onboarding.ui" line="1045"/>
         <source>Back</source>
-        <translation></translation>
+        <translation>no no wait go back</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="1056"/>
@@ -3657,7 +3662,7 @@ Items that will be kept if you choose to keep files:
         <location filename="../onboarding.cpp" line="143"/>
         <location filename="../onboarding.cpp" line="394"/>
         <source>Welcome to theShell %1!</source>
-        <translation></translation>
+        <translation>Alright awesome thank you for being here, welcome to theShell %1!</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="212"/>
@@ -3671,7 +3676,7 @@ Items that will be kept if you choose to keep files:
         <location filename="../rundialog.ui" line="29"/>
         <location filename="../rundialog.ui" line="79"/>
         <source>Run</source>
-        <translation></translation>
+        <translation>Do it</translation>
     </message>
     <message>
         <location filename="../rundialog.ui" line="36"/>
@@ -3733,7 +3738,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../segfaultdialog.ui" line="26"/>
         <source>theShell Error</source>
-        <translation></translation>
+        <translation>awh no</translation>
     </message>
     <message>
         <location filename="../segfaultdialog.ui" line="44"/>
@@ -3763,12 +3768,12 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../segfaultdialog.ui" line="143"/>
         <source>Reset theShell and Log Out</source>
-        <translation></translation>
+        <translation>yeah can we just start over</translation>
     </message>
     <message>
         <location filename="../segfaultdialog.ui" line="154"/>
         <source>Log Out</source>
-        <translation></translation>
+        <translation>send me home</translation>
     </message>
     <message>
         <location filename="../segfaultdialog.cpp" line="31"/>
@@ -3793,7 +3798,7 @@ Items that will be kept if you choose to keep files:
         <location filename="../systrayicons.cpp" line="50"/>
         <location filename="../systrayicons.cpp" line="67"/>
         <source>System Tray Unavailable.</source>
-        <translation></translation>
+        <translation>Something&apos;s wrong with the tray mate</translation>
     </message>
 </context>
 <context>
@@ -3833,7 +3838,9 @@ Items that will be kept if you choose to keep files:
         <source>- Open apps by typing in the name of the app
 - Get information about playing media by typing in &quot;current song&quot; (or something like that)
 - Open websites by typing in the address</source>
-        <translation></translation>
+        <translation>- If you just type in the name of the app, boom you&apos;re in
+- Do you want the current media? Yeah well great just type in &quot;current song&quot; or something
+- Websites? News? ah no worries we have it all just type the website URL in that thing</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="299"/>
@@ -3868,18 +3875,18 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../upowerdbus.cpp" line="126"/>
         <source>The power cable has been plugged in and the battery is now being charged. Power Stretch has been turned off.</source>
-        <translation></translation>
+        <translation>I&apos;ve just gotten news that the cable&apos;s in there and the battery is getting some charge. I&apos;ve turned that stretchy power off</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="128"/>
         <source>The power cable has been plugged in and the battery is now being charged.</source>
-        <translation></translation>
+        <translation>Awesome im getting some charge now, thank goodness i was getting a bit hungry</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="165"/>
         <location filename="../upowerdbus.cpp" line="308"/>
         <source>Discharging</source>
-        <translation></translation>
+        <translation>I&apos;m KINDA charging but not really</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="166"/>
@@ -3916,7 +3923,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../upowerdbus.cpp" line="224"/>
         <source>Battery Warning</source>
-        <translation></translation>
+        <translation>somethings bad with the battery</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="225"/>
@@ -3939,7 +3946,7 @@ Items that will be kept if you choose to keep files:
         <location filename="../upowerdbus.cpp" line="257"/>
         <location filename="../upowerdbus.cpp" line="318"/>
         <source>Not Charging</source>
-        <translation></translation>
+        <translation>Yeah sorry mate we&apos;re just not getting any charge here</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="262"/>
@@ -3965,7 +3972,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../upowerdbus.cpp" line="298"/>
         <source>%1 battery unavailable. Device trusted?</source>
-        <translation></translation>
+        <translation>%1 battery unavailable. can we trust this thing</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="302"/>
@@ -3980,12 +3987,12 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../upowerdbus.cpp" line="348"/>
         <source>%1% battery on %2 (Charging)</source>
-        <translation></translation>
+        <translation>%1% battery on %2 (It&apos;s going good)</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="351"/>
         <source>%1% battery on %2 (Discharging)</source>
-        <translation></translation>
+        <translation>%1% battery on %2 (It&apos;s sorta charging but not really hmm)</translation>
     </message>
 </context>
 <context>
@@ -4034,7 +4041,7 @@ Enter the name or path of a window manager to attempt to start a different windo
     <message>
         <location filename="../screenshotwindow.ui" line="129"/>
         <source>Highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Light it up</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="162"/>
@@ -4044,7 +4051,7 @@ Enter the name or path of a window manager to attempt to start a different windo
     <message>
         <location filename="../screenshotwindow.ui" line="179"/>
         <source>Copy</source>
-        <translation></translation>
+        <translation>Do that over</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="196"/>
@@ -4054,7 +4061,7 @@ Enter the name or path of a window manager to attempt to start a different windo
     <message>
         <location filename="../screenshotwindow.ui" line="223"/>
         <source>Reset Modificiations</source>
-        <translation type="unfinished"></translation>
+        <translation>Do it over again</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.cpp" line="351"/>
