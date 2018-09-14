@@ -229,11 +229,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../choosebackground.ui" line="325"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../choosebackground.ui" line="332"/>
         <source>License</source>
         <translation type="unfinished"></translation>
@@ -589,7 +584,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="512"/>
-        <location filename="../infopanedropdown.cpp" line="2619"/>
+        <location filename="../infopanedropdown.cpp" line="2557"/>
         <source>Charge History</source>
         <translation>Pin lịch sử</translation>
     </message>
@@ -1067,11 +1062,6 @@
         <translation>Trong &amp;cửa</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1854"/>
-        <source>The Status Bar is a shown when a window is maximised.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="1721"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
         <translation>Thanh nhỏ là nhỏ hơn thanh thường thường. Nó xếp mọi thứ trong một hàng để tiết kiệm không gian dọc.</translation>
@@ -1284,6 +1274,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="1854"/>
+        <source>The Status Bar is shown when a window is maximised.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="2494"/>
         <source>&amp;Gray</source>
         <translation>&amp;Xám</translation>
@@ -1320,7 +1315,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3433"/>
-        <location filename="../infopanedropdown.cpp" line="3718"/>
+        <location filename="../infopanedropdown.cpp" line="3656"/>
         <source>Keyboard Layout</source>
         <translation>Bố cục bàn phím</translation>
     </message>
@@ -1357,8 +1352,8 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4450"/>
-        <location filename="../infopanedropdown.cpp" line="3809"/>
-        <location filename="../infopanedropdown.cpp" line="3815"/>
+        <location filename="../infopanedropdown.cpp" line="3747"/>
+        <location filename="../infopanedropdown.cpp" line="3753"/>
         <source>Mouse Password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1379,7 +1374,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4681"/>
-        <location filename="../infopanedropdown.cpp" line="2228"/>
+        <location filename="../infopanedropdown.cpp" line="2229"/>
         <source>Edit User</source>
         <translation>Sửa người</translation>
     </message>
@@ -1396,15 +1391,15 @@
     <message>
         <location filename="../infopanedropdown.ui" line="4742"/>
         <location filename="../infopanedropdown.ui" line="4765"/>
-        <location filename="../infopanedropdown.cpp" line="2232"/>
         <location filename="../infopanedropdown.cpp" line="2233"/>
+        <location filename="../infopanedropdown.cpp" line="2234"/>
         <source>(unchanged)</source>
         <translation>(chưa đổi)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4749"/>
-        <location filename="../infopanedropdown.cpp" line="2272"/>
-        <location filename="../infopanedropdown.cpp" line="2277"/>
+        <location filename="../infopanedropdown.cpp" line="2273"/>
+        <location filename="../infopanedropdown.cpp" line="2278"/>
         <source>Username</source>
         <translation>Tên người dùng</translation>
     </message>
@@ -1584,7 +1579,7 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5828"/>
-        <location filename="../infopanedropdown.cpp" line="1479"/>
+        <location filename="../infopanedropdown.cpp" line="1480"/>
         <source>Reset theShell</source>
         <translation>Đặt lại theShell</translation>
     </message>
@@ -1604,27 +1599,27 @@ Tập tin này có thể giữ lại:
         <translation>Môi trường desktop</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2776"/>
+        <location filename="../infopanedropdown.cpp" line="2714"/>
         <source>Blue</source>
         <translation>Xanh trời</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2777"/>
+        <location filename="../infopanedropdown.cpp" line="2715"/>
         <source>Green</source>
         <translation>Xanh lá</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2778"/>
+        <location filename="../infopanedropdown.cpp" line="2716"/>
         <source>Orange</source>
         <translation>Cam</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2779"/>
+        <location filename="../infopanedropdown.cpp" line="2717"/>
         <source>Pink</source>
         <translation>Hồng</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2780"/>
+        <location filename="../infopanedropdown.cpp" line="2718"/>
         <source>Turquoise</source>
         <translation>Ngọc lam</translation>
     </message>
@@ -1649,12 +1644,12 @@ Tập tin này có thể giữ lại:
         <translation>theShell %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1453"/>
+        <location filename="../infopanedropdown.cpp" line="1454"/>
         <source>Current Battery Percentage: %1</source>
         <translation>Pin: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1457"/>
+        <location filename="../infopanedropdown.cpp" line="1458"/>
         <source>theShell Uptime: %1</source>
         <translation>Thời gian hoạt động theShell: %1</translation>
     </message>
@@ -1669,398 +1664,196 @@ Tập tin này có thể giữ lại:
         <translation>Không xác định</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="1466"/>
+        <location filename="../infopanedropdown.cpp" line="1467"/>
         <source>%n days</source>
         <translation>
             <numerusform>%n ngày</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1470"/>
+        <location filename="../infopanedropdown.cpp" line="1471"/>
         <source>System Uptime: %1</source>
         <translation>Thời gian hoạt động máy: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1472"/>
+        <location filename="../infopanedropdown.cpp" line="1473"/>
         <source>Couldn&apos;t get system uptime</source>
         <translation>Không được tìm thời gian hoạt động máy</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1480"/>
+        <location filename="../infopanedropdown.cpp" line="1481"/>
         <source>All settings will be reset to default, and you will be logged out. Are you sure you want to do this?</source>
         <translation>Cài đặt đặt lãi vay đang xuất. Bạn có chắc chắn không?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1997"/>
+        <location filename="../infopanedropdown.cpp" line="1998"/>
         <source>Last updated %1</source>
         <translation>Cập nhật cuối cùng ở %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2035"/>
+        <location filename="../infopanedropdown.cpp" line="2036"/>
         <source>Log in to network</source>
         <translation>Đăng nhập vào mạng</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2041"/>
+        <location filename="../infopanedropdown.cpp" line="2042"/>
         <source>Network Login</source>
         <translation>Đăng nhập vào internet</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2042"/>
+        <location filename="../infopanedropdown.cpp" line="2043"/>
         <source>Your connection to the internet is blocked by a login page.</source>
         <translation>Mạng của bạn với internet bị chặn bởi trang đăng nhập.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2195"/>
+        <location filename="../infopanedropdown.cpp" line="2196"/>
         <source>Add New User</source>
         <translation>Người mới</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2207"/>
-        <location filename="../infopanedropdown.cpp" line="3765"/>
-        <location filename="../infopanedropdown.cpp" line="3785"/>
+        <location filename="../infopanedropdown.cpp" line="2208"/>
+        <location filename="../infopanedropdown.cpp" line="3703"/>
+        <location filename="../infopanedropdown.cpp" line="3723"/>
         <source>Unauthorized</source>
         <translation>Không được phép</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2207"/>
+        <location filename="../infopanedropdown.cpp" line="2208"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation>Polkit không cho bạn quản lý người dùng trên thiết bị này.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2219"/>
+        <location filename="../infopanedropdown.cpp" line="2220"/>
         <source>New User</source>
         <translation>Người mới</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2222"/>
         <location filename="../infopanedropdown.cpp" line="2223"/>
-        <location filename="../infopanedropdown.cpp" line="2238"/>
+        <location filename="../infopanedropdown.cpp" line="2224"/>
         <location filename="../infopanedropdown.cpp" line="2239"/>
+        <location filename="../infopanedropdown.cpp" line="2240"/>
         <source>(none)</source>
         <translation>(không có)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2235"/>
         <location filename="../infopanedropdown.cpp" line="2236"/>
+        <location filename="../infopanedropdown.cpp" line="2237"/>
         <source>(set at next login)</source>
         <translation>(Đặt sau khi đăng nhập)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2267"/>
+        <location filename="../infopanedropdown.cpp" line="2268"/>
         <source>Password Check</source>
         <translation>Nhập lại mật khẩu</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2267"/>
+        <location filename="../infopanedropdown.cpp" line="2268"/>
         <source>The passwords don&apos;t match.</source>
         <translation>Mật khẩu không giống nhau.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2272"/>
+        <location filename="../infopanedropdown.cpp" line="2273"/>
         <source>The username must not contain spaces.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2277"/>
+        <location filename="../infopanedropdown.cpp" line="2278"/>
         <source>The username must not contain capital letters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2630"/>
+        <location filename="../infopanedropdown.cpp" line="2568"/>
         <source>Rate History</source>
         <translation>Lịch sử tỷ lệ</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2641"/>
+        <location filename="../infopanedropdown.cpp" line="2579"/>
         <source>Application Power Usage</source>
         <translation>Ứng dụng đang sử dụng điện</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2772"/>
+        <location filename="../infopanedropdown.cpp" line="2710"/>
         <source>Oxygen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2773"/>
+        <location filename="../infopanedropdown.cpp" line="2711"/>
         <source>Breeze</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3017"/>
+        <location filename="../infopanedropdown.cpp" line="2955"/>
         <source>Notifications for %1</source>
         <translation>Thông báo cho %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3025"/>
+        <location filename="../infopanedropdown.cpp" line="2963"/>
         <source>You can&apos;t configure notifications for %1</source>
         <translation>Bạn khong có đặt thông báo cho %1 đựơc</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3162"/>
-        <location filename="../infopanedropdown.cpp" line="3172"/>
-        <location filename="../infopanedropdown.cpp" line="3182"/>
-        <location filename="../infopanedropdown.cpp" line="3192"/>
+        <location filename="../infopanedropdown.cpp" line="3100"/>
+        <location filename="../infopanedropdown.cpp" line="3110"/>
+        <location filename="../infopanedropdown.cpp" line="3120"/>
+        <location filename="../infopanedropdown.cpp" line="3130"/>
         <source>Never</source>
         <translation>Không bao gìơ</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="3164"/>
-        <location filename="../infopanedropdown.cpp" line="3174"/>
-        <location filename="../infopanedropdown.cpp" line="3184"/>
-        <location filename="../infopanedropdown.cpp" line="3194"/>
+        <location filename="../infopanedropdown.cpp" line="3102"/>
+        <location filename="../infopanedropdown.cpp" line="3112"/>
+        <location filename="../infopanedropdown.cpp" line="3122"/>
+        <location filename="../infopanedropdown.cpp" line="3132"/>
         <source>%n min(s)</source>
         <translation>
             <numerusform>%n phút</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3493"/>
+        <location filename="../infopanedropdown.cpp" line="3431"/>
         <source>Log Out Now</source>
         <translation>Đăng xuất ngay</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3496"/>
+        <location filename="../infopanedropdown.cpp" line="3434"/>
         <source>Logoff Required</source>
         <translation>Cần đăng xuất</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3499"/>
+        <location filename="../infopanedropdown.cpp" line="3437"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3501"/>
+        <location filename="../infopanedropdown.cpp" line="3439"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3765"/>
-        <location filename="../infopanedropdown.cpp" line="3785"/>
+        <location filename="../infopanedropdown.cpp" line="3703"/>
+        <location filename="../infopanedropdown.cpp" line="3723"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3780"/>
+        <location filename="../infopanedropdown.cpp" line="3718"/>
         <source>Remove Mouse Password?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3780"/>
+        <location filename="../infopanedropdown.cpp" line="3718"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3810"/>
+        <location filename="../infopanedropdown.cpp" line="3748"/>
         <source>Mouse Password was removed successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3816"/>
+        <location filename="../infopanedropdown.cpp" line="3754"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Internationalisation</name>
-    <message>
-        <location filename="../internationalisation.h" line="78"/>
-        <location filename="../internationalisation.h" line="81"/>
-        <location filename="../internationalisation.h" line="84"/>
-        <location filename="../internationalisation.h" line="87"/>
-        <source>English</source>
-        <translation>Tiếng Anh</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="90"/>
-        <source>Vietnamese</source>
-        <translation>Tiếng Việt</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="93"/>
-        <source>Danish</source>
-        <translation>Tiếng Đan mạch</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="96"/>
-        <source>Dutch</source>
-        <translation>Tiếng Hà Lan</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="102"/>
-        <source>Spanish</source>
-        <translation>Tiếng Tây Ban Nha</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="105"/>
-        <source>Russian</source>
-        <translation>Tiếng Nga</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="108"/>
-        <source>Swedish</source>
-        <translation>Tiếng Thụy Điển</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="111"/>
-        <source>Lithuanian</source>
-        <translation>Tiếng Litva</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="168"/>
-        <source>Polish</source>
-        <translation>Tiếng Ba Lan</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="147"/>
-        <source>Afrikaans</source>
-        <translation>Tiếng Nam Phi</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="120"/>
-        <source>Australian</source>
-        <translation>Tiếng Úc</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="148"/>
-        <source>Arabic</source>
-        <translation>Tiếng Ả Rập</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="149"/>
-        <source>Bulgarian</source>
-        <translation>Tiếng Bungari</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="150"/>
-        <source>Catalan</source>
-        <translation>Tiếng Catalunya</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="152"/>
-        <source>Croatian</source>
-        <translation>Tiếng Croatia</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="153"/>
-        <source>Czech</source>
-        <translation>Tiếng Séc</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="154"/>
-        <source>Estonian</source>
-        <translation>Tiếng Estonia</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="155"/>
-        <source>Finnish</source>
-        <translation>Tiếng Phần Lan</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="158"/>
-        <source>Greek</source>
-        <translation>Tiếng Hy Lạp</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="159"/>
-        <source>Hebrew</source>
-        <translation>Tiếng Hebrew</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="160"/>
-        <source>Hungarian</source>
-        <translation>Tiếng Hungary</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="161"/>
-        <source>Italian</source>
-        <translation>Tiếng Ý</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="162"/>
-        <source>Icelandic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="163"/>
-        <source>Indonesian</source>
-        <translation>Tiếng Indonesia</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="164"/>
-        <source>Japanese</source>
-        <translation>Tiếng Nhật</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="165"/>
-        <source>Korean</source>
-        <translation>Tiếng Hàn Quốc</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="166"/>
-        <source>Latvian</source>
-        <translation>Tiếng Latvia</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="169"/>
-        <source>Portuguese</source>
-        <translation>Tiếng Bồ Đào Nha</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="170"/>
-        <source>Serbian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="171"/>
-        <source>Slovak</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="172"/>
-        <source>Slovenian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="173"/>
-        <source>Tagalog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="174"/>
-        <source>Thai</source>
-        <translation>Tiếng Thái</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="175"/>
-        <source>Turkish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="176"/>
-        <source>Ukranian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="151"/>
-        <source>Chinese</source>
-        <translation>Tiếng Trung Quốc</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="156"/>
-        <source>French</source>
-        <translation>Tiếng Pháp</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="167"/>
-        <source>Māori</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="99"/>
-        <location filename="../internationalisation.h" line="157"/>
-        <source>German</source>
-        <translation>Tiếng Đức</translation>
     </message>
 </context>
 <context>
@@ -3394,12 +3187,12 @@ Tập tin này có thể giữ lại:
 <context>
     <name>NotificationAppGroup</name>
     <message>
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="123"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="124"/>
         <source>Collapse Notifications</source>
         <translation>Thu gọn thông báo</translation>
     </message>
     <message numerus="yes">
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="126"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="127"/>
         <source>+%n notifications collapsed</source>
         <translation>
             <numerusform>+%n thông báo đã thu gọn</numerusform>
@@ -3481,7 +3274,7 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../onboarding.ui" line="1056"/>
-        <location filename="../onboarding.cpp" line="196"/>
+        <location filename="../onboarding.cpp" line="199"/>
         <source>Next</source>
         <translation>Tiếp</translation>
     </message>
@@ -3566,13 +3359,13 @@ Tập tin này có thể giữ lại:
         <translation>Lại</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="143"/>
-        <location filename="../onboarding.cpp" line="394"/>
+        <location filename="../onboarding.cpp" line="144"/>
+        <location filename="../onboarding.cpp" line="334"/>
         <source>Welcome to theShell %1!</source>
         <translation>Chào mừng bạn đến theShell %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="212"/>
+        <location filename="../onboarding.cpp" line="215"/>
         <source>Start</source>
         <translation>Bắt đầu</translation>
     </message>

@@ -103,7 +103,8 @@ SOURCES += main.cpp\
     agent_adaptor.cpp \
     locktypes/mousepassword.cpp \
     notificationsWidget/mediaplayernotification.cpp \
-    location/locationdaemon.cpp
+    location/locationdaemon.cpp \
+    internationalisation.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -211,7 +212,6 @@ TRANSLATIONS += translations/vi_VN.ts \
     translations/au_AU.ts \
     translations/it_IT.ts \
     translations/nb_NO.ts \
-    translations/no_NO.ts \
     translations/ro_RO.ts \
     translations/cy_GB.ts \
     translations/fr_FR.ts
