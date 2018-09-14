@@ -24,6 +24,7 @@
 
 #include <QScroller>
 #include <tvirtualkeyboard.h>
+#include "location/locationdaemon.h"
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
@@ -39,6 +40,8 @@ extern UPowerDBus* updbus;
 extern NotificationsDBusAdaptor* ndbus;
 extern DBusSignals* dbusSignals;
 extern LocationServices* locationServices;
+extern LocationDaemon* geolocation;
+
 
 #define LOWER_INFOPANE InfoPaneNotOnTopLocker locker(this);
 
@@ -3316,69 +3319,36 @@ void InfoPaneDropdown::updateRedshiftTime() {
     ui->startRedshift->setEnabled(false);
     ui->endRedshift->setEnabled(false);
 
-    QDBusMessage getMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "ListActivatableNames");
-    QDBusReply<QStringList> reply = QDBusConnection::systemBus().call(getMessage);
-    if (!reply.value().contains("org.freedesktop.GeoClue2")) {
-        qDebug() << "Can't start GeoClue";
-        return;
-    }
+    geolocation->singleShot()->then([=](Geolocation loc) {
+        QNetworkAccessManager* manager = new QNetworkAccessManager();
+        QNetworkRequest sunriseApi(QUrl(QString("https://api.sunrise-sunset.org/json?lat=%1&lng=%2&formatted=0").arg(loc.latitude).arg(loc.longitude)));
+        sunriseApi.setHeader(QNetworkRequest::UserAgentHeader, QString("theShell/%1").arg(TS_VERSION));
 
-    QDBusMessage launchMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "StartServiceByName");
-    QVariantList args;
-    args.append("org.freedesktop.GeoClue2");
-    args.append((uint) 0);
-    launchMessage.setArguments(args);
+        QNetworkReply* reply = manager->get(sunriseApi);
+        connect(reply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
+            [=](QNetworkReply::NetworkError code){
+            qDebug() << "Error";
+        });
+        connect(reply, &QNetworkReply::finished, [=] {
+            QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+            QJsonObject root = doc.object();
+            if (root.value("status").toString() != "OK") {
+                qDebug() << root.value("status").toString();
+                return;
+            }
 
-    QDBusConnection::systemBus().call(launchMessage);
+            //The time returned should be midway into the transition period, add/remove 30 minutes to compensate
+            QJsonObject results = root.value("results").toObject();
+            QDateTime sunrise = QDateTime::fromString(results.value("sunrise").toString(), Qt::ISODate).toLocalTime().addSecs(-1800);
+            QDateTime sunset = QDateTime::fromString(results.value("sunset").toString(), Qt::ISODate).toLocalTime().addSecs(1800);
 
-    QDBusMessage clientMessage = QDBusMessage::createMethodCall("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.GeoClue2.Manager", "GetClient");
-    QDBusReply<QDBusObjectPath> clientPathReply = QDBusConnection::systemBus().call(clientMessage);
-    geoclueClientPath = clientPathReply.value();
+            ui->startRedshift->setDateTime(sunset);
+            ui->endRedshift->setDateTime(sunrise);
 
-    QDBusInterface clientInterface("org.freedesktop.GeoClue2", geoclueClientPath.path(), "org.freedesktop.GeoClue2.Client", QDBusConnection::systemBus());
-    clientInterface.setProperty("DesktopId", "theshell");
-    QDBusConnection::systemBus().connect(clientInterface.service(), geoclueClientPath.path(), clientInterface.interface(), "LocationUpdated", this, SLOT(updateGeoclueLocation()));
-    clientInterface.call("Start");
-}
-
-void InfoPaneDropdown::updateGeoclueLocation() {
-    QDBusInterface clientInterface("org.freedesktop.GeoClue2", geoclueClientPath.path(), "org.freedesktop.GeoClue2.Client", QDBusConnection::systemBus());
-    QDBusObjectPath locationPath = clientInterface.property("Location").value<QDBusObjectPath>();
-
-    QDBusInterface locationInterface("org.freedesktop.GeoClue2", locationPath.path(), "org.freedesktop.GeoClue2.Location", QDBusConnection::systemBus());
-    double latitude = locationInterface.property("Latitude").toDouble();
-    double longitude = locationInterface.property("Longitude").toDouble();
-
-    QNetworkAccessManager* manager = new QNetworkAccessManager();
-    QNetworkRequest sunriseApi(QUrl(QString("https://api.sunrise-sunset.org/json?lat=%1&lng=%2&formatted=0").arg(latitude).arg(longitude)));
-    sunriseApi.setHeader(QNetworkRequest::UserAgentHeader, QString("theShell/%1").arg(TS_VERSION));
-
-    QNetworkReply* reply = manager->get(sunriseApi);
-    connect(reply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
-        [=](QNetworkReply::NetworkError code){
-        qDebug() << "Error";
+            reply->deleteLater();
+            manager->deleteLater();
+        });
     });
-    connect(reply, &QNetworkReply::finished, [=] {
-        QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-        QJsonObject root = doc.object();
-        if (root.value("status").toString() != "OK") {
-            qDebug() << root.value("status").toString();
-            return;
-        }
-
-        //The time returned should be midway into the transition period, add/remove 30 minutes to compensate
-        QJsonObject results = root.value("results").toObject();
-        QDateTime sunrise = QDateTime::fromString(results.value("sunrise").toString(), Qt::ISODate).toLocalTime().addSecs(-1800);
-        QDateTime sunset = QDateTime::fromString(results.value("sunset").toString(), Qt::ISODate).toLocalTime().addSecs(1800);
-
-        ui->startRedshift->setDateTime(sunset);
-        ui->endRedshift->setDateTime(sunrise);
-
-        reply->deleteLater();
-        manager->deleteLater();
-    });
-
-    clientInterface.call("Stop");
 }
 
 void InfoPaneDropdown::paintEvent(QPaintEvent *event) {
@@ -3951,6 +3921,10 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         } else {
             AudioMan->restoreStreams();
         }
+    } else if (message == "location") {
+        geolocation->singleShot()->then([=](Geolocation loc) {
+            caller->message("location", QVariantList() << loc.latitude << loc.longitude);
+        });
     }
 }
 

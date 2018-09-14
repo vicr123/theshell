@@ -102,7 +102,8 @@ SOURCES += main.cpp\
     location/locationrequestdialog.cpp \
     agent_adaptor.cpp \
     locktypes/mousepassword.cpp \
-    notificationsWidget/mediaplayernotification.cpp
+    notificationsWidget/mediaplayernotification.cpp \
+    location/locationdaemon.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -155,7 +156,8 @@ HEADERS  += mainwindow.h \
     locktypes/mousepassword.h \
     notificationsWidget/mediaplayernotification.h \
     statuscenter/statuscenterpane.h \
-    statuscenter/statuscenterpaneobject.h
+    statuscenter/statuscenterpaneobject.h \
+    location/locationdaemon.h
 
 FORMS    += mainwindow.ui \
     menu.ui \

@@ -167,6 +167,8 @@ void Overview::message(QString name, QVariantList args) {
     } else if (name == "hide") {
         animationTimer->stop();
         randomObjectTimer->stop();
+    } else if (name == "location") {
+        updateGeoclueLocation(args.at(0).toDouble(), args.at(1).toDouble());
     }
 }
 
@@ -539,23 +541,10 @@ void Overview::updateWeather() {
         ui->yahooAttribLabel->setVisible(true);
         if (!weatherAvailable) ui->weatherInfo->setText(tr("Waiting for location information..."));
 
-        QDBusMessage getMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "ListActivatableNames");
-        QDBusReply<QStringList> reply = QDBusConnection::systemBus().call(getMessage);
-        if (!reply.value().contains("org.freedesktop.GeoClue2")) {
-            if (!weatherAvailable) ui->weatherInfo->setText(tr("No location information available"));
-            return;
-        }
-
-        QDBusConnection::systemBus().interface()->startService("org.freedesktop.GeoClue2");
-
-        QDBusMessage clientMessage = QDBusMessage::createMethodCall("org.freedesktop.GeoClue2", "/org/freedesktop/GeoClue2/Manager", "org.freedesktop.GeoClue2.Manager", "GetClient");
-        QDBusReply<QDBusObjectPath> clientPathReply = QDBusConnection::systemBus().call(clientMessage);
-        geoclueClientPath = clientPathReply.value();
-
-        QDBusInterface clientInterface("org.freedesktop.GeoClue2", geoclueClientPath.path(), "org.freedesktop.GeoClue2.Client", QDBusConnection::systemBus());
-        clientInterface.setProperty("DesktopId", "theshell-weather");
-        QDBusConnection::systemBus().connect(clientInterface.service(), geoclueClientPath.path(), clientInterface.interface(), "LocationUpdated", this, SLOT(updateGeoclueLocation()));
-        clientInterface.asyncCall("Start");
+        //Request location from theShell
+        QTimer::singleShot(0, [=] {
+            sendMessage("location", QVariantList() << "theshell-overview");
+        });
 
         //Get Yahoo attribution images
         if (yahooAttribLight.isNull()) {
@@ -577,14 +566,7 @@ void Overview::updateWeather() {
     }
 }
 
-void Overview::updateGeoclueLocation() {
-    QDBusInterface clientInterface("org.freedesktop.GeoClue2", geoclueClientPath.path(), "org.freedesktop.GeoClue2.Client", QDBusConnection::systemBus());
-    QDBusObjectPath locationPath = clientInterface.property("Location").value<QDBusObjectPath>();
-
-    QDBusInterface locationInterface("org.freedesktop.GeoClue2", locationPath.path(), "org.freedesktop.GeoClue2.Location", QDBusConnection::systemBus());
-    double latitude = locationInterface.property("Latitude").toDouble();
-    double longitude = locationInterface.property("Longitude").toDouble();
-
+void Overview::updateGeoclueLocation(double latitude, double longitude) {
     QString temperatureUnitQuery;
     if (settings.value("overview/weatherInCelsius", true).toBool()) {
         temperatureUnitQuery = "c";
@@ -651,11 +633,6 @@ void Overview::updateGeoclueLocation() {
         ui->weatherInfo->setText(weatherText);
         weatherAvailable = true;
     });
-    /*connect(reply, &QNetworkReply::error, [=] {
-        ui->weatherInfo->setText(tr("Couldn't retrieve weather information"));
-    });*/
-
-    clientInterface.call("Stop");
 }
 
 WeatherCondition::WeatherCondition() {

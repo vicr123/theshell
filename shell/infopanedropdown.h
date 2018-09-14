@@ -402,8 +402,6 @@ class InfoPaneDropdown : public QDialog
 
         void updateRedshiftTime();
 
-        void updateGeoclueLocation();
-
         void on_systemGTK3Theme_currentIndexChanged(int index);
 
         void on_systemFontSize_valueChanged(int arg1);

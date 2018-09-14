@@ -83,7 +83,7 @@ class Overview : public QWidget, public StatusCenterPaneObject
 
         void updateWeather();
 
-        void updateGeoclueLocation();
+        void updateGeoclueLocation(double latitude, double longitude);
 
         void setAttribution(int attrib);
 

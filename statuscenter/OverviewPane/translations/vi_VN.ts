@@ -39,60 +39,55 @@
         <translation>Chào buổi tối %1!</translation>
     </message>
     <message numerus="yes">
-        <location filename="../overview.cpp" line="397"/>
+        <location filename="../overview.cpp" line="399"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="400"/>
+        <location filename="../overview.cpp" line="402"/>
         <source>end</source>
         <comment>Context: &quot;Daylight Savings Time will end.&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="400"/>
+        <location filename="../overview.cpp" line="402"/>
         <source>begin</source>
         <comment>Context: &quot;Daylight Savings Time will begin.&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="402"/>
+        <location filename="../overview.cpp" line="404"/>
         <source>backwards</source>
         <comment>Context: &quot;The clock will automatically adjust backwards&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="402"/>
+        <location filename="../overview.cpp" line="404"/>
         <source>forwards</source>
         <comment>Context: &quot;The clock will automatically adjust forwards&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="540"/>
+        <location filename="../overview.cpp" line="542"/>
         <source>Waiting for location information...</source>
         <translation>Đang chờ cho vị trí...</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="545"/>
-        <source>No location information available</source>
-        <translation>Không có thông tin vị trí</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="615"/>
-        <location filename="../overview.cpp" line="621"/>
-        <location filename="../overview.cpp" line="628"/>
+        <location filename="../overview.cpp" line="597"/>
+        <location filename="../overview.cpp" line="603"/>
+        <location filename="../overview.cpp" line="610"/>
         <source>Couldn&apos;t retrieve weather information</source>
         <translation>Không được tải thông tin thời tiết</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="645"/>
+        <location filename="../overview.cpp" line="627"/>
         <source>%2°%3 in %1 %4.</source>
         <translation>%2°%3 ở %1 %4.</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="648"/>
+        <location filename="../overview.cpp" line="630"/>
         <source>Expect a high of %1°%2 and a low of %3°%2</source>
         <translation>Hôm nay nhiệt độ cao là %1°%2 và nhiệt độ thấp là %3°%2</translation>
     </message>
@@ -305,172 +300,172 @@
 <context>
     <name>WeatherCondition</name>
     <message>
-        <location filename="../overview.cpp" line="668"/>
+        <location filename="../overview.cpp" line="645"/>
         <source>with tornado</source>
         <translation>với lốc xoáy</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="671"/>
+        <location filename="../overview.cpp" line="648"/>
         <source>with tropical storm</source>
         <translation>với bão nhiệt đới</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="674"/>
+        <location filename="../overview.cpp" line="651"/>
         <source>with hurricane</source>
         <translation>với bão</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="677"/>
+        <location filename="../overview.cpp" line="654"/>
         <source>with severe thunderstorms</source>
         <translation>với giông nặng</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="681"/>
+        <location filename="../overview.cpp" line="658"/>
         <source>with thunderstorms</source>
         <translation>với giông</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="684"/>
+        <location filename="../overview.cpp" line="661"/>
         <source>with rain and snow</source>
         <translation>với mưa và tuyết</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="687"/>
+        <location filename="../overview.cpp" line="664"/>
         <source>with rain and sleet</source>
         <translation>với mưa đá</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="690"/>
+        <location filename="../overview.cpp" line="667"/>
         <source>with snow and sleet</source>
         <translation>với mưa đá và tuyết</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="693"/>
+        <location filename="../overview.cpp" line="670"/>
         <source>with freezing drizzle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="696"/>
+        <location filename="../overview.cpp" line="673"/>
         <source>with a drizzle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="699"/>
+        <location filename="../overview.cpp" line="676"/>
         <source>with freezing rain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="703"/>
+        <location filename="../overview.cpp" line="680"/>
         <source>with showers</source>
         <translation>vòi hoa sen</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="706"/>
+        <location filename="../overview.cpp" line="683"/>
         <source>with snow flurries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="709"/>
+        <location filename="../overview.cpp" line="686"/>
         <source>with light snow showers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="712"/>
+        <location filename="../overview.cpp" line="689"/>
         <source>with blowing snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="715"/>
+        <location filename="../overview.cpp" line="692"/>
         <source>and snowing</source>
         <translation>với tuyết</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="718"/>
+        <location filename="../overview.cpp" line="695"/>
         <source>with hail</source>
         <translation>với mưa đá</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="721"/>
+        <location filename="../overview.cpp" line="698"/>
         <source>with sleet</source>
         <translation>với mưa đá</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="724"/>
+        <location filename="../overview.cpp" line="701"/>
         <source>with dust</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="727"/>
+        <location filename="../overview.cpp" line="704"/>
         <source>and foggy</source>
         <translation>với sương mù</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="730"/>
+        <location filename="../overview.cpp" line="707"/>
         <source>and smoky</source>
         <translation>với khói</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="733"/>
+        <location filename="../overview.cpp" line="710"/>
         <source>and breezy</source>
         <translation>với gió nặng</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="736"/>
+        <location filename="../overview.cpp" line="713"/>
         <source>and windy</source>
         <translation>với gió</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="739"/>
+        <location filename="../overview.cpp" line="716"/>
         <source>and cloudy</source>
         <translation>với mây</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="743"/>
+        <location filename="../overview.cpp" line="720"/>
         <source>and mostly cloudy</source>
         <translation>với nhiều mây</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="748"/>
+        <location filename="../overview.cpp" line="725"/>
         <source>and partly cloudy</source>
         <translation>với mây</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="754"/>
+        <location filename="../overview.cpp" line="731"/>
         <source>and clear</source>
         <translation>và rõ ràng</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="757"/>
+        <location filename="../overview.cpp" line="734"/>
         <source>with rain and hail</source>
         <translation>với mưa đá</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="761"/>
+        <location filename="../overview.cpp" line="738"/>
         <source>with isolated thunderstorms</source>
         <translation>với giông</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="765"/>
+        <location filename="../overview.cpp" line="742"/>
         <source>with scattered thunderstorms</source>
         <translation>với giông rải rác</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="768"/>
+        <location filename="../overview.cpp" line="745"/>
         <source>with scattered showers</source>
         <translation>vòi hoa sen rải rác</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="772"/>
+        <location filename="../overview.cpp" line="749"/>
         <source>with heavy snow</source>
         <translation>với tuyết nặng</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="775"/>
+        <location filename="../overview.cpp" line="752"/>
         <source>with scattered snow showers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="778"/>
+        <location filename="../overview.cpp" line="755"/>
         <source>with snow showers</source>
         <translation type="unfinished"></translation>
     </message>

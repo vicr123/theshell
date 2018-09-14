@@ -50,6 +50,7 @@
 #include <libunwind.h>
 #include <cxxabi.h>
 #include <QFile>
+#include "location/locationdaemon.h"
 
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
@@ -64,6 +65,7 @@ UPowerDBus* updbus = NULL;
 NotificationsDBusAdaptor* ndbus = NULL;
 DBusSignals* dbusSignals = NULL;
 QSettings::Format desktopFileFormat;
+LocationDaemon* geolocation = nullptr;
 ScreenRecorder* screenRecorder = nullptr;
 
 #define ONBOARDING_VERSION 6
@@ -368,9 +370,11 @@ int main(int argc, char *argv[])
         }
     }
 
+    locationServices = new LocationServices();
     TutorialWin = new TutorialWindow(tutorialDoSettings);
     AudioMan = new AudioManager;
     screenRecorder = new ScreenRecorder;
+    geolocation = new LocationDaemon;
 
     if (!QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect") && QFile("/usr/lib/kdeconnectd").exists()) {
         //Start KDE Connect if it is not running and it is existant on the PC
@@ -382,8 +386,6 @@ int main(int argc, char *argv[])
     //QObject::connect(&btProcess, SIGNAL(started()), &waiter, SLOT(quit()));
     //waiter.exec();
     //Wait for ts-bt to start so that the Bluetooth toggle will work properly
-
-    locationServices = new LocationServices();
 
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
