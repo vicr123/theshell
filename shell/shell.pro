@@ -227,7 +227,7 @@ PRE_TARGETDEPS = genlang rellang
 unix {
     target.path = /usr/bin/
 
-    translations.files = translations/*.qm
+    translations.files = translations/*
     xsession.path = /usr/share/xsessions
 
     headers.files = statuscenter/statuscenterpane.h statuscenter/statuscenterpaneobject.h
