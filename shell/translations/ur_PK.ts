@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_NZ" sourcelanguage="en_US">
+<TS version="2.1">
 <context>
     <name>AppsListModel</name>
     <message>
@@ -249,6 +249,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../choosebackground.ui" line="391"/>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../choosebackground.ui" line="453"/>
         <source>Image Sizing</source>
         <translation type="unfinished"></translation>
@@ -281,11 +286,6 @@
     <message>
         <location filename="../choosebackground.ui" line="506"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../choosebackground.ui" line="391"/>
-        <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -415,14 +415,14 @@
 <context>
     <name>EndSessionWait</name>
     <message>
-        <location filename="../endsessionwait.ui" line="180"/>
-        <location filename="../endsessionwait.ui" line="770"/>
-        <source>Cancel</source>
+        <location filename="../endsessionwait.ui" line="146"/>
+        <source>Waiting for apps to close...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../endsessionwait.ui" line="146"/>
-        <source>Waiting for apps to close...</source>
+        <location filename="../endsessionwait.ui" line="180"/>
+        <location filename="../endsessionwait.ui" line="770"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -769,6 +769,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="1767"/>
+        <location filename="../infopanedropdown.ui" line="3034"/>
+        <location filename="../infopanedropdown.ui" line="3119"/>
+        <source>HH:mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="1778"/>
         <source>Turn off at</source>
         <translation type="unfinished"></translation>
@@ -805,6 +812,13 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2021"/>
         <source>Sounds and Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2030"/>
+        <location filename="../infopanedropdown.ui" line="3906"/>
+        <location filename="../infopanedropdown.cpp" line="47"/>
+        <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -914,56 +928,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2653"/>
-        <source>Use Compact Bar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="6772"/>
-        <source>Website</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="6782"/>
-        <source>File Bug</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="6792"/>
-        <source>Sources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="2606"/>
-        <source>Within &amp;Gateway</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="2677"/>
-        <source>Use Status Bar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="2571"/>
-        <source>Automatically show bar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="2698"/>
-        <source>Show windows from other desktops</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="2684"/>
-        <source>Show text on window buttons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="2636"/>
-        <source>Show Bar on bottom of screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="2517"/>
         <source>When this is checked, hovering over the Status Bar will automatically expand the bar. Otherwise, clicking on the Status Bar will expand the bar.</source>
         <translation type="unfinished"></translation>
@@ -974,40 +938,58 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="2534"/>
+        <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2571"/>
+        <source>Automatically show bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2606"/>
+        <source>Within &amp;Gateway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="2613"/>
         <source>Fu&amp;ll Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3051"/>
-        <source>Start Time</source>
+        <location filename="../infopanedropdown.ui" line="2636"/>
+        <source>Show Bar on bottom of screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2914"/>
-        <source>Screen Scaling</source>
+        <location filename="../infopanedropdown.ui" line="2653"/>
+        <source>Use Compact Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3002"/>
-        <source>If the start time is later than the end time, Redshift will be activated until the end time on the next day.</source>
+        <location filename="../infopanedropdown.ui" line="2667"/>
+        <source>The Status Bar is a shown when a window is maximised.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2995"/>
-        <source>End Time</source>
+        <location filename="../infopanedropdown.ui" line="2677"/>
+        <source>Use Status Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3155"/>
-        <source>Redshift Intensity</source>
+        <location filename="../infopanedropdown.ui" line="2684"/>
+        <source>Show text on window buttons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1767"/>
-        <location filename="../infopanedropdown.ui" line="3034"/>
-        <location filename="../infopanedropdown.ui" line="3119"/>
-        <source>HH:mm</source>
+        <location filename="../infopanedropdown.ui" line="2698"/>
+        <source>Show windows from other desktops</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="2853"/>
+        <source>Screen Brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1016,8 +998,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2853"/>
-        <source>Screen Brightness</source>
+        <location filename="../infopanedropdown.ui" line="2914"/>
+        <source>Screen Scaling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1046,13 +1028,53 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3126"/>
-        <source>Scheduled</source>
+        <location filename="../infopanedropdown.ui" line="2995"/>
+        <source>End Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3002"/>
+        <source>If the start time is later than the end time, Redshift will be activated until the end time on the next day.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3041"/>
+        <source>We&apos;ll send your current location to https://sunrise-sunset.org/ to determine sunlight times if you enable this option.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3051"/>
+        <source>Start Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3060"/>
+        <source>Uses Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3076"/>
+        <source>Use Sunlight Cycle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3087"/>
         <source>Pause Redshift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3126"/>
+        <source>Scheduled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3155"/>
+        <source>Redshift Intensity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3245"/>
+        <source>Accent Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1066,6 +1088,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="3300"/>
+        <source>Black</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="3307"/>
         <source>&amp;Gray</source>
         <translation type="unfinished"></translation>
@@ -1076,18 +1103,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3245"/>
-        <source>Accent Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="3327"/>
         <source>Color Scheme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3396"/>
-        <source>Icon Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1096,8 +1113,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="3396"/>
+        <source>Icon Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3403"/>
+        <source>Use for GTK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="3414"/>
         <source>Widget Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3473"/>
+        <source>GTK3 Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3480"/>
+        <source>GTK3 Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1113,41 +1150,6 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3614"/>
         <source>Don&apos;t Show</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3843"/>
-        <source>Attenuate audio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3738"/>
-        <source>Show Notifications on lock screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3850"/>
-        <source>Notification Sound</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3815"/>
-        <source>Show options when connecting media</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3801"/>
-        <source>Volume change sound</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3822"/>
-        <source>Volume overdrive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3751"/>
-        <source>Applications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1176,107 +1178,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4366"/>
-        <source>Use Super Key to open Gateway</source>
+        <location filename="../infopanedropdown.ui" line="3738"/>
+        <source>Show Notifications on lock screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4393"/>
-        <source>Audible Touch Feedback</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="4383"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you&apos;d like to use the Super Key for another key combination, turn this off so that theShell won&apos;t take control of it. &lt;span style=&quot; font-weight:600;&quot;&gt;Changing t&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;his setting requires you to log out and then log back in.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="4359"/>
-        <source>Optimise for touch input</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="4655"/>
-        <location filename="../infopanedropdown.ui" line="4718"/>
-        <source>Suspend after</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="4641"/>
-        <source>When this device is running off battery power,</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="4648"/>
-        <location filename="../infopanedropdown.ui" line="4764"/>
-        <source>Turn off screen after</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="4771"/>
-        <source>When this device is connected to power,</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="4778"/>
-        <source>Drag the slider to the right to turn off power management</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="5036"/>
-        <source>Background</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="5043"/>
-        <source>Lock screen after returning from suspend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="2030"/>
-        <location filename="../infopanedropdown.ui" line="3906"/>
-        <location filename="../infopanedropdown.cpp" line="47"/>
-        <source>Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="2667"/>
-        <source>The Status Bar is a shown when a window is maximised.</source>
-        <translation>The Status Bar is shown when a window is maximised.</translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="2534"/>
-        <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3076"/>
-        <source>Use Sunlight Cycle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3041"/>
-        <source>We&apos;ll send your current location to https://sunrise-sunset.org/ to determine sunlight times if you enable this option.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3473"/>
-        <source>GTK3 Font</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3480"/>
-        <source>GTK3 Theme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3300"/>
-        <source>Black</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="3403"/>
-        <source>Use for GTK</source>
+        <location filename="../infopanedropdown.ui" line="3751"/>
+        <source>Applications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1285,23 +1193,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4811"/>
-        <source>Power Button</source>
+        <location filename="../infopanedropdown.ui" line="3801"/>
+        <source>Volume change sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4888"/>
-        <source>When I press the</source>
+        <location filename="../infopanedropdown.ui" line="3815"/>
+        <source>Show options when connecting media</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4822"/>
-        <source>Ask me what to do</source>
+        <location filename="../infopanedropdown.ui" line="3822"/>
+        <source>Volume overdrive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3060"/>
-        <source>Uses Location</source>
+        <location filename="../infopanedropdown.ui" line="3843"/>
+        <source>Attenuate audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="3850"/>
+        <source>Notification Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1347,8 +1260,65 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="4359"/>
+        <source>Optimise for touch input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4366"/>
+        <source>Use Super Key to open Gateway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4383"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you&apos;d like to use the Super Key for another key combination, turn this off so that theShell won&apos;t take control of it. &lt;span style=&quot; font-weight:600;&quot;&gt;Changing t&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;his setting requires you to log out and then log back in.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4393"/>
+        <source>Audible Touch Feedback</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="4477"/>
         <source>Select Keyboard Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4641"/>
+        <source>When this device is running off battery power,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4648"/>
+        <location filename="../infopanedropdown.ui" line="4764"/>
+        <source>Turn off screen after</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4655"/>
+        <location filename="../infopanedropdown.ui" line="4718"/>
+        <source>Suspend after</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4771"/>
+        <source>When this device is connected to power,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4778"/>
+        <source>Drag the slider to the right to turn off power management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4811"/>
+        <source>Power Button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="4822"/>
+        <source>Ask me what to do</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1382,6 +1352,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="4888"/>
+        <source>When I press the</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="4996"/>
         <source>SuspendLockScreenSwitch</source>
         <translation type="unfinished"></translation>
@@ -1389,6 +1364,16 @@
     <message>
         <location filename="../infopanedropdown.ui" line="5014"/>
         <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="5036"/>
+        <source>Background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="5043"/>
+        <source>Lock screen after returning from suspend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1561,18 +1546,8 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6296"/>
-        <source>HighContrastSwitch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="6259"/>
-        <source>System Animations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.ui" line="6306"/>
-        <source>SystemAnimationsAccessibilitySwitch</source>
+        <location filename="../infopanedropdown.ui" line="6245"/>
+        <source>Large Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1581,8 +1556,8 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6245"/>
-        <source>Large Text</source>
+        <location filename="../infopanedropdown.ui" line="6259"/>
+        <source>System Animations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1596,6 +1571,16 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="6296"/>
+        <source>HighContrastSwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="6306"/>
+        <source>SystemAnimationsAccessibilitySwitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="6319"/>
         <source>CapsNumLockBellSwitch</source>
         <translation type="unfinished"></translation>
@@ -1606,8 +1591,8 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6440"/>
-        <source>The items under here can do some bad things. Make sure you know what you&apos;re doing.</source>
+        <location filename="../infopanedropdown.ui" line="6418"/>
+        <source>Reset Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1617,8 +1602,8 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="6418"/>
-        <source>Reset Device</source>
+        <location filename="../infopanedropdown.ui" line="6440"/>
+        <source>The items under here can do some bad things. Make sure you know what you&apos;re doing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1667,6 +1652,31 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="6772"/>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="6782"/>
+        <source>File Bug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.ui" line="6792"/>
+        <source>Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="59"/>
+        <source>Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="521"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.cpp" line="528"/>
         <source>theShell %1 - Blueprint</source>
         <translation type="unfinished"></translation>
@@ -1675,6 +1685,11 @@ Items that will be kept if you choose to keep files:
         <location filename="../infopanedropdown.cpp" line="529"/>
         <location filename="../infopanedropdown.cpp" line="532"/>
         <source>You compiled theShell on %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="531"/>
+        <source>theShell %1 - Construction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1713,26 +1728,10 @@ Items that will be kept if you choose to keep files:
         <source>theShell Uptime: %1</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../infopanedropdown.cpp" line="59"/>
-        <source>Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.cpp" line="521"/>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../infopanedropdown.cpp" line="531"/>
-        <source>theShell %1 - Construction</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="1500"/>
         <source>%n days</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -1903,7 +1902,6 @@ Items that will be kept if you choose to keep files:
         <source>%n min(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -1929,9 +1927,8 @@ Items that will be kept if you choose to keep files:
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="3960"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
-        <translation>
-            <numerusform>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour.</numerusform>
-            <numerusform>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hours.</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -2011,6 +2008,12 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../internationalisation.h" line="100"/>
+        <location filename="../internationalisation.h" line="161"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../internationalisation.h" line="103"/>
         <source>Spanish</source>
         <translation type="unfinished"></translation>
@@ -2031,16 +2034,6 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../internationalisation.h" line="172"/>
-        <source>Polish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="151"/>
-        <source>Afrikaans</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../internationalisation.h" line="121"/>
         <source>Australian</source>
         <translation type="unfinished"></translation>
@@ -2049,6 +2042,11 @@ Items that will be kept if you choose to keep files:
         <location filename="../internationalisation.h" line="130"/>
         <location filename="../internationalisation.h" line="152"/>
         <source>Arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="151"/>
+        <source>Afrikaans</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2089,12 +2087,6 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../internationalisation.h" line="160"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="100"/>
-        <location filename="../internationalisation.h" line="161"/>
-        <source>German</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2145,6 +2137,11 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../internationalisation.h" line="171"/>
         <source>Māori</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="172"/>
+        <source>Polish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2506,7 +2503,6 @@ Items that will be kept if you choose to keep files:
         <source>Sending as %n messages</source>
         <translation type="unfinished">
             <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -2561,9 +2557,52 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../mainwindow.ui" line="123"/>
+        <location filename="../mainwindow.ui" line="943"/>
+        <source>Open the Gateway to your PC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="152"/>
+        <location filename="../mainwindow.cpp" line="2232"/>
+        <source>Open Status Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="365"/>
+        <source>Screen Brightness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="429"/>
+        <source>You are in Flight Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="484"/>
         <location filename="../mainwindow.ui" line="1227"/>
         <source>No Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="497"/>
+        <source>Your location is currently being used</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="576"/>
+        <source>Stop Screen Recording</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="648"/>
+        <location filename="../mainwindow.cpp" line="266"/>
+        <source>Quiet Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="761"/>
+        <source>Select Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2579,37 +2618,6 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../mainwindow.ui" line="829"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="123"/>
-        <location filename="../mainwindow.ui" line="943"/>
-        <source>Open the Gateway to your PC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="365"/>
-        <source>Screen Brightness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="429"/>
-        <source>You are in Flight Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="497"/>
-        <source>Your location is currently being used</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="576"/>
-        <source>Stop Screen Recording</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="761"/>
-        <source>Select Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2640,12 +2648,6 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../mainwindow.ui" line="1236"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="648"/>
-        <location filename="../mainwindow.cpp" line="266"/>
-        <source>Quiet Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2681,9 +2683,8 @@ Items that will be kept if you choose to keep files:
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="1756"/>
         <source>%n notification(s)</source>
-        <translation>
-            <numerusform>%n notification</numerusform>
-            <numerusform>%n notifications</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -2709,12 +2710,6 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../mainwindow.cpp" line="2231"/>
         <source>For System</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="2232"/>
-        <source>Open Status Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3110,11 +3105,6 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="360"/>
-        <source>Available Networks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../networkmanager/networkwidget.ui" line="127"/>
         <location filename="../networkmanager/networkwidget.ui" line="1382"/>
         <location filename="../networkmanager/networkwidget.cpp" line="903"/>
@@ -3139,6 +3129,11 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="289"/>
         <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="360"/>
+        <source>Available Networks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3282,6 +3277,12 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../networkmanager/networkwidget.ui" line="870"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1056"/>
+        <source>Phase 2 Authentication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../networkmanager/networkwidget.ui" line="884"/>
         <location filename="../networkmanager/networkwidget.ui" line="1066"/>
         <source>Anonymous Identity</source>
@@ -3308,44 +3309,9 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1035"/>
-        <source>PEAP version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1418"/>
-        <source>Enabling Tethering allows your internet connection to be shared from a wired connection. You won&apos;t be able to use Wi-Fi while Tethering is active.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1437"/>
-        <source>Key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1460"/>
-        <source>WPA2 PSK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1503"/>
-        <source>Enable Tethering</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../networkmanager/networkwidget.ui" line="870"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1056"/>
-        <source>Phase 2 Authentication</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1127"/>
-        <source>Auto&amp;matic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../networkmanager/networkwidget.ui" line="1144"/>
-        <source>Version &amp;1</source>
+        <location filename="../networkmanager/networkwidget.ui" line="976"/>
+        <location filename="../networkmanager/networkwidget.ui" line="1094"/>
+        <source>GTC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3355,19 +3321,28 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../networkmanager/networkwidget.ui" line="1035"/>
+        <source>PEAP version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../networkmanager/networkwidget.ui" line="1089"/>
         <source>MD5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.ui" line="976"/>
-        <location filename="../networkmanager/networkwidget.ui" line="1094"/>
-        <source>GTC</source>
+        <location filename="../networkmanager/networkwidget.ui" line="1127"/>
+        <source>Auto&amp;matic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1137"/>
         <source>Version &amp;0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="1144"/>
+        <source>Version &amp;1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3388,6 +3363,26 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1316"/>
         <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="1418"/>
+        <source>Enabling Tethering allows your internet connection to be shared from a wired connection. You won&apos;t be able to use Wi-Fi while Tethering is active.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="1437"/>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="1460"/>
+        <source>WPA2 PSK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.ui" line="1503"/>
+        <source>Enable Tethering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3500,7 +3495,6 @@ Items that will be kept if you choose to keep files:
         <source>+%n notifications collapsed</source>
         <translation type="unfinished">
             <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -3511,7 +3505,6 @@ Items that will be kept if you choose to keep files:
         <source>%n d</source>
         <translation type="unfinished">
             <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -3519,14 +3512,12 @@ Items that will be kept if you choose to keep files:
         <source>%n hr</source>
         <translation type="unfinished">
             <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="58"/>
         <source>%n min</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
