@@ -793,7 +793,7 @@
         <location filename="../infopanedropdown.ui" line="332"/>
         <location filename="../infopanedropdown.ui" line="3017"/>
         <source>Redshift</source>
-        <translation>Redshift</translation>
+        <translation>Rödskift</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3087"/>
@@ -1875,7 +1875,7 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../infopanedropdown.cpp" line="3068"/>
         <source>Oxygen</source>
-        <translation>Oxygen</translation>
+        <translation>Syre</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="3069"/>
@@ -2198,7 +2198,7 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="84"/>
         <source>Tablet</source>
-        <translation>Tablet</translation>
+        <translation>Läsplatta</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="86"/>
