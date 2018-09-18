@@ -1756,7 +1756,7 @@ Saker som kommer sparas ifall du väljer att spara filer
     <message>
         <location filename="../infopanedropdown.cpp" line="531"/>
         <source>theShell %1 - Construction</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell %1 - Konstruktion</translation>
     </message>
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="1500"/>
