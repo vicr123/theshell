@@ -140,6 +140,40 @@ MainWindow::MainWindow(QWidget *parent) :
             });
         }
     });
+    connect(infoPane, &InfoPaneDropdown::statusBarProgress, [=](QString title, QString description, int progress) {
+        this->statusBarPercentage = progress;
+        if (ui->StatusBarProgressTitle->text() != title || ui->StatusBarProgressDescription->text() != description || !statusBarProgressTimer->isActive()) {
+            ui->StatusBarProgressTitle->setText(title);
+            ui->StatusBarProgressDescription->setText(description);
+
+            //Animate in the progress description
+            showStatusBarProgress(true);
+            if (statusBarProgressTimer->isActive()) statusBarProgressTimer->stop();
+            statusBarProgressTimer->start();
+        }
+
+        if (progress == 0) {
+            ui->StatusBarProgressSpinner->setVisible(true);
+        } else {
+            ui->StatusBarProgressSpinner->setVisible(false);
+        }
+
+        ui->StatusBarFrame->update();
+        ui->StatusBarProgressFrame->update();
+    });
+    connect(infoPane, &InfoPaneDropdown::statusBarProgressFinished, [=](QString title, QString description) {
+        this->statusBarPercentage = -2;
+        //ui->StatusBarProgressTitle->setText(title);
+        //ui->StatusBarProgressDescription->setText(description);
+
+        //Animate in the progress description
+        //showStatusBarProgress(true);
+        showStatusBarProgress(false);
+        if (statusBarProgressTimer->isActive()) statusBarProgressTimer->stop();
+
+        ui->StatusBarFrame->update();
+        ui->StatusBarProgressFrame->update();
+    });
     infoPane->getNetworks();
     ui->StatusBarRedshift->setVisible(false);
     ui->keyboardButton->setVisible(false);
@@ -213,6 +247,11 @@ MainWindow::MainWindow(QWidget *parent) :
     });
     updbus->DeviceChanged();
 
+    seperatorWidget = new QWidget();
+    seperatorWidget->setParent(this);
+    seperatorWidget->raise();
+    seperatorWidget->installEventFilter(this);
+
     DBusEvents = new DbusEvents();
 
     QString loginSoundPath = settings.value("sounds/login", "").toString();
@@ -250,6 +289,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarHoverFrame->move(0, -ui->StatusBarHoverFrame->height());
     ui->StatusBarHoverFrame->installEventFilter(this);
     ui->StatusBarFrame->setMouseTracking(true);
+
+    ((QBoxLayout*) ui->centralWidget->layout())->removeWidget(ui->StatusBarProgressFrame);
+    ui->StatusBarProgressFrame->setParent(this);
+    ui->StatusBarProgressFrame->resize(ui->StatusBarFrame->size());
+    ui->StatusBarProgressFrame->move(0, -ui->StatusBarHoverFrame->height());
+    ui->StatusBarProgressFrame->installEventFilter(this);
+    ui->StatusBarProgressFrame->setMouseTracking(true);
 
     QPalette hoverFramePal = this->palette();
     hoverFramePal.setColor(QPalette::Window, hoverFramePal.color(QPalette::Highlight));
@@ -337,6 +383,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->StatusBarFrame->setVisible(false);
     ui->StatusBarHoverFrame->setVisible(false);
+    ui->StatusBarProgressFrame->setVisible(false);
+
+    statusBarProgressTimer = new QTimer();
+    statusBarProgressTimer->setInterval(5000);
+    connect(statusBarProgressTimer, &QTimer::timeout, [=] {
+        this->showStatusBarProgress(!ui->StatusBarProgressFrame->isVisible());
+        if (statusBarPercentage == -2) statusBarProgressTimer->stop();
+    });
+    ui->StatusBarProgressSpinner->setFixedSize(QSize(16, 16) * getDPIScaling());
 
     //ui->infoScrollArea->setFixedHeight(ui->InfoScrollWidget->height());
 
@@ -1435,9 +1490,13 @@ void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command 
 
     if (settings.value("bar/onTop", true).toBool()) {
         ui->StatusBarFrame->move(0, this->height() - 25 * getDPIScaling());
+        seperatorWidget->setGeometry(0, this->height() - 1, this->width(), 1);
     } else {
         ui->StatusBarFrame->move(0, 1);
+        seperatorWidget->setGeometry(0, 0, this->width(), 1);
     }
+    statusBarNormalY = ui->StatusBarFrame->y();
+    seperatorWidget->raise();
 }
 
 void MainWindow::setGeometry(QRect geometry) {
@@ -1629,13 +1688,13 @@ void MainWindow::paintEvent(QPaintEvent *event) {
             painter.drawLine(x1, this->height() - 1, x2, this->height() - 1);
             painter.drawLine(x1, this->height() - 2, x2, this->height() - 2);
         } else {
-            painter.setPen(this->palette().color(QPalette::WindowText));
+            /*painter.setPen(this->palette().color(QPalette::WindowText));
 
             if (settings.value("bar/onTop", true).toBool()) {
                 painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
             } else {
                 painter.drawLine(0, 0, this->width(), 0);
-            }
+            }*/
             warningAnimCreated = false;
         }
     }
@@ -1993,7 +2052,7 @@ void MainWindow::on_actionMute_triggered()
 
 bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    if (watched == ui->StatusBarFrame || watched == ui->StatusBarHoverFrame) {
+    if (watched == ui->StatusBarFrame || watched == ui->StatusBarHoverFrame || watched == ui->StatusBarProgressFrame) {
         if (event->type() == QEvent::MouseButtonPress) {
             gatewayMenu->close();
             //Completely extend the bar
@@ -2069,6 +2128,23 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
                 anim->start();
             }
             return true;
+        } else if ((watched == ui->StatusBarFrame || watched == ui->StatusBarProgressFrame) && event->type() == QEvent::Paint) {
+            QPainter painter((QWidget*) watched);
+            //Draw progress bar
+            painter.setPen(Qt::transparent);
+            painter.setBrush(this->palette().color(QPalette::Highlight));
+
+            QRect rect;
+            rect.setTopLeft(QPoint(0, 0));
+            rect.setHeight(ui->StatusBarFrame->height());
+            rect.setWidth(ui->StatusBarFrame->width() * ((float) statusBarPercentage / (float) 100));
+            painter.drawRect(rect);
+        }
+    } else if (watched == seperatorWidget) {
+        if (event->type() == QEvent::Paint) {
+            QPainter painter(seperatorWidget);
+            painter.setPen(this->palette().color(QPalette::WindowText));
+            painter.drawLine(0, 0, seperatorWidget->width(), 0);
         }
     }
     return false;
@@ -2238,4 +2314,51 @@ bool MainWindow::event(QEvent* event) {
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
     ui->StatusBarFrame->setFixedWidth(this->width());
+}
+
+void MainWindow::showStatusBarProgress(bool show) {
+    if (show) {
+        if (ui->StatusBarFrame->isVisible() && !ui->StatusBarProgressFrame->isVisible()) {
+            ui->StatusBarProgressFrame->setVisible(true);
+
+            tPropertyAnimation* anim = new tPropertyAnimation(ui->StatusBarProgressFrame, "geometry");
+            anim->setStartValue(ui->StatusBarProgressFrame->geometry());
+            anim->setEndValue(QRect(0, ui->StatusBarFrame->y(), ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
+            anim->setDuration(250);
+            anim->setEasingCurve(QEasingCurve::OutCubic);
+            connect(anim, &tPropertyAnimation::valueChanged, [=](QVariant value) {
+                if (settings.value("bar/onTop", true).toBool()) {
+                    ui->StatusBarFrame->move(0, value.toRect().bottom());
+                } else {
+                    ui->StatusBarFrame->move(0, value.toRect().top() - ui->StatusBarFrame->height());
+                }
+            });
+            connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+            anim->start();
+        }
+    } else {
+        if (ui->StatusBarProgressFrame->isVisible()) {
+            tPropertyAnimation* anim = new tPropertyAnimation(ui->StatusBarProgressFrame, "geometry");
+            anim->setStartValue(ui->StatusBarProgressFrame->geometry());
+            if (settings.value("bar/onTop", true).toBool()) {
+                anim->setEndValue(QRect(0, statusBarNormalY - ui->StatusBarFrame->height() + 1, ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
+            } else {
+                anim->setEndValue(QRect(0, statusBarNormalY + ui->StatusBarFrame->height(), ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
+            }
+            anim->setDuration(250);
+            anim->setEasingCurve(QEasingCurve::OutCubic);
+            connect(anim, &tPropertyAnimation::valueChanged, [=](QVariant value) {
+                if (settings.value("bar/onTop", true).toBool()) {
+                    ui->StatusBarFrame->move(0, value.toRect().bottom());
+                } else {
+                    ui->StatusBarFrame->move(0, value.toRect().top() - ui->StatusBarFrame->height());
+                }
+            });
+            connect(anim, &tPropertyAnimation::finished, [=] {
+                ui->StatusBarProgressFrame->setVisible(false);
+            });
+            connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
+            anim->start();
+        }
+    }
 }

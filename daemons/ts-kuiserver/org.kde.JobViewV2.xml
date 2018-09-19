@@ -1,0 +1,47 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.kde.JobViewV2">
+    <signal name="suspendRequested">
+    </signal>
+    <signal name="resumeRequested">
+    </signal>
+    <signal name="cancelRequested">
+    </signal>
+    <method name="terminate">
+    </method>
+    <method name="setSuspended">
+      <arg name="suspended" type="b" direction="in"/>
+    </method>
+    <method name="setTotalAmount">
+      <arg name="amount" type="t" direction="in"/>
+      <arg name="unit" type="s" direction="in"/>
+    </method>
+    <method name="setProcessedAmount">
+      <arg name="amount" type="t" direction="in"/>
+      <arg name="unit" type="s" direction="in"/>
+    </method>
+    <method name="setPercent">
+      <arg name="percent" type="u" direction="in"/>
+    </method>
+    <method name="setSpeed">
+      <arg name="bytesPerSecond" type="t" direction="in"/>
+    </method>
+    <method name="setInfoMessage">
+      <arg name="message" type="s" direction="in"/>
+    </method>
+    <method name="setDescriptionField">
+      <arg name="number" type="u" direction="in"/>
+      <arg name="name" type="s" direction="in"/>
+      <arg name="value" type="s" direction="in"/>
+    </method>
+    <method name="clearDescriptionField">
+      <arg name="number" type="u" direction="in"/>
+    </method>
+    <method name="setDestUrl">
+      <arg name="number" type="v" direction="in"/>
+    </method>
+    <method name="setError">
+      <arg name="errorCode" type="u" direction="in"/>
+    </method>
+  </interface>
+</node>

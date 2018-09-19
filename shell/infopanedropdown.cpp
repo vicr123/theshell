@@ -669,6 +669,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QList<QDir> searchDirs;
     QJsonArray errors;
     searchDirs.append(QApplication::applicationDirPath() + "/../statuscenter/");
+    searchDirs.append(QApplication::applicationDirPath() + "/../daemons/");
     #ifdef BLUEPRINT
         searchDirs.append(QDir("/usr/lib/theshellb/panes"));
         searchDirs.append(QDir("/usr/lib/theshellb/daemons"));
@@ -791,7 +792,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QScroller::grabGesture(ui->timezoneList, QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->appsGraph, QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->autostartAppList, QScroller::LeftMouseButtonGesture);
-    QScroller::grabGesture(ui->localeList, QScroller::LeftMouseButtonGesture);
 
     connect(tVirtualKeyboard::instance(), &tVirtualKeyboard::keyboardVisibleChanged, [=](bool visible) {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
@@ -804,6 +804,26 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     updateStruts();
     updateAutostart();
+
+    /*QTimer::singleShot(5000, [=] {
+        this->setProperty("aw", 0);
+        QTimer* timer = new QTimer();
+        timer->setInterval(1000);
+        connect(timer, &QTimer::timeout, [=] {
+            int number = this->property("aw").toInt();
+            number++;
+
+            if (number == 100) {
+                timer->stop();
+                emit statusBarProgressFinished("Copied", "lirios-2018-04-28.iso");
+            } else {
+                emit statusBarProgress("Copying", "lirios-2018.04.28.iso", number);
+            }
+
+            this->setProperty("aw", number);
+        });
+        timer->start();
+    });*/
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -2458,14 +2478,74 @@ void InfoPaneDropdown::on_DateTimeNTPSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
 {
-    if (currentRow == -1) return;
     //Show the splash screen (if available)
     emit dbusSignals->ShowSplash();
 
-    settings.setValue("locale/language", ui->localeList->item(currentRow)->data(Qt::UserRole).toString());
+    switch (currentRow) {
+        case Internationalisation::enUS:
+            settings.setValue("locale/language", "en_US");
+            break;
+        case Internationalisation::enGB:
+            settings.setValue("locale/language", "en_GB");
+            break;
+        case Internationalisation::enAU:
+            settings.setValue("locale/language", "en_AU");
+            break;
+        case Internationalisation::enNZ:
+            settings.setValue("locale/language", "en_NZ");
+            break;
+        case Internationalisation::viVN:
+            settings.setValue("locale/language", "vi_VN");
+            break;
+        case Internationalisation::daDK:
+            settings.setValue("locale/language", "da_DK");
+            break;
+        case Internationalisation::ptBR:
+            settings.setValue("locale/language", "pt_BR");
+            break;
+        case Internationalisation::arSA:
+            settings.setValue("locale/language", "ar_SA");
+            break;
+        case Internationalisation::zhCN:
+            settings.setValue("locale/language", "zh_CN");
+            break;
+        case Internationalisation::nlNL:
+            settings.setValue("locale/language", "nl_NL");
+            break;
+        case Internationalisation::miNZ:
+            settings.setValue("locale/language", "mi_NZ");
+            break;
+        case Internationalisation::jaJP:
+            settings.setValue("locale/language", "ja_JP");
+            break;
+        case Internationalisation::deDE:
+            settings.setValue("locale/language", "de_DE");
+            break;
+        case Internationalisation::esES:
+            settings.setValue("locale/language", "es_ES");
+            break;
+        case Internationalisation::ruRU:
+            settings.setValue("locale/language", "ru_RU");
+            break;
+        case Internationalisation::svSE:
+            settings.setValue("locale/language", "sv_SE");
+            break;
+        case Internationalisation::ltLT:
+            settings.setValue("locale/language", "lt_LT");
+            break;
+        case Internationalisation::idID:
+            settings.setValue("locale/language", "id_ID");
+            break;
+        case Internationalisation::auAU:
+            settings.setValue("locale/language", "au_AU");
+            break;
+        case Internationalisation::nbNO:
+            settings.setValue("locale/language", "nb_NO");
+            break;
+    }
 
     QString localeName = settings.value("locale/language", "en_US").toString();
-    qputenv("LANGUAGE", localeName.toUtf8());
+    qputenv("LANG", localeName.toUtf8());
 
     QLocale defaultLocale(localeName);
     QLocale::setDefault(defaultLocale);
@@ -2492,6 +2572,9 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
     for (StatusCenterPane* plugin : loadedPlugins) {
         plugin->loadLanguage(defaultLocale.name());
     }
+
+    //Fill locale box
+    Internationalisation::fillLanguageBox(ui->localeList);
 
     //Process all events
     QApplication::processEvents();
@@ -3863,6 +3946,10 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         geolocation->singleShot()->then([=](Geolocation loc) {
             caller->message("location", QVariantList() << loc.latitude << loc.longitude);
         });
+    } else if (message == "jobDone") {
+        emit statusBarProgressFinished(args.first().toString(), args.at(1).toString());
+    } else if (message == "jobUpdate") {
+        emit statusBarProgress(args.first().toString(), args.at(1).toString(), args.at(2).toUInt());
     }
 }
 

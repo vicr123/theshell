@@ -1,12 +1,12 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-08-021T22:27:46
+# Project created by QtCreator 2018-09-18T23:24:46
 #
 #-------------------------------------------------
 
-QT       += core gui widgets dbus thelib network
+QT       += core gui widgets dbus thelib
 
-TARGET = tsudev
+TARGET = tskuiserver
 TEMPLATE = lib
 CONFIG += plugin
 
@@ -23,7 +23,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-DISTFILES += udev.json
+DBUS_ADAPTORS += org.kde.JobViewV2.xml
+
+DISTFILES += udev.json \
+    kuiserver.json
 
 unix {
     blueprint {
@@ -32,19 +35,16 @@ unix {
         target.path = /usr/lib/theshell/daemons/
     }
     INSTALLS += target
-
-
-    CONFIG += link_pkgconfig
-    PKGCONFIG += libudev
 }
 
 HEADERS += \
     plugin.h \
-    daemon.h \
-    autorotation.h
+    jobserver.h \
+    jobdbus.h \
+    jobviewserver_adaptor.h
 
 SOURCES += \
     plugin.cpp \
-    daemon.cpp \
-    autorotation.cpp
-
+    jobserver.cpp \
+    jobdbus.cpp \
+    jobviewserver_adaptor.cpp

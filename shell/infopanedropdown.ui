@@ -381,7 +381,7 @@
    <item>
     <widget class="AnimatedStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="statusFrame">
       <property name="autoFillBackground">
@@ -857,8 +857,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>145</width>
-              <height>108</height>
+              <width>182</width>
+              <height>132</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_35">
@@ -1331,7 +1331,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>6</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1851,7 +1851,7 @@
                 <item row="5" column="1" colspan="2">
                  <widget class="QLabel" name="label_103">
                   <property name="text">
-                   <string>The Status Bar is shown when a window is maximised.</string>
+                   <string>The Status Bar is a shown when a window is maximised.</string>
                   </property>
                   <property name="wordWrap">
                    <bool>true</bool>
@@ -1990,8 +1990,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>683</width>
-                   <height>687</height>
+                   <width>804</width>
+                   <height>671</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_54">
@@ -3113,7 +3113,7 @@
               <item>
                <widget class="QStackedWidget" name="locationStack">
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="page_2">
                  <layout class="QVBoxLayout" name="verticalLayout_17">

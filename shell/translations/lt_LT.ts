@@ -229,6 +229,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../choosebackground.ui" line="325"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../choosebackground.ui" line="332"/>
         <source>License</source>
         <translation type="unfinished"></translation>
@@ -585,7 +590,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="512"/>
-        <location filename="../infopanedropdown.cpp" line="2557"/>
+        <location filename="../infopanedropdown.cpp" line="2640"/>
         <source>Charge History</source>
         <translation>Įkrovimo istorija</translation>
     </message>
@@ -1063,6 +1068,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../infopanedropdown.ui" line="1854"/>
+        <source>The Status Bar is a shown when a window is maximised.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../infopanedropdown.ui" line="1721"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
         <translation type="unfinished"></translation>
@@ -1275,11 +1285,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1854"/>
-        <source>The Status Bar is shown when a window is maximised.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../infopanedropdown.ui" line="2494"/>
         <source>&amp;Gray</source>
         <translation>&amp;Pilka</translation>
@@ -1316,7 +1321,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3433"/>
-        <location filename="../infopanedropdown.cpp" line="3656"/>
+        <location filename="../infopanedropdown.cpp" line="3739"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1353,8 +1358,8 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4450"/>
-        <location filename="../infopanedropdown.cpp" line="3747"/>
-        <location filename="../infopanedropdown.cpp" line="3753"/>
+        <location filename="../infopanedropdown.cpp" line="3830"/>
+        <location filename="../infopanedropdown.cpp" line="3836"/>
         <source>Mouse Password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1375,7 +1380,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4681"/>
-        <location filename="../infopanedropdown.cpp" line="2229"/>
+        <location filename="../infopanedropdown.cpp" line="2249"/>
         <source>Edit User</source>
         <translation>Redaguoti naudotoją</translation>
     </message>
@@ -1392,15 +1397,15 @@
     <message>
         <location filename="../infopanedropdown.ui" line="4742"/>
         <location filename="../infopanedropdown.ui" line="4765"/>
-        <location filename="../infopanedropdown.cpp" line="2233"/>
-        <location filename="../infopanedropdown.cpp" line="2234"/>
+        <location filename="../infopanedropdown.cpp" line="2253"/>
+        <location filename="../infopanedropdown.cpp" line="2254"/>
         <source>(unchanged)</source>
         <translation>(nekeistas)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4749"/>
-        <location filename="../infopanedropdown.cpp" line="2273"/>
-        <location filename="../infopanedropdown.cpp" line="2278"/>
+        <location filename="../infopanedropdown.cpp" line="2293"/>
+        <location filename="../infopanedropdown.cpp" line="2298"/>
         <source>Username</source>
         <translation>Vardas</translation>
     </message>
@@ -1580,7 +1585,7 @@ Daiktai kurie bus palikti:
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5828"/>
-        <location filename="../infopanedropdown.cpp" line="1480"/>
+        <location filename="../infopanedropdown.cpp" line="1500"/>
         <source>Reset theShell</source>
         <translation>Atstatyti theShell</translation>
     </message>
@@ -1600,27 +1605,27 @@ Daiktai kurie bus palikti:
         <translation>Darbalaukio aplinka</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2714"/>
+        <location filename="../infopanedropdown.cpp" line="2797"/>
         <source>Blue</source>
         <translation>Mėlyna</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2715"/>
+        <location filename="../infopanedropdown.cpp" line="2798"/>
         <source>Green</source>
         <translation>Žalia</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2716"/>
+        <location filename="../infopanedropdown.cpp" line="2799"/>
         <source>Orange</source>
         <translation>Oranžinė</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2717"/>
+        <location filename="../infopanedropdown.cpp" line="2800"/>
         <source>Pink</source>
         <translation>Rožinė</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2718"/>
+        <location filename="../infopanedropdown.cpp" line="2801"/>
         <source>Turquoise</source>
         <translation>Žalsvai mėlyna</translation>
     </message>
@@ -1645,12 +1650,12 @@ Daiktai kurie bus palikti:
         <translation>theShell %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1454"/>
+        <location filename="../infopanedropdown.cpp" line="1474"/>
         <source>Current Battery Percentage: %1</source>
         <translation>Dabartinė baterijos būsena: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1458"/>
+        <location filename="../infopanedropdown.cpp" line="1478"/>
         <source>theShell Uptime: %1</source>
         <translation>theShell Veikimo laikase: %1</translation>
     </message>
@@ -1665,7 +1670,7 @@ Daiktai kurie bus palikti:
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="1467"/>
+        <location filename="../infopanedropdown.cpp" line="1487"/>
         <source>%n days</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1674,139 +1679,139 @@ Daiktai kurie bus palikti:
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1471"/>
+        <location filename="../infopanedropdown.cpp" line="1491"/>
         <source>System Uptime: %1</source>
         <translation>Sistemos veikimo laikas: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1473"/>
+        <location filename="../infopanedropdown.cpp" line="1493"/>
         <source>Couldn&apos;t get system uptime</source>
         <translation>Nepavyko gauti sistemos veikimo laiko</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1481"/>
+        <location filename="../infopanedropdown.cpp" line="1501"/>
         <source>All settings will be reset to default, and you will be logged out. Are you sure you want to do this?</source>
         <translation>Visi nustatybai bus atstatyti į numatytus, ir būsite atjungti. Ar esate tikri, kad norite tai daryti?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1998"/>
+        <location filename="../infopanedropdown.cpp" line="2018"/>
         <source>Last updated %1</source>
         <translation>Paskutinį kartą atnaujinta %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2036"/>
+        <location filename="../infopanedropdown.cpp" line="2056"/>
         <source>Log in to network</source>
         <translation>Prisijunkite į tinklą</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2042"/>
+        <location filename="../infopanedropdown.cpp" line="2062"/>
         <source>Network Login</source>
         <translation>Tinklo prisijungimas</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2043"/>
+        <location filename="../infopanedropdown.cpp" line="2063"/>
         <source>Your connection to the internet is blocked by a login page.</source>
         <translation>Jūsų prisijungimas į tinklą buvo užblokuotas iš prisijungimo puslapio.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2196"/>
+        <location filename="../infopanedropdown.cpp" line="2216"/>
         <source>Add New User</source>
         <translation>Pridėkite naują vartotoją</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2208"/>
-        <location filename="../infopanedropdown.cpp" line="3703"/>
-        <location filename="../infopanedropdown.cpp" line="3723"/>
+        <location filename="../infopanedropdown.cpp" line="2228"/>
+        <location filename="../infopanedropdown.cpp" line="3786"/>
+        <location filename="../infopanedropdown.cpp" line="3806"/>
         <source>Unauthorized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2208"/>
+        <location filename="../infopanedropdown.cpp" line="2228"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2220"/>
+        <location filename="../infopanedropdown.cpp" line="2240"/>
         <source>New User</source>
         <translation>Naujas vartotojas</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2223"/>
-        <location filename="../infopanedropdown.cpp" line="2224"/>
-        <location filename="../infopanedropdown.cpp" line="2239"/>
-        <location filename="../infopanedropdown.cpp" line="2240"/>
+        <location filename="../infopanedropdown.cpp" line="2243"/>
+        <location filename="../infopanedropdown.cpp" line="2244"/>
+        <location filename="../infopanedropdown.cpp" line="2259"/>
+        <location filename="../infopanedropdown.cpp" line="2260"/>
         <source>(none)</source>
         <translation>(joks)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2236"/>
-        <location filename="../infopanedropdown.cpp" line="2237"/>
+        <location filename="../infopanedropdown.cpp" line="2256"/>
+        <location filename="../infopanedropdown.cpp" line="2257"/>
         <source>(set at next login)</source>
         <translation>(nustatyti į kitą prisijungimą)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2268"/>
+        <location filename="../infopanedropdown.cpp" line="2288"/>
         <source>Password Check</source>
         <translation>Slaptažodžio tikrinimas</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2268"/>
+        <location filename="../infopanedropdown.cpp" line="2288"/>
         <source>The passwords don&apos;t match.</source>
         <translation>The passwords don&apos;t match.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2273"/>
+        <location filename="../infopanedropdown.cpp" line="2293"/>
         <source>The username must not contain spaces.</source>
         <translation>Naudotojo vardas negali turėti tarpų.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2278"/>
+        <location filename="../infopanedropdown.cpp" line="2298"/>
         <source>The username must not contain capital letters.</source>
         <translation>Naudotojo vardas negali turėti didžiųjų raidžių.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2568"/>
+        <location filename="../infopanedropdown.cpp" line="2651"/>
         <source>Rate History</source>
         <translation>Vertinimo istorija</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2579"/>
+        <location filename="../infopanedropdown.cpp" line="2662"/>
         <source>Application Power Usage</source>
         <translation>Programų baterijos naudojimas</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2710"/>
+        <location filename="../infopanedropdown.cpp" line="2793"/>
         <source>Oxygen</source>
         <translation>Oxygen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2711"/>
+        <location filename="../infopanedropdown.cpp" line="2794"/>
         <source>Breeze</source>
         <translation>Breeze</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2955"/>
+        <location filename="../infopanedropdown.cpp" line="3038"/>
         <source>Notifications for %1</source>
         <translation>Pranešimai %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2963"/>
+        <location filename="../infopanedropdown.cpp" line="3046"/>
         <source>You can&apos;t configure notifications for %1</source>
         <translation>Jūs negalite konfigūruoti pranešimų %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3100"/>
-        <location filename="../infopanedropdown.cpp" line="3110"/>
-        <location filename="../infopanedropdown.cpp" line="3120"/>
-        <location filename="../infopanedropdown.cpp" line="3130"/>
+        <location filename="../infopanedropdown.cpp" line="3183"/>
+        <location filename="../infopanedropdown.cpp" line="3193"/>
+        <location filename="../infopanedropdown.cpp" line="3203"/>
+        <location filename="../infopanedropdown.cpp" line="3213"/>
         <source>Never</source>
         <translation>Niekada</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="3102"/>
-        <location filename="../infopanedropdown.cpp" line="3112"/>
-        <location filename="../infopanedropdown.cpp" line="3122"/>
-        <location filename="../infopanedropdown.cpp" line="3132"/>
+        <location filename="../infopanedropdown.cpp" line="3185"/>
+        <location filename="../infopanedropdown.cpp" line="3195"/>
+        <location filename="../infopanedropdown.cpp" line="3205"/>
+        <location filename="../infopanedropdown.cpp" line="3215"/>
         <source>%n min(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1815,50 +1820,252 @@ Daiktai kurie bus palikti:
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3431"/>
+        <location filename="../infopanedropdown.cpp" line="3514"/>
         <source>Log Out Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3434"/>
+        <location filename="../infopanedropdown.cpp" line="3517"/>
         <source>Logoff Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3437"/>
+        <location filename="../infopanedropdown.cpp" line="3520"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3439"/>
+        <location filename="../infopanedropdown.cpp" line="3522"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3703"/>
-        <location filename="../infopanedropdown.cpp" line="3723"/>
+        <location filename="../infopanedropdown.cpp" line="3786"/>
+        <location filename="../infopanedropdown.cpp" line="3806"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3718"/>
+        <location filename="../infopanedropdown.cpp" line="3801"/>
         <source>Remove Mouse Password?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3718"/>
+        <location filename="../infopanedropdown.cpp" line="3801"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3748"/>
+        <location filename="../infopanedropdown.cpp" line="3831"/>
         <source>Mouse Password was removed successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3754"/>
+        <location filename="../infopanedropdown.cpp" line="3837"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Internationalisation</name>
+    <message>
+        <location filename="../internationalisation.h" line="78"/>
+        <location filename="../internationalisation.h" line="81"/>
+        <location filename="../internationalisation.h" line="84"/>
+        <location filename="../internationalisation.h" line="87"/>
+        <source>English</source>
+        <translation>Anglų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="90"/>
+        <source>Vietnamese</source>
+        <translation>Vietnamiečių</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="93"/>
+        <source>Danish</source>
+        <translation>Danų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="96"/>
+        <source>Dutch</source>
+        <translation>Olandų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="102"/>
+        <source>Spanish</source>
+        <translation>Ispanų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="105"/>
+        <source>Russian</source>
+        <translation>Rusų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="108"/>
+        <source>Swedish</source>
+        <translation>Švedų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="111"/>
+        <source>Lithuanian</source>
+        <translation>Lietuvių</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="168"/>
+        <source>Polish</source>
+        <translation>Lenkų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="147"/>
+        <source>Afrikaans</source>
+        <translation>Afrikanų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="120"/>
+        <source>Australian</source>
+        <translation>Australų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="148"/>
+        <source>Arabic</source>
+        <translation>Arabų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="149"/>
+        <source>Bulgarian</source>
+        <translation>Bulgarų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="150"/>
+        <source>Catalan</source>
+        <translation>Katalonų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="152"/>
+        <source>Croatian</source>
+        <translation>Kroatų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="153"/>
+        <source>Czech</source>
+        <translation>Čekų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="154"/>
+        <source>Estonian</source>
+        <translation>Estų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="155"/>
+        <source>Finnish</source>
+        <translation>Suomių</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="158"/>
+        <source>Greek</source>
+        <translation>Graikų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="159"/>
+        <source>Hebrew</source>
+        <translation>Hebrajų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="160"/>
+        <source>Hungarian</source>
+        <translation>Vengrų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="161"/>
+        <source>Italian</source>
+        <translation>Italų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="162"/>
+        <source>Icelandic</source>
+        <translation>Islandų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="163"/>
+        <source>Indonesian</source>
+        <translation>Indonezų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="164"/>
+        <source>Japanese</source>
+        <translation>Japonų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="165"/>
+        <source>Korean</source>
+        <translation>Korėjiečių</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="166"/>
+        <source>Latvian</source>
+        <translation>Latvių</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="169"/>
+        <source>Portuguese</source>
+        <translation>Portugalų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="170"/>
+        <source>Serbian</source>
+        <translation>Serbų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="171"/>
+        <source>Slovak</source>
+        <translation>Slovakų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="172"/>
+        <source>Slovenian</source>
+        <translation>Slovėnų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="173"/>
+        <source>Tagalog</source>
+        <translation>Tagalogų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="174"/>
+        <source>Thai</source>
+        <translation>Tailandų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="175"/>
+        <source>Turkish</source>
+        <translation>Turkų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="176"/>
+        <source>Ukranian</source>
+        <translation>Ukrainiečių</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="151"/>
+        <source>Chinese</source>
+        <translation>Kinų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="156"/>
+        <source>French</source>
+        <translation>Prancūzų</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="167"/>
+        <source>Māori</source>
+        <translation>Maorių</translation>
+    </message>
+    <message>
+        <location filename="../internationalisation.h" line="99"/>
+        <location filename="../internationalisation.h" line="157"/>
+        <source>German</source>
+        <translation>Vokiečių</translation>
     </message>
 </context>
 <context>
@@ -2249,7 +2456,7 @@ Daiktai kurie bus palikti:
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="484"/>
-        <location filename="../mainwindow.ui" line="1227"/>
+        <location filename="../mainwindow.ui" line="1277"/>
         <source>No Notifications</source>
         <translation>Jokių pranešimų</translation>
     </message>
@@ -2320,58 +2527,58 @@ Daiktai kurie bus palikti:
         <translation>Paspauskite kad atsidarytų juostelė</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1218"/>
+        <location filename="../mainwindow.ui" line="1268"/>
         <source>Sound</source>
         <translation>Garsas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1236"/>
+        <location filename="../mainwindow.ui" line="1286"/>
         <source>Mute</source>
         <translation>Užtildyti</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1244"/>
+        <location filename="../mainwindow.ui" line="1295"/>
         <source>Critical Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="648"/>
-        <location filename="../mainwindow.cpp" line="276"/>
+        <location filename="../mainwindow.cpp" line="322"/>
         <source>Quiet Mode</source>
         <translation>Tylus režimas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="601"/>
+        <location filename="../mainwindow.cpp" line="656"/>
         <source>Desktop %1</source>
         <translation>Darbalaukis %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="371"/>
+        <location filename="../mainwindow.cpp" line="426"/>
         <source>For %1</source>
         <translation>Dėl %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="324"/>
+        <location filename="../mainwindow.cpp" line="370"/>
         <source>Recording Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="330"/>
+        <location filename="../mainwindow.cpp" line="376"/>
         <source>Processing Screen Recording...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="372"/>
+        <location filename="../mainwindow.cpp" line="427"/>
         <source>Close</source>
         <translation>Uždaryti</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1639"/>
+        <location filename="../mainwindow.cpp" line="1698"/>
         <source>No notifications</source>
         <translation>Jokių pranešimų</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="1643"/>
+        <location filename="../mainwindow.cpp" line="1702"/>
         <source>%n notification(s)</source>
         <translation>
             <numerusform>%n pranešimas</numerusform>
@@ -2380,43 +2587,43 @@ Daiktai kurie bus palikti:
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2096"/>
+        <location filename="../mainwindow.cpp" line="2172"/>
         <source>For Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2098"/>
+        <location filename="../mainwindow.cpp" line="2174"/>
         <source>Move to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2103"/>
+        <location filename="../mainwindow.cpp" line="2179"/>
         <source>Move to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2109"/>
+        <location filename="../mainwindow.cpp" line="2185"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2114"/>
+        <location filename="../mainwindow.cpp" line="2190"/>
         <source>For System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="2115"/>
+        <location filename="../mainwindow.cpp" line="2191"/>
         <source>Open Status Center</source>
         <translation type="unfinished">Atidaryti būsenos juostelę</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2118"/>
+        <location filename="../mainwindow.cpp" line="2194"/>
         <source>Open System Settings</source>
         <translation type="unfinished">Atidaryti sistemos nustatymus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2127"/>
+        <location filename="../mainwindow.cpp" line="2203"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3196,12 +3403,12 @@ Daiktai kurie bus palikti:
 <context>
     <name>NotificationAppGroup</name>
     <message>
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="124"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="123"/>
         <source>Collapse Notifications</source>
         <translation>Kolapsinti pranešimus</translation>
     </message>
     <message numerus="yes">
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="127"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="126"/>
         <source>+%n notifications collapsed</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -3291,7 +3498,7 @@ Daiktai kurie bus palikti:
     </message>
     <message>
         <location filename="../onboarding.ui" line="1056"/>
-        <location filename="../onboarding.cpp" line="199"/>
+        <location filename="../onboarding.cpp" line="196"/>
         <source>Next</source>
         <translation>Toliau</translation>
     </message>
@@ -3376,13 +3583,13 @@ Daiktai kurie bus palikti:
         <translation>Grįžti</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="144"/>
-        <location filename="../onboarding.cpp" line="334"/>
+        <location filename="../onboarding.cpp" line="143"/>
+        <location filename="../onboarding.cpp" line="394"/>
         <source>Welcome to theShell %1!</source>
         <translation>Sveiki į theShell %1!</translation>
     </message>
     <message>
-        <location filename="../onboarding.cpp" line="215"/>
+        <location filename="../onboarding.cpp" line="212"/>
         <source>Start</source>
         <translation>Pradėti</translation>
     </message>
