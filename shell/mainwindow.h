@@ -216,6 +216,8 @@ private slots:
 
     void unlockMovement(QString reason);
 
+    void remakeBar();
+
     signals:
     void reloadBackgrounds();
 

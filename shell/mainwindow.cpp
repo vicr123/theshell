@@ -72,13 +72,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(reloadScreens()));
     connect(QApplication::desktop(), SIGNAL(primaryScreenChanged()), this, SLOT(reloadScreens()));
 
+    remakeBar();
+
     //Set up bar movement
-    barAnim = new tPropertyAnimation(this, "geometry");
+    /*barAnim = new tPropertyAnimation(this, "geometry");
     barAnim->setDuration(500);
-    barAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(barAnim, &tPropertyAnimation::stateChanged, [=](tPropertyAnimation::State state) {
-        //if (state == tPropertyAnimation::Running) barAnim->setStartValue(this->geometry());
-    });
+    barAnim->setEasingCurve(QEasingCurve::OutCubic);*/
 
     //Create the gateway and set required flags
     gatewayMenu = new Menu(this);
@@ -351,6 +350,17 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::remakeBar() {
+    //This is a hack...
+    qDebug() << "barAnim was destroyed :(";
+    barAnim = new tPropertyAnimation(this, "geometry");
+    barAnim->setDuration(500);
+    barAnim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(barAnim, &tPropertyAnimation::destroyed, [=] {
+        remakeBar();
+    });
 }
 
 void MainWindow::updateWindow(WmWindow window) {
