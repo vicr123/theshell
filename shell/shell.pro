@@ -70,6 +70,7 @@ SOURCES += main.cpp\
     globalfilter.cpp \
     systrayicons.cpp \
     nativeeventfilter.cpp \
+    internationalisation.cpp \
     hotkeyhud.cpp \
     dbusevents.cpp \
     fadebutton.cpp \

@@ -245,68 +245,8 @@ void Onboarding::on_changeLanguageButton_clicked()
 
 void Onboarding::on_localeList_currentRowChanged(int currentRow)
 {
-    switch (currentRow) {
-        case Internationalisation::enUS:
-            settings.setValue("locale/language", "en_US");
-            break;
-        case Internationalisation::enGB:
-            settings.setValue("locale/language", "en_GB");
-            break;
-        case Internationalisation::enAU:
-            settings.setValue("locale/language", "en_AU");
-            break;
-        case Internationalisation::enNZ:
-            settings.setValue("locale/language", "en_NZ");
-            break;
-        case Internationalisation::viVN:
-            settings.setValue("locale/language", "vi_VN");
-            break;
-        case Internationalisation::daDK:
-            settings.setValue("locale/language", "da_DK");
-            break;
-        case Internationalisation::ptBR:
-            settings.setValue("locale/language", "pt_BR");
-            break;
-        case Internationalisation::arSA:
-            settings.setValue("locale/language", "ar_SA");
-            break;
-        case Internationalisation::zhCN:
-            settings.setValue("locale/language", "zh_CN");
-            break;
-        case Internationalisation::nlNL:
-            settings.setValue("locale/language", "nl_NL");
-            break;
-        case Internationalisation::miNZ:
-            settings.setValue("locale/language", "mi_NZ");
-            break;
-        case Internationalisation::jaJP:
-            settings.setValue("locale/language", "ja_JP");
-            break;
-        case Internationalisation::deDE:
-            settings.setValue("locale/language", "de_DE");
-            break;
-        case Internationalisation::esES:
-            settings.setValue("locale/language", "es_ES");
-            break;
-        case Internationalisation::ruRU:
-            settings.setValue("locale/language", "ru_RU");
-            break;
-        case Internationalisation::svSE:
-            settings.setValue("locale/language", "sv_SE");
-            break;
-        case Internationalisation::ltLT:
-            settings.setValue("locale/language", "lt_LT");
-            break;
-        case Internationalisation::idID:
-            settings.setValue("locale/language", "id_ID");
-            break;
-        case Internationalisation::auAU:
-            settings.setValue("locale/language", "au_AU");
-            break;
-        case Internationalisation::nbNO:
-            settings.setValue("locale/language", "nb_NO");
-            break;
-    }
+    if (currentRow == -1) return;
+    settings.setValue("locale/language", ui->localeList->item(currentRow)->data(Qt::UserRole).toString());
 
     QString localeName = settings.value("locale/language", "en_US").toString();
     qputenv("LANG", localeName.toUtf8());
@@ -329,9 +269,6 @@ void Onboarding::on_localeList_currentRowChanged(int currentRow)
 
     tsTranslator->load(QLocale().name(), QString(SHAREDIR) + "translations");
     QApplication::installTranslator(tsTranslator);
-
-    //Fill locale box
-    Internationalisation::fillLanguageBox(ui->localeList);
 }
 
 void Onboarding::on_enableStatusBarButton_clicked()

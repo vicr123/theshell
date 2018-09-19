@@ -595,7 +595,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="512"/>
-        <location filename="../infopanedropdown.cpp" line="2640"/>
+        <location filename="../infopanedropdown.cpp" line="2577"/>
         <source>Charge History</source>
         <translation>Oplaadgeschiedenis</translation>
     </message>
@@ -1263,7 +1263,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3433"/>
-        <location filename="../infopanedropdown.cpp" line="3739"/>
+        <location filename="../infopanedropdown.cpp" line="3676"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1345,8 +1345,8 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4450"/>
-        <location filename="../infopanedropdown.cpp" line="3830"/>
-        <location filename="../infopanedropdown.cpp" line="3836"/>
+        <location filename="../infopanedropdown.cpp" line="3767"/>
+        <location filename="../infopanedropdown.cpp" line="3773"/>
         <source>Mouse Password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1693,8 +1693,8 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2228"/>
-        <location filename="../infopanedropdown.cpp" line="3786"/>
-        <location filename="../infopanedropdown.cpp" line="3806"/>
+        <location filename="../infopanedropdown.cpp" line="3723"/>
+        <location filename="../infopanedropdown.cpp" line="3743"/>
         <source>Unauthorized</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1743,73 +1743,73 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>De gebruikersnaam mag geen hoofdletters bevatten.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2651"/>
+        <location filename="../infopanedropdown.cpp" line="2588"/>
         <source>Rate History</source>
         <translation>Waardeer geschiedenis</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2662"/>
+        <location filename="../infopanedropdown.cpp" line="2599"/>
         <source>Application Power Usage</source>
         <translation>Applicatie Stroomverbruik</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2793"/>
+        <location filename="../infopanedropdown.cpp" line="2730"/>
         <source>Oxygen</source>
         <translation>Oxygen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2794"/>
+        <location filename="../infopanedropdown.cpp" line="2731"/>
         <source>Breeze</source>
         <translation>Breeze</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2797"/>
+        <location filename="../infopanedropdown.cpp" line="2734"/>
         <source>Blue</source>
         <translation>Blauw</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2798"/>
+        <location filename="../infopanedropdown.cpp" line="2735"/>
         <source>Green</source>
         <translation>Groen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2799"/>
+        <location filename="../infopanedropdown.cpp" line="2736"/>
         <source>Orange</source>
         <translation>Oranje</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2800"/>
+        <location filename="../infopanedropdown.cpp" line="2737"/>
         <source>Pink</source>
         <translation>Roze</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2801"/>
+        <location filename="../infopanedropdown.cpp" line="2738"/>
         <source>Turquoise</source>
         <translation>Turqoise</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3038"/>
+        <location filename="../infopanedropdown.cpp" line="2975"/>
         <source>Notifications for %1</source>
         <translation>Meldingen voor %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3046"/>
+        <location filename="../infopanedropdown.cpp" line="2983"/>
         <source>You can&apos;t configure notifications for %1</source>
         <translation>U kunt geen meldingen configureren voor %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3183"/>
-        <location filename="../infopanedropdown.cpp" line="3193"/>
-        <location filename="../infopanedropdown.cpp" line="3203"/>
-        <location filename="../infopanedropdown.cpp" line="3213"/>
+        <location filename="../infopanedropdown.cpp" line="3120"/>
+        <location filename="../infopanedropdown.cpp" line="3130"/>
+        <location filename="../infopanedropdown.cpp" line="3140"/>
+        <location filename="../infopanedropdown.cpp" line="3150"/>
         <source>Never</source>
         <translation>Nooit</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="3185"/>
-        <location filename="../infopanedropdown.cpp" line="3195"/>
-        <location filename="../infopanedropdown.cpp" line="3205"/>
-        <location filename="../infopanedropdown.cpp" line="3215"/>
+        <location filename="../infopanedropdown.cpp" line="3122"/>
+        <location filename="../infopanedropdown.cpp" line="3132"/>
+        <location filename="../infopanedropdown.cpp" line="3142"/>
+        <location filename="../infopanedropdown.cpp" line="3152"/>
         <source>%n min(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1817,252 +1817,50 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3514"/>
+        <location filename="../infopanedropdown.cpp" line="3451"/>
         <source>Log Out Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3517"/>
+        <location filename="../infopanedropdown.cpp" line="3454"/>
         <source>Logoff Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3520"/>
+        <location filename="../infopanedropdown.cpp" line="3457"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3522"/>
+        <location filename="../infopanedropdown.cpp" line="3459"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3786"/>
-        <location filename="../infopanedropdown.cpp" line="3806"/>
+        <location filename="../infopanedropdown.cpp" line="3723"/>
+        <location filename="../infopanedropdown.cpp" line="3743"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3801"/>
+        <location filename="../infopanedropdown.cpp" line="3738"/>
         <source>Remove Mouse Password?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3801"/>
+        <location filename="../infopanedropdown.cpp" line="3738"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3831"/>
+        <location filename="../infopanedropdown.cpp" line="3768"/>
         <source>Mouse Password was removed successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3837"/>
+        <location filename="../infopanedropdown.cpp" line="3774"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Internationalisation</name>
-    <message>
-        <location filename="../internationalisation.h" line="78"/>
-        <location filename="../internationalisation.h" line="81"/>
-        <location filename="../internationalisation.h" line="84"/>
-        <location filename="../internationalisation.h" line="87"/>
-        <source>English</source>
-        <translation>Engels</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="90"/>
-        <source>Vietnamese</source>
-        <translation>Vietnamees</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="93"/>
-        <source>Danish</source>
-        <translation>Deens</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="96"/>
-        <source>Dutch</source>
-        <translation>Nederlands</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="102"/>
-        <source>Spanish</source>
-        <translation>Spaans</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="105"/>
-        <source>Russian</source>
-        <translation>Russisch</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="108"/>
-        <source>Swedish</source>
-        <translation>Zweeds</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="111"/>
-        <source>Lithuanian</source>
-        <translation>Litouws</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="168"/>
-        <source>Polish</source>
-        <translation>Pools</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="147"/>
-        <source>Afrikaans</source>
-        <translation>Afrikaans</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="120"/>
-        <source>Australian</source>
-        <translation>Australisch</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="148"/>
-        <source>Arabic</source>
-        <translation>Arabisch</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="149"/>
-        <source>Bulgarian</source>
-        <translation>Bulgaars</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="150"/>
-        <source>Catalan</source>
-        <translation>Catalaans</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="151"/>
-        <source>Chinese</source>
-        <translation>Chinees</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="152"/>
-        <source>Croatian</source>
-        <translation>Kroatisch</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="153"/>
-        <source>Czech</source>
-        <translation>Tsjechisch</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="154"/>
-        <source>Estonian</source>
-        <translation>Estlands</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="155"/>
-        <source>Finnish</source>
-        <translation>Fins</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="156"/>
-        <source>French</source>
-        <translation>Frans</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="99"/>
-        <location filename="../internationalisation.h" line="157"/>
-        <source>German</source>
-        <translation>Duits</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="158"/>
-        <source>Greek</source>
-        <translation>Grieks</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="159"/>
-        <source>Hebrew</source>
-        <translation>Hebreeuws</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="160"/>
-        <source>Hungarian</source>
-        <translation>Hongaars</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="161"/>
-        <source>Italian</source>
-        <translation>Italiaans</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="162"/>
-        <source>Icelandic</source>
-        <translation>IJslands</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="163"/>
-        <source>Indonesian</source>
-        <translation>Indonesisch</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="164"/>
-        <source>Japanese</source>
-        <translation>Japans</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="165"/>
-        <source>Korean</source>
-        <translation>Koreaans</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="166"/>
-        <source>Latvian</source>
-        <translation>Letlands</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="167"/>
-        <source>Māori</source>
-        <translation>Māori</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="169"/>
-        <source>Portuguese</source>
-        <translation>Portugees</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="170"/>
-        <source>Serbian</source>
-        <translation>Servisch</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="171"/>
-        <source>Slovak</source>
-        <translation>Slowaaks</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="172"/>
-        <source>Slovenian</source>
-        <translation>Sloveens</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="173"/>
-        <source>Tagalog</source>
-        <translation>Tagalog</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="174"/>
-        <source>Thai</source>
-        <translation>Thai</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="175"/>
-        <source>Turkish</source>
-        <translation>Turks</translation>
-    </message>
-    <message>
-        <location filename="../internationalisation.h" line="176"/>
-        <source>Ukranian</source>
-        <translation>Oekraïns</translation>
     </message>
 </context>
 <context>
@@ -2539,42 +2337,42 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="648"/>
-        <location filename="../mainwindow.cpp" line="322"/>
+        <location filename="../mainwindow.cpp" line="321"/>
         <source>Quiet Mode</source>
         <translation>Stille modus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="370"/>
+        <location filename="../mainwindow.cpp" line="369"/>
         <source>Recording Screen</source>
         <translation>Scherm wordt opgenomen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="376"/>
+        <location filename="../mainwindow.cpp" line="375"/>
         <source>Processing Screen Recording...</source>
         <translation>Schermopname verwerken...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="426"/>
+        <location filename="../mainwindow.cpp" line="436"/>
         <source>For %1</source>
         <translation>Voor %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="427"/>
+        <location filename="../mainwindow.cpp" line="437"/>
         <source>Close</source>
         <translation>Sluit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="656"/>
+        <location filename="../mainwindow.cpp" line="666"/>
         <source>Desktop %1</source>
         <translation>Bureaublad %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1698"/>
+        <location filename="../mainwindow.cpp" line="1708"/>
         <source>No notifications</source>
         <translation>Geen notificaties</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="1702"/>
+        <location filename="../mainwindow.cpp" line="1712"/>
         <source>%n notification(s)</source>
         <translation>
             <numerusform>%n melding</numerusform>
@@ -2582,43 +2380,43 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2172"/>
+        <location filename="../mainwindow.cpp" line="2182"/>
         <source>For Bar</source>
         <translation>Voor Bar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2174"/>
+        <location filename="../mainwindow.cpp" line="2184"/>
         <source>Move to bottom</source>
         <translation>Verplaats naar de bodem</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2179"/>
+        <location filename="../mainwindow.cpp" line="2189"/>
         <source>Move to top</source>
         <translation>Verplaats naar de top</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2185"/>
+        <location filename="../mainwindow.cpp" line="2195"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2190"/>
+        <location filename="../mainwindow.cpp" line="2200"/>
         <source>For System</source>
         <translation>Voor systeem</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="2191"/>
+        <location filename="../mainwindow.cpp" line="2201"/>
         <source>Open Status Center</source>
         <translation type="unfinished">Open Status Center</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2194"/>
+        <location filename="../mainwindow.cpp" line="2204"/>
         <source>Open System Settings</source>
         <translation type="unfinished">Open Systeem Instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2203"/>
+        <location filename="../mainwindow.cpp" line="2213"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3575,7 +3373,7 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     </message>
     <message>
         <location filename="../onboarding.cpp" line="143"/>
-        <location filename="../onboarding.cpp" line="394"/>
+        <location filename="../onboarding.cpp" line="331"/>
         <source>Welcome to theShell %1!</source>
         <translation>Welkom bij theShell %1!</translation>
     </message>
