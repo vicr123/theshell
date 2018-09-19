@@ -216,6 +216,8 @@ private slots:
 
     void unlockMovement(QString reason);
 
+    void showStatusBarProgress(bool show);
+
     signals:
     void reloadBackgrounds();
 
@@ -264,6 +266,12 @@ private:
     int currentTouch = -1;
 
     tPropertyAnimation* barAnim;
+
+    int statusBarPercentage = -2;
+    QTimer* statusBarProgressTimer;
+    int statusBarNormalY;
+
+    QWidget* seperatorWidget;
 
     QGraphicsOpacityEffect* statusBarOpacityEffect;
     bool statusBarVisible = false;

@@ -126,6 +126,8 @@ class InfoPaneDropdown : public QDialog
         void redshiftEnabledChanged(bool enabled);
         void keyboardLayoutChanged(QString code);
         void newKeyboardLayoutMenuAvailable(QMenu* menu);
+        void statusBarProgress(QString title, QString description, int progress);
+        void statusBarProgressFinished(QString title, QString description);
 
     private slots:
         void on_pushButton_clicked();

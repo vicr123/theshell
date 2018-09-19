@@ -669,6 +669,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QList<QDir> searchDirs;
     QJsonArray errors;
     searchDirs.append(QApplication::applicationDirPath() + "/../statuscenter/");
+    searchDirs.append(QApplication::applicationDirPath() + "/../daemons/");
     #ifdef BLUEPRINT
         searchDirs.append(QDir("/usr/lib/theshellb/panes"));
         searchDirs.append(QDir("/usr/lib/theshellb/daemons"));
@@ -803,6 +804,26 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     updateStruts();
     updateAutostart();
+
+    /*QTimer::singleShot(5000, [=] {
+        this->setProperty("aw", 0);
+        QTimer* timer = new QTimer();
+        timer->setInterval(1000);
+        connect(timer, &QTimer::timeout, [=] {
+            int number = this->property("aw").toInt();
+            number++;
+
+            if (number == 100) {
+                timer->stop();
+                emit statusBarProgressFinished("Copied", "lirios-2018-04-28.iso");
+            } else {
+                emit statusBarProgress("Copying", "lirios-2018.04.28.iso", number);
+            }
+
+            this->setProperty("aw", number);
+        });
+        timer->start();
+    });*/
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -3925,6 +3946,10 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         geolocation->singleShot()->then([=](Geolocation loc) {
             caller->message("location", QVariantList() << loc.latitude << loc.longitude);
         });
+    } else if (message == "jobDone") {
+        emit statusBarProgressFinished(args.first().toString(), args.at(1).toString());
+    } else if (message == "jobUpdate") {
+        emit statusBarProgress(args.first().toString(), args.at(1).toString(), args.at(2).toUInt());
     }
 }
 
