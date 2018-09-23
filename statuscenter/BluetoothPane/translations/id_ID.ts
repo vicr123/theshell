@@ -90,6 +90,7 @@
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="359"/>
+        <location filename="../bluetoothmanagement.cpp" line="192"/>
         <source>Enable Bluetooth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -132,7 +133,7 @@
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="629"/>
-        <location filename="../bluetoothmanagement.cpp" line="199"/>
+        <location filename="../bluetoothmanagement.cpp" line="207"/>
         <source>Unpair Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -280,47 +281,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="199"/>
+        <location filename="../bluetoothmanagement.cpp" line="192"/>
+        <source>Bluetooth needs to be enabled to pair a new device. Do you want to enable Bluetooth now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../bluetoothmanagement.cpp" line="207"/>
         <source>Unpair %1 from this device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="203"/>
+        <location filename="../bluetoothmanagement.cpp" line="211"/>
         <source>Unpair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="204"/>
+        <location filename="../bluetoothmanagement.cpp" line="212"/>
         <source>%1 has been unpaired from this device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="229"/>
+        <location filename="../bluetoothmanagement.cpp" line="237"/>
         <source>Pairing Complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="230"/>
+        <location filename="../bluetoothmanagement.cpp" line="238"/>
         <source>%1 has been paired with this device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="283"/>
+        <location filename="../bluetoothmanagement.cpp" line="291"/>
         <source>Pairing Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="284"/>
+        <location filename="../bluetoothmanagement.cpp" line="292"/>
         <source>Couldn&apos;t pair with %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="352"/>
+        <location filename="../bluetoothmanagement.cpp" line="360"/>
         <source>Send Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="353"/>
+        <location filename="../bluetoothmanagement.cpp" line="361"/>
         <source>Couldn&apos;t send the file to %1.</source>
         <translation type="unfinished"></translation>
     </message>

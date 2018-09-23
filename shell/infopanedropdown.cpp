@@ -26,6 +26,8 @@
 #include <tvirtualkeyboard.h>
 #include "location/locationdaemon.h"
 
+#include <QShortcut>
+
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern void EndSession(EndSessionWait::shutdownType type);
@@ -113,6 +115,22 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->userSettingsDeleteUserOnly->setProperty("type", "destructive");
     ui->resetDeviceButton->setProperty("type", "destructive");
     ui->partFrame->installEventFilter(this);
+
+    //Set up shortcuts
+    QShortcut* leftShortcut = new QShortcut(Qt::Key_Left, this);
+    connect(leftShortcut, &QShortcut::activated, [=] {
+        ui->pushButton_5->click();
+    });
+
+    QShortcut* rightShortcut = new QShortcut(Qt::Key_Right, this);
+    connect(rightShortcut, &QShortcut::activated, [=] {
+        ui->pushButton_6->click();
+    });
+
+    QShortcut* escShortcut = new QShortcut(Qt::Key_Escape, this);
+    connect(escShortcut, &QShortcut::activated, [=] {
+        ui->pushButton->click();
+    });
 
     QPalette powerStretchPalette = ui->PowerStretchSwitch->palette();
     QPalette flightModePalette = ui->FlightSwitch->palette();

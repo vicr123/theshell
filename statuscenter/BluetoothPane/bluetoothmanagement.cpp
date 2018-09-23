@@ -188,6 +188,14 @@ void BluetoothManagement::on_backButton_clicked()
 
 void BluetoothManagement::on_pairButton_clicked()
 {
+    if (!currentAdapter.data()->isPowered()) {
+        if (QMessageBox::warning(this, tr("Enable Bluetooth"), tr("Bluetooth needs to be enabled to pair a new device. Do you want to enable Bluetooth now?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No) {
+            return;
+        }
+
+        currentAdapter.data()->setPowered(true)->waitForFinished();
+    }
+
     ui->deviceStack->setCurrentIndex(2);
     currentAdapter.data()->startDiscovery();
     sendMessage("hide-menu", QVariantList());
