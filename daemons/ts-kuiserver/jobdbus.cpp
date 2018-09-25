@@ -10,7 +10,7 @@ JobDBus::JobDBus(QString title, QString path, QObject *parent) : QObject(parent)
     this->t = title;
 }
 
-void JobDBus::terminate(QString errorMessage) {
+void JobDBus::terminate() {
     emit complete();
 }
 

@@ -38,7 +38,7 @@
       <arg name="number" type="u" direction="in"/>
     </method>
     <method name="setDestUrl">
-      <arg name="number" type="v" direction="in"/>
+      <arg name="url" type="v" direction="in"/>
     </method>
     <method name="setError">
       <arg name="errorCode" type="u" direction="in"/>
