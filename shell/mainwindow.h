@@ -266,7 +266,7 @@ private:
     QPoint lastTouchScreenPoint;
     int currentTouch = -1;
 
-    tPropertyAnimation* barAnim;
+    tVariantAnimation* barAnim;
 
     int statusBarPercentage = -2;
     QTimer* statusBarProgressTimer;

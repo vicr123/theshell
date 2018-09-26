@@ -410,10 +410,13 @@ MainWindow::~MainWindow()
 void MainWindow::remakeBar() {
     //This is a hack...
     qDebug() << "barAnim was destroyed :(";
-    barAnim = new tPropertyAnimation(this, "geometry");
+    barAnim = new tVariantAnimation();
     barAnim->setDuration(500);
     barAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(barAnim, &tPropertyAnimation::destroyed, [=] {
+    connect(barAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        this->setGeometry(value.toRect());
+    });
+    connect(barAnim, &tVariantAnimation::destroyed, [=] {
         remakeBar();
     });
 }
