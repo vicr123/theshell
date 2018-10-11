@@ -531,7 +531,7 @@ void NetworkWidget::connectToWirelessDevice(QDBusObjectPath device) {
 }
 
 void NetworkWidget::updateGlobals() {
-    QString text;
+    QString text, supplementaryText;
     QIcon icon;
     QDBusObjectPath primaryConnection = nmInterface->property("PrimaryConnection").value<QDBusObjectPath>();
     NmDeviceType deviceType;
@@ -601,6 +601,14 @@ void NetworkWidget::updateGlobals() {
                 }
             }
         }
+
+        //Check connectivity
+        uint connectivity = nmInterface->property("Connectivity").toUInt();
+        if (connectivity == 2) {
+            supplementaryText = tr("Login Required", "Currently behind network Portal");
+        } else if (connectivity == 3) {
+            supplementaryText = tr("Can't get to the Internet", "Network Portal");
+        }
     }
 
     if (text == tr("Disconnected") && flightMode) {
@@ -608,7 +616,14 @@ void NetworkWidget::updateGlobals() {
         text = tr("Flight Mode");
     }
 
-    emit updateBarDisplay(text, icon);
+    QString finalText;
+    if (supplementaryText == "") {
+        finalText = text;
+    } else {
+        finalText = text + " · " + supplementaryText;
+    }
+
+    emit updateBarDisplay(finalText, icon);
 }
 
 void NetworkWidget::on_SecurityConnectButton_clicked()

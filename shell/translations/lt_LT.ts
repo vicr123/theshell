@@ -2346,12 +2346,12 @@ Daiktai kurie bus palikti:
         <translation>Tylus režimas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="666"/>
+        <location filename="../mainwindow.cpp" line="669"/>
         <source>Desktop %1</source>
         <translation>Darbalaukis %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="436"/>
+        <location filename="../mainwindow.cpp" line="439"/>
         <source>For %1</source>
         <translation>Dėl %1</translation>
     </message>
@@ -2366,17 +2366,17 @@ Daiktai kurie bus palikti:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="437"/>
+        <location filename="../mainwindow.cpp" line="440"/>
         <source>Close</source>
         <translation>Uždaryti</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1708"/>
+        <location filename="../mainwindow.cpp" line="1711"/>
         <source>No notifications</source>
         <translation>Jokių pranešimų</translation>
     </message>
     <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="1712"/>
+        <location filename="../mainwindow.cpp" line="1715"/>
         <source>%n notification(s)</source>
         <translation>
             <numerusform>%n pranešimas</numerusform>
@@ -2385,43 +2385,43 @@ Daiktai kurie bus palikti:
         </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2182"/>
+        <location filename="../mainwindow.cpp" line="2185"/>
         <source>For Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2184"/>
+        <location filename="../mainwindow.cpp" line="2187"/>
         <source>Move to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2189"/>
+        <location filename="../mainwindow.cpp" line="2192"/>
         <source>Move to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2195"/>
+        <location filename="../mainwindow.cpp" line="2198"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2200"/>
+        <location filename="../mainwindow.cpp" line="2203"/>
         <source>For System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="2201"/>
+        <location filename="../mainwindow.cpp" line="2204"/>
         <source>Open Status Center</source>
         <translation type="unfinished">Atidaryti būsenos juostelę</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2204"/>
+        <location filename="../mainwindow.cpp" line="2207"/>
         <source>Open System Settings</source>
         <translation type="unfinished">Atidaryti sistemos nustatymus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2213"/>
+        <location filename="../mainwindow.cpp" line="2216"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2827,7 +2827,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="127"/>
         <location filename="../networkmanager/networkwidget.ui" line="1382"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="903"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="918"/>
         <source>Tethering</source>
         <translation>Pririšimas</translation>
     </message>
@@ -3119,13 +3119,13 @@ Daiktai kurie bus palikti:
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="166"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="746"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="761"/>
         <source>Wi-Fi</source>
         <translation>Wi-Fi</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="167"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="747"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="762"/>
         <source>Connecting to %1...</source>
         <translation>Prisijungiama į %1...</translation>
     </message>
@@ -3134,7 +3134,7 @@ Daiktai kurie bus palikti:
         <location filename="../networkmanager/networkwidget.cpp" line="556"/>
         <location filename="../networkmanager/networkwidget.cpp" line="568"/>
         <location filename="../networkmanager/networkwidget.cpp" line="594"/>
-        <location filename="../networkmanager/networkwidget.cpp" line="606"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="614"/>
         <source>Disconnected</source>
         <translation>Atsijungta</translation>
     </message>
@@ -3145,26 +3145,38 @@ Daiktai kurie bus palikti:
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="608"/>
+        <source>Login Required</source>
+        <comment>Currently behind network Portal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="610"/>
+        <source>Can&apos;t get to the Internet</source>
+        <comment>Network Portal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkmanager/networkwidget.cpp" line="616"/>
         <source>Flight Mode</source>
         <translation>Lėktuvo režimas</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="737"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="752"/>
         <source>Connection Error</source>
         <translation>Prisijungimo klaida</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="757"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="772"/>
         <source>Enter the information to connect to a new network</source>
         <translation>Įveskite informaciją kad prisijungtumėte prie naujo tinklo</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="894"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="909"/>
         <source>Tethering Error</source>
         <translation>Pririšimo klaida</translation>
     </message>
     <message>
-        <location filename="../networkmanager/networkwidget.cpp" line="904"/>
+        <location filename="../networkmanager/networkwidget.cpp" line="919"/>
         <source>Preparing Tethering</source>
         <translation>Paruošiamas pririšimas</translation>
     </message>
