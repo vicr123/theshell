@@ -6,67 +6,67 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="52"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicazione</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="105"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Spegni</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="107"/>
         <source>Power off this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Spegni questo dispositivo</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="112"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>Riavvia</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="114"/>
         <source>Reboot this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Riavvia questo dispositivo</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="119"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Esci</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="121"/>
         <source>End your session</source>
-        <translation type="unfinished"></translation>
+        <translation>Termina sessione</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="132"/>
         <source>Run Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Esegui comando</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="143"/>
         <source>Open webpage</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri pagina Web</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="151"/>
         <source>Open Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri cartella</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="158"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri file</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="204"/>
         <source>System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni di Sistema</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="205"/>
         <source>System Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurazione di Sistema</translation>
     </message>
 </context>
 <context>
@@ -74,17 +74,17 @@
     <message>
         <location filename="../audiomanager.cpp" line="348"/>
         <source>Allows all sounds from all apps, and notifications from all apps.</source>
-        <translation type="unfinished"></translation>
+        <translation>Permette di ricevere suoni e notifiche da tutte le App.</translation>
     </message>
     <message>
         <location filename="../audiomanager.cpp" line="350"/>
         <source>Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignora qualunque notifica dalle App, tranne quelle impostate per bypassare la Quiet Mode. I suoni normali verranno comunque riprodotti e i timer e le sveglie ti manderanno comunque notifiche, ma non faranno nessun rumore.</translation>
     </message>
     <message>
         <location filename="../audiomanager.cpp" line="352"/>
         <source>Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Disattiva completamente ogni suono e notifica dalle App, incluse quelle impostate per bypassare la Quiet Mode. Nemmeno i timer o le sveglie ti manderanno notifiche.</translation>
     </message>
 </context>
 <context>
@@ -92,42 +92,42 @@
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="176"/>
         <source>Saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvato</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="180"/>
         <source>Secured with WPA2-PSK</source>
-        <translation type="unfinished"></translation>
+        <translation>Protetto da WPA2-PSK</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="182"/>
         <source>Secured with WPA-PSK</source>
-        <translation type="unfinished"></translation>
+        <translation>Protetto da WPA-PSK</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="184"/>
         <source>Secured with WPA Enterprise</source>
-        <translation type="unfinished"></translation>
+        <translation>Protetto con WPA Enterprise</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="186"/>
         <source>Secured with WPA2 Enterprise</source>
-        <translation type="unfinished"></translation>
+        <translation>Protetto con WPA2 Enterprise</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="188"/>
         <source>Secured with Dynamic WEP</source>
-        <translation type="unfinished"></translation>
+        <translation>Protetto da Dynamic WEP</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="190"/>
         <source>Secured with Static WEP</source>
-        <translation type="unfinished"></translation>
+        <translation>Protetto da WEP Statico</translation>
     </message>
     <message>
         <location filename="../networkmanager/availablenetworkslist.cpp" line="192"/>
         <source>Not Secured</source>
-        <translation type="unfinished"></translation>
+        <translation>Non protetto</translation>
     </message>
 </context>
 <context>
@@ -135,12 +135,12 @@
     <message>
         <location filename="../bthandsfree.cpp" line="89"/>
         <source>In call</source>
-        <translation type="unfinished"></translation>
+        <translation>In chiamata</translation>
     </message>
     <message>
         <location filename="../bthandsfree.cpp" line="93"/>
         <source>Dialling...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiamando...</translation>
     </message>
 </context>
 <context>
@@ -148,7 +148,7 @@
     <message>
         <location filename="../background.ui" line="29"/>
         <source>Change Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiare Sfondo</translation>
     </message>
     <message>
         <location filename="../background.ui" line="38"/>
@@ -158,7 +158,7 @@
     <message>
         <location filename="../background.ui" line="47"/>
         <source>Open System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri le Impostazioni di Sistema</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="387"/>
@@ -168,12 +168,12 @@
     <message>
         <location filename="../background.cpp" line="498"/>
         <source>For desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Per il Desktop</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="500"/>
         <source>For system</source>
-        <translation type="unfinished"></translation>
+        <translation>Per il Sistema</translation>
     </message>
 </context>
 <context>
@@ -181,7 +181,7 @@
     <message>
         <location filename="../choosebackground.ui" line="14"/>
         <source>Choose Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli Sfondo</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="44"/>
@@ -191,37 +191,37 @@
     <message>
         <location filename="../choosebackground.ui" line="57"/>
         <source>Community</source>
-        <translation type="unfinished"></translation>
+        <translation>Comunità</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="70"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Personalizzabile</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="184"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le immagini della community theShell verranno mostrate a rotazione ogni tanto.</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="194"/>
         <source>Show Image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra Informazioni Immagine</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="203"/>
         <source>Change image after</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambia Immagine dopo</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="226"/>
         <source>minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>minuti</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="279"/>
         <source>Current Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Sfondo Corrente</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="325"/>
@@ -231,62 +231,62 @@
     <message>
         <location filename="../choosebackground.ui" line="332"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licenza</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="339"/>
         <source>More Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Più Informazioni</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="350"/>
         <source>by</source>
-        <translation type="unfinished"></translation>
+        <translation>da</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="379"/>
         <source>Select a file to display as your desktop background</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli un file da impostare come sfondo del Desktop</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="453"/>
         <source>Image Sizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensioni Immagine</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="461"/>
         <source>Stretch to Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Adatta</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="466"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrandisci e Ritaglia</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="471"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Centra</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="476"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Mosaicizza</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="481"/>
         <source>Zoom and Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrandisci e Adatta</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="506"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Fatto</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="391"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Naviga...</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="88"/>
@@ -296,7 +296,7 @@
     <message>
         <location filename="../choosebackground.cpp" line="165"/>
         <source>Select Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona Sfondo</translation>
     </message>
 </context>
 <context>
@@ -304,19 +304,19 @@
     <message>
         <location filename="../dbusevents.cpp" line="100"/>
         <source>Perform Action...</source>
-        <translation type="unfinished"></translation>
+        <translation>Realizza Azione...</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="105"/>
         <location filename="../dbusevents.cpp" line="170"/>
         <source>%1 Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Connesso %1</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="105"/>
         <location filename="../dbusevents.cpp" line="170"/>
         <source>%1 has been connected to this PC.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 è connesso a questo PC.</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="127"/>
