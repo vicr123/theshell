@@ -163,7 +163,7 @@
     <message>
         <location filename="../background.cpp" line="387"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>pagal %1</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="498"/>
@@ -186,72 +186,72 @@
     <message>
         <location filename="../choosebackground.ui" line="44"/>
         <source>Inbuilt</source>
-        <translation type="unfinished"></translation>
+        <translation>Įmontuotas</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="57"/>
         <source>Community</source>
-        <translation type="unfinished"></translation>
+        <translation>Bendruomenė</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="70"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinktinis</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="184"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>Visos nuotraukos iš &quot;theShell&quot; bendruomenės bus naudojamos kaip darbalaukio paveikslėliais.</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="194"/>
         <source>Show Image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti paveikslėlio informaciją</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="203"/>
         <source>Change image after</source>
-        <translation type="unfinished"></translation>
+        <translation>Keisti paveikslėlį po</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="226"/>
         <source>minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>minutės</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="279"/>
         <source>Current Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Dabartinis paveikslėlis</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="325"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstas</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="332"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licencija</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="339"/>
         <source>More Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Daugiau informacijos</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="350"/>
         <source>by</source>
-        <translation type="unfinished"></translation>
+        <translation>pagal</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="379"/>
         <source>Select a file to display as your desktop background</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkite failą kuris bus jūsų darbalaukio paveikslėlis</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="453"/>
         <source>Image Sizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuotraukos dydis</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="461"/>
@@ -261,17 +261,17 @@
     <message>
         <location filename="../choosebackground.ui" line="466"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Priartinti ir apkarpyti</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="471"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Centras</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="476"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Plytelė</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="481"/>
@@ -291,7 +291,7 @@
     <message>
         <location filename="../choosebackground.cpp" line="88"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>pagal %1</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="165"/>
@@ -601,7 +601,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="743"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;quot;Happy Bee&amp;quot;, &amp;quot;Salty Ditty&amp;quot; copyright (c) Kevin MacLeod. Licensed under the Creative Commons CC-BY license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;quot;Happy Bee&amp;quot;, &amp;quot;Salty Ditty&amp;quot; copyright (c) Kevin MacLeod. Licensed under the Creative Commons CC-BY license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;quot;Happy Bee&amp;quot;, &amp;quot;Salty Ditty&amp;quot; Autorinės teisės. (c) Kevin MacLeod. Licencijuota &quot;Creative Commons CC-BY&quot; licencija.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="796"/>
@@ -794,7 +794,7 @@
         <location filename="../infopanedropdown.ui" line="332"/>
         <location filename="../infopanedropdown.ui" line="3017"/>
         <source>Redshift</source>
-        <translation>Redshift</translation>
+        <translation>&quot;Redshift&quot;</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3087"/>
@@ -1033,7 +1033,7 @@
         <location filename="../infopanedropdown.ui" line="3906"/>
         <location filename="../infopanedropdown.cpp" line="47"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Vieta</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2254"/>
@@ -1091,27 +1091,27 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2653"/>
         <source>Use Compact Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudoti minimalistinę juostą</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2606"/>
         <source>Within &amp;Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>Su &amp;vartais</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2667"/>
         <source>The Status Bar is a shown when a window is maximised.</source>
-        <translation type="unfinished"></translation>
+        <translation>Juosta yra rodoma kai langas yra padidintas.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2534"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimalistinė juosta yra mažesnė bei kompaktiškesnė versija, nes ji sutvarko visus elementus į vieną eilę kad išsaugotų vertikalios vietos.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2517"/>
         <source>When this is checked, hovering over the Status Bar will automatically expand the bar. Otherwise, clicking on the Status Bar will expand the bar.</source>
-        <translation>Jei šitas yra pasirinktas, būnant arti prie būsenos juostelės automatiškai išskleis juostelę. Kitaip, spaudžiant ant būsenos juostos išskleis juostelę.</translation>
+        <translation>Jei šis punktas yra pasirinktas, būnant arti prie būsenos juostelės automatiškai išskleis juostelę. Kitaip, spaudžiant ant būsenos juostos išskleis juostelę.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2914"/>
@@ -1121,32 +1121,32 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3076"/>
         <source>Use Sunlight Cycle</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudoti saulės šviesos ciklą</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2926"/>
         <source>&amp;100% (96 dpi)</source>
-        <translation>&amp;100% (96 dpi)</translation>
+        <translation>&amp;100% (96 tpc)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2933"/>
         <source>1&amp;50% (144 dpi)</source>
-        <translation>1&amp;50% (144 dpi)</translation>
+        <translation>1&amp;50% (144 tpc)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2940"/>
         <source>&amp;200% (192 dpi)</source>
-        <translation>&amp;200% (192 dpi)</translation>
+        <translation>&amp;200% (192 tpc)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2947"/>
         <source>&amp;300% (288 dpi)</source>
-        <translation>&amp;300% (288 dpi)</translation>
+        <translation>&amp;300% (288 tpc)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2954"/>
         <source>DPI settings will be applied at next login.</source>
-        <translation>DPI nustatymai bus atlikti per kitą prisijungimą.</translation>
+        <translation>DPI nustatymai bus pritaikyti kai prisijungsite iš naujo.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3126"/>
@@ -1156,22 +1156,22 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3041"/>
         <source>We&apos;ll send your current location to https://sunrise-sunset.org/ to determine sunlight times if you enable this option.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mes siųsime jūsų dabartinę vietovę į https://sunrise-sunset.org/, kad galėtume nustatyti saulės šviesos laikus, jeigu įjungsite šitą parinktį.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3473"/>
         <source>GTK3 Font</source>
-        <translation type="unfinished"></translation>
+        <translation>GTK3 šriftas</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3480"/>
         <source>GTK3 Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>GTK3 tema</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3300"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Juodas</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3314"/>
@@ -1186,17 +1186,17 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3403"/>
         <source>Use for GTK</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudoti GTK</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3801"/>
         <source>Volume change sound</source>
-        <translation>Garso stiprumo pakeitimo garsas</translation>
+        <translation>Garsumo pakeitimo garsas</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3822"/>
         <source>Volume overdrive</source>
-        <translation></translation>
+        <translation>Garso overdrive</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3751"/>
@@ -1231,7 +1231,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3761"/>
         <source>Emphasise sending app</source>
-        <translation type="unfinished"></translation>
+        <translation>Pabrėžti programos siuntimą</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4655"/>
@@ -1283,27 +1283,27 @@
     <message>
         <location filename="../infopanedropdown.ui" line="4840"/>
         <source>Reboot</source>
-        <translation type="unfinished">Perkrauti</translation>
+        <translation>Perkrauti</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4849"/>
         <source>Log Out</source>
-        <translation type="unfinished">Atsijungti</translation>
+        <translation>Atsijungti</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4858"/>
         <source>Suspend</source>
-        <translation type="unfinished">Laikinas sustabdymas</translation>
+        <translation>Laikinas sustabdymas</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4867"/>
         <source>Lock</source>
-        <translation type="unfinished">Užrakinti</translation>
+        <translation>Užrakinti</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4876"/>
         <source>Turn Off Screen</source>
-        <translation type="unfinished">Išjungia ekraną</translation>
+        <translation>Išjungs ekraną</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5050"/>
@@ -2230,7 +2230,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="80"/>
         <source>KDE Connect</source>
-        <translation type="unfinished">KDE Prisijungimas</translation>
+        <translation>KDE Prisijungimas</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="206"/>
@@ -2278,7 +2278,7 @@ Daiktai kurie bus palikti:
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="451"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="131"/>
         <source>Locate Device</source>
-        <translation type="unfinished">Surasti įrenginį</translation>
+        <translation>Surasti įrenginį</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="454"/>
@@ -2367,7 +2367,7 @@ Daiktai kurie bus palikti:
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="787"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="122"/>
         <source>Ping</source>
-        <translation type="unfinished">Ping</translation>
+        <translation>Ping</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="794"/>
@@ -2483,7 +2483,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="137"/>
         <source>Locate</source>
-        <translation type="unfinished">Nustatyti</translation>
+        <translation>Nustatyti</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="138"/>
@@ -2600,7 +2600,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../mainwindow.ui" line="365"/>
         <source>Screen Brightness</source>
-        <translation type="unfinished">Ekrano šviesumas</translation>
+        <translation>Ekrano šviesumas</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="429"/>
@@ -2671,12 +2671,12 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../mainwindow.cpp" line="298"/>
         <source>Recording Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Filmuojama ekraną</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="304"/>
         <source>Processing Screen Recording...</source>
-        <translation type="unfinished"></translation>
+        <translation>Apdorojamas ekrano filmavimas...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="350"/>
@@ -2691,12 +2691,10 @@ Daiktai kurie bus palikti:
     <message numerus="yes">
         <location filename="../mainwindow.cpp" line="1756"/>
         <source>%n notification(s)</source>
-        <translation>
-            <numerusform>%n pranešimas</numerusform>
-            <numerusform>%n pranešimas</numerusform>
-            <numerusform>%n pranešimai</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n pranešimas</numerusform>
+        <numerusform>%n pranešimaii</numerusform>
+        <numerusform>%n pranešimai</numerusform>
+        </translation></message>
     <message>
         <location filename="../mainwindow.cpp" line="2213"/>
         <source>For Bar</source>
@@ -2705,38 +2703,38 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../mainwindow.cpp" line="2215"/>
         <source>Move to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Perkelti į apačią</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2220"/>
         <source>Move to top</source>
-        <translation type="unfinished"></translation>
+        <translation>Perkelti į viršų</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2226"/>
         <source>Gateway and Bar Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Vartų ir juostos nustatymai</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2231"/>
         <source>For System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistemai</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
         <location filename="../mainwindow.cpp" line="2232"/>
         <source>Open Status Center</source>
-        <translation type="unfinished">Atidaryti būsenos juostelę</translation>
+        <translation>Atidaryti būsenos centrą</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2235"/>
         <source>Open System Settings</source>
-        <translation type="unfinished">Atidaryti sistemos nustatymus</translation>
+        <translation>Atidaryti sistemos nustatymus</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2244"/>
         <source>Open Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>Atidaryti vartus</translation>
     </message>
 </context>
 <context>
@@ -2754,12 +2752,12 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../menu.ui" line="107"/>
         <source>Open theShell OS Installer</source>
-        <translation>Atidaryti theShell OS Installer</translation>
+        <translation>Atidaryti theShell OS diegimo programą</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="137"/>
         <source>Gateway</source>
-        <translation>Gateway</translation>
+        <translation>Vartai</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="154"/>
@@ -2776,17 +2774,17 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../menu.ui" line="281"/>
         <source>You&apos;re about to power off your PC. Are you sure?</source>
-        <translation>Jūs norite išjungti savo kompiuterį. Ar jūs tikri?</translation>
+        <translation>Jūs norite išjungti savo kompiuterį. Ar jūs esate tuo tikri?</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="296"/>
         <source>Exit theShell</source>
-        <translation>Išeiti theShell</translation>
+        <translation>Išeiti iš theShell</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="309"/>
         <source>Exits theShell, leaving everything else open</source>
-        <translation>Išeina iš theShell, palieka visas programas atidarytas</translation>
+        <translation>Išeis iš theShell bet paliks visas programas atidarytas</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="316"/>
@@ -2796,12 +2794,12 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../menu.ui" line="333"/>
         <source>Power Off</source>
-        <translation>išjungti</translation>
+        <translation>Išjungti</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="346"/>
         <source>Turns off your computer</source>
-        <translation>Išjungia jūsų kompiuterį</translation>
+        <translation>Išjungs jūsų kompiuterį</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="357"/>
@@ -2811,7 +2809,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../menu.ui" line="370"/>
         <source>Turns off your computer and turns it back on again</source>
-        <translation>Išjungia ir vėl įjungia jūsų kompiuterį</translation>
+        <translation>Išjungs jūsų kompiuterį vėl jį įjungs</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="377"/>
@@ -2821,32 +2819,32 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../menu.ui" line="390"/>
         <source>Ends your session and keeps the computer on for other people to use</source>
-        <translation>Baigia jūsų sesiją ir palieka kompiuterį įjungtą kitiem žmonėm naudoti</translation>
+        <translation>Baigs jūsų sesiją ir paliks jūsų kompiuterį įjungtą kitiems žmonėms naudotis</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="443"/>
         <source>Turn Off Screen</source>
-        <translation>Išjungia ekraną</translation>
+        <translation>Išjungti ekraną</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="456"/>
         <source>Turns off the screen, but keeps everything else running in the background</source>
-        <translation>Išjungia ekraną, bet palieka visas programas veikiančias</translation>
+        <translation>Išjungs ekraną, bet paliks operacinę sistemą bei visas programas veikiančias fone</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="595"/>
         <source>Before you end your session, here are some things you might want to know</source>
-        <translation type="unfinished"></translation>
+        <translation>Prie baigiant jūsų sesiją, yra keli dalykai kurios turbūt norite žinoti</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="688"/>
         <source>Who are you switching to?</source>
-        <translation type="unfinished"></translation>
+        <translation>Į kokią paskyrą pereinate?</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="724"/>
         <source>Start a new session</source>
-        <translation type="unfinished"></translation>
+        <translation>Pradėti naują sesiją</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="423"/>
@@ -2866,7 +2864,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../menu.ui" line="413"/>
         <source>Puts your computer in a low power state so that it opens up quickly</source>
-        <translation>Palieka jūsų kompiuterį ant silpno baterijos naudojimo, kad jis vėliau įsijungtų greitai</translation>
+        <translation>Paliks jūsų kompiuterį ant silpno baterijos naudojimo, kad jis vėliau įsijungtų greitai</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="472"/>
@@ -2877,17 +2875,17 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../menu.ui" line="485"/>
         <source>Switches to the logon screen and keeps your session in the background</source>
-        <translation>Įeina į prisijungimo ekraną ir palieka visas jūsų programas atidarytas</translation>
+        <translation>Įeis į prisijungimo ekraną ir paliks visas jūsų programas atidarytas</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="495"/>
         <source>Hibernate</source>
-        <translation>Sleep</translation>
+        <translation>Miegojimo režimas</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="511"/>
         <source>Powers off your computer, but when powered back on, restores the session.</source>
-        <translation>Išjungia kompiuterį, bet kai įsijungia, atkuria visą sesiją.</translation>
+        <translation>Išjungs kompiuterį, bet kai jis įsijungs, jūsų sesija bus atkurta.</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="548"/>
@@ -2910,42 +2908,42 @@ Daiktai kurie bus palikti:
         <location filename="../menu.cpp" line="75"/>
         <location filename="../menu.cpp" line="77"/>
         <source>Hey, %1!</source>
-        <translation>Ei, %1!</translation>
+        <translation>Labas, %1!</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="274"/>
         <source>Power Off Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Vistiek išjungti</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="286"/>
         <source>Reboot Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Vistiek perkrauti</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="298"/>
         <source>Log Out Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Vistiek atsijungti</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="539"/>
         <source>%1 on X11 display %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ant X11 ekrano %2</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="541"/>
         <source>on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ant %1</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="543"/>
         <source>%1 on VT #%2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ant VT #%2</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="545"/>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Sesija</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="665"/>
@@ -2955,7 +2953,7 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../menu.cpp" line="702"/>
         <source>For &quot;%1&quot;</source>
-        <translation>For &quot;%1&quot;</translation>
+        <translation>&quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -2963,75 +2961,75 @@ Daiktai kurie bus palikti:
     <message>
         <location filename="../locktypes/mousepassword.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Forma</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="70"/>
         <source>Set up Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustatyti pelės slaptažodį</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="112"/>
         <source>A Mouse Password trades security for convenience when unlocking your computer from the lock screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pelės slaptažodis iškeičia saugą į patogumą kai atrakinama jūsų kompiuterį iš užrakto ekrano.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="149"/>
         <location filename="../locktypes/mousepassword.cpp" line="128"/>
         <source>Go for it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pirmyn!</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="193"/>
         <source>Reset</source>
-        <translation type="unfinished">Atstatyti</translation>
+        <translation>Atstatyti</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="203"/>
         <location filename="../locktypes/mousepassword.cpp" line="230"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Kitas</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="176"/>
         <source>Your Mouse Password needs to contain at least 5 events.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jūsų pelės slaptažodis turi turėti bent 5 paspaudimus.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="188"/>
         <source>Unfortunately that wasn&apos;t correct. Please try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deja tai nebuvo teisingas bandymas. Prašome bandyti iš naujo.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="194"/>
         <source>Set Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustatyti pelės slaptažodį</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="202"/>
         <source>Unauthorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Neautorizuotas</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="202"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Polkit neleidžia jums nustatyti pelės slaptažodžio.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="222"/>
         <location filename="../locktypes/mousepassword.cpp" line="236"/>
         <source>Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Pelės slaptažodis</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="222"/>
         <source>Mouse Password couldn&apos;t be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pelės slaptažodis negalėjo būti išsaugotas.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="237"/>
         <source>Mouse Password was set successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Pelės slaptažodis buvo nustatytas sėkmingai</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.h" line="54"/>
