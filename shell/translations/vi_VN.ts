@@ -41,7 +41,7 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="132"/>
         <source>Run Command</source>
-        <translation>Dụng lệnh</translation>
+        <translation>Chạy lệnh</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="143"/>
@@ -61,7 +61,7 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="204"/>
         <source>System Settings</source>
-        <translation>Cài đặt</translation>
+        <translation>Cài đặt hệ thông</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="205"/>
@@ -140,7 +140,7 @@
     <message>
         <location filename="../bthandsfree.cpp" line="93"/>
         <source>Dialling...</source>
-        <translation>Quay số...</translation>
+        <translation>Đang quay số...</translation>
     </message>
 </context>
 <context>
@@ -173,7 +173,7 @@
     <message>
         <location filename="../background.cpp" line="500"/>
         <source>For system</source>
-        <translation>Cho máy</translation>
+        <translation>Cho hệ thống</translation>
     </message>
 </context>
 <context>
@@ -186,42 +186,42 @@
     <message>
         <location filename="../choosebackground.ui" line="44"/>
         <source>Inbuilt</source>
-        <translation type="unfinished"></translation>
+        <translation>Gói</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="57"/>
         <source>Community</source>
-        <translation type="unfinished"></translation>
+        <translation>Cộng đồng</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="70"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Tùy chỉnh</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="184"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hình nền ngẫu nhiên từ cộng đồng theShell sẽ hiển thị trên màn hình và thay đổi tự động.</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="194"/>
         <source>Show Image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiển thị thông tin ảnh</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="203"/>
         <source>Change image after</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi hình nên sau</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="226"/>
         <source>minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>phút</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="279"/>
         <source>Current Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Hình nền hiện tại</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="325"/>
@@ -231,12 +231,12 @@
     <message>
         <location filename="../choosebackground.ui" line="332"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Giấy phép</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="339"/>
         <source>More Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Thông tin thêm</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="350"/>
@@ -246,37 +246,37 @@
     <message>
         <location filename="../choosebackground.ui" line="379"/>
         <source>Select a file to display as your desktop background</source>
-        <translation type="unfinished"></translation>
+        <translation>Chọn tệp làm nền màn hình</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="453"/>
         <source>Image Sizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Kích cỡ hình</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="461"/>
         <source>Stretch to Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kéo đễ vừa</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="466"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Phóng và cắt</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="471"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Để giữa</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="476"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Ngói</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="481"/>
         <source>Zoom and Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Phóng để vừa</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="506"/>
@@ -595,7 +595,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="671"/>
         <source>Timer</source>
-        <translation>Hẹn giờ</translation>
+        <translation>Bộ hẹn giờ</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="743"/>
@@ -620,7 +620,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="838"/>
         <source>Stopwatch</source>
-        <translation>Bấm giờ</translation>
+        <translation>Bộ bấm giờ</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="938"/>
@@ -673,7 +673,7 @@
         <location filename="../infopanedropdown.ui" line="1371"/>
         <location filename="../infopanedropdown.cpp" line="2837"/>
         <source>Charge History</source>
-        <translation>Pin lịch sử</translation>
+        <translation>Lịch sử pin</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1378"/>
@@ -720,33 +720,33 @@
         <location filename="../infopanedropdown.ui" line="2243"/>
         <location filename="../infopanedropdown.ui" line="4296"/>
         <source>Remove</source>
-        <translation>Tẩy</translation>
+        <translation>Xóa</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2270"/>
         <source>Autostart with</source>
-        <translation>Bật với</translation>
+        <translation>Khởi động với</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6772"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Trang Web</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6782"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Báo Cáo Lỗi</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6792"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Mã Nguồn</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1976"/>
         <location filename="../infopanedropdown.ui" line="2174"/>
         <source>Startup</source>
-        <translation>Bật</translation>
+        <translation>Khởi động</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2684"/>
@@ -798,7 +798,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3087"/>
         <source>Pause Redshift</source>
-        <translation>Đứng Redshift</translation>
+        <translation>Dừng Redshift</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3051"/>
@@ -808,7 +808,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2995"/>
         <source>End Time</source>
-        <translation>Giờ xong</translation>
+        <translation>Giờ kết thúc</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1767"/>
@@ -825,7 +825,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3002"/>
         <source>If the start time is later than the end time, Redshift will be activated until the end time on the next day.</source>
-        <translation>Nếu mà giờ bắt đầu là sau giờ xong thì Redshift sẽ bật cho đến khi giờ xong ngay mai.</translation>
+        <translation>Nếu giờ bắt đầu sau giờ kết thúc, Redshift sẽ bật đến khi giờ kết thúc ngay sau.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3366"/>
@@ -840,7 +840,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3327"/>
         <source>Color Scheme</source>
-        <translation>Màu</translation>
+        <translation>Mầu giao diện</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2012"/>
@@ -886,7 +886,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3614"/>
         <source>Don&apos;t Show</source>
-        <translation>Không hiển</translation>
+        <translation>Không hiện</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2102"/>
@@ -902,7 +902,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="6550"/>
         <source>You&apos;re using</source>
-        <translation>Bạn đang dụng</translation>
+        <translation>Bạn đang dùng</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6597"/>
@@ -974,7 +974,7 @@
         <location filename="../infopanedropdown.ui" line="2057"/>
         <location filename="../infopanedropdown.ui" line="4956"/>
         <source>Lock Screen</source>
-        <translation>Khóa màn hình</translation>
+        <translation>Màn hình khóa</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1592"/>
@@ -1042,7 +1042,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2299"/>
         <source>Which app do you want to automatically start with theShell?</source>
-        <translation>Bạn muốn ứng dụng nào tù động mở với theShell?</translation>
+        <translation>Khi theShell khởi động, bạn muốn mở ứng dụng nào?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2311"/>
@@ -1065,7 +1065,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2412"/>
         <source>Enter details of the app to autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhập vào chi tiết của ứng dụng để mở tự động</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2422"/>
@@ -1075,7 +1075,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2442"/>
         <source>Only autostart this app in theShell</source>
-        <translation>Tự động mở ứng dụng này trong theShell thoi</translation>
+        <translation>Chỉ mở ứng dụng này tự động trong theShell</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2571"/>
@@ -1374,19 +1374,19 @@
     <message>
         <location filename="../infopanedropdown.ui" line="5094"/>
         <source>Set Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Thiết lập</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5105"/>
         <source>Remove Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Gõ mật khẩu chuột</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5131"/>
         <location filename="../infopanedropdown.cpp" line="4265"/>
         <location filename="../infopanedropdown.cpp" line="4271"/>
         <source>Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Mật khẩu chuột</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5138"/>
@@ -1425,7 +1425,7 @@
         <location filename="../infopanedropdown.cpp" line="2303"/>
         <location filename="../infopanedropdown.cpp" line="2304"/>
         <source>(unchanged)</source>
-        <translation>(chưa đổi)</translation>
+        <translation>(không thay)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5430"/>
@@ -1457,7 +1457,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="5492"/>
         <source>Administrator</source>
-        <translation>Quản trị</translation>
+        <translation>Quản lý</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5565"/>
@@ -1556,7 +1556,7 @@ Tập tin này có thể giữ lại:
     <message>
         <location filename="../infopanedropdown.ui" line="6171"/>
         <source>Changing this setting requires you to log in and then log out.</source>
-        <translation>Nếu bạn thay đổi điều này, bạn cần phải đăng xuất và sau đó.</translation>
+        <translation>Khi bạn đổi ngôn ngữ, bạn sẽ cần đăng xuất rồi đăng nhập lại</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6296"/>
@@ -1623,7 +1623,7 @@ Tập tin này có thể giữ lại:
     <message>
         <location filename="../infopanedropdown.ui" line="6418"/>
         <source>Reset Device</source>
-        <translation>Đặt lại máy</translation>
+        <translation>Đặt lại hệ thống</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="6692"/>
