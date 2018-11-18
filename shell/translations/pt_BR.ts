@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US" language="pt_BR">
 <context>
     <name>AppsListModel</name>
     <message>
@@ -11,7 +11,7 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="105"/>
         <source>Power Off</source>
-        <translation type="unfinished">Desligar</translation>
+        <translation>Desligar</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="107"/>
@@ -21,7 +21,7 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="112"/>
         <source>Reboot</source>
-        <translation type="unfinished">Reiniciar</translation>
+        <translation>Reiniciar</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="114"/>
@@ -31,7 +31,7 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="119"/>
         <source>Log Out</source>
-        <translation type="unfinished">Trocar usuário</translation>
+        <translation>Trocar usuário</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="121"/>
@@ -61,7 +61,7 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="204"/>
         <source>System Settings</source>
-        <translation type="unfinished">Configurações do Sistema</translation>
+        <translation>Configurações do Sistema</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="205"/>
@@ -354,7 +354,7 @@
         <location filename="../networkmanager/networkwidget.cpp" line="381"/>
         <location filename="../networkmanager/networkwidget.cpp" line="485"/>
         <source>Connect</source>
-        <translation type="unfinished">Connectar</translation>
+        <translation>Conectar</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="391"/>
@@ -972,7 +972,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="5014"/>
         <source>Browse...</source>
-        <translation type="unfinished">Procurar...</translation>
+        <translation>Procurar...</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2057"/>
@@ -1281,22 +1281,22 @@
     <message>
         <location filename="../infopanedropdown.ui" line="4831"/>
         <source>Power Off</source>
-        <translation type="unfinished">Desligar</translation>
+        <translation>Desligar</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4840"/>
         <source>Reboot</source>
-        <translation type="unfinished">Reiniciar</translation>
+        <translation>Reiniciar</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4849"/>
         <source>Log Out</source>
-        <translation type="unfinished">Trocar usuário</translation>
+        <translation>Trocar usuário</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4858"/>
         <source>Suspend</source>
-        <translation type="unfinished">Suspender</translation>
+        <translation>Suspender</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4867"/>
@@ -1473,7 +1473,7 @@
         <location filename="../infopanedropdown.ui" line="1077"/>
         <location filename="../infopanedropdown.ui" line="1201"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5576"/>
@@ -2359,7 +2359,7 @@ Items that will be kept if you choose to keep files:
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="787"/>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="122"/>
         <source>Ping</source>
-        <translation type="unfinished">Ping</translation>
+        <translation>Ping</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="794"/>
@@ -2475,7 +2475,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="137"/>
         <source>Locate</source>
-        <translation type="unfinished">Localizar</translation>
+        <translation>Localizar</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="138"/>
@@ -2590,7 +2590,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../mainwindow.ui" line="365"/>
         <source>Screen Brightness</source>
-        <translation type="unfinished">Brilho da Tela</translation>
+        <translation>Brilho da Tela</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="429"/>
@@ -2714,12 +2714,12 @@ Items that will be kept if you choose to keep files:
         <location filename="../mainwindow.ui" line="152"/>
         <location filename="../mainwindow.cpp" line="2232"/>
         <source>Open Status Center</source>
-        <translation type="unfinished">Abrir Centro de Status</translation>
+        <translation>Abrir Centro de Status</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2235"/>
         <source>Open System Settings</source>
-        <translation type="unfinished">Abrir Configurações do Sistema</translation>
+        <translation>Abrir Configurações do Sistema</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2244"/>
@@ -2759,12 +2759,12 @@ Items that will be kept if you choose to keep files:
         <location filename="../menu.ui" line="268"/>
         <location filename="../menu.ui" line="588"/>
         <source>End Session</source>
-        <translation type="unfinished">Terminar sessão</translation>
+        <translation>Terminar sessão</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="281"/>
         <source>You&apos;re about to power off your PC. Are you sure?</source>
-        <translation type="unfinished">Você esta prester a desligar seu PC. Tem certeza?</translation>
+        <translation>Você esta prestes a desligar seu PC. Tem certeza?</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="296"/>
@@ -2779,12 +2779,12 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../menu.ui" line="316"/>
         <source>Fake Exit</source>
-        <translation type="unfinished">Saída falsa</translation>
+        <translation>Saída falsa</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="333"/>
         <source>Power Off</source>
-        <translation type="unfinished">Desligar</translation>
+        <translation>Desligar</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="346"/>
@@ -2794,7 +2794,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../menu.ui" line="357"/>
         <source>Reboot</source>
-        <translation type="unfinished">Reiniciar</translation>
+        <translation>Reiniciar</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="370"/>
@@ -2804,7 +2804,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../menu.ui" line="377"/>
         <source>Log Out</source>
-        <translation type="unfinished">Trocar usuário</translation>
+        <translation>Trocar usuário</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="390"/>
@@ -2849,7 +2849,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../menu.ui" line="400"/>
         <source>Suspend</source>
-        <translation type="unfinished">Suspender</translation>
+        <translation>Suspender</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="413"/>
@@ -2882,7 +2882,7 @@ Items that will be kept if you choose to keep files:
         <location filename="../menu.ui" line="620"/>
         <location filename="../menu.ui" line="700"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="203"/>
@@ -2972,7 +2972,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../locktypes/mousepassword.ui" line="193"/>
         <source>Reset</source>
-        <translation type="unfinished">Reiniciar</translation>
+        <translation>Reiniciar</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="203"/>
@@ -3372,12 +3372,12 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1205"/>
         <source>Connect</source>
-        <translation type="unfinished">Connectar</translation>
+        <translation>Conectar</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1276"/>
         <source>Information</source>
-        <translation type="unfinished">Informação</translation>
+        <translation>Informação</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.ui" line="1311"/>
@@ -3435,7 +3435,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="608"/>
         <source>Flight Mode</source>
-        <translation type="unfinished">Modo Avião</translation>
+        <translation>Modo Avião</translation>
     </message>
     <message>
         <location filename="../networkmanager/networkwidget.cpp" line="737"/>
@@ -3640,12 +3640,12 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../onboarding.ui" line="909"/>
         <source>Log Out</source>
-        <translation type="unfinished">Trocar usuário</translation>
+        <translation>Trocar usuário</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="923"/>
         <source>Power Off</source>
-        <translation type="unfinished">Desligar</translation>
+        <translation>Desligar</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="1045"/>
@@ -3661,7 +3661,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../onboarding.cpp" line="212"/>
         <source>Start</source>
-        <translation type="unfinished">Começar</translation>
+        <translation>Começar</translation>
     </message>
 </context>
 <context>
@@ -3680,7 +3680,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../rundialog.ui" line="68"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../rundialog.cpp" line="59"/>
