@@ -171,8 +171,8 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
     QDBusMessage SeekableRequest = QDBusMessage::createMethodCall(service, "/org/mpris/MediaPlayer2", "org.freedesktop.DBus.Properties", "Get");
     SeekableRequest.setArguments(QList<QVariant>() << "org.mpris.MediaPlayer2.Player" << "CanSeek");
 
-    QDBusReply<bool> SeekableReply(QDBusConnection::sessionBus().call(SeekableRequest, QDBus::Block, 1000));
-    ui->position->setEnabled(SeekableReply.value());
+    QDBusReply<QVariant> SeekableReply(QDBusConnection::sessionBus().call(SeekableRequest, QDBus::Block, 1000));
+    ui->position->setEnabled(SeekableReply.value().toBool());
 
     QTimer* t = new QTimer();
     t->setInterval(1000);

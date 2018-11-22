@@ -39,6 +39,7 @@ BluetoothManagement::BluetoothManagement(QWidget *parent) :
 
     ui->pairDeviceList->setModel(new DevicesListModel(mgr, DevicesListModel::Unpaired));
     ui->pairDeviceList->setItemDelegate(new DevicesDelegate(this));
+    ui->menuStackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
 
     obexAgent = new BTObexAgent(obexMgr, mgr, this);
     connect(obexAgent, &BTObexAgent::newTransfer, [=](BluezQt::ObexTransferPtr transfer) {
@@ -75,7 +76,7 @@ QWidget* BluetoothManagement::mainWidget() {
 }
 
 QString BluetoothManagement::name() {
-    return "Bluetooth";
+    return tr("Bluetooth");
 }
 
 BluetoothManagement::StatusPaneTypes BluetoothManagement::type() {

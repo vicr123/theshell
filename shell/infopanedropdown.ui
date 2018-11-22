@@ -379,9 +379,9 @@
     </widget>
    </item>
    <item>
-    <widget class="AnimatedStackedWidget" name="pageStack">
+    <widget class="tStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="statusFrame">
       <property name="autoFillBackground">
@@ -1323,7 +1323,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QStackedWidget" name="settingsTabs">
+           <widget class="tStackedWidget" name="settingsTabs">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -2027,21 +2027,21 @@
                     <property name="spacing">
                      <number>6</number>
                     </property>
-                    <item row="0" column="1">
+                    <item row="1" column="1">
                      <widget class="QSlider" name="brightnessSlider">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="0">
+                    <item row="1" column="0">
                      <widget class="QLabel" name="label_4">
                       <property name="text">
                        <string>Screen Brightness</string>
                       </property>
                      </widget>
                     </item>
-                    <item row="1" column="0" colspan="2">
+                    <item row="2" column="0" colspan="2">
                      <widget class="QFrame" name="resolutionFrame">
                       <property name="frameShape">
                        <enum>QFrame::NoFrame</enum>
@@ -2089,7 +2089,7 @@
                       </layout>
                      </widget>
                     </item>
-                    <item row="2" column="0">
+                    <item row="3" column="0">
                      <widget class="QLabel" name="label_51">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -2105,7 +2105,7 @@
                       </property>
                      </widget>
                     </item>
-                    <item row="2" column="1">
+                    <item row="3" column="1">
                      <layout class="QVBoxLayout" name="verticalLayout_33">
                       <item>
                        <widget class="QRadioButton" name="dpi100">
@@ -2143,6 +2143,19 @@
                        </widget>
                       </item>
                      </layout>
+                    </item>
+                    <item row="0" column="0" colspan="2">
+                     <widget class="QLabel" name="label_6">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>SCREEN</string>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </item>
@@ -2197,11 +2210,12 @@
                      <widget class="QLabel" name="redshiftLabel">
                       <property name="font">
                        <font>
-                        <pointsize>15</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
                        </font>
                       </property>
                       <property name="text">
-                       <string>Redshift</string>
+                       <string>REDSHIFT</string>
                       </property>
                      </widget>
                     </item>
@@ -6365,6 +6379,12 @@ Items that will be kept if you choose to keep files:
    <slots>
     <signal>exit()</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>tStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header location="global">tstackedwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

@@ -77,6 +77,8 @@ class UPowerDBus;
 
 using namespace QtCharts;
 
+class InfoPaneDropdownPrivate;
+
 namespace Ui {
 class InfoPaneDropdown;
 }
@@ -491,26 +493,11 @@ class InfoPaneDropdown : public QDialog
 
     private:
         Ui::InfoPaneDropdown *ui;
+        InfoPaneDropdownPrivate* d;
 
-        bool isRedshiftOn = false;
-        bool isNewRedshift = true;
         void changeDropDown(dropdownType changeTo, bool doAnimation = true);
         void changeDropDown(QWidget* changeTo, ClickableLabel* label, bool doAnimation = true);
-        int mouseClickPoint;
-        int initialPoint;
-        bool mouseMovedUp = false;
-        QRect dragRect;
-        bool effectiveRedshiftOn = false;
-        bool draggingInfoPane = false;
-        int overrideRedshift;
-
-        QMap<int, QFrame*> notificationFrames;
-        QMap<QString, QFrame*> printersFrames;
-        QMap<QString, QLabel*> printersStats;
-        QMap<QString, QFrame*> printersStatFrames;
-        QMap<QString, QString> connectedNetworks;
-        QMap<QWidget*, StatusCenterPaneObject*> pluginObjects;
-        QList<StatusCenterPane*> loadedPlugins;
+        void reject();
 
         void mousePressEvent(QMouseEvent *event);
         void mouseMoveEvent(QMouseEvent *event);
@@ -519,45 +506,6 @@ class InfoPaneDropdown : public QDialog
         void changeEvent(QEvent* event);
         void paintEvent(QPaintEvent* event);
         bool eventFilter(QObject *obj, QEvent *e);
-
-        QTimer* eventTimer;
-        QTime startTime;
-        void reject();
-
-        QTimer* networkCheckTimer;
-        networkAvailability networkOk = Ok;
-
-        QSettings settings;
-        QSettings* lockScreenSettings = new QSettings("theSuite", "tsscreenlock", this);
-        QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
-        QSettings* sessionSettings = new QSettings("theSuite", "ts-startsession");
-        QSettings* notificationAppSettings = new QSettings("theSuite", "theShell-notifications", this);
-        QSettings* gtk3Settings = new QSettings(QDir::homePath() + "/.config/gtk-3.0/settings.ini", QSettings::IniFormat);
-        QSettings* locationSettings = new QSettings("theSuite", "theShell-location", this);
-
-        QWidget* overviewFrame = nullptr;
-
-        QString editingUserPath;
-
-        bool networkListUpdating = false;
-
-        QMediaPlayer* ringtone;
-
-        QChart* batteryChart;
-        QDateTimeAxis* xAxis;
-        bool chartScrolling = false;
-        int startValue;
-
-        QList<Switch*> pluginSwitches;
-
-        int previousDragY;
-        WId MainWindowId;
-
-        QDBusObjectPath geoclueClientPath;
-
-        QVariantAnimation slice1, slice2, slice3, slice4;
-
-        QJsonObject timezoneData;
 };
 
 class InfoPaneNotOnTopLocker {

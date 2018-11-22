@@ -17,7 +17,7 @@ class JobDBus : public QObject
         uint percent();
 
     public Q_SLOTS:
-        Q_SCRIPTABLE void terminate();
+        Q_SCRIPTABLE void terminate(QString errorMessage);
         Q_SCRIPTABLE void setSuspended(bool suspended);
         Q_SCRIPTABLE void setTotalAmount(qulonglong amount, QString unit);
         Q_SCRIPTABLE void setProcessedAmount(qulonglong amount, QString unit);

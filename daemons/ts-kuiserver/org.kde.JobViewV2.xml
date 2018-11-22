@@ -8,6 +8,7 @@
     <signal name="cancelRequested">
     </signal>
     <method name="terminate">
+      <arg name="errorMessage" type="s" direction="in"/>
     </method>
     <method name="setSuspended">
       <arg name="suspended" type="b" direction="in"/>

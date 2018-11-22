@@ -44,8 +44,78 @@ extern DBusSignals* dbusSignals;
 extern LocationServices* locationServices;
 extern LocationDaemon* geolocation;
 
-
 #define LOWER_INFOPANE InfoPaneNotOnTopLocker locker(this);
+
+class InfoPaneDropdownPrivate {
+    public:
+        InfoPaneDropdownPrivate(InfoPaneDropdown* parent) {
+            lockScreenSettings = new QSettings("theSuite", "tsscreenlock", parent);
+            themeSettings = new QSettings("theSuite", "ts-qtplatform", parent);
+            sessionSettings = new QSettings("theSuite", "ts-startsession", parent);
+            notificationAppSettings = new QSettings("theSuite", "theShell-notifications", parent);
+            gtk3Settings = new QSettings(QDir::homePath() + "/.config/gtk-3.0/settings.ini", QSettings::IniFormat, parent);
+            locationSettings = new QSettings("theSuite", "theShell-location", parent);
+        }
+
+        bool isRedshiftOn = false;
+        bool isNewRedshift = true;
+        int mouseClickPoint;
+        int initialPoint;
+        bool mouseMovedUp = false;
+        QRect dragRect;
+        bool effectiveRedshiftOn = false;
+        bool draggingInfoPane = false;
+        int overrideRedshift;
+
+        QMap<int, QFrame*> notificationFrames;
+        QMap<QString, QFrame*> printersFrames;
+        QMap<QString, QLabel*> printersStats;
+        QMap<QString, QFrame*> printersStatFrames;
+        QMap<QString, QString> connectedNetworks;
+        QMap<QWidget*, StatusCenterPaneObject*> pluginObjects;
+        QList<StatusCenterPane*> loadedPlugins;
+
+        int pluginsSettingsStartIndex;
+        QList<StatusCenterPaneObject*> loadedSettingsPlugins;
+
+        QTimer* eventTimer;
+        QTime startTime;
+
+        QTimer* networkCheckTimer;
+        InfoPaneDropdown::networkAvailability networkOk = InfoPaneDropdown::Ok;
+
+        QSettings settings;
+        QSettings* lockScreenSettings;
+        QSettings* themeSettings;
+        QSettings* sessionSettings;
+        QSettings* notificationAppSettings;
+        QSettings* gtk3Settings;
+        QSettings* locationSettings;
+
+        QWidget* overviewFrame = nullptr;
+
+        QString editingUserPath;
+
+        bool networkListUpdating = false;
+
+        QMediaPlayer* ringtone;
+
+        QChart* batteryChart;
+        QDateTimeAxis* xAxis;
+        bool chartScrolling = false;
+        int startValue;
+
+        QList<Switch*> pluginSwitches;
+
+        int previousDragY;
+        WId MainWindowId;
+
+        QDBusObjectPath geoclueClientPath;
+
+        QVariantAnimation slice1, slice2, slice3, slice4;
+
+        QJsonObject timezoneData;
+};
 
 InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QDialog(parent),
@@ -56,13 +126,14 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     }
 
     ui->setupUi(this);
+    d = new InfoPaneDropdownPrivate(this);
 
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 
     ui->settingsList->setIconSize(QSize(32 * getDPIScaling(), 32 * getDPIScaling()));
     ui->settingsListContainer->setFixedWidth(250 * getDPIScaling());
 
-    startTime.start();
+    d->startTime.start();
 
     ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2018"));
     ui->usesLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
@@ -70,11 +141,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     connect(this, SIGNAL(flightModeChanged(bool)), ui->NetworkManager, SLOT(flightModeChanged(bool)));
     connect(this, SIGNAL(flightModeChanged(bool)), ui->networkManagerSettings, SLOT(flightModeChanged(bool)));
 
-    if (settings.value("flightmode/on", false).toBool()) {
+    if (d->settings.value("flightmode/on", false).toBool()) {
         ui->FlightSwitch->setChecked(true);
     }
 
-    this->MainWindowId = MainWindowId;
+    d->MainWindowId = MainWindowId;
 
     connect(ui->notificationsWidget, SIGNAL(numNotificationsChanged(int)), this, SIGNAL(numNotificationsChanged(int)));
 
@@ -94,11 +165,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         doNetworkCheck();
 
         if (isOn) {
-            slice1.pause();
-            slice2.pause();
+            d->slice1.pause();
+            d->slice2.pause();
         } else {
-            slice1.resume();
-            slice2.resume();
+            d->slice1.resume();
+            d->slice2.resume();
         }
     });
     ui->PowerStretchSwitch->setChecked(updbus->powerStretch());
@@ -115,6 +186,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->userSettingsDeleteUserOnly->setProperty("type", "destructive");
     ui->resetDeviceButton->setProperty("type", "destructive");
     ui->partFrame->installEventFilter(this);
+    ui->pageStack->setCurrentAnimation(tStackedWidget::SlideHorizontal);
+    ui->settingsTabs->setCurrentAnimation(tStackedWidget::Lift);
 
     //Set up shortcuts
     QShortcut* leftShortcut = new QShortcut(Qt::Key_Left, this);
@@ -153,11 +226,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->FlightSwitch->setPalette(flightModePalette);
 
     //Set up battery chart
-    batteryChart = new QChart();
-    batteryChart->setBackgroundVisible(false);
-    batteryChart->legend()->hide();
+    d->batteryChart = new QChart();
+    d->batteryChart->setBackgroundVisible(false);
+    d->batteryChart->legend()->hide();
 
-    QChartView* batteryChartView = new QChartView(batteryChart);
+    QChartView* batteryChartView = new QChartView(d->batteryChart);
     batteryChartView->setRenderHint(QPainter::Antialiasing);
     ((QBoxLayout*) ui->batteryGraph->layout())->insertWidget(1, batteryChartView);
 
@@ -177,12 +250,12 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                 if (version > 1) {
                     break;
                 } else if (version < 1) {
-                    isNewRedshift = false;
+                    d->isNewRedshift = false;
                     break;
                 }
             } else if (i == 1) {
                 if (version < 11) {
-                    isNewRedshift = false;
+                    d->isNewRedshift = false;
                 }
                 break;
             }
@@ -215,7 +288,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     //Load icons into icon theme box
     {
-        QString currentIconTheme = themeSettings->value("icons/theme", "contemporary").toString();
+        QString currentIconTheme = d->themeSettings->value("icons/theme", "contemporary").toString();
         QDir iconPath("/usr/share/icons");
         for (QString iconDir : iconPath.entryList(QDir::NoDotAndDotDot | QDir::Dirs)) {
             QFile themeFile("/usr/share/icons/" + iconDir + "/index.theme");
@@ -248,7 +321,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     //Load widget themes into widget theme box
     {
         ui->systemWidgetTheme->blockSignals(true);
-        QString currentWidgetTheme = themeSettings->value("style/name", "contemporary").toString();
+        QString currentWidgetTheme = d->themeSettings->value("style/name", "contemporary").toString();
         QStringList keys = QStyleFactory::keys();
         for (QString key : keys) {
             ui->systemWidgetTheme->addItem(key);
@@ -264,7 +337,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     //Load GTK3 themes into GTK3 theme box
     {
         ui->systemGTK3Theme->blockSignals(true);
-        QString currentWidgetTheme = gtk3Settings->value("Settings/gtk-theme-name", "Contemporary").toString();
+        QString currentWidgetTheme = d->gtk3Settings->value("Settings/gtk-theme-name", "Contemporary").toString();
         QStringList themes;
 
         QString themeSearchDirectory = "/usr/share/themes/";
@@ -289,28 +362,28 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->systemGTK3Theme->blockSignals(false);
     }
 
-    QString redshiftStart = settings.value("display/redshiftStart", "").toString();
+    QString redshiftStart = d->settings.value("display/redshiftStart", "").toString();
     if (redshiftStart == "") {
         redshiftStart = ui->startRedshift->time().toString();
-        settings.setValue("display/redshiftStart", redshiftStart);
+        d->settings.setValue("display/redshiftStart", redshiftStart);
     }
     ui->startRedshift->setTime(QTime::fromString(redshiftStart));
 
-    QString redshiftEnd = settings.value("display/redshiftEnd", "").toString();
+    QString redshiftEnd = d->settings.value("display/redshiftEnd", "").toString();
     if (redshiftEnd == "") {
         redshiftEnd = ui->endRedshift->time().toString();
-        settings.setValue("display/redshiftEnd", redshiftEnd);
+        d->settings.setValue("display/redshiftEnd", redshiftEnd);
     }
     ui->endRedshift->setTime(QTime::fromString(redshiftEnd));
 
-    QString redshiftVal = settings.value("display/redshiftIntensity", "").toString();
+    QString redshiftVal = d->settings.value("display/redshiftIntensity", "").toString();
     if (redshiftVal == "") {
         redshiftVal = ui->endRedshift->time().toString();
-        settings.setValue("display/redshiftIntensity", redshiftVal);
+        d->settings.setValue("display/redshiftIntensity", redshiftVal);
     }
     ui->redshiftIntensity->setValue(redshiftVal.toInt());
 
-    if (settings.value("ui/useFullScreenEndSession", false).toBool()) {
+    if (d->settings.value("ui/useFullScreenEndSession", false).toBool()) {
         ui->endSessionConfirmFullScreen->setChecked(true);
         ui->endSessionConfirmInMenu->setChecked(false);
     } else {
@@ -318,10 +391,10 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->endSessionConfirmInMenu->setChecked(true);
     }
 
-    if (settings.contains("notifications/lockScreen")) {
-        if (settings.value("notifications/lockScreen").toString() == "contents") {
+    if (d->settings.contains("notifications/lockScreen")) {
+        if (d->settings.value("notifications/lockScreen").toString() == "contents") {
             ui->showNotificationsContents->setChecked(true);
-        } else if (settings.value("notifications/lockScreen").toString() == "none") {
+        } else if (d->settings.value("notifications/lockScreen").toString() == "none") {
             ui->showNotificationsNo->setChecked(true);
         } else {
             ui->showNotificationsOnly->setChecked(true);
@@ -330,7 +403,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->showNotificationsOnly->setChecked(true);
     }
 
-    QString themeType = themeSettings->value("color/type", "dark").toString();
+    QString themeType = d->themeSettings->value("color/type", "dark").toString();
     if (themeType == "light") {
         ui->lightColorThemeRadio->setChecked(true);
     } else if (themeType == "dark") {
@@ -341,7 +414,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->decorativeColorThemeRadio->setChecked(true);
     }
 
-    int dpi = settings.value("screen/dpi", 96).toInt();
+    int dpi = d->settings.value("screen/dpi", 96).toInt();
     switch (dpi) {
         case 96:
             ui->dpi100->setChecked(true);
@@ -360,37 +433,37 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     //Populate the language box
     Internationalisation::fillLanguageBox(ui->localeList);
 
-    ui->lockScreenBackground->setText(lockScreenSettings->value("background", "/usr/share/tsscreenlock/triangles.svg").toString());
-    //ui->lineEdit_2->setText(settings.value("startup/autostart", "").toString());
-    ui->redshiftPause->setChecked(!settings.value("display/redshiftPaused", true).toBool());
-    ui->TouchFeedbackSwitch->setChecked(settings.value("input/touchFeedbackSound", false).toBool());
-    ui->SuperkeyGatewaySwitch->setChecked(settings.value("input/superkeyGateway", true).toBool());
-    ui->TextSwitch->setChecked(settings.value("bar/showText", true).toBool());
-    ui->windowManager->setText(settings.value("startup/WindowManagerCommand", "kwin_x11").toString());
-    ui->barDesktopsSwitch->setChecked(settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
-    ui->MediaSwitch->setChecked(settings.value("notifications/mediaInsert", true).toBool());
-    ui->StatusBarSwitch->setChecked(settings.value("bar/statusBar", false).toBool());
-    ui->TouchInputSwitch->setChecked(settings.value("input/touch", false).toBool());
-    ui->SuspendLockScreen->setChecked(settings.value("lockScreen/showOnSuspend", true).toBool());
-    ui->LargeTextSwitch->setChecked(themeSettings->value("accessibility/largeText", false).toBool());
-    ui->HighContrastSwitch->setChecked(themeSettings->value("accessibility/highcontrast", false).toBool());
-    ui->systemAnimationsAccessibilitySwitch->setChecked(themeSettings->value("accessibility/systemAnimations", true).toBool());
-    ui->CapsNumLockBellSwitch->setChecked(themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool());
-    ui->TwentyFourHourSwitch->setChecked(settings.value("time/use24hour", true).toBool());
-    ui->AttenuateSwitch->setChecked(settings.value("notifications/attenuate", true).toBool());
-    ui->BarOnBottom->setChecked(!settings.value("bar/onTop", true).toBool());
-    ui->AutoShowBarSwitch->setChecked(settings.value("bar/autoshow", true).toBool());
-    ui->SoundFeedbackSoundSwitch->setChecked(settings.value("sound/feedbackSound", true).toBool());
-    ui->VolumeOverdriveSwitch->setChecked(settings.value("sound/volumeOverdrive", true).toBool());
-    ui->batteryScreenOff->setValue(settings.value("power/batteryScreenOff", 15).toInt());
-    ui->batterySuspend->setValue(settings.value("power/batterySuspend", 30).toInt());
-    ui->powerScreenOff->setValue(settings.value("power/powerScreenOff", 30).toInt());
-    ui->powerSuspend->setValue(settings.value("power/powerSuspend", 90).toInt());
-    ui->sunlightRedshift->setChecked(settings.value("display/redshiftSunlightCycle", false).toBool());
-    ui->EmphasiseAppSwitch->setChecked(settings.value("notifications/emphasiseApp", true).toBool());
-    ui->CompactBarSwitch->setChecked(settings.value("bar/compact", false).toBool());
-    ui->LocationMasterSwitch->setChecked(locationSettings->value("master/master", true).toBool());
-    ui->powerButtonPressed->setCurrentIndex(settings.value("power/onPowerButtonPressed", 0).toInt());
+    ui->lockScreenBackground->setText(d->lockScreenSettings->value("background", "/usr/share/tsscreenlock/triangles.svg").toString());
+    //ui->lineEdit_2->setText(d->settings.value("startup/autostart", "").toString());
+    ui->redshiftPause->setChecked(!d->settings.value("display/redshiftPaused", true).toBool());
+    ui->TouchFeedbackSwitch->setChecked(d->settings.value("input/touchFeedbackSound", false).toBool());
+    ui->SuperkeyGatewaySwitch->setChecked(d->settings.value("input/superkeyGateway", true).toBool());
+    ui->TextSwitch->setChecked(d->settings.value("bar/showText", true).toBool());
+    ui->windowManager->setText(d->settings.value("startup/WindowManagerCommand", "kwin_x11").toString());
+    ui->barDesktopsSwitch->setChecked(d->settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
+    ui->MediaSwitch->setChecked(d->settings.value("notifications/mediaInsert", true).toBool());
+    ui->StatusBarSwitch->setChecked(d->settings.value("bar/statusBar", false).toBool());
+    ui->TouchInputSwitch->setChecked(d->settings.value("input/touch", false).toBool());
+    ui->SuspendLockScreen->setChecked(d->settings.value("lockScreen/showOnSuspend", true).toBool());
+    ui->LargeTextSwitch->setChecked(d->themeSettings->value("accessibility/largeText", false).toBool());
+    ui->HighContrastSwitch->setChecked(d->themeSettings->value("accessibility/highcontrast", false).toBool());
+    ui->systemAnimationsAccessibilitySwitch->setChecked(d->themeSettings->value("accessibility/systemAnimations", true).toBool());
+    ui->CapsNumLockBellSwitch->setChecked(d->themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool());
+    ui->TwentyFourHourSwitch->setChecked(d->settings.value("time/use24hour", true).toBool());
+    ui->AttenuateSwitch->setChecked(d->settings.value("notifications/attenuate", true).toBool());
+    ui->BarOnBottom->setChecked(!d->settings.value("bar/onTop", true).toBool());
+    ui->AutoShowBarSwitch->setChecked(d->settings.value("bar/autoshow", true).toBool());
+    ui->SoundFeedbackSoundSwitch->setChecked(d->settings.value("sound/feedbackSound", true).toBool());
+    ui->VolumeOverdriveSwitch->setChecked(d->settings.value("sound/volumeOverdrive", true).toBool());
+    ui->batteryScreenOff->setValue(d->settings.value("power/batteryScreenOff", 15).toInt());
+    ui->batterySuspend->setValue(d->settings.value("power/batterySuspend", 30).toInt());
+    ui->powerScreenOff->setValue(d->settings.value("power/powerScreenOff", 30).toInt());
+    ui->powerSuspend->setValue(d->settings.value("power/powerSuspend", 90).toInt());
+    ui->sunlightRedshift->setChecked(d->settings.value("display/redshiftSunlightCycle", false).toBool());
+    ui->EmphasiseAppSwitch->setChecked(d->settings.value("notifications/emphasiseApp", true).toBool());
+    ui->CompactBarSwitch->setChecked(d->settings.value("bar/compact", false).toBool());
+    ui->LocationMasterSwitch->setChecked(d->locationSettings->value("master/master", true).toBool());
+    ui->powerButtonPressed->setCurrentIndex(d->settings.value("power/onPowerButtonPressed", 0).toInt());
     updateAccentColourBox();
     updateRedshiftTime();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
@@ -407,16 +480,16 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     } else {
         defaultFont = "Noto Sans";
     }
-    ui->systemFont->setCurrentFont(QFont(themeSettings->value("fonts/defaultFamily", defaultFont).toString(), themeSettings->value("font/defaultSize", 10).toInt()));
-    ui->systemFontSize->setValue(themeSettings->value("font/defaultSize", 10).toInt());
+    ui->systemFont->setCurrentFont(QFont(d->themeSettings->value("fonts/defaultFamily", defaultFont).toString(), d->themeSettings->value("font/defaultSize", 10).toInt()));
+    ui->systemFontSize->setValue(d->themeSettings->value("font/defaultSize", 10).toInt());
 
-    QString gtk3FontString = gtk3Settings->value("Settings/gtk-font-name", "Contemporary 10").toString();
+    QString gtk3FontString = d->gtk3Settings->value("Settings/gtk-font-name", "Contemporary 10").toString();
     QString gtk3FontFamily = gtk3FontString.left(gtk3FontString.lastIndexOf(" "));
     QString gtk3FontSize = gtk3FontString.mid(gtk3FontString.lastIndexOf(" ") + 1);
     ui->systemGTK3Font->setCurrentFont(QFont(gtk3FontFamily, gtk3FontSize.toInt()));
     ui->systemGTK3FontSize->setValue(gtk3FontSize.toInt());
 
-    switch (settings.value("power/suspendMode", 0).toInt()) {
+    switch (d->settings.value("power/suspendMode", 0).toInt()) {
         case 0:
             ui->powerSuspendNormally->setChecked(true);
             break;
@@ -428,15 +501,15 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             break;
     }
 
-    eventTimer = new QTimer(this);
-    eventTimer->setInterval(1000);
-    connect(eventTimer, SIGNAL(timeout()), this, SLOT(processTimer()));
-    eventTimer->start();
+    d->eventTimer = new QTimer(this);
+    d->eventTimer->setInterval(1000);
+    connect(d->eventTimer, SIGNAL(timeout()), this, SLOT(processTimer()));
+    d->eventTimer->start();
 
-    networkCheckTimer = new QTimer(this);
-    networkCheckTimer->setInterval(60000);
-    connect(networkCheckTimer, SIGNAL(timeout()), this, SLOT(doNetworkCheck()));
-    networkCheckTimer->start();
+    d->networkCheckTimer = new QTimer(this);
+    d->networkCheckTimer->setInterval(60000);
+    connect(d->networkCheckTimer, SIGNAL(timeout()), this, SLOT(doNetworkCheck()));
+    d->networkCheckTimer->start();
     doNetworkCheck();
 
     QObjectList allObjects;
@@ -447,7 +520,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->notificationSoundBox->addItem("Upside Down");
     ui->notificationSoundBox->addItem("Echo");
 
-    QString notificationSound = settings.value("notifications/sound", "tripleping").toString();
+    QString notificationSound = d->settings.value("notifications/sound", "tripleping").toString();
     if (notificationSound == "tripleping") {
         ui->notificationSoundBox->setCurrentIndex(0);
     } else if (notificationSound == "upsidedown") {
@@ -456,10 +529,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->notificationSoundBox->setCurrentIndex(2);
     }
     ui->notificationSoundBox->blockSignals(false);
-
-    //Don't forget to change settings pane setup things
-    ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
-    ui->settingsTabs->setCurrentIndex(ui->settingsTabs->count() - 1);
 
     //Get distribution information
     {
@@ -584,7 +653,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             file.close();
         }
 
-        retval.currentKeyboardLayout = settings.value("input/layout", "us(basic)").toString().split(",");
+        retval.currentKeyboardLayout = d->settings.value("input/layout", "us(basic)").toString().split(",");
         return retval;
     });
     QFutureWatcher<KeyboardLayoutReturn>* keyboardLayoutWatcher = new QFutureWatcher<KeyboardLayoutReturn>();
@@ -610,12 +679,12 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
         ui->availableKeyboardLayouts->sortItems();
         connect(ui->selectedLayouts->model(), SIGNAL(layoutChanged(QList<QPersistentModelIndex>,QAbstractItemModel::LayoutChangeHint)), this, SLOT(KeyboardLayoutsMoved()));
-        setKeyboardLayout(settings.value("input/currentLayout", "us(basic)").toString());
+        setKeyboardLayout(d->settings.value("input/currentLayout", "us(basic)").toString());
     });
     keyboardLayoutWatcher->setFuture(keyboardLayouts);
 
     //Set up timer ringtones
-    ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
+    d->ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
 
     connect(AudioMan, &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
         ui->quietModeSound->setChecked(false);
@@ -648,39 +717,39 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->quietModeTurnOffIn->setEnabled(false);
     ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
 
-    slice1.setStartValue((float) (this->width() - 250 * getDPIScaling()));
-    slice1.setEndValue((float) (this->width() - 300 * getDPIScaling()));
-    slice1.setEasingCurve(QEasingCurve::OutCubic);
-    slice1.setDuration(15000);
-    connect(&slice1, &tVariantAnimation::finished, [=] {
-        slice1.setStartValue(slice1.endValue());
-        if (slice1.endValue() == this->width() - 300 * getDPIScaling()) {
-            slice1.setEndValue(this->width() - 250 * getDPIScaling());
+    d->slice1.setStartValue((float) (this->width() - 250 * getDPIScaling()));
+    d->slice1.setEndValue((float) (this->width() - 300 * getDPIScaling()));
+    d->slice1.setEasingCurve(QEasingCurve::OutCubic);
+    d->slice1.setDuration(15000);
+    connect(&d->slice1, &tVariantAnimation::finished, [=] {
+        d->slice1.setStartValue(d->slice1.endValue());
+        if (d->slice1.endValue() == this->width() - 300 * getDPIScaling()) {
+            d->slice1.setEndValue(this->width() - 250 * getDPIScaling());
         } else {
-            slice1.setEndValue(this->width() - 300 * getDPIScaling());
+            d->slice1.setEndValue(this->width() - 300 * getDPIScaling());
         }
-        slice1.setEasingCurve(QEasingCurve::InOutCubic);
-        slice1.start();
+        d->slice1.setEasingCurve(QEasingCurve::InOutCubic);
+        d->slice1.start();
     });
-    connect(&slice1, SIGNAL(valueChanged(QVariant)), ui->partFrame, SLOT(repaint()));
-    slice1.start();
+    connect(&d->slice1, SIGNAL(valueChanged(QVariant)), ui->partFrame, SLOT(repaint()));
+    d->slice1.start();
 
     QTimer::singleShot(2500, [=] {
-        slice2.setStartValue((float) (this->width() - 300 * getDPIScaling()));
-        slice2.setEndValue((float) (this->width() - 350 * getDPIScaling()));
-        slice2.setEasingCurve(QEasingCurve::OutCubic);
-        slice2.setDuration(15000);
-        connect(&slice2, &tVariantAnimation::finished, [=] {
-            slice2.setStartValue(slice2.endValue());
-            if (slice2.endValue() == this->width() - 350 * getDPIScaling()) {
-                slice2.setEndValue(this->width() - 300 * getDPIScaling());
+        d->slice2.setStartValue((float) (this->width() - 300 * getDPIScaling()));
+        d->slice2.setEndValue((float) (this->width() - 350 * getDPIScaling()));
+        d->slice2.setEasingCurve(QEasingCurve::OutCubic);
+        d->slice2.setDuration(15000);
+        connect(&d->slice2, &tVariantAnimation::finished, [=] {
+            d->slice2.setStartValue(d->slice2.endValue());
+            if (d->slice2.endValue() == this->width() - 350 * getDPIScaling()) {
+                d->slice2.setEndValue(this->width() - 300 * getDPIScaling());
             } else {
-                slice2.setEndValue(this->width() - 350 * getDPIScaling());
+                d->slice2.setEndValue(this->width() - 350 * getDPIScaling());
             }
-            slice2.setEasingCurve(QEasingCurve::InOutCubic);
-            slice2.start();
+            d->slice2.setEasingCurve(QEasingCurve::InOutCubic);
+            d->slice2.start();
         });
-        slice2.start();
+        d->slice2.start();
     });
 
     //Load plugins
@@ -695,7 +764,9 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         searchDirs.append(QDir("/usr/lib/theshell/panes"));
         searchDirs.append(QDir("/usr/lib/theshell/daemons"));
     #endif
+
     QStringList loadedPanes, loadedSettings;
+    d->pluginsSettingsStartIndex = ui->settingsList->count() - 3;
     for (QDir pluginsDir : searchDirs) {
         QDirIterator pluginsIterator(pluginsDir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
@@ -721,9 +792,9 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                         if (pane->name() == "Overview" && pane->type().testFlag(StatusCenterPaneObject::Informational)) {
                             if (!loadedPanes.contains("Overview")) {
                                 //Special handling for Overview pane
-                                overviewFrame = pane->mainWidget();
-                                overviewFrame->setAutoFillBackground(true);
-                                ui->pageStack->insertWidget(0, overviewFrame);
+                                d->overviewFrame = pane->mainWidget();
+                                d->overviewFrame->setAutoFillBackground(true);
+                                ui->pageStack->insertWidget(0, d->overviewFrame);
 
                                 loadedPanes.append(pane->name());
                             }
@@ -756,7 +827,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                                     item->setText(pane->name());
                                     item->setIcon(pane->settingAttributes.icon);
                                     item->setData(Qt::UserRole, -1);
-                                    ui->settingsList->insertItem(ui->settingsList->count() - 3, item);
+                                    ui->settingsList->insertItem(d->pluginsSettingsStartIndex + loadedSettings.count(), item);
 
                                     if (pane->settingAttributes.menuWidget != nullptr) {
                                         int settingNumber = ui->settingsListStack->addWidget(pane->settingAttributes.menuWidget);
@@ -764,10 +835,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                                         item->setData(Qt::UserRole, settingNumber);
                                     }
 
-                                    ui->settingsTabs->insertWidget(ui->settingsTabs->count() - 3, pane->mainWidget());
+                                    ui->settingsTabs->insertWidget(d->pluginsSettingsStartIndex + loadedSettings.count(), pane->mainWidget());
                                     pane->mainWidget()->setAutoFillBackground(true);
 
                                     loadedSettings.append(pane->name());
+                                    d->loadedSettingsPlugins.append(pane);
                                 }
                             }
                         }
@@ -775,9 +847,9 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                         pane->sendMessage = [=](QString message, QVariantList args) {
                             this->pluginMessage(message, args, pane);
                         };
-                        pluginObjects.insert(pane->mainWidget(), pane);
+                        d->pluginObjects.insert(pane->mainWidget(), pane);
                     }
-                    loadedPlugins.append(p);
+                    d->loadedPlugins.append(p);
                 }
             }
         }
@@ -803,6 +875,10 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             ui->settingsUnavailableTable->setItem(i, 1, new QTableWidgetItem(o.value("error").toString()));
         }
     }
+
+    //Don't forget to change settings pane setup things
+    ui->settingsList->item(ui->settingsList->count() - 1)->setSelected(true);
+    ui->settingsTabs->setCurrentIndex(ui->settingsTabs->count() - 1);
 
     QScroller::grabGesture(ui->settingsList, QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->availableKeyboardLayouts, QScroller::LeftMouseButtonGesture);
@@ -846,6 +922,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
 InfoPaneDropdown::~InfoPaneDropdown()
 {
+    delete d;
     delete ui;
 }
 
@@ -961,13 +1038,13 @@ void InfoPaneDropdown::processTimer() {
             }
 
             //Check Redshift override
-            if (overrideRedshift != 0) {
-                if (intensity == 6500 && overrideRedshift == 1) {
-                    overrideRedshift = 0; //Reset Redshift override
-                } else if (intensity != 6500 && overrideRedshift == 2) {
-                    overrideRedshift = 0; //Reset Redshift override
+            if (d->overrideRedshift != 0) {
+                if (intensity == 6500 && d->overrideRedshift == 1) {
+                    d->overrideRedshift = 0; //Reset Redshift override
+                } else if (intensity != 6500 && d->overrideRedshift == 2) {
+                    d->overrideRedshift = 0; //Reset Redshift override
                 } else {
-                    if (overrideRedshift == 1) {
+                    if (d->overrideRedshift == 1) {
                         intensity = 6500;
                     } else {
                         intensity = endIntensity;
@@ -977,33 +1054,33 @@ void InfoPaneDropdown::processTimer() {
 
             redshiftCommand = "redshift -O " + QString::number(intensity);
 
-            isRedshiftOn = true;
-            if (intensity == 6500 && effectiveRedshiftOn) {
-                effectiveRedshiftOn = false;
+            d->isRedshiftOn = true;
+            if (intensity == 6500 && d->effectiveRedshiftOn) {
+                d->effectiveRedshiftOn = false;
                 ui->redshiftSwitch->setChecked(false);
                 emit redshiftEnabledChanged(false);
-            } else if (intensity != 6500 && !effectiveRedshiftOn) {
-                effectiveRedshiftOn = true;
+            } else if (intensity != 6500 && !d->effectiveRedshiftOn) {
+                d->effectiveRedshiftOn = true;
                 ui->redshiftSwitch->setChecked(true);
                 emit redshiftEnabledChanged(true);
             }
         } else {
             //Check Redshift Override
-            if (overrideRedshift == 2) {
+            if (d->overrideRedshift == 2) {
                 redshiftCommand = "redshift -O " + QString::number(endIntensity);
             } else {
                 redshiftCommand = "redshift -O 6500";
             }
 
-            if (isRedshiftOn) {
-                isRedshiftOn = false;
-                effectiveRedshiftOn = false;
+            if (d->isRedshiftOn) {
+                d->isRedshiftOn = false;
+                d->effectiveRedshiftOn = false;
                 ui->redshiftSwitch->setChecked(false);
                 emit redshiftEnabledChanged(false);
             }
         }
 
-        if (isNewRedshift) {
+        if (d->isNewRedshift) {
             redshiftCommand += " -P";
         }
 
@@ -1100,7 +1177,7 @@ void InfoPaneDropdown::show(dropdownType showWith) {
     if (!this->isVisible()) {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-        if (settings.value("bar/onTop", true).toBool()) {
+        if (d->settings.value("bar/onTop", true).toBool()) {
             this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height() + 1);
         } else {
             this->setGeometry(screenGeometry.x(), screenGeometry.bottom(), screenGeometry.width(), screenGeometry.height() + 1);
@@ -1124,10 +1201,10 @@ void InfoPaneDropdown::show(dropdownType showWith) {
             this->setFixedHeight(screenGeometry.height() + 1);
         }
 
-        if (settings.value("bar/onTop", true).toBool()) {
-            previousDragY = -1;
+        if (d->settings.value("bar/onTop", true).toBool()) {
+            d->previousDragY = -1;
         } else {
-            previousDragY = screenGeometry.bottom();
+            d->previousDragY = screenGeometry.bottom();
         }
         completeDragDown();
     }
@@ -1144,7 +1221,7 @@ void InfoPaneDropdown::show(dropdownType showWith) {
 
 void InfoPaneDropdown::showNoAnimation() {
     QDialog::show();
-    previousDragY = -1;
+    d->previousDragY = -1;
     completeDragDown();
 }
 
@@ -1153,7 +1230,7 @@ void InfoPaneDropdown::close() {
     tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
     a->setStartValue(this->geometry());
 
-    if (settings.value("bar/onTop", true).toBool()) {
+    if (d->settings.value("bar/onTop", true).toBool()) {
         a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - screenGeometry.height() + 1, this->width(), this->height()));
     } else {
         a->setEndValue(QRect(screenGeometry.x(), screenGeometry.bottom() + 1, this->width(), this->height()));
@@ -1161,7 +1238,7 @@ void InfoPaneDropdown::close() {
     a->setEasingCurve(QEasingCurve::OutCubic);
     a->setDuration(500);
     connect(a, &tPropertyAnimation::finished, [=] {
-        for (StatusCenterPaneObject* plugin : pluginObjects.values()) {
+        for (StatusCenterPaneObject* plugin : d->pluginObjects.values()) {
             plugin->message("hide");
             plugin->showing = false;
         }
@@ -1179,7 +1256,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     //Switch to the requested frame
     switch (changeTo) {
         case Clock:
-            changeDropDown(overviewFrame, ui->clockLabel, doAnimation);
+            changeDropDown(d->overviewFrame, ui->clockLabel, doAnimation);
 
             if (ui->lightColorThemeRadio->isChecked()) {
                 setHeaderColour(QColor(0, 150, 0));
@@ -1232,20 +1309,20 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
 }
 
 void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, bool doAnimation) {
-    for (StatusCenterPaneObject* plugin : pluginObjects.values()) {
+    for (StatusCenterPaneObject* plugin : d->pluginObjects.values()) {
         plugin->message("hide");
         plugin->showing = false;
     }
-    if (pluginObjects.contains(changeTo)) {
-        pluginObjects.value(changeTo)->message("show");
-        pluginObjects.value(changeTo)->showing = true;
+    if (d->pluginObjects.contains(changeTo)) {
+        d->pluginObjects.value(changeTo)->message("show");
+        d->pluginObjects.value(changeTo)->showing = true;
     }
 
     //Switch to the requested frame
     if (ui->pageStack->currentWidget() == changeTo) return; //Do nothing
 
     ui->pageStack->setCurrentWidget(changeTo, doAnimation);
-    if (changeTo == overviewFrame) {
+    if (changeTo == d->overviewFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
             setHeaderColour(QColor(0, 150, 0));
         } else {
@@ -1384,19 +1461,19 @@ void InfoPaneDropdown::on_resolutionButton_clicked()
 
 void InfoPaneDropdown::on_startRedshift_timeChanged(const QTime &time)
 {
-    settings.setValue("display/redshiftStart", time.toString());
+    d->settings.setValue("display/redshiftStart", time.toString());
     processTimer();
 }
 
 void InfoPaneDropdown::on_endRedshift_timeChanged(const QTime &time)
 {
-    settings.setValue("display/redshiftEnd", time.toString());
+    d->settings.setValue("display/redshiftEnd", time.toString());
     processTimer();
 }
 
 void InfoPaneDropdown::on_redshiftIntensity_sliderMoved(int position)
 {
-    if (isNewRedshift) {
+    if (d->isNewRedshift) {
         QProcess::startDetached("redshift -P -O " + QString::number(position));
     } else {
         QProcess::startDetached("redshift -O " + QString::number(position));
@@ -1405,8 +1482,8 @@ void InfoPaneDropdown::on_redshiftIntensity_sliderMoved(int position)
 
 void InfoPaneDropdown::on_redshiftIntensity_sliderReleased()
 {
-    if (!isRedshiftOn) {
-        if (isNewRedshift) {
+    if (!d->isRedshiftOn) {
+        if (d->isNewRedshift) {
             QProcess::startDetached("redshift -P -O 6500");
         } else {
             QProcess::startDetached("redshift -O 6500");
@@ -1416,12 +1493,12 @@ void InfoPaneDropdown::on_redshiftIntensity_sliderReleased()
 
 void InfoPaneDropdown::on_redshiftIntensity_valueChanged(int value)
 {
-    settings.setValue("display/redshiftIntensity", value);
+    d->settings.setValue("display/redshiftIntensity", value);
 }
 
 void InfoPaneDropdown::newNotificationReceived(int id, QString summary, QString body, QIcon icon) {
-    if (notificationFrames.keys().contains(id)) { //Notification already exists, update it.
-        QFrame* frame = notificationFrames.value(id);
+    if (d->notificationFrames.keys().contains(id)) { //Notification already exists, update it.
+        QFrame* frame = d->notificationFrames.value(id);
         frame->property("summaryLabel").value<QLabel*>()->setText(summary);
         frame->property("bodyLabel").value<QLabel*>()->setText(body);
     } else {
@@ -1462,21 +1539,21 @@ void InfoPaneDropdown::newNotificationReceived(int id, QString summary, QString 
         frame->setProperty("summaryLabel", QVariant::fromValue(sumLabel));
         frame->setProperty("bodyLabel", QVariant::fromValue(bodyLabel));
 
-        notificationFrames.insert(id, frame);
+        d->notificationFrames.insert(id, frame);
 
-        emit numNotificationsChanged(notificationFrames.count());
+        emit numNotificationsChanged(d->notificationFrames.count());
     }
 }
 
 void InfoPaneDropdown::removeNotification(int id) {
-    if (notificationFrames.keys().contains(id)) {
-        delete notificationFrames.value(id);
-        notificationFrames.remove(id);
+    if (d->notificationFrames.keys().contains(id)) {
+        delete d->notificationFrames.value(id);
+        d->notificationFrames.remove(id);
     }
 
-    emit numNotificationsChanged(notificationFrames.count());
+    emit numNotificationsChanged(d->notificationFrames.count());
 
-    if (notificationFrames.count() == 0) {
+    if (d->notificationFrames.count() == 0) {
         //ui->noNotifications->setVisible(true);
     }
 }
@@ -1485,14 +1562,14 @@ void InfoPaneDropdown::removeNotification(int id) {
 void InfoPaneDropdown::on_redshiftPause_toggled(bool checked)
 {
     processTimer();
-    settings.setValue("display/redshiftPaused", !checked);
+    d->settings.setValue("display/redshiftPaused", !checked);
 }
 
 void InfoPaneDropdown::updateSysInfo() {
     ui->currentBattery->setText(tr("Current Battery Percentage: %1").arg(QString::number(updbus->currentBattery()).append("%")));
 
     QTime uptime(0, 0);
-    uptime = uptime.addMSecs(startTime.elapsed());
+    uptime = uptime.addMSecs(d->startTime.elapsed());
     ui->theshellUptime->setText(tr("theShell Uptime: %1").arg(uptime.toString("hh:mm:ss")));
 
     struct sysinfo* info = new struct sysinfo;
@@ -1519,72 +1596,72 @@ void InfoPaneDropdown::on_resetButton_clicked()
                              tr("All settings will be reset to default, and you will be logged out. "
                              "Are you sure you want to do this?"), QMessageBox::Yes | QMessageBox::No,
                              QMessageBox::No) == QMessageBox::Yes) {
-        settings.clear();
+        d->settings.clear();
         EndSession(EndSessionWait::logout);
     }
 }
 
 void InfoPaneDropdown::mousePressEvent(QMouseEvent *event) {
-    mouseClickPoint = event->localPos().toPoint().y();
-    initialPoint = mouseClickPoint;
-    dragRect = this->geometry();
-    mouseMovedUp = false;
-    draggingInfoPane = true;
+    d->mouseClickPoint = event->localPos().toPoint().y();
+    d->initialPoint = d->mouseClickPoint;
+    d->dragRect = this->geometry();
+    d->mouseMovedUp = false;
+    d->draggingInfoPane = true;
     event->accept();
 }
 
 void InfoPaneDropdown::mouseMoveEvent(QMouseEvent *event) {
-    if (draggingInfoPane) {
+    if (d->draggingInfoPane) {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-        if (event->globalY() < mouseClickPoint) {
-            mouseMovedUp = true;
+        if (event->globalY() < d->mouseClickPoint) {
+            d->mouseMovedUp = true;
         } else {
-            mouseMovedUp = false;
+            d->mouseMovedUp = false;
         }
 
         //dragRect.translate(0, event->localPos().toPoint().y() - mouseClickPoint + this->y());
-        dragRect = screenGeometry;
-        dragRect.translate(0, event->globalY() - (initialPoint + screenGeometry.top()));
+        d->dragRect = screenGeometry;
+        d->dragRect.translate(0, event->globalY() - (d->initialPoint + screenGeometry.top()));
 
         //innerRect.translate(event->localPos().toPoint().y() - mouseClickPoint, 0);
 
-        if (settings.value("bar/onTop", true).toBool()) {
-            if (dragRect.bottom() >= screenGeometry.bottom()) {
-                dragRect.moveTo(screenGeometry.left(), screenGeometry.top());
+        if (d->settings.value("bar/onTop", true).toBool()) {
+            if (d->dragRect.bottom() >= screenGeometry.bottom()) {
+                d->dragRect.moveTo(screenGeometry.left(), screenGeometry.top());
             }
         } else {
-            if (dragRect.top() <= screenGeometry.top() - 1) {
-                dragRect.moveTo(screenGeometry.left(), screenGeometry.top() - 1);
+            if (d->dragRect.top() <= screenGeometry.top() - 1) {
+                d->dragRect.moveTo(screenGeometry.left(), screenGeometry.top() - 1);
             }
         }
-        this->setGeometry(dragRect);
+        this->setGeometry(d->dragRect);
 
-        mouseClickPoint = event->globalY();
+        d->mouseClickPoint = event->globalY();
         event->accept();
     }
 }
 
 void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
-    if (draggingInfoPane) {
+    if (d->draggingInfoPane) {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
-        if (initialPoint - 5 > mouseClickPoint && initialPoint + 5 < mouseClickPoint) {
+        if (d->initialPoint - 5 > d->mouseClickPoint && d->initialPoint + 5 < d->mouseClickPoint) {
             tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
             a->setStartValue(this->geometry());
-            a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), this->height()));
+            a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (d->settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), this->height()));
             a->setEasingCurve(QEasingCurve::OutCubic);
             a->setDuration(500);
             connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
             a->start();
         } else {
-            /*if ((mouseMovedUp && settings.value("bar/onTop", true).toBool()) ||
-                    (!mouseMovedUp && !settings.value("bar/onTop", true).toBool())) {*/
-            if (mouseMovedUp == settings.value("bar/onTop", true).toBool()) {
+            /*if ((mouseMovedUp && d->settings.value("bar/onTop", true).toBool()) ||
+                    (!mouseMovedUp && !d->settings.value("bar/onTop", true).toBool())) {*/
+            if (d->mouseMovedUp == d->settings.value("bar/onTop", true).toBool()) {
                 this->close();
             } else {
                 tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
                 a->setStartValue(this->geometry());
-                a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), this->height()));
+                a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (d->settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), this->height()));
                 a->setEasingCurve(QEasingCurve::OutCubic);
                 a->setDuration(500);
                 connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
@@ -1592,14 +1669,14 @@ void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
             }
         }
         event->accept();
-        initialPoint = 0;
-        draggingInfoPane = false;
+        d->initialPoint = 0;
+        d->draggingInfoPane = false;
     }
 }
 
 void InfoPaneDropdown::on_TouchFeedbackSwitch_toggled(bool checked)
 {
-    settings.setValue("input/touchFeedbackSound", checked);
+    d->settings.setValue("input/touchFeedbackSound", checked);
 }
 
 void InfoPaneDropdown::on_brightnessSlider_sliderMoved(int position)
@@ -1634,12 +1711,12 @@ void InfoPaneDropdown::setupNotificationsSettingsPane() {
     ui->AppNotifications->clear();
 
     QStringList knownApplications;
-    int amount = notificationAppSettings->beginReadArray("notifications/knownApplications");
+    int amount = d->notificationAppSettings->beginReadArray("notifications/knownApplications");
     for (int i = 0; i < amount; i++) {
-        notificationAppSettings->setArrayIndex(i);
-        knownApplications.append(notificationAppSettings->value("appname").toString());
+        d->notificationAppSettings->setArrayIndex(i);
+        knownApplications.append(d->notificationAppSettings->value("appname").toString());
     }
-    notificationAppSettings->endArray();
+    d->notificationAppSettings->endArray();
 
     for (QString app : knownApplications) {
         QListWidgetItem* item = new QListWidgetItem();
@@ -1659,29 +1736,29 @@ void InfoPaneDropdown::on_lockScreenBackgroundBrowse_clicked()
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
     dialog.setNameFilter("Images (*.jpg *.jpeg *.bmp *.png *.gif *.svg)");
     if (dialog.exec() == QDialog::Accepted) {
-        lockScreenSettings->setValue("background", dialog.selectedFiles().first());
+        d->lockScreenSettings->setValue("background", dialog.selectedFiles().first());
         ui->lockScreenBackground->setText(dialog.selectedFiles().first());
     }
 }
 
 void InfoPaneDropdown::on_lockScreenBackground_textEdited(const QString &arg1)
 {
-    lockScreenSettings->setValue("background", arg1);
+    d->lockScreenSettings->setValue("background", arg1);
 }
 
 void InfoPaneDropdown::on_TextSwitch_toggled(bool checked)
 {
-    settings.setValue("bar/showText", checked);
+    d->settings.setValue("bar/showText", checked);
 }
 
 void InfoPaneDropdown::on_windowManager_textEdited(const QString &arg1)
 {
-    settings.setValue("startup/WindowManagerCommand", arg1);
+    d->settings.setValue("startup/WindowManagerCommand", arg1);
 }
 
 void InfoPaneDropdown::on_barDesktopsSwitch_toggled(bool checked)
 {
-    settings.setValue("bar/showWindowsFromOtherDesktops", checked);
+    d->settings.setValue("bar/showWindowsFromOtherDesktops", checked);
 }
 
 void InfoPaneDropdown::on_BluetoothSwitch_toggled(bool checked)
@@ -1691,7 +1768,7 @@ void InfoPaneDropdown::on_BluetoothSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::on_SuperkeyGatewaySwitch_toggled(bool checked)
 {
-    settings.setValue("input/superkeyGateway", checked);
+    d->settings.setValue("input/superkeyGateway", checked);
 }
 
 void InfoPaneDropdown::reject() {
@@ -1706,14 +1783,14 @@ void InfoPaneDropdown::on_kdeconnectLabel_clicked()
 void InfoPaneDropdown::on_endSessionConfirmFullScreen_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("ui/useFullScreenEndSession", true);
+        d->settings.setValue("ui/useFullScreenEndSession", true);
     }
 }
 
 void InfoPaneDropdown::on_endSessionConfirmInMenu_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("ui/useFullScreenEndSession", false);
+        d->settings.setValue("ui/useFullScreenEndSession", false);
     }
 }
 
@@ -1727,7 +1804,7 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
     //ui->printLabel->setShowDisabled(true);
     ui->kdeconnectLabel->setShowDisabled(true);
 
-    if (switchingWidget == overviewFrame) {
+    if (switchingWidget == d->overviewFrame) {
         ui->clockLabel->setShowDisabled(false);
     } else if (switchingWidget == ui->statusFrame) {
         ui->batteryLabel->setShowDisabled(false);
@@ -1745,33 +1822,33 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
 void InfoPaneDropdown::on_showNotificationsContents_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("notifications/lockScreen", "contents");
+        d->settings.setValue("notifications/lockScreen", "contents");
     }
 }
 
 void InfoPaneDropdown::on_showNotificationsOnly_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("notifications/lockScreen", "noContents");
+        d->settings.setValue("notifications/lockScreen", "noContents");
     }
 }
 
 void InfoPaneDropdown::on_showNotificationsNo_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("notifications/lockScreen", "none");
+        d->settings.setValue("notifications/lockScreen", "none");
     }
 }
 
 void InfoPaneDropdown::on_MediaSwitch_toggled(bool checked)
 {
-    settings.setValue("notifications/mediaInsert", checked);
+    d->settings.setValue("notifications/mediaInsert", checked);
 }
 
 void InfoPaneDropdown::on_lightColorThemeRadio_toggled(bool checked)
 {
     if (checked) {
-        themeSettings->setValue("color/type", "light");
+        d->themeSettings->setValue("color/type", "light");
         updateAccentColourBox();
         resetStyle();
         changeDropDown(Settings, false);
@@ -1781,7 +1858,7 @@ void InfoPaneDropdown::on_lightColorThemeRadio_toggled(bool checked)
 void InfoPaneDropdown::on_darkColorThemeRadio_toggled(bool checked)
 {
     if (checked) {
-        themeSettings->setValue("color/type", "dark");
+        d->themeSettings->setValue("color/type", "dark");
         updateAccentColourBox();
         resetStyle();
         changeDropDown(Settings, false);
@@ -1790,16 +1867,16 @@ void InfoPaneDropdown::on_darkColorThemeRadio_toggled(bool checked)
 
 void InfoPaneDropdown::on_themeButtonColor_currentIndexChanged(int index)
 {
-    themeSettings->setValue("color/accent", index);
+    d->themeSettings->setValue("color/accent", index);
     resetStyle();
 }
 
 void InfoPaneDropdown::on_systemFont_currentFontChanged(const QFont &f)
 {
-    themeSettings->setValue("fonts/defaultFamily", f.family());
-    themeSettings->setValue("fonts/smallFamily", f.family());
-    ui->systemFontSize->setValue(themeSettings->value("font/defaultSize", 10).toInt());
-    //ui->systemFont->setFont(QFont(themeSettings->value("font/defaultFamily", defaultFont).toString(), themeSettings->value("font/defaultSize", 10).toInt()));
+    d->themeSettings->setValue("fonts/defaultFamily", f.family());
+    d->themeSettings->setValue("fonts/smallFamily", f.family());
+    ui->systemFontSize->setValue(d->themeSettings->value("font/defaultSize", 10).toInt());
+    //ui->systemFont->setFont(QFont(d->themeSettings->value("font/defaultFamily", defaultFont).toString(), d->themeSettings->value("font/defaultSize", 10).toInt()));
 }
 
 void InfoPaneDropdown::on_batteryChartUpdateButton_clicked()
@@ -1894,8 +1971,8 @@ void InfoPaneDropdown::updateBatteryChart() {
         }
 
     } else {
-        for (QAbstractAxis* axis : batteryChart->axes()) {
-            batteryChart->removeAxis(axis);
+        for (QAbstractAxis* axis : d->batteryChart->axes()) {
+            d->batteryChart->removeAxis(axis);
             axis->deleteLater();
         }
 
@@ -1977,46 +2054,46 @@ void InfoPaneDropdown::updateBatteryChart() {
             }
         }
 
-        batteryChart->removeAllSeries();
-        batteryChart->addSeries(batteryChartData);
-        batteryChart->addSeries(batteryChartTimeRemainingData);
+        d->batteryChart->removeAllSeries();
+        d->batteryChart->addSeries(batteryChartData);
+        d->batteryChart->addSeries(batteryChartTimeRemainingData);
 
-        xAxis = new QDateTimeAxis;
+        d->xAxis = new QDateTimeAxis;
         if (ui->chargeGraphButton->isChecked()) {
             if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked()) {
-                xAxis->setMax(QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x()).addMSecs(remainingTime.toMSecsSinceEpoch()));
+                d->xAxis->setMax(QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x()).addMSecs(remainingTime.toMSecsSinceEpoch()));
             } else {
-                xAxis->setMax(QDateTime::currentDateTime());
+                d->xAxis->setMax(QDateTime::currentDateTime());
             }
 
-            QDateTime oneDay = xAxis->max().addDays(-1);
+            QDateTime oneDay = d->xAxis->max().addDays(-1);
             if (msecsSinceFull == -1 || msecsSinceFull < oneDay.toMSecsSinceEpoch()) {
-                xAxis->setMin(oneDay);
+                d->xAxis->setMin(oneDay);
             } else {
-                xAxis->setMin(QDateTime::fromMSecsSinceEpoch(msecsSinceFull));
+                d->xAxis->setMin(QDateTime::fromMSecsSinceEpoch(msecsSinceFull));
             }
         } else {
-            xAxis->setMax(QDateTime::currentDateTime());
-            xAxis->setMin(xAxis->max().addSecs(-43200)); //Half a day
+            d->xAxis->setMax(QDateTime::currentDateTime());
+            d->xAxis->setMin(d->xAxis->max().addSecs(-43200)); //Half a day
         }
-        batteryChart->addAxis(xAxis, Qt::AlignBottom);
-        xAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
-        xAxis->setFormat("hh:mm");
-        xAxis->setTickCount(9);
-        batteryChartData->attachAxis(xAxis);
-        batteryChartTimeRemainingData->attachAxis(xAxis);
+        d->batteryChart->addAxis(d->xAxis, Qt::AlignBottom);
+        d->xAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
+        d->xAxis->setFormat("hh:mm");
+        d->xAxis->setTickCount(9);
+        batteryChartData->attachAxis(d->xAxis);
+        batteryChartTimeRemainingData->attachAxis(d->xAxis);
 
         /*connect(xAxis, &QDateTimeAxis::rangeChanged, [=](QDateTime min, QDateTime max) {
             ui->BatteryChargeScrollBar->setMaximum(max.toMSecsSinceEpoch() - min.toMSecsSinceEpoch());
         });*/
 
-        chartScrolling = true;
+        d->chartScrolling = true;
         int currentSecsSinceEpoch = QDateTime::currentSecsSinceEpoch();
         ui->BatteryChargeScrollBar->setMinimum(0);
         ui->BatteryChargeScrollBar->setMaximum(currentSecsSinceEpoch / 60 - firstDateTime);
         ui->BatteryChargeScrollBar->setValue(currentSecsSinceEpoch / 60 - firstDateTime);
-        startValue = currentSecsSinceEpoch / 60 - firstDateTime;
-        chartScrolling = false;
+        d->startValue = currentSecsSinceEpoch / 60 - firstDateTime;
+        d->chartScrolling = false;
 
         QValueAxis* yAxis = new QValueAxis;
         if (ui->chargeGraphButton->isChecked()) {
@@ -2029,7 +2106,7 @@ void InfoPaneDropdown::updateBatteryChart() {
 
         yAxis->setMin(0);
         yAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
-        batteryChart->addAxis(yAxis, Qt::AlignLeft);
+        d->batteryChart->addAxis(yAxis, Qt::AlignLeft);
         batteryChartData->attachAxis(yAxis);
         batteryChartTimeRemainingData->attachAxis(yAxis);
 
@@ -2057,14 +2134,14 @@ void InfoPaneDropdown::on_PowerStretchSwitch_toggled(bool checked)
 void InfoPaneDropdown::doNetworkCheck() {
     if (updbus->powerStretch()) {
         //Always set networkOk to ok because we don't update when power stretch is on
-        networkOk = Ok;
+        d->networkOk = Ok;
     } else {
         //Do some network checks to see if network is working
 
         QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
         int connectivity = i.property("Connectivity").toUInt();
         if (connectivity == 2) {
-            if (networkOk != BehindPortal) {
+            if (d->networkOk != BehindPortal) {
                 //Notify user that they are behind a portal.
                 //Wait 10 seconds for startup or for connection notification
 
@@ -2088,24 +2165,24 @@ void InfoPaneDropdown::doNetworkCheck() {
                 });
             }
 
-            networkOk = BehindPortal;
+            d->networkOk = BehindPortal;
 
             //Reload the connectivity status
             i.asyncCall("CheckConnectivity");
             return;
         } else if (connectivity == 3) {
-            networkOk = Unspecified;
+            d->networkOk = Unspecified;
 
             //Reload the connectivity status
             i.asyncCall("CheckConnectivity");
             return;
         } else {
-            networkOk = Ok;
+            d->networkOk = Ok;
         }
 
         QNetworkAccessManager* manager = new QNetworkAccessManager;
         if (manager->networkAccessible() == QNetworkAccessManager::NotAccessible) {
-            networkOk = Unspecified;
+            d->networkOk = Unspecified;
             manager->deleteLater();
 
             //Reload the connectivity status
@@ -2134,7 +2211,7 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
     changeDropDown(showWith, false);
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    if (settings.value("bar/onTop", true).toBool()) {
+    if (d->settings.value("bar/onTop", true).toBool()) {
         this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height() + y, screenGeometry.width(), screenGeometry.height() + 1);
     } else {
         this->setGeometry(screenGeometry.x(), screenGeometry.top() + y + screenGeometry.y(), screenGeometry.width(), screenGeometry.height() + 1);
@@ -2168,19 +2245,19 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
 
     ui->brightnessSlider->setValue((int) output);
 
-    previousDragY = y;
+    d->previousDragY = y;
 }
 
 void InfoPaneDropdown::completeDragDown() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    if ((QCursor::pos().y() - screenGeometry.top() < previousDragY && settings.value("bar/onTop", true).toBool()) ||
-            (QCursor::pos().y() - screenGeometry.top() > previousDragY && !settings.value("bar/onTop", true).toBool())) {
+    if ((QCursor::pos().y() - screenGeometry.top() < d->previousDragY && d->settings.value("bar/onTop", true).toBool()) ||
+            (QCursor::pos().y() - screenGeometry.top() > d->previousDragY && !d->settings.value("bar/onTop", true).toBool())) {
         this->close();
     } else {
         tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
         a->setStartValue(this->geometry());
-        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), screenGeometry.height() + 1));
+        a->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - (d->settings.value("bar/onTop", true).toBool() ? 0 : 1), this->width(), screenGeometry.height() + 1));
         a->setEasingCurve(QEasingCurve::OutCubic);
         a->setDuration(500);
         connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
@@ -2193,15 +2270,15 @@ void InfoPaneDropdown::on_notificationSoundBox_currentIndexChanged(int index)
     QSoundEffect* sound = new QSoundEffect();
     switch (index) {
         case 0:
-            settings.setValue("notifications/sound", "tripleping");
+            d->settings.setValue("notifications/sound", "tripleping");
             sound->setSource(QUrl("qrc:/sounds/notifications/tripleping.wav"));
             break;
         case 1:
-            settings.setValue("notifications/sound", "upsidedown");
+            d->settings.setValue("notifications/sound", "upsidedown");
             sound->setSource(QUrl("qrc:/sounds/notifications/upsidedown.wav"));
             break;
         case 2:
-            settings.setValue("notifications/sound", "echo");
+            d->settings.setValue("notifications/sound", "echo");
             sound->setSource(QUrl("qrc:/sounds/notifications/echo.wav"));
             break;
     }
@@ -2253,8 +2330,8 @@ void InfoPaneDropdown::on_userSettingsNextButton_clicked()
             }
         }
 
-        editingUserPath = ui->availableUsersWidget->selectedItems().first()->data(Qt::UserRole).toString();
-        if (editingUserPath == "new") {
+        d->editingUserPath = ui->availableUsersWidget->selectedItems().first()->data(Qt::UserRole).toString();
+        if (d->editingUserPath == "new") {
             ui->userSettingsEditUserLabel->setText(tr("New User"));
             ui->userSettingsFullName->setText("");
             ui->userSettingsUserName->setText("");
@@ -2265,7 +2342,7 @@ void InfoPaneDropdown::on_userSettingsNextButton_clicked()
             ui->userSettingsAdminAccount->setChecked(false);
         } else {
             ui->userSettingsEditUserLabel->setText(tr("Edit User"));
-            QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
+            QDBusInterface interface("org.freedesktop.Accounts", d->editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
             int passwordMode = interface.property("PasswordMode").toInt();
             if (passwordMode == 0) {
                 ui->userSettingsPassword->setPlaceholderText(tr("(unchanged)"));
@@ -2317,7 +2394,7 @@ void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
         return;
     }
 
-    if (editingUserPath == "new") {
+    if (d->editingUserPath == "new") {
         QDBusMessage createMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "CreateUser");
         QVariantList args;
         args.append(ui->userSettingsUserName->text());
@@ -2334,11 +2411,11 @@ void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
             toast->show(this);
             return;
         } else {
-            editingUserPath = newUser.value().path();
+            d->editingUserPath = newUser.value().path();
         }
     }
 
-    QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
+    QDBusInterface interface("org.freedesktop.Accounts", d->editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
     QDBusMessage setUserNameMessage = interface.call("SetUserName", ui->userSettingsUserName->text());
     if (setUserNameMessage.errorMessage() != "") {
         tToast* toast = new tToast();
@@ -2369,7 +2446,7 @@ void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
 
         interface.call("SetPassword", cryptedPassword, ui->userSettingsPasswordHint->text());
     } else {
-        if (editingUserPath == "new") {
+        if (d->editingUserPath == "new") {
             interface.call("SetPasswordMode", 2);
             interface.call("SetPasswordHint", ui->userSettingsPasswordHint->text());
         }
@@ -2396,7 +2473,7 @@ void InfoPaneDropdown::on_userSettingsCancelDeleteUser_clicked()
 
 void InfoPaneDropdown::on_userSettingsDeleteUserOnly_clicked()
 {
-    QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
+    QDBusInterface interface("org.freedesktop.Accounts", d->editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
     qlonglong uid = interface.property("Uid").toLongLong();
 
     QDBusMessage deleteMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "DeleteUser");
@@ -2412,7 +2489,7 @@ void InfoPaneDropdown::on_userSettingsDeleteUserOnly_clicked()
 
 void InfoPaneDropdown::on_userSettingsDeleteUserAndData_clicked()
 {
-    QDBusInterface interface("org.freedesktop.Accounts", editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
+    QDBusInterface interface("org.freedesktop.Accounts", d->editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
     qlonglong uid = interface.property("Uid").toLongLong();
 
     QDBusMessage deleteMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "DeleteUser");
@@ -2500,9 +2577,9 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
     //Show the splash screen (if available)
     emit dbusSignals->ShowSplash();
 
-    settings.setValue("locale/language", ui->localeList->item(currentRow)->data(Qt::UserRole).toString());
+    d->settings.setValue("locale/language", ui->localeList->item(currentRow)->data(Qt::UserRole).toString());
 
-    QString localeName = settings.value("locale/language", "en_US").toString();
+    QString localeName = d->settings.value("locale/language", "en_US").toString();
     qputenv("LANGUAGE", localeName.toUtf8());
 
     QLocale defaultLocale(localeName);
@@ -2527,7 +2604,7 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
     QApplication::installTranslator(tsTranslator);
 
     //Tell all plugins to update translator
-    for (StatusCenterPane* plugin : loadedPlugins) {
+    for (StatusCenterPane* plugin : d->loadedPlugins) {
         plugin->loadLanguage(defaultLocale.name());
     }
 
@@ -2540,7 +2617,7 @@ void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
 
 void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
 {
-    settings.setValue("bar/statusBar", checked);
+    d->settings.setValue("bar/statusBar", checked);
     updateStruts();
 
     ui->AutoShowBarLabel->setEnabled(checked);
@@ -2550,7 +2627,7 @@ void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::on_TouchInputSwitch_toggled(bool checked)
 {
-    settings.setValue("input/touch", checked);
+    d->settings.setValue("input/touch", checked);
 }
 
 void InfoPaneDropdown::on_quietModeSound_clicked()
@@ -2573,16 +2650,16 @@ void InfoPaneDropdown::on_quietModeMute_clicked()
 
 void InfoPaneDropdown::on_SuspendLockScreen_toggled(bool checked)
 {
-    settings.setValue("lockScreen/showOnSuspend", checked);
+    d->settings.setValue("lockScreen/showOnSuspend", checked);
 }
 
 void InfoPaneDropdown::on_BatteryChargeScrollBar_valueChanged(int value)
 {
-    if (!chartScrolling) {
-        chartScrolling = true;
-        batteryChart->scroll(value - startValue, 0);
-        startValue = value;
-        chartScrolling = false;
+    if (!d->chartScrolling) {
+        d->chartScrolling = true;
+        d->batteryChart->scroll(value - d->startValue, 0);
+        d->startValue = value;
+        d->chartScrolling = false;
     }
 }
 
@@ -2621,23 +2698,23 @@ void InfoPaneDropdown::on_appsGraphButton_clicked()
 
 void InfoPaneDropdown::on_LargeTextSwitch_toggled(bool checked)
 {
-    themeSettings->setValue("accessibility/largeText", checked);
+    d->themeSettings->setValue("accessibility/largeText", checked);
 }
 
 void InfoPaneDropdown::on_HighContrastSwitch_toggled(bool checked)
 {
-    themeSettings->setValue("accessibility/highcontrast", checked);
+    d->themeSettings->setValue("accessibility/highcontrast", checked);
     setHeaderColour(QColor(0, 100, 255));
 }
 
 void InfoPaneDropdown::on_systemAnimationsAccessibilitySwitch_toggled(bool checked)
 {
-    themeSettings->setValue("accessibility/systemAnimations", checked);
+    d->themeSettings->setValue("accessibility/systemAnimations", checked);
 }
 
 void InfoPaneDropdown::on_CapsNumLockBellSwitch_toggled(bool checked)
 {
-    themeSettings->setValue("accessibility/bellOnCapsNumLock", checked);
+    d->themeSettings->setValue("accessibility/bellOnCapsNumLock", checked);
 }
 
 void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
@@ -2645,10 +2722,10 @@ void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
     QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
 
     //Set flags that persist between changes
-    settings.setValue("flightmode/on", checked);
+    d->settings.setValue("flightmode/on", checked);
     if (checked) {
-        settings.setValue("flightmode/wifi", ui->WifiSwitch->isChecked());
-        settings.setValue("flightmode/bt", ui->BluetoothSwitch->isChecked());
+        d->settings.setValue("flightmode/wifi", ui->WifiSwitch->isChecked());
+        d->settings.setValue("flightmode/bt", ui->BluetoothSwitch->isChecked());
 
         //Disable bluetooth and WiFi.
         ui->WifiSwitch->setChecked(false);
@@ -2659,8 +2736,8 @@ void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
         i.setProperty("WimaxEnabled", false);
     } else {
         //Enable bluetooth and WiFi.
-        ui->WifiSwitch->setChecked(settings.value("flightmode/wifi", true).toBool());
-        ui->BluetoothSwitch->setChecked(settings.value("flightmode/bt", true).toBool());
+        ui->WifiSwitch->setChecked(d->settings.value("flightmode/wifi", true).toBool());
+        ui->BluetoothSwitch->setChecked(d->settings.value("flightmode/bt", true).toBool());
 
         //Enable WiMAX and mobile networking
         i.setProperty("WwanEnabled", true);
@@ -2674,29 +2751,29 @@ void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::on_TwentyFourHourSwitch_toggled(bool checked)
 {
-    settings.setValue("time/use24hour", checked);
+    d->settings.setValue("time/use24hour", checked);
 }
 
 void InfoPaneDropdown::on_systemIconTheme_currentIndexChanged(int index)
 {
-    themeSettings->setValue("icons/theme", ui->systemIconTheme->itemData(index).toString());
+    d->themeSettings->setValue("icons/theme", ui->systemIconTheme->itemData(index).toString());
 }
 
 void InfoPaneDropdown::on_AttenuateSwitch_toggled(bool checked)
 {
-    settings.setValue("notifications/attenuate", checked);
+    d->settings.setValue("notifications/attenuate", checked);
 }
 
 void InfoPaneDropdown::on_BarOnBottom_toggled(bool checked)
 {
-    settings.setValue("bar/onTop", !checked);
+    d->settings.setValue("bar/onTop", !checked);
     updateStruts();
 }
 
 void InfoPaneDropdown::updateStruts() {
     emit updateStrutsSignal();
 
-    if (settings.value("bar/onTop", true).toBool()) {
+    if (d->settings.value("bar/onTop", true).toBool()) {
         ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::TopToBottom);
         ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::TopToBottom);
         ((QBoxLayout*) ui->settingsFrame->layout())->setDirection(QBoxLayout::TopToBottom);
@@ -2713,7 +2790,7 @@ void InfoPaneDropdown::updateStruts() {
 
 void InfoPaneDropdown::on_systemWidgetTheme_currentIndexChanged(int index)
 {
-    themeSettings->setValue("style/name", ui->systemWidgetTheme->itemData(index).toString());
+    d->themeSettings->setValue("style/name", ui->systemWidgetTheme->itemData(index).toString());
     resetStyle();
 }
 
@@ -2724,26 +2801,26 @@ void InfoPaneDropdown::resetStyle() {
 void InfoPaneDropdown::on_decorativeColorThemeRadio_toggled(bool checked)
 {
     if (checked) {
-        themeSettings->setValue("color/type", "decorative");
+        d->themeSettings->setValue("color/type", "decorative");
         updateAccentColourBox();
         resetStyle();
     }
 }
 
 void InfoPaneDropdown::on_SoundFeedbackSoundSwitch_toggled(bool checked) {
-    settings.setValue("sound/feedbackSound", checked);
+    d->settings.setValue("sound/feedbackSound", checked);
 }
 
 void InfoPaneDropdown::on_VolumeOverdriveSwitch_toggled(bool checked) {
-    settings.setValue("sound/volumeOverdrive", checked);
+    d->settings.setValue("sound/volumeOverdrive", checked);
 }
 
 void InfoPaneDropdown::updateAccentColourBox() {
     //Set up theme button combo box
-    int themeAccentColorIndex = themeSettings->value("color/accent", 0).toInt();
+    int themeAccentColorIndex = d->themeSettings->value("color/accent", 0).toInt();
 
     ui->themeButtonColor->clear();
-    if (themeSettings->value("color/type", "dark") == "decorative") {
+    if (d->themeSettings->value("color/type", "dark") == "decorative") {
         if (themeAccentColorIndex > 1) themeAccentColorIndex = 0;
         ui->themeButtonColor->addItem(tr("Oxygen"));
         ui->themeButtonColor->addItem(tr("Breeze"));
@@ -2762,34 +2839,34 @@ void InfoPaneDropdown::updateAccentColourBox() {
 void InfoPaneDropdown::on_dpi100_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("screen/dpi", 96);
+        d->settings.setValue("screen/dpi", 96);
     }
 }
 
 void InfoPaneDropdown::on_dpi150_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("screen/dpi", 144);
+        d->settings.setValue("screen/dpi", 144);
     }
 }
 
 void InfoPaneDropdown::on_dpi200_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("screen/dpi", 192);
+        d->settings.setValue("screen/dpi", 192);
     }
 }
 
 void InfoPaneDropdown::on_dpi300_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("screen/dpi", 288);
+        d->settings.setValue("screen/dpi", 288);
     }
 }
 
 void InfoPaneDropdown::on_AutoShowBarSwitch_toggled(bool checked)
 {
-    settings.setValue("bar/autoshow", checked);
+    d->settings.setValue("bar/autoshow", checked);
 }
 
 void InfoPaneDropdown::on_userSettingsAdminAccount_toggled(bool checked)
@@ -2959,17 +3036,17 @@ void InfoPaneDropdown::on_addAutostartApp_clicked()
 
 void InfoPaneDropdown::on_redshiftSwitch_toggled(bool checked)
 {
-    if (effectiveRedshiftOn) {
+    if (d->effectiveRedshiftOn) {
         if (checked) { //Turn Redshift back on
-            overrideRedshift = 0;
+            d->overrideRedshift = 0;
         } else { //Temporarily disable Redshift
-            overrideRedshift = 1;
+            d->overrideRedshift = 1;
         }
     } else {
         if (checked) { //Temporarily enable Redshift
-            overrideRedshift = 2;
+            d->overrideRedshift = 2;
         } else { //Turn Redshift back off
-            overrideRedshift = 0;
+            d->overrideRedshift = 0;
         }
     }
 }
@@ -2977,7 +3054,7 @@ void InfoPaneDropdown::on_redshiftSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_grayColorThemeRadio_toggled(bool checked)
 {
     if (checked) {
-        themeSettings->setValue("color/type", "gray");
+        d->themeSettings->setValue("color/type", "gray");
         updateAccentColourBox();
         resetStyle();
         changeDropDown(Settings, false);
@@ -2991,10 +3068,10 @@ void InfoPaneDropdown::on_AppNotifications_currentItemChanged(QListWidgetItem *c
         ui->appNotificationsConfigureLock->setVisible(false);
     } else {
         ui->appNotificationsTitle->setText(tr("Notifications for %1").arg(current->text()));
-        ui->appAllowNotifications->setChecked(notificationAppSettings->value(current->text() + "/allow", true).toBool());
-        ui->appAllowSounds->setChecked(notificationAppSettings->value(current->text() + "/sounds", true).toBool());
-        ui->appAllowPopup->setChecked(notificationAppSettings->value(current->text() + "/popup", true).toBool());
-        ui->appBypassQuiet->setChecked(notificationAppSettings->value(current->text() + "/bypassQuiet", false).toBool());
+        ui->appAllowNotifications->setChecked(d->notificationAppSettings->value(current->text() + "/allow", true).toBool());
+        ui->appAllowSounds->setChecked(d->notificationAppSettings->value(current->text() + "/sounds", true).toBool());
+        ui->appAllowPopup->setChecked(d->notificationAppSettings->value(current->text() + "/popup", true).toBool());
+        ui->appBypassQuiet->setChecked(d->notificationAppSettings->value(current->text() + "/bypassQuiet", false).toBool());
 
         if (current->text() == "theShell") {
             ui->appNotificationsPane->setEnabled(false);
@@ -3010,28 +3087,28 @@ void InfoPaneDropdown::on_AppNotifications_currentItemChanged(QListWidgetItem *c
 void InfoPaneDropdown::on_appAllowNotifications_toggled(bool checked)
 {
     if (ui->AppNotifications->currentItem() != NULL) {
-        notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/allow", checked);
+        d->notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/allow", checked);
     }
 }
 
 void InfoPaneDropdown::on_appAllowSounds_toggled(bool checked)
 {
     if (ui->AppNotifications->currentItem() != NULL) {
-        notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/sounds", checked);
+        d->notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/sounds", checked);
     }
 }
 
 void InfoPaneDropdown::on_appAllowPopup_toggled(bool checked)
 {
     if (ui->AppNotifications->currentItem() != NULL) {
-        notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/popup", checked);
+        d->notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/popup", checked);
     }
 }
 
 void InfoPaneDropdown::on_appBypassQuiet_toggled(bool checked)
 {
     if (ui->AppNotifications->currentItem() != NULL) {
-        notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/bypassQuiet", checked);
+        d->notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/bypassQuiet", checked);
     }
 }
 
@@ -3043,7 +3120,7 @@ void InfoPaneDropdown::on_SetSystemTimezoneButton_clicked()
     QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
     QString currentTimezone = dateTimeInterface.property("Timezone").toString();
 
-    timezoneData = QJsonObject();
+    d->timezoneData = QJsonObject();
 
     ui->timezoneList->clear();
     QFile tzInfo("/usr/share/zoneinfo/zone.tab");
@@ -3056,11 +3133,11 @@ void InfoPaneDropdown::on_SetSystemTimezoneButton_clicked()
                 QString region = parts.at(2).left(parts.at(2).indexOf("/"));
                 QString city = parts.at(2).mid(parts.at(2).indexOf("/") + 1);
 
-                if (!timezoneData.contains(region)) {
+                if (!d->timezoneData.contains(region)) {
                     QListWidgetItem* i = new QListWidgetItem();
                     i->setText(region);
                     ui->timezoneList->addItem(i);
-                    timezoneData.insert(region, QJsonArray());
+                    d->timezoneData.insert(region, QJsonArray());
                 }
 
                 QJsonObject cityData;
@@ -3073,9 +3150,9 @@ void InfoPaneDropdown::on_SetSystemTimezoneButton_clicked()
                     cityData.insert("selected", false);
                 }
 
-                QJsonArray a = timezoneData.value(region).toArray();
+                QJsonArray a = d->timezoneData.value(region).toArray();
                 a.append(cityData);
-                timezoneData.insert(region, a);
+                d->timezoneData.insert(region, a);
             }
         }
     }
@@ -3106,8 +3183,8 @@ void InfoPaneDropdown::on_setTimezoneButton_clicked()
 void InfoPaneDropdown::on_timezoneList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
     ui->timezoneCityList->clear();
-    if (current != NULL) {
-        QJsonArray a = timezoneData.value(current->text()).toArray();
+    if (current != nullptr) {
+        QJsonArray a = d->timezoneData.value(current->text()).toArray();
         for (QJsonValue v : a) {
             QListWidgetItem* i = new QListWidgetItem();
             QJsonObject cityData = v.toObject();
@@ -3133,7 +3210,7 @@ void InfoPaneDropdown::on_timezoneCityList_currentRowChanged(int currentRow)
 
 void InfoPaneDropdown::on_batteryScreenOff_valueChanged(int value)
 {
-    settings.setValue("power/batteryScreenOff", value);
+    d->settings.setValue("power/batteryScreenOff", value);
     if (value == 121) {
         ui->batteryScreenOffLabel->setText(tr("Never"));
     } else {
@@ -3143,7 +3220,7 @@ void InfoPaneDropdown::on_batteryScreenOff_valueChanged(int value)
 
 void InfoPaneDropdown::on_batterySuspend_valueChanged(int value)
 {
-    settings.setValue("power/batterySuspend", value);
+    d->settings.setValue("power/batterySuspend", value);
     if (value == 121) {
         ui->batterySuspendLabel->setText(tr("Never"));
     } else {
@@ -3153,7 +3230,7 @@ void InfoPaneDropdown::on_batterySuspend_valueChanged(int value)
 
 void InfoPaneDropdown::on_powerScreenOff_valueChanged(int value)
 {
-    settings.setValue("power/powerScreenOff", value);
+    d->settings.setValue("power/powerScreenOff", value);
     if (value == 121) {
         ui->powerScreenOffLabel->setText(tr("Never"));
     } else {
@@ -3163,7 +3240,7 @@ void InfoPaneDropdown::on_powerScreenOff_valueChanged(int value)
 
 void InfoPaneDropdown::on_powerSuspend_valueChanged(int value)
 {
-    settings.setValue("power/powerSuspend", value);
+    d->settings.setValue("power/powerSuspend", value);
     if (value == 121) {
         ui->powerSuspendLabel->setText(tr("Never"));
     } else {
@@ -3275,18 +3352,33 @@ void InfoPaneDropdown::on_resetDeviceButton_clicked()
 void InfoPaneDropdown::changeEvent(QEvent *event) {
     if (event->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
+
+        for (int i = 0; i < d->loadedSettingsPlugins.count(); i++) {
+            ui->settingsList->item(d->pluginsSettingsStartIndex + i)->setText(d->loadedSettingsPlugins.at(i)->name());
+        }
+
+        int currentTranslateIndex = d->pluginsSettingsStartIndex + d->loadedSettingsPlugins.count();
+        if (ui->settingsTabs->indexOf(ui->UnavailablePanesPage) != -1) {
+            ui->settingsList->item(currentTranslateIndex)->setText(tr("Unavailable Panes"));
+            currentTranslateIndex++;
+        }
+
+        ui->settingsList->item(currentTranslateIndex)->setText(tr("Advanced"));
+        currentTranslateIndex++;
+        ui->settingsList->item(currentTranslateIndex)->setText(tr("About"));
+        currentTranslateIndex++;
     }
     QDialog::changeEvent(event);
 }
 
 void InfoPaneDropdown::on_sunlightRedshift_toggled(bool checked)
 {
-    settings.setValue("display/redshiftSunlightCycle", checked);
+    d->settings.setValue("display/redshiftSunlightCycle", checked);
     updateRedshiftTime();
 }
 
 void InfoPaneDropdown::updateRedshiftTime() {
-    if (!settings.value("display/redshiftSunlightCycle", false).toBool()) {
+    if (!d->settings.value("display/redshiftSunlightCycle", false).toBool()) {
         //Don't grab location if user doesn't want
         ui->startRedshift->setEnabled(true);
         ui->endRedshift->setEnabled(true);
@@ -3330,7 +3422,7 @@ void InfoPaneDropdown::updateRedshiftTime() {
 void InfoPaneDropdown::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setPen(this->palette().color(QPalette::WindowText));
-    if (settings.value("bar/onTop", true).toBool()) {
+    if (d->settings.value("bar/onTop", true).toBool()) {
         painter.drawLine(0, this->height() - 1, this->width(), this->height() - 1);
     } else {
         painter.drawLine(0, 0, this->width(), 0);
@@ -3340,22 +3432,22 @@ void InfoPaneDropdown::paintEvent(QPaintEvent *event) {
 
 void InfoPaneDropdown::on_systemGTK3Theme_currentIndexChanged(int index)
 {
-    gtk3Settings->setValue("Settings/gtk-theme-name", ui->systemGTK3Theme->itemText(index));
+    d->gtk3Settings->setValue("Settings/gtk-theme-name", ui->systemGTK3Theme->itemText(index));
 }
 
 void InfoPaneDropdown::on_systemFontSize_valueChanged(int arg1)
 {
-    themeSettings->setValue("font/defaultSize", arg1);
+    d->themeSettings->setValue("font/defaultSize", arg1);
 }
 
 void InfoPaneDropdown::on_systemGTK3Font_currentFontChanged(const QFont &f)
 {
-    gtk3Settings->setValue("Settings/gtk-font-name", f.family() + " " + QString::number(ui->systemGTK3FontSize->value()));
+    d->gtk3Settings->setValue("Settings/gtk-font-name", f.family() + " " + QString::number(ui->systemGTK3FontSize->value()));
 }
 
 void InfoPaneDropdown::on_systemGTK3FontSize_valueChanged(int arg1)
 {
-    gtk3Settings->setValue("Settings/gtk-font-name", ui->systemGTK3Font->currentFont().family() + " " + QString::number(arg1));
+    d->gtk3Settings->setValue("Settings/gtk-font-name", ui->systemGTK3Font->currentFont().family() + " " + QString::number(arg1));
 }
 
 void InfoPaneDropdown::on_useSystemFontForGTKButton_clicked()
@@ -3418,8 +3510,8 @@ bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
             if (QApplication::layoutDirection() == Qt::RightToLeft) {
                 int width = ui->partFrame->width();
                 QPolygonF firstPoly;
-                firstPoly.append(QPointF(width - slice1.currentValue().toFloat(), 0));
-                firstPoly.append(QPointF(width - slice2.currentValue().toFloat(), ui->partFrame->height()));
+                firstPoly.append(QPointF(width - d->slice1.currentValue().toFloat(), 0));
+                firstPoly.append(QPointF(width - d->slice2.currentValue().toFloat(), ui->partFrame->height()));
                 firstPoly.append(QPointF(0, ui->partFrame->height()));
                 firstPoly.append(QPointF(0, 0));
                 p.setBrush(pal.color(QPalette::Window).lighter(110));
@@ -3434,8 +3526,8 @@ bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
                 p.drawPolygon(secondPoly);
             } else {
                 QPolygonF firstPoly;
-                firstPoly.append(QPointF(slice1.currentValue().toFloat(), 0));
-                firstPoly.append(QPointF(slice2.currentValue().toFloat(), ui->partFrame->height()));
+                firstPoly.append(QPointF(d->slice1.currentValue().toFloat(), 0));
+                firstPoly.append(QPointF(d->slice2.currentValue().toFloat(), ui->partFrame->height()));
                 firstPoly.append(QPointF(ui->partFrame->width(), ui->partFrame->height()));
                 firstPoly.append(QPointF(ui->partFrame->width(), 0));
                 p.setBrush(pal.color(QPalette::Window).lighter(110));
@@ -3457,13 +3549,13 @@ bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
 
 void InfoPaneDropdown::on_EmphasiseAppSwitch_toggled(bool checked)
 {
-    settings.setValue("notifications/emphasiseApp", checked);
+    d->settings.setValue("notifications/emphasiseApp", checked);
 }
 
 void InfoPaneDropdown::on_CompactBarSwitch_toggled(bool checked)
 {
-    if (settings.value("bar/compact") != checked) {
-        settings.setValue("bar/compact", checked);
+    if (d->settings.value("bar/compact") != checked) {
+        d->settings.setValue("bar/compact", checked);
 
         QMap<QString, QString> actions;
         actions.insert("logout", tr("Log Out Now"));
@@ -3495,7 +3587,7 @@ void InfoPaneDropdown::keyPressEvent(QKeyEvent *event) {
 void InfoPaneDropdown::on_blackColorThemeRadio_toggled(bool checked)
 {
     if (checked) {
-        themeSettings->setValue("color/type", "black");
+        d->themeSettings->setValue("color/type", "black");
         updateAccentColourBox();
         resetStyle();
         changeDropDown(Settings, false);
@@ -3520,7 +3612,7 @@ void InfoPaneDropdown::on_allowGeoclueAgent_clicked()
 
 void InfoPaneDropdown::on_LocationMasterSwitch_toggled(bool checked)
 {
-    locationSettings->setValue("master/master", checked);
+    d->locationSettings->setValue("master/master", checked);
 }
 
 void InfoPaneDropdown::setupLocationSettingsPane() {
@@ -3530,12 +3622,12 @@ void InfoPaneDropdown::setupLocationSettingsPane() {
         ui->locationStack->setCurrentIndex(1);
 
         ui->LocationAppsList->clear();
-        QStringList availableApps = locationSettings->childGroups();
+        QStringList availableApps = d->locationSettings->childGroups();
         availableApps.removeOne("master");
 
         for (QString app : availableApps) {
-            locationSettings->beginGroup(app);
-            bool allow = locationSettings->value("allow").toBool();
+            d->locationSettings->beginGroup(app);
+            bool allow = d->locationSettings->value("allow").toBool();
 
             App a = App::invalidApp();
             if (QFile("/usr/share/applications/" + app + ".desktop").exists()) {
@@ -3561,7 +3653,7 @@ void InfoPaneDropdown::setupLocationSettingsPane() {
             i->setData(Qt::UserRole, app);
             ui->LocationAppsList->addItem(i);
 
-            locationSettings->endGroup();
+            d->locationSettings->endGroup();
         }
     }
 }
@@ -3569,9 +3661,9 @@ void InfoPaneDropdown::setupLocationSettingsPane() {
 void InfoPaneDropdown::on_LocationAppsList_itemChanged(QListWidgetItem *item)
 {
     if (item->checkState() == Qt::Checked) {
-        locationSettings->setValue(item->data(Qt::UserRole).toString() + "/allow", true);
+        d->locationSettings->setValue(item->data(Qt::UserRole).toString() + "/allow", true);
     } else {
-        locationSettings->setValue(item->data(Qt::UserRole).toString() + "/allow", false);
+        d->locationSettings->setValue(item->data(Qt::UserRole).toString() + "/allow", false);
     }
 }
 
@@ -3588,14 +3680,14 @@ void InfoPaneDropdown::on_addLayout_clicked()
 void InfoPaneDropdown::on_addKeyboardLayout_clicked()
 {
     QListWidgetItem* item = ui->availableKeyboardLayouts->currentItem();
-    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    QStringList currentLayouts = d->settings.value("input/layout", "us(basic)").toString().split(",");
     currentLayouts.append(item->data(Qt::UserRole).toString());
 
     QListWidgetItem* newItem = new QListWidgetItem();
     newItem->setText(item->text());
     newItem->setData(Qt::UserRole, item->data(Qt::UserRole));
     ui->selectedLayouts->addItem(newItem);
-    settings.setValue("input/layout", currentLayouts.join(","));
+    d->settings.setValue("input/layout", currentLayouts.join(","));
 
     ui->InputStack->setCurrentIndex(0);
     loadNewKeyboardLayoutMenu();
@@ -3603,12 +3695,12 @@ void InfoPaneDropdown::on_addKeyboardLayout_clicked()
 
 void InfoPaneDropdown::on_removeLayout_clicked()
 {
-    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    QStringList currentLayouts = d->settings.value("input/layout", "us(basic)").toString().split(",");
     int item = ui->selectedLayouts->currentRow();
     currentLayouts.removeAt(item);
     QListWidgetItem* i = ui->selectedLayouts->takeItem(item);
     delete i;
-    settings.setValue("input/layout", currentLayouts.join(","));
+    d->settings.setValue("input/layout", currentLayouts.join(","));
     loadNewKeyboardLayoutMenu();
 }
 
@@ -3640,7 +3732,7 @@ void InfoPaneDropdown::KeyboardLayoutsMoved()
         QListWidgetItem* item = ui->selectedLayouts->item(i);
         currentLayouts.append(item->data(Qt::UserRole).toString());
     }
-    settings.setValue("input/layout", currentLayouts.join(","));
+    d->settings.setValue("input/layout", currentLayouts.join(","));
     loadNewKeyboardLayoutMenu();
 }
 
@@ -3654,10 +3746,10 @@ void InfoPaneDropdown::on_moveLayoutDown_clicked()
         item->setSelected(true);
     }
 
-    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    QStringList currentLayouts = d->settings.value("input/layout", "us(basic)").toString().split(",");
     QString layout = currentLayouts.takeAt(row);
     currentLayouts.insert(row + 1, layout);
-    settings.setValue("input/layout", currentLayouts.join(","));
+    d->settings.setValue("input/layout", currentLayouts.join(","));
     loadNewKeyboardLayoutMenu();
 }
 
@@ -3671,17 +3763,17 @@ void InfoPaneDropdown::on_moveLayoutUp_clicked()
         item->setSelected(true);
     }
 
-    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    QStringList currentLayouts = d->settings.value("input/layout", "us(basic)").toString().split(",");
     QString layout = currentLayouts.takeAt(row);
     currentLayouts.insert(row - 1, layout);
-    settings.setValue("input/layout", currentLayouts.join(","));
+    d->settings.setValue("input/layout", currentLayouts.join(","));
     loadNewKeyboardLayoutMenu();
 }
 
 void InfoPaneDropdown::loadNewKeyboardLayoutMenu() {
     //Check to see if current keyboard layout is included in list, and if not, select first
-    QString currentLayout = settings.value("input/currentLayout", "us(basic)").toString();
-    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    QString currentLayout = d->settings.value("input/currentLayout", "us(basic)").toString();
+    QStringList currentLayouts = d->settings.value("input/layout", "us(basic)").toString().split(",");
     if (!currentLayouts.contains(currentLayout)) {
         setKeyboardLayout(currentLayouts.first());
         return;
@@ -3708,15 +3800,15 @@ void InfoPaneDropdown::loadNewKeyboardLayoutMenu() {
 }
 
 void InfoPaneDropdown::setKeyboardLayout(QString layout) {
-    settings.setValue("input/currentLayout", layout);
+    d->settings.setValue("input/currentLayout", layout);
     QProcess::startDetached("setxkbmap " + layout);
     loadNewKeyboardLayoutMenu();
     emit keyboardLayoutChanged(layout.split("(").first().toUpper());
 }
 
 QString InfoPaneDropdown::setNextKeyboardLayout() {
-    QString currentLayout = settings.value("input/currentLayout", "us(basic)").toString();
-    QStringList currentLayouts = settings.value("input/layout", "us(basic)").toString().split(",");
+    QString currentLayout = d->settings.value("input/currentLayout", "us(basic)").toString();
+    QStringList currentLayouts = d->settings.value("input/layout", "us(basic)").toString().split(",");
     int currentIndex = currentLayouts.indexOf(currentLayout);
     currentIndex++;
     if (currentIndex == currentLayouts.count()) currentIndex = 0;
@@ -3730,6 +3822,7 @@ QString InfoPaneDropdown::setNextKeyboardLayout() {
             return ui->selectedLayouts->item(i)->text();
         }
     }
+    return "";
 }
 
 void InfoPaneDropdown::on_setupMousePassword_clicked()
@@ -3863,7 +3956,7 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         });
         anim->start(tVariantAnimation::DeleteWhenStopped);
     } else if (message == "register-switch") {
-        uint thisSwitchId = pluginSwitches.count();
+        uint thisSwitchId = d->pluginSwitches.count();
         QBoxLayout* layout = new QBoxLayout(QBoxLayout::LeftToRight);
 
         QFrame* line = new QFrame();
@@ -3883,13 +3976,13 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
             s->setChecked(args.at(1).toBool());
         }
         layout->addWidget(s);
-        pluginSwitches.append(s);
+        d->pluginSwitches.append(s);
 
         ui->customSwitches->addLayout(layout);
 
         caller->message("switch-registered", QVariantList() << thisSwitchId << args.first().toString());
     } else if (message == "toggle-switch") {
-        Switch* s = pluginSwitches.value(args.first().toUInt());
+        Switch* s = d->pluginSwitches.value(args.first().toUInt());
         s->setChecked(args.last().toBool());
     } else if (message == "attenuate") {
         if (args.first() == true) {
@@ -3925,25 +4018,25 @@ void InfoPaneDropdown::on_quietModeCriticalOnly_clicked()
 void InfoPaneDropdown::on_powerSuspendNormally_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("power/suspendMode", 0);
+        d->settings.setValue("power/suspendMode", 0);
     }
 }
 
 void InfoPaneDropdown::on_powerSuspendTurnOffScreen_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("power/suspendMode", 1);
+        d->settings.setValue("power/suspendMode", 1);
     }
 }
 
 void InfoPaneDropdown::on_powerSuspendHibernate_toggled(bool checked)
 {
     if (checked) {
-        settings.setValue("power/suspendMode", 2);
+        d->settings.setValue("power/suspendMode", 2);
     }
 }
 
 void InfoPaneDropdown::on_powerButtonPressed_currentIndexChanged(int index)
 {
-    settings.setValue("power/onPowerButtonPressed", index);
+    d->settings.setValue("power/onPowerButtonPressed", index);
 }

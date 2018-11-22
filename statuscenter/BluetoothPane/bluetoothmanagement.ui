@@ -142,7 +142,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QStackedWidget" name="menuStackedWidget">
+     <widget class="tStackedWidget" name="menuStackedWidget">
       <property name="maximumSize">
        <size>
         <width>250</width>
@@ -471,7 +471,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QStackedWidget" name="deviceStack">
+     <widget class="tStackedWidget" name="deviceStack">
       <widget class="QWidget" name="page_2">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
@@ -1679,6 +1679,12 @@
    <class>tCircularSpinner</class>
    <extends>QWidget</extends>
    <header location="global">tcircularspinner.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>tStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header location="global">tstackedwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

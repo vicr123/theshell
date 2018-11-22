@@ -339,7 +339,7 @@ void Background::setCommunityBackground(QString bg) {
             darkener.setColorAt(0, QColor::fromRgb(0, 0, 0, 0));
             darkener.setColorAt(1, QColor::fromRgb(0, 0, 0, 200));
 
-            if (settings.value("bar/onTop").toBool()) {
+            if (settings.value("bar/onTop", true).toBool()) {
                 darkener.setStart(0, 0);
                 darkener.setFinalStop(0, background.height());
             } else {
@@ -353,7 +353,7 @@ void Background::setCommunityBackground(QString bg) {
             int currentX = 30 * getDPIScaling();
             int baselineY;
 
-            if (settings.value("bar/onTop").toBool()) {
+            if (settings.value("bar/onTop", true).toBool()) {
                 baselineY = background.height() - 30 * getDPIScaling();
             } else {
                 baselineY = 30 * getDPIScaling() + QFontMetrics(QFont(this->font().family(), 20)).ascent();
