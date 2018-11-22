@@ -73,22 +73,22 @@
 <context>
     <name>AudioManager</name>
     <message>
-        <location filename="../audiomanager.cpp" line="348"/>
+        <location filename="../audiomanager.cpp" line="350"/>
         <source>Allows all sounds from all apps, and notifications from all apps.</source>
         <translation>Erlaubt alle Töne und Benachrichtigungen von allen Apps.</translation>
     </message>
     <message>
-        <location filename="../audiomanager.cpp" line="350"/>
+        <location filename="../audiomanager.cpp" line="352"/>
         <source>Ignores all notifications not marked as critical and those set to bypass Quiet Mode. Normal sounds will still be played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiomanager.cpp" line="352"/>
+        <location filename="../audiomanager.cpp" line="354"/>
         <source>Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
         <translation>Ignoriert jegliche App-Benachrichtigungen, außer die, bei denen eingestellt wurde, den Ruhemodus zu umgehen. Normale Töne werden noch immer abgespielt und Timer und Erinnerungen werden Sie noch immer benachrichtigen, sie werden dennoch keine Töne abspielen.</translation>
     </message>
     <message>
-        <location filename="../audiomanager.cpp" line="354"/>
+        <location filename="../audiomanager.cpp" line="356"/>
         <source>Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.</source>
         <translation>Schaltet alle Töne und Benachrichtigungen von allen Apps komplett aus, inklusive die, bei denen eingestellt wurde, den Ruhemodus zu umgehen. Nicht einmal Erinnerungen werden Sie benachrichtigen.</translation>
     </message>

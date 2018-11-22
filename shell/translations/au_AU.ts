@@ -72,23 +72,23 @@
 <context>
     <name>AudioManager</name>
     <message>
-        <location filename="../audiomanager.cpp" line="348"/>
+        <location filename="../audiomanager.cpp" line="350"/>
         <source>Allows all sounds from all apps, and notifications from all apps.</source>
         <translation>Allows all sounds from ya apps, and notifications from ya apps.</translation>
     </message>
     <message>
-        <location filename="../audiomanager.cpp" line="350"/>
+        <location filename="../audiomanager.cpp" line="352"/>
         <source>Ignores all notifications not marked as critical and those set to bypass Quiet Mode. Normal sounds will still be played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiomanager.cpp" line="352"/>
+        <location filename="../audiomanager.cpp" line="354"/>
         <source>Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
         <translatorcomment>god thats long</translatorcomment>
         <translation>Stuffs off with any notifications from ya apps, but not the one&apos;s set to bypass Quiet mode. Y&apos;know your normal sounds will still be played, and your timers and stuff will still give you a lil&apos; ring a ding, but they won&apos;t make any noise.</translation>
     </message>
     <message>
-        <location filename="../audiomanager.cpp" line="354"/>
+        <location filename="../audiomanager.cpp" line="356"/>
         <source>Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.</source>
         <translation>My god, it just turns off all the loud noises coming from those damn apps even the ones set to bypass Quiet Mode. Here&apos;s something even more insane; timers and reminders won&apos;t notify you either. Shocking.</translation>
     </message>

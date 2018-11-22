@@ -72,22 +72,22 @@
 <context>
     <name>AudioManager</name>
     <message>
-        <location filename="../audiomanager.cpp" line="348"/>
+        <location filename="../audiomanager.cpp" line="350"/>
         <source>Allows all sounds from all apps, and notifications from all apps.</source>
         <translation>Leis visus garsus iš visų programų, ir pranešimus iš visų programų.</translation>
     </message>
     <message>
-        <location filename="../audiomanager.cpp" line="350"/>
+        <location filename="../audiomanager.cpp" line="352"/>
         <source>Ignores all notifications not marked as critical and those set to bypass Quiet Mode. Normal sounds will still be played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiomanager.cpp" line="352"/>
+        <location filename="../audiomanager.cpp" line="354"/>
         <source>Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
         <translation>Ignoruos bet kokius pranešimus iš visų programų, išskyrus tas, kurios nustatytos, jog nekreiptų dėmesio į &quot;Tylos Režimo&quot; nustatymą. Normalūs garsai vistiek bus grojami,žadintuvai ir pranešimai vistiek veiks, bet jie neleis jokių garsų.</translation>
     </message>
     <message>
-        <location filename="../audiomanager.cpp" line="354"/>
+        <location filename="../audiomanager.cpp" line="356"/>
         <source>Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.</source>
         <translation>Pilnai išjungia visus garsus ir pranešimus iš visų programų, įskaitant tuos kurie nustatyti &quot;Tylos Režimo&quot; ignoravimui. Net žadintuvai neskambės ir nerodys pranešimų.</translation>
     </message>

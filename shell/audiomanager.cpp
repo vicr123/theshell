@@ -20,6 +20,8 @@
 
 #include "audiomanager.h"
 
+#include <qmath.h>
+
 AudioManager::AudioManager(QObject *parent) : QObject(parent)
 {
     pulseLoopApi = pa_glib_mainloop_get_api(pa_glib_mainloop_new(NULL));
@@ -125,7 +127,7 @@ void AudioManager::setMasterVolume(int volume) {
 int AudioManager::MasterVolume() {
     if (pulseAvailable) {
         pa_volume_t avgVol = pa_cvolume_avg(&defaultSinkVolume);
-        int currentVol = ((float) (avgVol - PA_VOLUME_MUTED) / (float) PA_VOLUME_NORM) * 100;
+        int currentVol = qCeil(((float) (avgVol - PA_VOLUME_MUTED) / (float) PA_VOLUME_NORM) * 100);
         return currentVol;
     } else {
         //Get Current Volume
