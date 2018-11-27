@@ -138,7 +138,7 @@ MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *paren
             setDetails(title, artist, album, albumArt);
         });
     });
-
+    connect(watcher, &QDBusPendingCallWatcher::finished, watcher, &QDBusPendingCallWatcher::deleteLater);
 
 
     //Get Playback Status

@@ -152,7 +152,7 @@ bool TaskbarManager::updateInternalWindow(Window window) {
                 ok = XGetWindowProperty(QX11Info::display(), window, XInternAtom(QX11Info::display(), "_NET_WM_ICON", False), 2, width * height * 4, False,
                                    XA_CARDINAL, &ReturnType, &format, &items, &bytes, &returnVal);
 
-                if (returnVal != 0x0) {
+                if (returnVal != nullptr) {
                     QImage image(16, 16, QImage::Format_ARGB32);
 
                     float widthSpacing = (float) width / (float) 16;

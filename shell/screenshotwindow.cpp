@@ -192,7 +192,8 @@ void screenshotWindow::show() {
     });
     anim->start();
 
-    if (!screenshotMode) {tVariantAnimation* anim = new tVariantAnimation();
+    if (!screenshotMode) {
+        tVariantAnimation* anim = new tVariantAnimation();
         anim->setStartValue(QRectF(0, 0, this->width(), this->height()));
         anim->setEndValue(QRectF(0, this->height(), this->width(), this->height()));
         anim->setDuration(500);

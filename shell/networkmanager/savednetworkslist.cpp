@@ -77,7 +77,7 @@ QVariant SavedNetworksList::data(const QModelIndex &index, int role) const
 void SavedNetworksList::loadNetworks() {
     savedNetworks.clear();
     QDBusMessage m = savedInterface->call(QDBus::Block, "ListConnections");
-    QDBusArgument knownNetworks = m.arguments().first().value<QDBusArgument>();
+    const QDBusArgument knownNetworks = m.arguments().first().value<QDBusArgument>();
     knownNetworks.beginArray();
     while (!knownNetworks.atEnd()) {
         QDBusObjectPath o;

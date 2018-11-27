@@ -72,24 +72,24 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="542"/>
+        <location filename="../overview.cpp" line="546"/>
         <source>Waiting for location information...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="597"/>
-        <location filename="../overview.cpp" line="603"/>
-        <location filename="../overview.cpp" line="610"/>
+        <location filename="../overview.cpp" line="601"/>
+        <location filename="../overview.cpp" line="607"/>
+        <location filename="../overview.cpp" line="614"/>
         <source>Couldn&apos;t retrieve weather information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="627"/>
+        <location filename="../overview.cpp" line="631"/>
         <source>%2°%3 in %1 %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="630"/>
+        <location filename="../overview.cpp" line="634"/>
         <source>Expect a high of %1°%2 and a low of %3°%2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -306,172 +306,172 @@
 <context>
     <name>WeatherCondition</name>
     <message>
-        <location filename="../overview.cpp" line="645"/>
+        <location filename="../overview.cpp" line="649"/>
         <source>with tornado</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="648"/>
+        <location filename="../overview.cpp" line="652"/>
         <source>with tropical storm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="651"/>
+        <location filename="../overview.cpp" line="655"/>
         <source>with hurricane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="654"/>
+        <location filename="../overview.cpp" line="658"/>
         <source>with severe thunderstorms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="658"/>
+        <location filename="../overview.cpp" line="662"/>
         <source>with thunderstorms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="661"/>
+        <location filename="../overview.cpp" line="665"/>
         <source>with rain and snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="664"/>
+        <location filename="../overview.cpp" line="668"/>
         <source>with rain and sleet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="667"/>
+        <location filename="../overview.cpp" line="671"/>
         <source>with snow and sleet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="670"/>
+        <location filename="../overview.cpp" line="674"/>
         <source>with freezing drizzle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="673"/>
+        <location filename="../overview.cpp" line="677"/>
         <source>with a drizzle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="676"/>
+        <location filename="../overview.cpp" line="680"/>
         <source>with freezing rain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="680"/>
+        <location filename="../overview.cpp" line="684"/>
         <source>with showers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="683"/>
+        <location filename="../overview.cpp" line="687"/>
         <source>with snow flurries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="686"/>
+        <location filename="../overview.cpp" line="690"/>
         <source>with light snow showers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="689"/>
+        <location filename="../overview.cpp" line="693"/>
         <source>with blowing snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="692"/>
+        <location filename="../overview.cpp" line="696"/>
         <source>and snowing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="695"/>
+        <location filename="../overview.cpp" line="699"/>
         <source>with hail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="698"/>
+        <location filename="../overview.cpp" line="702"/>
         <source>with sleet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="701"/>
+        <location filename="../overview.cpp" line="705"/>
         <source>with dust</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="704"/>
+        <location filename="../overview.cpp" line="708"/>
         <source>and foggy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="707"/>
+        <location filename="../overview.cpp" line="711"/>
         <source>and smoky</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="710"/>
+        <location filename="../overview.cpp" line="714"/>
         <source>and breezy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="713"/>
+        <location filename="../overview.cpp" line="717"/>
         <source>and windy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="716"/>
+        <location filename="../overview.cpp" line="720"/>
         <source>and cloudy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="720"/>
+        <location filename="../overview.cpp" line="724"/>
         <source>and mostly cloudy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="725"/>
+        <location filename="../overview.cpp" line="729"/>
         <source>and partly cloudy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="731"/>
+        <location filename="../overview.cpp" line="735"/>
         <source>and clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="734"/>
+        <location filename="../overview.cpp" line="738"/>
         <source>with rain and hail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="738"/>
+        <location filename="../overview.cpp" line="742"/>
         <source>with isolated thunderstorms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="742"/>
+        <location filename="../overview.cpp" line="746"/>
         <source>with scattered thunderstorms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="745"/>
+        <location filename="../overview.cpp" line="749"/>
         <source>with scattered showers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="749"/>
+        <location filename="../overview.cpp" line="753"/>
         <source>with heavy snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="752"/>
+        <location filename="../overview.cpp" line="756"/>
         <source>with scattered snow showers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="755"/>
+        <location filename="../overview.cpp" line="759"/>
         <source>with snow showers</source>
         <translation type="unfinished"></translation>
     </message>

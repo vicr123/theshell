@@ -464,5 +464,5 @@ void UPowerDBus::queryIdleState() {
         }
     }
 
-    XFree(info);
+    delete info;
 }

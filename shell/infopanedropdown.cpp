@@ -65,7 +65,7 @@ class InfoPaneDropdownPrivate {
         QRect dragRect;
         bool effectiveRedshiftOn = false;
         bool draggingInfoPane = false;
-        int overrideRedshift;
+        int overrideRedshift = 0;
 
         QMap<int, QFrame*> notificationFrames;
         QMap<QString, QFrame*> printersFrames;
@@ -115,6 +115,7 @@ class InfoPaneDropdownPrivate {
         QVariantAnimation slice1, slice2, slice3, slice4;
 
         QJsonObject timezoneData;
+        QNetworkAccessManager mgr;
 };
 
 InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
@@ -2015,7 +2016,7 @@ void InfoPaneDropdown::updateBatteryChart() {
         uint lastState = -1;
         bool takeNextSinceLastFull = false;
         if (historyArgument.isValid()) {
-            QDBusArgument arrayArgument = historyArgument.value();
+            const QDBusArgument arrayArgument = historyArgument.value();
             arrayArgument.beginArray();
             while (!arrayArgument.atEnd()) {
                 BatteryInfo info;
@@ -2180,16 +2181,13 @@ void InfoPaneDropdown::doNetworkCheck() {
             d->networkOk = Ok;
         }
 
-        QNetworkAccessManager* manager = new QNetworkAccessManager;
-        if (manager->networkAccessible() == QNetworkAccessManager::NotAccessible) {
+        if (d->mgr.networkAccessible() == QNetworkAccessManager::NotAccessible) {
             d->networkOk = Unspecified;
-            manager->deleteLater();
 
             //Reload the connectivity status
             i.asyncCall("CheckConnectivity");
             return;
         }
-        manager->deleteLater();
 
         //For some reason this crashes theShell so let's not do this (for now)
         /*connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply* reply) {

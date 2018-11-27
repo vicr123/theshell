@@ -530,7 +530,15 @@ bool AppsListModel::launchApp(QModelIndex index) {
         QString finalCommand = commandSpace.join(" ");
         qDebug() << "Starting command:" << finalCommand;
         process->start(finalCommand);
-        connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
+        connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus){
+            process->deleteLater();
+        });
+        connect(process, &QProcess::readyReadStandardError, [=] {
+            process->readAllStandardError(); //Discard stderr
+        });
+        connect(process, &QProcess::readyReadStandardOutput, [=] {
+            process->readAllStandardOutput(); //Discard stdout
+        });
         return true;
     }
 }

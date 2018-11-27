@@ -56,11 +56,6 @@
       </property>
       <item>
        <widget class="QFrame" name="horizontalFrame">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_14">
          <property name="leftMargin">
           <number>0</number>

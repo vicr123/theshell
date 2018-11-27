@@ -14,6 +14,8 @@ namespace Ui {
 }
 
 struct BgObject {
+    virtual ~BgObject();
+
     QPoint location;
     bool done = false;
 

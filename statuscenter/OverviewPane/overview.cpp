@@ -484,6 +484,10 @@ void Overview::drawObjects(QPainter* p) {
     p->restore();
 }
 
+BgObject::~BgObject() {
+
+}
+
 void Raindrop::advance(int maxHeight, int maxWidth) {
     horizontalDisplacement = velocity * tan(-0.26);
     this->location += QPoint(horizontalDisplacement, velocity);

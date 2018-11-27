@@ -633,6 +633,25 @@ void MainWindow::on_openMenu_clicked()
 }
 
 void MainWindow::doUpdate() {
+    /*{
+        QFile f("/proc/self/status");
+        f.open(QFile::ReadOnly);
+
+        QByteArray a = f.readAll();
+        QBuffer buf(&a);
+        buf.open(QBuffer::ReadOnly);
+        while (!buf.atEnd()) {
+            QString l = buf.readLine();
+            if (l.startsWith("VmRSS:")) {
+                QString mem = l.split(" ", QString::SkipEmptyParts).at(1);
+                int m = mem.toInt();
+                if (m > 500000) {
+                    qDebug() << "Memory!!!!!";
+                }
+            }
+        }
+    }*/
+
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     Display* d = QX11Info::display();
 
