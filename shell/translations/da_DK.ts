@@ -3222,12 +3222,12 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
 <context>
     <name>NotificationAppGroup</name>
     <message>
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="123"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="124"/>
         <source>Collapse Notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="126"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="127"/>
         <source>+%n notifications collapsed</source>
         <translation type="unfinished">
             <numerusform></numerusform>

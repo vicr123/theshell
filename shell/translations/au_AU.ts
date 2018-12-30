@@ -3222,12 +3222,12 @@ If you say yeah, we&apos;re gonna keep the following from them:
 <context>
     <name>NotificationAppGroup</name>
     <message>
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="123"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="124"/>
         <source>Collapse Notifications</source>
         <translation>Collapse ya notifs</translation>
     </message>
     <message numerus="yes">
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="126"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="127"/>
         <source>+%n notifications collapsed</source>
         <translation type="unfinished">
             <numerusform></numerusform>

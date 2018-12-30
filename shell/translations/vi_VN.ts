@@ -3216,12 +3216,12 @@ Tập tin này có thể giữ lại:
 <context>
     <name>NotificationAppGroup</name>
     <message>
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="123"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="124"/>
         <source>Collapse Notifications</source>
         <translation>Thu gọn thông báo</translation>
     </message>
     <message numerus="yes">
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="126"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="127"/>
         <source>+%n notifications collapsed</source>
         <translation>
             <numerusform>+%n thông báo đã thu gọn</numerusform>

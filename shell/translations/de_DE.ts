@@ -3234,13 +3234,13 @@ bereit, gespeichert zu werden = ready to be saved</translatorcomment>
 <context>
     <name>NotificationAppGroup</name>
     <message>
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="123"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="124"/>
         <source>Collapse Notifications</source>
         <translatorcomment>minimieren/einklappen</translatorcomment>
         <translation>Benachrichtigungen minimieren</translation>
     </message>
     <message numerus="yes">
-        <location filename="../notificationsWidget/notificationappgroup.cpp" line="126"/>
+        <location filename="../notificationsWidget/notificationappgroup.cpp" line="127"/>
         <source>+%n notifications collapsed</source>
         <translation>
             <numerusform>+%n Benachrichtigung minimiert</numerusform>

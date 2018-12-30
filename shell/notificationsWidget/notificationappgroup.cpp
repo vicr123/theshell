@@ -92,6 +92,7 @@ void NotificationAppGroup::AddNotification(NotificationObject *object) {
             //Remove layout constraints
             this->setFixedSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
         });
+        connect(this, &QObject::destroyed, anim, &tVariantAnimation::deleteLater);
         anim->start();
     });
 
