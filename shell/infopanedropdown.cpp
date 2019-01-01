@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -136,7 +136,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     d->startTime.start();
 
-    ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2018"));
+    ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2019"));
     ui->usesLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
 
     connect(this, SIGNAL(flightModeChanged(bool)), ui->NetworkManager, SLOT(flightModeChanged(bool)));

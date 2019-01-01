@@ -1876,27 +1876,27 @@ Tập tin này có thể giữ lại:
 <context>
     <name>KdeConnectDevicesModel</name>
     <message>
-        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="84"/>
+        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="104"/>
         <source>Tablet</source>
         <translation>Máy tính bảng</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="86"/>
+        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="106"/>
         <source>Computer</source>
         <translation>Máy tính</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="88"/>
+        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="108"/>
         <source>Phone</source>
         <translation>Điện thoại</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="90"/>
+        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="110"/>
         <source>Device</source>
         <translation>Thiết bị</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="94"/>
+        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="114"/>
         <source>Ready to pair</source>
         <translation>Sẵn sàng ghép nối</translation>
     </message>
@@ -1952,7 +1952,7 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="451"/>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="143"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="163"/>
         <source>Locate Device</source>
         <translation>Tìm thiết bị</translation>
     </message>
@@ -1974,7 +1974,7 @@ Tập tin này có thể giữ lại:
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="471"/>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1074"/>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="382"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="402"/>
         <source>Send SMS</source>
         <translation>Gửi tin nhắn</translation>
     </message>
@@ -2005,7 +2005,7 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="602"/>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="179"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="199"/>
         <source>Pair</source>
         <translation>Ghép Nối</translation>
     </message>
@@ -2041,7 +2041,7 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="787"/>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="134"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="154"/>
         <source>Ping</source>
         <translation>Ping</translation>
     </message>
@@ -2111,7 +2111,7 @@ Tập tin này có thể giữ lại:
         <translation>KDE Connect không chạy</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="59"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="79"/>
         <source>You can attempt to start KDE Connect again</source>
         <translation>Bạn có thể bắt đầu KDE Connect lại</translation>
     </message>
@@ -2126,95 +2126,95 @@ Tập tin này có thể giữ lại:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="39"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="59"/>
         <source>This device is called &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Máy này là gọi &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="50"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="70"/>
         <source>KDE Connect is not running</source>
         <translation>KDE Connect không chạy</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="56"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="76"/>
         <source>Install KDE Connect for KDE Connect integration with theShell</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="100"/>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="161"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="120"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="181"/>
         <source>Unpair Device</source>
         <translation>Gỡ ghép nối</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="103"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="123"/>
         <source>Pair Device</source>
         <translation>Ghép Nối Thiết Bị</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="135"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="155"/>
         <source>Ping sent to %1</source>
         <translation>Ping đã gửi đến %1</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="143"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="163"/>
         <source>Your device will play its ringtone at full volume. To stop it ringing, tap the button on the device&apos;s screen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="149"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="169"/>
         <source>Locate</source>
         <translation>Tìm</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="150"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="170"/>
         <source>The request to play a sound has been sent to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="161"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="181"/>
         <source>Do you want to unpair this device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="167"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="187"/>
         <source>Unpair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="168"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="188"/>
         <source>%1 has been unpaired from this device. To use KDE Connect between these devices again, you&apos;ll need to pair them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="180"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="200"/>
         <source>A pairing request has been sent to %1. To complete pairing, you&apos;ll need to respond on %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="363"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="383"/>
         <source>Sending as %n messages</source>
         <translation>
             <numerusform>Gửi dạng %n tin nhắn</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="383"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="403"/>
         <source>Your SMS has been sent to your device and is on its way!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="401"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="421"/>
         <source>Encryption Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="422"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="442"/>
         <source>Rename Device</source>
         <translation>Đổi tên thiết bị</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="422"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="442"/>
         <source>What do you want to call this device?</source>
         <translation>Bạn muốn gọi thiết bị này là gì?</translation>
     </message>
@@ -2222,7 +2222,7 @@ Tập tin này có thể giữ lại:
 <context>
     <name>LocationDaemon</name>
     <message>
-        <location filename="../location/locationdaemon.cpp" line="33"/>
+        <location filename="../location/locationdaemon.cpp" line="53"/>
         <source>Couldn&apos;t start Geoclue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2250,7 +2250,7 @@ Tập tin này có thể giữ lại:
         <translation>Quyền truy cập vị trí có thể bị thu hồi lúc nào trong Vị trí trong Cài đặt.</translation>
     </message>
     <message>
-        <location filename="../location/locationrequestdialog.cpp" line="27"/>
+        <location filename="../location/locationrequestdialog.cpp" line="47"/>
         <source>Allow &lt;b&gt;%1&lt;/b&gt; to use your physical location?</source>
         <translation>Chô Phép &lt;b&gt;%1&lt;/b&gt; dùng vị trí của bạn?</translation>
     </message>
@@ -2672,7 +2672,7 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="149"/>
-        <location filename="../locktypes/mousepassword.cpp" line="128"/>
+        <location filename="../locktypes/mousepassword.cpp" line="148"/>
         <source>Go for it!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2683,63 +2683,63 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="203"/>
-        <location filename="../locktypes/mousepassword.cpp" line="228"/>
+        <location filename="../locktypes/mousepassword.cpp" line="248"/>
         <source>Next</source>
         <translation>Tiếp</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="176"/>
+        <location filename="../locktypes/mousepassword.cpp" line="196"/>
         <source>Your Mouse Password needs to contain at least 5 events.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="188"/>
+        <location filename="../locktypes/mousepassword.cpp" line="208"/>
         <source>Unfortunately that wasn&apos;t correct. Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="194"/>
+        <location filename="../locktypes/mousepassword.cpp" line="214"/>
         <source>Set Mouse Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="202"/>
+        <location filename="../locktypes/mousepassword.cpp" line="222"/>
         <source>Unauthorized</source>
         <translation>Không được phép</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="202"/>
+        <location filename="../locktypes/mousepassword.cpp" line="222"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="220"/>
-        <location filename="../locktypes/mousepassword.cpp" line="234"/>
+        <location filename="../locktypes/mousepassword.cpp" line="240"/>
+        <location filename="../locktypes/mousepassword.cpp" line="254"/>
         <source>Mouse Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="220"/>
+        <location filename="../locktypes/mousepassword.cpp" line="240"/>
         <source>Mouse Password couldn&apos;t be saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="235"/>
+        <location filename="../locktypes/mousepassword.cpp" line="255"/>
         <source>Mouse Password was set successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.h" line="54"/>
+        <location filename="../locktypes/mousepassword.h" line="74"/>
         <source>To get started, use the mouse to input a sequence of button events now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.h" line="55"/>
+        <location filename="../locktypes/mousepassword.h" line="75"/>
         <source>Now, confirm the Mouse Password you chose by entering it again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.h" line="56"/>
+        <location filename="../locktypes/mousepassword.h" line="76"/>
         <source>Your Mouse Password is ready to be saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3434,30 +3434,30 @@ Tập tin này có thể giữ lại:
 <context>
     <name>ScreenRecorder</name>
     <message>
-        <location filename="../screenrecorder.cpp" line="16"/>
-        <location filename="../screenrecorder.cpp" line="41"/>
-        <location filename="../screenrecorder.cpp" line="76"/>
-        <location filename="../screenrecorder.cpp" line="87"/>
+        <location filename="../screenrecorder.cpp" line="36"/>
+        <location filename="../screenrecorder.cpp" line="61"/>
+        <location filename="../screenrecorder.cpp" line="96"/>
+        <location filename="../screenrecorder.cpp" line="107"/>
         <source>Screen Recorder</source>
         <translation>Đồ quay phim màn hình</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="16"/>
+        <location filename="../screenrecorder.cpp" line="36"/>
         <source>To record your screen, you&apos;ll need to install ffmpeg</source>
         <translation>Để quay phim màn hình, bạn cần cài đặt ffmpeg</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="41"/>
+        <location filename="../screenrecorder.cpp" line="61"/>
         <source>Couldn&apos;t start screen recording</source>
         <translation>Không bắt đầu quay phim màn hình được</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="76"/>
+        <location filename="../screenrecorder.cpp" line="96"/>
         <source>Screen Recording saved in Recordings folder</source>
         <translation>Phim màn hình đã lưu trong thư mục Recordings</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="87"/>
+        <location filename="../screenrecorder.cpp" line="107"/>
         <source>Screen Recording failed</source>
         <translation>Phim màn hình thất bại</translation>
     </message>

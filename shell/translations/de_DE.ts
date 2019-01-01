@@ -1882,27 +1882,27 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
 <context>
     <name>KdeConnectDevicesModel</name>
     <message>
-        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="84"/>
+        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="104"/>
         <source>Tablet</source>
         <translation>Tablet</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="86"/>
+        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="106"/>
         <source>Computer</source>
         <translation>Computer</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="88"/>
+        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="108"/>
         <source>Phone</source>
         <translation>Handy</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="90"/>
+        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="110"/>
         <source>Device</source>
         <translation>Gerät</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="94"/>
+        <location filename="../kdeconnect/kdeconnectdevicesmodel.cpp" line="114"/>
         <source>Ready to pair</source>
         <translatorcomment>pair = paaren (but not used in technology), so rather &quot;koppeln&quot;, while &quot;verbinden&quot; would be &quot;connect&quot;</translatorcomment>
         <translation>Bereit zum koppeln</translation>
@@ -1963,7 +1963,7 @@ in German</translatorcomment>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="451"/>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="143"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="163"/>
         <source>Locate Device</source>
         <translation>Gerät orten</translation>
     </message>
@@ -1985,7 +1985,7 @@ in German</translatorcomment>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="471"/>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1074"/>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="382"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="402"/>
         <source>Send SMS</source>
         <translation>SMS senden</translation>
     </message>
@@ -2016,7 +2016,7 @@ in German</translatorcomment>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="602"/>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="179"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="199"/>
         <source>Pair</source>
         <translation>Koppeln</translation>
     </message>
@@ -2053,7 +2053,7 @@ in German</translatorcomment>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="787"/>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="134"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="154"/>
         <source>Ping</source>
         <translation>Pingen</translation>
     </message>
@@ -2123,7 +2123,7 @@ in German</translatorcomment>
         <translation>KDE Connect wird nicht ausgeführt</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="59"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="79"/>
         <source>You can attempt to start KDE Connect again</source>
         <translation>Sie können versuchen, KDE Connect erneut zu starten</translation>
     </message>
@@ -2138,73 +2138,73 @@ in German</translatorcomment>
         <translation>Wenn dieser Fehler weiterhin auftritt, ist KDE Connect auf diesem Gerät möglicherweise nicht ordnungsgemäß installiert.</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="39"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="59"/>
         <source>This device is called &lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Dieses Gerät heißt &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="50"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="70"/>
         <source>KDE Connect is not running</source>
         <translation>KDE Connect wird nicht ausgeführt</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="56"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="76"/>
         <source>Install KDE Connect for KDE Connect integration with theShell</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="100"/>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="161"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="120"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="181"/>
         <source>Unpair Device</source>
         <translation>Gerät entkoppeln</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="103"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="123"/>
         <source>Pair Device</source>
         <translation>Gerät koppeln</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="135"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="155"/>
         <source>Ping sent to %1</source>
         <translation>Ping wurde an %1 gesendet</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="143"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="163"/>
         <source>Your device will play its ringtone at full volume. To stop it ringing, tap the button on the device&apos;s screen.</source>
         <translation>Ihr Gerät spielt seinen Klingelton mit voller Lautstärke ab. Um das Klingeln zu beenden, tippen Sie auf die Schaltfläche auf dem Gerätebildschirm.</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="149"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="169"/>
         <source>Locate</source>
         <translation>Orten</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="150"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="170"/>
         <source>The request to play a sound has been sent to %1</source>
         <translation>Die Anforderung, einen Ton abzuspielen, wurde an %1 gesendet</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="161"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="181"/>
         <source>Do you want to unpair this device?</source>
         <translation>Möchten Sie dieses Gerät entkoppeln?</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="167"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="187"/>
         <source>Unpair</source>
         <translation>Entkoppeln</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="168"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="188"/>
         <source>%1 has been unpaired from this device. To use KDE Connect between these devices again, you&apos;ll need to pair them.</source>
         <translation>%1 wurde von diesem Gerät getrennt. Um KDE Connect erneut zwischen diesen Geräten zu verwenden, müssen Sie sie koppeln.</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="180"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="200"/>
         <source>A pairing request has been sent to %1. To complete pairing, you&apos;ll need to respond on %1.</source>
         <translation>Eine Kopplungsanfrage wurde an %1 gesendet. Um die Kopplung abzuschließen, müssen Sie auf %1 antworten.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="363"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="383"/>
         <source>Sending as %n messages</source>
         <translation>
             <numerusform>Sende als %n Nachricht</numerusform>
@@ -2212,22 +2212,22 @@ in German</translatorcomment>
         </translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="383"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="403"/>
         <source>Your SMS has been sent to your device and is on its way!</source>
         <translation>Ihre SMS wurde an Ihr Gerät gesendet und ist unterwegs!</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="401"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="421"/>
         <source>Encryption Information</source>
         <translation>Verschlüsselungsinformationen</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="422"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="442"/>
         <source>Rename Device</source>
         <translation>Gerät umbenennen</translation>
     </message>
     <message>
-        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="422"/>
+        <location filename="../kdeconnect/kdeconnectwidget.cpp" line="442"/>
         <source>What do you want to call this device?</source>
         <translation>Wie möchten Sie dieses Gerät nennen?</translation>
     </message>
@@ -2235,7 +2235,7 @@ in German</translatorcomment>
 <context>
     <name>LocationDaemon</name>
     <message>
-        <location filename="../location/locationdaemon.cpp" line="33"/>
+        <location filename="../location/locationdaemon.cpp" line="53"/>
         <source>Couldn&apos;t start Geoclue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2263,7 +2263,7 @@ in German</translatorcomment>
         <translation>Der Standortzugriff kann unter Standort in den Systemeinstellungen jederzeit widerrufen werden.</translation>
     </message>
     <message>
-        <location filename="../location/locationrequestdialog.cpp" line="27"/>
+        <location filename="../location/locationrequestdialog.cpp" line="47"/>
         <source>Allow &lt;b&gt;%1&lt;/b&gt; to use your physical location?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; erlauben, Ihren physichen Standort zu verwenden?</translation>
     </message>
@@ -2686,7 +2686,7 @@ in German</translatorcomment>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="149"/>
-        <location filename="../locktypes/mousepassword.cpp" line="128"/>
+        <location filename="../locktypes/mousepassword.cpp" line="148"/>
         <source>Go for it!</source>
         <translatorcomment>Tu(e) es!
 Depending on wether it is a button or a label (motivating to use a mouse password)</translatorcomment>
@@ -2699,63 +2699,63 @@ Depending on wether it is a button or a label (motivating to use a mouse passwor
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="203"/>
-        <location filename="../locktypes/mousepassword.cpp" line="228"/>
+        <location filename="../locktypes/mousepassword.cpp" line="248"/>
         <source>Next</source>
         <translation>Weiter</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="176"/>
+        <location filename="../locktypes/mousepassword.cpp" line="196"/>
         <source>Your Mouse Password needs to contain at least 5 events.</source>
         <translation>Ihr Mauspasswort muss mindestens 5 Ereignisse enthalten.</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="188"/>
+        <location filename="../locktypes/mousepassword.cpp" line="208"/>
         <source>Unfortunately that wasn&apos;t correct. Please try again.</source>
         <translation>Leider war das nicht richtig. Bitte versuchen Sie es nochmal.</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="194"/>
+        <location filename="../locktypes/mousepassword.cpp" line="214"/>
         <source>Set Mouse Password</source>
         <translation>Mauspasswort setzen</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="202"/>
+        <location filename="../locktypes/mousepassword.cpp" line="222"/>
         <source>Unauthorized</source>
         <translation>Unautorisiert</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="202"/>
+        <location filename="../locktypes/mousepassword.cpp" line="222"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation>Polkit erlaubt Ihnen nicht, ein Mauspasswort einzurichten.</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="220"/>
-        <location filename="../locktypes/mousepassword.cpp" line="234"/>
+        <location filename="../locktypes/mousepassword.cpp" line="240"/>
+        <location filename="../locktypes/mousepassword.cpp" line="254"/>
         <source>Mouse Password</source>
         <translation>Mauspasswort</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="220"/>
+        <location filename="../locktypes/mousepassword.cpp" line="240"/>
         <source>Mouse Password couldn&apos;t be saved.</source>
         <translation>Mauspasswort konnte nicht gespeichert werden.</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.cpp" line="235"/>
+        <location filename="../locktypes/mousepassword.cpp" line="255"/>
         <source>Mouse Password was set successfully</source>
         <translation>Mauspasswort wurde erfolgreich gesetzt</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.h" line="54"/>
+        <location filename="../locktypes/mousepassword.h" line="74"/>
         <source>To get started, use the mouse to input a sequence of button events now.</source>
         <translation>Um zu beginnen, benutzen Sie die Maus, um eine Folge von Tastenereignissen einzugeben.</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.h" line="55"/>
+        <location filename="../locktypes/mousepassword.h" line="75"/>
         <source>Now, confirm the Mouse Password you chose by entering it again.</source>
         <translation>Bestätigen Sie nun das von Ihnen gewählte Mauspasswort, indem Sie es erneut eingeben.</translation>
     </message>
     <message>
-        <location filename="../locktypes/mousepassword.h" line="56"/>
+        <location filename="../locktypes/mousepassword.h" line="76"/>
         <source>Your Mouse Password is ready to be saved.</source>
         <translatorcomment>bereit zum speichern = ready for saving
 bereit, gespeichert zu werden = ready to be saved</translatorcomment>
@@ -3458,31 +3458,31 @@ bereit, gespeichert zu werden = ready to be saved</translatorcomment>
 <context>
     <name>ScreenRecorder</name>
     <message>
-        <location filename="../screenrecorder.cpp" line="16"/>
-        <location filename="../screenrecorder.cpp" line="41"/>
-        <location filename="../screenrecorder.cpp" line="76"/>
-        <location filename="../screenrecorder.cpp" line="87"/>
+        <location filename="../screenrecorder.cpp" line="36"/>
+        <location filename="../screenrecorder.cpp" line="61"/>
+        <location filename="../screenrecorder.cpp" line="96"/>
+        <location filename="../screenrecorder.cpp" line="107"/>
         <source>Screen Recorder</source>
         <translation>Bildschirmrecorder</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="16"/>
+        <location filename="../screenrecorder.cpp" line="36"/>
         <source>To record your screen, you&apos;ll need to install ffmpeg</source>
         <translation>Um Ihren Bildschirm aufzunehmen, müssen Sie ffmpeg installieren</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="41"/>
+        <location filename="../screenrecorder.cpp" line="61"/>
         <source>Couldn&apos;t start screen recording</source>
         <translatorcomment>Instead of &quot;Konnte keine Bildschirmaufnahme starten&quot;, which is kind of colloquial, comparable to &quot;Couldn&apos;t start no screen recording&quot;).</translatorcomment>
         <translation>Konnte Bildschirmaufnahme nicht starten</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="76"/>
+        <location filename="../screenrecorder.cpp" line="96"/>
         <source>Screen Recording saved in Recordings folder</source>
         <translation>Bildschirmaufnahme wurde im Aufnahmenordner gespeichert</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="87"/>
+        <location filename="../screenrecorder.cpp" line="107"/>
         <source>Screen Recording failed</source>
         <translation>Bildschirmaufnahme gescheitert</translation>
     </message>
