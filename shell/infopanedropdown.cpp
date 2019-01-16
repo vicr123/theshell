@@ -105,7 +105,8 @@ class InfoPaneDropdownPrivate {
         bool chartScrolling = false;
         int startValue;
 
-        QList<Switch*> pluginSwitches;
+        QMap<uint, Switch*> pluginSwitches;
+        uint numberOfSwitches = 0;
 
         int previousDragY;
         WId MainWindowId;
@@ -116,6 +117,12 @@ class InfoPaneDropdownPrivate {
 
         QJsonObject timezoneData;
         QNetworkAccessManager mgr;
+
+        void broadcastMessage(QString name, QVariantList args = QVariantList()) {
+            for (StatusCenterPaneObject* pane : pluginObjects.values()) {
+                pane->sendMessage(name, args);
+            }
+        }
 };
 
 InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
@@ -273,19 +280,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     connect(ui->NetworkManager, SIGNAL(updateBarDisplay(QString,QIcon)), this, SIGNAL(networkLabelChanged(QString,QIcon)));
 
     ui->WifiSwitch->setChecked(networkInterface.property("WirelessEnabled").toBool());
-
-    {
-        QDBusInterface interface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus());
-        QDBusConnection::sessionBus().connect("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", "BluetoothEnabledChanged", this, SLOT(bluetoothEnabledChanged()));
-
-        if (interface.isValid()) {
-            DBusServiceRegistered("org.thesuite.tsbt");
-        } else {
-            DBusServiceUnregistered("org.thesuite.tsbt");
-        }
-
-        dbusServiceWatcher->addWatchedService("org.thesuite.tsbt");
-    }
 
     //Load icons into icon theme box
     {
@@ -935,24 +929,6 @@ InfoPaneNotOnTopLocker::InfoPaneNotOnTopLocker(InfoPaneDropdown *infoPane) {
 InfoPaneNotOnTopLocker::~InfoPaneNotOnTopLocker() {
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     infoPane->showNoAnimation();
-}
-
-void InfoPaneDropdown::DBusServiceRegistered(QString serviceName) {
-    if (serviceName == "org.thesuite.tsbt") {
-        QDBusInterface interface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus());
-        ui->BluetoothSwitch->setEnabled(true);
-        ui->BluetoothSwitch->setChecked(interface.property("BluetoothEnabled").toBool());
-    }
-}
-
-void InfoPaneDropdown::DBusServiceUnregistered(QString serviceName) {
-    if (serviceName == "org.thesuite.tsbt") {
-        ui->BluetoothSwitch->setEnabled(false);
-    }
-}
-
-void InfoPaneDropdown::bluetoothEnabledChanged() {
-    ui->BluetoothSwitch->setChecked(QDBusInterface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus()).property("BluetoothEnabled").toBool());
 }
 
 void InfoPaneDropdown::newNetworkDevice(QDBusObjectPath device) {
@@ -1760,11 +1736,6 @@ void InfoPaneDropdown::on_windowManager_textEdited(const QString &arg1)
 void InfoPaneDropdown::on_barDesktopsSwitch_toggled(bool checked)
 {
     d->settings.setValue("bar/showWindowsFromOtherDesktops", checked);
-}
-
-void InfoPaneDropdown::on_BluetoothSwitch_toggled(bool checked)
-{
-    QDBusInterface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus()).setProperty("BluetoothEnabled", checked);
 }
 
 void InfoPaneDropdown::on_SuperkeyGatewaySwitch_toggled(bool checked)
@@ -2723,23 +2694,26 @@ void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
     d->settings.setValue("flightmode/on", checked);
     if (checked) {
         d->settings.setValue("flightmode/wifi", ui->WifiSwitch->isChecked());
-        d->settings.setValue("flightmode/bt", ui->BluetoothSwitch->isChecked());
 
-        //Disable bluetooth and WiFi.
+        //Disable WiFi.
         ui->WifiSwitch->setChecked(false);
-        ui->BluetoothSwitch->setChecked(false);
 
         //Disable WiMAX and mobile networking
         i.setProperty("WwanEnabled", false);
         i.setProperty("WimaxEnabled", false);
+
+        //Tell everyone that we're going into flight mode
+        d->broadcastMessage("flight-mode-changed", {true});
     } else {
-        //Enable bluetooth and WiFi.
+        //Enable WiFi.
         ui->WifiSwitch->setChecked(d->settings.value("flightmode/wifi", true).toBool());
-        ui->BluetoothSwitch->setChecked(d->settings.value("flightmode/bt", true).toBool());
 
         //Enable WiMAX and mobile networking
         i.setProperty("WwanEnabled", true);
         i.setProperty("WimaxEnabled", true);
+
+        //Tell everyone that we're leaving flight mode
+        d->broadcastMessage("flight-mode-changed", {false});
     }
 
     emit flightModeChanged(checked);
@@ -3954,7 +3928,9 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         });
         anim->start(tVariantAnimation::DeleteWhenStopped);
     } else if (message == "register-switch") {
-        uint thisSwitchId = d->pluginSwitches.count();
+        uint thisSwitchId = d->numberOfSwitches;
+        d->numberOfSwitches++;
+
         QBoxLayout* layout = new QBoxLayout(QBoxLayout::LeftToRight);
 
         QFrame* line = new QFrame();
@@ -3970,18 +3946,32 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         connect(s, &Switch::toggled, [=](bool checked) {
             caller->message("switch-toggled", QVariantList() << thisSwitchId << checked);
         });
+        connect(s, &Switch::destroyed, [=] {
+            ui->customSwitches->removeItem(layout);
+            switchLabel->deleteLater();
+            line->deleteLater();
+        });
         if (args.count() >= 2) {
             s->setChecked(args.at(1).toBool());
         }
         layout->addWidget(s);
-        d->pluginSwitches.append(s);
+        d->pluginSwitches.insert(thisSwitchId, s);
 
         ui->customSwitches->addLayout(layout);
 
-        caller->message("switch-registered", QVariantList() << thisSwitchId << args.first().toString());
+        if (args.count() >= 3) {
+            caller->message("switch-registered", QVariantList() << thisSwitchId << args.at(2));
+        } else {
+            caller->message("switch-registered", QVariantList() << thisSwitchId << args.first().toString());
+        }
     } else if (message == "toggle-switch") {
         Switch* s = d->pluginSwitches.value(args.first().toUInt());
         s->setChecked(args.last().toBool());
+    } else if (message == "set-switch") {
+        Switch* s = d->pluginSwitches.value(args.first().toUInt());
+        s->setChecked(args.at(1).toBool());
+    } else if (message == "deregister-switch") {
+        d->pluginSwitches.value(args.first().toUInt())->deleteLater();
     } else if (message == "attenuate") {
         if (args.first() == true) {
             AudioMan->attenuateStreams();

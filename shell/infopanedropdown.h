@@ -192,10 +192,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_barDesktopsSwitch_toggled(bool checked);
 
-        void bluetoothEnabledChanged();
-
-        void on_BluetoothSwitch_toggled(bool checked);
-
         void on_SuperkeyGatewaySwitch_toggled(bool checked);
 
         void updateSysInfo();
@@ -297,10 +293,6 @@ class InfoPaneDropdown : public QDialog
         void on_systemAnimationsAccessibilitySwitch_toggled(bool checked);
 
         void on_CapsNumLockBellSwitch_toggled(bool checked);
-
-        void DBusServiceRegistered(QString serviceName);
-
-        void DBusServiceUnregistered(QString serviceName);
 
         void on_FlightSwitch_toggled(bool checked);
 

@@ -123,6 +123,8 @@ class BluetoothManagement : public QStackedWidget, public StatusCenterPaneObject
         BluezQt::Request<> currentRequest;
         BluezQt::Request<QString> currentReturnRequest;
 
+        QMap<uint, BluezQt::AdapterPtr> adapterSwitches;
+
         BluezQt::ObexManager* obexMgr;
         BluezQt::ObexTransferPtr currentTransfer;
         TransfersListModel* obexTransferModel;

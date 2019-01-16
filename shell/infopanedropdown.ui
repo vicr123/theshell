@@ -278,33 +278,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_24">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="text">
-           <string>Bluetooth</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="Switch" name="BluetoothSwitch">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="text">
-           <string notr="true">BluetoothSwitch</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="Line" name="line_13">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QLabel" name="label_56">
           <property name="text">
            <string>Power Stretch</string>
