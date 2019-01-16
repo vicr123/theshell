@@ -72,6 +72,7 @@ class InfoPaneDropdownPrivate {
         QMap<QString, QFrame*> printersStatFrames;
         QMap<QString, QString> connectedNetworks;
         QMap<QWidget*, StatusCenterPaneObject*> pluginObjects;
+        QMap<StatusCenterPaneObject*, ClickableLabel*> pluginLabels;
         QList<StatusCenterPane*> loadedPlugins;
 
         int pluginsSettingsStartIndex;
@@ -780,6 +781,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                                     });
 
                                     loadedPanes.append(pane->name());
+                                    d->pluginLabels.insert(pane, label);
                                 }
                             }
 
@@ -1120,7 +1122,10 @@ void InfoPaneDropdown::processTimer() {
 }
 
 void InfoPaneDropdown::show(dropdownType showWith) {
-    changeDropDown(showWith, false);
+    if (showWith != None) {
+        changeDropDown(showWith, false);
+    }
+
     if (!this->isVisible()) {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
@@ -3788,6 +3793,25 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         emit statusBarProgress(args.first().toString(), args.at(1).toString(), args.at(2).toUInt());
     } else if (message == "set-quiet-mode") {
         AudioMan->setQuietMode((AudioManager::quietMode) args.first().toInt());
+    } else if (message == "show") {
+        if (caller->type() == StatusCenterPaneObject::Informational) {
+            this->show(None);
+
+            this->changeDropDown(caller->mainWidget(), d->pluginLabels.value(caller), false);
+            if (ui->lightColorThemeRadio->isChecked()) {
+                setHeaderColour(caller->informationalAttributes.lightColor);
+            } else {
+                setHeaderColour(caller->informationalAttributes.darkColor);
+            }
+        } else {
+            this->show(Settings);
+
+            int row = ui->settingsTabs->indexOf(caller->mainWidget());
+            ui->settingsList->setCurrentRow(row);
+            on_settingsList_itemActivated(ui->settingsList->item(row));
+        }
+    } else if (message == "register-chunk") {
+        emit newChunk(args.first().value<QWidget*>());
     }
 }
 

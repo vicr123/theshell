@@ -473,6 +473,9 @@
            </widget>
           </item>
           <item>
+           <layout class="QHBoxLayout" name="chunksLayout"/>
+          </item>
+          <item>
            <widget class="QFrame" name="screenRecordingFrame">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">

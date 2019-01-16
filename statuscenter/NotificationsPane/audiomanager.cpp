@@ -72,11 +72,11 @@ AudioManager* AudioManager::instance() {
 }
 
 void AudioManager::attenuateStreams() {
-
+    sendMessage("attenuate", {true});
 }
 
 void AudioManager::restoreStreams() {
-
+    sendMessage("attenuate", {false});
 }
 
 void AudioManager::setQuietMode(quietMode mode) {

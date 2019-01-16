@@ -103,6 +103,13 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
 
     QTimer::singleShot(0, [=] {
         ui->quietModeDescription->setText(getProperty("current-quiet-mode-description").toString());
+
+        /*QPushButton* b = new QPushButton();
+        b->setText("Notifications");
+        connect(b, &QPushButton::clicked, [=] {
+            sendMessage("show", {});
+        });
+        sendMessage("register-chunk", {QVariant::fromValue(b)});*/
     });
 
     QScroller::grabGesture(ui->scrollArea->viewport(), QScroller::LeftMouseButtonGesture);

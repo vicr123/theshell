@@ -103,7 +103,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     infoPane = new InfoPaneDropdown(this->winId());
     connect(infoPane, SIGNAL(networkLabelChanged(QString,QIcon)), this, SLOT(internetLabelChanged(QString,QIcon)));
-    connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
     connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
     connect(infoPane, &InfoPaneDropdown::batteryStretchChanged, [=](bool isOn) {
         if (isOn) {
@@ -172,6 +171,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
         ui->StatusBarFrame->update();
         ui->StatusBarProgressFrame->update();
+    });
+    connect(infoPane, &InfoPaneDropdown::newChunk, [=](QWidget* chunk) {
+        ui->chunksLayout->addWidget(chunk);
+
+        QFrame* line = new QFrame();
+        line->setFrameShape(QFrame::VLine);
+        ui->chunksLayout->addWidget(line);
     });
     infoPane->getNetworks();
     ui->StatusBarRedshift->setVisible(false);

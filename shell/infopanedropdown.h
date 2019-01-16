@@ -94,6 +94,7 @@ class InfoPaneDropdown : public QDialog
         void setGeometry(QRect geometry);
 
         enum dropdownType {
+            None = -2,
             Settings = -1,
             Clock = 0,
             Battery = 1,
@@ -127,6 +128,7 @@ class InfoPaneDropdown : public QDialog
         void newKeyboardLayoutMenuAvailable(QMenu* menu);
         void statusBarProgress(QString title, QString description, int progress);
         void statusBarProgressFinished(QString title, QString description);
+        void newChunk(QWidget* chunk);
 
     private slots:
         void on_pushButton_clicked();

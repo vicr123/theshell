@@ -342,7 +342,7 @@
    <item>
     <widget class="tStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="statusFrame">
       <property name="autoFillBackground">
@@ -1625,8 +1625,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>381</width>
-                   <height>563</height>
+                   <width>804</width>
+                   <height>671</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_54">

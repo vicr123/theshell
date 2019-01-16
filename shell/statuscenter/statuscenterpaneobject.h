@@ -25,6 +25,7 @@
 #include <QWidget>
 #include <QIcon>
 #include <functional>
+#include <QVariant>
 
 struct InformationalStatusCenterPaneObjectAttributes {
     QColor lightColor;
