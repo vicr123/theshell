@@ -440,11 +440,18 @@ void UPowerDBus::queryIdleState() {
         idleSuspend = false;
     }
 
+    CARD16 mode;
+    BOOL isDpmsOn;
+    DPMSInfo(QX11Info::display(), &mode, &isDpmsOn);
+
     if (charging()) {
         int idleTime = settings.value("power/powerScreenOff", 15).toInt();
         if (info->idle > idleTime * 60000 && !idleScreen && idleTime != 121) {
-            idleScreen = true;
-            EndSession(EndSessionWait::screenOff);
+            //Don't turn the screen back on if it's already off
+            if (isDpmsOn && mode != DPMSModeOff) {
+                idleScreen = true;
+                EndSession(EndSessionWait::screenOff);
+            }
         }
         int suspendTime = settings.value("power/powerSuspend", 15).toInt() * 1000;
         if (info->idle > suspendTime * 60000 && !idleSuspend && suspendTime != 121) {
@@ -454,8 +461,11 @@ void UPowerDBus::queryIdleState() {
     } else {
         int idleTime = settings.value("power/batteryScreenOff", 15).toInt();
         if (info->idle > idleTime * 60000 && !idleScreen && idleTime != 121) {
-            idleScreen = true;
-            EndSession(EndSessionWait::screenOff);
+            //Don't turn the screen back on if it's already off
+            if (isDpmsOn && mode != DPMSModeOff) {
+                idleScreen = true;
+                EndSession(EndSessionWait::screenOff);
+            }
         }
         int suspendTime = settings.value("power/batterySuspend", 15).toInt() * 1000;
         if (info->idle > suspendTime * 60000 && !idleSuspend && suspendTime != 121) {
