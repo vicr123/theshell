@@ -98,8 +98,7 @@ class InfoPaneDropdown : public QDialog
             Clock = 0,
             Battery = 1,
             Network = 2,
-            Notifications = 3,
-            KDEConnect = 4 //,
+            KDEConnect = 3 //,
             //Print = 5
         };
 
@@ -118,7 +117,6 @@ class InfoPaneDropdown : public QDialog
     signals:
         void networkLabelChanged(QString label, QIcon icon);
         void closeNotification(int id);
-        void numNotificationsChanged(int notifications);
         void timerEnabledChanged(bool timerEnabled);
         void batteryStretchChanged(bool isOn);
         void flightModeChanged(bool flight);
@@ -143,8 +141,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_networkLabel_clicked();
 
-        void on_notificationsLabel_clicked();
-
         void on_pushButton_7_clicked();
 
         void on_resolutionButton_clicked();
@@ -160,10 +156,6 @@ class InfoPaneDropdown : public QDialog
         void processTimer();
 
         void on_redshiftIntensity_valueChanged(int value);
-
-        void newNotificationReceived(int id, QString summary, QString body, QIcon icon);
-
-        void removeNotification(int id);
 
         void on_redshiftPause_toggled(bool checked);
 

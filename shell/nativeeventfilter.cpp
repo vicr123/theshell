@@ -59,8 +59,6 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F2), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F3), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F4), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
-    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F5), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
-    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F6), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Num_Lock), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Caps_Lock), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Return), Mod4Mask, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
@@ -99,8 +97,6 @@ NativeEventFilter::~NativeEventFilter() {
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F2), Mod4Mask, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F3), Mod4Mask, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F4), Mod4Mask, QX11Info::appRootWindow());
-    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F5), Mod4Mask, QX11Info::appRootWindow());
-    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_F6), Mod4Mask, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Num_Lock), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Caps_Lock), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XK_Return), Mod4Mask, QX11Info::appRootWindow());
@@ -353,12 +349,9 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 MainWin->getInfoPane()->show(InfoPaneDropdown::Network);
                 ignoreSuper = true;
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F4) && (button->state == Mod4Mask)) {
-                MainWin->getInfoPane()->show(InfoPaneDropdown::Notifications);
-                ignoreSuper = true;
-            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F5) && (button->state == Mod4Mask)) {
                 MainWin->getInfoPane()->show(InfoPaneDropdown::KDEConnect);
                 ignoreSuper = true;
-            /*} else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F6) && (button->state == Mod4Mask)) {
+            /*} else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F5) && (button->state == Mod4Mask)) {
                 MainWin->getInfoPane()->show(InfoPaneDropdown::Print);
                 ignoreSuper = true;*/
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Return) && (button->state == Mod4Mask)) {

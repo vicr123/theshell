@@ -603,7 +603,7 @@ void MainWindow::updateMpris(QString interfaceName, QMap<QString, QVariant> prop
 
 void MainWindow::pullDownGesture() {
     if (lockHide) {
-        on_notifications_clicked();
+        on_date_clicked();
     } else {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
         barAnim->setStartValue(this->geometry());
@@ -1553,11 +1553,6 @@ void MainWindow::on_networkLabel_clicked()
     infoPane->show(InfoPaneDropdown::Network);
 }
 
-void MainWindow::on_notifications_clicked()
-{
-    infoPane->show(InfoPaneDropdown::Notifications);
-}
-
 void MainWindow::on_batteryLabel_clicked()
 {
     infoPane->show(InfoPaneDropdown::Battery);
@@ -1720,21 +1715,6 @@ void MainWindow::paintEvent(QPaintEvent *event) {
         }
     }
     event->accept();
-}
-
-void MainWindow::numNotificationsChanged(int notifications) {
-    QFont font = ui->notifications->font();
-    if (notifications == 0) {
-        font.setBold(false);
-        ui->notifications->setText(tr("No notifications"));
-        ui->StatusBarNotifications->setVisible(false);
-    } else {
-        font.setBold(true);
-        ui->notifications->setText(tr("%n notification(s)", NULL, notifications));
-        ui->StatusBarNotifications->setText(QString::number(notifications));
-        ui->StatusBarNotifications->setVisible(true);
-    }
-    ui->notifications->setFont(font);
 }
 
 InfoPaneDropdown* MainWindow::getInfoPane() {
@@ -1983,7 +1963,7 @@ void MainWindow::on_networkLabel_mouseReleased()
 void MainWindow::on_notifications_dragging(int x, int y)
 {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    infoPane->dragDown(InfoPaneDropdown::Notifications, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
+    infoPane->dragDown(InfoPaneDropdown::Clock, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
 }
 
 void MainWindow::on_notifications_mouseReleased()

@@ -473,35 +473,6 @@
            </widget>
           </item>
           <item>
-           <widget class="ClickableLabel" name="notifications">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>No Notifications</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="LocationIndication">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Your location is currently being used</string>
-            </property>
-            <property name="text">
-             <string notr="true">Location</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QFrame" name="screenRecordingFrame">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -587,20 +558,20 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="Line" name="line_5">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
             </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="Line" name="line_5">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
            </widget>
           </item>
           <item>
@@ -908,6 +879,22 @@
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="LocationIndication">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Your location is currently being used</string>
+            </property>
+            <property name="text">
+             <string notr="true">Location</string>
             </property>
            </widget>
           </item>

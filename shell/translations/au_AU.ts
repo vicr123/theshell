@@ -541,7 +541,7 @@
     <name>InfoPaneDropdown</name>
     <message>
         <location filename="../infopanedropdown.ui" line="130"/>
-        <location filename="../infopanedropdown.ui" line="382"/>
+        <location filename="../infopanedropdown.ui" line="375"/>
         <source>System Status</source>
         <translation>How&apos;s ya computer lookin&apos;</translation>
     </message>
@@ -551,851 +551,850 @@
         <translation>Fancy connection</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="144"/>
-        <location filename="../infopanedropdown.ui" line="2414"/>
+        <location filename="../infopanedropdown.ui" line="2375"/>
         <source>Notifications</source>
         <translation>Notifs</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="151"/>
+        <location filename="../infopanedropdown.ui" line="144"/>
         <source>KDE Connect</source>
         <translation>Hookin&apos; up ya KDE</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="198"/>
-        <location filename="../infopanedropdown.ui" line="784"/>
+        <location filename="../infopanedropdown.ui" line="191"/>
+        <location filename="../infopanedropdown.ui" line="745"/>
         <source>System Settings</source>
         <translation>Ya computer&apos;s settings</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="220"/>
+        <location filename="../infopanedropdown.ui" line="213"/>
         <source>Flight Mode</source>
         <translatorcomment>why brisbane idk</translatorcomment>
         <translation>Take a flight to Brisbane</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="253"/>
+        <location filename="../infopanedropdown.ui" line="246"/>
         <source>Wi-Fi</source>
         <translation>Flying internet</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="283"/>
+        <location filename="../infopanedropdown.ui" line="276"/>
         <source>Power Stretch</source>
         <translation>Power lengthener</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="304"/>
+        <location filename="../infopanedropdown.ui" line="297"/>
         <source>Redshift</source>
         <translation>Outback shift</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="480"/>
-        <location filename="../infopanedropdown.cpp" line="2592"/>
+        <location filename="../infopanedropdown.ui" line="473"/>
+        <location filename="../infopanedropdown.cpp" line="2506"/>
         <source>Charge History</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="487"/>
+        <location filename="../infopanedropdown.ui" line="480"/>
         <source>Show projected charge</source>
         <translation>Show what I think of your battery</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="505"/>
+        <location filename="../infopanedropdown.ui" line="498"/>
         <source>Charge</source>
         <translation>Bring it up</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="518"/>
+        <location filename="../infopanedropdown.ui" line="511"/>
         <source>Rate</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="528"/>
+        <location filename="../infopanedropdown.ui" line="521"/>
         <source>Apps</source>
         <translation>Appies</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1909"/>
-        <location filename="../infopanedropdown.ui" line="1994"/>
+        <location filename="../infopanedropdown.ui" line="1870"/>
+        <location filename="../infopanedropdown.ui" line="1955"/>
         <source>HH:mm</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="826"/>
-        <location filename="../infopanedropdown.ui" line="1035"/>
+        <location filename="../infopanedropdown.ui" line="787"/>
+        <location filename="../infopanedropdown.ui" line="996"/>
         <source>Startup</source>
         <translation>Turn it up!</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="835"/>
-        <location filename="../infopanedropdown.ui" line="1338"/>
+        <location filename="../infopanedropdown.ui" line="796"/>
+        <location filename="../infopanedropdown.ui" line="1299"/>
         <source>Gateway and Bar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="844"/>
+        <location filename="../infopanedropdown.ui" line="805"/>
         <source>Networks</source>
         <translation>Ya connections</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="853"/>
-        <location filename="../infopanedropdown.ui" line="1631"/>
+        <location filename="../infopanedropdown.ui" line="814"/>
+        <location filename="../infopanedropdown.ui" line="1592"/>
         <source>Display</source>
         <translation>What are ya lookin&apos; at</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="862"/>
-        <location filename="../infopanedropdown.ui" line="2080"/>
+        <location filename="../infopanedropdown.ui" line="823"/>
+        <location filename="../infopanedropdown.ui" line="2041"/>
         <source>Theme</source>
         <translation>Fancy stuff</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="871"/>
+        <location filename="../infopanedropdown.ui" line="832"/>
         <source>Sounds and Notifications</source>
         <translation>Noises and Info Displays</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="889"/>
-        <location filename="../infopanedropdown.ui" line="3071"/>
+        <location filename="../infopanedropdown.ui" line="850"/>
+        <location filename="../infopanedropdown.ui" line="3032"/>
         <source>Input</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="898"/>
-        <location filename="../infopanedropdown.ui" line="3453"/>
+        <location filename="../infopanedropdown.ui" line="859"/>
+        <location filename="../infopanedropdown.ui" line="3414"/>
         <source>Power</source>
         <translation>Electricity</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="907"/>
-        <location filename="../infopanedropdown.ui" line="3963"/>
+        <location filename="../infopanedropdown.ui" line="868"/>
+        <location filename="../infopanedropdown.ui" line="3924"/>
         <source>Lock Screen</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="916"/>
+        <location filename="../infopanedropdown.ui" line="877"/>
         <source>Users</source>
         <translation>Ya mates</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="925"/>
-        <location filename="../infopanedropdown.ui" line="4819"/>
+        <location filename="../infopanedropdown.ui" line="886"/>
+        <location filename="../infopanedropdown.ui" line="4780"/>
         <source>Date and Time</source>
         <translation>Time and Date</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="934"/>
-        <location filename="../infopanedropdown.ui" line="5154"/>
+        <location filename="../infopanedropdown.ui" line="895"/>
+        <location filename="../infopanedropdown.ui" line="5115"/>
         <source>Language</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="943"/>
-        <location filename="../infopanedropdown.ui" line="5212"/>
+        <location filename="../infopanedropdown.ui" line="904"/>
+        <location filename="../infopanedropdown.ui" line="5173"/>
         <source>Accessibility</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="952"/>
-        <location filename="../infopanedropdown.ui" line="5372"/>
-        <location filename="../infopanedropdown.cpp" line="3220"/>
+        <location filename="../infopanedropdown.ui" line="913"/>
+        <location filename="../infopanedropdown.ui" line="5333"/>
+        <location filename="../infopanedropdown.cpp" line="3134"/>
         <source>Unavailable Panes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="961"/>
-        <location filename="../infopanedropdown.ui" line="5452"/>
-        <location filename="../infopanedropdown.cpp" line="3224"/>
+        <location filename="../infopanedropdown.ui" line="922"/>
+        <location filename="../infopanedropdown.ui" line="5413"/>
+        <location filename="../infopanedropdown.cpp" line="3138"/>
         <source>Advanced</source>
         <translation>Fancy stuff</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="970"/>
-        <location filename="../infopanedropdown.cpp" line="3226"/>
+        <location filename="../infopanedropdown.ui" line="931"/>
+        <location filename="../infopanedropdown.cpp" line="3140"/>
         <source>About</source>
         <translation>Learn mroe</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1104"/>
-        <location filename="../infopanedropdown.ui" line="3171"/>
+        <location filename="../infopanedropdown.ui" line="1065"/>
+        <location filename="../infopanedropdown.ui" line="3132"/>
         <source>Remove</source>
         <translation>Off with that</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1115"/>
+        <location filename="../infopanedropdown.ui" line="1076"/>
         <source>New App</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1131"/>
+        <location filename="../infopanedropdown.ui" line="1092"/>
         <source>Autostart with</source>
         <translation>Let&apos;s start it with</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1160"/>
+        <location filename="../infopanedropdown.ui" line="1121"/>
         <source>Which app do you want to automatically start with theShell?</source>
         <translation>Which apps do ya wanna use when theShell starts?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1172"/>
-        <location filename="../infopanedropdown.ui" line="1236"/>
-        <location filename="../infopanedropdown.ui" line="5089"/>
+        <location filename="../infopanedropdown.ui" line="1133"/>
+        <location filename="../infopanedropdown.ui" line="1197"/>
+        <location filename="../infopanedropdown.ui" line="5050"/>
         <source>Back</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1196"/>
-        <location filename="../infopanedropdown.ui" line="1224"/>
+        <location filename="../infopanedropdown.ui" line="1157"/>
+        <location filename="../infopanedropdown.ui" line="1185"/>
         <source>Command</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1260"/>
+        <location filename="../infopanedropdown.ui" line="1221"/>
         <source>Add App</source>
         <translation>Add ya app</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1273"/>
+        <location filename="../infopanedropdown.ui" line="1234"/>
         <source>Enter details of the app to autostart</source>
         <translation>Enter some info of the app ya wanna autostart</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1283"/>
+        <location filename="../infopanedropdown.ui" line="1244"/>
         <source>Application Name</source>
         <translation>The app&apos;s name</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1303"/>
+        <location filename="../infopanedropdown.ui" line="1264"/>
         <source>Only autostart this app in theShell</source>
         <translation>Unless it&apos;s in theShell, don&apos;t autostart this baby</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1514"/>
+        <location filename="../infopanedropdown.ui" line="1475"/>
         <source>Use Compact Bar</source>
         <translation>Use the smaller bar</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2580"/>
+        <location filename="../infopanedropdown.ui" line="2541"/>
         <source>Allow this app&apos;s notifications to show when Quiet Mode is not set to Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5395"/>
+        <location filename="../infopanedropdown.ui" line="5356"/>
         <source>There were errors loading the following items:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5859"/>
+        <location filename="../infopanedropdown.ui" line="5820"/>
         <source>Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5870"/>
+        <location filename="../infopanedropdown.ui" line="5831"/>
         <source>File Bug</source>
         <translation>File something wrong</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5881"/>
+        <location filename="../infopanedropdown.ui" line="5842"/>
         <source>Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1467"/>
+        <location filename="../infopanedropdown.ui" line="1428"/>
         <source>Within &amp;Gateway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1538"/>
+        <location filename="../infopanedropdown.ui" line="1499"/>
         <source>Use Status Bar</source>
         <translation>Use that fancy status bar</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1432"/>
+        <location filename="../infopanedropdown.ui" line="1393"/>
         <source>Automatically show bar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1559"/>
+        <location filename="../infopanedropdown.ui" line="1520"/>
         <source>Show windows from other desktops</source>
         <translation>Show stuff from other desktops too please</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1545"/>
+        <location filename="../infopanedropdown.ui" line="1506"/>
         <source>Show text on window buttons</source>
         <translation>Show the text on window buttons if ya want</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1497"/>
+        <location filename="../infopanedropdown.ui" line="1458"/>
         <source>Show Bar on bottom of screen</source>
         <translation>Show that bar thing on the bottom of the screen you&apos;ve got</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1378"/>
+        <location filename="../infopanedropdown.ui" line="1339"/>
         <source>When this is checked, hovering over the Status Bar will automatically expand the bar. Otherwise, clicking on the Status Bar will expand the bar.</source>
         <translation>Listen if this is checked, hovering over to the status bar will give ya a lil&apos; jump. Otherwise, you&apos;ll have to click the thing to expand it y&apos;know.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1388"/>
+        <location filename="../infopanedropdown.ui" line="1349"/>
         <source>End Session Confirmation</source>
         <translation>Just confirming you wanna end this</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1474"/>
+        <location filename="../infopanedropdown.ui" line="1435"/>
         <source>Fu&amp;ll Screen</source>
         <translation>Blow it up</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1926"/>
+        <location filename="../infopanedropdown.ui" line="1887"/>
         <source>Start Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1775"/>
+        <location filename="../infopanedropdown.ui" line="1736"/>
         <source>Screen Scaling</source>
         <translation>Blow up the screen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1876"/>
+        <location filename="../infopanedropdown.ui" line="1837"/>
         <source>If the start time is later than the end time, Redshift will be activated until the end time on the next day.</source>
         <translation>If that start time is later than the end time, well first of all that&apos;s not really smart but don&apos;t worry because I&apos;ll start the shifting until the end time on the next day.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1869"/>
+        <location filename="../infopanedropdown.ui" line="1830"/>
         <source>End Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2030"/>
+        <location filename="../infopanedropdown.ui" line="1991"/>
         <source>Redshift Intensity</source>
         <translation>The redness of the redshift</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1755"/>
+        <location filename="../infopanedropdown.ui" line="1716"/>
         <source>Adjust Screen Resolution</source>
         <translation>Adjust the blowing up of your screen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1714"/>
+        <location filename="../infopanedropdown.ui" line="1675"/>
         <source>Screen Brightness</source>
         <translation>Lighten up ya screen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1787"/>
+        <location filename="../infopanedropdown.ui" line="1748"/>
         <source>&amp;100% (96 dpi)</source>
         <translation>&amp;100% (96 dpi)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1794"/>
+        <location filename="../infopanedropdown.ui" line="1755"/>
         <source>1&amp;50% (144 dpi)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1801"/>
+        <location filename="../infopanedropdown.ui" line="1762"/>
         <source>&amp;200% (192 dpi)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1808"/>
+        <location filename="../infopanedropdown.ui" line="1769"/>
         <source>&amp;300% (288 dpi)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1815"/>
+        <location filename="../infopanedropdown.ui" line="1776"/>
         <source>DPI settings will be applied at next login.</source>
         <translation>I&apos;ve got ya back mate, DPI settings wil be applied the next time ya login.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2001"/>
+        <location filename="../infopanedropdown.ui" line="1962"/>
         <source>Scheduled</source>
         <translation>I&apos;ve got this planned</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1962"/>
+        <location filename="../infopanedropdown.ui" line="1923"/>
         <source>Pause Redshift</source>
         <translation>Stop that red stuff</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2161"/>
+        <location filename="../infopanedropdown.ui" line="2122"/>
         <source>&amp;Light</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2168"/>
+        <location filename="../infopanedropdown.ui" line="2129"/>
         <source>Dar&amp;k</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2182"/>
+        <location filename="../infopanedropdown.ui" line="2143"/>
         <source>&amp;Gray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2189"/>
+        <location filename="../infopanedropdown.ui" line="2150"/>
         <source>Decorati&amp;ve</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2120"/>
+        <location filename="../infopanedropdown.ui" line="2081"/>
         <source>Accent Color</source>
         <translation>The color that matches the walls</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2202"/>
+        <location filename="../infopanedropdown.ui" line="2163"/>
         <source>Color Scheme</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2271"/>
+        <location filename="../infopanedropdown.ui" line="2232"/>
         <source>Icon Theme</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2241"/>
+        <location filename="../infopanedropdown.ui" line="2202"/>
         <source>System Font</source>
         <translation>Ya computer&apos;s font</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2289"/>
+        <location filename="../infopanedropdown.ui" line="2250"/>
         <source>Widget Theme</source>
         <translation>Fancy fangle themes</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2613"/>
+        <location filename="../infopanedropdown.ui" line="2574"/>
         <source>Show Notifications on lock screen</source>
         <translation>Show ya notifs on the screen when its locked</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2718"/>
+        <location filename="../infopanedropdown.ui" line="2679"/>
         <source>Attenuate audio</source>
         <translation>Make that audio less loud</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2475"/>
+        <location filename="../infopanedropdown.ui" line="2436"/>
         <source>Show Contents</source>
         <translation>Show me the stuff please</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2482"/>
+        <location filename="../infopanedropdown.ui" line="2443"/>
         <source>Hide Contents</source>
         <translation>Hide it actually</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2489"/>
+        <location filename="../infopanedropdown.ui" line="2450"/>
         <source>Don&apos;t Show</source>
         <translation>Don&apos;t show me that</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2725"/>
+        <location filename="../infopanedropdown.ui" line="2686"/>
         <source>Notification Sound</source>
         <translation>Notif sounds</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2690"/>
+        <location filename="../infopanedropdown.ui" line="2651"/>
         <source>Show options when connecting media</source>
         <translation>Show some stuff when hookin&apos; up some media</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2676"/>
+        <location filename="../infopanedropdown.ui" line="2637"/>
         <source>Volume change sound</source>
         <translation>Blast the speakers</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2697"/>
+        <location filename="../infopanedropdown.ui" line="2658"/>
         <source>Volume overdrive</source>
         <translation>Kaboom the volume</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2626"/>
+        <location filename="../infopanedropdown.ui" line="2587"/>
         <source>Applications</source>
         <translation>Apps</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2552"/>
+        <location filename="../infopanedropdown.ui" line="2513"/>
         <source>Allow notifications</source>
         <translation>Allow some notifs</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2559"/>
+        <location filename="../infopanedropdown.ui" line="2520"/>
         <source>Allow sounds</source>
         <translation>Allow ya sounds</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2566"/>
+        <location filename="../infopanedropdown.ui" line="2527"/>
         <source>Allow popup</source>
         <translation>Allow popup even</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2573"/>
+        <location filename="../infopanedropdown.ui" line="2534"/>
         <source>Bypass Quiet Mode</source>
         <translation>Bypass Can ya shut up Mode</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3241"/>
+        <location filename="../infopanedropdown.ui" line="3202"/>
         <source>Use Super Key to open Gateway</source>
         <translation>Use the keys on your keyboard to open the Gateway</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3268"/>
+        <location filename="../infopanedropdown.ui" line="3229"/>
         <source>Audible Touch Feedback</source>
         <translation>Hear the touch</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3258"/>
+        <location filename="../infopanedropdown.ui" line="3219"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you&apos;d like to use the Super Key for another key combination, turn this off so that theShell won&apos;t take control of it. &lt;span style=&quot; font-weight:600;&quot;&gt;Changing t&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;his setting requires you to log out and then log back in.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3234"/>
+        <location filename="../infopanedropdown.ui" line="3195"/>
         <source>Optimise for touch input</source>
         <translation>Make me a nice guy for touch input</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3530"/>
-        <location filename="../infopanedropdown.ui" line="3599"/>
+        <location filename="../infopanedropdown.ui" line="3491"/>
+        <location filename="../infopanedropdown.ui" line="3560"/>
         <source>Suspend after</source>
         <translation>Stop it after</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3516"/>
+        <location filename="../infopanedropdown.ui" line="3477"/>
         <source>When this device is running off battery power,</source>
         <translation>When this device is doing it&apos;s things on the battery,</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3523"/>
-        <location filename="../infopanedropdown.ui" line="3645"/>
+        <location filename="../infopanedropdown.ui" line="3484"/>
+        <location filename="../infopanedropdown.ui" line="3606"/>
         <source>Turn off screen after</source>
         <translation>Turn off the screen after</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3652"/>
+        <location filename="../infopanedropdown.ui" line="3613"/>
         <source>When this device is connected to power,</source>
         <translation>Yeah and when this is hooked up to the wall can ya,</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3659"/>
+        <location filename="../infopanedropdown.ui" line="3620"/>
         <source>Drag the slider to the right to turn off power management</source>
         <translation>Drag the slider off to ya right to turn off power management</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4043"/>
+        <location filename="../infopanedropdown.ui" line="4004"/>
         <source>Background</source>
         <translation>Grill</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4050"/>
+        <location filename="../infopanedropdown.ui" line="4011"/>
         <source>Lock screen after returning from suspend</source>
         <translation>Lock it up after returning from suspend</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="880"/>
-        <location filename="../infopanedropdown.ui" line="2781"/>
+        <location filename="../infopanedropdown.ui" line="841"/>
+        <location filename="../infopanedropdown.ui" line="2742"/>
         <location filename="../infopanedropdown.cpp" line="135"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1528"/>
+        <location filename="../infopanedropdown.ui" line="1489"/>
         <source>The Status Bar is a shown when a window is maximised.</source>
         <translation>The ah status a bar is a shown when a uh window is ah... maximised.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1395"/>
+        <location filename="../infopanedropdown.ui" line="1356"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
         <translation>Yeah the compact bar is just a smaller squished version of the bar what else do you need.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1951"/>
+        <location filename="../infopanedropdown.ui" line="1912"/>
         <source>Use Sunlight Cycle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1916"/>
+        <location filename="../infopanedropdown.ui" line="1877"/>
         <source>We&apos;ll send your current location to https://sunrise-sunset.org/ to determine sunlight times if you enable this option.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2348"/>
+        <location filename="../infopanedropdown.ui" line="2309"/>
         <source>GTK3 Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2355"/>
+        <location filename="../infopanedropdown.ui" line="2316"/>
         <source>GTK3 Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2175"/>
+        <location filename="../infopanedropdown.ui" line="2136"/>
         <source>Black</source>
         <translation>Dark</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2278"/>
+        <location filename="../infopanedropdown.ui" line="2239"/>
         <source>Use for GTK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2636"/>
+        <location filename="../infopanedropdown.ui" line="2597"/>
         <source>Emphasise sending app</source>
         <translation>Make that app drop some notifs on your screen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3698"/>
+        <location filename="../infopanedropdown.ui" line="3659"/>
         <source>Power Button</source>
         <translation>Turny offy button</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3790"/>
+        <location filename="../infopanedropdown.ui" line="3751"/>
         <source>When I press the</source>
         <translation>Look when I press the bloomin&apos;</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3715"/>
+        <location filename="../infopanedropdown.ui" line="3676"/>
         <source>Ask me what to do</source>
         <translation>What&apos;s up</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1830"/>
+        <location filename="../infopanedropdown.ui" line="1791"/>
         <source>SCREEN</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="1892"/>
+        <location filename="../infopanedropdown.ui" line="1853"/>
         <source>REDSHIFT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2829"/>
+        <location filename="../infopanedropdown.ui" line="2790"/>
         <source>Permission Required</source>
         <translation>Yeah you&apos;re not good enough to do that</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2839"/>
+        <location filename="../infopanedropdown.ui" line="2800"/>
         <source>To manage location settings in theShell, you&apos;ll need to give us permission to be a geoclue agent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2864"/>
+        <location filename="../infopanedropdown.ui" line="2825"/>
         <source>Allow theShell to be a geoclue agent</source>
         <translation>Can we be a secret spy</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2890"/>
+        <location filename="../infopanedropdown.ui" line="2851"/>
         <source>Have your administrator password ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2916"/>
+        <location filename="../infopanedropdown.ui" line="2877"/>
         <source>If you wish to manually configure theShell as a geoclue agent, you&apos;ll need to edit /etc/geoclue/geoclue.conf and append &quot;theshell&quot; to the end of the whitelist setting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="2978"/>
+        <location filename="../infopanedropdown.ui" line="2939"/>
         <source>Allow apps to access your physical location</source>
         <translation>Allow apps to hack ya</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3121"/>
-        <location filename="../infopanedropdown.cpp" line="3644"/>
+        <location filename="../infopanedropdown.ui" line="3082"/>
+        <location filename="../infopanedropdown.cpp" line="3558"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3182"/>
-        <location filename="../infopanedropdown.ui" line="3412"/>
+        <location filename="../infopanedropdown.ui" line="3143"/>
+        <location filename="../infopanedropdown.ui" line="3373"/>
         <source>Add</source>
         <translation>Boom</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3352"/>
+        <location filename="../infopanedropdown.ui" line="3313"/>
         <source>Select Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3724"/>
+        <location filename="../infopanedropdown.ui" line="3685"/>
         <source>Power Off</source>
         <translation>Turn it off</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3733"/>
+        <location filename="../infopanedropdown.ui" line="3694"/>
         <source>Reboot</source>
         <translation>Switch it off and back on</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3742"/>
+        <location filename="../infopanedropdown.ui" line="3703"/>
         <source>Log Out</source>
         <translation>Bail out</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3751"/>
+        <location filename="../infopanedropdown.ui" line="3712"/>
         <source>Suspend</source>
         <translation>Stop it</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3760"/>
+        <location filename="../infopanedropdown.ui" line="3721"/>
         <source>Lock</source>
         <translation>Lock it up</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3769"/>
+        <location filename="../infopanedropdown.ui" line="3730"/>
         <source>Turn Off Screen</source>
         <translation>Cark the screen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3778"/>
+        <location filename="../infopanedropdown.ui" line="3739"/>
         <source>Hibernate</source>
         <translation type="unfinished">Go out for winter</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3829"/>
+        <location filename="../infopanedropdown.ui" line="3790"/>
         <source>When suspending this device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3851"/>
+        <location filename="../infopanedropdown.ui" line="3812"/>
         <source>Suspend nor&amp;mally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3858"/>
+        <location filename="../infopanedropdown.ui" line="3819"/>
         <source>This will save power, but stop everything that you&apos;re doing until you wake your device. Recommended for most users</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3868"/>
+        <location filename="../infopanedropdown.ui" line="3829"/>
         <source>&amp;Just turn off the screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3875"/>
+        <location filename="../infopanedropdown.ui" line="3836"/>
         <source>This will consume more power but continue to run any tasks you were doing. For example, music will continue playing. When you wake this device, it will wake immediately. Not recommended if you don&apos;t have a solid state drive as the drive will not be turned off while you&apos;re moving it around. Recommended for tablets and tablet PCs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3885"/>
+        <location filename="../infopanedropdown.ui" line="3846"/>
         <source>Hibernate instead</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="3892"/>
+        <location filename="../infopanedropdown.ui" line="3853"/>
         <source>This will save a lot of power but will take a while to wake up again. Everything stops while your device is hibernating.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4003"/>
+        <location filename="../infopanedropdown.ui" line="3964"/>
         <source>SuspendLockScreenSwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4021"/>
+        <location filename="../infopanedropdown.ui" line="3982"/>
         <source>Browse...</source>
         <translation>Snoop...</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4057"/>
+        <location filename="../infopanedropdown.ui" line="4018"/>
         <source>To change your password, go to User settings</source>
         <translation>To change ya pass, go to ya settings</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4101"/>
+        <location filename="../infopanedropdown.ui" line="4062"/>
         <source>Set Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4112"/>
+        <location filename="../infopanedropdown.ui" line="4073"/>
         <source>Remove Mouse Password</source>
         <translation>Remove the fancy movement password</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4138"/>
-        <location filename="../infopanedropdown.cpp" line="3736"/>
-        <location filename="../infopanedropdown.cpp" line="3742"/>
+        <location filename="../infopanedropdown.ui" line="4099"/>
+        <location filename="../infopanedropdown.cpp" line="3650"/>
+        <location filename="../infopanedropdown.cpp" line="3656"/>
         <source>Mouse Password</source>
         <translation>Movey password</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4145"/>
+        <location filename="../infopanedropdown.ui" line="4106"/>
         <source>A mouse password trades security for convenience on the lock screen by substituting your password with a sequence of mouse buttons. &lt;b&gt;This can only be used on the lock screen, not while logging in.&lt;/b&gt;</source>
         <translation>Yeah you can move your mouse to log in it&apos;s pretty sweet but &lt;b&gt;this can only be used on the lock screen, not while logging in.&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4229"/>
+        <location filename="../infopanedropdown.ui" line="4190"/>
         <source>Select a user</source>
         <translation>Select a mate</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4298"/>
+        <location filename="../infopanedropdown.ui" line="4259"/>
         <source>Next</source>
         <translation>Alright</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4369"/>
-        <location filename="../infopanedropdown.cpp" line="2282"/>
+        <location filename="../infopanedropdown.ui" line="4330"/>
+        <location filename="../infopanedropdown.cpp" line="2196"/>
         <source>Edit User</source>
         <translation>Edit mate</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4413"/>
+        <location filename="../infopanedropdown.ui" line="4374"/>
         <source>Retype Password</source>
         <translation>Retype ya pass</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4420"/>
+        <location filename="../infopanedropdown.ui" line="4381"/>
         <source>Full Name</source>
         <translation>Full Name</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4430"/>
-        <location filename="../infopanedropdown.ui" line="4453"/>
-        <location filename="../infopanedropdown.cpp" line="2286"/>
-        <location filename="../infopanedropdown.cpp" line="2287"/>
+        <location filename="../infopanedropdown.ui" line="4391"/>
+        <location filename="../infopanedropdown.ui" line="4414"/>
+        <location filename="../infopanedropdown.cpp" line="2200"/>
+        <location filename="../infopanedropdown.cpp" line="2201"/>
         <source>(unchanged)</source>
         <translation>(not touched)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4437"/>
-        <location filename="../infopanedropdown.cpp" line="2326"/>
-        <location filename="../infopanedropdown.cpp" line="2331"/>
+        <location filename="../infopanedropdown.ui" line="4398"/>
+        <location filename="../infopanedropdown.cpp" line="2240"/>
+        <location filename="../infopanedropdown.cpp" line="2245"/>
         <source>Username</source>
         <translation>Matename</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4463"/>
+        <location filename="../infopanedropdown.ui" line="4424"/>
         <source>Password</source>
         <translation>Pass</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4470"/>
+        <location filename="../infopanedropdown.ui" line="4431"/>
         <source>Password Hint</source>
         <translation>Pass Hint yeah</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4477"/>
+        <location filename="../infopanedropdown.ui" line="4438"/>
         <source>Account Type</source>
         <translation>Type of mate</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4489"/>
+        <location filename="../infopanedropdown.ui" line="4450"/>
         <source>Standard</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4499"/>
+        <location filename="../infopanedropdown.ui" line="4460"/>
         <source>Administrator</source>
         <translation>WHEEW COMPLICATED</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4572"/>
-        <location filename="../infopanedropdown.ui" line="4654"/>
+        <location filename="../infopanedropdown.ui" line="4533"/>
+        <location filename="../infopanedropdown.ui" line="4615"/>
         <source>Delete User</source>
         <translation>Delete ya mate</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4583"/>
+        <location filename="../infopanedropdown.ui" line="4544"/>
         <source>Apply Changes</source>
         <translation>Give it a spin</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4696"/>
+        <location filename="../infopanedropdown.ui" line="4657"/>
         <source>Do you also want to keep files from this user?
 
 Items that will be kept if you choose to keep files:
@@ -1410,113 +1409,113 @@ If you say yeah, we&apos;re gonna keep the following from them:
 - Temporary Files</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4714"/>
+        <location filename="../infopanedropdown.ui" line="4675"/>
         <source>This is the final step. The user will be deleted once you choose whether to keep or remove files.</source>
         <translation>Alright, final run. This mate will be gone once you choose whether to keep their files or not.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4767"/>
+        <location filename="../infopanedropdown.ui" line="4728"/>
         <source>Delete user only</source>
         <translation>Delete mate only thanks</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4778"/>
+        <location filename="../infopanedropdown.ui" line="4739"/>
         <source>Delete user and all files</source>
         <translation>Stuff it, just delete the whole thing</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4894"/>
+        <location filename="../infopanedropdown.ui" line="4855"/>
         <source>Set</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4935"/>
+        <location filename="../infopanedropdown.ui" line="4896"/>
         <source>Use network to sync date and time</source>
         <translation>Use ya connection to sync the date and time</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4966"/>
+        <location filename="../infopanedropdown.ui" line="4927"/>
         <source>Use 24 hour time</source>
         <translation>Use fancy time (24 hour)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="4973"/>
+        <location filename="../infopanedropdown.ui" line="4934"/>
         <source>TwentyFourHourSwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5016"/>
+        <location filename="../infopanedropdown.ui" line="4977"/>
         <source>Set System Timezone</source>
         <translation>Set ya computer&apos;s timezone</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5050"/>
+        <location filename="../infopanedropdown.ui" line="5011"/>
         <source>Where are you located?</source>
         <translation>Where are ya at mate?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5113"/>
+        <location filename="../infopanedropdown.ui" line="5074"/>
         <source>Set Timezone</source>
         <translation>Set ya timezone</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5178"/>
+        <location filename="../infopanedropdown.ui" line="5139"/>
         <source>Changing this setting requires you to log in and then log out.</source>
         <translation>Watch out because this setting requires you to log in then log out.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5303"/>
+        <location filename="../infopanedropdown.ui" line="5264"/>
         <source>HighContrastSwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5266"/>
+        <location filename="../infopanedropdown.ui" line="5227"/>
         <source>System Animations</source>
         <translation>System whooshes</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5313"/>
+        <location filename="../infopanedropdown.ui" line="5274"/>
         <source>SystemAnimationsAccessibilitySwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5259"/>
+        <location filename="../infopanedropdown.ui" line="5220"/>
         <source>High Contrast</source>
         <translation>Nice and high contrast</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5252"/>
+        <location filename="../infopanedropdown.ui" line="5213"/>
         <source>Large Text</source>
         <translation>Blow up the text</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5286"/>
+        <location filename="../infopanedropdown.ui" line="5247"/>
         <source>LargeTextSwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5296"/>
+        <location filename="../infopanedropdown.ui" line="5257"/>
         <source>Tone on Caps Lock and Num Lock</source>
         <translation>Make some noise when I click Caps Lock and Num Lock</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5326"/>
+        <location filename="../infopanedropdown.ui" line="5287"/>
         <source>CapsNumLockBellSwitch</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5492"/>
+        <location filename="../infopanedropdown.ui" line="5453"/>
         <source>Window Manager Command</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5527"/>
+        <location filename="../infopanedropdown.ui" line="5488"/>
         <source>The items under here can do some bad things. Make sure you know what you&apos;re doing.</source>
         <translation>Jesus mate, might wanna watch out. Things here can do some bad stuff so just make sure you&apos;re an experienced bloke.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5516"/>
-        <location filename="../infopanedropdown.cpp" line="1540"/>
+        <location filename="../infopanedropdown.ui" line="5477"/>
+        <location filename="../infopanedropdown.cpp" line="1456"/>
         <source>Reset theShell</source>
         <translation>Reset the entire thing</translation>
     </message>
@@ -1526,77 +1525,77 @@ If you say yeah, we&apos;re gonna keep the following from them:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5505"/>
+        <location filename="../infopanedropdown.ui" line="5466"/>
         <source>Reset Device</source>
         <translation>Start over seriously</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5597"/>
+        <location filename="../infopanedropdown.ui" line="5558"/>
         <source>System Information</source>
         <translation>Ya computer&apos;s info</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5637"/>
+        <location filename="../infopanedropdown.ui" line="5598"/>
         <source>You&apos;re using</source>
         <translation>Ya using</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5684"/>
+        <location filename="../infopanedropdown.ui" line="5645"/>
         <source>Support</source>
         <translation>Help me mate</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5717"/>
+        <location filename="../infopanedropdown.ui" line="5678"/>
         <source>Available Swap</source>
         <translation>Here&apos;s how much swap you&apos;ve got</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5724"/>
+        <location filename="../infopanedropdown.ui" line="5685"/>
         <source>Available Memory</source>
         <translation>And also here&apos;s ya memory you&apos;ve got</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5744"/>
+        <location filename="../infopanedropdown.ui" line="5705"/>
         <source>Kernel Version</source>
         <translation>Popcorn Version</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5765"/>
+        <location filename="../infopanedropdown.ui" line="5726"/>
         <source>Qt Version</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5779"/>
+        <location filename="../infopanedropdown.ui" line="5740"/>
         <source>Processor</source>
         <translation>ya mini computer</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.ui" line="5840"/>
+        <location filename="../infopanedropdown.ui" line="5801"/>
         <source>Desktop Environment</source>
         <translation>what are you using seriously</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="597"/>
+        <location filename="../infopanedropdown.cpp" line="595"/>
         <source>theShell %1 - Blueprint</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="598"/>
+        <location filename="../infopanedropdown.cpp" line="596"/>
         <source>You compiled theShell on %1</source>
         <translation>You made this thing happen on %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="600"/>
+        <location filename="../infopanedropdown.cpp" line="598"/>
         <source>theShell %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1514"/>
+        <location filename="../infopanedropdown.cpp" line="1430"/>
         <source>Current Battery Percentage: %1</source>
         <translation>Alright here&apos;s how long until this carks it: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1518"/>
+        <location filename="../infopanedropdown.cpp" line="1434"/>
         <source>theShell Uptime: %1</source>
         <translation>I&apos;ve been up for about %1</translation>
     </message>
@@ -1606,12 +1605,12 @@ If you say yeah, we&apos;re gonna keep the following from them:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="590"/>
+        <location filename="../infopanedropdown.cpp" line="588"/>
         <source>Unknown</source>
         <translation>What</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="1527"/>
+        <location filename="../infopanedropdown.cpp" line="1443"/>
         <source>%n days</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1619,164 +1618,164 @@ If you say yeah, we&apos;re gonna keep the following from them:
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1531"/>
+        <location filename="../infopanedropdown.cpp" line="1447"/>
         <source>System Uptime: %1</source>
         <translation>I&apos;ve been up for about %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1533"/>
+        <location filename="../infopanedropdown.cpp" line="1449"/>
         <source>Couldn&apos;t get system uptime</source>
         <translation>I actually have no idea how long I&apos;ve been running, sorry about that mate.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1541"/>
+        <location filename="../infopanedropdown.cpp" line="1457"/>
         <source>All settings will be reset to default, and you will be logged out. Are you sure you want to do this?</source>
         <translation>Stop right there alright, because all ya settings will be reset back to default and you&apos;ll be logged out. Are ya sure man?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2053"/>
+        <location filename="../infopanedropdown.cpp" line="1967"/>
         <source>Last updated %1</source>
         <translation>Last did the thing %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2091"/>
+        <location filename="../infopanedropdown.cpp" line="2005"/>
         <source>Log in to network</source>
         <translation>Log into the place</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2097"/>
+        <location filename="../infopanedropdown.cpp" line="2011"/>
         <source>Network Login</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2098"/>
+        <location filename="../infopanedropdown.cpp" line="2012"/>
         <source>Your connection to the internet is blocked by a login page.</source>
         <translation>Awh jeez, ya connections been a bit mangled by a login page.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2249"/>
+        <location filename="../infopanedropdown.cpp" line="2163"/>
         <source>Add New User</source>
         <translation>Add a new mate</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2261"/>
-        <location filename="../infopanedropdown.cpp" line="3692"/>
-        <location filename="../infopanedropdown.cpp" line="3712"/>
+        <location filename="../infopanedropdown.cpp" line="2175"/>
+        <location filename="../infopanedropdown.cpp" line="3606"/>
+        <location filename="../infopanedropdown.cpp" line="3626"/>
         <source>Unauthorized</source>
         <translation>Not allowed mate</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2261"/>
+        <location filename="../infopanedropdown.cpp" line="2175"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation>What are you doing come on Polkit is keeping you from managing users on the system.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2273"/>
+        <location filename="../infopanedropdown.cpp" line="2187"/>
         <source>New User</source>
         <translation>New mate</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2276"/>
-        <location filename="../infopanedropdown.cpp" line="2277"/>
-        <location filename="../infopanedropdown.cpp" line="2292"/>
-        <location filename="../infopanedropdown.cpp" line="2293"/>
+        <location filename="../infopanedropdown.cpp" line="2190"/>
+        <location filename="../infopanedropdown.cpp" line="2191"/>
+        <location filename="../infopanedropdown.cpp" line="2206"/>
+        <location filename="../infopanedropdown.cpp" line="2207"/>
         <source>(none)</source>
         <translation>(none of it)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2289"/>
-        <location filename="../infopanedropdown.cpp" line="2290"/>
+        <location filename="../infopanedropdown.cpp" line="2203"/>
+        <location filename="../infopanedropdown.cpp" line="2204"/>
         <source>(set at next login)</source>
         <translation>(set at the next one)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2321"/>
+        <location filename="../infopanedropdown.cpp" line="2235"/>
         <source>Password Check</source>
         <translation>Pass check</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2321"/>
+        <location filename="../infopanedropdown.cpp" line="2235"/>
         <source>The passwords don&apos;t match.</source>
         <translation>Come on seriously I was born on a Friday but it wasn&apos;t this Friday, ya passwords don&apos;t match ya goon.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2326"/>
+        <location filename="../infopanedropdown.cpp" line="2240"/>
         <source>The username must not contain spaces.</source>
         <translation>Ya name can&apos;t have spaces.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2331"/>
+        <location filename="../infopanedropdown.cpp" line="2245"/>
         <source>The username must not contain capital letters.</source>
         <translation>Yeah and the name can&apos;t have any capitals either, sorry.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2603"/>
+        <location filename="../infopanedropdown.cpp" line="2517"/>
         <source>Rate History</source>
         <translation>yeehaw we&apos;re going fast</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2614"/>
+        <location filename="../infopanedropdown.cpp" line="2528"/>
         <source>Application Power Usage</source>
         <translation>How much energy are those stinkers using</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2748"/>
+        <location filename="../infopanedropdown.cpp" line="2662"/>
         <source>Oxygen</source>
         <translation>What we breathe</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2749"/>
+        <location filename="../infopanedropdown.cpp" line="2663"/>
         <source>Breeze</source>
         <translation>Gust of wind</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2752"/>
+        <location filename="../infopanedropdown.cpp" line="2666"/>
         <source>Blue</source>
         <translation>True blue</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2753"/>
+        <location filename="../infopanedropdown.cpp" line="2667"/>
         <source>Green</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2754"/>
+        <location filename="../infopanedropdown.cpp" line="2668"/>
         <source>Orange</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2755"/>
+        <location filename="../infopanedropdown.cpp" line="2669"/>
         <source>Pink</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2756"/>
+        <location filename="../infopanedropdown.cpp" line="2670"/>
         <source>Turquoise</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2993"/>
+        <location filename="../infopanedropdown.cpp" line="2907"/>
         <source>Notifications for %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3001"/>
+        <location filename="../infopanedropdown.cpp" line="2915"/>
         <source>You can&apos;t configure notifications for %1</source>
         <translation>Ya can&apos;t do that for %1 sorry mate</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3138"/>
-        <location filename="../infopanedropdown.cpp" line="3148"/>
-        <location filename="../infopanedropdown.cpp" line="3158"/>
-        <location filename="../infopanedropdown.cpp" line="3168"/>
+        <location filename="../infopanedropdown.cpp" line="3052"/>
+        <location filename="../infopanedropdown.cpp" line="3062"/>
+        <location filename="../infopanedropdown.cpp" line="3072"/>
+        <location filename="../infopanedropdown.cpp" line="3082"/>
         <source>Never</source>
         <translation>Nah none of it</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="3140"/>
-        <location filename="../infopanedropdown.cpp" line="3150"/>
-        <location filename="../infopanedropdown.cpp" line="3160"/>
-        <location filename="../infopanedropdown.cpp" line="3170"/>
+        <location filename="../infopanedropdown.cpp" line="3054"/>
+        <location filename="../infopanedropdown.cpp" line="3064"/>
+        <location filename="../infopanedropdown.cpp" line="3074"/>
+        <location filename="../infopanedropdown.cpp" line="3084"/>
         <source>%n min(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1784,48 +1783,48 @@ If you say yeah, we&apos;re gonna keep the following from them:
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3419"/>
+        <location filename="../infopanedropdown.cpp" line="3333"/>
         <source>Log Out Now</source>
         <translation>Get me outta here right now</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3422"/>
+        <location filename="../infopanedropdown.cpp" line="3336"/>
         <source>Logoff Required</source>
         <translation>You&apos;re gonna need to get out</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3425"/>
+        <location filename="../infopanedropdown.cpp" line="3339"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3427"/>
+        <location filename="../infopanedropdown.cpp" line="3341"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3692"/>
-        <location filename="../infopanedropdown.cpp" line="3712"/>
+        <location filename="../infopanedropdown.cpp" line="3606"/>
+        <location filename="../infopanedropdown.cpp" line="3626"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3707"/>
+        <location filename="../infopanedropdown.cpp" line="3621"/>
         <source>Remove Mouse Password?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3707"/>
+        <location filename="../infopanedropdown.cpp" line="3621"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3737"/>
+        <location filename="../infopanedropdown.cpp" line="3651"/>
         <source>Mouse Password was removed successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3743"/>
+        <location filename="../infopanedropdown.cpp" line="3657"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2216,29 +2215,28 @@ If you say yeah, we&apos;re gonna keep the following from them:
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="484"/>
-        <location filename="../mainwindow.ui" line="1277"/>
+        <location filename="../mainwindow.ui" line="1264"/>
         <source>No Notifications</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="783"/>
+        <location filename="../mainwindow.ui" line="754"/>
         <source>Previous</source>
         <translation>Go back actually</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="806"/>
+        <location filename="../mainwindow.ui" line="777"/>
         <source>Pause</source>
         <translation>Hang on a sec</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="829"/>
+        <location filename="../mainwindow.ui" line="800"/>
         <source>Next</source>
         <translation>Alright go forward</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="123"/>
-        <location filename="../mainwindow.ui" line="943"/>
+        <location filename="../mainwindow.ui" line="930"/>
         <source>Open the Gateway to your PC</source>
         <translation>Open the Gateway to ya computer</translation>
     </message>
@@ -2253,57 +2251,57 @@ If you say yeah, we&apos;re gonna keep the following from them:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="497"/>
+        <location filename="../mainwindow.ui" line="894"/>
         <source>Your location is currently being used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="576"/>
+        <location filename="../mainwindow.ui" line="547"/>
         <source>Stop Screen Recording</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="761"/>
+        <location filename="../mainwindow.ui" line="732"/>
         <source>Select Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="862"/>
+        <location filename="../mainwindow.ui" line="833"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="993"/>
+        <location filename="../mainwindow.ui" line="980"/>
         <source>Previous Desktop</source>
         <translation>Old Desktop</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1017"/>
+        <location filename="../mainwindow.ui" line="1004"/>
         <source>Next Desktop</source>
         <translation>Forward a Desktop</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1203"/>
+        <location filename="../mainwindow.ui" line="1190"/>
         <source>Click to show bar</source>
         <translation>Click me and some cool stuff will happen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1268"/>
+        <location filename="../mainwindow.ui" line="1255"/>
         <source>Sound</source>
         <translation>Noise</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1286"/>
+        <location filename="../mainwindow.ui" line="1273"/>
         <source>Mute</source>
         <translation>Shut up</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1295"/>
+        <location filename="../mainwindow.ui" line="1282"/>
         <source>Critical Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="648"/>
+        <location filename="../mainwindow.ui" line="619"/>
         <location filename="../mainwindow.cpp" line="320"/>
         <source>Quiet Mode</source>
         <translation>Can ya shut up mode</translation>
@@ -2334,56 +2332,43 @@ If you say yeah, we&apos;re gonna keep the following from them:
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1729"/>
-        <source>No notifications</source>
-        <translation>Jeez that&apos;s a bit sad you&apos;ve got no notifs</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../mainwindow.cpp" line="1733"/>
-        <source>%n notification(s)</source>
-        <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="2203"/>
+        <location filename="../mainwindow.cpp" line="2183"/>
         <source>For Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2205"/>
+        <location filename="../mainwindow.cpp" line="2185"/>
         <source>Move to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2210"/>
+        <location filename="../mainwindow.cpp" line="2190"/>
         <source>Move to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2216"/>
+        <location filename="../mainwindow.cpp" line="2196"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2221"/>
+        <location filename="../mainwindow.cpp" line="2201"/>
         <source>For System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="2222"/>
+        <location filename="../mainwindow.cpp" line="2202"/>
         <source>Open Status Center</source>
         <translation>Open ya stuff</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2225"/>
+        <location filename="../mainwindow.cpp" line="2205"/>
         <source>Open System Settings</source>
         <translation>Open ya settings</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2234"/>
+        <location filename="../mainwindow.cpp" line="2214"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2706,70 +2691,70 @@ If you say yeah, we&apos;re gonna keep the following from them:
 <context>
     <name>NativeEventFilter</name>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="158"/>
-        <location filename="../nativeeventfilter.cpp" line="167"/>
-        <location filename="../nativeeventfilter.cpp" line="178"/>
-        <location filename="../nativeeventfilter.cpp" line="211"/>
+        <location filename="../nativeeventfilter.cpp" line="154"/>
+        <location filename="../nativeeventfilter.cpp" line="163"/>
+        <location filename="../nativeeventfilter.cpp" line="174"/>
+        <location filename="../nativeeventfilter.cpp" line="207"/>
         <source>Brightness</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="182"/>
-        <location filename="../nativeeventfilter.cpp" line="198"/>
-        <location filename="../nativeeventfilter.cpp" line="219"/>
-        <location filename="../nativeeventfilter.cpp" line="233"/>
+        <location filename="../nativeeventfilter.cpp" line="178"/>
+        <location filename="../nativeeventfilter.cpp" line="194"/>
+        <location filename="../nativeeventfilter.cpp" line="215"/>
+        <location filename="../nativeeventfilter.cpp" line="229"/>
         <source>Volume</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="182"/>
-        <location filename="../nativeeventfilter.cpp" line="219"/>
+        <location filename="../nativeeventfilter.cpp" line="178"/>
+        <location filename="../nativeeventfilter.cpp" line="215"/>
         <source>Quiet Mode is set to Mute.</source>
         <translation>Can ya shut up Mode is set to shut up.</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="240"/>
+        <location filename="../nativeeventfilter.cpp" line="236"/>
         <source>Critical Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="244"/>
+        <location filename="../nativeeventfilter.cpp" line="240"/>
         <source>No Notifications</source>
         <translation>Nah none of those notifs</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="248"/>
+        <location filename="../nativeeventfilter.cpp" line="244"/>
         <source>Mute</source>
         <translation>Shut up</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="252"/>
+        <location filename="../nativeeventfilter.cpp" line="248"/>
         <source>Sound</source>
         <translation>Noise</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="260"/>
-        <location filename="../nativeeventfilter.cpp" line="266"/>
+        <location filename="../nativeeventfilter.cpp" line="256"/>
+        <location filename="../nativeeventfilter.cpp" line="262"/>
         <source>Keyboard Brightness</source>
         <translation>Lighten up ya keyboard a bit</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="282"/>
+        <location filename="../nativeeventfilter.cpp" line="278"/>
         <source>Eject</source>
         <translation>Get out</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="282"/>
+        <location filename="../nativeeventfilter.cpp" line="278"/>
         <source>Attempting to eject disc...</source>
         <translation>Give me a sec I&apos;m trying to get it out...</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="366"/>
+        <location filename="../nativeeventfilter.cpp" line="359"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="366"/>
+        <location filename="../nativeeventfilter.cpp" line="359"/>
         <source>Keyboard Layout set to %1</source>
         <translation type="unfinished"></translation>
     </message>

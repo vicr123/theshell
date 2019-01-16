@@ -103,8 +103,6 @@ private slots:
 
     void on_networkLabel_clicked();
 
-    void on_notifications_clicked();
-
     void on_batteryLabel_clicked();
 
     void on_volumeFrame_MouseEnter();
@@ -124,8 +122,6 @@ private slots:
     void on_brightnessSlider_valueChanged(int value);
 
     void on_volumeSlider_sliderReleased();
-
-    void numNotificationsChanged(int notifications);
 
     void pullDownGesture();
 

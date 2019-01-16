@@ -139,13 +139,6 @@
             </widget>
            </item>
            <item>
-            <widget class="ClickableLabel" name="notificationsLabel">
-             <property name="text">
-              <string>Notifications</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="ClickableLabel" name="kdeconnectLabel">
              <property name="text">
               <string>KDE Connect</string>
@@ -612,38 +605,6 @@
        </property>
        <item>
         <widget class="NetworkWidget" name="NetworkManager" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="notificationsFrame">
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QWidget" name="notificationsWidget" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>

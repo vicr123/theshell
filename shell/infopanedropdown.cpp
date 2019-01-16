@@ -67,7 +67,6 @@ class InfoPaneDropdownPrivate {
         bool draggingInfoPane = false;
         int overrideRedshift = 0;
 
-        QMap<int, QFrame*> notificationFrames;
         QMap<QString, QFrame*> printersFrames;
         QMap<QString, QLabel*> printersStats;
         QMap<QString, QFrame*> printersStatFrames;
@@ -157,8 +156,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     }
 
     d->MainWindowId = MainWindowId;
-
-    connect(ui->notificationsWidget, SIGNAL(numNotificationsChanged(int)), this, SIGNAL(numNotificationsChanged(int)));
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateSysInfo()));
@@ -1219,14 +1216,6 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
                 setHeaderColour(QColor(100, 50, 0));
             }
             break;
-        case Notifications:
-            changeDropDown(ui->notificationsFrame, ui->notificationsLabel, doAnimation);
-            if (ui->lightColorThemeRadio->isChecked()) {
-                setHeaderColour(QColor(200, 50, 100));
-            } else {
-                setHeaderColour(QColor(100, 25, 50));
-            }
-            break;
         case Network:
             changeDropDown(ui->networkFrame, ui->networkLabel, doAnimation);
             if (ui->lightColorThemeRadio->isChecked()) {
@@ -1280,12 +1269,6 @@ void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, 
             setHeaderColour(QColor(200, 150, 0));
         } else {
             setHeaderColour(QColor(100, 50, 0));
-        }
-    } else if (changeTo == ui->notificationsFrame) {
-        if (ui->lightColorThemeRadio->isChecked()) {
-            setHeaderColour(QColor(200, 50, 100));
-        } else {
-            setHeaderColour(QColor(100, 25, 50));
         }
     } else if (changeTo == ui->networkFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
@@ -1378,11 +1361,6 @@ void InfoPaneDropdown::on_networkLabel_clicked()
     changeDropDown(Network);
 }
 
-void InfoPaneDropdown::on_notificationsLabel_clicked()
-{
-    changeDropDown(Notifications);
-}
-
 void InfoPaneDropdown::on_pushButton_7_clicked()
 {
     changeDropDown(Settings);
@@ -1441,69 +1419,6 @@ void InfoPaneDropdown::on_redshiftIntensity_valueChanged(int value)
 {
     d->settings.setValue("display/redshiftIntensity", value);
 }
-
-void InfoPaneDropdown::newNotificationReceived(int id, QString summary, QString body, QIcon icon) {
-    if (d->notificationFrames.keys().contains(id)) { //Notification already exists, update it.
-        QFrame* frame = d->notificationFrames.value(id);
-        frame->property("summaryLabel").value<QLabel*>()->setText(summary);
-        frame->property("bodyLabel").value<QLabel*>()->setText(body);
-    } else {
-        QFrame* frame = new QFrame();
-        QHBoxLayout* layout = new QHBoxLayout();
-        layout->setMargin(0);
-        frame->setLayout(layout);
-
-        QLabel* iconLabel = new QLabel();
-        iconLabel->setPixmap(icon.pixmap(22 * getDPIScaling(), 22 * getDPIScaling()));
-        layout->addWidget(iconLabel);
-
-        QLabel* sumLabel = new QLabel();
-        sumLabel->setText(summary);
-        QFont font = sumLabel->font();
-        font.setBold(true);
-        sumLabel->setFont(font);
-        layout->addWidget(sumLabel);
-
-        QLabel* bodyLabel = new QLabel();
-        bodyLabel->setText(body);
-        bodyLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        layout->addWidget(bodyLabel);
-
-        QLabel* dateLabel = new QLabel();
-        dateLabel->setText(QDateTime::currentDateTime().toString("HH:mm:ss"));
-        layout->addWidget(dateLabel);
-
-        QPushButton* button = new QPushButton();
-        button->setIcon(QIcon::fromTheme("window-close"));
-        connect(button, &QPushButton::clicked, [=]() {
-            emit closeNotification(id);
-        });
-        layout->addWidget(button);
-
-        //ui->notificationsList->layout()->addWidget(frame);
-        //ui->noNotifications->setVisible(false);
-        frame->setProperty("summaryLabel", QVariant::fromValue(sumLabel));
-        frame->setProperty("bodyLabel", QVariant::fromValue(bodyLabel));
-
-        d->notificationFrames.insert(id, frame);
-
-        emit numNotificationsChanged(d->notificationFrames.count());
-    }
-}
-
-void InfoPaneDropdown::removeNotification(int id) {
-    if (d->notificationFrames.keys().contains(id)) {
-        delete d->notificationFrames.value(id);
-        d->notificationFrames.remove(id);
-    }
-
-    emit numNotificationsChanged(d->notificationFrames.count());
-
-    if (d->notificationFrames.count() == 0) {
-        //ui->noNotifications->setVisible(true);
-    }
-}
-
 
 void InfoPaneDropdown::on_redshiftPause_toggled(bool checked)
 {
@@ -1740,7 +1655,6 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
     QWidget* switchingWidget = ui->pageStack->widget(switchTo);
     ui->clockLabel->setShowDisabled(true);
     ui->batteryLabel->setShowDisabled(true);
-    ui->notificationsLabel->setShowDisabled(true);
     ui->networkLabel->setShowDisabled(true);
     //ui->printLabel->setShowDisabled(true);
     ui->kdeconnectLabel->setShowDisabled(true);
@@ -1749,8 +1663,7 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
         ui->clockLabel->setShowDisabled(false);
     } else if (switchingWidget == ui->statusFrame) {
         ui->batteryLabel->setShowDisabled(false);
-    } else if (switchingWidget == ui->notificationsFrame) {
-        ui->notificationsLabel->setShowDisabled(false);
+
     } else if (switchingWidget == ui->networkFrame) {
         ui->networkLabel->setShowDisabled(false);
     /*} else if (switchingWidget == ui->printFrame) {
