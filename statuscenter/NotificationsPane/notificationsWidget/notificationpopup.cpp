@@ -23,9 +23,6 @@
 
 #include "notificationobject.h"
 
-extern float getDPIScaling();
-extern NotificationsDBusAdaptor* ndbus;
-
 NotificationPopup* NotificationPopup::currentlyShowingPopup = NULL;
 QList<NotificationPopup*> NotificationPopup::pendingPopups = QList<NotificationPopup*>();
 
@@ -39,7 +36,7 @@ NotificationPopup::NotificationPopup(int id, QWidget *parent) :
     this->setAttribute(Qt::WA_AcceptTouchEvents, true);
     this->setWindowFlag(Qt::WindowStaysOnTopHint);
     ui->buttonsWidget->setFixedHeight(0);
-    ui->downArrow->setPixmap(QIcon::fromTheme("go-down").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->downArrow->setPixmap(QIcon::fromTheme("go-down").pixmap(16 * theLibsGlobal::getDPIScaling(), 16 * theLibsGlobal::getDPIScaling()));
     ui->ContentsWidget->setFixedHeight(ui->bodyLabel->fontMetrics().height() + ui->ContentsWidget->layout()->contentsMargins().top());
     this->id = id;
 
@@ -283,21 +280,21 @@ void NotificationPopup::paintEvent(QPaintEvent *event) {
         textRect.setTop(0);
         textRect.setHeight(this->height() - 1);
         textRect.setWidth(metrics.width(tr("Dismiss")));
-        if (ui->mainWidget->geometry().left() > textRect.width() + 40 * getDPIScaling()) {
-            textRect.moveRight(ui->mainWidget->geometry().left() - 20 * getDPIScaling());
+        if (ui->mainWidget->geometry().left() > textRect.width() + 40 * theLibsGlobal::getDPIScaling()) {
+            textRect.moveRight(ui->mainWidget->geometry().left() - 20 * theLibsGlobal::getDPIScaling());
         } else {
-            textRect.moveLeft(20 * getDPIScaling());
+            textRect.moveLeft(20 * theLibsGlobal::getDPIScaling());
         }
 
         QRect iconRect;
-        iconRect.setWidth(16 * getDPIScaling());
-        iconRect.setHeight(16 * getDPIScaling());
-        iconRect.moveRight(textRect.left() - 9 * getDPIScaling());
+        iconRect.setWidth(16 * theLibsGlobal::getDPIScaling());
+        iconRect.setHeight(16 * theLibsGlobal::getDPIScaling());
+        iconRect.moveRight(textRect.left() - 9 * theLibsGlobal::getDPIScaling());
         iconRect.moveTop(this->height() / 2 - iconRect.height() / 2);
 
         painter.setPen(Qt::white);
         painter.drawText(textRect, Qt::AlignVCenter | Qt::AlignLeft, tr("Dismiss"));
-        painter.drawPixmap(iconRect, QIcon::fromTheme("arrow-right").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+        painter.drawPixmap(iconRect, QIcon::fromTheme("arrow-right").pixmap(16 * theLibsGlobal::getDPIScaling(), 16 * theLibsGlobal::getDPIScaling()));
     }
 
     if (urgency != 1) {
@@ -307,8 +304,8 @@ void NotificationPopup::paintEvent(QPaintEvent *event) {
         } else {
             painter.setBrush(QColor(200, 0, 0));
         }
-        painter.drawRect(0, 0, this->width(), 3 * getDPIScaling());
-        //painter.drawRect(0, 0, 3 * getDPIScaling(), this->height());
+        painter.drawRect(0, 0, this->width(), 3 * theLibsGlobal::getDPIScaling());
+        //painter.drawRect(0, 0, 3 * theLibsGlobal::getDPIScaling(), this->height());
     }
 
 
@@ -316,9 +313,9 @@ void NotificationPopup::paintEvent(QPaintEvent *event) {
 
 void NotificationPopup::setApp(QString appName, QIcon appIcon) {
     ui->appnameLabel->setText(appName);
-    ui->appIcon->setPixmap(appIcon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
+    ui->appIcon->setPixmap(appIcon.pixmap(16 * theLibsGlobal::getDPIScaling(), 16 * theLibsGlobal::getDPIScaling()));
 
-    QPixmap pm = appIcon.pixmap(32 * getDPIScaling(), 32 * getDPIScaling());
+    QPixmap pm = appIcon.pixmap(32 * theLibsGlobal::getDPIScaling(), 32 * theLibsGlobal::getDPIScaling());
     coverAppIcon->setPixmap(pm);
     coverAppName->setText(appName);
 
@@ -371,7 +368,7 @@ void NotificationPopup::setApp(QString appName, QIcon appIcon) {
 }
 
 void NotificationPopup::setSummary(QString summary) {
-    ui->summaryLabel->setText(ui->summaryLabel->fontMetrics().elidedText(summary, Qt::ElideRight, 300 * getDPIScaling()));
+    ui->summaryLabel->setText(ui->summaryLabel->fontMetrics().elidedText(summary, Qt::ElideRight, 300 * theLibsGlobal::getDPIScaling()));
 }
 
 void NotificationPopup::setBody(QString body) {
@@ -440,7 +437,7 @@ void NotificationPopup::on_dismissButton_clicked()
 }
 
 void NotificationPopup::setBigIcon(QIcon bigIcon) {
-    ui->bigIconLabel->setPixmap(bigIcon.pixmap(32 * getDPIScaling(), 32 * getDPIScaling()));
+    ui->bigIconLabel->setPixmap(bigIcon.pixmap(32 * theLibsGlobal::getDPIScaling(), 32 * theLibsGlobal::getDPIScaling()));
 }
 
 bool NotificationPopup::event(QEvent* event) {

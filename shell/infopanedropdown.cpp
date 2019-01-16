@@ -25,6 +25,7 @@
 #include <QScroller>
 #include <tvirtualkeyboard.h>
 #include "location/locationdaemon.h"
+#include <notificationsdbusadaptor.h>
 
 #include <QShortcut>
 
@@ -39,7 +40,6 @@ extern float getDPIScaling();
 extern QDBusServiceWatcher* dbusServiceWatcher;
 extern QDBusServiceWatcher* dbusServiceWatcherSystem;
 extern UPowerDBus* updbus;
-extern NotificationsDBusAdaptor* ndbus;
 extern DBusSignals* dbusSignals;
 extern LocationServices* locationServices;
 extern LocationDaemon* geolocation;
@@ -119,8 +119,11 @@ class InfoPaneDropdownPrivate {
         QNetworkAccessManager mgr;
 
         void broadcastMessage(QString name, QVariantList args = QVariantList()) {
-            for (StatusCenterPaneObject* pane : pluginObjects.values()) {
-                pane->sendMessage(name, args);
+            //Go through each plugin to make sure plugins registered as daemons also get sent messages
+            for (StatusCenterPane* plugin : loadedPlugins) {
+                for (StatusCenterPaneObject* pane : plugin->availablePanes()) {
+                    pane->message(name, args);
+                }
             }
         }
 };
@@ -157,11 +160,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     connect(ui->notificationsWidget, SIGNAL(numNotificationsChanged(int)), this, SIGNAL(numNotificationsChanged(int)));
 
-    connect(dbusServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(DBusServiceRegistered(QString)));
-    connect(dbusServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(DBusServiceUnregistered(QString)));
-    connect(dbusServiceWatcherSystem, SIGNAL(serviceRegistered(QString)), this, SLOT(DBusServiceRegistered(QString)));
-    connect(dbusServiceWatcherSystem, SIGNAL(serviceUnregistered(QString)), this, SLOT(DBusServiceUnregistered(QString)));
-
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateSysInfo()));
     timer->setInterval(1000);
@@ -185,7 +183,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     ui->BatteryChargeScrollBar->setVisible(false);
     ui->appNotificationsConfigureLock->setVisible(false);
-    ui->quietModeExtras->setFixedHeight(0);
     //ui->networkKey->setVisible(false);
     //ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
@@ -682,35 +679,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     d->ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
 
     connect(AudioMan, &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
-        ui->quietModeSound->setChecked(false);
-        ui->quietModeCriticalOnly->setChecked(false);
-        ui->quietModeNotification->setChecked(false);
-        ui->quietModeMute->setChecked(false);
-        ui->quietModeForeverButton->setEnabled(true);
-        ui->quietModeTurnOffAt->setEnabled(true);
-        ui->quietModeTurnOffIn->setEnabled(true);
-
-        if (mode == AudioManager::none) {
-            ui->quietModeSound->setChecked(true);
-
-            ui->quietModeForeverButton->setEnabled(false);
-            ui->quietModeTurnOffAt->setEnabled(false);
-            ui->quietModeTurnOffIn->setEnabled(false);
-            ui->quietModeForeverButton->setChecked(true);
-        } else if (mode == AudioManager::notifications) {
-            ui->quietModeNotification->setChecked(true);
-        } else if (mode == AudioManager::critical) {
-            ui->quietModeCriticalOnly->setChecked(true);
-        } else {
-            ui->quietModeMute->setChecked(true);
-        }
-        ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
+        d->broadcastMessage("quiet-mode-changed", {(int) mode});
     });
-    ui->quietModeForeverButton->setChecked(true);
-    ui->quietModeForeverButton->setEnabled(false);
-    ui->quietModeTurnOffAt->setEnabled(false);
-    ui->quietModeTurnOffIn->setEnabled(false);
-    ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
 
     d->slice1.setStartValue((float) (this->width() - 250 * getDPIScaling()));
     d->slice1.setEndValue((float) (this->width() - 300 * getDPIScaling()));
@@ -841,6 +811,9 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
                         pane->sendMessage = [=](QString message, QVariantList args) {
                             this->pluginMessage(message, args, pane);
+                        };
+                        pane->getProperty = [=](QString key) {
+                            return this->pluginProperty(key);
                         };
                         d->pluginObjects.insert(pane->mainWidget(), pane);
                     }
@@ -1223,10 +1196,6 @@ void InfoPaneDropdown::close() {
     });
     connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
     a->start();
-
-    if (ui->quietModeExtras->height() != 0) {
-        ui->quietModeExpandButton->click();
-    }
 }
 
 void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
@@ -2126,13 +2095,14 @@ void InfoPaneDropdown::doNetworkCheck() {
                     hints.insert("category", "network.connected");
                     hints.insert("transient", true);
 
-                    uint notificationId = ndbus->Notify("theShell", 0, "", tr("Network Login"),
+                    NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Network Login"),
                                                tr("Your connection to the internet is blocked by a login page."),
-                                               actions, hints, 30000);
-                    connect(ndbus, &NotificationsDBusAdaptor::ActionInvoked, [=](uint id, QString key) {
-                        if (notificationId == id && key == "login") {
-                            QProcess::startDetached("xdg-open http://nmcheck.gnome.org/");
-                        }
+                                               actions, hints, 30000)->then([=](uint notificationId) {
+                        connect(NotificationsDBusAdaptor::instance(), &NotificationsDBusAdaptor::ActionInvoked, [=](uint id, QString key) {
+                            if (notificationId == id && key == "login") {
+                                QProcess::startDetached("xdg-open http://nmcheck.gnome.org/");
+                            }
+                        });
                     });
                 });
             }
@@ -2597,24 +2567,6 @@ void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_TouchInputSwitch_toggled(bool checked)
 {
     d->settings.setValue("input/touch", checked);
-}
-
-void InfoPaneDropdown::on_quietModeSound_clicked()
-{
-    AudioMan->setQuietMode(AudioManager::none);
-    ui->quietModeSound->setChecked(true);
-}
-
-void InfoPaneDropdown::on_quietModeNotification_clicked()
-{
-    AudioMan->setQuietMode(AudioManager::notifications);
-    ui->quietModeNotification->setChecked(true);
-}
-
-void InfoPaneDropdown::on_quietModeMute_clicked()
-{
-    AudioMan->setQuietMode(AudioManager::mute);
-    ui->quietModeMute->setChecked(true);
 }
 
 void InfoPaneDropdown::on_SuspendLockScreen_toggled(bool checked)
@@ -3218,71 +3170,6 @@ void InfoPaneDropdown::on_powerSuspend_valueChanged(int value)
     } else {
         ui->powerSuspendLabel->setText(tr("%n min(s)", NULL, value));
     }
-}
-
-void InfoPaneDropdown::on_quietModeExpandButton_clicked()
-{
-    tVariantAnimation* anim = new tVariantAnimation();
-    anim->setStartValue(ui->quietModeExtras->height());
-    if (ui->quietModeExtras->height() == 0) {
-        anim->setEndValue(ui->quietModeExtras->sizeHint().height());
-        ui->quietModeExpandButton->setIcon(QIcon::fromTheme("go-up"));
-    } else {
-        anim->setEndValue(0);
-        ui->quietModeExpandButton->setIcon(QIcon::fromTheme("go-down"));
-    }
-    anim->setDuration(500);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->quietModeExtras->setFixedHeight(value.toInt());
-    });
-    anim->start();
-}
-
-void InfoPaneDropdown::on_quietModeForeverButton_toggled(bool checked)
-{
-    if (checked) {
-        ui->quietModeTurnOffAtTimer->setVisible(false);
-        ui->quietModeTurnOffInTimer->setVisible(false);
-        AudioMan->setQuietModeResetTime(QDateTime::fromString(""));
-    }
-}
-
-void InfoPaneDropdown::on_quietModeTurnOffIn_toggled(bool checked)
-{
-    if (checked) {
-        ui->quietModeTurnOffAtTimer->setVisible(false);
-        ui->quietModeTurnOffInTimer->setVisible(true);
-
-        QDateTime oneHour = QDateTime::currentDateTime().addSecs(3600);
-        AudioMan->setQuietModeResetTime(oneHour);
-        ui->quietModeTurnOffInTimer->setTime(QTime(1, 0));
-    }
-}
-
-void InfoPaneDropdown::on_quietModeTurnOffAt_toggled(bool checked)
-{
-
-    if (checked) {
-        ui->quietModeTurnOffAtTimer->setVisible(true);
-        ui->quietModeTurnOffInTimer->setVisible(false);
-
-        QDateTime oneHour = QDateTime::currentDateTime().addSecs(3600);
-        AudioMan->setQuietModeResetTime(oneHour);
-        ui->quietModeTurnOffAtTimer->setDateTime(oneHour);
-    }
-}
-
-void InfoPaneDropdown::on_quietModeTurnOffAtTimer_editingFinished()
-{
-    AudioMan->setQuietModeResetTime(ui->quietModeTurnOffAtTimer->dateTime());
-}
-
-void InfoPaneDropdown::on_quietModeTurnOffInTimer_editingFinished()
-{
-    QDateTime timeout = QDateTime::currentDateTime().addMSecs(ui->quietModeTurnOffInTimer->time().msecsSinceStartOfDay());
-    AudioMan->setQuietModeResetTime(timeout);
 }
 
 void InfoPaneDropdown::on_removeAutostartButton_clicked()
@@ -3986,7 +3873,16 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         emit statusBarProgressFinished(args.first().toString(), args.at(1).toString());
     } else if (message == "jobUpdate") {
         emit statusBarProgress(args.first().toString(), args.at(1).toString(), args.at(2).toUInt());
+    } else if (message == "set-quiet-mode") {
+        AudioMan->setQuietMode((AudioManager::quietMode) args.first().toInt());
     }
+}
+
+QVariant InfoPaneDropdown::pluginProperty(QString key) {
+    if (key == "current-quiet-mode-description") {
+        return AudioMan->getCurrentQuietModeDescription();
+    }
+    return QVariant();
 }
 
 void InfoPaneDropdown::on_settingsList_itemActivated(QListWidgetItem *item)
@@ -3995,12 +3891,6 @@ void InfoPaneDropdown::on_settingsList_itemActivated(QListWidgetItem *item)
     if (!setting.isNull() && setting.toInt() != -1) {
         ui->settingsListStack->setCurrentIndex(setting.toInt());
     }
-}
-
-void InfoPaneDropdown::on_quietModeCriticalOnly_clicked()
-{
-    AudioMan->setQuietMode(AudioManager::critical);
-    ui->quietModeCriticalOnly->setChecked(true);
 }
 
 void InfoPaneDropdown::on_powerSuspendNormally_toggled(bool checked)

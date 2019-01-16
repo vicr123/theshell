@@ -39,7 +39,6 @@
 #include <math.h>
 #include "window.h"
 #include "menu.h"
-#include "notificationsWidget/notificationsdbusadaptor.h"
 #include "upowerdbus.h"
 #include "infopanedropdown.h"
 #include "systrayicons.h"

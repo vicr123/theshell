@@ -87,12 +87,6 @@ SOURCES += main.cpp\
     dbussignals.cpp \
     networkmanager/networkwidget.cpp \
     networkmanager/availablenetworkslist.cpp \
-    notificationsWidget/notificationswidget.cpp \
-    notificationsWidget/notificationsdbusadaptor.cpp \
-    notificationsWidget/notificationpopup.cpp \
-    notificationsWidget/notificationobject.cpp \
-    notificationsWidget/notificationappgroup.cpp \
-    notificationsWidget/notificationpanel.cpp \
     apps/appslistmodel.cpp \
     apps/app.cpp \
     networkmanager/savednetworkslist.cpp \
@@ -103,8 +97,8 @@ SOURCES += main.cpp\
     location/locationrequestdialog.cpp \
     agent_adaptor.cpp \
     locktypes/mousepassword.cpp \
-    notificationsWidget/mediaplayernotification.cpp \
-    location/locationdaemon.cpp
+    location/locationdaemon.cpp \
+    notificationsdbusadaptor.cpp
 
 HEADERS  += mainwindow.h \
     window.h \
@@ -139,12 +133,6 @@ HEADERS  += mainwindow.h \
     dbussignals.h \
     networkmanager/networkwidget.h \
     networkmanager/availablenetworkslist.h \
-    notificationsWidget/notificationswidget.h \
-    notificationsWidget/notificationsdbusadaptor.h \
-    notificationsWidget/notificationpopup.h \
-    notificationsWidget/notificationobject.h \
-    notificationsWidget/notificationappgroup.h \
-    notificationsWidget/notificationpanel.h \
     apps/appslistmodel.h \
     apps/app.h \
     networkmanager/savednetworkslist.h \
@@ -155,10 +143,10 @@ HEADERS  += mainwindow.h \
     location/locationrequestdialog.h \
     agent_adaptor.h \
     locktypes/mousepassword.h \
-    notificationsWidget/mediaplayernotification.h \
     statuscenter/statuscenterpane.h \
     statuscenter/statuscenterpaneobject.h \
-    location/locationdaemon.h
+    location/locationdaemon.h \
+    notificationsdbusadaptor.h
 
 FORMS    += mainwindow.ui \
     menu.ui \
@@ -174,14 +162,9 @@ FORMS    += mainwindow.ui \
     tutorialwindow.ui \
     screenshotwindow.ui \
     networkmanager/networkwidget.ui \
-    notificationsWidget/notificationswidget.ui \
-    notificationsWidget/notificationpopup.ui \
-    notificationsWidget/notificationappgroup.ui \
-    notificationsWidget/notificationpanel.ui \
     kdeconnect/kdeconnectwidget.ui \
     location/locationrequestdialog.ui \
-    locktypes/mousepassword.ui \
-    notificationsWidget/mediaplayernotification.ui
+    locktypes/mousepassword.ui
 
 DISTFILES += \
     org.freedesktop.Notifications.xml \

@@ -59,6 +59,7 @@ class StatusCenterPaneObject
         SettingStatusCenterPaneObjectAttributes settingAttributes;
 
         std::function<void(QString, QVariantList)> sendMessage;
+        std::function<QVariant(QString)> getProperty;
         bool showing = false;
 };
 

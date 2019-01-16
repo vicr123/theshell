@@ -47,7 +47,6 @@
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QDateTimeAxis>
 #include "animatedstackedwidget.h"
-#include "notificationsWidget/notificationsdbusadaptor.h"
 #include "upowerdbus.h"
 #include "endsessionwait.h"
 #include "audiomanager.h"
@@ -270,12 +269,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_TouchInputSwitch_toggled(bool checked);
 
-        void on_quietModeSound_clicked();
-
-        void on_quietModeNotification_clicked();
-
-        void on_quietModeMute_clicked();
-
         void on_SuspendLockScreen_toggled(bool checked);
 
         void on_BatteryChargeScrollBar_valueChanged(int value);
@@ -378,18 +371,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_powerSuspend_valueChanged(int value);
 
-        void on_quietModeExpandButton_clicked();
-
-        void on_quietModeForeverButton_toggled(bool checked);
-
-        void on_quietModeTurnOffIn_toggled(bool checked);
-
-        void on_quietModeTurnOffAt_toggled(bool checked);
-
-        void on_quietModeTurnOffAtTimer_editingFinished();
-
-        void on_quietModeTurnOffInTimer_editingFinished();
-
         void on_removeAutostartButton_clicked();
 
         void on_resetDeviceButton_clicked();
@@ -462,9 +443,9 @@ class InfoPaneDropdown : public QDialog
 
         void pluginMessage(QString message, QVariantList args, StatusCenterPaneObject* caller);
 
-        void on_settingsList_itemActivated(QListWidgetItem *item);
+        QVariant pluginProperty(QString key);
 
-        void on_quietModeCriticalOnly_clicked();
+        void on_settingsList_itemActivated(QListWidgetItem *item);
 
         void on_powerSuspendNormally_toggled(bool checked);
 

@@ -21,7 +21,7 @@
 #include "screenrecorder.h"
 #include <QDebug>
 
-extern NotificationsDBusAdaptor* ndbus;
+#include "notificationsdbusadaptor.h"
 
 ScreenRecorder::ScreenRecorder(QObject *parent) : QObject(parent)
 {
@@ -33,7 +33,7 @@ ScreenRecorder::ScreenRecorder(QObject *parent) : QObject(parent)
 void ScreenRecorder::start() {
     if (!recording()) {
         if (!QFile("/usr/bin/ffmpeg").exists()) {
-            ndbus->Notify("theShell", 0, "", tr("Screen Recorder"), tr("To record your screen, you'll need to install ffmpeg"), QStringList(), QVariantMap(), -1);
+            NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Screen Recorder"), tr("To record your screen, you'll need to install ffmpeg"), QStringList(), QVariantMap(), -1);
             return;
         }
 
@@ -58,7 +58,7 @@ void ScreenRecorder::start() {
             s = Recording;
             emit stateChanged(Recording);
         } else {
-            ndbus->Notify("theShell", 0, "", tr("Screen Recorder"), tr("Couldn't start screen recording"), QStringList(), QVariantMap(), -1);
+            NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Screen Recorder"), tr("Couldn't start screen recording"), QStringList(), QVariantMap(), -1);
         }
 
     }
@@ -93,17 +93,18 @@ void ScreenRecorder::recorderFinished(int returnCode) {
         actions.append("View");
         actions.append("del");
         actions.append("Delete");
-        uint nId = ndbus->Notify("theShell", 0, "", tr("Screen Recorder"), tr("Screen Recording saved in Recordings folder"), actions, QVariantMap(), -1);
-        connect(ndbus, &NotificationsDBusAdaptor::ActionInvoked, [=](uint id, QString key) {
-            if (id == nId) {
-                if (key == "view") {
-                    QProcess::startDetached("xdg-open \"" + filename + "\"");
-                } else if (key == "del") {
-                    QFile(filename).remove();
+        NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Screen Recorder"), tr("Screen Recording saved in Recordings folder"), actions, QVariantMap(), -1)->then([=](uint nId) {
+            connect(NotificationsDBusAdaptor::instance(), &NotificationsDBusAdaptor::ActionInvoked, [=](uint id, QString key) {
+                if (id == nId) {
+                    if (key == "view") {
+                        QProcess::startDetached("xdg-open \"" + filename + "\"");
+                    } else if (key == "del") {
+                        QFile(filename).remove();
+                    }
                 }
-            }
+            });
         });
     } else {
-        ndbus->Notify("theShell", 0, "", tr("Screen Recorder"), tr("Screen Recording failed"), QStringList(), QVariantMap(), -1);
+        NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Screen Recorder"), tr("Screen Recording failed"), QStringList(), QVariantMap(), -1);
     }
 }

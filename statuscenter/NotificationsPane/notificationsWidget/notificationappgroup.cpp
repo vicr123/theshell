@@ -21,8 +21,6 @@
 #include "notificationappgroup.h"
 #include "ui_notificationappgroup.h"
 
-extern float getDPIScaling();
-
 NotificationAppGroup::NotificationAppGroup(QString appIdentifier, QIcon appIcon, QString appName, QWidget *parent) :
     QFrame(parent),
     ui(new Ui::NotificationAppGroup)
@@ -32,7 +30,7 @@ NotificationAppGroup::NotificationAppGroup(QString appIdentifier, QIcon appIcon,
     this->appIcon = appIcon;
     this->appIdentifier = appIdentifier;
 
-    ui->appIcon->setPixmap(appIcon.pixmap(24 * getDPIScaling(), 24 * getDPIScaling()));
+    ui->appIcon->setPixmap(appIcon.pixmap(24 * theLibsGlobal::getDPIScaling(), 24 * theLibsGlobal::getDPIScaling()));
     ui->appName->setText(appName);
 
     //this->setFixedHeight(0);

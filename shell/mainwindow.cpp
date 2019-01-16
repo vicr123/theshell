@@ -31,7 +31,6 @@ extern NativeEventFilter* NativeFilter;
 extern float getDPIScaling();
 extern LocationServices* locationServices;
 extern UPowerDBus* updbus;
-extern NotificationsDBusAdaptor* ndbus;
 extern ScreenRecorder* screenRecorder;
 
 MainWindow::MainWindow(QWidget *parent) :

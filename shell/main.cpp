@@ -51,6 +51,7 @@
 #include <cxxabi.h>
 #include <QFile>
 #include "location/locationdaemon.h"
+#include <QDBusMetaType>
 
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
@@ -62,7 +63,6 @@ LocationServices* locationServices = NULL;
 QDBusServiceWatcher* dbusServiceWatcher = NULL;
 QDBusServiceWatcher* dbusServiceWatcherSystem = NULL;
 UPowerDBus* updbus = NULL;
-NotificationsDBusAdaptor* ndbus = NULL;
 DBusSignals* dbusSignals = NULL;
 QSettings::Format desktopFileFormat;
 LocationDaemon* geolocation = nullptr;
@@ -307,12 +307,6 @@ int main(int argc, char *argv[])
 
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerService("org.thesuite.theshell");
-
-    QObject* notificationParent = new QObject();
-    ndbus = new NotificationsDBusAdaptor(notificationParent);
-
-    dbus.registerObject("/org/freedesktop/Notifications", "org.freedesktop.Notifications", notificationParent);
-    dbus.registerService("org.freedesktop.Notifications");
 
     dbusSignals = new DBusSignals();
 

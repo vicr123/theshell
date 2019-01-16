@@ -30,7 +30,8 @@
 #include <QSystemTrayIcon>
 #include <QSoundEffect>
 #include "endsessionwait.h"
-#include "notificationsWidget/notificationsdbusadaptor.h"
+#include <QDBusConnection>
+#include <QDBusUnixFileDescriptor>
 
 #include <X11/Xlib.h>
 

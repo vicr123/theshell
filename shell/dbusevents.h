@@ -33,7 +33,6 @@
 #include <QSettings>
 #include <QTimer>
 #include <QSoundEffect>
-#include "notificationsWidget/notificationsdbusadaptor.h"
 #include "newmedia.h"
 
 class DbusEvents : public QObject

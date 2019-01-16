@@ -27,14 +27,16 @@
 #include "notificationobject.h"
 #include "notificationappgroup.h"
 #include <QScrollArea>
-#include "nativeeventfilter.h"
 #include "mediaplayernotification.h"
+#include <statuscenterpaneobject.h>
+
+class NotificationsDBusAdaptor;
 
 namespace Ui {
 class NotificationsWidget;
 }
 
-class NotificationsWidget : public QWidget
+class NotificationsWidget : public QWidget, public StatusCenterPaneObject
 {
     Q_OBJECT
 
@@ -42,14 +44,42 @@ public:
     explicit NotificationsWidget(QWidget *parent = 0);
     ~NotificationsWidget();
 
+    void setAdaptor(NotificationsDBusAdaptor* adaptor);
+
     void addNotification(NotificationObject* object);
     bool hasNotificationId(uint id);
     NotificationObject* getNotification(uint id);
+
+    QWidget* mainWidget();
+    QString name();
+    StatusPaneTypes type();
+    int position();
+    void message(QString name, QVariantList args = QVariantList());
 
 private slots:
     void on_clearAllButton_clicked();
 
     void updateNotificationCount();
+
+    void on_quietModeSound_clicked();
+
+    void on_quietModeNotification_clicked();
+
+    void on_quietModeMute_clicked();
+
+    void on_quietModeCriticalOnly_clicked();
+
+    void on_quietModeExpandButton_clicked();
+
+    void on_quietModeForeverButton_toggled(bool checked);
+
+    void on_quietModeTurnOffIn_toggled(bool checked);
+
+    void on_quietModeTurnOffAt_toggled(bool checked);
+
+    void on_quietModeTurnOffAtTimer_editingFinished();
+
+    void on_quietModeTurnOffInTimer_editingFinished();
 
 signals:
     void numNotificationsChanged(int number);
@@ -63,6 +93,8 @@ private:
     QMap<int, NotificationObject*> notifications;
     QList<NotificationAppGroup*> notificationGroups;
     QMap<QString, MediaPlayerNotification*> mediaPlayers;
+
+    NotificationsDBusAdaptor* adaptor;
 };
 
 #endif // NOTIFICATIONSWIDGET_H

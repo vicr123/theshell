@@ -30,7 +30,6 @@
 #include <QFile>
 #include <QDir>
 #include <QDateTime>
-#include "notificationsWidget/notificationsdbusadaptor.h"
 
 class ScreenRecorder : public QObject
 {

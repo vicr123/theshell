@@ -32,6 +32,7 @@
 #include <QApplication>
 #include <QDBusReply>
 #include <QSettings>
+#include "audiomanager.h"
 
 class NotificationsWidget;
 
