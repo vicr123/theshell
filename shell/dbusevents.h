@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -33,7 +33,6 @@
 #include <QSettings>
 #include <QTimer>
 #include <QSoundEffect>
-#include "notificationsWidget/notificationsdbusadaptor.h"
 #include "newmedia.h"
 
 class DbusEvents : public QObject

@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -39,7 +39,6 @@
 #include <math.h>
 #include "window.h"
 #include "menu.h"
-#include "notificationsWidget/notificationsdbusadaptor.h"
 #include "upowerdbus.h"
 #include "infopanedropdown.h"
 #include "systrayicons.h"
@@ -104,8 +103,6 @@ private slots:
 
     void on_networkLabel_clicked();
 
-    void on_notifications_clicked();
-
     void on_batteryLabel_clicked();
 
     void on_volumeFrame_MouseEnter();
@@ -125,8 +122,6 @@ private slots:
     void on_brightnessSlider_valueChanged(int value);
 
     void on_volumeSlider_sliderReleased();
-
-    void numNotificationsChanged(int notifications);
 
     void pullDownGesture();
 

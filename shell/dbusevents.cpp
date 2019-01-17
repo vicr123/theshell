@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 #include "dbusevents.h"
 
-extern NotificationsDBusAdaptor* ndbus;
+#include "notificationsdbusadaptor.h"
 
 DbusEvents::DbusEvents(QObject *parent) : QObject(parent)
 {
@@ -49,7 +49,7 @@ DbusEvents::DbusEvents(QObject *parent) : QObject(parent)
     //QDBusConnection::systemBus().connect("org.freedesktop.UDisks2", "/org/freedesktop/UDisks2", "org.freedesktop.DBus.ObjectManager",
     //                                     "InterfacesRemoved", this, SLOT(RemoveUdisksInterface(QDBusObjectPath,QStringList)));
 
-    connect(ndbus, SIGNAL(ActionInvoked(uint,QString)), this, SLOT(NotificationAction(uint,QString)));
+    connect(NotificationsDBusAdaptor::instance(), SIGNAL(ActionInvoked(uint,QString)), this, SLOT(NotificationAction(uint,QString)));
 
     if (QFile("/usr/bin/idevice_id").exists()) {
         QProcess deviceId;
@@ -102,8 +102,9 @@ void DbusEvents::NewUdisksInterface(QDBusObjectPath path) {
             hints.insert("transient", true);
             hints.insert("category", "device.added");
             hints.insert("sound-file", "qrc:/sounds/media-insert.wav");
-            uint id = ndbus->Notify("theShell", 0, "", tr("%1 Connected").arg(deviceName), tr("%1 has been connected to this PC.").arg(deviceName), actions, hints, -1);
-            notificationIds.insert(id, path);
+            NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("%1 Connected").arg(deviceName), tr("%1 has been connected to this PC.").arg(deviceName), actions, hints, -1)->then([=](uint id) {
+                notificationIds.insert(id, path);
+            });
         }
     }
 }
@@ -167,7 +168,7 @@ void DbusEvents::DetectNewDevices() {
                     hints.insert("transient", true);
                     hints.insert("category", "device.added");
                     hints.insert("sound-file", "qrc:/sounds/media-insert.wav");
-                    ndbus->Notify("theShell", 0, "", tr("%1 Connected").arg(deviceName), tr("%1 has been connected to this PC.").arg(deviceName), QStringList(), hints, -1);
+                    NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("%1 Connected").arg(deviceName), tr("%1 has been connected to this PC.").arg(deviceName), QStringList(), hints, -1);
                     connectediOSDevices.append(device);
                 }
             }

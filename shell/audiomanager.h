@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -62,7 +62,6 @@ public slots:
     void silenceStreams();
     void restoreStreams(bool immediate = false);
     void setQuietMode(quietMode mode);
-    void setQuietModeResetTime(QDateTime time);
 
 private:
     pa_context* pulseContext = NULL;
@@ -88,9 +87,6 @@ private:
     pa_cvolume defaultSinkVolume;
     quietMode currentQuietMode = none;
     QSettings settings;
-
-    QDateTime quietModeOff;
-    QTimer* quietModeWatcher;
 };
 
 #endif // AUDIOMANAGER_H

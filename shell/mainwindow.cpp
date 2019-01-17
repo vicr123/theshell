@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@ extern NativeEventFilter* NativeFilter;
 extern float getDPIScaling();
 extern LocationServices* locationServices;
 extern UPowerDBus* updbus;
-extern NotificationsDBusAdaptor* ndbus;
 extern ScreenRecorder* screenRecorder;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -104,7 +103,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     infoPane = new InfoPaneDropdown(this->winId());
     connect(infoPane, SIGNAL(networkLabelChanged(QString,QIcon)), this, SLOT(internetLabelChanged(QString,QIcon)));
-    connect(infoPane, SIGNAL(numNotificationsChanged(int)), this, SLOT(numNotificationsChanged(int)));
     connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
     connect(infoPane, &InfoPaneDropdown::batteryStretchChanged, [=](bool isOn) {
         if (isOn) {
@@ -173,6 +171,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
         ui->StatusBarFrame->update();
         ui->StatusBarProgressFrame->update();
+    });
+    connect(infoPane, &InfoPaneDropdown::newChunk, [=](QWidget* chunk) {
+        ui->chunksLayout->addWidget(chunk);
+
+        QFrame* line = new QFrame();
+        line->setFrameShape(QFrame::VLine);
+        ui->chunksLayout->addWidget(line);
     });
     infoPane->getNetworks();
     ui->StatusBarRedshift->setVisible(false);
@@ -604,7 +609,7 @@ void MainWindow::updateMpris(QString interfaceName, QMap<QString, QVariant> prop
 
 void MainWindow::pullDownGesture() {
     if (lockHide) {
-        on_notifications_clicked();
+        on_date_clicked();
     } else {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
         barAnim->setStartValue(this->geometry());
@@ -1554,11 +1559,6 @@ void MainWindow::on_networkLabel_clicked()
     infoPane->show(InfoPaneDropdown::Network);
 }
 
-void MainWindow::on_notifications_clicked()
-{
-    infoPane->show(InfoPaneDropdown::Notifications);
-}
-
 void MainWindow::on_batteryLabel_clicked()
 {
     infoPane->show(InfoPaneDropdown::Battery);
@@ -1721,21 +1721,6 @@ void MainWindow::paintEvent(QPaintEvent *event) {
         }
     }
     event->accept();
-}
-
-void MainWindow::numNotificationsChanged(int notifications) {
-    QFont font = ui->notifications->font();
-    if (notifications == 0) {
-        font.setBold(false);
-        ui->notifications->setText(tr("No notifications"));
-        ui->StatusBarNotifications->setVisible(false);
-    } else {
-        font.setBold(true);
-        ui->notifications->setText(tr("%n notification(s)", NULL, notifications));
-        ui->StatusBarNotifications->setText(QString::number(notifications));
-        ui->StatusBarNotifications->setVisible(true);
-    }
-    ui->notifications->setFont(font);
 }
 
 InfoPaneDropdown* MainWindow::getInfoPane() {
@@ -1984,7 +1969,7 @@ void MainWindow::on_networkLabel_mouseReleased()
 void MainWindow::on_notifications_dragging(int x, int y)
 {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    infoPane->dragDown(InfoPaneDropdown::Notifications, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
+    infoPane->dragDown(InfoPaneDropdown::Clock, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
 }
 
 void MainWindow::on_notifications_mouseReleased()

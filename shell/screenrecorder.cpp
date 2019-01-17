@@ -1,7 +1,27 @@
+/****************************************
+ *
+ *   theShell - Desktop Environment
+ *   Copyright (C) 2019 Victor Tran
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * *************************************/
+
 #include "screenrecorder.h"
 #include <QDebug>
 
-extern NotificationsDBusAdaptor* ndbus;
+#include "notificationsdbusadaptor.h"
 
 ScreenRecorder::ScreenRecorder(QObject *parent) : QObject(parent)
 {
@@ -13,7 +33,7 @@ ScreenRecorder::ScreenRecorder(QObject *parent) : QObject(parent)
 void ScreenRecorder::start() {
     if (!recording()) {
         if (!QFile("/usr/bin/ffmpeg").exists()) {
-            ndbus->Notify("theShell", 0, "", tr("Screen Recorder"), tr("To record your screen, you'll need to install ffmpeg"), QStringList(), QVariantMap(), -1);
+            NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Screen Recorder"), tr("To record your screen, you'll need to install ffmpeg"), QStringList(), QVariantMap(), -1);
             return;
         }
 
@@ -38,7 +58,7 @@ void ScreenRecorder::start() {
             s = Recording;
             emit stateChanged(Recording);
         } else {
-            ndbus->Notify("theShell", 0, "", tr("Screen Recorder"), tr("Couldn't start screen recording"), QStringList(), QVariantMap(), -1);
+            NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Screen Recorder"), tr("Couldn't start screen recording"), QStringList(), QVariantMap(), -1);
         }
 
     }
@@ -73,17 +93,18 @@ void ScreenRecorder::recorderFinished(int returnCode) {
         actions.append("View");
         actions.append("del");
         actions.append("Delete");
-        uint nId = ndbus->Notify("theShell", 0, "", tr("Screen Recorder"), tr("Screen Recording saved in Recordings folder"), actions, QVariantMap(), -1);
-        connect(ndbus, &NotificationsDBusAdaptor::ActionInvoked, [=](uint id, QString key) {
-            if (id == nId) {
-                if (key == "view") {
-                    QProcess::startDetached("xdg-open \"" + filename + "\"");
-                } else if (key == "del") {
-                    QFile(filename).remove();
+        NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Screen Recorder"), tr("Screen Recording saved in Recordings folder"), actions, QVariantMap(), -1)->then([=](uint nId) {
+            connect(NotificationsDBusAdaptor::instance(), &NotificationsDBusAdaptor::ActionInvoked, [=](uint id, QString key) {
+                if (id == nId) {
+                    if (key == "view") {
+                        QProcess::startDetached("xdg-open \"" + filename + "\"");
+                    } else if (key == "del") {
+                        QFile(filename).remove();
+                    }
                 }
-            }
+            });
         });
     } else {
-        ndbus->Notify("theShell", 0, "", tr("Screen Recorder"), tr("Screen Recording failed"), QStringList(), QVariantMap(), -1);
+        NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Screen Recorder"), tr("Screen Recording failed"), QStringList(), QVariantMap(), -1);
     }
 }

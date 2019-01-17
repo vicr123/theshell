@@ -1,3 +1,23 @@
+/****************************************
+ *
+ *   theShell - Desktop Environment
+ *   Copyright (C) 2019 Victor Tran
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * *************************************/
+
 #include "bluetoothmanagement.h"
 #include "ui_bluetoothmanagement.h"
 
@@ -55,12 +75,24 @@ BluetoothManagement::BluetoothManagement(QWidget *parent) :
     connect(ui->deviceList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(selectedDeviceChanged(QModelIndex,QModelIndex)));
     connect(ui->transfersList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(selectedTransferChanged(QModelIndex,QModelIndex)));
 
-    connect(mgr, SIGNAL(adapterAdded(AdapterPtr)), this, SLOT(updateAdapters()));
-    connect(mgr, SIGNAL(adapterChanged(AdapterPtr)), this, SLOT(updateAdapters()));
-    connect(mgr, SIGNAL(adapterRemoved(AdapterPtr)), this, SLOT(updateAdapters()));
     connect(mgr, SIGNAL(allAdaptersRemoved()), this, SLOT(updateAdapters()));
     connect(mgr, &BluezQt::Manager::deviceChanged, [=](BluezQt::DevicePtr device) {
         if (currentDevice == device) loadCurrentDevice();
+    });
+    connect(mgr, &BluezQt::Manager::adapterAdded, [=](BluezQt::AdapterPtr adapter) {
+        sendMessage("register-switch", QVariantList() << tr("Bluetooth") << adapter->isPowered() << adapter->address());
+        updateAdapters();
+    });
+    connect(mgr, &BluezQt::Manager::adapterRemoved, [=](BluezQt::AdapterPtr adapter) {
+        uint key = adapterSwitches.key(adapter);
+        sendMessage("deregister-switch", QVariantList() << key);
+        adapterSwitches.remove(key);
+        updateAdapters();
+    });
+    connect(mgr, &BluezQt::Manager::adapterChanged, [=](BluezQt::AdapterPtr adapter) {
+        uint key = adapterSwitches.key(adapter);
+        sendMessage("set-switch", QVariantList() << key << adapter->isPowered());
+        updateAdapters();
     });
 
     ui->menuStackedWidget->setFixedWidth(250 * getDPIScaling());
@@ -88,7 +120,34 @@ int BluetoothManagement::position() {
 }
 
 void BluetoothManagement::message(QString name, QVariantList args) {
+    if (name == "switch-registered") {
+        BluezQt::AdapterPtr adapter = mgr->adapterForAddress(args.at(1).toString());
+        if (!adapter.isNull()) {
+            adapterSwitches.insert(args.first().toUInt(), adapter);
+        }
+    } else if (name == "switch-toggled") {
+        BluezQt::AdapterPtr adapter = adapterSwitches.value(args.first().toUInt());
+        if (!adapter.isNull()) {
+            adapter->setPowered(args.at(1).toBool());
+        }
+    } else if (name == "flight-mode-changed") {
+        bool flightModeOn = args.first().toBool();
 
+        if (flightModeOn) {
+            //Disable all Bluetooth adapters
+            for (BluezQt::AdapterPtr adapter : mgr->adapters()) {
+                adapter->setProperty("poweredBeforeFlightMode", adapter->isPowered());
+                adapter->setPowered(false);
+            }
+        } else {
+            //Enable bluetooth adapters that were powered
+            for (BluezQt::AdapterPtr adapter : mgr->adapters()) {
+                if (adapter->property("poweredBeforeFlightMode").toBool()) {
+                    adapter->setPowered(true);
+                }
+            }
+        }
+    }
 }
 
 void BluetoothManagement::changeEvent(QEvent *event) {

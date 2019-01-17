@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,8 +21,6 @@
 #include "notificationappgroup.h"
 #include "ui_notificationappgroup.h"
 
-extern float getDPIScaling();
-
 NotificationAppGroup::NotificationAppGroup(QString appIdentifier, QIcon appIcon, QString appName, QWidget *parent) :
     QFrame(parent),
     ui(new Ui::NotificationAppGroup)
@@ -32,7 +30,7 @@ NotificationAppGroup::NotificationAppGroup(QString appIdentifier, QIcon appIcon,
     this->appIcon = appIcon;
     this->appIdentifier = appIdentifier;
 
-    ui->appIcon->setPixmap(appIcon.pixmap(24 * getDPIScaling(), 24 * getDPIScaling()));
+    ui->appIcon->setPixmap(appIcon.pixmap(24 * theLibsGlobal::getDPIScaling(), 24 * theLibsGlobal::getDPIScaling()));
     ui->appName->setText(appName);
 
     //this->setFixedHeight(0);
@@ -92,6 +90,7 @@ void NotificationAppGroup::AddNotification(NotificationObject *object) {
             //Remove layout constraints
             this->setFixedSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
         });
+        connect(this, &QObject::destroyed, anim, &tVariantAnimation::deleteLater);
         anim->start();
     });
 

@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -42,15 +42,6 @@ AudioManager::AudioManager(QObject *parent) : QObject(parent)
     } else {
         pulseAvailable = true;
     }
-
-    quietModeWatcher = new QTimer();
-    quietModeWatcher->setInterval(1000);
-    connect(quietModeWatcher, &QTimer::timeout, [=] {
-        if (QDateTime::currentDateTime() > quietModeOff) {
-            setQuietMode(none);
-            quietModeWatcher->stop();
-        }
-    });
 }
 
 void AudioManager::changeVolume(int volume) {
@@ -354,14 +345,5 @@ QString AudioManager::getCurrentQuietModeDescription() {
             return tr("Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won't play sounds.");
         case mute:
             return tr("Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.");
-    }
-}
-
-void AudioManager::setQuietModeResetTime(QDateTime time) {
-    if (time.isValid()) {
-        quietModeOff = time;
-        quietModeWatcher->start();
-    } else {
-        quietModeWatcher->stop();
     }
 }

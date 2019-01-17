@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,9 +22,6 @@
 #include "notificationswidget.h"
 #include "notificationobject.h"
 #include "audiomanager.h"
-#include "internationalisation.h"
-
-extern AudioManager* AudioMan;
 
 NotificationsDBusAdaptor::NotificationsDBusAdaptor(QObject *parent)
     : QDBusAbstractAdaptor(parent)
@@ -56,7 +53,7 @@ QStringList NotificationsDBusAdaptor::GetCapabilities()
 QString NotificationsDBusAdaptor::GetServerInformation(QString &vendor, QString &version, QString &spec_version)
 {
     vendor = "theSuite";
-    version = TS_VERSION;
+    version = "8.1";
     spec_version = "1.2";
     return "theShell";
 }
@@ -108,7 +105,7 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
         }
 
         bool postNotification = true;
-        if (AudioMan->QuietMode() == AudioManager::notifications && !applicationNotifications->value(app_name + "/bypassQuiet", false).toBool()) {
+        if (AudioManager::instance()->QuietMode() == AudioManager::notifications && !applicationNotifications->value(app_name + "/bypassQuiet", false).toBool()) {
             QStringList allowedCategories;
             allowedCategories.append("battery.low");
             allowedCategories.append("battery.critical");
@@ -117,12 +114,12 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
                 postNotification = false;
                 emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
             }
-        } else if (AudioMan->QuietMode() == AudioManager::critical && !applicationNotifications->value(app_name + "/bypassQuiet", false).toBool()) {
+        } else if (AudioManager::instance()->QuietMode() == AudioManager::critical && !applicationNotifications->value(app_name + "/bypassQuiet", false).toBool()) {
             if (hints.value("urgency", 1).toInt() != 2) {
                 postNotification = false;
                 emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
             }
-        } else if (AudioMan->QuietMode() == AudioManager::mute) {
+        } else if (AudioManager::instance()->QuietMode() == AudioManager::mute) {
             postNotification = false;
             emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
         }

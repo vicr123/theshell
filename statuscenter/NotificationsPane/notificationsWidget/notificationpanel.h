@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,56 +18,53 @@
  *
  * *************************************/
 
-#ifndef NOTIFICATIONAPPGROUP_H
-#define NOTIFICATIONAPPGROUP_H
+#ifndef NOTIFICATIONPANEL_H
+#define NOTIFICATIONPANEL_H
 
-#include <QFrame>
-#include "notificationpanel.h"
-#include "tvariantanimation.h"
+#include <QWidget>
+#include <QMouseEvent>
+#include <QTimer>
+#include "notificationobject.h"
+#include "tpropertyanimation.h"
 
 namespace Ui {
-class NotificationAppGroup;
+class NotificationPanel;
 }
 
-class NotificationAppGroup : public QFrame
+class NotificationPanel : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit NotificationAppGroup(QString appIdentifier, QIcon appIcon, QString appName, QWidget *parent = 0);
-    ~NotificationAppGroup();
+    explicit NotificationPanel(NotificationObject* object, QWidget *parent = 0);
+    ~NotificationPanel();
 
-    QString getIdentifier();
-
-    int count();
+    NotificationObject* getObject();
 
 public slots:
-    void AddNotification(NotificationObject* object);
-
-    void clearAll();
-
-    void updateCollapsedCounter();
+    void collapseHide();
+    void expandHide();
+    void toggleExpandNormal();
+    void updateTime();
 
 private slots:
+    void updateParameters();
 
-    void on_closeAllNotificationsButton_clicked();
+    void closeNotification(NotificationObject::NotificationCloseReason reason);
 
-    void on_collapsedLabel_clicked();
-
-    void on_expandNotificationsButton_clicked();
+    void on_closeButton_clicked();
 
 signals:
-    void notificationCountChanged();
+    void dismissed();
 
 private:
-    Ui::NotificationAppGroup *ui;
-
-    QString appIdentifier;
-    QIcon appIcon;
+    Ui::NotificationPanel *ui;
 
     bool expanded = false;
 
-    QList<NotificationPanel*> notifications;
+    void mouseReleaseEvent(QMouseEvent* event);
+
+    NotificationObject* object;
 };
 
-#endif // NOTIFICATIONAPPGROUP_H
+#endif // NOTIFICATIONPANEL_H

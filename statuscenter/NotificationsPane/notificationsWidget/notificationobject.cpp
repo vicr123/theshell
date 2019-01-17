@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #include "notificationobject.h"
 
 int NotificationObject::currentId = 0;
-extern AudioManager* AudioMan;
 
 const QDBusArgument &operator<<(QDBusArgument &argument, const ImageData &d) {
     argument.beginStructure();
@@ -200,9 +199,9 @@ void NotificationObject::post() {
     }
 
     //Play sounds if requested
-    if (!hints.value("suppress-sound", false).toBool() && !(AudioMan->QuietMode() == AudioManager::notifications || AudioMan->QuietMode() == AudioManager::mute) && notificationAppSettings->value(appName + "/sounds", true).toBool()) {
+    if (!hints.value("suppress-sound", false).toBool() && !(AudioManager::instance()->QuietMode() == AudioManager::notifications || AudioManager::instance()->QuietMode() == AudioManager::mute) && notificationAppSettings->value(appName + "/sounds", true).toBool()) {
         if (settings.value("notifications/attenuate", true).toBool()) {
-            AudioMan->attenuateStreams();
+            AudioManager::instance()->attenuateStreams();
         }
 
         if (hints.contains("sound-file")) {
@@ -217,7 +216,7 @@ void NotificationObject::post() {
                 if (state == QMediaPlayer::StoppedState) {
                     player->deleteLater();
                     if (settings.value("notifications/attenuate", true).toBool()) {
-                        AudioMan->restoreStreams();
+                        AudioManager::instance()->restoreStreams();
                     }
                 }
             });
@@ -237,7 +236,7 @@ void NotificationObject::post() {
 
             if (settings.value("notifications/attenuate", true).toBool()) {
                 connect(sound, &QSoundEffect::playingChanged, [=]() {
-                    AudioMan->restoreStreams();
+                    AudioManager::instance()->restoreStreams();
                 });
             }
         }

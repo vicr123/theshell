@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -51,6 +51,7 @@
 #include <cxxabi.h>
 #include <QFile>
 #include "location/locationdaemon.h"
+#include <QDBusMetaType>
 
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
@@ -62,7 +63,6 @@ LocationServices* locationServices = NULL;
 QDBusServiceWatcher* dbusServiceWatcher = NULL;
 QDBusServiceWatcher* dbusServiceWatcherSystem = NULL;
 UPowerDBus* updbus = NULL;
-NotificationsDBusAdaptor* ndbus = NULL;
 DBusSignals* dbusSignals = NULL;
 QSettings::Format desktopFileFormat;
 LocationDaemon* geolocation = nullptr;
@@ -307,12 +307,6 @@ int main(int argc, char *argv[])
 
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerService("org.thesuite.theshell");
-
-    QObject* notificationParent = new QObject();
-    ndbus = new NotificationsDBusAdaptor(notificationParent);
-
-    dbus.registerObject("/org/freedesktop/Notifications", "org.freedesktop.Notifications", notificationParent);
-    dbus.registerService("org.freedesktop.Notifications");
 
     dbusSignals = new DBusSignals();
 

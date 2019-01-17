@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,7 +30,8 @@
 #include <QSystemTrayIcon>
 #include <QSoundEffect>
 #include "endsessionwait.h"
-#include "notificationsWidget/notificationsdbusadaptor.h"
+#include <QDBusConnection>
+#include <QDBusUnixFileDescriptor>
 
 #include <X11/Xlib.h>
 

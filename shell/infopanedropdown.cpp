@@ -1,7 +1,7 @@
 /****************************************
  *
  *   theShell - Desktop Environment
- *   Copyright (C) 2018 Victor Tran
+ *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include <QScroller>
 #include <tvirtualkeyboard.h>
 #include "location/locationdaemon.h"
+#include <notificationsdbusadaptor.h>
 
 #include <QShortcut>
 
@@ -39,7 +40,6 @@ extern float getDPIScaling();
 extern QDBusServiceWatcher* dbusServiceWatcher;
 extern QDBusServiceWatcher* dbusServiceWatcherSystem;
 extern UPowerDBus* updbus;
-extern NotificationsDBusAdaptor* ndbus;
 extern DBusSignals* dbusSignals;
 extern LocationServices* locationServices;
 extern LocationDaemon* geolocation;
@@ -67,12 +67,12 @@ class InfoPaneDropdownPrivate {
         bool draggingInfoPane = false;
         int overrideRedshift = 0;
 
-        QMap<int, QFrame*> notificationFrames;
         QMap<QString, QFrame*> printersFrames;
         QMap<QString, QLabel*> printersStats;
         QMap<QString, QFrame*> printersStatFrames;
         QMap<QString, QString> connectedNetworks;
         QMap<QWidget*, StatusCenterPaneObject*> pluginObjects;
+        QMap<StatusCenterPaneObject*, ClickableLabel*> pluginLabels;
         QList<StatusCenterPane*> loadedPlugins;
 
         int pluginsSettingsStartIndex;
@@ -105,7 +105,8 @@ class InfoPaneDropdownPrivate {
         bool chartScrolling = false;
         int startValue;
 
-        QList<Switch*> pluginSwitches;
+        QMap<uint, Switch*> pluginSwitches;
+        uint numberOfSwitches = 0;
 
         int previousDragY;
         WId MainWindowId;
@@ -116,6 +117,15 @@ class InfoPaneDropdownPrivate {
 
         QJsonObject timezoneData;
         QNetworkAccessManager mgr;
+
+        void broadcastMessage(QString name, QVariantList args = QVariantList()) {
+            //Go through each plugin to make sure plugins registered as daemons also get sent messages
+            for (StatusCenterPane* plugin : loadedPlugins) {
+                for (StatusCenterPaneObject* pane : plugin->availablePanes()) {
+                    pane->message(name, args);
+                }
+            }
+        }
 };
 
 InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
@@ -136,7 +146,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     d->startTime.start();
 
-    ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2018"));
+    ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2019"));
     ui->usesLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
 
     connect(this, SIGNAL(flightModeChanged(bool)), ui->NetworkManager, SLOT(flightModeChanged(bool)));
@@ -147,13 +157,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     }
 
     d->MainWindowId = MainWindowId;
-
-    connect(ui->notificationsWidget, SIGNAL(numNotificationsChanged(int)), this, SIGNAL(numNotificationsChanged(int)));
-
-    connect(dbusServiceWatcher, SIGNAL(serviceRegistered(QString)), this, SLOT(DBusServiceRegistered(QString)));
-    connect(dbusServiceWatcher, SIGNAL(serviceUnregistered(QString)), this, SLOT(DBusServiceUnregistered(QString)));
-    connect(dbusServiceWatcherSystem, SIGNAL(serviceRegistered(QString)), this, SLOT(DBusServiceRegistered(QString)));
-    connect(dbusServiceWatcherSystem, SIGNAL(serviceUnregistered(QString)), this, SLOT(DBusServiceUnregistered(QString)));
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateSysInfo()));
@@ -178,7 +181,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     ui->BatteryChargeScrollBar->setVisible(false);
     ui->appNotificationsConfigureLock->setVisible(false);
-    ui->quietModeExtras->setFixedHeight(0);
     //ui->networkKey->setVisible(false);
     //ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
@@ -273,19 +275,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     connect(ui->NetworkManager, SIGNAL(updateBarDisplay(QString,QIcon)), this, SIGNAL(networkLabelChanged(QString,QIcon)));
 
     ui->WifiSwitch->setChecked(networkInterface.property("WirelessEnabled").toBool());
-
-    {
-        QDBusInterface interface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus());
-        QDBusConnection::sessionBus().connect("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", "BluetoothEnabledChanged", this, SLOT(bluetoothEnabledChanged()));
-
-        if (interface.isValid()) {
-            DBusServiceRegistered("org.thesuite.tsbt");
-        } else {
-            DBusServiceUnregistered("org.thesuite.tsbt");
-        }
-
-        dbusServiceWatcher->addWatchedService("org.thesuite.tsbt");
-    }
 
     //Load icons into icon theme box
     {
@@ -688,35 +677,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     d->ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
 
     connect(AudioMan, &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
-        ui->quietModeSound->setChecked(false);
-        ui->quietModeCriticalOnly->setChecked(false);
-        ui->quietModeNotification->setChecked(false);
-        ui->quietModeMute->setChecked(false);
-        ui->quietModeForeverButton->setEnabled(true);
-        ui->quietModeTurnOffAt->setEnabled(true);
-        ui->quietModeTurnOffIn->setEnabled(true);
-
-        if (mode == AudioManager::none) {
-            ui->quietModeSound->setChecked(true);
-
-            ui->quietModeForeverButton->setEnabled(false);
-            ui->quietModeTurnOffAt->setEnabled(false);
-            ui->quietModeTurnOffIn->setEnabled(false);
-            ui->quietModeForeverButton->setChecked(true);
-        } else if (mode == AudioManager::notifications) {
-            ui->quietModeNotification->setChecked(true);
-        } else if (mode == AudioManager::critical) {
-            ui->quietModeCriticalOnly->setChecked(true);
-        } else {
-            ui->quietModeMute->setChecked(true);
-        }
-        ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
+        d->broadcastMessage("quiet-mode-changed", {(int) mode});
     });
-    ui->quietModeForeverButton->setChecked(true);
-    ui->quietModeForeverButton->setEnabled(false);
-    ui->quietModeTurnOffAt->setEnabled(false);
-    ui->quietModeTurnOffIn->setEnabled(false);
-    ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
 
     d->slice1.setStartValue((float) (this->width() - 250 * getDPIScaling()));
     d->slice1.setEndValue((float) (this->width() - 300 * getDPIScaling()));
@@ -819,6 +781,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                                     });
 
                                     loadedPanes.append(pane->name());
+                                    d->pluginLabels.insert(pane, label);
                                 }
                             }
 
@@ -847,6 +810,9 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
                         pane->sendMessage = [=](QString message, QVariantList args) {
                             this->pluginMessage(message, args, pane);
+                        };
+                        pane->getProperty = [=](QString key) {
+                            return this->pluginProperty(key);
                         };
                         d->pluginObjects.insert(pane->mainWidget(), pane);
                     }
@@ -935,24 +901,6 @@ InfoPaneNotOnTopLocker::InfoPaneNotOnTopLocker(InfoPaneDropdown *infoPane) {
 InfoPaneNotOnTopLocker::~InfoPaneNotOnTopLocker() {
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     infoPane->showNoAnimation();
-}
-
-void InfoPaneDropdown::DBusServiceRegistered(QString serviceName) {
-    if (serviceName == "org.thesuite.tsbt") {
-        QDBusInterface interface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus());
-        ui->BluetoothSwitch->setEnabled(true);
-        ui->BluetoothSwitch->setChecked(interface.property("BluetoothEnabled").toBool());
-    }
-}
-
-void InfoPaneDropdown::DBusServiceUnregistered(QString serviceName) {
-    if (serviceName == "org.thesuite.tsbt") {
-        ui->BluetoothSwitch->setEnabled(false);
-    }
-}
-
-void InfoPaneDropdown::bluetoothEnabledChanged() {
-    ui->BluetoothSwitch->setChecked(QDBusInterface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus()).property("BluetoothEnabled").toBool());
 }
 
 void InfoPaneDropdown::newNetworkDevice(QDBusObjectPath device) {
@@ -1174,7 +1122,10 @@ void InfoPaneDropdown::processTimer() {
 }
 
 void InfoPaneDropdown::show(dropdownType showWith) {
-    changeDropDown(showWith, false);
+    if (showWith != None) {
+        changeDropDown(showWith, false);
+    }
+
     if (!this->isVisible()) {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
@@ -1247,10 +1198,6 @@ void InfoPaneDropdown::close() {
     });
     connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
     a->start();
-
-    if (ui->quietModeExtras->height() != 0) {
-        ui->quietModeExpandButton->click();
-    }
 }
 
 void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
@@ -1272,14 +1219,6 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
                 setHeaderColour(QColor(200, 150, 0));
             } else {
                 setHeaderColour(QColor(100, 50, 0));
-            }
-            break;
-        case Notifications:
-            changeDropDown(ui->notificationsFrame, ui->notificationsLabel, doAnimation);
-            if (ui->lightColorThemeRadio->isChecked()) {
-                setHeaderColour(QColor(200, 50, 100));
-            } else {
-                setHeaderColour(QColor(100, 25, 50));
             }
             break;
         case Network:
@@ -1335,12 +1274,6 @@ void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, 
             setHeaderColour(QColor(200, 150, 0));
         } else {
             setHeaderColour(QColor(100, 50, 0));
-        }
-    } else if (changeTo == ui->notificationsFrame) {
-        if (ui->lightColorThemeRadio->isChecked()) {
-            setHeaderColour(QColor(200, 50, 100));
-        } else {
-            setHeaderColour(QColor(100, 25, 50));
         }
     } else if (changeTo == ui->networkFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
@@ -1433,11 +1366,6 @@ void InfoPaneDropdown::on_networkLabel_clicked()
     changeDropDown(Network);
 }
 
-void InfoPaneDropdown::on_notificationsLabel_clicked()
-{
-    changeDropDown(Notifications);
-}
-
 void InfoPaneDropdown::on_pushButton_7_clicked()
 {
     changeDropDown(Settings);
@@ -1496,69 +1424,6 @@ void InfoPaneDropdown::on_redshiftIntensity_valueChanged(int value)
 {
     d->settings.setValue("display/redshiftIntensity", value);
 }
-
-void InfoPaneDropdown::newNotificationReceived(int id, QString summary, QString body, QIcon icon) {
-    if (d->notificationFrames.keys().contains(id)) { //Notification already exists, update it.
-        QFrame* frame = d->notificationFrames.value(id);
-        frame->property("summaryLabel").value<QLabel*>()->setText(summary);
-        frame->property("bodyLabel").value<QLabel*>()->setText(body);
-    } else {
-        QFrame* frame = new QFrame();
-        QHBoxLayout* layout = new QHBoxLayout();
-        layout->setMargin(0);
-        frame->setLayout(layout);
-
-        QLabel* iconLabel = new QLabel();
-        iconLabel->setPixmap(icon.pixmap(22 * getDPIScaling(), 22 * getDPIScaling()));
-        layout->addWidget(iconLabel);
-
-        QLabel* sumLabel = new QLabel();
-        sumLabel->setText(summary);
-        QFont font = sumLabel->font();
-        font.setBold(true);
-        sumLabel->setFont(font);
-        layout->addWidget(sumLabel);
-
-        QLabel* bodyLabel = new QLabel();
-        bodyLabel->setText(body);
-        bodyLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        layout->addWidget(bodyLabel);
-
-        QLabel* dateLabel = new QLabel();
-        dateLabel->setText(QDateTime::currentDateTime().toString("HH:mm:ss"));
-        layout->addWidget(dateLabel);
-
-        QPushButton* button = new QPushButton();
-        button->setIcon(QIcon::fromTheme("window-close"));
-        connect(button, &QPushButton::clicked, [=]() {
-            emit closeNotification(id);
-        });
-        layout->addWidget(button);
-
-        //ui->notificationsList->layout()->addWidget(frame);
-        //ui->noNotifications->setVisible(false);
-        frame->setProperty("summaryLabel", QVariant::fromValue(sumLabel));
-        frame->setProperty("bodyLabel", QVariant::fromValue(bodyLabel));
-
-        d->notificationFrames.insert(id, frame);
-
-        emit numNotificationsChanged(d->notificationFrames.count());
-    }
-}
-
-void InfoPaneDropdown::removeNotification(int id) {
-    if (d->notificationFrames.keys().contains(id)) {
-        delete d->notificationFrames.value(id);
-        d->notificationFrames.remove(id);
-    }
-
-    emit numNotificationsChanged(d->notificationFrames.count());
-
-    if (d->notificationFrames.count() == 0) {
-        //ui->noNotifications->setVisible(true);
-    }
-}
-
 
 void InfoPaneDropdown::on_redshiftPause_toggled(bool checked)
 {
@@ -1762,11 +1627,6 @@ void InfoPaneDropdown::on_barDesktopsSwitch_toggled(bool checked)
     d->settings.setValue("bar/showWindowsFromOtherDesktops", checked);
 }
 
-void InfoPaneDropdown::on_BluetoothSwitch_toggled(bool checked)
-{
-    QDBusInterface("org.thesuite.tsbt", "/org/thesuite/tsbt", "org.thesuite.tsbt", QDBusConnection::sessionBus()).setProperty("BluetoothEnabled", checked);
-}
-
 void InfoPaneDropdown::on_SuperkeyGatewaySwitch_toggled(bool checked)
 {
     d->settings.setValue("input/superkeyGateway", checked);
@@ -1800,7 +1660,6 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
     QWidget* switchingWidget = ui->pageStack->widget(switchTo);
     ui->clockLabel->setShowDisabled(true);
     ui->batteryLabel->setShowDisabled(true);
-    ui->notificationsLabel->setShowDisabled(true);
     ui->networkLabel->setShowDisabled(true);
     //ui->printLabel->setShowDisabled(true);
     ui->kdeconnectLabel->setShowDisabled(true);
@@ -1809,8 +1668,7 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
         ui->clockLabel->setShowDisabled(false);
     } else if (switchingWidget == ui->statusFrame) {
         ui->batteryLabel->setShowDisabled(false);
-    } else if (switchingWidget == ui->notificationsFrame) {
-        ui->notificationsLabel->setShowDisabled(false);
+
     } else if (switchingWidget == ui->networkFrame) {
         ui->networkLabel->setShowDisabled(false);
     /*} else if (switchingWidget == ui->printFrame) {
@@ -2155,13 +2013,14 @@ void InfoPaneDropdown::doNetworkCheck() {
                     hints.insert("category", "network.connected");
                     hints.insert("transient", true);
 
-                    uint notificationId = ndbus->Notify("theShell", 0, "", tr("Network Login"),
+                    NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Network Login"),
                                                tr("Your connection to the internet is blocked by a login page."),
-                                               actions, hints, 30000);
-                    connect(ndbus, &NotificationsDBusAdaptor::ActionInvoked, [=](uint id, QString key) {
-                        if (notificationId == id && key == "login") {
-                            QProcess::startDetached("xdg-open http://nmcheck.gnome.org/");
-                        }
+                                               actions, hints, 30000)->then([=](uint notificationId) {
+                        connect(NotificationsDBusAdaptor::instance(), &NotificationsDBusAdaptor::ActionInvoked, [=](uint id, QString key) {
+                            if (notificationId == id && key == "login") {
+                                QProcess::startDetached("xdg-open http://nmcheck.gnome.org/");
+                            }
+                        });
                     });
                 });
             }
@@ -2628,24 +2487,6 @@ void InfoPaneDropdown::on_TouchInputSwitch_toggled(bool checked)
     d->settings.setValue("input/touch", checked);
 }
 
-void InfoPaneDropdown::on_quietModeSound_clicked()
-{
-    AudioMan->setQuietMode(AudioManager::none);
-    ui->quietModeSound->setChecked(true);
-}
-
-void InfoPaneDropdown::on_quietModeNotification_clicked()
-{
-    AudioMan->setQuietMode(AudioManager::notifications);
-    ui->quietModeNotification->setChecked(true);
-}
-
-void InfoPaneDropdown::on_quietModeMute_clicked()
-{
-    AudioMan->setQuietMode(AudioManager::mute);
-    ui->quietModeMute->setChecked(true);
-}
-
 void InfoPaneDropdown::on_SuspendLockScreen_toggled(bool checked)
 {
     d->settings.setValue("lockScreen/showOnSuspend", checked);
@@ -2723,23 +2564,26 @@ void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
     d->settings.setValue("flightmode/on", checked);
     if (checked) {
         d->settings.setValue("flightmode/wifi", ui->WifiSwitch->isChecked());
-        d->settings.setValue("flightmode/bt", ui->BluetoothSwitch->isChecked());
 
-        //Disable bluetooth and WiFi.
+        //Disable WiFi.
         ui->WifiSwitch->setChecked(false);
-        ui->BluetoothSwitch->setChecked(false);
 
         //Disable WiMAX and mobile networking
         i.setProperty("WwanEnabled", false);
         i.setProperty("WimaxEnabled", false);
+
+        //Tell everyone that we're going into flight mode
+        d->broadcastMessage("flight-mode-changed", {true});
     } else {
-        //Enable bluetooth and WiFi.
+        //Enable WiFi.
         ui->WifiSwitch->setChecked(d->settings.value("flightmode/wifi", true).toBool());
-        ui->BluetoothSwitch->setChecked(d->settings.value("flightmode/bt", true).toBool());
 
         //Enable WiMAX and mobile networking
         i.setProperty("WwanEnabled", true);
         i.setProperty("WimaxEnabled", true);
+
+        //Tell everyone that we're leaving flight mode
+        d->broadcastMessage("flight-mode-changed", {false});
     }
 
     emit flightModeChanged(checked);
@@ -3244,71 +3088,6 @@ void InfoPaneDropdown::on_powerSuspend_valueChanged(int value)
     } else {
         ui->powerSuspendLabel->setText(tr("%n min(s)", NULL, value));
     }
-}
-
-void InfoPaneDropdown::on_quietModeExpandButton_clicked()
-{
-    tVariantAnimation* anim = new tVariantAnimation();
-    anim->setStartValue(ui->quietModeExtras->height());
-    if (ui->quietModeExtras->height() == 0) {
-        anim->setEndValue(ui->quietModeExtras->sizeHint().height());
-        ui->quietModeExpandButton->setIcon(QIcon::fromTheme("go-up"));
-    } else {
-        anim->setEndValue(0);
-        ui->quietModeExpandButton->setIcon(QIcon::fromTheme("go-down"));
-    }
-    anim->setDuration(500);
-    anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
-        ui->quietModeExtras->setFixedHeight(value.toInt());
-    });
-    anim->start();
-}
-
-void InfoPaneDropdown::on_quietModeForeverButton_toggled(bool checked)
-{
-    if (checked) {
-        ui->quietModeTurnOffAtTimer->setVisible(false);
-        ui->quietModeTurnOffInTimer->setVisible(false);
-        AudioMan->setQuietModeResetTime(QDateTime::fromString(""));
-    }
-}
-
-void InfoPaneDropdown::on_quietModeTurnOffIn_toggled(bool checked)
-{
-    if (checked) {
-        ui->quietModeTurnOffAtTimer->setVisible(false);
-        ui->quietModeTurnOffInTimer->setVisible(true);
-
-        QDateTime oneHour = QDateTime::currentDateTime().addSecs(3600);
-        AudioMan->setQuietModeResetTime(oneHour);
-        ui->quietModeTurnOffInTimer->setTime(QTime(1, 0));
-    }
-}
-
-void InfoPaneDropdown::on_quietModeTurnOffAt_toggled(bool checked)
-{
-
-    if (checked) {
-        ui->quietModeTurnOffAtTimer->setVisible(true);
-        ui->quietModeTurnOffInTimer->setVisible(false);
-
-        QDateTime oneHour = QDateTime::currentDateTime().addSecs(3600);
-        AudioMan->setQuietModeResetTime(oneHour);
-        ui->quietModeTurnOffAtTimer->setDateTime(oneHour);
-    }
-}
-
-void InfoPaneDropdown::on_quietModeTurnOffAtTimer_editingFinished()
-{
-    AudioMan->setQuietModeResetTime(ui->quietModeTurnOffAtTimer->dateTime());
-}
-
-void InfoPaneDropdown::on_quietModeTurnOffInTimer_editingFinished()
-{
-    QDateTime timeout = QDateTime::currentDateTime().addMSecs(ui->quietModeTurnOffInTimer->time().msecsSinceStartOfDay());
-    AudioMan->setQuietModeResetTime(timeout);
 }
 
 void InfoPaneDropdown::on_removeAutostartButton_clicked()
@@ -3954,7 +3733,9 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         });
         anim->start(tVariantAnimation::DeleteWhenStopped);
     } else if (message == "register-switch") {
-        uint thisSwitchId = d->pluginSwitches.count();
+        uint thisSwitchId = d->numberOfSwitches;
+        d->numberOfSwitches++;
+
         QBoxLayout* layout = new QBoxLayout(QBoxLayout::LeftToRight);
 
         QFrame* line = new QFrame();
@@ -3970,18 +3751,32 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         connect(s, &Switch::toggled, [=](bool checked) {
             caller->message("switch-toggled", QVariantList() << thisSwitchId << checked);
         });
+        connect(s, &Switch::destroyed, [=] {
+            ui->customSwitches->removeItem(layout);
+            switchLabel->deleteLater();
+            line->deleteLater();
+        });
         if (args.count() >= 2) {
             s->setChecked(args.at(1).toBool());
         }
         layout->addWidget(s);
-        d->pluginSwitches.append(s);
+        d->pluginSwitches.insert(thisSwitchId, s);
 
         ui->customSwitches->addLayout(layout);
 
-        caller->message("switch-registered", QVariantList() << thisSwitchId << args.first().toString());
+        if (args.count() >= 3) {
+            caller->message("switch-registered", QVariantList() << thisSwitchId << args.at(2));
+        } else {
+            caller->message("switch-registered", QVariantList() << thisSwitchId << args.first().toString());
+        }
     } else if (message == "toggle-switch") {
         Switch* s = d->pluginSwitches.value(args.first().toUInt());
         s->setChecked(args.last().toBool());
+    } else if (message == "set-switch") {
+        Switch* s = d->pluginSwitches.value(args.first().toUInt());
+        s->setChecked(args.at(1).toBool());
+    } else if (message == "deregister-switch") {
+        d->pluginSwitches.value(args.first().toUInt())->deleteLater();
     } else if (message == "attenuate") {
         if (args.first() == true) {
             AudioMan->attenuateStreams();
@@ -3996,7 +3791,35 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         emit statusBarProgressFinished(args.first().toString(), args.at(1).toString());
     } else if (message == "jobUpdate") {
         emit statusBarProgress(args.first().toString(), args.at(1).toString(), args.at(2).toUInt());
+    } else if (message == "set-quiet-mode") {
+        AudioMan->setQuietMode((AudioManager::quietMode) args.first().toInt());
+    } else if (message == "show") {
+        if (caller->type() == StatusCenterPaneObject::Informational) {
+            this->show(None);
+
+            this->changeDropDown(caller->mainWidget(), d->pluginLabels.value(caller), false);
+            if (ui->lightColorThemeRadio->isChecked()) {
+                setHeaderColour(caller->informationalAttributes.lightColor);
+            } else {
+                setHeaderColour(caller->informationalAttributes.darkColor);
+            }
+        } else {
+            this->show(Settings);
+
+            int row = ui->settingsTabs->indexOf(caller->mainWidget());
+            ui->settingsList->setCurrentRow(row);
+            on_settingsList_itemActivated(ui->settingsList->item(row));
+        }
+    } else if (message == "register-chunk") {
+        emit newChunk(args.first().value<QWidget*>());
     }
+}
+
+QVariant InfoPaneDropdown::pluginProperty(QString key) {
+    if (key == "current-quiet-mode-description") {
+        return AudioMan->getCurrentQuietModeDescription();
+    }
+    return QVariant();
 }
 
 void InfoPaneDropdown::on_settingsList_itemActivated(QListWidgetItem *item)
@@ -4005,12 +3828,6 @@ void InfoPaneDropdown::on_settingsList_itemActivated(QListWidgetItem *item)
     if (!setting.isNull() && setting.toInt() != -1) {
         ui->settingsListStack->setCurrentIndex(setting.toInt());
     }
-}
-
-void InfoPaneDropdown::on_quietModeCriticalOnly_clicked()
-{
-    AudioMan->setQuietMode(AudioManager::critical);
-    ui->quietModeCriticalOnly->setChecked(true);
 }
 
 void InfoPaneDropdown::on_powerSuspendNormally_toggled(bool checked)

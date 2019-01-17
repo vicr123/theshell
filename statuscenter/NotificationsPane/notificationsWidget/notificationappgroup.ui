@@ -120,7 +120,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="ClickableLabel" name="collapsedLabel">
+       <widget class="QLabel" name="collapsedLabel">
         <property name="text">
          <string notr="true">%1 collapsed notifications</string>
         </property>
@@ -134,16 +134,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>ClickableLabel</class>
-   <extends>QLabel</extends>
-   <header>clickablelabel.h</header>
-   <slots>
-    <signal>clicked()</signal>
-   </slots>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
