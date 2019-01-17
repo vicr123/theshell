@@ -2300,73 +2300,73 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="622"/>
-        <location filename="../mainwindow.cpp" line="326"/>
+        <location filename="../mainwindow.cpp" line="328"/>
         <source>Quiet Mode</source>
         <translation>Stille modus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="374"/>
+        <location filename="../mainwindow.cpp" line="376"/>
         <source>Recording Screen</source>
         <translation>Scherm wordt opgenomen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="380"/>
+        <location filename="../mainwindow.cpp" line="382"/>
         <source>Processing Screen Recording...</source>
         <translation>Schermopname verwerken...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="444"/>
+        <location filename="../mainwindow.cpp" line="446"/>
         <source>For %1</source>
         <translation>Voor %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="445"/>
+        <location filename="../mainwindow.cpp" line="447"/>
         <source>Close</source>
         <translation>Sluit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="693"/>
+        <location filename="../mainwindow.cpp" line="695"/>
         <source>Desktop %1</source>
         <translation>Bureaublad %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2189"/>
+        <location filename="../mainwindow.cpp" line="2191"/>
         <source>For Bar</source>
         <translation>Voor Bar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2191"/>
+        <location filename="../mainwindow.cpp" line="2193"/>
         <source>Move to bottom</source>
         <translation>Verplaats naar de bodem</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2196"/>
+        <location filename="../mainwindow.cpp" line="2198"/>
         <source>Move to top</source>
         <translation>Verplaats naar de top</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2202"/>
+        <location filename="../mainwindow.cpp" line="2204"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2207"/>
+        <location filename="../mainwindow.cpp" line="2209"/>
         <source>For System</source>
         <translation>Voor systeem</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="2208"/>
+        <location filename="../mainwindow.cpp" line="2210"/>
         <source>Open Status Center</source>
         <translation type="unfinished">Open Status Center</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2211"/>
+        <location filename="../mainwindow.cpp" line="2213"/>
         <source>Open System Settings</source>
         <translation type="unfinished">Open Systeem Instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2220"/>
+        <location filename="../mainwindow.cpp" line="2222"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3466,131 +3466,131 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>Kon geen batterijinformatie ophalen.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="120"/>
-        <location filename="../upowerdbus.cpp" line="137"/>
-        <location filename="../upowerdbus.cpp" line="319"/>
+        <location filename="../upowerdbus.cpp" line="122"/>
+        <location filename="../upowerdbus.cpp" line="139"/>
+        <location filename="../upowerdbus.cpp" line="321"/>
         <source>Charging</source>
         <translation>Opladen</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="127"/>
+        <location filename="../upowerdbus.cpp" line="129"/>
         <source>The power cable has been plugged in and the battery is now being charged. Power Stretch has been turned off.</source>
         <translation>De oplaadkabel is ingeplugd en de batterij wordt nu opgeladen. Batterijbesparing is uitgeschakeld.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="129"/>
+        <location filename="../upowerdbus.cpp" line="131"/>
         <source>The power cable has been plugged in and the battery is now being charged.</source>
         <translation>De oplaadkabel is ingeplugd en de batterij wordt nu opgeladen.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="169"/>
-        <location filename="../upowerdbus.cpp" line="322"/>
+        <location filename="../upowerdbus.cpp" line="171"/>
+        <location filename="../upowerdbus.cpp" line="324"/>
         <source>Discharging</source>
         <translation>Op batterij</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="170"/>
+        <location filename="../upowerdbus.cpp" line="172"/>
         <source>The power cable has been removed, and your PC is now running on battery power.</source>
         <translation>De oplaadkabel is verwijderd, en uw PC draait nu op de batterij.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="189"/>
-        <location filename="../upowerdbus.cpp" line="210"/>
-        <location filename="../upowerdbus.cpp" line="231"/>
+        <location filename="../upowerdbus.cpp" line="191"/>
+        <location filename="../upowerdbus.cpp" line="212"/>
+        <location filename="../upowerdbus.cpp" line="233"/>
         <source>Turn on Power Stretch</source>
         <translation>Zet batterijbesparing aan</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="191"/>
+        <location filename="../upowerdbus.cpp" line="193"/>
         <source>Battery Critically Low</source>
         <translation>Batterij Kritisch Laag</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="192"/>
+        <location filename="../upowerdbus.cpp" line="194"/>
         <source>You have about 10 minutes of battery remaining. Either plug in your PC or save your work and power off the PC and change the battery.</source>
         <translation>U heeft ongeveer 10 minuten stroom over. Plug u PC in of sla uw werk op en schakel de PC uit en laad de batterij op.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="213"/>
+        <location filename="../upowerdbus.cpp" line="215"/>
         <source>Battery Low</source>
         <translation>Batterij Laag</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="214"/>
+        <location filename="../upowerdbus.cpp" line="216"/>
         <source>You have about half an hour of battery remaining. You should plug in your PC now.</source>
         <translation>U heeft ongeveer een half uur stroom over. U zou uw PC nu moeten inpluggen.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="234"/>
+        <location filename="../upowerdbus.cpp" line="236"/>
         <source>Battery Warning</source>
         <translation>Batterij Waarschuwing</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="235"/>
+        <location filename="../upowerdbus.cpp" line="237"/>
         <source>You have about an hour of battery remaining. You may want to plug in your PC now.</source>
         <translation>U heeft ongeveer een half uur strom over. U wilt misschien uw PC nu inpluggen.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="252"/>
-        <location filename="../upowerdbus.cpp" line="325"/>
+        <location filename="../upowerdbus.cpp" line="254"/>
+        <location filename="../upowerdbus.cpp" line="327"/>
         <source>Empty</source>
         <translation>Leeg</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="256"/>
-        <location filename="../upowerdbus.cpp" line="329"/>
+        <location filename="../upowerdbus.cpp" line="258"/>
+        <location filename="../upowerdbus.cpp" line="331"/>
         <source>Full</source>
         <translation>Vol</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="271"/>
-        <location filename="../upowerdbus.cpp" line="332"/>
+        <location filename="../upowerdbus.cpp" line="273"/>
+        <location filename="../upowerdbus.cpp" line="334"/>
         <source>Not Charging</source>
         <translation>Niet aan het opladen</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="276"/>
         <location filename="../upowerdbus.cpp" line="278"/>
+        <location filename="../upowerdbus.cpp" line="280"/>
         <source>%1% PC Battery%2</source>
         <translation>%1% PC Batterij %2</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="283"/>
+        <location filename="../upowerdbus.cpp" line="285"/>
         <source>Power Stretch on</source>
         <translation>Batterijbesparing aan</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="288"/>
+        <location filename="../upowerdbus.cpp" line="290"/>
         <source>No Battery Inserted</source>
         <translation>Geen Batterij Ingevoerd</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="310"/>
+        <location filename="../upowerdbus.cpp" line="312"/>
         <source>Pair %1 using theFile to see battery status.</source>
         <translation>Verbind %1 via theFile om batterijstatus te zien.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="312"/>
+        <location filename="../upowerdbus.cpp" line="314"/>
         <source>%1 battery unavailable. Device trusted?</source>
         <translation>%1 batterij niet beschikbaar. Apparaat vertrouwd?</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="316"/>
+        <location filename="../upowerdbus.cpp" line="318"/>
         <source>%1% battery on %2</source>
         <translation>%1% batterij op %2</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="360"/>
+        <location filename="../upowerdbus.cpp" line="372"/>
         <source>%1% battery on %2 (Full)</source>
         <translation>%1% batterij op %2 (Vol)</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="362"/>
+        <location filename="../upowerdbus.cpp" line="374"/>
         <source>%1% battery on %2 (Charging)</source>
         <translation>%1% batterij op %2 (Aan het opladen)</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="365"/>
+        <location filename="../upowerdbus.cpp" line="377"/>
         <source>%1% battery on %2 (Discharging)</source>
         <translation>%1% batterij op %2 (Niet aan het opladen)</translation>
     </message>

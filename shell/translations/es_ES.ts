@@ -2295,73 +2295,73 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="622"/>
-        <location filename="../mainwindow.cpp" line="326"/>
+        <location filename="../mainwindow.cpp" line="328"/>
         <source>Quiet Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="693"/>
+        <location filename="../mainwindow.cpp" line="695"/>
         <source>Desktop %1</source>
         <translation>Escritorio %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="444"/>
+        <location filename="../mainwindow.cpp" line="446"/>
         <source>For %1</source>
         <translation>Para %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="374"/>
+        <location filename="../mainwindow.cpp" line="376"/>
         <source>Recording Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="380"/>
+        <location filename="../mainwindow.cpp" line="382"/>
         <source>Processing Screen Recording...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="445"/>
+        <location filename="../mainwindow.cpp" line="447"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2189"/>
+        <location filename="../mainwindow.cpp" line="2191"/>
         <source>For Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2191"/>
+        <location filename="../mainwindow.cpp" line="2193"/>
         <source>Move to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2196"/>
+        <location filename="../mainwindow.cpp" line="2198"/>
         <source>Move to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2202"/>
+        <location filename="../mainwindow.cpp" line="2204"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2207"/>
+        <location filename="../mainwindow.cpp" line="2209"/>
         <source>For System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="2208"/>
+        <location filename="../mainwindow.cpp" line="2210"/>
         <source>Open Status Center</source>
         <translation type="unfinished">Abrir Centro de Estado</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2211"/>
+        <location filename="../mainwindow.cpp" line="2213"/>
         <source>Open System Settings</source>
         <translation type="unfinished">Abrir Ajustes del Sistema</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2220"/>
+        <location filename="../mainwindow.cpp" line="2222"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3461,131 +3461,131 @@ Items that will be kept if you choose to keep files:
         <translation>No se puede conseguir informacion de la batería.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="283"/>
+        <location filename="../upowerdbus.cpp" line="285"/>
         <source>Power Stretch on</source>
         <translation>Ahorro de Batería activado</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="120"/>
-        <location filename="../upowerdbus.cpp" line="137"/>
-        <location filename="../upowerdbus.cpp" line="319"/>
+        <location filename="../upowerdbus.cpp" line="122"/>
+        <location filename="../upowerdbus.cpp" line="139"/>
+        <location filename="../upowerdbus.cpp" line="321"/>
         <source>Charging</source>
         <translation>Cargando</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="127"/>
+        <location filename="../upowerdbus.cpp" line="129"/>
         <source>The power cable has been plugged in and the battery is now being charged. Power Stretch has been turned off.</source>
         <translation>El cable de energía se ha conectado y ahora la batería esta siendo cargada. Ahorro de Batería ha sido desactivado.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="129"/>
+        <location filename="../upowerdbus.cpp" line="131"/>
         <source>The power cable has been plugged in and the battery is now being charged.</source>
         <translation>El cable de energía se ha conectado y ahora la batería esta siendo cargada.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="169"/>
-        <location filename="../upowerdbus.cpp" line="322"/>
+        <location filename="../upowerdbus.cpp" line="171"/>
+        <location filename="../upowerdbus.cpp" line="324"/>
         <source>Discharging</source>
         <translation>Descargando</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="170"/>
+        <location filename="../upowerdbus.cpp" line="172"/>
         <source>The power cable has been removed, and your PC is now running on battery power.</source>
         <translation>El cable de energía ha sido removido, y ahora tu PC esta corriendo de poder de la batería.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="189"/>
-        <location filename="../upowerdbus.cpp" line="210"/>
-        <location filename="../upowerdbus.cpp" line="231"/>
+        <location filename="../upowerdbus.cpp" line="191"/>
+        <location filename="../upowerdbus.cpp" line="212"/>
+        <location filename="../upowerdbus.cpp" line="233"/>
         <source>Turn on Power Stretch</source>
         <translation>Activar Ahorro de Batería</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="191"/>
+        <location filename="../upowerdbus.cpp" line="193"/>
         <source>Battery Critically Low</source>
         <translation>Batería Criticalmente Baja</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="192"/>
+        <location filename="../upowerdbus.cpp" line="194"/>
         <source>You have about 10 minutes of battery remaining. Either plug in your PC or save your work and power off the PC and change the battery.</source>
         <translation>Te quedan alrededor 10 minutos de batería. Conecta tu PC o guarda tu trabajo y apaga la PC y conecte su PC.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="213"/>
+        <location filename="../upowerdbus.cpp" line="215"/>
         <source>Battery Low</source>
         <translation>Batería Baja</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="214"/>
+        <location filename="../upowerdbus.cpp" line="216"/>
         <source>You have about half an hour of battery remaining. You should plug in your PC now.</source>
         <translation>Te quedan alrededor de media hora de batería. Deberias conectar tu PC ahora.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="234"/>
+        <location filename="../upowerdbus.cpp" line="236"/>
         <source>Battery Warning</source>
         <translation>Alerta de Batería</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="235"/>
+        <location filename="../upowerdbus.cpp" line="237"/>
         <source>You have about an hour of battery remaining. You may want to plug in your PC now.</source>
         <translation>Te quedan alrededor de una hora de batería. Quizás quieras conectar tu PC ahora.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="252"/>
-        <location filename="../upowerdbus.cpp" line="325"/>
+        <location filename="../upowerdbus.cpp" line="254"/>
+        <location filename="../upowerdbus.cpp" line="327"/>
         <source>Empty</source>
         <translation>Vacío</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="256"/>
-        <location filename="../upowerdbus.cpp" line="329"/>
+        <location filename="../upowerdbus.cpp" line="258"/>
+        <location filename="../upowerdbus.cpp" line="331"/>
         <source>Full</source>
         <translation>Lleno</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="271"/>
-        <location filename="../upowerdbus.cpp" line="332"/>
+        <location filename="../upowerdbus.cpp" line="273"/>
+        <location filename="../upowerdbus.cpp" line="334"/>
         <source>Not Charging</source>
         <translation>No Esta Cargando</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="276"/>
         <location filename="../upowerdbus.cpp" line="278"/>
+        <location filename="../upowerdbus.cpp" line="280"/>
         <source>%1% PC Battery%2</source>
         <translation>%1% Batería restante%2</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="288"/>
+        <location filename="../upowerdbus.cpp" line="290"/>
         <source>No Battery Inserted</source>
         <translation>Ninguna Batería Insertada</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="310"/>
+        <location filename="../upowerdbus.cpp" line="312"/>
         <source>Pair %1 using theFile to see battery status.</source>
         <translation>Conecta %1 usando theFile para ver el estado de batería.</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="312"/>
+        <location filename="../upowerdbus.cpp" line="314"/>
         <source>%1 battery unavailable. Device trusted?</source>
         <translation>Batería de %1 indisponible. Dispositivo confiado?</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="316"/>
+        <location filename="../upowerdbus.cpp" line="318"/>
         <source>%1% battery on %2</source>
         <translation>%1% de batería en %2</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="360"/>
+        <location filename="../upowerdbus.cpp" line="372"/>
         <source>%1% battery on %2 (Full)</source>
         <translation>%1% de batería en %2 (Lleno)</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="362"/>
+        <location filename="../upowerdbus.cpp" line="374"/>
         <source>%1% battery on %2 (Charging)</source>
         <translation>%1% de batería en %2 (Cargando)</translation>
     </message>
     <message>
-        <location filename="../upowerdbus.cpp" line="365"/>
+        <location filename="../upowerdbus.cpp" line="377"/>
         <source>%1% battery on %2 (Discharging)</source>
         <translation>%1% de batería en %2 (Descargando)</translation>
     </message>

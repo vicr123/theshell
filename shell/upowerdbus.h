@@ -104,6 +104,8 @@ private:
     bool isLidClosed = false;
 
     bool idleScreen = false, idleSuspend = false;
+
+    bool isUpdatingDisplay = false;
 };
 
 #endif // UPOWERDBUS_H

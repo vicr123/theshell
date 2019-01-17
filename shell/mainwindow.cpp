@@ -250,7 +250,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
         updbus->currentBattery();
     });
-    updbus->DeviceChanged();
+    QTimer::singleShot(0, [=] {
+        updbus->DeviceChanged();
+    });
 
     seperatorWidget = new QWidget();
     seperatorWidget->setParent(this);
