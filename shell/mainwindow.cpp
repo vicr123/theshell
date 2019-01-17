@@ -1861,7 +1861,7 @@ void MainWindow::on_desktopBack_clicked()
 }
 
 void MainWindow::openMenu() {
-    lockMovement("Gateway");
+    if (!gatewayMenu->isVisible()) lockMovement("Gateway");
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     QRect availableGeometry = QApplication::desktop()->availableGeometry();
