@@ -23,6 +23,7 @@
 
 #include <QScroller>
 #include <QDBusConnectionInterface>
+#include "kjob/jobviewwidget.h"
 
 NotificationsWidget::NotificationsWidget(QWidget *parent) :
     QWidget(parent),
@@ -192,6 +193,10 @@ bool NotificationsWidget::hasNotificationId(uint id) {
 
 NotificationObject* NotificationsWidget::getNotification(uint id) {
     return notifications.value(id);
+}
+
+void NotificationsWidget::addJobView(JobViewWidget *view) {
+    ((QBoxLayout*) ui->notificationGroups->layout())->insertWidget(0, view);
 }
 
 bool NotificationsWidget::eventFilter(QObject *watched, QEvent *event) {

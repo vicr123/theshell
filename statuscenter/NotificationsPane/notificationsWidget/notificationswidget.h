@@ -31,6 +31,7 @@
 #include <statuscenterpaneobject.h>
 
 class NotificationsDBusAdaptor;
+class JobViewWidget;
 
 namespace Ui {
 class NotificationsWidget;
@@ -49,6 +50,8 @@ public:
     void addNotification(NotificationObject* object);
     bool hasNotificationId(uint id);
     NotificationObject* getNotification(uint id);
+
+    void addJobView(JobViewWidget* view);
 
     QWidget* mainWidget();
     QString name();

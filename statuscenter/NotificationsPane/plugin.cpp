@@ -21,6 +21,7 @@
 #include "plugin.h"
 #include "notificationsWidget/notificationsdbusadaptor.h"
 #include "notificationsWidget/notificationswidget.h"
+#include "kjob/jobserver.h"
 
 #include "audiomanager.h"
 
@@ -41,6 +42,8 @@ Plugin::Plugin(QObject *parent) :
     panes.append(widget);
     adaptor->setParentWidget(widget);
     widget->setAdaptor(adaptor);
+
+    panes.append(new JobServer(widget));
 }
 
 QList<StatusCenterPaneObject*> Plugin::availablePanes() {

@@ -20,6 +20,8 @@ blueprint {
     DEFINES += "SHAREDIR=\\\"/usr/share/theshell/notificationpane/\\\""
 }
 
+DBUS_ADAPTORS += org.kde.JobViewV2.xml
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -76,33 +78,43 @@ unix {
 }
 
 DISTFILES += \
-    NotificationPane.json
+    NotificationPane.json \
+    org.kde.JobViewV2.xml
 
 HEADERS += \
     plugin.h \
-    notificationsWidget/notificationswidget.h \
-    notificationsWidget/notificationsdbusadaptor.h \
-    notificationsWidget/notificationpopup.h \
-    notificationsWidget/notificationobject.h \
-    notificationsWidget/notificationappgroup.h \
-    notificationsWidget/notificationpanel.h \
+    audiomanager.h \
+    kjob/jobdbus.h \
+    kjob/jobserver.h \
+    kjob/jobviewserver_adaptor.h \
     notificationsWidget/mediaplayernotification.h \
-    audiomanager.h
+    notificationsWidget/notificationappgroup.h \
+    notificationsWidget/notificationobject.h \
+    notificationsWidget/notificationpanel.h \
+    notificationsWidget/notificationpopup.h \
+    notificationsWidget/notificationsdbusadaptor.h \
+    notificationsWidget/notificationswidget.h \
+    kjob/jobviewwidget.h
 
 SOURCES += \
     plugin.cpp \
-    notificationsWidget/notificationswidget.cpp \
-    notificationsWidget/notificationsdbusadaptor.cpp \
-    notificationsWidget/notificationpopup.cpp \
-    notificationsWidget/notificationobject.cpp \
-    notificationsWidget/notificationappgroup.cpp \
-    notificationsWidget/notificationpanel.cpp \
+    audiomanager.cpp \
+    kjob/jobdbus.cpp \
+    kjob/jobserver.cpp \
+    kjob/jobviewserver_adaptor.cpp \
     notificationsWidget/mediaplayernotification.cpp \
-    audiomanager.cpp
+    notificationsWidget/notificationappgroup.cpp \
+    notificationsWidget/notificationobject.cpp \
+    notificationsWidget/notificationpanel.cpp \
+    notificationsWidget/notificationpopup.cpp \
+    notificationsWidget/notificationsdbusadaptor.cpp \
+    notificationsWidget/notificationswidget.cpp \
+    kjob/jobviewwidget.cpp
 
 FORMS += \
     notificationsWidget/notificationswidget.ui \
     notificationsWidget/notificationpopup.ui \
     notificationsWidget/notificationappgroup.ui \
     notificationsWidget/notificationpanel.ui \
-    notificationsWidget/mediaplayernotification.ui
+    notificationsWidget/mediaplayernotification.ui \
+    kjob/jobviewwidget.ui

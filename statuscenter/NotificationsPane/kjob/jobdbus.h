@@ -24,17 +24,26 @@
 #include <QObject>
 #include <QDBusVariant>
 
+class NotificationsWidget;
+class JobViewWidget;
+
 class JobDBus : public QObject
 {
         Q_OBJECT
         Q_CLASSINFO("D-Bus Interface", "org.kde.JobViewV2")
 
     public:
-        explicit JobDBus(QString title, QString path, QObject *parent = nullptr);
+        explicit JobDBus(NotificationsWidget* widget, QString title, QString icon, QString path, int capabilities, QObject *parent = nullptr);
 
         QString title();
         QString description();
         uint percent();
+
+        enum Capabilities {
+            NoCapabilities = 0x0,
+            Killable = 0x1,
+            Suspendable = 0x2
+        };
 
     public Q_SLOTS:
         Q_SCRIPTABLE void terminate(QString errorMessage);
@@ -62,6 +71,9 @@ class JobDBus : public QObject
 
         QString t, d;
         uint p = 0;
+        bool suspended = false;
+
+        JobViewWidget* view;
 };
 
 #endif // JOBDBUS_H

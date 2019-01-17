@@ -21,8 +21,10 @@
 #include "jobserver.h"
 #include "jobviewserver_adaptor.h"
 
-JobServer::JobServer(QObject* parent) : QObject(parent)
+JobServer::JobServer(NotificationsWidget* widget, QObject* parent) : QObject(parent)
 {
+    this->notificationsWidget = widget;
+
     JobViewServerAdaptor* adaptor = new JobViewServerAdaptor(this);
     KuiServerAdaptor* kuiAdaptor = new KuiServerAdaptor(this);
     QDBusConnection::sessionBus().registerObject("/JobViewServer", this);
@@ -35,7 +37,7 @@ QDBusObjectPath JobServer::requestView(QString appName, QString appIconName, int
     currentView++;
 
     QString viewPath = QString("/JobViewServer/JobView_%1").arg(currentView);
-    JobDBus* job = new JobDBus(appName, viewPath);
+    JobDBus* job = new JobDBus(this->notificationsWidget, appName, appIconName, viewPath, capabilities);
     connect(job, &JobDBus::update, [=](QString message, QString description, uint progress) {
         updateJobs();
     });

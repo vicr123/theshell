@@ -26,13 +26,15 @@
 #include <statuscenterpaneobject.h>
 #include "jobdbus.h"
 
+class NotificationsWidget;
+
 class JobServer : public QObject, public StatusCenterPaneObject
 {
         Q_OBJECT
         Q_CLASSINFO("D-Bus Interface", "org.kde.JobViewServer")
 
     public:
-        explicit JobServer(QObject *parent = nullptr);
+        explicit JobServer(NotificationsWidget* widget, QObject *parent = nullptr);
 
         QWidget* mainWidget();
         QString name();
@@ -47,6 +49,8 @@ class JobServer : public QObject, public StatusCenterPaneObject
     private:
         int currentView = 0;
         QList<JobDBus*> jobs;
+
+        NotificationsWidget* notificationsWidget;
 };
 
 #endif

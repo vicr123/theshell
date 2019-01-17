@@ -21,21 +21,40 @@
 #include "jobdbus.h"
 #include "jobviewv2_adaptor.h"
 
-JobDBus::JobDBus(QString title, QString path, QObject *parent) : QObject(parent)
+#include "notificationsWidget/notificationswidget.h"
+#include "jobviewwidget.h"
+
+JobDBus::JobDBus(NotificationsWidget* widget, QString title, QString icon, QString path, int capabilities, QObject *parent) : QObject(parent)
 {
     JobViewV2Adaptor* adaptor = new JobViewV2Adaptor(this);
     QDBusConnection::sessionBus().registerObject(path, this);
 
     this->path = path;
     this->t = title;
+
+    this->view = new JobViewWidget(title, icon, capabilities);
+    widget->addJobView(this->view);
+
+    connect(view, &JobViewWidget::terminate, [=] {
+        emit cancelRequested();
+    });
+    connect(view, &JobViewWidget::suspend, [=] {
+        if (suspended) {
+            return resumeRequested();
+        } else {
+            return suspendRequested();
+        }
+    });
 }
 
 void JobDBus::terminate(QString errorMessage) {
     emit complete();
+    view->deleteLater();
 }
 
 void JobDBus::setSuspended(bool suspended) {
-
+    this->suspended = suspended;
+    view->setSuspended(suspended);
 }
 
 void JobDBus::setTotalAmount(qulonglong amount, QString unit) {
@@ -49,6 +68,7 @@ void JobDBus::setProcessedAmount(qulonglong amount, QString unit) {
 void JobDBus::setPercent(uint percent) {
     this->p = percent;
     emit update(title(), description(), this->percent());
+    view->setPercent(percent);
 }
 
 void JobDBus::setSpeed(qulonglong bytesPerSecond) {
@@ -58,14 +78,15 @@ void JobDBus::setSpeed(qulonglong bytesPerSecond) {
 void JobDBus::setInfoMessage(QString message) {
     d = message;
     emit update(title(), description(), percent());
+    view->setInfoMessage(message);
 }
 
 void JobDBus::setDescriptionField(uint number, QString name, QString value) {
-
+    view->setDescriptionField(number, name, value);
 }
 
 void JobDBus::clearDescriptionField(uint number) {
-
+    view->clearDescriptionField(number);
 }
 
 void JobDBus::setDestUrl(QDBusVariant url) {
@@ -74,6 +95,7 @@ void JobDBus::setDestUrl(QDBusVariant url) {
 
 void JobDBus::setError(uint errorCode) {
     emit complete();
+    view->deleteLater();
 }
 
 QString JobDBus::title() {
