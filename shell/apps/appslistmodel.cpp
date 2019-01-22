@@ -20,6 +20,8 @@
 
 #include "appslistmodel.h"
 
+#include "mainwindow.h"
+
 extern float getDPIScaling();
 extern NativeEventFilter* NativeFilter;
 extern MainWindow* MainWin;

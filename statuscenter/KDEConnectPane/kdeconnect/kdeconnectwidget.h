@@ -40,11 +40,13 @@
 #include <QInputDialog>
 #include "kdeconnectdevicesmodel.h"
 
+#include <statuscenterpaneobject.h>
+
 namespace Ui {
     class KdeConnectWidget;
 }
 
-class KdeConnectWidget : public QWidget
+class KdeConnectWidget : public QWidget, public StatusCenterPaneObject
 {
         Q_OBJECT
 
@@ -52,6 +54,11 @@ class KdeConnectWidget : public QWidget
         explicit KdeConnectWidget(QWidget *parent = 0);
         ~KdeConnectWidget();
 
+        QWidget* mainWidget();
+        QString name();
+        StatusPaneTypes type();
+        int position();
+        void message(QString name, QVariantList args = QVariantList());
     private slots:
         void kdeConnectAnnouncedNameChanged(QString name);
 

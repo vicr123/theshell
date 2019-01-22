@@ -98,8 +98,7 @@ class InfoPaneDropdown : public QDialog
             Settings = -1,
             Clock = 0,
             Battery = 1,
-            Network = 2,
-            KDEConnect = 3 //,
+            Network = 2 //,
             //Print = 5
         };
 
@@ -188,8 +187,6 @@ class InfoPaneDropdown : public QDialog
         void on_SuperkeyGatewaySwitch_toggled(bool checked);
 
         void updateSysInfo();
-
-        void on_kdeconnectLabel_clicked();
 
         void on_endSessionConfirmFullScreen_toggled(bool checked);
 

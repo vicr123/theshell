@@ -376,8 +376,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>332</width>
-              <height>469</height>
+              <width>435</width>
+              <height>560</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -729,8 +729,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>195</width>
-              <height>380</height>
+              <width>256</width>
+              <height>483</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -1317,6 +1317,19 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_3">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>1</height>
+      </size>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

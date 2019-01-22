@@ -138,13 +138,6 @@
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="ClickableLabel" name="kdeconnectLabel">
-             <property name="text">
-              <string>KDE Connect</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </item>
          <item>
@@ -342,7 +335,7 @@
    <item>
     <widget class="tStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="statusFrame">
       <property name="autoFillBackground">
@@ -610,38 +603,6 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="kdeConnectFrame">
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="KdeConnectWidget" name="widget" native="true"/>
-       </item>
-       <item>
-        <widget class="Line" name="line_26">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
@@ -5967,6 +5928,12 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
+   <class>tStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header location="global">tstackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>AnimatedStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>animatedstackedwidget.h</header>
@@ -5995,12 +5962,6 @@ Items that will be kept if you choose to keep files:
    <header>switch.h</header>
   </customwidget>
   <customwidget>
-   <class>KdeConnectWidget</class>
-   <extends>QWidget</extends>
-   <header>kdeconnect/kdeconnectwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>MousePassword</class>
    <extends>QWidget</extends>
    <header>locktypes/mousepassword.h</header>
@@ -6008,12 +5969,6 @@ Items that will be kept if you choose to keep files:
    <slots>
     <signal>exit()</signal>
    </slots>
-  </customwidget>
-  <customwidget>
-   <class>tStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header location="global">tstackedwidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

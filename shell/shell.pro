@@ -91,8 +91,6 @@ SOURCES += main.cpp\
     apps/app.cpp \
     networkmanager/savednetworkslist.cpp \
     screenrecorder.cpp \
-    kdeconnect/kdeconnectwidget.cpp \
-    kdeconnect/kdeconnectdevicesmodel.cpp \
     location/locationservices.cpp \
     location/locationrequestdialog.cpp \
     agent_adaptor.cpp \
@@ -137,8 +135,6 @@ HEADERS  += mainwindow.h \
     apps/app.h \
     networkmanager/savednetworkslist.h \
     screenrecorder.h \
-    kdeconnect/kdeconnectwidget.h \
-    kdeconnect/kdeconnectdevicesmodel.h \
     location/locationservices.h \
     location/locationrequestdialog.h \
     agent_adaptor.h \
@@ -162,7 +158,6 @@ FORMS    += mainwindow.ui \
     tutorialwindow.ui \
     screenshotwindow.ui \
     networkmanager/networkwidget.ui \
-    kdeconnect/kdeconnectwidget.ui \
     location/locationrequestdialog.ui \
     locktypes/mousepassword.ui
 

@@ -28,6 +28,9 @@
 #include <notificationsdbusadaptor.h>
 
 #include <QShortcut>
+#include <QMenu>
+#include <QAction>
+#include "location/locationservices.h"
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
@@ -1229,14 +1232,6 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
                 setHeaderColour(QColor(50, 50, 100));
             }
             break;
-        case KDEConnect:
-            changeDropDown(ui->kdeConnectFrame, ui->kdeconnectLabel, doAnimation);
-            if (ui->lightColorThemeRadio->isChecked()) {
-                setHeaderColour(QColor(200, 100, 255));
-            } else {
-                setHeaderColour(QColor(50, 0, 100));
-            }
-            break;
         case Settings:
             changeDropDown(ui->settingsFrame, nullptr, doAnimation);
             if (ui->lightColorThemeRadio->isChecked()) {
@@ -1280,12 +1275,6 @@ void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, 
             setHeaderColour(QColor(100, 100, 255));
         } else {
             setHeaderColour(QColor(50, 50, 100));
-        }
-    } else if (changeTo == ui->kdeConnectFrame) {
-        if (ui->lightColorThemeRadio->isChecked()) {
-            setHeaderColour(QColor(200, 100, 255));
-        } else {
-            setHeaderColour(QColor(50, 0, 100));
         }
     } else if (changeTo == ui->settingsFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
@@ -1636,11 +1625,6 @@ void InfoPaneDropdown::reject() {
     this->close();
 }
 
-void InfoPaneDropdown::on_kdeconnectLabel_clicked()
-{
-    changeDropDown(KDEConnect);
-}
-
 void InfoPaneDropdown::on_endSessionConfirmFullScreen_toggled(bool checked)
 {
     if (checked) {
@@ -1662,7 +1646,6 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
     ui->batteryLabel->setShowDisabled(true);
     ui->networkLabel->setShowDisabled(true);
     //ui->printLabel->setShowDisabled(true);
-    ui->kdeconnectLabel->setShowDisabled(true);
 
     if (switchingWidget == d->overviewFrame) {
         ui->clockLabel->setShowDisabled(false);
@@ -1673,8 +1656,6 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
         ui->networkLabel->setShowDisabled(false);
     /*} else if (switchingWidget == ui->printFrame) {
         ui->printLabel->setShowDisabled(false);*/
-    } else if (switchingWidget == ui->kdeConnectFrame) {
-        ui->kdeconnectLabel->setShowDisabled(false);
     }
 }
 
@@ -2619,13 +2600,11 @@ void InfoPaneDropdown::updateStruts() {
         ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::TopToBottom);
         ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::TopToBottom);
         ((QBoxLayout*) ui->settingsFrame->layout())->setDirection(QBoxLayout::TopToBottom);
-        ((QBoxLayout*) ui->kdeConnectFrame->layout())->setDirection(QBoxLayout::TopToBottom);
         ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     } else {
         ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::BottomToTop);
         ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::BottomToTop);
         ((QBoxLayout*) ui->settingsFrame->layout())->setDirection(QBoxLayout::BottomToTop);
-        ((QBoxLayout*) ui->kdeConnectFrame->layout())->setDirection(QBoxLayout::BottomToTop);
         ui->upArrow->setPixmap(QIcon::fromTheme("go-down").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     }
 }

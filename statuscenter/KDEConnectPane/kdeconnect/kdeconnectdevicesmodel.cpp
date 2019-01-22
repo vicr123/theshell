@@ -20,7 +20,7 @@
 
 #include "kdeconnectdevicesmodel.h"
 
-extern float getDPIScaling();
+#include <the-libs_global.h>
 
 KdeConnectDevicesModel::KdeConnectDevicesModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -129,14 +129,14 @@ void KdeConnectDevicesDelegate::paint(QPainter *painter, const QStyleOptionViewI
 
     QRect iconRect;
     if (((QListView*) option.widget)->viewMode() == QListView::IconMode) {
-        iconRect.setLeft(option.rect.left() + 38 * getDPIScaling());
-        iconRect.setTop(option.rect.top() + 6 * getDPIScaling());
-        iconRect.setHeight(32 * getDPIScaling());
-        iconRect.setWidth(32 * getDPIScaling());
+        iconRect.setLeft(option.rect.left() + 38 * theLibsGlobal::getDPIScaling());
+        iconRect.setTop(option.rect.top() + 6 * theLibsGlobal::getDPIScaling());
+        iconRect.setHeight(32 * theLibsGlobal::getDPIScaling());
+        iconRect.setWidth(32 * theLibsGlobal::getDPIScaling());
 
         QRect textRect;
-        textRect.setLeft(option.rect.left() + 6 * getDPIScaling());
-        textRect.setTop(iconRect.bottom() + 6 * getDPIScaling());
+        textRect.setLeft(option.rect.left() + 6 * theLibsGlobal::getDPIScaling());
+        textRect.setTop(iconRect.bottom() + 6 * theLibsGlobal::getDPIScaling());
         textRect.setBottom(option.rect.bottom());
         textRect.setRight(option.rect.right());
 
@@ -161,21 +161,21 @@ void KdeConnectDevicesDelegate::paint(QPainter *painter, const QStyleOptionViewI
             painter->drawText(textRect, index.data().toString());
         }
     } else {
-        iconRect.setLeft(option.rect.left() + 12 * getDPIScaling());
-        iconRect.setTop(option.rect.top() + 6 * getDPIScaling());
-        iconRect.setBottom(iconRect.top() + 32 * getDPIScaling());
-        iconRect.setRight(iconRect.left() + 32 * getDPIScaling());
+        iconRect.setLeft(option.rect.left() + 12 * theLibsGlobal::getDPIScaling());
+        iconRect.setTop(option.rect.top() + 6 * theLibsGlobal::getDPIScaling());
+        iconRect.setBottom(iconRect.top() + 32 * theLibsGlobal::getDPIScaling());
+        iconRect.setRight(iconRect.left() + 32 * theLibsGlobal::getDPIScaling());
 
         QRect textRect;
-        textRect.setLeft(iconRect.right() + 6 * getDPIScaling());
-        textRect.setTop(option.rect.top() + 6 * getDPIScaling());
-        textRect.setBottom(option.rect.top() + option.fontMetrics.height() + 6 * getDPIScaling());
+        textRect.setLeft(iconRect.right() + 6 * theLibsGlobal::getDPIScaling());
+        textRect.setTop(option.rect.top() + 6 * theLibsGlobal::getDPIScaling());
+        textRect.setBottom(option.rect.top() + option.fontMetrics.height() + 6 * theLibsGlobal::getDPIScaling());
         textRect.setRight(option.rect.right());
 
         QRect descRect;
-        descRect.setLeft(iconRect.right() + 6 * getDPIScaling());
-        descRect.setTop(option.rect.top() + option.fontMetrics.height() + 8 * getDPIScaling());
-        descRect.setBottom(option.rect.top() + option.fontMetrics.height() * 2 + 6 * getDPIScaling());
+        descRect.setLeft(iconRect.right() + 6 * theLibsGlobal::getDPIScaling());
+        descRect.setTop(option.rect.top() + option.fontMetrics.height() + 8 * theLibsGlobal::getDPIScaling());
+        descRect.setBottom(option.rect.top() + option.fontMetrics.height() * 2 + 6 * theLibsGlobal::getDPIScaling());
         descRect.setRight(option.rect.right());
 
         if (option.state & QStyle::State_Selected) {
@@ -213,16 +213,16 @@ void KdeConnectDevicesDelegate::paint(QPainter *painter, const QStyleOptionViewI
     if (reachable && trusted) {
         painter->setBrush(QColor(0, 100, 0));
         painter->setPen(Qt::transparent);
-        painter->drawRect(option.rect.left(), option.rect.top(), 6 * getDPIScaling(), option.rect.height());
+        painter->drawRect(option.rect.left(), option.rect.top(), 6 * theLibsGlobal::getDPIScaling(), option.rect.height());
     }
 }
 
 QSize KdeConnectDevicesDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
     if (((QListView*) option.widget)->viewMode() == QListView::IconMode) {
-        return QSize(128 * getDPIScaling(), 128 * getDPIScaling());
+        return QSize(128 * theLibsGlobal::getDPIScaling(), 128 * theLibsGlobal::getDPIScaling());
     } else {
-        int fontHeight = option.fontMetrics.height() * 2 + 14 * getDPIScaling();
-        int iconHeight = 46 * getDPIScaling();
+        int fontHeight = option.fontMetrics.height() * 2 + 14 * theLibsGlobal::getDPIScaling();
+        int iconHeight = 46 * theLibsGlobal::getDPIScaling();
 
         return QSize(option.fontMetrics.width(index.data().toString()), qMax(fontHeight, iconHeight));
     }

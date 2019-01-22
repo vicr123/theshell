@@ -21,13 +21,16 @@
 #include "kdeconnectwidget.h"
 #include "ui_kdeconnectwidget.h"
 
-extern float getDPIScaling();
+#include <the-libs_global.h>
 
 KdeConnectWidget::KdeConnectWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::KdeConnectWidget)
 {
     ui->setupUi(this);
+
+    this->informationalAttributes.lightColor = QColor(200, 100, 255);
+    this->informationalAttributes.darkColor = QColor(50, 0, 100);
 
     watcher = new QDBusServiceWatcher("org.kde.kdeconnect", QDBusConnection::sessionBus());
     connect(watcher, SIGNAL(serviceRegistered(QString)), this, SLOT(kdeConnectOnline()));
@@ -39,7 +42,7 @@ KdeConnectWidget::KdeConnectWidget(QWidget *parent) :
     devicesModel = new KdeConnectDevicesModel();
     ui->devicesView->setModel(devicesModel);
     ui->devicesView->setItemDelegate(new KdeConnectDevicesDelegate());
-    ui->leftPane->setFixedWidth(300 * getDPIScaling());
+    ui->leftPane->setFixedWidth(300 * theLibsGlobal::getDPIScaling());
 
     connect(ui->devicesView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(selectedDeviceChanged(QModelIndex,QModelIndex)));
 
@@ -53,6 +56,26 @@ KdeConnectWidget::KdeConnectWidget(QWidget *parent) :
 KdeConnectWidget::~KdeConnectWidget()
 {
     delete ui;
+}
+
+QWidget* KdeConnectWidget::mainWidget() {
+    return this;
+}
+
+QString KdeConnectWidget::name() {
+    return tr("KDE Connect");
+}
+
+StatusCenterPaneObject::StatusPaneTypes KdeConnectWidget::type() {
+    return Informational;
+}
+
+int KdeConnectWidget::position() {
+    return 0;
+}
+
+void KdeConnectWidget::message(QString name, QVariantList args) {
+
 }
 
 void KdeConnectWidget::kdeConnectAnnouncedNameChanged(QString name) {

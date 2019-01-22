@@ -21,6 +21,8 @@
 #include "networkwidget.h"
 #include "ui_networkwidget.h"
 
+#include "mainwindow.h"
+
 extern float getDPIScaling();
 extern NativeEventFilter* NativeFilter;
 extern MainWindow* MainWin;

@@ -21,6 +21,10 @@
 #include "background.h"
 #include "ui_background.h"
 
+#include "mainwindow.h"
+
+#include <X11/Xlib.h>
+
 extern float getDPIScaling();
 
 extern Background* firstBackground;

@@ -20,6 +20,9 @@
 
 #include "globalfilter.h"
 
+#include "mainwindow.h"
+#include <QThread>
+
 extern void playSound(QUrl, bool = false);
 extern MainWindow* MainWin;
 
