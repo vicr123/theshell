@@ -2301,73 +2301,73 @@ Saker som kommer sparas ifall du väljer att spara filer
     </message>
     <message>
         <location filename="../mainwindow.ui" line="622"/>
-        <location filename="../mainwindow.cpp" line="328"/>
+        <location filename="../mainwindow.cpp" line="334"/>
         <source>Quiet Mode</source>
         <translation>Tysta Läget</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="695"/>
+        <location filename="../mainwindow.cpp" line="701"/>
         <source>Desktop %1</source>
         <translation>Skrivbord %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="446"/>
+        <location filename="../mainwindow.cpp" line="452"/>
         <source>For %1</source>
         <translation>För %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="376"/>
+        <location filename="../mainwindow.cpp" line="382"/>
         <source>Recording Screen</source>
         <translation>Spelar in skärm</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="382"/>
+        <location filename="../mainwindow.cpp" line="388"/>
         <source>Processing Screen Recording...</source>
         <translation>Bearbetar Skärminspelning...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="447"/>
+        <location filename="../mainwindow.cpp" line="453"/>
         <source>Close</source>
         <translation>Stäng</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2191"/>
+        <location filename="../mainwindow.cpp" line="2197"/>
         <source>For Bar</source>
         <translation>För Baren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2193"/>
+        <location filename="../mainwindow.cpp" line="2199"/>
         <source>Move to bottom</source>
         <translation>Flytta till botten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2198"/>
+        <location filename="../mainwindow.cpp" line="2204"/>
         <source>Move to top</source>
         <translation>Flytta till toppen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2204"/>
+        <location filename="../mainwindow.cpp" line="2210"/>
         <source>Gateway and Bar Settings</source>
         <translation>Dörr och Barinställningar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2209"/>
+        <location filename="../mainwindow.cpp" line="2215"/>
         <source>For System</source>
         <translation>För System</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="2210"/>
+        <location filename="../mainwindow.cpp" line="2216"/>
         <source>Open Status Center</source>
         <translation>Öppna Statuscentret</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2213"/>
+        <location filename="../mainwindow.cpp" line="2219"/>
         <source>Open System Settings</source>
         <translation>Öppna Systeminställningar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2222"/>
+        <location filename="../mainwindow.cpp" line="2228"/>
         <source>Open Gateway</source>
         <translation>Öppna Dörren</translation>
     </message>

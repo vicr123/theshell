@@ -19,6 +19,7 @@
  * *************************************/
 
 #include "transferslistmodel.h"
+#include <QDBusInterface>
 
 extern float getDPIScaling();
 
@@ -63,6 +64,44 @@ QVariant TransfersListModel::data(const QModelIndex &index, int role) const
 }
 
 void TransfersListModel::pushTransfer(BluezQt::ObexTransferPtr transfer, bool incoming) {
+    //Request a new KJob Server
+    QDBusMessage message = QDBusMessage::createMethodCall("org.kde.JobViewServer", "/JobViewServer", "org.kde.JobViewServer", "requestView");
+    message.setArguments({
+        tr("Bluetooth"),
+        "preferences-system-bluetooth",
+        1
+    });
+    QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(QDBusConnection::sessionBus().asyncCall(message));
+    connect(watcher, &QDBusPendingCallWatcher::finished, [=] {
+        QDBusObjectPath jobviewPath = watcher->reply().arguments().first().value<QDBusObjectPath>();
+
+        CancelWatcher* canceller = new CancelWatcher();
+
+        QDBusInterface* interface = new QDBusInterface("org.kde.JobViewServer", jobviewPath.path(), "org.kde.JobViewV2");
+        interface->call(QDBus::NoBlock, "setInfoMessage", incoming ? tr("Receiving File over Bluetooth") : tr("Sending File over Bluetooth"));
+        interface->call(QDBus::NoBlock, "setDescriptionField", (uint) 1, tr("File Name"), transfer->fileName());
+        interface->call(QDBus::NoBlock, "setPercent", (uint) 0);
+        interface->call(QDBus::NoBlock, "setTotalAmount", (qulonglong) transfer->size(), "bytes");
+        interface->call(QDBus::NoBlock, "setProcessedAmount", (qulonglong) 0, "bytes");
+        connect(transfer.data(), &BluezQt::ObexTransfer::transferredChanged, [=](quint64 bytes) {
+            interface->call(QDBus::NoBlock, "setProcessedAmount", (qulonglong) bytes, "bytes");
+            interface->call(QDBus::NoBlock, "setPercent", (uint) ((float) bytes * 100 / (float) transfer->size()));
+        });
+        connect(transfer.data(), &BluezQt::ObexTransfer::statusChanged, [=](BluezQt::ObexTransfer::Status status) {
+            if (status == BluezQt::ObexTransfer::Complete || status == BluezQt::ObexTransfer::Error) {
+                //Finish everything
+                interface->call(QDBus::NoBlock, "terminate", "");
+                canceller->deleteLater();
+            }
+        });
+        QDBusConnection::sessionBus().connect("org.kde.JobViewServer", jobviewPath.path(), "org.kde.JobViewV2", "cancelRequested", canceller, SLOT(cancelRequested()));
+        connect(canceller, &CancelWatcher::cancelled, [=] {
+            transfer->cancel();
+        });
+
+        watcher->deleteLater();
+    });
+
     transfers.prepend(transfer);
     connect(transfer.data(), &BluezQt::ObexTransfer::transferredChanged, [=] {
         emit dataChanged(index(transfers.indexOf(transfer)), index(transfers.indexOf(transfer)));

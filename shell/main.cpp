@@ -375,12 +375,6 @@ int main(int argc, char *argv[])
         QProcess::startDetached("/usr/lib/kdeconnectd");
     }
 
-    //QProcess btProcess;
-    //btProcess.start("ts-bt");
-    //QObject::connect(&btProcess, SIGNAL(started()), &waiter, SLOT(quit()));
-    //waiter.exec();
-    //Wait for ts-bt to start so that the Bluetooth toggle will work properly
-
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);
 

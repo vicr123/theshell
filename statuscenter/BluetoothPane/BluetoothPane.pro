@@ -37,7 +37,8 @@ SOURCES += \
     btagent.cpp \
     deviceslistmodel.cpp \
     btobexagent.cpp \
-    transferslistmodel.cpp
+    transferslistmodel.cpp \
+    chunkwidget.cpp
 
 HEADERS += \
         plugin.h \
@@ -45,7 +46,8 @@ HEADERS += \
     btagent.h \
     deviceslistmodel.h \
     btobexagent.h \
-    transferslistmodel.h
+    transferslistmodel.h \
+    chunkwidget.h
 DISTFILES += BluetoothPane.json 
 
 TRANSLATIONS += translations/vi_VN.ts \
@@ -93,4 +95,5 @@ unix {
 }
 
 FORMS += \
-    bluetoothmanagement.ui
+    bluetoothmanagement.ui \
+    chunkwidget.ui

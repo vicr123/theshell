@@ -178,6 +178,12 @@ MainWindow::MainWindow(QWidget *parent) :
         QFrame* line = new QFrame();
         line->setFrameShape(QFrame::VLine);
         ui->chunksLayout->addWidget(line);
+
+        ChunkWatcher* watcher = new ChunkWatcher(chunk);
+        connect(watcher, &ChunkWatcher::visibilityChanged, [=](bool isVisible) {
+            line->setVisible(isVisible);
+        });
+        line->setVisible(chunk->isVisible());
     });
     infoPane->getNetworks();
     ui->StatusBarRedshift->setVisible(false);

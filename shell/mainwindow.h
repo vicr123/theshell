@@ -56,6 +56,28 @@ class Menu;
 
 class InfoPaneDropdown;
 
+class ChunkWatcher : public QObject
+{
+    Q_OBJECT
+    public:
+        ChunkWatcher(QWidget* chunk) : QObject(chunk) {
+            chunk->installEventFilter(this);
+        }
+
+    signals:
+        void visibilityChanged(bool isVisible);
+
+    private:
+        bool eventFilter(QObject* watched, QEvent* event) {
+            if (event->type() == QEvent::Show) {
+                emit visibilityChanged(true);
+            } else if (event->type() == QEvent::Hide) {
+                emit visibilityChanged(false);
+            }
+            return false;
+        }
+};
+
 namespace Ui {
 class MainWindow;
 }
