@@ -35,6 +35,21 @@
 #include <QDBusReply>
 #include <QDir>
 
+class CancelWatcher : public QObject
+{
+    Q_OBJECT
+    public:
+        CancelWatcher(QObject* parent = nullptr) : QObject(parent) {};
+
+    signals:
+        void cancelled();
+
+    public slots:
+        void cancelRequested() {
+            emit cancelled();
+        }
+};
+
 class BTObexAgent : public BluezQt::ObexAgent
 {
     Q_OBJECT

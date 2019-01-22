@@ -46,6 +46,7 @@
     <name>BTObexAgent</name>
     <message>
         <location filename="../btobexagent.cpp" line="63"/>
+        <location filename="../btobexagent.cpp" line="91"/>
         <source>Bluetooth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -57,6 +58,16 @@
     <message>
         <location filename="../btobexagent.cpp" line="64"/>
         <source>%1 wants to send the file &lt;b&gt;%2&lt;/b&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../btobexagent.cpp" line="102"/>
+        <source>Receiving File over Bluetooth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../btobexagent.cpp" line="103"/>
+        <source>File Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

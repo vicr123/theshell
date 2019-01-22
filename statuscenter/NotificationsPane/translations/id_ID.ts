@@ -116,5 +116,11 @@
         <source>Turn off at</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>%n notification(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 </TS>

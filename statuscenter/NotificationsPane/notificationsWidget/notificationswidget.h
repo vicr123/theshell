@@ -97,6 +97,8 @@ private:
     QList<NotificationAppGroup*> notificationGroups;
     QMap<QString, MediaPlayerNotification*> mediaPlayers;
 
+    QLabel* chunk;
+
     NotificationsDBusAdaptor* adaptor;
 };
 
