@@ -7,39 +7,39 @@
         <location filename="../btagent.cpp" line="54"/>
         <location filename="../btagent.cpp" line="94"/>
         <source>Key in this code</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhập mã này</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="77"/>
         <location filename="../btagent.cpp" line="123"/>
         <source>Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="77"/>
         <location filename="../btagent.cpp" line="123"/>
         <source>Pair Request</source>
-        <translation type="unfinished"></translation>
+        <translation>Yêu cầu ghép nối</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="78"/>
         <source>%1 wants to pair with your device.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 muốn ghép nối với thiết bị của bạn.</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="88"/>
         <source>Enter Pairing code</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhập mã ghép nối</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="102"/>
         <source>Check this code matches</source>
-        <translation type="unfinished">Kiểm tra mã này khớp</translation>
+        <translation>Kiểm tra mã này khớp</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="124"/>
         <source>%1 wants to pair with your device. Check that the code &lt;b&gt;%2&lt;/b&gt; matches with the code shown on %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 muốn ghép nối với thiết bị của bạn. Vui lòng xác minh mã số &lt;b&gt;%1&lt;/b&gt; là giống mã số hiển thị trên %1.</translation>
     </message>
 </context>
 <context>
@@ -47,17 +47,17 @@
     <message>
         <location filename="../btobexagent.cpp" line="63"/>
         <source>Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth</translation>
     </message>
     <message>
         <location filename="../btobexagent.cpp" line="63"/>
         <source>Incoming File over Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Tệp gửi đến qua Bluetooth</translation>
     </message>
     <message>
         <location filename="../btobexagent.cpp" line="64"/>
         <source>%1 wants to send the file &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 muốn gửi tệp &lt;b&gt;%2&lt;/b&gt;.</translation>
     </message>
 </context>
 <context>
@@ -68,27 +68,27 @@
         <location filename="../bluetoothmanagement.cpp" line="83"/>
         <location filename="../bluetoothmanagement.cpp" line="119"/>
         <source>Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="93"/>
         <source>No Bluetooth Hardware Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Không tìm thấy phần cứng Bluetooth</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="103"/>
         <source>No Bluetooth hardware was found</source>
-        <translation type="unfinished"></translation>
+        <translation>Không tìm thấy phần cứng Bluetooth</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="227"/>
         <source>View Active File Transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Xem việc chuyển tệp hoạt động</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="250"/>
         <source>Pair New Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghép nối với thiết bị mới</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="359"/>
@@ -99,17 +99,17 @@
     <message>
         <location filename="../bluetoothmanagement.ui" line="366"/>
         <source>Visible to other devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiển thị với thiết bị khác</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="375"/>
         <source>Bluetooth Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Địa chỉ Bluetooth</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="440"/>
         <source>File Transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Việc chuyển tệp</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="500"/>
@@ -137,7 +137,7 @@
         <location filename="../bluetoothmanagement.ui" line="629"/>
         <location filename="../bluetoothmanagement.cpp" line="275"/>
         <source>Unpair Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gỡ ghép nối</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="666"/>
@@ -147,7 +147,7 @@
     <message>
         <location filename="../bluetoothmanagement.ui" line="703"/>
         <source>Device Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Địa chỉ thiết bị</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="724"/>
@@ -163,17 +163,17 @@
     <message>
         <location filename="../bluetoothmanagement.ui" line="737"/>
         <source>Establish a connection with this Bluetooth device</source>
-        <translation type="unfinished"></translation>
+        <translation>Thiết lập kết nối với thiết bị này</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="760"/>
         <source>Connect to the Internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Kết nối với Internet</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="763"/>
         <source>Establish a connection with this device to access the internet</source>
-        <translation type="unfinished"></translation>
+        <translation>Thiết lập kết nối với thiết bị này để truy cập Internet</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="770"/>
@@ -183,7 +183,7 @@
     <message>
         <location filename="../bluetoothmanagement.ui" line="773"/>
         <source>Sends a file to this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gửi tệp đến thiết bị này</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="848"/>
@@ -225,42 +225,42 @@
     <message>
         <location filename="../bluetoothmanagement.ui" line="1437"/>
         <source>No Transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Không có việc chuyển tệp</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="1485"/>
         <source>No Transfer Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Chưa được chọn việc chuyển tệp</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="1495"/>
         <source>Select a transfer for more details</source>
-        <translation type="unfinished"></translation>
+        <translation>Chọn việc chuyển tệp để xem chi tiết hơn</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="1617"/>
         <source>Transferred</source>
-        <translation type="unfinished"></translation>
+        <translation>Chuyển thành công</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="1624"/>
         <source>File Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Kích thước tệp</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="178"/>
         <source>Device Name: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Tên thiết bị: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="179"/>
         <source>Address: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Địa chỉ: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="201"/>
         <source>Rename Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi tên thiết bị</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="201"/>
@@ -275,62 +275,62 @@
     <message>
         <location filename="../bluetoothmanagement.cpp" line="226"/>
         <source>Stop communicating with this Bluetooth device</source>
-        <translation type="unfinished"></translation>
+        <translation>Ngắt kết nối với thiết bị này</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="229"/>
         <source>Connect to all available Bluetooth profiles on this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Kết nối với mỗi hồ sơ Bluetooth trên thiết bị này</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="260"/>
         <source>Bluetooth needs to be enabled to pair a new device. Do you want to enable Bluetooth now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn cần bật Bluetooth để ghép nối với thiết bị mới. Bạn có muốn bật Bluetooth bây giờ không?</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="275"/>
         <source>Unpair %1 from this device?</source>
-        <translation type="unfinished"></translation>
+        <translation>Gỡ ghép nối của %1?</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="279"/>
         <source>Unpair</source>
-        <translation type="unfinished"></translation>
+        <translation>Gỡ ghép nối</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="280"/>
         <source>%1 has been unpaired from this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghép nối của %1 đã bị gỡ.</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="305"/>
         <source>Pairing Complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghép nối kết thúc</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="306"/>
         <source>%1 has been paired with this device.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 đã bị ghép nối với thiết bị này.</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="359"/>
         <source>Pairing Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghép nối không thành công</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="360"/>
         <source>Couldn&apos;t pair with %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Không có thể ghép nối với %1.</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="428"/>
         <source>Send Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi gửi</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.cpp" line="429"/>
         <source>Couldn&apos;t send the file to %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Không có thể gửi tệp đến %1.</translation>
     </message>
 </context>
 <context>
@@ -338,87 +338,85 @@
     <message numerus="yes">
         <location filename="../chunkwidget.cpp" line="54"/>
         <source>%n devices</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n thiết bị</numerusform>
+        </translation></message>
 </context>
 <context>
     <name>DevicesListModel</name>
     <message>
         <location filename="../deviceslistmodel.cpp" line="96"/>
         <source>Mobile Phone</source>
-        <translation type="unfinished"></translation>
+        <translation>Điện thoại</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="98"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Máy tính</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="100"/>
         <source>AV</source>
-        <translation type="unfinished"></translation>
+        <translation>AV</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="103"/>
         <source>Speaker</source>
-        <translation type="unfinished"></translation>
+        <translation>Loa</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="105"/>
         <source>Camera</source>
-        <translation type="unfinished"></translation>
+        <translation>Máy ảnh</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="107"/>
         <source>Health</source>
-        <translation type="unfinished"></translation>
+        <translation>Máy theo dõi sức khỏe</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="109"/>
         <source>Imaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Máy ảnh</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="111"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Bàn phím</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="113"/>
         <source>Mouse</source>
-        <translation type="unfinished"></translation>
+        <translation>Chuột</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="115"/>
         <source>Joypad</source>
-        <translation type="unfinished"></translation>
+        <translation>Cần điều khiển</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="117"/>
         <source>Peripheral</source>
-        <translation type="unfinished"></translation>
+        <translation>Thiết bị</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="119"/>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Máy in</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="121"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Mạng</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="123"/>
         <source>Modem</source>
-        <translation type="unfinished"></translation>
+        <translation>Modem</translation>
     </message>
     <message>
         <location filename="../deviceslistmodel.cpp" line="125"/>
         <source>Unknown</source>
-        <translation type="unfinished">Không xác định</translation>
+        <translation>Không xác định</translation>
     </message>
 </context>
 <context>
@@ -454,22 +452,22 @@
     <message>
         <location filename="../transferslistmodel.cpp" line="70"/>
         <source>Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth</translation>
     </message>
     <message>
         <location filename="../transferslistmodel.cpp" line="81"/>
         <source>Receiving File over Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang nhận tệp qua Bluetooth</translation>
     </message>
     <message>
         <location filename="../transferslistmodel.cpp" line="81"/>
         <source>Sending File over Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang gửi tệp qua Bluetooth</translation>
     </message>
     <message>
         <location filename="../transferslistmodel.cpp" line="82"/>
         <source>File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Tên tệp</translation>
     </message>
     <message>
         <location filename="../transferslistmodel.cpp" line="116"/>
@@ -479,7 +477,7 @@
     <message>
         <location filename="../transferslistmodel.cpp" line="118"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been successfully received and placed inside Downloads &gt; Bluetooth.</source>
-        <translation>&lt;b&gt;%1&lt;/&gt; đã bị nhận được và lưu trong thư mục Downloads &gt; Bluetooth.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; đã bị nhận được và lưu trong thư mục Downloads &gt; Bluetooth.</translation>
     </message>
     <message>
         <location filename="../transferslistmodel.cpp" line="120"/>
@@ -494,12 +492,12 @@
     <message>
         <location filename="../transferslistmodel.cpp" line="129"/>
         <source>There was a problem while receiving &lt;b&gt;%1&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Đã xảy ra sự cố khi nhận &lt;b&gt;%1&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../transferslistmodel.cpp" line="131"/>
         <source>There was a problem while sending &lt;b&gt;%1&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Đã xảy ra sự cố khi gửi &lt;b&gt;%1&lt;/b&gt;.</translation>
     </message>
 </context>
 </TS>
