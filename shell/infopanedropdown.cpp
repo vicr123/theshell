@@ -1133,7 +1133,7 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
     if (changeTo == Clock) {
         ui->pushButton_5->setEnabled(false);
         ui->pushButton_6->setEnabled(true);
-    } else if ((ui->kdeconnectLabel->isVisible() && changeTo == KDEConnect) || (changeTo == Notifications)) { //Print) {
+    } else if ((ui->kdeconnectLabel->isVisible() && changeTo == KDEConnect) || (changeTo == Notifications && !ui->kdeconnectLabel->isVisible())) { //Print) {
         ui->pushButton_5->setEnabled(true);
         ui->pushButton_6->setEnabled(false);
     } else if (changeTo == Settings) {
