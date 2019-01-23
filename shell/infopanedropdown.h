@@ -46,12 +46,6 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QDateTimeAxis>
-#include "animatedstackedwidget.h"
-#include "upowerdbus.h"
-#include "endsessionwait.h"
-#include "audiomanager.h"
-#include "nativeeventfilter.h"
-#include "dbussignals.h"
 #include <QScrollBar>
 #include <sys/sysinfo.h>
 #include <QSysInfo>

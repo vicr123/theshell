@@ -246,18 +246,16 @@ MainWindow::MainWindow(QWidget *parent) :
                 }
             }
 
-
+            ui->StatusBarBattery->setVisible(true);
             ui->StatusBarBattery->setPixmap(QIcon::fromTheme(iconName).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
             ui->batteryIcon->setPixmap(QIcon::fromTheme(iconName).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
         } else {
             ui->batteryFrame->setVisible(false);
             ui->StatusBarBattery->setVisible(false);
         }
-
-        updbus->currentBattery();
     });
     QTimer::singleShot(0, [=] {
-        updbus->DeviceChanged();
+        updbus->DeviceChanged(updbus->allDevices);
     });
 
     seperatorWidget = new QWidget();

@@ -26,6 +26,12 @@
 #include <tvirtualkeyboard.h>
 #include "location/locationdaemon.h"
 #include <notificationsdbusadaptor.h>
+#include "animatedstackedwidget.h"
+#include "upowerdbus.h"
+#include "endsessionwait.h"
+#include "audiomanager.h"
+#include "nativeeventfilter.h"
+#include "dbussignals.h"
 
 #include <QShortcut>
 #include <QMenu>
