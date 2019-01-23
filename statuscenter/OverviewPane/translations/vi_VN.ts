@@ -41,33 +41,31 @@
     <message numerus="yes">
         <location filename="../overview.cpp" line="419"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Vào ngày %1, giờ tiết kiệm ánh sáng ban ngày sẽ %2. Đồng hồ sẽ tự động %3 %n giờ.</numerusform>
+        </translation></message>
     <message>
         <location filename="../overview.cpp" line="422"/>
         <source>end</source>
         <comment>Context: &quot;Daylight Savings Time will end.&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>kết thúc</translation>
     </message>
     <message>
         <location filename="../overview.cpp" line="422"/>
         <source>begin</source>
         <comment>Context: &quot;Daylight Savings Time will begin.&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>bắt đầu</translation>
     </message>
     <message>
         <location filename="../overview.cpp" line="424"/>
         <source>backwards</source>
         <comment>Context: &quot;The clock will automatically adjust backwards&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>quay lại</translation>
     </message>
     <message>
         <location filename="../overview.cpp" line="424"/>
         <source>forwards</source>
         <comment>Context: &quot;The clock will automatically adjust forwards&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>đi tiếp</translation>
     </message>
     <message>
         <location filename="../overview.cpp" line="566"/>
@@ -250,27 +248,27 @@
     <message>
         <location filename="../Timers/timerpage.ui" line="450"/>
         <source>Happy Bee</source>
-        <translation type="unfinished"></translation>
+        <translation>Ong vui</translation>
     </message>
     <message>
         <location filename="../Timers/timerpage.ui" line="455"/>
         <source>Playing in the Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Chơi buổi tối</translation>
     </message>
     <message>
         <location filename="../Timers/timerpage.ui" line="460"/>
         <source>Ice Cream Truck</source>
-        <translation type="unfinished"></translation>
+        <translation>Xe kem</translation>
     </message>
     <message>
         <location filename="../Timers/timerpage.ui" line="465"/>
         <source>Party Complex</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhà tiệc</translation>
     </message>
     <message>
         <location filename="../Timers/timerpage.ui" line="470"/>
         <source>Salty Ditty</source>
-        <translation type="unfinished"></translation>
+        <translation>Bài hát mặn</translation>
     </message>
     <message>
         <location filename="../Timers/timerpage.ui" line="478"/>
