@@ -45,7 +45,7 @@
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="216"/>
         <source>If you have an Android device, you can install the KDE Connect Android app on Google Play or on F-Droid.</source>
-        <translation>Nếu bạn có thiết bị Android, bạn có thể cài đặt ứng dụng KDE Connect trên CH Google Play hoặc F-Droid</translation>
+        <translation>Nếu bạn có thiết bị Android, bạn có thể cài đặt ứng dụng KDE Connect trên CH Google Play hoặc F-Droid.</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="242"/>
@@ -303,7 +303,7 @@
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="204"/>
         <source>Do you want to unpair this device?</source>
-        <translation>Bạn có muốn gỡ ghép nối thiết bị này</translation>
+        <translation>Bạn có muốn gỡ ghép nối thiết bị này?</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="210"/>
