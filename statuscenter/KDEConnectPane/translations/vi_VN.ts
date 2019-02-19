@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="vi_VN">
+<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
 <context>
     <name>KdeConnectDevicesModel</name>
     <message>
@@ -323,8 +323,10 @@
     <message numerus="yes">
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="406"/>
         <source>Sending as %n messages</source>
-        <translation><numerusform>Gửi thành %n tin nhắn</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Gửi thành %n tin nhắn</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="426"/>
         <source>Your SMS has been sent to your device and is on its way!</source>
