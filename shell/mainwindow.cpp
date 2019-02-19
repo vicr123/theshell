@@ -1314,7 +1314,7 @@ void MainWindow::doUpdate() {
 
     QString statusBarText = ui->time->text();
     if (!settings.value("time/use24hour", true).toBool()) {
-        statusBarText.append(" " + QLocale().toString(QDateTime::currentDateTime(), "a"));
+        statusBarText.append(" " + ui->ampmLabel->text());
     }
     ui->StatusBarClock->setText(statusBarText);
 
