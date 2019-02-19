@@ -79,7 +79,7 @@
     <message>
         <location filename="../audiomanager.cpp" line="343"/>
         <source>Ignores all notifications not marked as critical and those set to bypass Quiet Mode. Normal sounds will still be played.</source>
-        <translation type="unfinished"></translation>
+        <translation>Уведомления, не отмеченные как важные, и не имеющие разрешения на обход Тихого режима будут пропущены. Остальные звуки останутся неизменными.</translation>
     </message>
     <message>
         <location filename="../audiomanager.cpp" line="345"/>
@@ -621,17 +621,17 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1752"/>
         <source>SCREEN</source>
-        <translation type="unfinished"></translation>
+        <translation>ЭКРАН</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1814"/>
         <source>REDSHIFT</source>
-        <translation type="unfinished"></translation>
+        <translation>РЕЖИМ НОЧИ</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5317"/>
         <source>There were errors loading the following items:</source>
-        <translation type="unfinished"></translation>
+        <translation>Произошла ошибка при загрузке следующих компонентов:</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="5781"/>
@@ -900,7 +900,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="123"/>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>Обзор</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="757"/>
@@ -930,7 +930,7 @@
         <location filename="../infopanedropdown.ui" line="5294"/>
         <location filename="../infopanedropdown.cpp" line="3131"/>
         <source>Unavailable Panes</source>
-        <translation type="unfinished"></translation>
+        <translation>Недоступные панели</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1037"/>
@@ -1215,7 +1215,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2502"/>
         <source>Allow this app&apos;s notifications to show when Quiet Mode is not set to Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Разрешить уведомлениям этого приложения обходить Тихий режим</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2751"/>
@@ -1267,27 +1267,27 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3700"/>
         <source>Hibernate</source>
-        <translation type="unfinished">Гибернация</translation>
+        <translation>Гибернация</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3751"/>
         <source>When suspending this device</source>
-        <translation type="unfinished"></translation>
+        <translation>При переводе этого устройства в режим сна</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3773"/>
         <source>Suspend nor&amp;mally</source>
-        <translation type="unfinished"></translation>
+        <translation>Обы&amp;чный режим сна</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3780"/>
         <source>This will save power, but stop everything that you&apos;re doing until you wake your device. Recommended for most users</source>
-        <translation type="unfinished"></translation>
+        <translation>Позволяет сэкономить энергию, но приостанавливает всё, пока вы не включите устройство. Рекомендуется большинству пользователей</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3790"/>
         <source>&amp;Just turn off the screen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Просто выключить экран</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3797"/>
