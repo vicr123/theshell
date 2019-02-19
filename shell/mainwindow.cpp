@@ -1311,7 +1311,12 @@ void MainWindow::doUpdate() {
         ui->time->setText(now.toString("hh:mm:ss"));
         ui->ampmLabel->setVisible(true);
     }
-    ui->StatusBarClock->setText(ui->time->text());
+
+    QString statusBarText = ui->time->text();
+    if (!settings.value("time/use24hour", true).toBool()) {
+        statusBarText.append(" " + QLocale().toString(QDateTime::currentDateTime(), "a"));
+    }
+    ui->StatusBarClock->setText(statusBarText);
 
     QStringList currentMprisApps;
     for (QString service : QDBusConnection::sessionBus().interface()->registeredServiceNames().value()) {

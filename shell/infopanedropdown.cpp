@@ -52,6 +52,7 @@ extern UPowerDBus* updbus;
 extern DBusSignals* dbusSignals;
 extern LocationServices* locationServices;
 extern LocationDaemon* geolocation;
+extern bool startSafe;
 
 #define LOWER_INFOPANE InfoPaneNotOnTopLocker locker(this);
 
@@ -438,7 +439,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->TouchFeedbackSwitch->setChecked(d->settings.value("input/touchFeedbackSound", false).toBool());
     ui->SuperkeyGatewaySwitch->setChecked(d->settings.value("input/superkeyGateway", true).toBool());
     ui->TextSwitch->setChecked(d->settings.value("bar/showText", true).toBool());
-    ui->windowManager->setText(d->settings.value("startup/WindowManagerCommand", "kwin_x11").toString());
+    ui->windowManager->setText(d->settings.value("startup/WindowManagerCommand", "kwin_x11 --no-kactivities").toString());
     ui->barDesktopsSwitch->setChecked(d->settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
     ui->MediaSwitch->setChecked(d->settings.value("notifications/mediaInsert", true).toBool());
     ui->StatusBarSwitch->setChecked(d->settings.value("bar/statusBar", false).toBool());
@@ -725,131 +726,137 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     });
 
     //Load plugins
-    QList<QDir> searchDirs;
-    QJsonArray errors;
-    searchDirs.append(QApplication::applicationDirPath() + "/../statuscenter/");
-    searchDirs.append(QApplication::applicationDirPath() + "/../daemons/");
-    #ifdef BLUEPRINT
-        searchDirs.append(QDir("/usr/lib/theshellb/panes"));
-        searchDirs.append(QDir("/usr/lib/theshellb/daemons"));
-    #else
-        searchDirs.append(QDir("/usr/lib/theshell/panes"));
-        searchDirs.append(QDir("/usr/lib/theshell/daemons"));
-    #endif
+    if (!startSafe) {
+        QList<QDir> searchDirs;
+        QJsonArray errors;
+        searchDirs.append(QApplication::applicationDirPath() + "/../statuscenter/");
+        searchDirs.append(QApplication::applicationDirPath() + "/../daemons/");
+        #ifdef BLUEPRINT
+            searchDirs.append(QDir("/usr/lib/theshellb/panes"));
+            searchDirs.append(QDir("/usr/lib/theshellb/daemons"));
+        #else
+            searchDirs.append(QDir("/usr/lib/theshell/panes"));
+            searchDirs.append(QDir("/usr/lib/theshell/daemons"));
+        #endif
 
-    QStringList loadedPanes, loadedSettings;
-    d->pluginsSettingsStartIndex = ui->settingsList->count() - 3;
-    for (QDir pluginsDir : searchDirs) {
-        QDirIterator pluginsIterator(pluginsDir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+        QStringList loadedPanes, loadedSettings;
+        d->pluginsSettingsStartIndex = ui->settingsList->count() - 3;
+        for (QDir pluginsDir : searchDirs) {
+            QDirIterator pluginsIterator(pluginsDir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
-        while (pluginsIterator.hasNext()) {
-            pluginsIterator.next();
-            if (pluginsIterator.fileInfo().suffix() != "so" && pluginsIterator.fileInfo().suffix() != "a") continue;
-            QPluginLoader loader(pluginsIterator.filePath());
-            QJsonObject metadata = loader.metaData();
-            if (!metadata.contains("name")) {
-                metadata.insert("name", pluginsIterator.fileName());
-            }
+            while (pluginsIterator.hasNext()) {
+                pluginsIterator.next();
+                if (pluginsIterator.fileInfo().suffix() != "so" && pluginsIterator.fileInfo().suffix() != "a") continue;
+                QPluginLoader loader(pluginsIterator.filePath());
+                QJsonObject metadata = loader.metaData();
+                if (!metadata.contains("name")) {
+                    metadata.insert("name", pluginsIterator.fileName());
+                }
 
-            QObject* plugin = loader.instance();
-            if (plugin == nullptr) {
-                metadata.insert("error", loader.errorString());
-                errors.append(metadata);
-            } else {
-                StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
-                if (p) {
-                    qDebug() << "Loading" << metadata.value("name").toString();
-                    p->loadLanguage(QLocale().name());
-                    for (StatusCenterPaneObject* pane : p->availablePanes()) {
-                        if (pane->name() == "Overview" && pane->type().testFlag(StatusCenterPaneObject::Informational)) {
-                            if (!loadedPanes.contains("Overview")) {
-                                //Special handling for Overview pane
-                                d->overviewFrame = pane->mainWidget();
-                                d->overviewFrame->setAutoFillBackground(true);
-                                ui->pageStack->insertWidget(0, d->overviewFrame);
-
-                                loadedPanes.append(pane->name());
-                            }
-                        } else {
-                            if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
-                                if (!loadedPanes.contains(pane->name())) {
-                                    ClickableLabel* label = new ClickableLabel(this);
-                                    label->setText(pane->name());
-                                    ui->InformationalPluginsLayout->addWidget(label);
-
-                                    ui->pageStack->insertWidget(ui->pageStack->count() - 1, pane->mainWidget());
-                                    pane->mainWidget()->setAutoFillBackground(true);
-
-                                    connect(label, &ClickableLabel::clicked, [=] {
-                                        changeDropDown(pane->mainWidget(), label);
-                                        if (ui->lightColorThemeRadio->isChecked()) {
-                                            setHeaderColour(pane->informationalAttributes.lightColor);
-                                        } else {
-                                            setHeaderColour(pane->informationalAttributes.darkColor);
-                                        }
-                                    });
+                QObject* plugin = loader.instance();
+                if (plugin == nullptr) {
+                    metadata.insert("error", loader.errorString());
+                    errors.append(metadata);
+                } else {
+                    StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
+                    if (p) {
+                        qDebug() << "Loading" << metadata.value("name").toString();
+                        p->loadLanguage(QLocale().name());
+                        for (StatusCenterPaneObject* pane : p->availablePanes()) {
+                            if (pane->name() == "Overview" && pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+                                if (!loadedPanes.contains("Overview")) {
+                                    //Special handling for Overview pane
+                                    d->overviewFrame = pane->mainWidget();
+                                    d->overviewFrame->setAutoFillBackground(true);
+                                    ui->pageStack->insertWidget(0, d->overviewFrame);
 
                                     loadedPanes.append(pane->name());
-                                    d->pluginLabels.insert(pane, label);
                                 }
-                            }
+                            } else {
+                                if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+                                    if (!loadedPanes.contains(pane->name())) {
+                                        ClickableLabel* label = new ClickableLabel(this);
+                                        label->setText(pane->name());
+                                        ui->InformationalPluginsLayout->addWidget(label);
 
-                            if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
-                                if (!loadedSettings.contains(pane->name())) {
-                                    QListWidgetItem* item = new QListWidgetItem();
-                                    item->setText(pane->name());
-                                    item->setIcon(pane->settingAttributes.icon);
-                                    item->setData(Qt::UserRole, -1);
-                                    ui->settingsList->insertItem(d->pluginsSettingsStartIndex + loadedSettings.count(), item);
+                                        ui->pageStack->insertWidget(ui->pageStack->count() - 1, pane->mainWidget());
+                                        pane->mainWidget()->setAutoFillBackground(true);
 
-                                    if (pane->settingAttributes.menuWidget != nullptr) {
-                                        int settingNumber = ui->settingsListStack->addWidget(pane->settingAttributes.menuWidget);
-                                        pane->settingAttributes.menuWidget->setAutoFillBackground(true);
-                                        item->setData(Qt::UserRole, settingNumber);
+                                        connect(label, &ClickableLabel::clicked, [=] {
+                                            changeDropDown(pane->mainWidget(), label);
+                                            if (ui->lightColorThemeRadio->isChecked()) {
+                                                setHeaderColour(pane->informationalAttributes.lightColor);
+                                            } else {
+                                                setHeaderColour(pane->informationalAttributes.darkColor);
+                                            }
+                                        });
+
+                                        loadedPanes.append(pane->name());
+                                        d->pluginLabels.insert(pane, label);
                                     }
+                                }
 
-                                    ui->settingsTabs->insertWidget(d->pluginsSettingsStartIndex + loadedSettings.count(), pane->mainWidget());
-                                    pane->mainWidget()->setAutoFillBackground(true);
+                                if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
+                                    if (!loadedSettings.contains(pane->name())) {
+                                        QListWidgetItem* item = new QListWidgetItem();
+                                        item->setText(pane->name());
+                                        item->setIcon(pane->settingAttributes.icon);
+                                        item->setData(Qt::UserRole, -1);
+                                        ui->settingsList->insertItem(d->pluginsSettingsStartIndex + loadedSettings.count(), item);
 
-                                    loadedSettings.append(pane->name());
-                                    d->loadedSettingsPlugins.append(pane);
+                                        if (pane->settingAttributes.menuWidget != nullptr) {
+                                            int settingNumber = ui->settingsListStack->addWidget(pane->settingAttributes.menuWidget);
+                                            pane->settingAttributes.menuWidget->setAutoFillBackground(true);
+                                            item->setData(Qt::UserRole, settingNumber);
+                                        }
+
+                                        ui->settingsTabs->insertWidget(d->pluginsSettingsStartIndex + loadedSettings.count(), pane->mainWidget());
+                                        pane->mainWidget()->setAutoFillBackground(true);
+
+                                        loadedSettings.append(pane->name());
+                                        d->loadedSettingsPlugins.append(pane);
+                                    }
                                 }
                             }
-                        }
 
-                        pane->sendMessage = [=](QString message, QVariantList args) {
-                            this->pluginMessage(message, args, pane);
-                        };
-                        pane->getProperty = [=](QString key) {
-                            return this->pluginProperty(key);
-                        };
-                        d->pluginObjects.insert(pane->mainWidget(), pane);
+                            pane->sendMessage = [=](QString message, QVariantList args) {
+                                this->pluginMessage(message, args, pane);
+                            };
+                            pane->getProperty = [=](QString key) {
+                                return this->pluginProperty(key);
+                            };
+                            d->pluginObjects.insert(pane->mainWidget(), pane);
+                        }
+                        d->loadedPlugins.append(p);
                     }
-                    d->loadedPlugins.append(p);
                 }
             }
         }
-    }
 
-    if (!loadedPanes.contains("Overview")) {
-        qWarning() << "Could not load Overview pane";
-        qWarning() << "theShell may not work properly";
-    }
-
-    if (errors.count() == 0) {
-        ui->settingsTabs->removeWidget(ui->UnavailablePanesPage);
-        delete ui->settingsList->takeItem(ui->settingsList->count() - 3);
-    } else {
-        ui->settingsUnavailableTable->setColumnCount(2);
-        ui->settingsUnavailableTable->setRowCount(errors.count());
-        ui->settingsUnavailableTable->setHorizontalHeaderLabels(QStringList() << "Name" << "Reason");
-        ui->settingsUnavailableTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-        ui->settingsUnavailableTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-        for (int i = 0; i < errors.count(); i++) {
-            QJsonObject o = errors.at(i).toObject();
-            ui->settingsUnavailableTable->setItem(i, 0, new QTableWidgetItem(o.value("name").toString()));
-            ui->settingsUnavailableTable->setItem(i, 1, new QTableWidgetItem(o.value("error").toString()));
+        if (!loadedPanes.contains("Overview")) {
+            qWarning() << "Could not load Overview pane";
+            qWarning() << "theShell may not work properly";
         }
+
+        if (errors.count() == 0) {
+            ui->settingsTabs->removeWidget(ui->UnavailablePanesPage);
+            delete ui->settingsList->takeItem(ui->settingsList->count() - 3);
+        } else {
+            ui->settingsUnavailableTable->setColumnCount(2);
+            ui->settingsUnavailableTable->setRowCount(errors.count());
+            ui->settingsUnavailableTable->setHorizontalHeaderLabels(QStringList() << "Name" << "Reason");
+            ui->settingsUnavailableTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+            ui->settingsUnavailableTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+            for (int i = 0; i < errors.count(); i++) {
+                QJsonObject o = errors.at(i).toObject();
+                ui->settingsUnavailableTable->setItem(i, 0, new QTableWidgetItem(o.value("name").toString()));
+                ui->settingsUnavailableTable->setItem(i, 1, new QTableWidgetItem(o.value("error").toString()));
+            }
+        }
+    } else {
+        //We're starting in safe mode; hide the overview label
+        ui->clockLabel->setVisible(false);
+        ui->unavailablePaneMessage->setText(tr("No plugins were loaded because you've started theShell in Safe Mode."));
     }
 
     //Don't forget to change settings pane setup things
@@ -3797,6 +3804,8 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         }
     } else if (message == "register-chunk") {
         emit newChunk(args.first().value<QWidget*>());
+    } else if (message == "register-snack") {
+
     }
 }
 

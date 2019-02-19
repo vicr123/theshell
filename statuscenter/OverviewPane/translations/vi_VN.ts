@@ -41,8 +41,10 @@
     <message numerus="yes">
         <location filename="../overview.cpp" line="419"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
-        <translation><numerusform>Vào ngày %1, giờ tiết kiệm ánh sáng ban ngày sẽ %2. Đồng hồ sẽ tự động %3 %n giờ.</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Vào ngày %1, giờ tiết kiệm ánh sáng ban ngày sẽ %2. Đồng hồ sẽ tự động %3 %n giờ.</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="../overview.cpp" line="422"/>
         <source>end</source>

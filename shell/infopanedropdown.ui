@@ -14,7 +14,7 @@
    <string notr="true">theShellStatusCenter</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="theshell" resource="resources.qrc">
+   <iconset theme="theshell" resource="../startsession/resources.qrc">
     <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -927,7 +927,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>3</number>
+             <number>14</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -5312,7 +5312,7 @@ Items that will be kept if you choose to keep files:
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_111">
+               <widget class="QLabel" name="unavailablePaneMessage">
                 <property name="text">
                  <string>There were errors loading the following items:</string>
                 </property>
@@ -5928,24 +5928,18 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
-   <class>tStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header location="global">tstackedwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>AnimatedStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header>animatedstackedwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>clickablelabel.h</header>
    <slots>
     <signal>clicked()</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>AnimatedStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>animatedstackedwidget.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>NetworkWidget</class>
@@ -5970,9 +5964,15 @@ Items that will be kept if you choose to keep files:
     <signal>exit()</signal>
    </slots>
   </customwidget>
+  <customwidget>
+   <class>tStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header location="global">tstackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../startsession/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

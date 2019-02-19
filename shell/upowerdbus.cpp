@@ -417,6 +417,7 @@ void UPowerDBus::checkUpower() {
             this->isLidClosed = false;
         }
     }
+    delete i;
 }
 
 QDBusObjectPath UPowerDBus::defaultBattery() {

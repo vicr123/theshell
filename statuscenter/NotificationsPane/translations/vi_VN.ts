@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="vi_VN">
+<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
 <context>
     <name>JobServer</name>
     <message numerus="yes">
         <source>%n jobs running</source>
-        <translation><numerusform>%n việc đang chạy</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n việc đang chạy</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>JobViewWidget</name>
@@ -23,23 +25,31 @@
     </message>
     <message numerus="yes">
         <source>+%n notifications collapsed</source>
-        <translation><numerusform>+%n thông báo thu gọn</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>+%n thông báo thu gọn</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>NotificationPanel</name>
     <message numerus="yes">
         <source>%n d</source>
-        <translation><numerusform>%n ng</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n ng</numerusform>
+        </translation>
+    </message>
     <message numerus="yes">
         <source>%n hr</source>
-        <translation><numerusform>%n g</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n g</numerusform>
+        </translation>
+    </message>
     <message numerus="yes">
         <source>%n min</source>
-        <translation><numerusform>%n ph</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n ph</numerusform>
+        </translation>
+    </message>
     <message>
         <source>just now</source>
         <translation>vừa báo</translation>
@@ -108,7 +118,9 @@
     </message>
     <message numerus="yes">
         <source>%n notification(s)</source>
-        <translation><numerusform>%n thông báo</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n thông báo</numerusform>
+        </translation>
+    </message>
 </context>
 </TS>
