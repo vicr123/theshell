@@ -96,6 +96,14 @@ BluetoothManagement::BluetoothManagement(QWidget *parent) :
     });
 
     ui->menuStackedWidget->setFixedWidth(250 * getDPIScaling());
+
+    chunk = new ChunkWidget(mgr);
+    connect(chunk, &ChunkWidget::showBluetoothPane, [=] {
+        sendMessage("show", {});
+    });
+    QTimer::singleShot(0, [=] {
+        sendMessage("register-chunk", {QVariant::fromValue(chunk)});
+    });
 }
 
 BluetoothManagement::~BluetoothManagement()

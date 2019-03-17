@@ -131,20 +131,6 @@
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="ClickableLabel" name="networkLabel">
-             <property name="text">
-              <string>Network</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="ClickableLabel" name="kdeconnectLabel">
-             <property name="text">
-              <string>KDE Connect</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </item>
          <item>
@@ -238,39 +224,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_23">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="text">
-           <string>Wi-Fi</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="Switch" name="WifiSwitch">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="text">
-           <string notr="true">WifiSwitch</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="Line" name="line_4">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QLabel" name="label_56">
           <property name="text">
            <string>Power Stretch</string>
@@ -342,7 +295,7 @@
    <item>
     <widget class="tStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="statusFrame">
       <property name="autoFillBackground">
@@ -586,67 +539,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="networkFrame">
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="NetworkWidget" name="NetworkManager" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="kdeConnectFrame">
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="KdeConnectWidget" name="widget" native="true"/>
-       </item>
-       <item>
-        <widget class="Line" name="line_26">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="settingsFrame">
       <property name="autoFillBackground">
        <bool>true</bool>
@@ -797,15 +689,6 @@
                     </property>
                     <property name="icon">
                      <iconset theme="preferences-desktop-gateway">
-                      <normaloff>.</normaloff>.</iconset>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Networks</string>
-                    </property>
-                    <property name="icon">
-                     <iconset theme="preferences-system-network">
                       <normaloff>.</normaloff>.</iconset>
                     </property>
                    </item>
@@ -966,7 +849,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>3</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1535,32 +1418,6 @@
                  </spacer>
                 </item>
                </layout>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="page_14">
-             <layout class="QVBoxLayout" name="verticalLayout_8">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="NetworkWidget" name="networkManagerSettings" native="true">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-               </widget>
               </item>
              </layout>
             </widget>
@@ -5351,7 +5208,7 @@ Items that will be kept if you choose to keep files:
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_111">
+               <widget class="QLabel" name="unavailablePaneMessage">
                 <property name="text">
                  <string>There were errors loading the following items:</string>
                 </property>
@@ -5967,9 +5824,9 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AnimatedStackedWidget</class>
+   <class>tStackedWidget</class>
    <extends>QStackedWidget</extends>
-   <header>animatedstackedwidget.h</header>
+   <header location="global">tstackedwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -5981,24 +5838,15 @@ Items that will be kept if you choose to keep files:
    </slots>
   </customwidget>
   <customwidget>
-   <class>NetworkWidget</class>
-   <extends>QWidget</extends>
-   <header>networkmanager/networkwidget.h</header>
+   <class>AnimatedStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>animatedstackedwidget.h</header>
    <container>1</container>
-   <slots>
-    <signal>networkAvailable(bool)</signal>
-   </slots>
   </customwidget>
   <customwidget>
    <class>Switch</class>
    <extends>QPushButton</extends>
    <header>switch.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KdeConnectWidget</class>
-   <extends>QWidget</extends>
-   <header>kdeconnect/kdeconnectwidget.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>MousePassword</class>
@@ -6008,12 +5856,6 @@ Items that will be kept if you choose to keep files:
    <slots>
     <signal>exit()</signal>
    </slots>
-  </customwidget>
-  <customwidget>
-   <class>tStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header location="global">tstackedwidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

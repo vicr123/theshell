@@ -33,12 +33,10 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QPaintEvent>
-#include "mainwindow.h"
 #include "choosebackground.h"
 
-#include <X11/Xlib.h>
-
 class ChooseBackground;
+class MainWindow;
 
 namespace Ui {
 class Background;

@@ -26,8 +26,17 @@
 #include <tvirtualkeyboard.h>
 #include "location/locationdaemon.h"
 #include <notificationsdbusadaptor.h>
+#include "animatedstackedwidget.h"
+#include "upowerdbus.h"
+#include "endsessionwait.h"
+#include "audiomanager.h"
+#include "nativeeventfilter.h"
+#include "dbussignals.h"
 
 #include <QShortcut>
+#include <QMenu>
+#include <QAction>
+#include "location/locationservices.h"
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
@@ -43,6 +52,7 @@ extern UPowerDBus* updbus;
 extern DBusSignals* dbusSignals;
 extern LocationServices* locationServices;
 extern LocationDaemon* geolocation;
+extern bool startSafe;
 
 #define LOWER_INFOPANE InfoPaneNotOnTopLocker locker(this);
 
@@ -148,13 +158,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2019"));
     ui->usesLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-
-    connect(this, SIGNAL(flightModeChanged(bool)), ui->NetworkManager, SLOT(flightModeChanged(bool)));
-    connect(this, SIGNAL(flightModeChanged(bool)), ui->networkManagerSettings, SLOT(flightModeChanged(bool)));
-
-    if (d->settings.value("flightmode/on", false).toBool()) {
-        ui->FlightSwitch->setChecked(true);
-    }
 
     d->MainWindowId = MainWindowId;
 
@@ -269,12 +272,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     if (!QFile("/usr/bin/scallop").exists()) {
         ui->resetDeviceButton->setVisible(false);
     }
-
-    //Set up networking
-    QDBusInterface networkInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
-    connect(ui->NetworkManager, SIGNAL(updateBarDisplay(QString,QIcon)), this, SIGNAL(networkLabelChanged(QString,QIcon)));
-
-    ui->WifiSwitch->setChecked(networkInterface.property("WirelessEnabled").toBool());
 
     //Load icons into icon theme box
     {
@@ -429,7 +426,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->TouchFeedbackSwitch->setChecked(d->settings.value("input/touchFeedbackSound", false).toBool());
     ui->SuperkeyGatewaySwitch->setChecked(d->settings.value("input/superkeyGateway", true).toBool());
     ui->TextSwitch->setChecked(d->settings.value("bar/showText", true).toBool());
-    ui->windowManager->setText(d->settings.value("startup/WindowManagerCommand", "kwin_x11").toString());
+    ui->windowManager->setText(d->settings.value("startup/WindowManagerCommand", "kwin_x11 --no-kactivities").toString());
     ui->barDesktopsSwitch->setChecked(d->settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
     ui->MediaSwitch->setChecked(d->settings.value("notifications/mediaInsert", true).toBool());
     ui->StatusBarSwitch->setChecked(d->settings.value("bar/statusBar", false).toBool());
@@ -716,131 +713,137 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     });
 
     //Load plugins
-    QList<QDir> searchDirs;
-    QJsonArray errors;
-    searchDirs.append(QApplication::applicationDirPath() + "/../statuscenter/");
-    searchDirs.append(QApplication::applicationDirPath() + "/../daemons/");
-    #ifdef BLUEPRINT
-        searchDirs.append(QDir("/usr/lib/theshellb/panes"));
-        searchDirs.append(QDir("/usr/lib/theshellb/daemons"));
-    #else
-        searchDirs.append(QDir("/usr/lib/theshell/panes"));
-        searchDirs.append(QDir("/usr/lib/theshell/daemons"));
-    #endif
+    if (!startSafe) {
+        QList<QDir> searchDirs;
+        QJsonArray errors;
+        searchDirs.append(QApplication::applicationDirPath() + "/../statuscenter/");
+        searchDirs.append(QApplication::applicationDirPath() + "/../daemons/");
+        #ifdef BLUEPRINT
+            searchDirs.append(QDir("/usr/lib/theshellb/panes"));
+            searchDirs.append(QDir("/usr/lib/theshellb/daemons"));
+        #else
+            searchDirs.append(QDir("/usr/lib/theshell/panes"));
+            searchDirs.append(QDir("/usr/lib/theshell/daemons"));
+        #endif
 
-    QStringList loadedPanes, loadedSettings;
-    d->pluginsSettingsStartIndex = ui->settingsList->count() - 3;
-    for (QDir pluginsDir : searchDirs) {
-        QDirIterator pluginsIterator(pluginsDir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
+        QStringList loadedPanes, loadedSettings;
+        d->pluginsSettingsStartIndex = ui->settingsList->count() - 3;
+        for (QDir pluginsDir : searchDirs) {
+            QDirIterator pluginsIterator(pluginsDir, QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
-        while (pluginsIterator.hasNext()) {
-            pluginsIterator.next();
-            if (pluginsIterator.fileInfo().suffix() != "so" && pluginsIterator.fileInfo().suffix() != "a") continue;
-            QPluginLoader loader(pluginsIterator.filePath());
-            QJsonObject metadata = loader.metaData();
-            if (!metadata.contains("name")) {
-                metadata.insert("name", pluginsIterator.fileName());
-            }
+            while (pluginsIterator.hasNext()) {
+                pluginsIterator.next();
+                if (pluginsIterator.fileInfo().suffix() != "so" && pluginsIterator.fileInfo().suffix() != "a") continue;
+                QPluginLoader loader(pluginsIterator.filePath());
+                QJsonObject metadata = loader.metaData();
+                if (!metadata.contains("name")) {
+                    metadata.insert("name", pluginsIterator.fileName());
+                }
 
-            QObject* plugin = loader.instance();
-            if (plugin == nullptr) {
-                metadata.insert("error", loader.errorString());
-                errors.append(metadata);
-            } else {
-                StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
-                if (p) {
-                    qDebug() << "Loading" << metadata.value("name").toString();
-                    p->loadLanguage(QLocale().name());
-                    for (StatusCenterPaneObject* pane : p->availablePanes()) {
-                        if (pane->name() == "Overview" && pane->type().testFlag(StatusCenterPaneObject::Informational)) {
-                            if (!loadedPanes.contains("Overview")) {
-                                //Special handling for Overview pane
-                                d->overviewFrame = pane->mainWidget();
-                                d->overviewFrame->setAutoFillBackground(true);
-                                ui->pageStack->insertWidget(0, d->overviewFrame);
-
-                                loadedPanes.append(pane->name());
-                            }
-                        } else {
-                            if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
-                                if (!loadedPanes.contains(pane->name())) {
-                                    ClickableLabel* label = new ClickableLabel(this);
-                                    label->setText(pane->name());
-                                    ui->InformationalPluginsLayout->addWidget(label);
-
-                                    ui->pageStack->insertWidget(ui->pageStack->count() - 1, pane->mainWidget());
-                                    pane->mainWidget()->setAutoFillBackground(true);
-
-                                    connect(label, &ClickableLabel::clicked, [=] {
-                                        changeDropDown(pane->mainWidget(), label);
-                                        if (ui->lightColorThemeRadio->isChecked()) {
-                                            setHeaderColour(pane->informationalAttributes.lightColor);
-                                        } else {
-                                            setHeaderColour(pane->informationalAttributes.darkColor);
-                                        }
-                                    });
+                QObject* plugin = loader.instance();
+                if (plugin == nullptr) {
+                    metadata.insert("error", loader.errorString());
+                    errors.append(metadata);
+                } else {
+                    StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
+                    if (p) {
+                        qDebug() << "Loading" << metadata.value("name").toString();
+                        p->loadLanguage(QLocale().name());
+                        for (StatusCenterPaneObject* pane : p->availablePanes()) {
+                            if (pane->name() == "Overview" && pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+                                if (!loadedPanes.contains("Overview")) {
+                                    //Special handling for Overview pane
+                                    d->overviewFrame = pane->mainWidget();
+                                    d->overviewFrame->setAutoFillBackground(true);
+                                    ui->pageStack->insertWidget(0, d->overviewFrame);
 
                                     loadedPanes.append(pane->name());
-                                    d->pluginLabels.insert(pane, label);
                                 }
-                            }
+                            } else {
+                                if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+                                    if (!loadedPanes.contains(pane->name())) {
+                                        ClickableLabel* label = new ClickableLabel(this);
+                                        label->setText(pane->name());
+                                        ui->InformationalPluginsLayout->addWidget(label);
 
-                            if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
-                                if (!loadedSettings.contains(pane->name())) {
-                                    QListWidgetItem* item = new QListWidgetItem();
-                                    item->setText(pane->name());
-                                    item->setIcon(pane->settingAttributes.icon);
-                                    item->setData(Qt::UserRole, -1);
-                                    ui->settingsList->insertItem(d->pluginsSettingsStartIndex + loadedSettings.count(), item);
+                                        ui->pageStack->insertWidget(ui->pageStack->count() - 1, pane->mainWidget());
+                                        pane->mainWidget()->setAutoFillBackground(true);
 
-                                    if (pane->settingAttributes.menuWidget != nullptr) {
-                                        int settingNumber = ui->settingsListStack->addWidget(pane->settingAttributes.menuWidget);
-                                        pane->settingAttributes.menuWidget->setAutoFillBackground(true);
-                                        item->setData(Qt::UserRole, settingNumber);
+                                        connect(label, &ClickableLabel::clicked, [=] {
+                                            changeDropDown(pane->mainWidget(), label);
+                                            if (ui->lightColorThemeRadio->isChecked()) {
+                                                setHeaderColour(pane->informationalAttributes.lightColor);
+                                            } else {
+                                                setHeaderColour(pane->informationalAttributes.darkColor);
+                                            }
+                                        });
+
+                                        loadedPanes.append(pane->name());
+                                        d->pluginLabels.insert(pane, label);
                                     }
+                                }
 
-                                    ui->settingsTabs->insertWidget(d->pluginsSettingsStartIndex + loadedSettings.count(), pane->mainWidget());
-                                    pane->mainWidget()->setAutoFillBackground(true);
+                                if (pane->type().testFlag(StatusCenterPaneObject::Setting)) {
+                                    if (!loadedSettings.contains(pane->name())) {
+                                        QListWidgetItem* item = new QListWidgetItem();
+                                        item->setText(pane->name());
+                                        item->setIcon(pane->settingAttributes.icon);
+                                        item->setData(Qt::UserRole, -1);
+                                        ui->settingsList->insertItem(d->pluginsSettingsStartIndex + loadedSettings.count(), item);
 
-                                    loadedSettings.append(pane->name());
-                                    d->loadedSettingsPlugins.append(pane);
+                                        if (pane->settingAttributes.menuWidget != nullptr) {
+                                            int settingNumber = ui->settingsListStack->addWidget(pane->settingAttributes.menuWidget);
+                                            pane->settingAttributes.menuWidget->setAutoFillBackground(true);
+                                            item->setData(Qt::UserRole, settingNumber);
+                                        }
+
+                                        ui->settingsTabs->insertWidget(d->pluginsSettingsStartIndex + loadedSettings.count(), pane->mainWidget());
+                                        pane->mainWidget()->setAutoFillBackground(true);
+
+                                        loadedSettings.append(pane->name());
+                                        d->loadedSettingsPlugins.append(pane);
+                                    }
                                 }
                             }
-                        }
 
-                        pane->sendMessage = [=](QString message, QVariantList args) {
-                            this->pluginMessage(message, args, pane);
-                        };
-                        pane->getProperty = [=](QString key) {
-                            return this->pluginProperty(key);
-                        };
-                        d->pluginObjects.insert(pane->mainWidget(), pane);
+                            pane->sendMessage = [=](QString message, QVariantList args) {
+                                this->pluginMessage(message, args, pane);
+                            };
+                            pane->getProperty = [=](QString key) {
+                                return this->pluginProperty(key);
+                            };
+                            d->pluginObjects.insert(pane->mainWidget(), pane);
+                        }
+                        d->loadedPlugins.append(p);
                     }
-                    d->loadedPlugins.append(p);
                 }
             }
         }
-    }
 
-    if (!loadedPanes.contains("Overview")) {
-        qWarning() << "Could not load Overview pane";
-        qWarning() << "theShell may not work properly";
-    }
-
-    if (errors.count() == 0) {
-        ui->settingsTabs->removeWidget(ui->UnavailablePanesPage);
-        delete ui->settingsList->takeItem(ui->settingsList->count() - 3);
-    } else {
-        ui->settingsUnavailableTable->setColumnCount(2);
-        ui->settingsUnavailableTable->setRowCount(errors.count());
-        ui->settingsUnavailableTable->setHorizontalHeaderLabels(QStringList() << "Name" << "Reason");
-        ui->settingsUnavailableTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-        ui->settingsUnavailableTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-        for (int i = 0; i < errors.count(); i++) {
-            QJsonObject o = errors.at(i).toObject();
-            ui->settingsUnavailableTable->setItem(i, 0, new QTableWidgetItem(o.value("name").toString()));
-            ui->settingsUnavailableTable->setItem(i, 1, new QTableWidgetItem(o.value("error").toString()));
+        if (!loadedPanes.contains("Overview")) {
+            qWarning() << "Could not load Overview pane";
+            qWarning() << "theShell may not work properly";
         }
+
+        if (errors.count() == 0) {
+            ui->settingsTabs->removeWidget(ui->UnavailablePanesPage);
+            delete ui->settingsList->takeItem(ui->settingsList->count() - 3);
+        } else {
+            ui->settingsUnavailableTable->setColumnCount(2);
+            ui->settingsUnavailableTable->setRowCount(errors.count());
+            ui->settingsUnavailableTable->setHorizontalHeaderLabels(QStringList() << "Name" << "Reason");
+            ui->settingsUnavailableTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+            ui->settingsUnavailableTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+            for (int i = 0; i < errors.count(); i++) {
+                QJsonObject o = errors.at(i).toObject();
+                ui->settingsUnavailableTable->setItem(i, 0, new QTableWidgetItem(o.value("name").toString()));
+                ui->settingsUnavailableTable->setItem(i, 1, new QTableWidgetItem(o.value("error").toString()));
+            }
+        }
+    } else {
+        //We're starting in safe mode; hide the overview label
+        ui->clockLabel->setVisible(false);
+        ui->unavailablePaneMessage->setText(tr("No plugins were loaded because you've started theShell in Safe Mode."));
     }
 
     //Don't forget to change settings pane setup things
@@ -865,6 +868,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     updateStruts();
     updateAutostart();
+
+    //Turn on flight mode if needed
+    if (d->settings.value("flightmode/on", false).toBool()) {
+        ui->FlightSwitch->setChecked(true);
+    }
 
     /*QTimer::singleShot(5000, [=] {
         this->setProperty("aw", 0);
@@ -901,40 +909,6 @@ InfoPaneNotOnTopLocker::InfoPaneNotOnTopLocker(InfoPaneDropdown *infoPane) {
 InfoPaneNotOnTopLocker::~InfoPaneNotOnTopLocker() {
     infoPane->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     infoPane->showNoAnimation();
-}
-
-void InfoPaneDropdown::newNetworkDevice(QDBusObjectPath device) {
-    QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus(), this);
-    if (i->property("DeviceType").toInt() == 2) { //WiFi Device
-        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wireless", "AccessPointAdded", this, SLOT(getNetworks()));
-        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wireless", "AccessPointRemoved", this, SLOT(getNetworks()));
-        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", "StateChanged", this, SLOT(getNetworks()));
-    } else if (i->property("DeviceType").toInt() == 1) { //Wired Device
-        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wired", "PropertiesChanged", this, SLOT(getNetworks()));
-    }
-    QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(getNetworks()));
-
-    QDBusInterface *stats = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Statistics", QDBusConnection::systemBus(), this);
-    stats->setProperty("RefreshRateMs", (uint) 1000);
-    getNetworks();
-    stats->deleteLater();
-    i->deleteLater();
-}
-
-void InfoPaneDropdown::on_WifiSwitch_toggled(bool checked)
-{
-    QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
-    if (i->property("WirelessEnabled").toBool() != checked) {
-        i->setProperty("WirelessEnabled", checked);
-    }
-
-    if (i->property("WirelessEnabled").toBool()) {
-        ui->WifiSwitch->setChecked(true);
-    } else {
-        ui->WifiSwitch->setChecked(false);
-    }
-
-    i->deleteLater();
 }
 
 void InfoPaneDropdown::processTimer() {
@@ -1221,22 +1195,6 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
                 setHeaderColour(QColor(100, 50, 0));
             }
             break;
-        case Network:
-            changeDropDown(ui->networkFrame, ui->networkLabel, doAnimation);
-            if (ui->lightColorThemeRadio->isChecked()) {
-                setHeaderColour(QColor(100, 100, 255));
-            } else {
-                setHeaderColour(QColor(50, 50, 100));
-            }
-            break;
-        case KDEConnect:
-            changeDropDown(ui->kdeConnectFrame, ui->kdeconnectLabel, doAnimation);
-            if (ui->lightColorThemeRadio->isChecked()) {
-                setHeaderColour(QColor(200, 100, 255));
-            } else {
-                setHeaderColour(QColor(50, 0, 100));
-            }
-            break;
         case Settings:
             changeDropDown(ui->settingsFrame, nullptr, doAnimation);
             if (ui->lightColorThemeRadio->isChecked()) {
@@ -1274,18 +1232,6 @@ void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, 
             setHeaderColour(QColor(200, 150, 0));
         } else {
             setHeaderColour(QColor(100, 50, 0));
-        }
-    } else if (changeTo == ui->networkFrame) {
-        if (ui->lightColorThemeRadio->isChecked()) {
-            setHeaderColour(QColor(100, 100, 255));
-        } else {
-            setHeaderColour(QColor(50, 50, 100));
-        }
-    } else if (changeTo == ui->kdeConnectFrame) {
-        if (ui->lightColorThemeRadio->isChecked()) {
-            setHeaderColour(QColor(200, 100, 255));
-        } else {
-            setHeaderColour(QColor(50, 0, 100));
         }
     } else if (changeTo == ui->settingsFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
@@ -1335,10 +1281,6 @@ void InfoPaneDropdown::on_pushButton_clicked()
     this->close();
 }
 
-void InfoPaneDropdown::getNetworks() {
-    ui->NetworkManager->updateGlobals();
-}
-
 void InfoPaneDropdown::on_pushButton_5_clicked()
 {
     int change = ui->pageStack->currentIndex() - 1;
@@ -1359,11 +1301,6 @@ void InfoPaneDropdown::on_clockLabel_clicked()
 void InfoPaneDropdown::on_batteryLabel_clicked()
 {
     changeDropDown(Battery);
-}
-
-void InfoPaneDropdown::on_networkLabel_clicked()
-{
-    changeDropDown(Network);
 }
 
 void InfoPaneDropdown::on_pushButton_7_clicked()
@@ -1564,11 +1501,11 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     //Set up settings
     if (ui->settingsTabs->currentWidget() == ui->NotificationsSettings) { //Notifications
         setupNotificationsSettingsPane();
-    } else if (currentRow == 6) { //Location
+    } else if (currentRow == 5) { //Location
         setupLocationSettingsPane();
-    } else if (ui->settingsTabs->currentWidget() == ui->UserSettings) { //Users
+    } else if (currentRow == ui->settingsTabs->indexOf(ui->UserSettings)) { //Users
         setupUsersSettingsPane();
-    } else if (ui->settingsTabs->currentWidget() == ui->DateTimeSettings) { //Date and Time
+    } else if (currentRow == ui->settingsTabs->indexOf(ui->DateTimeSettings)) { //Date and Time
         setupDateTimeSettingsPane();
     }
 }
@@ -1636,11 +1573,6 @@ void InfoPaneDropdown::reject() {
     this->close();
 }
 
-void InfoPaneDropdown::on_kdeconnectLabel_clicked()
-{
-    changeDropDown(KDEConnect);
-}
-
 void InfoPaneDropdown::on_endSessionConfirmFullScreen_toggled(bool checked)
 {
     if (checked) {
@@ -1660,21 +1592,14 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
     QWidget* switchingWidget = ui->pageStack->widget(switchTo);
     ui->clockLabel->setShowDisabled(true);
     ui->batteryLabel->setShowDisabled(true);
-    ui->networkLabel->setShowDisabled(true);
     //ui->printLabel->setShowDisabled(true);
-    ui->kdeconnectLabel->setShowDisabled(true);
 
     if (switchingWidget == d->overviewFrame) {
         ui->clockLabel->setShowDisabled(false);
     } else if (switchingWidget == ui->statusFrame) {
         ui->batteryLabel->setShowDisabled(false);
-
-    } else if (switchingWidget == ui->networkFrame) {
-        ui->networkLabel->setShowDisabled(false);
     /*} else if (switchingWidget == ui->printFrame) {
         ui->printLabel->setShowDisabled(false);*/
-    } else if (switchingWidget == ui->kdeConnectFrame) {
-        ui->kdeconnectLabel->setShowDisabled(false);
     }
 }
 
@@ -2558,30 +2483,12 @@ void InfoPaneDropdown::on_CapsNumLockBellSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
 {
-    QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
-
     //Set flags that persist between changes
     d->settings.setValue("flightmode/on", checked);
     if (checked) {
-        d->settings.setValue("flightmode/wifi", ui->WifiSwitch->isChecked());
-
-        //Disable WiFi.
-        ui->WifiSwitch->setChecked(false);
-
-        //Disable WiMAX and mobile networking
-        i.setProperty("WwanEnabled", false);
-        i.setProperty("WimaxEnabled", false);
-
         //Tell everyone that we're going into flight mode
         d->broadcastMessage("flight-mode-changed", {true});
     } else {
-        //Enable WiFi.
-        ui->WifiSwitch->setChecked(d->settings.value("flightmode/wifi", true).toBool());
-
-        //Enable WiMAX and mobile networking
-        i.setProperty("WwanEnabled", true);
-        i.setProperty("WimaxEnabled", true);
-
         //Tell everyone that we're leaving flight mode
         d->broadcastMessage("flight-mode-changed", {false});
     }
@@ -2619,13 +2526,11 @@ void InfoPaneDropdown::updateStruts() {
         ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::TopToBottom);
         ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::TopToBottom);
         ((QBoxLayout*) ui->settingsFrame->layout())->setDirection(QBoxLayout::TopToBottom);
-        ((QBoxLayout*) ui->kdeConnectFrame->layout())->setDirection(QBoxLayout::TopToBottom);
         ui->upArrow->setPixmap(QIcon::fromTheme("go-up").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     } else {
         ((QBoxLayout*) this->layout())->setDirection(QBoxLayout::BottomToTop);
         ((QBoxLayout*) ui->partFrame->layout())->setDirection(QBoxLayout::BottomToTop);
         ((QBoxLayout*) ui->settingsFrame->layout())->setDirection(QBoxLayout::BottomToTop);
-        ((QBoxLayout*) ui->kdeConnectFrame->layout())->setDirection(QBoxLayout::BottomToTop);
         ui->upArrow->setPixmap(QIcon::fromTheme("go-down").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     }
 }
@@ -3812,6 +3717,8 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         }
     } else if (message == "register-chunk") {
         emit newChunk(args.first().value<QWidget*>());
+    } else if (message == "register-snack") {
+        emit newSnack(args.first().value<QWidget*>());
     }
 }
 

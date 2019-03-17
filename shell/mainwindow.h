@@ -56,6 +56,28 @@ class Menu;
 
 class InfoPaneDropdown;
 
+class ChunkWatcher : public QObject
+{
+    Q_OBJECT
+    public:
+        ChunkWatcher(QWidget* chunk) : QObject(chunk) {
+            chunk->installEventFilter(this);
+        }
+
+    signals:
+        void visibilityChanged(bool isVisible);
+
+    private:
+        bool eventFilter(QObject* watched, QEvent* event) {
+            if (event->type() == QEvent::Show) {
+                emit visibilityChanged(true);
+            } else if (event->type() == QEvent::Hide) {
+                emit visibilityChanged(false);
+            }
+            return false;
+        }
+};
+
 namespace Ui {
 class MainWindow;
 }
@@ -98,10 +120,6 @@ private slots:
     void on_time_clicked();
 
     void on_date_clicked();
-
-    void internetLabelChanged(QString text, QIcon icon);
-
-    void on_networkLabel_clicked();
 
     void on_batteryLabel_clicked();
 
@@ -175,10 +193,6 @@ private slots:
 
     void on_batteryLabel_mouseReleased();
 
-    void on_networkLabel_dragging(int , int );
-
-    void on_networkLabel_mouseReleased();
-
     void on_notifications_dragging(int , int );
 
     void on_notifications_mouseReleased();
@@ -192,10 +206,6 @@ private slots:
     void updateWindow(WmWindow window);
 
     void deleteWindow(WmWindow window);
-
-    void on_flightIcon_clicked();
-
-    void on_networkStrength_clicked();
 
     void on_stopRecordingButton_clicked();
 

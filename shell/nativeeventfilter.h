@@ -42,14 +42,11 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QSoundEffect>
-#include "mainwindow.h"
 #include "screenshotwindow.h"
 
 #include <X11/XF86keysym.h>
 #include <X11/keysym.h>
 #include <X11/Xlib.h>
-
-class MainWindow;
 
 class NativeEventFilter : public QObject, public QAbstractNativeEventFilter
 {

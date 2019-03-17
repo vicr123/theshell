@@ -32,6 +32,7 @@
 #include "endsessionwait.h"
 #include <QDBusConnection>
 #include <QDBusUnixFileDescriptor>
+#include <QMutex>
 
 #include <X11/Xlib.h>
 
@@ -46,64 +47,67 @@ class UPowerDBus : public QObject
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.thesuite.Power")
-public:
-    explicit UPowerDBus(QObject *parent = 0);
 
-    bool hasBattery();
-    bool hasPCBattery();
-    int currentBattery();
-    QDBusObjectPath defaultBattery();
-    QDateTime batteryTimeRemaining();
-    bool charging();
+    public:
+        explicit UPowerDBus(QObject *parent = 0);
 
-    Q_SCRIPTABLE bool powerStretch();
+        bool hasBattery();
+        bool hasPCBattery();
+        int currentBattery();
+        QDBusObjectPath defaultBattery();
+        QDateTime batteryTimeRemaining();
+        bool charging();
 
-signals:
-    void updateDisplay(QString display);
-    void batteryChanged(int batteryPercent);
+        Q_SCRIPTABLE bool powerStretch();
 
-    Q_SCRIPTABLE void powerStretchChanged(bool powerStretch);
+        QStringList allDevices;
 
-public slots:
-    void DeviceChanged();
-    void checkUpower();
-    void devicesChanged();
-    void setPowerStretch(bool on);
-    void queryIdleState();
+    signals:
+        void updateDisplay(QString display);
+        void batteryChanged(int batteryPercent);
 
-private slots:
-    void ActionInvoked(uint id, QString action_key);
+        Q_SCRIPTABLE void powerStretchChanged(bool powerStretch);
 
-private:
-    QList<QDBusInterface*> allDevices;
+    public slots:
+        void DeviceChanged(QStringList allDevices);
+        void checkUpower();
+        void devicesChanged();
+        void setPowerStretch(bool on);
+        void queryIdleState();
 
-    bool hourBatteryWarning = false;
-    bool halfHourBatteryWarning = false;
-    bool tenMinuteBatteryWarning = false;
+    private slots:
+        void ActionInvoked(uint id, QString action_key);
 
-    bool isCharging = false;
-    bool isConnectedToPower = false;
+    private:
+        bool hourBatteryWarning = false;
+        bool halfHourBatteryWarning = false;
+        bool tenMinuteBatteryWarning = false;
 
-    bool isPowerStretchOn = false;
+        bool isCharging = false;
+        bool isConnectedToPower = false;
 
-    uint batteryLowNotificationNumber = 0;
+        bool isPowerStretchOn = false;
 
-    bool hasBat;
-    bool hasPCBat;
-    int batLevel;
+        uint batteryLowNotificationNumber = 0;
 
-    QDBusUnixFileDescriptor powerInhibit;
+        bool hasBat;
+        bool hasPCBat;
+        int batLevel;
 
-    QTimer* checkTimer;
-    QSettings settings;
+        QDBusUnixFileDescriptor powerInhibit;
 
-    QDBusObjectPath batteryPath;
+        QTimer* checkTimer;
+        QSettings settings;
 
-    QDateTime timeRemain;
+        QDBusObjectPath batteryPath;
 
-    bool isLidClosed = false;
+        QDateTime timeRemain;
 
-    bool idleScreen = false, idleSuspend = false;
+        bool isLidClosed = false;
+
+        bool idleScreen = false, idleSuspend = false;
+
+        bool isUpdatingDisplay = false;
 };
 
 #endif // UPOWERDBUS_H

@@ -67,6 +67,7 @@ DBusSignals* dbusSignals = NULL;
 QSettings::Format desktopFileFormat;
 LocationDaemon* geolocation = nullptr;
 ScreenRecorder* screenRecorder = nullptr;
+bool startSafe = false;
 
 #define ONBOARDING_VERSION 6
 
@@ -282,6 +283,32 @@ int main(int argc, char *argv[])
 
     QEventLoop waiter;
 
+    //Check if we should start in safe mode
+    if (a.queryKeyboardModifiers() & Qt::ControlModifier) {
+        QString messageTitle = a.translate("main", "Start in Safe Mode?");
+        QString messageBody = a.translate("main", "You're holding the CTRL key. Do you want to start theShell in Safe Mode?");
+
+        if (sessionStarter) {
+            QFile out;
+            out.open(stdout, QFile::WriteOnly);
+            out.write(QString("QUESTION:%1:%2").arg(messageTitle, messageBody).toLocal8Bit());
+            out.flush();
+            out.close();
+
+            std::string response;
+            std::cin >> response;
+
+            if (QString::fromStdString(response).trimmed() == "yes") {
+                startSafe = true;
+            }
+        } else {
+            if (QMessageBox::warning(nullptr, messageTitle, messageBody,
+                                 QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes) {
+                startSafe = true;
+            }
+        }
+    }
+
     if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.thesuite.theshell")) {
         QString messageTitle = a.translate("main", "theShell already running");
         QString messageBody = a.translate("main", "theShell seems to already be running. "
@@ -300,7 +327,7 @@ int main(int argc, char *argv[])
                 return 0;
             }
         } else {
-            if (QMessageBox::warning(0, messageTitle, messageBody,
+            if (QMessageBox::warning(nullptr, messageTitle, messageBody,
                                  QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
                 return 0;
             }
@@ -336,7 +363,7 @@ int main(int argc, char *argv[])
         QDBusConnection::sessionBus().call(sni);
     }
 
-    QString windowManager = settings.value("startup/WindowManagerCommand", "kwin_x11").toString();
+    QString windowManager = settings.value("startup/WindowManagerCommand", "kwin_x11 --no-kactivities").toString();
 
     if (startWm) {
         while (!QProcess::startDetached(windowManager)) {
@@ -376,12 +403,6 @@ int main(int argc, char *argv[])
         //Start KDE Connect if it is not running and it is existant on the PC
         QProcess::startDetached("/usr/lib/kdeconnectd");
     }
-
-    //QProcess btProcess;
-    //btProcess.start("ts-bt");
-    //QObject::connect(&btProcess, SIGNAL(started()), &waiter, SLOT(quit()));
-    //waiter.exec();
-    //Wait for ts-bt to start so that the Bluetooth toggle will work properly
 
     NativeFilter = new NativeEventFilter();
     a.installNativeEventFilter(NativeFilter);

@@ -41,6 +41,8 @@
 #include "deviceslistmodel.h"
 #include "transferslistmodel.h"
 
+#include "chunkwidget.h"
+
 namespace Ui {
     class BluetoothManagement;
 }
@@ -129,6 +131,8 @@ class BluetoothManagement : public QStackedWidget, public StatusCenterPaneObject
         BluezQt::ObexTransferPtr currentTransfer;
         TransfersListModel* obexTransferModel;
         QMetaObject::Connection transferTransferredSignal, transferStateChangedSignal;
+
+        ChunkWidget* chunk;
 
         void changeEvent(QEvent* event);
 

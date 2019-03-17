@@ -14,7 +14,7 @@
    <string notr="true">theShellMenu</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="theshell" resource="resources.qrc">
+   <iconset theme="theshell">
     <normaloff>:/icons/icon.svg</normaloff>:/icons/icon.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -796,8 +796,6 @@ color: #FFF;</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

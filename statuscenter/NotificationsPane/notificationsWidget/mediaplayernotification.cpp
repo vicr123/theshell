@@ -22,8 +22,7 @@
 #include "ui_mediaplayernotification.h"
 
 #include <QDBusPendingCallWatcher>
-
-extern float getDPIScaling();
+#include <the-libs_global.h>
 
 MediaPlayerNotification::MediaPlayerNotification(QString service, QWidget *parent) :
     QFrame(parent),
@@ -303,7 +302,7 @@ void MediaPlayerNotification::setDetails(QString title, QString artist, QString 
             if (reply->error() == QNetworkReply::NoError) {
                 QImage image = QImage::fromData(reply->readAll());
                 if (!image.isNull()) {
-                    image = image.scaled(48 * getDPIScaling(), 48 * getDPIScaling(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+                    image = image.scaled(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
                     qulonglong red = 0, green = 0, blue = 0;
 
@@ -343,13 +342,13 @@ void MediaPlayerNotification::setDetails(QString title, QString artist, QString 
                     pal.setColor(QPalette::Window, c);
                     this->setPalette(pal);
 
-                    QImage rounded(48 * getDPIScaling(), 48 * getDPIScaling(), QImage::Format_ARGB32);
+                    QImage rounded(48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), QImage::Format_ARGB32);
                     rounded.fill(Qt::transparent);
                     QPainter p(&rounded);
                     p.setRenderHint(QPainter::Antialiasing);
                     p.setBrush(QBrush(image));
                     p.setPen(Qt::transparent);
-                    p.drawRoundedRect(0, 0, 48 * getDPIScaling(), 48 * getDPIScaling(), 40, 40, Qt::RelativeSize);
+                    p.drawRoundedRect(0, 0, 48 * theLibsGlobal::getDPIScaling(), 48 * theLibsGlobal::getDPIScaling(), 40, 40, Qt::RelativeSize);
 
                     ui->albumArt->setPixmap(QPixmap::fromImage(rounded));
                 }

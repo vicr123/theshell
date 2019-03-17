@@ -46,12 +46,6 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QDateTimeAxis>
-#include "animatedstackedwidget.h"
-#include "upowerdbus.h"
-#include "endsessionwait.h"
-#include "audiomanager.h"
-#include "nativeeventfilter.h"
-#include "dbussignals.h"
 #include <QScrollBar>
 #include <sys/sysinfo.h>
 #include <QSysInfo>
@@ -97,9 +91,7 @@ class InfoPaneDropdown : public QDialog
             None = -2,
             Settings = -1,
             Clock = 0,
-            Battery = 1,
-            Network = 2,
-            KDEConnect = 3 //,
+            Battery = 1 //,
             //Print = 5
         };
 
@@ -116,7 +108,6 @@ class InfoPaneDropdown : public QDialog
         void completeDragDown();
 
     signals:
-        void networkLabelChanged(QString label, QIcon icon);
         void closeNotification(int id);
         void timerEnabledChanged(bool timerEnabled);
         void batteryStretchChanged(bool isOn);
@@ -129,6 +120,7 @@ class InfoPaneDropdown : public QDialog
         void statusBarProgress(QString title, QString description, int progress);
         void statusBarProgressFinished(QString title, QString description);
         void newChunk(QWidget* chunk);
+        void newSnack(QWidget* snack);
 
     private slots:
         void on_pushButton_clicked();
@@ -140,8 +132,6 @@ class InfoPaneDropdown : public QDialog
         void on_clockLabel_clicked();
 
         void on_batteryLabel_clicked();
-
-        void on_networkLabel_clicked();
 
         void on_pushButton_7_clicked();
 
@@ -177,8 +167,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_lockScreenBackground_textEdited(const QString &arg1);
 
-        void newNetworkDevice(QDBusObjectPath device);
-
         void on_TextSwitch_toggled(bool checked);
 
         void on_windowManager_textEdited(const QString &arg1);
@@ -188,8 +176,6 @@ class InfoPaneDropdown : public QDialog
         void on_SuperkeyGatewaySwitch_toggled(bool checked);
 
         void updateSysInfo();
-
-        void on_kdeconnectLabel_clicked();
 
         void on_endSessionConfirmFullScreen_toggled(bool checked);
 
@@ -450,9 +436,6 @@ class InfoPaneDropdown : public QDialog
         void on_powerButtonPressed_currentIndexChanged(int index);
 
     public slots:
-        void getNetworks();
-
-        void on_WifiSwitch_toggled(bool checked);
         void updateStruts();
         void changeSettingsPane(int pane);
 

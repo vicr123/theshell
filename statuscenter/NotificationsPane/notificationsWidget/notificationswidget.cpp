@@ -23,6 +23,7 @@
 
 #include <QScroller>
 #include <QDBusConnectionInterface>
+#include "kjob/jobviewwidget.h"
 
 NotificationsWidget::NotificationsWidget(QWidget *parent) :
     QWidget(parent),
@@ -101,15 +102,14 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
     //ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
     ui->quietModeExtras->setFixedHeight(0);
 
+    chunk = new QLabel();
+    chunk->setText(tr("No Notifications"));
+    chunk->installEventFilter(this);
+
     QTimer::singleShot(0, [=] {
         ui->quietModeDescription->setText(getProperty("current-quiet-mode-description").toString());
 
-        /*QPushButton* b = new QPushButton();
-        b->setText("Notifications");
-        connect(b, &QPushButton::clicked, [=] {
-            sendMessage("show", {});
-        });
-        sendMessage("register-chunk", {QVariant::fromValue(b)});*/
+        sendMessage("register-chunk", {QVariant::fromValue(chunk)});
     });
 
     QScroller::grabGesture(ui->scrollArea->viewport(), QScroller::LeftMouseButtonGesture);
@@ -125,7 +125,7 @@ QWidget* NotificationsWidget::mainWidget() {
 }
 
 QString NotificationsWidget::name() {
-    return "Notifications";
+    return tr("Notifications");
 }
 
 StatusCenterPaneObject::StatusPaneTypes NotificationsWidget::type() {
@@ -159,9 +159,15 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
         if (notifications.count() == 0 && mediaPlayers.count() == 0) {
             ui->noNotificationsFrame->setVisible(true);
         }
+
+        if (notifications.count() == 0) {
+            chunk->setText(tr("No notifications"));
+        } else {
+            chunk->setText("<b>" + tr("%n notification(s)", nullptr, notifications.count()) + "</b>");
+        }
     });
 
-    NotificationAppGroup* nGroup = NULL;
+    NotificationAppGroup* nGroup = nullptr;
 
     for (NotificationAppGroup* group : notificationGroups) {
         if (group->getIdentifier() == object->getAppIdentifier()) {
@@ -170,7 +176,7 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
         }
     }
 
-    if (nGroup == NULL) {
+    if (nGroup == nullptr) {
         nGroup = new NotificationAppGroup(object->getAppIdentifier(), object->getAppIcon(), object->getAppName());
         ((QBoxLayout*) ui->notificationGroups->layout())->insertWidget(mediaPlayers.count(), nGroup);
 
@@ -184,6 +190,12 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
     }
 
     nGroup->AddNotification(object);
+
+    if (notifications.count() == 0) {
+        chunk->setText(tr("No notifications"));
+    } else {
+        chunk->setText("<b>" + tr("%n notification(s)", nullptr, notifications.count()) + "</b>");
+    }
 }
 
 bool NotificationsWidget::hasNotificationId(uint id) {
@@ -194,10 +206,18 @@ NotificationObject* NotificationsWidget::getNotification(uint id) {
     return notifications.value(id);
 }
 
+void NotificationsWidget::addJobView(JobViewWidget *view) {
+    ((QBoxLayout*) ui->notificationGroups->layout())->insertWidget(0, view);
+}
+
 bool NotificationsWidget::eventFilter(QObject *watched, QEvent *event) {
     if (watched == ui->scrollArea) {
         if (event->type() == QEvent::Resize) {
             ui->notificationGroups->setFixedWidth(ui->scrollArea->width());
+        }
+    } else if (watched == chunk) {
+        if (event->type() == QEvent::MouseButtonPress) {
+            sendMessage("show", {});
         }
     }
     return false;
@@ -295,7 +315,6 @@ void NotificationsWidget::on_quietModeTurnOffIn_toggled(bool checked)
 
 void NotificationsWidget::on_quietModeTurnOffAt_toggled(bool checked)
 {
-
     if (checked) {
         ui->quietModeTurnOffAtTimer->setVisible(true);
         ui->quietModeTurnOffInTimer->setVisible(false);

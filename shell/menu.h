@@ -39,7 +39,6 @@
 #include "bthandsfree.h"
 #include <QFutureWatcher>
 #include "apps/appslistmodel.h"
-#include "networkmanager/availablenetworkslist.h"
 #include "screenrecorder.h"
 
 #undef KeyPress
@@ -149,5 +148,17 @@ class Menu : public QDialog
 
         BTHandsfree* bt;
 };
+
+class UsersListDelegate : public QAbstractItemDelegate
+{
+    Q_OBJECT
+
+public:
+        explicit UsersListDelegate(QObject* parent = nullptr) {}
+
+        void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+        QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+};
+
 
 #endif // MENU_H

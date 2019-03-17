@@ -66,7 +66,7 @@
         <location filename="../bluetoothmanagement.ui" line="44"/>
         <location filename="../bluetoothmanagement.ui" line="211"/>
         <location filename="../bluetoothmanagement.cpp" line="83"/>
-        <location filename="../bluetoothmanagement.cpp" line="111"/>
+        <location filename="../bluetoothmanagement.cpp" line="119"/>
         <source>Bluetooth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -92,7 +92,7 @@
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="359"/>
-        <location filename="../bluetoothmanagement.cpp" line="252"/>
+        <location filename="../bluetoothmanagement.cpp" line="260"/>
         <source>Enable Bluetooth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -135,7 +135,7 @@
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="629"/>
-        <location filename="../bluetoothmanagement.cpp" line="267"/>
+        <location filename="../bluetoothmanagement.cpp" line="275"/>
         <source>Unpair Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -156,7 +156,7 @@
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="734"/>
-        <location filename="../bluetoothmanagement.cpp" line="220"/>
+        <location filename="../bluetoothmanagement.cpp" line="228"/>
         <source>Connect to Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -248,89 +248,100 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="170"/>
+        <location filename="../bluetoothmanagement.cpp" line="178"/>
         <source>Device Name: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="171"/>
+        <location filename="../bluetoothmanagement.cpp" line="179"/>
         <source>Address: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="193"/>
+        <location filename="../bluetoothmanagement.cpp" line="201"/>
         <source>Rename Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="193"/>
+        <location filename="../bluetoothmanagement.cpp" line="201"/>
         <source>What do you want to call this device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="217"/>
+        <location filename="../bluetoothmanagement.cpp" line="225"/>
         <source>Disconnect from Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="218"/>
+        <location filename="../bluetoothmanagement.cpp" line="226"/>
         <source>Stop communicating with this Bluetooth device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="221"/>
+        <location filename="../bluetoothmanagement.cpp" line="229"/>
         <source>Connect to all available Bluetooth profiles on this device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="252"/>
+        <location filename="../bluetoothmanagement.cpp" line="260"/>
         <source>Bluetooth needs to be enabled to pair a new device. Do you want to enable Bluetooth now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="267"/>
+        <location filename="../bluetoothmanagement.cpp" line="275"/>
         <source>Unpair %1 from this device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="271"/>
+        <location filename="../bluetoothmanagement.cpp" line="279"/>
         <source>Unpair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="272"/>
+        <location filename="../bluetoothmanagement.cpp" line="280"/>
         <source>%1 has been unpaired from this device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="297"/>
+        <location filename="../bluetoothmanagement.cpp" line="305"/>
         <source>Pairing Complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="298"/>
+        <location filename="../bluetoothmanagement.cpp" line="306"/>
         <source>%1 has been paired with this device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="351"/>
+        <location filename="../bluetoothmanagement.cpp" line="359"/>
         <source>Pairing Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="352"/>
+        <location filename="../bluetoothmanagement.cpp" line="360"/>
         <source>Couldn&apos;t pair with %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="420"/>
+        <location filename="../bluetoothmanagement.cpp" line="428"/>
         <source>Send Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="421"/>
+        <location filename="../bluetoothmanagement.cpp" line="429"/>
         <source>Couldn&apos;t send the file to %1.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChunkWidget</name>
+    <message numerus="yes">
+        <location filename="../chunkwidget.cpp" line="54"/>
+        <source>%n devices</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -414,27 +425,27 @@
 <context>
     <name>TransfersDelegate</name>
     <message>
-        <location filename="../transferslistmodel.cpp" line="136"/>
+        <location filename="../transferslistmodel.cpp" line="175"/>
         <source>Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../transferslistmodel.cpp" line="140"/>
+        <location filename="../transferslistmodel.cpp" line="179"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../transferslistmodel.cpp" line="144"/>
+        <location filename="../transferslistmodel.cpp" line="183"/>
         <source>Queued</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../transferslistmodel.cpp" line="148"/>
+        <location filename="../transferslistmodel.cpp" line="187"/>
         <source>Paused</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../transferslistmodel.cpp" line="152"/>
+        <location filename="../transferslistmodel.cpp" line="191"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -442,32 +453,52 @@
 <context>
     <name>TransfersListModel</name>
     <message>
-        <location filename="../transferslistmodel.cpp" line="77"/>
-        <source>Transfer Complete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../transferslistmodel.cpp" line="79"/>
-        <source>&lt;b&gt;%1&lt;/b&gt; has been successfully received and placed inside Downloads &gt; Bluetooth.</source>
+        <location filename="../transferslistmodel.cpp" line="70"/>
+        <source>Bluetooth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../transferslistmodel.cpp" line="81"/>
+        <source>Receiving File over Bluetooth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../transferslistmodel.cpp" line="81"/>
+        <source>Sending File over Bluetooth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../transferslistmodel.cpp" line="82"/>
+        <source>File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../transferslistmodel.cpp" line="116"/>
+        <source>Transfer Complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../transferslistmodel.cpp" line="118"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; has been successfully received and placed inside Downloads &gt; Bluetooth.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../transferslistmodel.cpp" line="120"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been sent successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../transferslistmodel.cpp" line="88"/>
+        <location filename="../transferslistmodel.cpp" line="127"/>
         <source>Transfer Failure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../transferslistmodel.cpp" line="90"/>
+        <location filename="../transferslistmodel.cpp" line="129"/>
         <source>There was a problem while receiving &lt;b&gt;%1&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../transferslistmodel.cpp" line="92"/>
+        <location filename="../transferslistmodel.cpp" line="131"/>
         <source>There was a problem while sending &lt;b&gt;%1&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>

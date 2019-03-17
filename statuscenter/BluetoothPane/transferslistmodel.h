@@ -33,6 +33,21 @@
 #include <QFileInfo>
 #include <tnotification.h>
 
+class CancelWatcher : public QObject
+{
+    Q_OBJECT
+    public:
+        CancelWatcher(QObject* parent = nullptr) : QObject(parent) {};
+
+    signals:
+        void cancelled();
+
+    public slots:
+        void cancelRequested() {
+            emit cancelled();
+        }
+};
+
 class TransfersListModel : public QAbstractListModel
 {
         Q_OBJECT

@@ -21,6 +21,11 @@
 #include "choosebackground.h"
 #include "ui_choosebackground.h"
 
+#include <QDir>
+#include <QPainter>
+#include <QFileDialog>
+#include <QProcess>
+
 ChooseBackground::ChooseBackground(QString currentCommunityBackground, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ChooseBackground)
