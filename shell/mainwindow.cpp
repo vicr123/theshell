@@ -102,7 +102,6 @@ MainWindow::MainWindow(QWidget *parent) :
     timer->start();
 
     infoPane = new InfoPaneDropdown(this->winId());
-    connect(infoPane, SIGNAL(networkLabelChanged(QString,QIcon)), this, SLOT(internetLabelChanged(QString,QIcon)));
     connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
     connect(infoPane, &InfoPaneDropdown::batteryStretchChanged, [=](bool isOn) {
         if (isOn) {
@@ -114,7 +113,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(infoPane, SIGNAL(updateStrutsSignal()), this, SLOT(updateStruts()));
     connect(infoPane, SIGNAL(updateBarSignal()), this, SLOT(reloadBar()));
     connect(infoPane, &InfoPaneDropdown::flightModeChanged, [=](bool flight) {
-        ui->flightIcon->setVisible(flight);
         ui->StatusBarFlight->setVisible(flight);
     });
     connect(infoPane, &InfoPaneDropdown::redshiftEnabledChanged, [=](bool enabled) {
@@ -185,7 +183,9 @@ MainWindow::MainWindow(QWidget *parent) :
         });
         line->setVisible(chunk->isVisible());
     });
-    infoPane->getNetworks();
+    connect(infoPane, &InfoPaneDropdown::newSnack, [=](QWidget* snack) {
+        ui->StatusBarSnacks->addWidget(snack);
+    });
     ui->StatusBarRedshift->setVisible(false);
     ui->keyboardButton->setVisible(false);
 
@@ -277,7 +277,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->timerIcon->setVisible(false);
     ui->screenRecordingFrame->setVisible(false);
     ui->timerIcon->setPixmap(QIcon::fromTheme("chronometer").pixmap(ic16));
-    ui->StatusBarNotifications->setVisible(false);
     ui->StatusBarMpris->setVisible(false);
     ui->StatusBarMprisIcon->setVisible(false);
     ui->StatusBarQuietMode->setVisible(false);
@@ -286,9 +285,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarRecording->setVisible(false);
     ui->StatusBarLocation->setPixmap(QIcon::fromTheme("gps").pixmap(ic16));
     ui->LocationIndication->setPixmap(QIcon::fromTheme("gps").pixmap(ic16));
-    ui->flightIcon->setPixmap(QIcon::fromTheme("flight-mode").pixmap(ic16));
     ui->StatusBarFlight->setPixmap(QIcon::fromTheme("flight-mode").pixmap(ic16));
-    ui->flightIcon->setVisible(settings.value("flightmode/on", false).toBool());
     ui->StatusBarFlight->setVisible(settings.value("flightmode/on", false).toBool());
     ui->StatusBarFrame->installEventFilter(this);
     ui->StatusBarRedshift->setPixmap(QIcon::fromTheme("redshift-on").pixmap(ic16));
@@ -1546,30 +1543,6 @@ void MainWindow::on_date_clicked()
     infoPane->show(InfoPaneDropdown::Clock);
 }
 
-void MainWindow::internetLabelChanged(QString text, QIcon icon) {
-    if (icon.isNull()) {
-        ui->networkStrength->setVisible(false);
-        ui->StatusBarNetwork->setVisible(false);
-    } else {
-        ui->networkStrength->setVisible(true);
-        ui->StatusBarNetwork->setVisible(true);
-        ui->networkStrength->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-        ui->StatusBarNetwork->setPixmap(icon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-    }
-
-    if (text == "") {
-        ui->networkLabel->setVisible(false);
-    } else {
-        ui->networkLabel->setVisible(true);
-        ui->networkLabel->setText(text);
-    }
-}
-
-void MainWindow::on_networkLabel_clicked()
-{
-    infoPane->show(InfoPaneDropdown::Network);
-}
-
 void MainWindow::on_batteryLabel_clicked()
 {
     infoPane->show(InfoPaneDropdown::Battery);
@@ -1966,17 +1939,6 @@ void MainWindow::on_batteryLabel_mouseReleased()
     infoPane->completeDragDown();
 }
 
-void MainWindow::on_networkLabel_dragging(int x, int y)
-{
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    infoPane->dragDown(InfoPaneDropdown::Network, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
-}
-
-void MainWindow::on_networkLabel_mouseReleased()
-{
-    infoPane->completeDragDown();
-}
-
 void MainWindow::on_notifications_dragging(int x, int y)
 {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
@@ -2166,16 +2128,6 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
         }
     }
     return false;
-}
-
-void MainWindow::on_flightIcon_clicked()
-{
-    infoPane->show(InfoPaneDropdown::Network);
-}
-
-void MainWindow::on_networkStrength_clicked()
-{
-    infoPane->show(InfoPaneDropdown::Network);
 }
 
 void MainWindow::enterEvent(QEvent *event) {

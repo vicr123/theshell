@@ -345,10 +345,10 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F2) && (button->state == Mod4Mask)) {
                 MainWin->getInfoPane()->show(InfoPaneDropdown::Battery);
                 ignoreSuper = true;
-            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F3) && (button->state == Mod4Mask)) {
+            /*} else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F3) && (button->state == Mod4Mask)) {
                 MainWin->getInfoPane()->show(InfoPaneDropdown::Network);
                 ignoreSuper = true;
-            /*} else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F5) && (button->state == Mod4Mask)) {
+            } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_F5) && (button->state == Mod4Mask)) {
                 MainWin->getInfoPane()->show(InfoPaneDropdown::Print);
                 ignoreSuper = true;*/
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Return) && (button->state == Mod4Mask)) {

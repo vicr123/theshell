@@ -19,8 +19,7 @@
  * *************************************/
 
 #include "availablenetworkslist.h"
-
-extern float getDPIScaling();
+#include <the-libs_global.h>
 
 AvailableNetworksList::AvailableNetworksList(QDBusObjectPath devicePath, QObject *parent)
     : QAbstractListModel(parent)
@@ -207,21 +206,21 @@ void AvailableNetworksListDelegate::paint(QPainter *painter, const QStyleOptionV
     painter->setFont(option.font);
 
     QRect iconRect;
-    iconRect.setLeft(option.rect.left() + 6 * getDPIScaling());
-    iconRect.setTop(option.rect.top() + 6 * getDPIScaling());
-    iconRect.setBottom(iconRect.top() + 32 * getDPIScaling());
-    iconRect.setRight(iconRect.left() + 32 * getDPIScaling());
+    iconRect.setLeft(option.rect.left() + 6 * theLibsGlobal::getDPIScaling());
+    iconRect.setTop(option.rect.top() + 6 * theLibsGlobal::getDPIScaling());
+    iconRect.setBottom(iconRect.top() + 32 * theLibsGlobal::getDPIScaling());
+    iconRect.setRight(iconRect.left() + 32 * theLibsGlobal::getDPIScaling());
 
     QRect textRect;
-    textRect.setLeft(iconRect.right() + 6 * getDPIScaling());
-    textRect.setTop(option.rect.top() + 6 * getDPIScaling());
-    textRect.setBottom(option.rect.top() + option.fontMetrics.height() + 6 * getDPIScaling());
+    textRect.setLeft(iconRect.right() + 6 * theLibsGlobal::getDPIScaling());
+    textRect.setTop(option.rect.top() + 6 * theLibsGlobal::getDPIScaling());
+    textRect.setBottom(option.rect.top() + option.fontMetrics.height() + 6 * theLibsGlobal::getDPIScaling());
     textRect.setRight(option.rect.right());
 
     QRect descRect;
-    descRect.setLeft(iconRect.right() + 6 * getDPIScaling());
-    descRect.setTop(option.rect.top() + option.fontMetrics.height() + 8 * getDPIScaling());
-    descRect.setBottom(option.rect.top() + option.fontMetrics.height() * 2 + 6 * getDPIScaling());
+    descRect.setLeft(iconRect.right() + 6 * theLibsGlobal::getDPIScaling());
+    descRect.setTop(option.rect.top() + option.fontMetrics.height() + 8 * theLibsGlobal::getDPIScaling());
+    descRect.setBottom(option.rect.top() + option.fontMetrics.height() * 2 + 6 * theLibsGlobal::getDPIScaling());
     descRect.setRight(option.rect.right());
 
     if (option.state & QStyle::State_Selected) {
@@ -249,12 +248,12 @@ void AvailableNetworksListDelegate::paint(QPainter *painter, const QStyleOptionV
         painter->setPen(option.palette.color(QPalette::Disabled, QPalette::WindowText));
         painter->drawText(descRect, index.data(Qt::UserRole + 1).toString());
     }
-    painter->drawPixmap(iconRect, index.data(Qt::DecorationRole).value<QIcon>().pixmap(32 * getDPIScaling(), 32 * getDPIScaling()));
+    painter->drawPixmap(iconRect, index.data(Qt::DecorationRole).value<QIcon>().pixmap(32 * theLibsGlobal::getDPIScaling(), 32 * theLibsGlobal::getDPIScaling()));
 }
 
 QSize AvailableNetworksListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    int fontHeight = option.fontMetrics.height() * 2 + 14 * getDPIScaling();
-    int iconHeight = 46 * getDPIScaling();
+    int fontHeight = option.fontMetrics.height() * 2 + 14 * theLibsGlobal::getDPIScaling();
+    int iconHeight = 46 * theLibsGlobal::getDPIScaling();
 
     return QSize(option.fontMetrics.width(index.data().toString()), qMax(fontHeight, iconHeight));
 }

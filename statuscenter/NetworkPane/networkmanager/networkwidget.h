@@ -34,9 +34,10 @@
 #include <QDebug>
 #include "availablenetworkslist.h"
 #include "savednetworkslist.h"
-#include "nativeeventfilter.h"
+#include "chunkwidget.h"
 #include <ttoast.h>
-#include "infopanedropdown.h"
+
+#include <statuscenterpaneobject.h>
 
 namespace Ui {
 class NetworkWidget;
@@ -46,32 +47,41 @@ class DevicePanel : public QWidget
 {
     Q_OBJECT
 
-public:
-    explicit DevicePanel(QDBusObjectPath device, QWidget* parent = 0);
-    ~DevicePanel();
+    public:
+        explicit DevicePanel(QDBusObjectPath device, QWidget* parent = 0);
+        ~DevicePanel();
 
-public slots:
-    void updateInfo();
+        int deviceType();
 
-signals:
-    void connectToWirelessDevice(QDBusObjectPath device);
-    void getInformationAboutDevice(QDBusObjectPath device);
+    public slots:
+        void updateInfo();
 
-private:
-    QDBusInterface* deviceInterface;
-    QDBusInterface* nmInterface = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus());
-    QLabel *iconLabel, *connectionNameLabel, *connectionSubNameLabel;
-    QDBusObjectPath device;
-    QBoxLayout* buttonLayout;
+    signals:
+        void connectToWirelessDevice(QDBusObjectPath device);
+        void getInformationAboutDevice(QDBusObjectPath device);
+
+    private:
+        QDBusInterface* deviceInterface;
+        QDBusInterface* nmInterface = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus());
+        QLabel *iconLabel, *connectionNameLabel, *connectionSubNameLabel;
+        QDBusObjectPath device;
+        QBoxLayout* buttonLayout;
 };
 
-class NetworkWidget : public QWidget
+struct NetworkWidgetPrivate;
+class NetworkWidget : public QWidget, public StatusCenterPaneObject
 {
     Q_OBJECT
 
     public:
         explicit NetworkWidget(QWidget *parent = 0);
         ~NetworkWidget();
+
+        QWidget* mainWidget();
+        QString name();
+        StatusPaneTypes type();
+        int position();
+        void message(QString name, QVariantList args = QVariantList());
 
     public slots:
         void flightModeChanged(bool flight);
@@ -120,16 +130,11 @@ class NetworkWidget : public QWidget
     public slots:
         void updateGlobals();
 
-    signals:
-        void updateBarDisplay(QString text, QIcon icon);
-
     private:
         Ui::NetworkWidget *ui;
+        NetworkWidgetPrivate* d;
 
         void changeEvent(QEvent* event);
-
-        QDBusInterface* nmInterface = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus());
-        bool flightMode = false;
 };
 
 #endif // NETWORKWIDGET_H

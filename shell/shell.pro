@@ -85,11 +85,8 @@ SOURCES += main.cpp\
     audiomanager.cpp \
     taskbarmanager.cpp \
     dbussignals.cpp \
-    networkmanager/networkwidget.cpp \
-    networkmanager/availablenetworkslist.cpp \
     apps/appslistmodel.cpp \
     apps/app.cpp \
-    networkmanager/savednetworkslist.cpp \
     screenrecorder.cpp \
     location/locationservices.cpp \
     location/locationrequestdialog.cpp \
@@ -129,11 +126,8 @@ HEADERS  += mainwindow.h \
     internationalisation.h \
     taskbarmanager.h \
     dbussignals.h \
-    networkmanager/networkwidget.h \
-    networkmanager/availablenetworkslist.h \
     apps/appslistmodel.h \
     apps/app.h \
-    networkmanager/savednetworkslist.h \
     screenrecorder.h \
     location/locationservices.h \
     location/locationrequestdialog.h \
@@ -157,7 +151,6 @@ FORMS    += mainwindow.ui \
     newmedia.ui \
     tutorialwindow.ui \
     screenshotwindow.ui \
-    networkmanager/networkwidget.ui \
     location/locationrequestdialog.ui \
     locktypes/mousepassword.ui
 

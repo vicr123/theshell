@@ -418,61 +418,6 @@
            </widget>
           </item>
           <item>
-           <widget class="ClickableLabel" name="flightIcon">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>You are in Flight Mode</string>
-            </property>
-            <property name="text">
-             <string notr="true">Flight</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="ClickableLabel" name="networkStrength">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string notr="true">signalStrength</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="ClickableLabel" name="networkLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string notr="true">Connected to SSID</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="Line" name="line_4">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
            <layout class="QHBoxLayout" name="chunksLayout"/>
           </item>
           <item>
@@ -1072,18 +1017,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="StatusBarNetwork">
-         <property name="text">
-          <string notr="true">Network</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="StatusBarBattery">
          <property name="text">
           <string notr="true">Battery</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="StatusBarSnacks"/>
        </item>
        <item>
         <widget class="QLabel" name="StatusBarQuietMode">
@@ -1109,19 +1050,6 @@ padding-right: 3px;</string>
          </property>
          <property name="text">
           <string notr="true">Recording</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="StatusBarNotifications">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(200, 100, 0);
-color: white;
-padding-left: 3px;
-padding-right: 3px;</string>
-         </property>
-         <property name="text">
-          <string notr="true">Notifications</string>
          </property>
         </widget>
        </item>
@@ -1289,6 +1217,12 @@ padding-right: 3px;</string>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>tCircularSpinner</class>
+   <extends>QWidget</extends>
+   <header location="global">tcircularspinner.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>ClickableLabel</class>
    <extends>QLabel</extends>
    <header>clickablelabel.h</header>
@@ -1316,12 +1250,6 @@ padding-right: 3px;</string>
    <class>MouseScrollWidget</class>
    <extends>QScrollArea</extends>
    <header>mousescrollwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>tCircularSpinner</class>
-   <extends>QWidget</extends>
-   <header location="global">tcircularspinner.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

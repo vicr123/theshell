@@ -159,9 +159,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2019"));
     ui->usesLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
 
-    connect(this, SIGNAL(flightModeChanged(bool)), ui->NetworkManager, SLOT(flightModeChanged(bool)));
-    connect(this, SIGNAL(flightModeChanged(bool)), ui->networkManagerSettings, SLOT(flightModeChanged(bool)));
-
     if (d->settings.value("flightmode/on", false).toBool()) {
         ui->FlightSwitch->setChecked(true);
     }
@@ -279,12 +276,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     if (!QFile("/usr/bin/scallop").exists()) {
         ui->resetDeviceButton->setVisible(false);
     }
-
-    //Set up networking
-    QDBusInterface networkInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
-    connect(ui->NetworkManager, SIGNAL(updateBarDisplay(QString,QIcon)), this, SIGNAL(networkLabelChanged(QString,QIcon)));
-
-    ui->WifiSwitch->setChecked(networkInterface.property("WirelessEnabled").toBool());
 
     //Load icons into icon theme box
     {
@@ -919,40 +910,6 @@ InfoPaneNotOnTopLocker::~InfoPaneNotOnTopLocker() {
     infoPane->showNoAnimation();
 }
 
-void InfoPaneDropdown::newNetworkDevice(QDBusObjectPath device) {
-    QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus(), this);
-    if (i->property("DeviceType").toInt() == 2) { //WiFi Device
-        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wireless", "AccessPointAdded", this, SLOT(getNetworks()));
-        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wireless", "AccessPointRemoved", this, SLOT(getNetworks()));
-        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", "StateChanged", this, SLOT(getNetworks()));
-    } else if (i->property("DeviceType").toInt() == 1) { //Wired Device
-        QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Wired", "PropertiesChanged", this, SLOT(getNetworks()));
-    }
-    QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(getNetworks()));
-
-    QDBusInterface *stats = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device.Statistics", QDBusConnection::systemBus(), this);
-    stats->setProperty("RefreshRateMs", (uint) 1000);
-    getNetworks();
-    stats->deleteLater();
-    i->deleteLater();
-}
-
-void InfoPaneDropdown::on_WifiSwitch_toggled(bool checked)
-{
-    QDBusInterface *i = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
-    if (i->property("WirelessEnabled").toBool() != checked) {
-        i->setProperty("WirelessEnabled", checked);
-    }
-
-    if (i->property("WirelessEnabled").toBool()) {
-        ui->WifiSwitch->setChecked(true);
-    } else {
-        ui->WifiSwitch->setChecked(false);
-    }
-
-    i->deleteLater();
-}
-
 void InfoPaneDropdown::processTimer() {
     QTime time = QTime::currentTime();
     {
@@ -1237,14 +1194,6 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
                 setHeaderColour(QColor(100, 50, 0));
             }
             break;
-        case Network:
-            changeDropDown(ui->networkFrame, ui->networkLabel, doAnimation);
-            if (ui->lightColorThemeRadio->isChecked()) {
-                setHeaderColour(QColor(100, 100, 255));
-            } else {
-                setHeaderColour(QColor(50, 50, 100));
-            }
-            break;
         case Settings:
             changeDropDown(ui->settingsFrame, nullptr, doAnimation);
             if (ui->lightColorThemeRadio->isChecked()) {
@@ -1282,12 +1231,6 @@ void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, 
             setHeaderColour(QColor(200, 150, 0));
         } else {
             setHeaderColour(QColor(100, 50, 0));
-        }
-    } else if (changeTo == ui->networkFrame) {
-        if (ui->lightColorThemeRadio->isChecked()) {
-            setHeaderColour(QColor(100, 100, 255));
-        } else {
-            setHeaderColour(QColor(50, 50, 100));
         }
     } else if (changeTo == ui->settingsFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
@@ -1337,10 +1280,6 @@ void InfoPaneDropdown::on_pushButton_clicked()
     this->close();
 }
 
-void InfoPaneDropdown::getNetworks() {
-    ui->NetworkManager->updateGlobals();
-}
-
 void InfoPaneDropdown::on_pushButton_5_clicked()
 {
     int change = ui->pageStack->currentIndex() - 1;
@@ -1361,11 +1300,6 @@ void InfoPaneDropdown::on_clockLabel_clicked()
 void InfoPaneDropdown::on_batteryLabel_clicked()
 {
     changeDropDown(Battery);
-}
-
-void InfoPaneDropdown::on_networkLabel_clicked()
-{
-    changeDropDown(Network);
 }
 
 void InfoPaneDropdown::on_pushButton_7_clicked()
@@ -1566,11 +1500,11 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     //Set up settings
     if (ui->settingsTabs->currentWidget() == ui->NotificationsSettings) { //Notifications
         setupNotificationsSettingsPane();
-    } else if (currentRow == 6) { //Location
+    } else if (currentRow == 5) { //Location
         setupLocationSettingsPane();
-    } else if (ui->settingsTabs->currentWidget() == ui->UserSettings) { //Users
+    } else if (currentRow == ui->settingsTabs->indexOf(ui->UserSettings)) { //Users
         setupUsersSettingsPane();
-    } else if (ui->settingsTabs->currentWidget() == ui->DateTimeSettings) { //Date and Time
+    } else if (currentRow == ui->settingsTabs->indexOf(ui->DateTimeSettings)) { //Date and Time
         setupDateTimeSettingsPane();
     }
 }
@@ -1657,16 +1591,12 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
     QWidget* switchingWidget = ui->pageStack->widget(switchTo);
     ui->clockLabel->setShowDisabled(true);
     ui->batteryLabel->setShowDisabled(true);
-    ui->networkLabel->setShowDisabled(true);
     //ui->printLabel->setShowDisabled(true);
 
     if (switchingWidget == d->overviewFrame) {
         ui->clockLabel->setShowDisabled(false);
     } else if (switchingWidget == ui->statusFrame) {
         ui->batteryLabel->setShowDisabled(false);
-
-    } else if (switchingWidget == ui->networkFrame) {
-        ui->networkLabel->setShowDisabled(false);
     /*} else if (switchingWidget == ui->printFrame) {
         ui->printLabel->setShowDisabled(false);*/
     }
@@ -2552,30 +2482,12 @@ void InfoPaneDropdown::on_CapsNumLockBellSwitch_toggled(bool checked)
 
 void InfoPaneDropdown::on_FlightSwitch_toggled(bool checked)
 {
-    QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
-
     //Set flags that persist between changes
     d->settings.setValue("flightmode/on", checked);
     if (checked) {
-        d->settings.setValue("flightmode/wifi", ui->WifiSwitch->isChecked());
-
-        //Disable WiFi.
-        ui->WifiSwitch->setChecked(false);
-
-        //Disable WiMAX and mobile networking
-        i.setProperty("WwanEnabled", false);
-        i.setProperty("WimaxEnabled", false);
-
         //Tell everyone that we're going into flight mode
         d->broadcastMessage("flight-mode-changed", {true});
     } else {
-        //Enable WiFi.
-        ui->WifiSwitch->setChecked(d->settings.value("flightmode/wifi", true).toBool());
-
-        //Enable WiMAX and mobile networking
-        i.setProperty("WwanEnabled", true);
-        i.setProperty("WimaxEnabled", true);
-
         //Tell everyone that we're leaving flight mode
         d->broadcastMessage("flight-mode-changed", {false});
     }
@@ -3805,7 +3717,7 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
     } else if (message == "register-chunk") {
         emit newChunk(args.first().value<QWidget*>());
     } else if (message == "register-snack") {
-
+        emit newSnack(args.first().value<QWidget*>());
     }
 }
 

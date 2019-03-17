@@ -91,8 +91,7 @@ class InfoPaneDropdown : public QDialog
             None = -2,
             Settings = -1,
             Clock = 0,
-            Battery = 1,
-            Network = 2 //,
+            Battery = 1 //,
             //Print = 5
         };
 
@@ -109,7 +108,6 @@ class InfoPaneDropdown : public QDialog
         void completeDragDown();
 
     signals:
-        void networkLabelChanged(QString label, QIcon icon);
         void closeNotification(int id);
         void timerEnabledChanged(bool timerEnabled);
         void batteryStretchChanged(bool isOn);
@@ -122,6 +120,7 @@ class InfoPaneDropdown : public QDialog
         void statusBarProgress(QString title, QString description, int progress);
         void statusBarProgressFinished(QString title, QString description);
         void newChunk(QWidget* chunk);
+        void newSnack(QWidget* snack);
 
     private slots:
         void on_pushButton_clicked();
@@ -133,8 +132,6 @@ class InfoPaneDropdown : public QDialog
         void on_clockLabel_clicked();
 
         void on_batteryLabel_clicked();
-
-        void on_networkLabel_clicked();
 
         void on_pushButton_7_clicked();
 
@@ -169,8 +166,6 @@ class InfoPaneDropdown : public QDialog
         void on_lockScreenBackgroundBrowse_clicked();
 
         void on_lockScreenBackground_textEdited(const QString &arg1);
-
-        void newNetworkDevice(QDBusObjectPath device);
 
         void on_TextSwitch_toggled(bool checked);
 
@@ -441,9 +436,6 @@ class InfoPaneDropdown : public QDialog
         void on_powerButtonPressed_currentIndexChanged(int index);
 
     public slots:
-        void getNetworks();
-
-        void on_WifiSwitch_toggled(bool checked);
         void updateStruts();
         void changeSettingsPane(int pane);
 

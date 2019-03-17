@@ -12,4 +12,5 @@ SUBDIRS += \
     BluetoothPane \
     OverviewPane \
     NotificationsPane \
-    KDEConnectPane
+    KDEConnectPane \
+    NetworkPane
