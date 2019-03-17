@@ -226,10 +226,10 @@ void Background::loadCommunityBackgroundMetadata() {
     QString background = allBackgrounds.at(qrand() % allBackgrounds.count());
 
     if (QFile(QDir::homePath() + "/.theshell/backgrounds/" + background + "/" + background + ".jpeg").exists()) {
-        QTimer::singleShot(0, [=] {
+        QTimer::singleShot(0, this, [=] {
             emit setAllBackgrounds(background);
             setCommunityBackground(background);
-        });;
+        });
     } else {
         QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + background + "/metadata.json");
         metadataFile.open(QFile::ReadOnly);

@@ -560,6 +560,11 @@ void Aircraft::paint(QPainter *p) {
 }
 
 void Overview::updateWeather() {
+    //The Yahoo API has been deprecated.
+    ui->weatherPanel->setVisible(false);
+    ui->yahooAttribLabel->setVisible(false);
+
+    /*
     if (settings.value("overview/enableWeather", false).toBool()) {
         ui->weatherPanel->setVisible(true);
         ui->yahooAttribLabel->setVisible(true);
@@ -587,7 +592,7 @@ void Overview::updateWeather() {
     } else {
         ui->weatherPanel->setVisible(false);
         ui->yahooAttribLabel->setVisible(false);
-    }
+    }*/
 }
 
 void Overview::updateGeoclueLocation(double latitude, double longitude) {
