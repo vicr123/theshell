@@ -159,10 +159,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2019"));
     ui->usesLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
 
-    if (d->settings.value("flightmode/on", false).toBool()) {
-        ui->FlightSwitch->setChecked(true);
-    }
-
     d->MainWindowId = MainWindowId;
 
     QTimer *timer = new QTimer(this);
@@ -872,6 +868,11 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     updateStruts();
     updateAutostart();
+
+    //Turn on flight mode if needed
+    if (d->settings.value("flightmode/on", false).toBool()) {
+        ui->FlightSwitch->setChecked(true);
+    }
 
     /*QTimer::singleShot(5000, [=] {
         this->setProperty("aw", 0);

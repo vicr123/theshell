@@ -28,9 +28,6 @@ HotkeyHud::HotkeyHud(QWidget *parent) :
     ui(new Ui::HotkeyHud)
 {
     ui->setupUi(this);
-
-    this->setFixedHeight(this->height() * getDPIScaling());
-    this->resize(this->width() * getDPIScaling(), this->height());
 }
 
 HotkeyHud::~HotkeyHud()
@@ -75,6 +72,9 @@ void HotkeyHud::paintEvent(QPaintEvent *event) {
 }
 
 void HotkeyHud::show(int timeout) {
+    this->setFixedHeight(this->sizeHint().height() * getDPIScaling());
+    this->resize(this->width() * getDPIScaling(), this->height());
+
     Atom atoms[2];
     atoms[0] = XInternAtom(QX11Info::display(), "_KDE_NET_WM_WINDOW_TYPE_ON_SCREEN_DISPLAY", False);
     atoms[1] = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NOTIFICATION", False);
@@ -102,7 +102,7 @@ void HotkeyHud::show(int timeout) {
         });
     }
 
-    if (this->timeout == NULL) {
+    if (this->timeout == nullptr) {
         this->timeout = new QTimer();
         this->timeout->setSingleShot(true);
         this->timeout->setInterval(timeout);
@@ -138,7 +138,7 @@ void HotkeyHud::show(QIcon icon, QString control, QString explanation, int timeo
 
 void HotkeyHud::Timeout() {
     timeout->deleteLater();
-    timeout = NULL;
+    timeout = nullptr;
     this->close();
 }
 

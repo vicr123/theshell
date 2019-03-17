@@ -42,6 +42,9 @@ NetworkWidget::NetworkWidget(QWidget *parent) :
     ui->setupUi(this);
     d = new NetworkWidgetPrivate();
 
+    ui->flightModeWarning->setVisible(false);
+    ui->flightModeIcon->setPixmap(QIcon::fromTheme("flight-mode").pixmap(QSize(16, 16) * theLibsGlobal::getDPIScaling()));
+
     d->chunk = new ChunkWidget();
     d->snack = new QLabel();
     connect(d->chunk, &ChunkWidget::showNetworkPane, [=] {
@@ -137,6 +140,7 @@ void NetworkWidget::message(QString name, QVariantList args) {
 
 void NetworkWidget::flightModeChanged(bool flight) {
     d->flightMode = flight;
+    ui->flightModeWarning->setVisible(flight);
     updateGlobals();
 }
 
@@ -711,7 +715,7 @@ void NetworkWidget::updateGlobals() {
     }
 
     if (text == tr("Disconnected") && d->flightMode) {
-        icon = QIcon();
+        icon = QIcon::fromTheme("flight-mode");
         text = tr("Flight Mode");
     }
 
