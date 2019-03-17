@@ -172,7 +172,9 @@ int main(int argc, char *argv[])
     signal(SIGILL, *catch_signal); //Catch SIGILL
     signal(SIGFPE, *catch_signal); //Catch SIGFPE
 
-    qputenv("QT_IM_MODULE", QByteArray("ts-kbd")); //Set up keyboard
+    //Set up keyboard
+    qputenv("QT_IM_MODULE", QByteArray("ts-kbd"));
+    qputenv("GTK_IM_MODULE", QByteArray("ts-kbd"));
 
     QSettings settings("theSuite", "theShell");
     //qputenv("GTK_THEME", settings.value("theme/gtktheme", "Contemporary").toByteArray());
