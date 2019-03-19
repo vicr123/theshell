@@ -67,10 +67,10 @@ unix {
 
     blueprint {
         target.path = /usr/lib/theshellb/panes/
-        translations.path = /usr/share/theshellb/kdeconnectpane/translations
+        translations.path = /usr/share/theshellb/tsnm/translations
     } else {
         target.path = /usr/lib/theshell/panes/
-        translations.path = /usr/share/theshell/kdeconnectpane/translations
+        translations.path = /usr/share/theshell/tsnm/translations
     }
     INSTALLS += target translations
 }

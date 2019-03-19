@@ -142,7 +142,9 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                                 hints.insert("transient", true);
                                 hints.insert("sound-file", "qrc:/sounds/charging.wav");
 
-                                NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Charging"), message, QStringList(), hints, 10000);
+                                if (settings.value("power/notifyConnectPower", true).toBool()) {
+                                    NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Charging"), message, QStringList(), hints, 10000);
+                                }
                             }
 
                             isCharging = true;
@@ -169,7 +171,7 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                         case 2: //Discharging
                             //state = " (" + tr("Discharging");
                             state = " (";
-                            if (isConnectedToPower) {
+                            if (isConnectedToPower && settings.value("power/notifyUnplugPower", true).toBool()) {
                                 QVariantMap hints;
                                 hints.insert("category", "battery.discharging");
                                 hints.insert("transient", true);

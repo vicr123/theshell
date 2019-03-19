@@ -44,7 +44,7 @@ NotificationPopup::NotificationPopup(int id, QWidget *parent) :
 
     dismisser = new QTimer();
     dismisser->setInterval(500);
-    connect(dismisser, &QTimer::timeout, [=] {
+    connect(dismisser, &QTimer::timeout, dismisser, [=] {
         if (timeoutLeft != -2000) {
             timeoutLeft -= 500;
             if (timeoutLeft < 0) {
@@ -77,13 +77,17 @@ NotificationPopup::NotificationPopup(int id, QWidget *parent) :
 
 NotificationPopup::~NotificationPopup()
 {
+    dismisser->deleteLater();
+    coverWidget->deleteLater();
+    coverAppIcon->deleteLater();
+    coverAppName->deleteLater();
     delete ui;
 }
 
 void NotificationPopup::show() {
     if (currentlyShowingPopup != nullptr) {
         currentlyShowingPopup->close();
-        emit currentlyShowingPopup->notificationClosed(NotificationObject::Undefined);
+        //emit currentlyShowingPopup->notificationClosed(NotificationObject::Undefined);
         pendingPopups.append(this);
     } else {
         currentlyShowingPopup = this;
@@ -546,4 +550,10 @@ void NotificationPopup::startDismisser() {
 void NotificationPopup::stopDismisser() {
     dismisserStopCount++;
     dismisser->stop();
+}
+
+void NotificationPopup::on_timeoutButton_clicked()
+{
+    stopDismisser();
+    this->close();
 }

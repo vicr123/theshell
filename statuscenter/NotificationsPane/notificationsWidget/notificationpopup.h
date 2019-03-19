@@ -63,7 +63,9 @@ private slots:
     void startDismisser();
     void stopDismisser();
 
-signals:
+    void on_timeoutButton_clicked();
+
+    signals:
     void actionClicked(QString key);
     void notificationClosed(uint reason);
 

@@ -38,6 +38,11 @@
         <source>Good evening, %1!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../overview.cpp" line="169"/>
+        <source>Overview</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
         <location filename="../overview.cpp" line="419"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
@@ -239,37 +244,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Timers/timerpage.ui" line="436"/>
+        <location filename="../Timers/timerpage.ui" line="439"/>
         <source>&quot;Happy Bee&quot;, &quot;Salty Ditty&quot; copyright (c) Kevin MacLeod. Licensed under the Creative Commons CC-BY license.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Timers/timerpage.ui" line="450"/>
+        <location filename="../Timers/timerpage.ui" line="453"/>
         <source>Happy Bee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Timers/timerpage.ui" line="455"/>
+        <location filename="../Timers/timerpage.ui" line="458"/>
         <source>Playing in the Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Timers/timerpage.ui" line="460"/>
+        <location filename="../Timers/timerpage.ui" line="463"/>
         <source>Ice Cream Truck</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Timers/timerpage.ui" line="465"/>
+        <location filename="../Timers/timerpage.ui" line="468"/>
         <source>Party Complex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Timers/timerpage.ui" line="470"/>
+        <location filename="../Timers/timerpage.ui" line="473"/>
         <source>Salty Ditty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Timers/timerpage.ui" line="478"/>
+        <location filename="../Timers/timerpage.ui" line="481"/>
         <source>Set</source>
         <translation type="unfinished"></translation>
     </message>

@@ -849,7 +849,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>7</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -3330,8 +3330,14 @@
                 </item>
                 <item row="0" column="0" colspan="3">
                  <widget class="QLabel" name="label_29">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
                   <property name="text">
-                   <string>When this device is running off battery power,</string>
+                   <string>ON BATTERY</string>
                   </property>
                  </widget>
                 </item>
@@ -3466,8 +3472,14 @@
                 </item>
                 <item row="0" column="0" colspan="3">
                  <widget class="QLabel" name="label_55">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
                   <property name="text">
-                   <string>When this device is connected to power,</string>
+                   <string>ON AC</string>
                   </property>
                  </widget>
                 </item>
@@ -3604,8 +3616,14 @@
                 </item>
                 <item row="0" column="0" colspan="2">
                  <widget class="QLabel" name="label_21">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
                   <property name="text">
-                   <string>When I press the</string>
+                   <string>PHYSICAL BUTTONS</string>
                   </property>
                  </widget>
                 </item>
@@ -3613,6 +3631,65 @@
               </item>
               <item>
                <widget class="Line" name="line_54">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>1</height>
+                 </size>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QGridLayout" name="gridLayout">
+                <property name="leftMargin">
+                 <number>9</number>
+                </property>
+                <property name="topMargin">
+                 <number>9</number>
+                </property>
+                <property name="rightMargin">
+                 <number>9</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>9</number>
+                </property>
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <item row="1" column="0">
+                 <widget class="QCheckBox" name="notifyOnConnectPower">
+                  <property name="text">
+                   <string>Notify me when I connect power to this device</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="notifyOnUnplug">
+                  <property name="text">
+                   <string>Notify me when I unplug this device</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_7">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>NOTIFICATIONS</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="Line" name="line">
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
@@ -3643,8 +3720,14 @@
                 </property>
                 <item row="0" column="0">
                  <widget class="QLabel" name="label_112">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
                   <property name="text">
-                   <string>When suspending this device</string>
+                   <string>ON SUSPENSION</string>
                   </property>
                  </widget>
                 </item>

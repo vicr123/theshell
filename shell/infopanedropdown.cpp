@@ -451,6 +451,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->CompactBarSwitch->setChecked(d->settings.value("bar/compact", false).toBool());
     ui->LocationMasterSwitch->setChecked(d->locationSettings->value("master/master", true).toBool());
     ui->powerButtonPressed->setCurrentIndex(d->settings.value("power/onPowerButtonPressed", 0).toInt());
+    ui->notifyOnConnectPower->setChecked(d->settings.value("power/notifyConnectPower", true).toBool());
+    ui->notifyOnUnplug->setChecked(d->settings.value("power/notifyUnplugPower", true).toBool());
     updateAccentColourBox();
     updateRedshiftTime();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
@@ -750,14 +752,14 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                         qDebug() << "Loading" << metadata.value("name").toString();
                         p->loadLanguage(QLocale().name());
                         for (StatusCenterPaneObject* pane : p->availablePanes()) {
-                            if (pane->name() == "Overview" && pane->type().testFlag(StatusCenterPaneObject::Informational)) {
+                            if (pane->position() == -1000 && pane->type().testFlag(StatusCenterPaneObject::Informational)) {
                                 if (!loadedPanes.contains("Overview")) {
                                     //Special handling for Overview pane
                                     d->overviewFrame = pane->mainWidget();
                                     d->overviewFrame->setAutoFillBackground(true);
                                     ui->pageStack->insertWidget(0, d->overviewFrame);
 
-                                    loadedPanes.append(pane->name());
+                                    loadedPanes.append("Overview");
                                 }
                             } else {
                                 if (pane->type().testFlag(StatusCenterPaneObject::Informational)) {
@@ -3761,4 +3763,14 @@ void InfoPaneDropdown::on_powerSuspendHibernate_toggled(bool checked)
 void InfoPaneDropdown::on_powerButtonPressed_currentIndexChanged(int index)
 {
     d->settings.setValue("power/onPowerButtonPressed", index);
+}
+
+void InfoPaneDropdown::on_notifyOnConnectPower_toggled(bool checked)
+{
+    d->settings.setValue("power/notifyConnectPower", checked);
+}
+
+void InfoPaneDropdown::on_notifyOnUnplug_toggled(bool checked)
+{
+    d->settings.setValue("power/notifyUnplugPower", checked);
 }
