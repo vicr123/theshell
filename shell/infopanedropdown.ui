@@ -849,7 +849,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>7</number>
+             <number>15</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1482,8 +1482,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>804</width>
-                   <height>671</height>
+                   <width>381</width>
+                   <height>563</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_54">

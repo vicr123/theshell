@@ -27,7 +27,7 @@ PrinterManagement::PrinterManagement(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->settingAttributes.icon = QIcon::fromTheme("printer");
+    this->settingAttributes.icon = QIcon::fromTheme("preferences-desktop-printers", QIcon::fromTheme("printer"));
     this->settingAttributes.menuWidget = ui->menuWidget;
 
     destCount = cupsGetDests(&dests);

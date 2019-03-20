@@ -13,4 +13,5 @@ SUBDIRS += \
     OverviewPane \
     NotificationsPane \
     KDEConnectPane \
-    NetworkPane
+    NetworkPane \
+    PulseaudioPane
