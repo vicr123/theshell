@@ -435,6 +435,10 @@ class InfoPaneDropdown : public QDialog
 
         void on_powerButtonPressed_currentIndexChanged(int index);
 
+        void on_notifyOnConnectPower_toggled(bool checked);
+
+        void on_notifyOnUnplug_toggled(bool checked);
+
     public slots:
         void updateStruts();
         void changeSettingsPane(int pane);

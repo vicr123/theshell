@@ -84,6 +84,8 @@ private slots:
 
     void on_quietModeTurnOffInTimer_editingFinished();
 
+    void updateNotificationsNumber();
+
 signals:
     void numNotificationsChanged(int number);
 
@@ -97,7 +99,7 @@ private:
     QList<NotificationAppGroup*> notificationGroups;
     QMap<QString, MediaPlayerNotification*> mediaPlayers;
 
-    QLabel* chunk;
+    QLabel *chunk, *snack;
 
     NotificationsDBusAdaptor* adaptor;
 };

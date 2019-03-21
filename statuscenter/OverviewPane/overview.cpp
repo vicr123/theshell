@@ -166,7 +166,7 @@ QWidget* Overview::mainWidget() {
 }
 
 QString Overview::name() {
-    return "Overview";
+    return tr("Overview");
 }
 
 StatusCenterPaneObject::StatusPaneTypes Overview::type() {
@@ -174,7 +174,7 @@ StatusCenterPaneObject::StatusPaneTypes Overview::type() {
 }
 
 int Overview::position() {
-    return 0;
+    return -1000;
 }
 
 void Overview::message(QString name, QVariantList args) {

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>558</width>
-    <height>105</height>
+    <height>116</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -275,7 +275,26 @@
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="timeoutButton">
+           <property name="toolTip">
+            <string>Hide</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="go-up"/>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="dismissButton">
+           <property name="toolTip">
+            <string>Dismiss</string>
+           </property>
            <property name="text">
             <string/>
            </property>

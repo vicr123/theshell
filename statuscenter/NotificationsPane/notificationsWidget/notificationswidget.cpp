@@ -106,10 +106,17 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
     chunk->setText(tr("No Notifications"));
     chunk->installEventFilter(this);
 
+    snack = new QLabel();
+    snack->setStyleSheet("QLabel {background-color: #FF6400; color: white;}");
+    snack->setMargin(6);
+    snack->setVisible(false);
+    snack->setText("0");
+
     QTimer::singleShot(0, [=] {
         ui->quietModeDescription->setText(getProperty("current-quiet-mode-description").toString());
 
         sendMessage("register-chunk", {QVariant::fromValue(chunk)});
+        sendMessage("register-snack", {QVariant::fromValue(snack)});
     });
 
     QScroller::grabGesture(ui->scrollArea->viewport(), QScroller::LeftMouseButtonGesture);
@@ -148,11 +155,11 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
     notifications.insert(object->getId(), object);
     ui->noNotificationsFrame->setVisible(false);
 
-    connect(object, &NotificationObject::actionClicked, [=](QString key) {
+    connect(object, &NotificationObject::actionClicked, object, [=](QString key) {
         emit adaptor->ActionInvoked(object->getId(), key);
         object->dismiss();
     });
-    connect(object, &NotificationObject::closed, [=](NotificationObject::NotificationCloseReason reason) {
+    connect(object, &NotificationObject::closed, object, [=](NotificationObject::NotificationCloseReason reason) {
         emit adaptor->NotificationClosed(object->getId(), reason);
         notifications.remove(object->getId());
 
@@ -160,11 +167,7 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
             ui->noNotificationsFrame->setVisible(true);
         }
 
-        if (notifications.count() == 0) {
-            chunk->setText(tr("No notifications"));
-        } else {
-            chunk->setText("<b>" + tr("%n notification(s)", nullptr, notifications.count()) + "</b>");
-        }
+        updateNotificationsNumber();
     });
 
     NotificationAppGroup* nGroup = nullptr;
@@ -190,11 +193,17 @@ void NotificationsWidget::addNotification(NotificationObject *object) {
     }
 
     nGroup->AddNotification(object);
+    updateNotificationsNumber();
+}
 
+void NotificationsWidget::updateNotificationsNumber() {
     if (notifications.count() == 0) {
         chunk->setText(tr("No notifications"));
+        snack->setVisible(false);
     } else {
         chunk->setText("<b>" + tr("%n notification(s)", nullptr, notifications.count()) + "</b>");
+        snack->setText(QString::number(notifications.count()));
+        snack->setVisible(true);
     }
 }
 
