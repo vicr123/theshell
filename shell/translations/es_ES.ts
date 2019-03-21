@@ -2739,32 +2739,32 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="286"/>
+        <location filename="../main.cpp" line="288"/>
         <source>Start in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="287"/>
+        <location filename="../main.cpp" line="289"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="311"/>
+        <location filename="../main.cpp" line="313"/>
         <source>theShell already running</source>
         <translation>theShell ya esta iniciado</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="312"/>
+        <location filename="../main.cpp" line="314"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell parece ya estar iniciado. Deseas iniciar theShell de todas maneras?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="369"/>
+        <location filename="../main.cpp" line="371"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Gestor de ventanas no pudo iniciar</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="370"/>
+        <location filename="../main.cpp" line="372"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>
