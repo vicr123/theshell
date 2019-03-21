@@ -383,6 +383,14 @@
         <source>You are in flight mode. Network access may be limited.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Network Management is not operational</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check that NetworkManager is running</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SavedNetworksList</name>

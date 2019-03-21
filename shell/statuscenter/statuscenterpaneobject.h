@@ -55,6 +55,9 @@ class StatusCenterPaneObject
         virtual StatusPaneTypes type() = 0;
         virtual int position() = 0;
         virtual void message(QString name, QVariantList args = QVariantList()) = 0;
+        virtual QVariant messageReturn(QString name, QVariantList args = QVariantList()) {
+            return QVariant();
+        }
 
         InformationalStatusCenterPaneObjectAttributes informationalAttributes;
         SettingStatusCenterPaneObjectAttributes settingAttributes;
@@ -63,7 +66,6 @@ class StatusCenterPaneObject
         std::function<QVariant(QString)> getProperty;
         bool showing = false;
 };
-
 Q_DECLARE_OPERATORS_FOR_FLAGS(StatusCenterPaneObject::StatusPaneTypes)
 
 #endif // STATUSCENTERPANEOBJECT_H

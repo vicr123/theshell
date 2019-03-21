@@ -222,7 +222,11 @@ void AudioPane::updateSinkInput(AudioPane *pane, int index) {
     pa_context_get_sink_input_info(pane->d->ctx, index, [](pa_context* c, const pa_sink_input_info* infoArray, int eol, void* userdata) {
         if (infoArray) {
             AudioPane* pane = static_cast<AudioPane*>(userdata);
-            pane->d->sinkInputWidgets.value(QString::fromLocal8Bit(infoArray->name))->updateInfo(*infoArray);
+
+            QString sinkName = QString::fromLocal8Bit(infoArray->name);
+            if (pane->d->sinkInputWidgets.contains(sinkName)) {
+                pane->d->sinkInputWidgets.value(sinkName)->updateInfo(*infoArray);
+            }
         }
     }, pane);
 }

@@ -94,6 +94,7 @@ BluetoothManagement::BluetoothManagement(QWidget *parent) :
         sendMessage("set-switch", QVariantList() << key << adapter->isPowered());
         updateAdapters();
     });
+    connect(mgr, &BluezQt::Manager::operationalChanged, this, &BluetoothManagement::updateAdapters);
 
     ui->menuStackedWidget->setFixedWidth(250 * getDPIScaling());
 
@@ -103,6 +104,8 @@ BluetoothManagement::BluetoothManagement(QWidget *parent) :
     });
     QTimer::singleShot(0, [=] {
         sendMessage("register-chunk", {QVariant::fromValue(chunk)});
+
+        updateAdapters();
     });
 }
 
@@ -165,12 +168,19 @@ void BluetoothManagement::changeEvent(QEvent *event) {
 }
 
 void BluetoothManagement::updateAdapters() {
-    if (mgr->adapters().count() == 0) {
+    if (!mgr->isOperational()) {
+        this->setCurrentIndex(1); //Bluetooth not operational
+        ui->menuStackedWidget->setProperty("STATUSCENTER_notavailable", true);
+
+        if (showing) ui->mainMenuButton->click(); //Return to the main menu
+    } else if (mgr->adapters().count() == 0) {
         this->setCurrentIndex(0); //No Bluetooth Hardware
+        ui->menuStackedWidget->setProperty("STATUSCENTER_notavailable", true);
+
+        if (showing) ui->mainMenuButton->click(); //Return to the main menu
     } else {
-        if (this->currentIndex() == 0) {
-            this->setCurrentIndex(1);
-        }
+        this->setCurrentIndex(2);
+        ui->menuStackedWidget->setProperty("STATUSCENTER_notavailable", false);
 
         if (!mgr->adapters().contains(currentAdapter)) {
             currentAdapter = mgr->adapters().first();
