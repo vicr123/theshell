@@ -73,7 +73,7 @@ void HotkeyHud::paintEvent(QPaintEvent *event) {
 
 void HotkeyHud::show(int timeout) {
     this->setFixedHeight(this->sizeHint().height() * getDPIScaling());
-    this->resize(this->width() * getDPIScaling(), this->height());
+    //this->resize(this->width() * getDPIScaling(), this->height());
 
     Atom atoms[2];
     atoms[0] = XInternAtom(QX11Info::display(), "_KDE_NET_WM_WINDOW_TYPE_ON_SCREEN_DISPLAY", False);
