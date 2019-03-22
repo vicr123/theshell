@@ -118,7 +118,7 @@ class InfoPaneDropdownPrivate {
         QMap<uint, Switch*> pluginSwitches;
         uint numberOfSwitches = 0;
 
-        int previousDragY;
+        QVector<int> previousDrags;
         WId MainWindowId;
 
         QDBusObjectPath geoclueClientPath;
@@ -1130,9 +1130,9 @@ void InfoPaneDropdown::show(dropdownType showWith) {
         }
 
         if (d->settings.value("bar/onTop", true).toBool()) {
-            d->previousDragY = -1;
+            d->previousDrags.prepend(-1);
         } else {
-            d->previousDragY = screenGeometry.bottom();
+            d->previousDrags.prepend(screenGeometry.bottom());
         }
         completeDragDown();
     }
@@ -1149,7 +1149,7 @@ void InfoPaneDropdown::show(dropdownType showWith) {
 
 void InfoPaneDropdown::showNoAnimation() {
     QDialog::show();
-    d->previousDragY = -1;
+    d->previousDrags.prepend(-1);
     completeDragDown();
 }
 
@@ -2029,14 +2029,15 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
 
     ui->brightnessSlider->setValue((int) output);
 
-    d->previousDragY = y;
+    d->previousDrags.prepend(y);
+    if (d->previousDrags.count() > 10) d->previousDrags.removeLast();
 }
 
 void InfoPaneDropdown::completeDragDown() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    if ((QCursor::pos().y() - screenGeometry.top() < d->previousDragY && d->settings.value("bar/onTop", true).toBool()) ||
-            (QCursor::pos().y() - screenGeometry.top() > d->previousDragY && !d->settings.value("bar/onTop", true).toBool())) {
+    if (d->previousDrags.isEmpty() || (QCursor::pos().y() - screenGeometry.top() < d->previousDrags.last() && d->settings.value("bar/onTop", true).toBool()) ||
+            (QCursor::pos().y() - screenGeometry.top() > d->previousDrags.last() && !d->settings.value("bar/onTop", true).toBool())) {
         this->close();
     } else {
         tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
@@ -2047,6 +2048,7 @@ void InfoPaneDropdown::completeDragDown() {
         connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
         a->start();
     }
+    d->previousDrags.clear();
 }
 
 void InfoPaneDropdown::on_notificationSoundBox_currentIndexChanged(int index)

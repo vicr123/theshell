@@ -10,7 +10,7 @@ LIBS     += -lcrypt
 
 unix {
     CONFIG += link_pkgconfig
-    PKGCONFIG += glib-2.0 x11 x11-xcb xcb-keysyms xscrnsaver xext libpulse libpulse-mainloop-glib libsystemd libunwind polkit-qt5-1
+    PKGCONFIG += glib-2.0 x11 x11-xcb xcb-keysyms xscrnsaver xext libpulse libpulse-mainloop-glib libsystemd libunwind polkit-qt5-1 xi
 }
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

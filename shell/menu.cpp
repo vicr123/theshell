@@ -134,37 +134,81 @@ Menu::~Menu()
     delete ui;
 }
 
-void Menu::show() {
+void Menu::prepareForShow() {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect availableGeometry = QApplication::desktop()->availableGeometry();
+
+    int left;
+    if (QApplication::isRightToLeft()) {
+        left = MainWin->x() + MainWin->width();
+    } else {
+        left = MainWin->x() - this->width();
+    }
+
+    if (settings.value("bar/onTop", true).toBool()) {
+        this->setGeometry(left, MainWin->y() + MainWin->height() - 1, this->width(), availableGeometry.height() - (MainWin->height() + (MainWin->y() - availableGeometry.y())) + 1);
+    } else {
+        int height;
+
+        if (availableGeometry.bottom() < screenGeometry.height() - MainWin->height()) {
+            height = availableGeometry.height();
+        } else {
+            height = MainWin->y() - screenGeometry.top() + 1;
+        }
+        this->setGeometry(left, availableGeometry.y() , this->width(), height);
+    }
+
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->lineEdit->setText("");
+    on_lineEdit_textEdited("");
+    ui->appsListView->scrollToTop();
+
     unsigned long desktop = 0xFFFFFFFF;
     XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+}
 
+void Menu::show() {
     QDialog::show();
     doCheckForClose = true;
 
-    ui->stackedWidget->setCurrentIndex(0);
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
     tPropertyAnimation* animation = new tPropertyAnimation(this, "geometry");
     animation->setStartValue(this->geometry());
 
     if (QApplication::isRightToLeft()) {
-        animation->setEndValue(QRect(this->x() - this->width(), this->y(), this->width(), this->height()));
+        animation->setEndValue(QRect(screenGeometry.x() + screenGeometry.width() - this->width(), this->y(), this->width(), this->height()));
     } else {
-        animation->setEndValue(QRect(this->x() + this->width(), this->y(), this->width(), this->height()));
+        animation->setEndValue(QRect(screenGeometry.x(), this->y(), this->width(), this->height()));
     }
     animation->setDuration(500);
     animation->setEasingCurve(QEasingCurve::OutCubic);
     connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
     animation->start();
 
-    ui->lineEdit->setText("");
     ui->lineEdit->setFocus();
-    on_lineEdit_textEdited("");
-
-    ui->appsListView->scrollToTop();
 
     //Show Tutorial Screen
     TutorialWin->showScreen(TutorialWindow::GatewaySearch);
+
+    this->activateWindow();
+}
+
+void Menu::showPartial(int pixels) {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+
+    QDialog::show();
+
+    int x;
+    if (QApplication::isRightToLeft()) {
+        x = screenGeometry.x() + screenGeometry.width() + this->width() - pixels;
+        if (x >= screenGeometry.x() + screenGeometry.width() - this->width()) x = screenGeometry.x() + screenGeometry.width() + this->width(); //Make sure the menu doesn't go too far
+    } else {
+        x = screenGeometry.x() + pixels - this->width();
+        if (x >= screenGeometry.x()) x = x > screenGeometry.x(); //Make sure the menu doesn't go too far
+    }
+    this->setGeometry(x, this->y(), this->width(), this->height());
 }
 
 void Menu::changeEvent(QEvent *event) {
@@ -180,13 +224,15 @@ void Menu::changeEvent(QEvent *event) {
 }
 
 void Menu::close() {
+    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+
     tPropertyAnimation* animation = new tPropertyAnimation(this, "geometry");
     animation->setStartValue(this->geometry());
 
     if (QApplication::isRightToLeft()) {
-        animation->setEndValue(QRect(this->x() + this->width(), this->y(), this->width(), this->height()));
+        animation->setEndValue(QRect(screenGeometry.x() + screenGeometry.width(), this->y(), this->width(), this->height()));
     } else {
-        animation->setEndValue(QRect(this->x() - this->width(), this->y(), this->width(), this->height()));
+        animation->setEndValue(QRect(screenGeometry.x() - this->width(), this->y(), this->width(), this->height()));
     }
     animation->setDuration(500);
     animation->setEasingCurve(QEasingCurve::OutCubic);

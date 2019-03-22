@@ -446,7 +446,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="426"/>
-        <location filename="../infopanedropdown.cpp" line="2438"/>
+        <location filename="../infopanedropdown.cpp" line="2440"/>
         <source>Charge History</source>
         <translation>Oplaadgeschiedenis</translation>
     </message>
@@ -543,20 +543,20 @@
     <message>
         <location filename="../infopanedropdown.ui" line="796"/>
         <location filename="../infopanedropdown.ui" line="5273"/>
-        <location filename="../infopanedropdown.cpp" line="3046"/>
+        <location filename="../infopanedropdown.cpp" line="3048"/>
         <source>Unavailable Panes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="805"/>
         <location filename="../infopanedropdown.ui" line="5353"/>
-        <location filename="../infopanedropdown.cpp" line="3050"/>
+        <location filename="../infopanedropdown.cpp" line="3052"/>
         <source>Advanced</source>
         <translation>Geavanceerd</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="814"/>
-        <location filename="../infopanedropdown.cpp" line="3052"/>
+        <location filename="../infopanedropdown.cpp" line="3054"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
@@ -1061,7 +1061,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2939"/>
-        <location filename="../infopanedropdown.cpp" line="3470"/>
+        <location filename="../infopanedropdown.cpp" line="3472"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1178,8 +1178,8 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4039"/>
-        <location filename="../infopanedropdown.cpp" line="3562"/>
-        <location filename="../infopanedropdown.cpp" line="3568"/>
+        <location filename="../infopanedropdown.cpp" line="3564"/>
+        <location filename="../infopanedropdown.cpp" line="3570"/>
         <source>Mouse Password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1200,7 +1200,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4270"/>
-        <location filename="../infopanedropdown.cpp" line="2128"/>
+        <location filename="../infopanedropdown.cpp" line="2130"/>
         <source>Edit User</source>
         <translation>Verander gebruiker</translation>
     </message>
@@ -1217,15 +1217,15 @@
     <message>
         <location filename="../infopanedropdown.ui" line="4331"/>
         <location filename="../infopanedropdown.ui" line="4354"/>
-        <location filename="../infopanedropdown.cpp" line="2132"/>
-        <location filename="../infopanedropdown.cpp" line="2133"/>
+        <location filename="../infopanedropdown.cpp" line="2134"/>
+        <location filename="../infopanedropdown.cpp" line="2135"/>
         <source>(unchanged)</source>
         <translation>(niet veranderd)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4338"/>
-        <location filename="../infopanedropdown.cpp" line="2172"/>
-        <location filename="../infopanedropdown.cpp" line="2177"/>
+        <location filename="../infopanedropdown.cpp" line="2174"/>
+        <location filename="../infopanedropdown.cpp" line="2179"/>
         <source>Username</source>
         <translation>Gebruikersnaam</translation>
     </message>
@@ -1525,129 +1525,129 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>U vebinding met het internet is geblokkeerd door een inlogpagina.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2095"/>
+        <location filename="../infopanedropdown.cpp" line="2097"/>
         <source>Add New User</source>
         <translation>Voeg nieuwe gebruiker toe</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2107"/>
-        <location filename="../infopanedropdown.cpp" line="3518"/>
-        <location filename="../infopanedropdown.cpp" line="3538"/>
+        <location filename="../infopanedropdown.cpp" line="2109"/>
+        <location filename="../infopanedropdown.cpp" line="3520"/>
+        <location filename="../infopanedropdown.cpp" line="3540"/>
         <source>Unauthorized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2107"/>
+        <location filename="../infopanedropdown.cpp" line="2109"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2119"/>
+        <location filename="../infopanedropdown.cpp" line="2121"/>
         <source>New User</source>
         <translation>Nieuwe gebruiker</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2122"/>
-        <location filename="../infopanedropdown.cpp" line="2123"/>
-        <location filename="../infopanedropdown.cpp" line="2138"/>
-        <location filename="../infopanedropdown.cpp" line="2139"/>
+        <location filename="../infopanedropdown.cpp" line="2124"/>
+        <location filename="../infopanedropdown.cpp" line="2125"/>
+        <location filename="../infopanedropdown.cpp" line="2140"/>
+        <location filename="../infopanedropdown.cpp" line="2141"/>
         <source>(none)</source>
         <translation>(geen)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2135"/>
-        <location filename="../infopanedropdown.cpp" line="2136"/>
+        <location filename="../infopanedropdown.cpp" line="2137"/>
+        <location filename="../infopanedropdown.cpp" line="2138"/>
         <source>(set at next login)</source>
         <translation>(stel in bij volgende login)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2167"/>
+        <location filename="../infopanedropdown.cpp" line="2169"/>
         <source>Password Check</source>
         <translation>Wachtwoord Check</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2167"/>
+        <location filename="../infopanedropdown.cpp" line="2169"/>
         <source>The passwords don&apos;t match.</source>
         <translation>De wachtwoorden kloppen niet.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2172"/>
+        <location filename="../infopanedropdown.cpp" line="2174"/>
         <source>The username must not contain spaces.</source>
         <translation>De gebruikersnaam mag geen spaties bevatten.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2177"/>
+        <location filename="../infopanedropdown.cpp" line="2179"/>
         <source>The username must not contain capital letters.</source>
         <translation>De gebruikersnaam mag geen hoofdletters bevatten.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2449"/>
+        <location filename="../infopanedropdown.cpp" line="2451"/>
         <source>Rate History</source>
         <translation>Waardeer geschiedenis</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2460"/>
+        <location filename="../infopanedropdown.cpp" line="2462"/>
         <source>Application Power Usage</source>
         <translation>Applicatie Stroomverbruik</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2574"/>
+        <location filename="../infopanedropdown.cpp" line="2576"/>
         <source>Oxygen</source>
         <translation>Oxygen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2575"/>
+        <location filename="../infopanedropdown.cpp" line="2577"/>
         <source>Breeze</source>
         <translation>Breeze</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2578"/>
+        <location filename="../infopanedropdown.cpp" line="2580"/>
         <source>Blue</source>
         <translation>Blauw</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2579"/>
+        <location filename="../infopanedropdown.cpp" line="2581"/>
         <source>Green</source>
         <translation>Groen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2580"/>
+        <location filename="../infopanedropdown.cpp" line="2582"/>
         <source>Orange</source>
         <translation>Oranje</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2581"/>
+        <location filename="../infopanedropdown.cpp" line="2583"/>
         <source>Pink</source>
         <translation>Roze</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2582"/>
+        <location filename="../infopanedropdown.cpp" line="2584"/>
         <source>Turquoise</source>
         <translation>Turqoise</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2819"/>
+        <location filename="../infopanedropdown.cpp" line="2821"/>
         <source>Notifications for %1</source>
         <translation>Meldingen voor %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2827"/>
+        <location filename="../infopanedropdown.cpp" line="2829"/>
         <source>You can&apos;t configure notifications for %1</source>
         <translation>U kunt geen meldingen configureren voor %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2964"/>
-        <location filename="../infopanedropdown.cpp" line="2974"/>
-        <location filename="../infopanedropdown.cpp" line="2984"/>
-        <location filename="../infopanedropdown.cpp" line="2994"/>
-        <source>Never</source>
-        <translation>Nooit</translation>
-    </message>
-    <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="2966"/>
         <location filename="../infopanedropdown.cpp" line="2976"/>
         <location filename="../infopanedropdown.cpp" line="2986"/>
         <location filename="../infopanedropdown.cpp" line="2996"/>
+        <source>Never</source>
+        <translation>Nooit</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../infopanedropdown.cpp" line="2968"/>
+        <location filename="../infopanedropdown.cpp" line="2978"/>
+        <location filename="../infopanedropdown.cpp" line="2988"/>
+        <location filename="../infopanedropdown.cpp" line="2998"/>
         <source>%n min(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1655,48 +1655,48 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3245"/>
+        <location filename="../infopanedropdown.cpp" line="3247"/>
         <source>Log Out Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3248"/>
+        <location filename="../infopanedropdown.cpp" line="3250"/>
         <source>Logoff Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3251"/>
+        <location filename="../infopanedropdown.cpp" line="3253"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3253"/>
+        <location filename="../infopanedropdown.cpp" line="3255"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3518"/>
-        <location filename="../infopanedropdown.cpp" line="3538"/>
+        <location filename="../infopanedropdown.cpp" line="3520"/>
+        <location filename="../infopanedropdown.cpp" line="3540"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3533"/>
+        <location filename="../infopanedropdown.cpp" line="3535"/>
         <source>Remove Mouse Password?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3533"/>
+        <location filename="../infopanedropdown.cpp" line="3535"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3563"/>
+        <location filename="../infopanedropdown.cpp" line="3565"/>
         <source>Mouse Password was removed successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="3569"/>
+        <location filename="../infopanedropdown.cpp" line="3571"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1822,73 +1822,73 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="567"/>
-        <location filename="../mainwindow.cpp" line="329"/>
+        <location filename="../mainwindow.cpp" line="332"/>
         <source>Quiet Mode</source>
         <translation>Stille modus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="377"/>
+        <location filename="../mainwindow.cpp" line="380"/>
         <source>Recording Screen</source>
         <translation>Scherm wordt opgenomen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="383"/>
+        <location filename="../mainwindow.cpp" line="386"/>
         <source>Processing Screen Recording...</source>
         <translation>Schermopname verwerken...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="447"/>
+        <location filename="../mainwindow.cpp" line="450"/>
         <source>For %1</source>
         <translation>Voor %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="448"/>
+        <location filename="../mainwindow.cpp" line="451"/>
         <source>Close</source>
         <translation>Sluit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="696"/>
+        <location filename="../mainwindow.cpp" line="699"/>
         <source>Desktop %1</source>
         <translation>Bureaublad %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2152"/>
+        <location filename="../mainwindow.cpp" line="2138"/>
         <source>For Bar</source>
         <translation>Voor Bar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2154"/>
+        <location filename="../mainwindow.cpp" line="2140"/>
         <source>Move to bottom</source>
         <translation>Verplaats naar de bodem</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2159"/>
+        <location filename="../mainwindow.cpp" line="2145"/>
         <source>Move to top</source>
         <translation>Verplaats naar de top</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2165"/>
+        <location filename="../mainwindow.cpp" line="2151"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2170"/>
+        <location filename="../mainwindow.cpp" line="2156"/>
         <source>For System</source>
         <translation>Voor systeem</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="2171"/>
+        <location filename="../mainwindow.cpp" line="2157"/>
         <source>Open Status Center</source>
         <translation type="unfinished">Open Status Center</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2174"/>
+        <location filename="../mainwindow.cpp" line="2160"/>
         <source>Open System Settings</source>
         <translation type="unfinished">Open Systeem Instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2183"/>
+        <location filename="../mainwindow.cpp" line="2169"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2072,47 +2072,47 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>Hallo, %1!</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="278"/>
+        <location filename="../menu.cpp" line="324"/>
         <source>Power Off Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="290"/>
+        <location filename="../menu.cpp" line="336"/>
         <source>Reboot Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="302"/>
+        <location filename="../menu.cpp" line="348"/>
         <source>Log Out Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="543"/>
+        <location filename="../menu.cpp" line="589"/>
         <source>%1 on X11 display %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="545"/>
+        <location filename="../menu.cpp" line="591"/>
         <source>on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="547"/>
+        <location filename="../menu.cpp" line="593"/>
         <source>%1 on VT #%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="549"/>
+        <location filename="../menu.cpp" line="595"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="669"/>
+        <location filename="../menu.cpp" line="715"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation>Acties voor &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="706"/>
+        <location filename="../menu.cpp" line="752"/>
         <source>For &quot;%1&quot;</source>
         <translation>Voor &quot;%1&quot;</translation>
     </message>
@@ -2211,70 +2211,70 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
 <context>
     <name>NativeEventFilter</name>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="154"/>
-        <location filename="../nativeeventfilter.cpp" line="163"/>
-        <location filename="../nativeeventfilter.cpp" line="174"/>
-        <location filename="../nativeeventfilter.cpp" line="207"/>
+        <location filename="../nativeeventfilter.cpp" line="347"/>
+        <location filename="../nativeeventfilter.cpp" line="356"/>
+        <location filename="../nativeeventfilter.cpp" line="367"/>
+        <location filename="../nativeeventfilter.cpp" line="400"/>
         <source>Brightness</source>
         <translation>Helderheid</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="178"/>
-        <location filename="../nativeeventfilter.cpp" line="194"/>
-        <location filename="../nativeeventfilter.cpp" line="215"/>
-        <location filename="../nativeeventfilter.cpp" line="229"/>
+        <location filename="../nativeeventfilter.cpp" line="371"/>
+        <location filename="../nativeeventfilter.cpp" line="387"/>
+        <location filename="../nativeeventfilter.cpp" line="408"/>
+        <location filename="../nativeeventfilter.cpp" line="422"/>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="178"/>
-        <location filename="../nativeeventfilter.cpp" line="215"/>
+        <location filename="../nativeeventfilter.cpp" line="371"/>
+        <location filename="../nativeeventfilter.cpp" line="408"/>
         <source>Quiet Mode is set to Mute.</source>
         <translation>Stille modus is ingesteld op Stil.</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="236"/>
+        <location filename="../nativeeventfilter.cpp" line="429"/>
         <source>Critical Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="240"/>
+        <location filename="../nativeeventfilter.cpp" line="433"/>
         <source>No Notifications</source>
         <translation>Geen Notificaties</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="244"/>
+        <location filename="../nativeeventfilter.cpp" line="437"/>
         <source>Mute</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="248"/>
+        <location filename="../nativeeventfilter.cpp" line="441"/>
         <source>Sound</source>
         <translation>Geluid</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="256"/>
-        <location filename="../nativeeventfilter.cpp" line="262"/>
+        <location filename="../nativeeventfilter.cpp" line="449"/>
+        <location filename="../nativeeventfilter.cpp" line="455"/>
         <source>Keyboard Brightness</source>
         <translation>Toetsenbord Helderheid</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="278"/>
+        <location filename="../nativeeventfilter.cpp" line="471"/>
         <source>Eject</source>
         <translation>Uitwerpen</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="278"/>
+        <location filename="../nativeeventfilter.cpp" line="471"/>
         <source>Attempting to eject disc...</source>
         <translation>Aan het proberen de schijf uit te werpen...</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="356"/>
+        <location filename="../nativeeventfilter.cpp" line="549"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="356"/>
+        <location filename="../nativeeventfilter.cpp" line="549"/>
         <source>Keyboard Layout set to %1</source>
         <translation type="unfinished"></translation>
     </message>

@@ -58,8 +58,13 @@ class Menu : public QDialog
         void setGeometry(int x, int y, int w, int h);
         void setGeometry(QRect geometry);
 
+        void prepareForShow();
+
         void show();
         void close();
+
+        void showPartial(int pixels);
+
 
     signals:
         void menuClosing();

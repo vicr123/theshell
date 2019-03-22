@@ -21,6 +21,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "menu.h"
+#include "infopanedropdown.h"
+
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0, long data2 = 0, long data3 = 0, long data4 = 0);
@@ -1711,6 +1714,10 @@ InfoPaneDropdown* MainWindow::getInfoPane() {
     return this->infoPane;
 }
 
+Menu* MainWindow::getMenu() {
+    return this->gatewayMenu;
+}
+
 void MainWindow::setTimer(QString timer) {
     ui->timer->setText(timer);
     ui->timer->setVisible(true);
@@ -1832,29 +1839,8 @@ void MainWindow::on_desktopBack_clicked()
 void MainWindow::openMenu() {
     if (!gatewayMenu->isVisible()) lockMovement("Gateway");
 
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    QRect availableGeometry = QApplication::desktop()->availableGeometry();
-
-    int left;
-    if (QApplication::isRightToLeft()) {
-        left = this->x() + this->width();
-    } else {
-        left = this->x() - gatewayMenu->width();
-    }
-
     //gatewayMenu->setGeometry(availableGeometry.x(), availableGeometry.y(), gatewayMenu->width(), availableGeometry.height());
-    if (settings.value("bar/onTop", true).toBool()) {
-        gatewayMenu->setGeometry(left, this->y() + this->height() - 1, gatewayMenu->width(), availableGeometry.height() - (this->height() + (this->y() - availableGeometry.y())) + 1);
-    } else {
-        int height;
-
-        if (availableGeometry.bottom() < screenGeometry.height() - this->height()) {
-            height = availableGeometry.height();
-        } else {
-            height = this->y() - screenGeometry.top() + 1;
-        }
-        gatewayMenu->setGeometry(left, availableGeometry.y() , gatewayMenu->width(), height);
-    }
+    gatewayMenu->prepareForShow();
     gatewayMenu->show();
     gatewayMenu->setFocus();
 }

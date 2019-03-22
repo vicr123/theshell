@@ -44,37 +44,24 @@
 #include <QSoundEffect>
 #include "screenshotwindow.h"
 
-#include <X11/XF86keysym.h>
-#include <X11/keysym.h>
-#include <X11/Xlib.h>
-
+struct NativeEventFilterPrivate;
 class NativeEventFilter : public QObject, public QAbstractNativeEventFilter
 {
     Q_OBJECT
-public:
-    explicit NativeEventFilter(QObject* parent = 0);
-    ~NativeEventFilter();
+    public:
+        explicit NativeEventFilter(QObject* parent = 0);
+        ~NativeEventFilter();
 
-signals:
-    void SysTrayEvent(long opcode, long data2, long data3, long data4);
+    signals:
+        void SysTrayEvent(long opcode, long data2, long data3, long data4);
 
-public slots:
-    void handlePowerButton();
+    public slots:
+        void handlePowerButton();
 
-private:
-    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
+    private:
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
 
-    QTime lastPress;
-    HotkeyHud* Hotkeys;
-
-    bool isEndSessionBoxShowing = false;
-    bool ignoreSuper = false;
-
-    QSettings settings;
-    QSettings* themeSettings = new QSettings("theSuite", "ts-qtplatform");
-
-    QTimer* powerButtonTimer = nullptr;
-    bool powerPressed = false;
+        NativeEventFilterPrivate* d;
 };
 
 #endif // NATIVEEVENTFILTER_H

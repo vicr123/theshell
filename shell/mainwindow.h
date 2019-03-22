@@ -38,7 +38,6 @@
 #include <QMutex>
 #include <math.h>
 #include "window.h"
-#include "menu.h"
 #include "upowerdbus.h"
 #include "infopanedropdown.h"
 #include "systrayicons.h"
@@ -53,7 +52,6 @@
 #include "screenrecorder.h"
 
 class Menu;
-
 class InfoPaneDropdown;
 
 class ChunkWatcher : public QObject
@@ -93,6 +91,7 @@ public:
     void setGeometry(int x, int y, int w, int h);
     void setGeometry(QRect geometry);
     InfoPaneDropdown* getInfoPane();
+    Menu* getMenu();
     void show();
 
     bool isMprisAvailable();
