@@ -21,13 +21,15 @@
 #include "rundialog.h"
 #include "ui_rundialog.h"
 
+#include <tpropertyanimation.h>
+
 RunDialog::RunDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RunDialog)
 {
     ui->setupUi(this);
 
-    ui->errorLabel->setVisible(false);
+    ui->errorContainer->setFixedHeight(0);
 }
 
 RunDialog::~RunDialog()
@@ -56,8 +58,7 @@ void RunDialog::on_runButton_clicked()
     if (QProcess::startDetached(ui->command->text())) {
         this->close();
     } else {
-        ui->errorLabel->setText(tr("Couldn't run that command."));
-        ui->errorLabel->setVisible(true);
+        showError(tr("Couldn't run that command."));
     }
 }
 
@@ -79,11 +80,11 @@ void RunDialog::show() {
     QDialog::show();
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    this->setGeometry(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height());
+    this->setGeometry(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->sizeHint().height());
 
-    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+    tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
     anim->setStartValue(this->geometry());
-    anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), this->height()));
+    anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), this->sizeHint().height()));
     anim->setDuration(100);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     anim->start();
@@ -109,7 +110,7 @@ void RunDialog::show() {
 void RunDialog::close() {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
 
-    QPropertyAnimation *anim = new QPropertyAnimation(this, "geometry");
+    tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
     anim->setStartValue(this->geometry());
     anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height()));
     anim->setDuration(500);
@@ -139,4 +140,51 @@ void RunDialog::changeEvent(QEvent *event) {
             this->close();
         }
     }
+}
+
+void RunDialog::on_command_textChanged(const QString &arg1)
+{
+    if (arg1 != "" && theLibsGlobal::searchInPath(arg1.split(" ").first()).isEmpty()) {
+        showError(tr("Can't find that command"));
+    } else {
+        hideError();
+    }
+}
+
+void RunDialog::showError(QString error) {
+    ui->errorLabel->setText(error);
+
+    if (!errorAnimPointer.isNull()) {
+        errorAnimPointer->stop();
+        errorAnimPointer->deleteLater();
+    }
+    errorAnimPointer = new tVariantAnimation();
+    errorAnimPointer->setStartValue(ui->errorContainer->height());
+    errorAnimPointer->setEndValue(ui->errorContainer->sizeHint().height());
+    errorAnimPointer->setDuration(500);
+    errorAnimPointer->setEasingCurve(QEasingCurve::OutCubic);
+    connect(errorAnimPointer.data(), &tVariantAnimation::valueChanged, ui->errorContainer, [=](QVariant value) {
+        ui->errorContainer->setFixedHeight(value.toInt());
+        this->setGeometry(this->x(), this->y(), this->width(), this->sizeHint().height());
+    });
+    connect(errorAnimPointer.data(), &tVariantAnimation::finished, errorAnimPointer.data(), &tVariantAnimation::deleteLater);
+    errorAnimPointer->start();
+}
+
+void RunDialog::hideError() {
+    if (!errorAnimPointer.isNull()) {
+        errorAnimPointer->stop();
+        errorAnimPointer->deleteLater();
+    }
+    errorAnimPointer = new tVariantAnimation();
+    errorAnimPointer->setStartValue(ui->errorContainer->height());
+    errorAnimPointer->setEndValue(0);
+    errorAnimPointer->setDuration(500);
+    errorAnimPointer->setEasingCurve(QEasingCurve::OutCubic);
+    connect(errorAnimPointer.data(), &tVariantAnimation::valueChanged, ui->errorContainer, [=](QVariant value) {
+        ui->errorContainer->setFixedHeight(value.toInt());
+        this->setGeometry(this->x(), this->y(), this->width(), this->sizeHint().height());
+    });
+    connect(errorAnimPointer.data(), &tVariantAnimation::finished, errorAnimPointer.data(), &tVariantAnimation::deleteLater);
+    errorAnimPointer->start();
 }

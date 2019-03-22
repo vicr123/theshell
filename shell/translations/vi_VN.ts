@@ -2424,25 +2424,35 @@ Tập tin này có thể giữ lại:
 <context>
     <name>RunDialog</name>
     <message>
-        <location filename="../rundialog.ui" line="29"/>
-        <location filename="../rundialog.ui" line="79"/>
+        <location filename="../rundialog.ui" line="50"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Hủy</translation>
+    </message>
+    <message>
+        <location filename="../rundialog.ui" line="81"/>
+        <location filename="../rundialog.ui" line="97"/>
         <source>Run</source>
         <translation>Chạy</translation>
     </message>
     <message>
-        <location filename="../rundialog.ui" line="36"/>
+        <location filename="../rundialog.ui" line="132"/>
+        <source>Enter a command to run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../rundialog.ui" line="150"/>
         <source>Enter Command</source>
         <translation>Gõ vào ứng dụng</translation>
     </message>
     <message>
-        <location filename="../rundialog.ui" line="68"/>
-        <source>Cancel</source>
-        <translation>Hủy</translation>
-    </message>
-    <message>
-        <location filename="../rundialog.cpp" line="59"/>
+        <location filename="../rundialog.cpp" line="61"/>
         <source>Couldn&apos;t run that command.</source>
         <translation>Khong chạy lẹnh đó được.</translation>
+    </message>
+    <message>
+        <location filename="../rundialog.cpp" line="148"/>
+        <source>Can&apos;t find that command</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

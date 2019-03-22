@@ -2421,24 +2421,34 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>RunDialog</name>
     <message>
-        <location filename="../rundialog.ui" line="29"/>
-        <location filename="../rundialog.ui" line="79"/>
-        <source>Run</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../rundialog.ui" line="36"/>
-        <source>Enter Command</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../rundialog.ui" line="68"/>
+        <location filename="../rundialog.ui" line="50"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../rundialog.cpp" line="59"/>
+        <location filename="../rundialog.ui" line="81"/>
+        <location filename="../rundialog.ui" line="97"/>
+        <source>Run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../rundialog.ui" line="132"/>
+        <source>Enter a command to run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../rundialog.ui" line="150"/>
+        <source>Enter Command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../rundialog.cpp" line="61"/>
         <source>Couldn&apos;t run that command.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../rundialog.cpp" line="148"/>
+        <source>Can&apos;t find that command</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

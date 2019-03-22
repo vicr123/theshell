@@ -29,6 +29,8 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QLabel>
+#include <QPointer>
+#include <tvariantanimation.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -54,28 +56,37 @@ class RunDialog : public QDialog
 {
     Q_OBJECT
 
-public:
-    explicit RunDialog(QWidget *parent = 0);
-    ~RunDialog();
+    public:
+        explicit RunDialog(QWidget *parent = 0);
+        ~RunDialog();
 
-    void show();
-    void close();
-    void reject();
+        void show();
+        void close();
+        void reject();
 
-    void setGeometry(int x, int y, int w, int h);
-    void setGeometry(QRect geometry);
-private slots:
-    void on_cancelButton_clicked();
+        void setGeometry(int x, int y, int w, int h);
+        void setGeometry(QRect geometry);
 
-    void on_runButton_clicked();
+    private slots:
+        void on_cancelButton_clicked();
 
-    void on_command_returnPressed();
+        void on_runButton_clicked();
 
-private:
-    Ui::RunDialog *ui;
+        void on_command_returnPressed();
 
-    void paintEvent(QPaintEvent* event);
-    void changeEvent(QEvent* event);
+        void on_command_textChanged(const QString &arg1);
+
+        void showError(QString error);
+
+        void hideError();
+
+    private:
+        Ui::RunDialog *ui;
+
+        void paintEvent(QPaintEvent* event);
+        void changeEvent(QEvent* event);
+
+        QPointer<tVariantAnimation> errorAnimPointer;
 };
 
 #endif // RUNDIALOG_H
