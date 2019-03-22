@@ -64,9 +64,10 @@
     <name>BluetoothManagement</name>
     <message>
         <location filename="../bluetoothmanagement.ui" line="44"/>
-        <location filename="../bluetoothmanagement.ui" line="211"/>
+        <location filename="../bluetoothmanagement.ui" line="152"/>
+        <location filename="../bluetoothmanagement.ui" line="319"/>
         <location filename="../bluetoothmanagement.cpp" line="83"/>
-        <location filename="../bluetoothmanagement.cpp" line="119"/>
+        <location filename="../bluetoothmanagement.cpp" line="122"/>
         <source>Bluetooth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -81,254 +82,264 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="227"/>
+        <location filename="../bluetoothmanagement.ui" line="201"/>
+        <source>Bluetooth is not operational</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../bluetoothmanagement.ui" line="211"/>
+        <source>Check that the system Bluetooth daemon is running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../bluetoothmanagement.ui" line="335"/>
         <source>View Active File Transfers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="250"/>
+        <location filename="../bluetoothmanagement.ui" line="358"/>
         <source>Pair New Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="359"/>
-        <location filename="../bluetoothmanagement.cpp" line="260"/>
+        <location filename="../bluetoothmanagement.ui" line="467"/>
+        <location filename="../bluetoothmanagement.cpp" line="270"/>
         <source>Enable Bluetooth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="366"/>
+        <location filename="../bluetoothmanagement.ui" line="474"/>
         <source>Visible to other devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="375"/>
+        <location filename="../bluetoothmanagement.ui" line="483"/>
         <source>Bluetooth Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="440"/>
+        <location filename="../bluetoothmanagement.ui" line="548"/>
         <source>File Transfers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="500"/>
+        <location filename="../bluetoothmanagement.ui" line="608"/>
         <source>No Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="546"/>
+        <location filename="../bluetoothmanagement.ui" line="654"/>
         <source>Select a device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="556"/>
+        <location filename="../bluetoothmanagement.ui" line="664"/>
         <source>To get started, select a device to manage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="613"/>
-        <location filename="../bluetoothmanagement.ui" line="696"/>
-        <location filename="../bluetoothmanagement.ui" line="929"/>
+        <location filename="../bluetoothmanagement.ui" line="721"/>
+        <location filename="../bluetoothmanagement.ui" line="804"/>
+        <location filename="../bluetoothmanagement.ui" line="1037"/>
         <source>Device Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="629"/>
-        <location filename="../bluetoothmanagement.cpp" line="275"/>
+        <location filename="../bluetoothmanagement.ui" line="737"/>
+        <location filename="../bluetoothmanagement.cpp" line="285"/>
         <source>Unpair Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="666"/>
+        <location filename="../bluetoothmanagement.ui" line="774"/>
         <source>Device Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="703"/>
+        <location filename="../bluetoothmanagement.ui" line="811"/>
         <source>Device Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="724"/>
+        <location filename="../bluetoothmanagement.ui" line="832"/>
         <source>Device Actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="734"/>
-        <location filename="../bluetoothmanagement.cpp" line="228"/>
+        <location filename="../bluetoothmanagement.ui" line="842"/>
+        <location filename="../bluetoothmanagement.cpp" line="238"/>
         <source>Connect to Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="737"/>
+        <location filename="../bluetoothmanagement.ui" line="845"/>
         <source>Establish a connection with this Bluetooth device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="760"/>
+        <location filename="../bluetoothmanagement.ui" line="868"/>
         <source>Connect to the Internet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="763"/>
+        <location filename="../bluetoothmanagement.ui" line="871"/>
         <source>Establish a connection with this device to access the internet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="770"/>
+        <location filename="../bluetoothmanagement.ui" line="878"/>
         <source>Send Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="773"/>
+        <location filename="../bluetoothmanagement.ui" line="881"/>
         <source>Sends a file to this device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="848"/>
-        <location filename="../bluetoothmanagement.ui" line="1068"/>
+        <location filename="../bluetoothmanagement.ui" line="956"/>
+        <location filename="../bluetoothmanagement.ui" line="1176"/>
         <source>Pair Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="873"/>
+        <location filename="../bluetoothmanagement.ui" line="981"/>
         <source>Select a device to pair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1134"/>
-        <location filename="../bluetoothmanagement.ui" line="1295"/>
+        <location filename="../bluetoothmanagement.ui" line="1242"/>
+        <location filename="../bluetoothmanagement.ui" line="1403"/>
         <source>Complete Pairing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1146"/>
+        <location filename="../bluetoothmanagement.ui" line="1254"/>
         <source>Check this code matches</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1153"/>
+        <location filename="../bluetoothmanagement.ui" line="1261"/>
         <source>Then hit ENTER or RETURN.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1189"/>
+        <location filename="../bluetoothmanagement.ui" line="1297"/>
         <source>000000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1307"/>
+        <location filename="../bluetoothmanagement.ui" line="1415"/>
         <source>Enter Pairing Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1437"/>
+        <location filename="../bluetoothmanagement.ui" line="1545"/>
         <source>No Transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1485"/>
+        <location filename="../bluetoothmanagement.ui" line="1593"/>
         <source>No Transfer Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1495"/>
+        <location filename="../bluetoothmanagement.ui" line="1603"/>
         <source>Select a transfer for more details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1617"/>
+        <location filename="../bluetoothmanagement.ui" line="1725"/>
         <source>Transferred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1624"/>
+        <location filename="../bluetoothmanagement.ui" line="1732"/>
         <source>File Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="178"/>
+        <location filename="../bluetoothmanagement.cpp" line="188"/>
         <source>Device Name: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="179"/>
+        <location filename="../bluetoothmanagement.cpp" line="189"/>
         <source>Address: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="201"/>
+        <location filename="../bluetoothmanagement.cpp" line="211"/>
         <source>Rename Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="201"/>
+        <location filename="../bluetoothmanagement.cpp" line="211"/>
         <source>What do you want to call this device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="225"/>
+        <location filename="../bluetoothmanagement.cpp" line="235"/>
         <source>Disconnect from Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="226"/>
+        <location filename="../bluetoothmanagement.cpp" line="236"/>
         <source>Stop communicating with this Bluetooth device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="229"/>
+        <location filename="../bluetoothmanagement.cpp" line="239"/>
         <source>Connect to all available Bluetooth profiles on this device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="260"/>
+        <location filename="../bluetoothmanagement.cpp" line="270"/>
         <source>Bluetooth needs to be enabled to pair a new device. Do you want to enable Bluetooth now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="275"/>
+        <location filename="../bluetoothmanagement.cpp" line="285"/>
         <source>Unpair %1 from this device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="279"/>
+        <location filename="../bluetoothmanagement.cpp" line="289"/>
         <source>Unpair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="280"/>
+        <location filename="../bluetoothmanagement.cpp" line="290"/>
         <source>%1 has been unpaired from this device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="305"/>
+        <location filename="../bluetoothmanagement.cpp" line="315"/>
         <source>Pairing Complete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="306"/>
+        <location filename="../bluetoothmanagement.cpp" line="316"/>
         <source>%1 has been paired with this device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="359"/>
+        <location filename="../bluetoothmanagement.cpp" line="369"/>
         <source>Pairing Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="360"/>
+        <location filename="../bluetoothmanagement.cpp" line="370"/>
         <source>Couldn&apos;t pair with %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="428"/>
+        <location filename="../bluetoothmanagement.cpp" line="438"/>
         <source>Send Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.cpp" line="429"/>
+        <location filename="../bluetoothmanagement.cpp" line="439"/>
         <source>Couldn&apos;t send the file to %1.</source>
         <translation type="unfinished"></translation>
     </message>

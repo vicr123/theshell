@@ -120,11 +120,11 @@ void Switch::checkChanging(bool checked) {
     }
 
     animation->setEasingCurve(QEasingCurve::OutCubic);
-    connect(animation, &tVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(animation, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
         innerRect = value.toRect();
         this->repaint();
     });
-    connect(animation, &tVariantAnimation::finished, [=] {
+    connect(animation, &tVariantAnimation::finished, this, [=] {
         innerRect = animation->endValue().toRect();
         this->repaint();
     });

@@ -127,6 +127,10 @@ class NetworkWidget : public QWidget, public StatusCenterPaneObject
 
         void on_tetheringButton_clicked();
 
+        void networkManagerGone();
+
+        void networkManagerRunning();
+
     public slots:
         void updateGlobals();
 

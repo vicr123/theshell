@@ -3737,7 +3737,10 @@ void InfoPaneDropdown::on_settingsList_itemActivated(QListWidgetItem *item)
 {
     QVariant setting = item->data(Qt::UserRole);
     if (!setting.isNull() && setting.toInt() != -1) {
-        ui->settingsListStack->setCurrentIndex(setting.toInt());
+        QWidget* settingWidget = ui->settingsListStack->widget(setting.toInt());
+        if (!settingWidget->property("STATUSCENTER_notavailable").toBool()) {
+            ui->settingsListStack->setCurrentIndex(setting.toInt());
+        }
     }
 }
 
