@@ -70,7 +70,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset theme="go-previous"/>
+           <iconset theme="go-previous">
+            <normaloff>.</normaloff>.</iconset>
           </property>
           <property name="flat">
            <bool>true</bool>
@@ -214,8 +215,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>381</width>
-            <height>380</height>
+            <width>86</width>
+            <height>16</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -321,8 +322,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>381</width>
-            <height>380</height>
+            <width>173</width>
+            <height>37</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="_2">
@@ -438,8 +439,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>381</width>
-            <height>380</height>
+            <width>86</width>
+            <height>16</height>
            </rect>
           </property>
           <layout class="QVBoxLayout">
@@ -545,8 +546,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>381</width>
-            <height>380</height>
+            <width>173</width>
+            <height>37</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="_3">

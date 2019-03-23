@@ -383,24 +383,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_LocationAppsList_itemChanged(QListWidgetItem *item);
 
-        void on_backInput_clicked();
-
-        void on_addLayout_clicked();
-
-        void on_addKeyboardLayout_clicked();
-
-        void on_removeLayout_clicked();
-
-        void on_selectedLayouts_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
-
-        void on_availableKeyboardLayouts_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
-
-        void KeyboardLayoutsMoved();
-
-        void on_moveLayoutDown_clicked();
-
-        void on_moveLayoutUp_clicked();
-
         void loadNewKeyboardLayoutMenu();
 
         void setKeyboardLayout(QString layout);

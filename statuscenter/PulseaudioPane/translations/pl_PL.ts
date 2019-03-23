@@ -9,44 +9,44 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="94"/>
+        <location filename="../audiopane.ui" line="95"/>
         <location filename="../audiopane.cpp" line="75"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="123"/>
-        <location filename="../audiopane.ui" line="184"/>
+        <location filename="../audiopane.ui" line="124"/>
+        <location filename="../audiopane.ui" line="185"/>
         <source>Playback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="128"/>
-        <location filename="../audiopane.ui" line="291"/>
+        <location filename="../audiopane.ui" line="129"/>
+        <location filename="../audiopane.ui" line="292"/>
         <source>Recording</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="133"/>
-        <location filename="../audiopane.ui" line="408"/>
+        <location filename="../audiopane.ui" line="134"/>
+        <location filename="../audiopane.ui" line="409"/>
         <source>Output Devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="138"/>
-        <location filename="../audiopane.ui" line="515"/>
+        <location filename="../audiopane.ui" line="139"/>
+        <location filename="../audiopane.ui" line="516"/>
         <source>Input Devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="143"/>
-        <location filename="../audiopane.ui" line="632"/>
+        <location filename="../audiopane.ui" line="144"/>
+        <location filename="../audiopane.ui" line="633"/>
         <source>Advanced Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="354"/>
-        <location filename="../audiopane.ui" line="578"/>
+        <location filename="../audiopane.ui" line="355"/>
+        <location filename="../audiopane.ui" line="579"/>
         <source>Coming soon. Stay tuned!</source>
         <translation type="unfinished"></translation>
     </message>
