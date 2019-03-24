@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/gatewayopen.svg</file>
+        <file>images/gatewayopen-static.svg</file>
+        <file>images/touchmode-static.svg</file>
+    </qresource>
+</RCC>

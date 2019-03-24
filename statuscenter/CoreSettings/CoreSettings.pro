@@ -4,13 +4,18 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets dbus thelib
+QT       += core gui widgets dbus thelib svg x11extras
 
 TARGET = tscoresettings
 TEMPLATE = lib
 CONFIG += plugin
 
 INCLUDEPATH += ../../shell/statuscenter/
+
+unix {
+    CONFIG += link_pkgconfig
+    PKGCONFIG += x11 xi xorg-libinput
+}
 
 blueprint {
     DEFINES += "BLUEPRINT"
@@ -79,13 +84,15 @@ HEADERS += \
     plugin.h \
     Input/inputpane.h \
     Input/keyboardpane.h \
-    Input/gesturepane.h
+    Input/gesturepane.h \
+    Input/mousepane.h
 
 SOURCES += \
     plugin.cpp \
     Input/inputpane.cpp \
     Input/keyboardpane.cpp \
-    Input/gesturepane.cpp
+    Input/gesturepane.cpp \
+    Input/mousepane.cpp
 
 DISTFILES += \
     CoreSettings.json
@@ -93,4 +100,9 @@ DISTFILES += \
 FORMS += \
     Input/inputpane.ui \
     Input/keyboardpane.ui \
-    Input/gesturepane.ui
+    Input/gesturepane.ui \
+    Input/mousepane.ui
+
+RESOURCES += \
+    coresettings_resources.qrc
+

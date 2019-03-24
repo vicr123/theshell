@@ -17,35 +17,41 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef GESTUREPANE_H
-#define GESTUREPANE_H
+#ifndef MOUSEPANE_H
+#define MOUSEPANE_H
 
 #include <QWidget>
 
 namespace Ui {
-    class GesturePane;
+    class MousePane;
 }
 
-struct GesturePanePrivate;
-class GesturePane : public QWidget
+struct MousePanePrivate;
+class MousePane : public QWidget
 {
         Q_OBJECT
 
     public:
-        explicit GesturePane(QWidget *parent = nullptr);
-        ~GesturePane();
+        explicit MousePane(QWidget *parent = nullptr);
+        ~MousePane();
 
     private slots:
-        void on_touchModeSwitch_toggled(bool checked);
+        void applySettings();
 
-        void on_swipeGatewaySwitch_toggled(bool checked);
+        void on_leftPrimaryButton_toggled(bool checked);
+
+        void on_rightPrimaryButton_toggled(bool checked);
+
+        void on_speedSlider_valueChanged(int value);
+
+        void on_speedSlider_sliderReleased();
+
+        void on_tapToClick_toggled(bool checked);
 
     private:
-        Ui::GesturePane *ui;
+        Ui::MousePane *ui;
 
-        bool eventFilter(QObject* watched, QEvent* event);
-
-        GesturePanePrivate* d;
+        MousePanePrivate* d;
 };
 
-#endif // GESTUREPANE_H
+#endif // MOUSEPANE_H

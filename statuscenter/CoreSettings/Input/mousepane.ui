@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GesturePane</class>
- <widget class="QWidget" name="GesturePane">
+ <class>MousePane</class>
+ <widget class="QWidget" name="MousePane">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>552</width>
-    <height>354</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,30 +37,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Gestures</string>
-     </property>
-     <property name="margin">
-      <number>9</number>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="Line" name="line_3">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>1</height>
-      </size>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_8">
-     <property name="text">
-      <string>These gestures work on touch screens.</string>
+      <string>Mouse and Touchpad</string>
      </property>
      <property name="margin">
       <number>9</number>
@@ -93,8 +70,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>552</width>
-        <height>275</height>
+        <width>400</width>
+        <height>257</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -130,31 +107,74 @@
          <property name="spacing">
           <number>6</number>
          </property>
-         <item row="2" column="2">
-          <widget class="tSwitch" name="touchModeSwitch">
-           <property name="text">
-            <string notr="true">TouchModeSwitch</string>
-           </property>
+         <item row="1" column="1">
+          <widget class="QWidget" name="widget" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="leftPrimaryButton">
+              <property name="text">
+               <string>Left</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="rightPrimaryButton">
+              <property name="text">
+               <string>Right</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Touch Mode</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1" colspan="3">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Optimise theShell for touch screen input by making buttons bigger. &lt;b&gt;Requires a theShell restart&lt;/b&gt;</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
+            <string>Primary Button</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="0" colspan="4">
+         <item row="0" column="0" colspan="2">
           <widget class="QLabel" name="label_2">
            <property name="font">
             <font>
@@ -163,46 +183,21 @@
             </font>
            </property>
            <property name="text">
-            <string>TOUCH MODE</string>
+            <string>CLICKING</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="3">
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>Tap to click</string>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          </widget>
          </item>
-         <item row="3" column="1">
-          <spacer name="verticalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Preferred</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="0" rowspan="3">
-          <widget class="QWidget" name="touchModeAnimation" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>5</width>
-             <height>0</height>
-            </size>
+         <item row="2" column="1">
+          <widget class="tSwitch" name="tapToClick">
+           <property name="text">
+            <string notr="true">TapToClick</string>
            </property>
           </widget>
          </item>
@@ -238,51 +233,28 @@
          <property name="spacing">
           <number>6</number>
          </property>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_7">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>Swipe to open Gateway</string>
+            <string>Pointer Speed</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
-          <widget class="tSwitch" name="swipeGatewaySwitch">
-           <property name="text">
-            <string>SwipeOpenGatewaySwitch</string>
+         <item row="1" column="1">
+          <widget class="QSlider" name="speedSlider">
+           <property name="maximum">
+            <number>100</number>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="3">
-          <spacer name="horizontalSpacer_2">
+           <property name="value">
+            <number>50</number>
+           </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="1" colspan="3">
-          <widget class="QLabel" name="label_6">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Swipe from the left side of the screen to open the Gateway</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
           </widget>
          </item>
-         <item row="0" column="0" colspan="4">
-          <widget class="QLabel" name="label_5">
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="label_4">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -290,33 +262,7 @@
             </font>
            </property>
            <property name="text">
-            <string>SWIPE TO OPEN GATEWAY</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Preferred</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="0" rowspan="3">
-          <widget class="QWidget" name="swipeGatewayAnimation" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>5</width>
-             <height>0</height>
-            </size>
+            <string>MOVEMENT</string>
            </property>
           </widget>
          </item>

@@ -24,6 +24,8 @@
 Plugin::Plugin(QObject *parent) :
     QObject(parent)
 {
+    Q_INIT_RESOURCE(coresettings_resources);
+
     translator = new QTranslator;
 
     panes.append(new InputPane());

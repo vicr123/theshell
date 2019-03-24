@@ -135,7 +135,7 @@
         </item>
         <item>
          <property name="text">
-          <string>Mouse</string>
+          <string>Mouse and Touchpad</string>
          </property>
          <property name="icon">
           <iconset theme="preferences-desktop-mouse"/>
@@ -157,10 +157,10 @@
    <item>
     <widget class="tStackedWidget" name="settingsStack">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="KeyboardPane" name="keyboardPane"/>
-     <widget class="QWidget" name="page"/>
+     <widget class="MousePane" name="mousePane"/>
      <widget class="GesturePane" name="gesturePane"/>
     </widget>
    </item>
@@ -183,6 +183,12 @@
    <class>GesturePane</class>
    <extends>QWidget</extends>
    <header>Input/gesturepane.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MousePane</class>
+   <extends>QWidget</extends>
+   <header>Input/mousepane.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

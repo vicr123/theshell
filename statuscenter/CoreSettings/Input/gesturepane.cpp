@@ -21,9 +21,15 @@
 #include "ui_gesturepane.h"
 
 #include <QSettings>
+#include <QSvgRenderer>
+#include <QPainter>
+#include <QDebug>
+#include <QTimer>
 
 struct GesturePanePrivate {
     QSettings settings;
+
+    QSvgRenderer *touchModeRenderer, *swipeOpenRenderer;
 };
 
 GesturePane::GesturePane(QWidget *parent) :
@@ -34,6 +40,15 @@ GesturePane::GesturePane(QWidget *parent) :
     d = new GesturePanePrivate();
 
     ui->touchModeSwitch->setChecked(d->settings.value("input/touch", false).toBool());
+    ui->swipeGatewaySwitch->setChecked(d->settings.value("gestures/swipeGateway", true).toBool());
+
+    d->swipeOpenRenderer = new QSvgRenderer(QLatin1Literal(":/images/gatewayopen-static.svg"));
+    d->touchModeRenderer = new QSvgRenderer(QLatin1Literal(":/images/touchmode-static.svg"));
+
+    ui->swipeGatewayAnimation->installEventFilter(this);
+    ui->swipeGatewayAnimation->setFixedSize(d->swipeOpenRenderer->viewBox().size() * 2 * theLibsGlobal::getDPIScaling());
+    ui->touchModeAnimation->installEventFilter(this);
+    ui->touchModeAnimation->setFixedSize(d->touchModeRenderer->viewBox().size() * 2 * theLibsGlobal::getDPIScaling());
 }
 
 GesturePane::~GesturePane()
@@ -45,4 +60,24 @@ GesturePane::~GesturePane()
 void GesturePane::on_touchModeSwitch_toggled(bool checked)
 {
     d->settings.setValue("input/touch", checked);
+}
+
+bool GesturePane::eventFilter(QObject *watched, QEvent *event) {
+    if (event->type() == QEvent::Paint) {
+        QPainter painter;
+        painter.begin(static_cast<QWidget*>(watched));
+        if (watched == ui->swipeGatewayAnimation) {
+            d->swipeOpenRenderer->render(&painter, QRectF(0, 0, ui->swipeGatewayAnimation->width(), ui->swipeGatewayAnimation->height()));
+        } else if (watched == ui->touchModeAnimation) {
+            d->touchModeRenderer->render(&painter, QRectF(0, 0, ui->touchModeAnimation->width(), ui->touchModeAnimation->height()));
+        }
+        painter.end();
+        return true;
+    }
+    return false;
+}
+
+void GesturePane::on_swipeGatewaySwitch_toggled(bool checked)
+{
+    d->settings.setValue("gestures/swipeGateway", checked);
 }
