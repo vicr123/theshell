@@ -48,6 +48,10 @@ class MousePane : public QWidget
 
         void on_tapToClick_toggled(bool checked);
 
+        void on_naturalMouseScrolling_toggled(bool checked);
+
+        void on_naturalTouchpadScrolling_toggled(bool checked);
+
     private:
         Ui::MousePane *ui;
 

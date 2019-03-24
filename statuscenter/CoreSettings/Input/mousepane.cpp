@@ -64,7 +64,7 @@ struct MousePanePrivate {
              || (d->type == trackballAtom && writeFor & Mice)) {
                 Atom valAtom = XInternAtom(QX11Info::display(), atom, True);
                 Atom type;
-                if (value.first().type() == QVariant::Bool || value.first().type() == QVariant::Int) {
+                if (value.first().type() == QVariant::Bool || value.first().type() == QVariant::Int || value.first().type() == QVariant::Char) {
                     type = XA_INTEGER;
                 } else if (value.first().type() == QVariant::Double) {
                     type = XInternAtom(QX11Info::display(), "FLOAT", False);
@@ -93,7 +93,10 @@ struct MousePanePrivate {
                 } else if (value.first().type() == QVariant::Double && formatReturn != 32) {
                     XFree(data);
                     continue;
-                } else if (value.first().type() == QVariant::Int && formatReturn != 8) {
+                } else if (value.first().type() == QVariant::Char && formatReturn != 8) {
+                    XFree(data);
+                    continue;
+                } else if (value.first().type() == QVariant::Int && formatReturn != 32) {
                     XFree(data);
                     continue;
                 }
@@ -110,12 +113,18 @@ struct MousePanePrivate {
                         v[i] = static_cast<float>(value.at(i).toDouble());
                     }
                     XIChangeProperty(QX11Info::display(), d->id, valAtom, type, 32, XIPropModeReplace, reinterpret_cast<unsigned char*>(v), value.count());
-                } else if (value.first().type() == QVariant::Int) {
+                } else if (value.first().type() == QVariant::Char) {
                     unsigned char v[64];
+                    for (int i = 0; i < value.count(); i++) {
+                        v[i] = value.at(i).toChar().toLatin1();
+                    }
+                    XIChangeProperty(QX11Info::display(), d->id, valAtom, type, 8, XIPropModeReplace, v, value.count());
+                } else if (value.first().type() == QVariant::Int) {
+                    int v[64];
                     for (int i = 0; i < value.count(); i++) {
                         v[i] = value.at(i).toInt();
                     }
-                    XIChangeProperty(QX11Info::display(), d->id, valAtom, type, 8, XIPropModeReplace, reinterpret_cast<unsigned char*>(v), value.count());
+                    XIChangeProperty(QX11Info::display(), d->id, valAtom, type, 32, XIPropModeReplace, reinterpret_cast<unsigned char*>(v), value.count());
                 }
 
                 XFree(data);
@@ -139,6 +148,8 @@ MousePane::MousePane(QWidget *parent) :
     }
     ui->speedSlider->setValue(d->settings.value("mouse/speed", 100).toInt());
     ui->tapToClick->setChecked(d->settings.value("mouse/tapToClick", true).toBool());
+    ui->naturalMouseScrolling->setChecked(d->settings.value("mouse/naturalScroll", false).toBool());
+    ui->naturalTouchpadScrolling->setChecked(d->settings.value("mouse/naturalTouchpadScroll", false).toBool());
 
     if (XInternAtom(QX11Info::display(), LIBINPUT_PROP_ACCEL, True)) {
         //We have libinput
@@ -171,10 +182,20 @@ void MousePane::applySettings() {
 
         if (d->settings.value("mouse/tapToClick", true).toBool()) {
             d->writeXiSetting(LIBINPUT_PROP_TAP, {true}, MousePanePrivate::Touchpads);
-            d->writeXiSetting(SYNAPTICS_PROP_TAP_ACTION, {0, 0, 0, 0, 1, 0, 0}, MousePanePrivate::Touchpads);
+            d->writeXiSetting(SYNAPTICS_PROP_TAP_ACTION, {QChar(0), QChar(0), QChar(0), QChar(0), QChar(1), QChar(0), QChar(0)}, MousePanePrivate::Touchpads);
         } else {
             d->writeXiSetting(LIBINPUT_PROP_TAP, {false}, MousePanePrivate::Touchpads);
-            d->writeXiSetting(SYNAPTICS_PROP_TAP_ACTION, {0, 0, 0, 0, 0, 0, 0}, MousePanePrivate::Touchpads);
+            d->writeXiSetting(SYNAPTICS_PROP_TAP_ACTION, {QChar(0), QChar(0), QChar(0), QChar(0), QChar(0), QChar(0), QChar(0)}, MousePanePrivate::Touchpads);
+        }
+
+        d->writeXiSetting(LIBINPUT_PROP_NATURAL_SCROLL, {d->settings.value("mouse/naturalScroll", false).toBool()}, MousePanePrivate::Mice);
+
+        if (d->settings.value("mouse/naturalTouchpadScroll", false).toBool()) {
+            d->writeXiSetting(LIBINPUT_PROP_NATURAL_SCROLL, {true}, MousePanePrivate::Touchpads);
+            d->writeXiSetting(SYNAPTICS_PROP_SCROLL_DISTANCE, {-200, -200}, MousePanePrivate::Touchpads);
+        } else {
+            d->writeXiSetting(LIBINPUT_PROP_NATURAL_SCROLL, {false}, MousePanePrivate::Touchpads);
+            d->writeXiSetting(SYNAPTICS_PROP_SCROLL_DISTANCE, {200, 200}, MousePanePrivate::Touchpads);
         }
     } else {
         unsigned char pointerMapping[256];
@@ -251,5 +272,17 @@ void MousePane::on_speedSlider_sliderReleased()
 void MousePane::on_tapToClick_toggled(bool checked)
 {
     d->settings.setValue("mouse/tapToClick", checked);
+    applySettings();
+}
+
+void MousePane::on_naturalMouseScrolling_toggled(bool checked)
+{
+    d->settings.setValue("mouse/naturalScroll", checked);
+    applySettings();
+}
+
+void MousePane::on_naturalTouchpadScrolling_toggled(bool checked)
+{
+    d->settings.setValue("mouse/naturalTouchpadScroll", checked);
     applySettings();
 }
