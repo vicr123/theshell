@@ -3,5 +3,6 @@
         <file>images/gatewayopen.svg</file>
         <file>images/gatewayopen-static.svg</file>
         <file>images/touchmode-static.svg</file>
+        <file>images/mouseclicktest.svg</file>
     </qresource>
 </RCC>

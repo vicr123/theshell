@@ -35,6 +35,8 @@ InputPane::InputPane(QWidget *parent) :
     });
 
     ui->settingsStack->setCurrentAnimation(tStackedWidget::Lift);
+
+    ui->LeftPaneWidget->setFixedWidth(250 * theLibsGlobal::getDPIScaling());
 }
 
 InputPane::~InputPane()

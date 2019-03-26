@@ -1,6 +1,6 @@
 /****************************************
  *
- *   theShell - Desktop Environment
+ *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
  *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -17,40 +17,25 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-
-#ifndef PRINTERMANAGEMENT_H
-#define PRINTERMANAGEMENT_H
+#ifndef EDITWIDGET_H
+#define EDITWIDGET_H
 
 #include <QWidget>
-#include <QListWidgetItem>
-#include <cups/cups.h>
-#include <statuscenterpaneobject.h>
 
 namespace Ui {
-    class PrinterManagement;
+    class EditWidget;
 }
 
-struct PrinterManagementPrivate;
-class PrinterManagement : public QWidget, public StatusCenterPaneObject
+class EditWidget : public QWidget
 {
         Q_OBJECT
 
     public:
-        explicit PrinterManagement(QWidget *parent = 0);
-        ~PrinterManagement();
-
-        QWidget* mainWidget();
-        QString name();
-        StatusPaneTypes type();
-        int position();
-        void message(QString name, QVariantList args);
-
-    private slots:
-        void on_mainMenuButton_clicked();
+        explicit EditWidget(QWidget *parent = nullptr);
+        ~EditWidget();
 
     private:
-        Ui::PrinterManagement *ui;
-        PrinterManagementPrivate* d;
+        Ui::EditWidget *ui;
 };
 
-#endif // PRINTERMANAGEMENT_H
+#endif // EDITWIDGET_H

@@ -1,6 +1,6 @@
 /****************************************
  *
- *   theShell - Desktop Environment
+ *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
  *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -17,40 +17,27 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-
-#ifndef PRINTERMANAGEMENT_H
-#define PRINTERMANAGEMENT_H
+#ifndef MOUSEPANETESTER_H
+#define MOUSEPANETESTER_H
 
 #include <QWidget>
-#include <QListWidgetItem>
-#include <cups/cups.h>
-#include <statuscenterpaneobject.h>
 
-namespace Ui {
-    class PrinterManagement;
-}
-
-struct PrinterManagementPrivate;
-class PrinterManagement : public QWidget, public StatusCenterPaneObject
+struct MousePaneTesterPrivate;
+class MousePaneTester : public QWidget
 {
         Q_OBJECT
-
     public:
-        explicit PrinterManagement(QWidget *parent = 0);
-        ~PrinterManagement();
+        explicit MousePaneTester(QWidget *parent = nullptr);
+        ~MousePaneTester();
+    signals:
 
-        QWidget* mainWidget();
-        QString name();
-        StatusPaneTypes type();
-        int position();
-        void message(QString name, QVariantList args);
-
-    private slots:
-        void on_mainMenuButton_clicked();
+    public slots:
 
     private:
-        Ui::PrinterManagement *ui;
-        PrinterManagementPrivate* d;
+        MousePaneTesterPrivate* d;
+
+        void paintEvent(QPaintEvent* event);
+        QSize sizeHint() const;
 };
 
-#endif // PRINTERMANAGEMENT_H
+#endif // MOUSEPANETESTER_H

@@ -85,14 +85,16 @@ HEADERS += \
     Input/inputpane.h \
     Input/keyboardpane.h \
     Input/gesturepane.h \
-    Input/mousepane.h
+    Input/mousepane.h \
+    Input/mousepanetester.h
 
 SOURCES += \
     plugin.cpp \
     Input/inputpane.cpp \
     Input/keyboardpane.cpp \
     Input/gesturepane.cpp \
-    Input/mousepane.cpp
+    Input/mousepane.cpp \
+    Input/mousepanetester.cpp
 
 DISTFILES += \
     CoreSettings.json

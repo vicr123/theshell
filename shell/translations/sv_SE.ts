@@ -1857,174 +1857,167 @@ Saker som kommer sparas ifall du väljer att spara filer
 <context>
     <name>Menu</name>
     <message>
-        <location filename="../menu.ui" line="75"/>
+        <location filename="../menu.ui" line="96"/>
         <source>Install theShell OS</source>
         <translation>Installera theShell OS</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="82"/>
+        <location filename="../menu.ui" line="160"/>
         <source>Give theShell OS a permanant place on your PC. Install theOS on your hard drive, either replacing another operating system or next to another operating system.</source>
         <translation>Ge theShell OS en permanent plats på din dator. Installera theOS på din hårddisk, antingen ersätter ett annat operativsystem eller bredvid ett annat operativsystem.</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="107"/>
+        <location filename="../menu.ui" line="149"/>
         <source>Open theShell OS Installer</source>
         <translation>Öppna theShell OS Installeraren</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="137"/>
+        <location filename="../menu.ui" line="198"/>
         <source>Gateway</source>
         <translation>Dörr</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="157"/>
+        <location filename="../menu.ui" line="250"/>
         <source>Start typing to search, run a command, or open a web address</source>
         <translation>Börja skriv för att söka, köra ett kommando, eller öppna en webaddress</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="223"/>
-        <location filename="../menu.ui" line="271"/>
-        <location filename="../menu.ui" line="591"/>
+        <location filename="../menu.ui" line="307"/>
+        <source>File Bug</source>
+        <translation type="unfinished">Filbugg</translation>
+    </message>
+    <message>
+        <location filename="../menu.ui" line="341"/>
+        <location filename="../menu.ui" line="417"/>
+        <location filename="../menu.ui" line="774"/>
         <source>End Session</source>
         <translation>Avsluta Sessionen</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="284"/>
+        <location filename="../menu.ui" line="448"/>
         <source>You&apos;re about to power off your PC. Are you sure?</source>
         <translation>Du är på väg att stänga datorn. Är du säker?</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="299"/>
+        <location filename="../menu.ui" line="479"/>
         <source>Exit theShell</source>
         <translation>Avsluta theShell</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="312"/>
+        <location filename="../menu.ui" line="492"/>
         <source>Exits theShell, leaving everything else open</source>
         <translation>Avslutar theShell, lämnar allt annat öppnat</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="319"/>
+        <location filename="../menu.ui" line="499"/>
         <source>Fake Exit</source>
         <translation>Falsk Exit</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="336"/>
+        <location filename="../menu.ui" line="516"/>
         <source>Power Off</source>
         <translation>Stäng Av</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="349"/>
+        <location filename="../menu.ui" line="529"/>
         <source>Turns off your computer</source>
         <translation>Stänger av din dator</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="360"/>
+        <location filename="../menu.ui" line="540"/>
         <source>Reboot</source>
         <translation>Starta om</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="373"/>
+        <location filename="../menu.ui" line="553"/>
         <source>Turns off your computer and turns it back on again</source>
         <translation>Stänger av din dator och sätter på den igen</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="380"/>
+        <location filename="../menu.ui" line="560"/>
         <source>Log Out</source>
         <translation>Logga Ut</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="393"/>
+        <location filename="../menu.ui" line="573"/>
         <source>Ends your session and keeps the computer on for other people to use</source>
         <translation>Avslutar sessionen och håller datorn på för andra att använda</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="446"/>
+        <location filename="../menu.ui" line="626"/>
         <source>Turn Off Screen</source>
         <translation>Stäng Av Skärmen</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="459"/>
+        <location filename="../menu.ui" line="639"/>
         <source>Turns off the screen, but keeps everything else running in the background</source>
         <translation>Stänger av skärmen, men håller allt annat i bakgrunden</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="598"/>
+        <location filename="../menu.ui" line="799"/>
         <source>Before you end your session, here are some things you might want to know</source>
         <translation>Innan du avslutar din session, här är några grejor du kanske vill veta</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="691"/>
+        <location filename="../menu.ui" line="952"/>
         <source>Who are you switching to?</source>
         <translation>Vem byter du till?</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="727"/>
+        <location filename="../menu.ui" line="993"/>
         <source>Start a new session</source>
         <translation>Starta en ny session</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="761"/>
+        <location filename="../menu.ui" line="1030"/>
         <source>Failed to start app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="426"/>
+        <location filename="../menu.ui" line="606"/>
         <source>Lock</source>
         <translation>Lås</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="439"/>
+        <location filename="../menu.ui" line="619"/>
         <source>Locks your workspace with your password</source>
         <translation>Låser din arbetsyta med ditt lösenord</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="403"/>
+        <location filename="../menu.ui" line="583"/>
         <source>Suspend</source>
         <translation>Suspendera</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="416"/>
+        <location filename="../menu.ui" line="596"/>
         <source>Puts your computer in a low power state so that it opens up quickly</source>
         <translation>Placerar din dator i ett lågt strömtillstånd så att den öppnar snabbt</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="475"/>
-        <location filename="../menu.ui" line="684"/>
+        <location filename="../menu.ui" line="655"/>
+        <location filename="../menu.ui" line="927"/>
         <source>Switch Users</source>
         <translation>Byt Användare</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="488"/>
+        <location filename="../menu.ui" line="668"/>
         <source>Switches to the logon screen and keeps your session in the background</source>
         <translation>Ändrar till inloggningsskärmen och håller din session i bakgrunden</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="498"/>
+        <location filename="../menu.ui" line="678"/>
         <source>Hibernate</source>
         <translation>Viloläge</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="514"/>
+        <location filename="../menu.ui" line="694"/>
         <source>Powers off your computer, but when powered back on, restores the session.</source>
         <translation>Stänger av din dator, men när den sätts på igen återställs sessionen.</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="551"/>
-        <location filename="../menu.ui" line="623"/>
-        <location filename="../menu.ui" line="703"/>
-        <source>Cancel</source>
-        <translation>Avbryt</translation>
-    </message>
-    <message>
-        <location filename="../menu.ui" line="206"/>
+        <location filename="../menu.ui" line="324"/>
         <source>Help</source>
         <translation>Hjälp</translation>
-    </message>
-    <message>
-        <location filename="../menu.ui" line="189"/>
-        <source>Report Bug</source>
-        <translation>Rapportera bugg</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="77"/>
@@ -2033,47 +2026,47 @@ Saker som kommer sparas ifall du väljer att spara filer
         <translation>Hej, %1!</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="324"/>
+        <location filename="../menu.cpp" line="326"/>
         <source>Power Off Anyway</source>
         <translation>Stäng av ändå</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="336"/>
+        <location filename="../menu.cpp" line="338"/>
         <source>Reboot Anyway</source>
         <translation>Starta om ändå</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="348"/>
+        <location filename="../menu.cpp" line="350"/>
         <source>Log Out Anyway</source>
         <translation>Logga ut ändå</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="589"/>
+        <location filename="../menu.cpp" line="591"/>
         <source>%1 on X11 display %2</source>
         <translation>%1 på X11 display %2</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="591"/>
+        <location filename="../menu.cpp" line="593"/>
         <source>on %1</source>
         <translation>på %1</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="593"/>
+        <location filename="../menu.cpp" line="595"/>
         <source>%1 on VT #%2</source>
         <translation>%1 på VT #%2</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="595"/>
+        <location filename="../menu.cpp" line="597"/>
         <source>Session</source>
         <translation>Session</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="715"/>
+        <location filename="../menu.cpp" line="717"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation>Åtgärder för &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="752"/>
+        <location filename="../menu.cpp" line="754"/>
         <source>For &quot;%1&quot;</source>
         <translation>För&quot;%1&quot;</translation>
     </message>

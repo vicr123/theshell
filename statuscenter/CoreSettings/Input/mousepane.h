@@ -56,6 +56,7 @@ class MousePane : public QWidget
         Ui::MousePane *ui;
 
         MousePanePrivate* d;
+        bool eventFilter(QObject* watched, QEvent* event);
 };
 
 #endif // MOUSEPANE_H

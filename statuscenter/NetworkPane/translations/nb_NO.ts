@@ -96,6 +96,13 @@
     </message>
 </context>
 <context>
+    <name>EditWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NetworkWidget</name>
     <message>
         <source>Network Devices</source>
@@ -131,6 +138,118 @@
     </message>
     <message>
         <source>Security</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enabling Tethering allows your internet connection to be shared from a wired connection. You won&apos;t be able to use Wi-Fi while Tethering is active.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WPA2 PSK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Tethering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wi-Fi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connecting to %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login Required</source>
+        <comment>Currently behind network Portal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t get to the Internet</source>
+        <comment>Network Portal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flight Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tethering Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are in flight mode. Network access may be limited.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Network Management is not operational</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check that NetworkManager is running</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SavedNetworksList</name>
+    <message>
+        <source>Saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SecurityInformationWidget</name>
+    <message>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -282,38 +401,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Connect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enabling Tethering allows your internet connection to be shared from a wired connection. You won&apos;t be able to use Wi-Fi while Tethering is active.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>WPA2 PSK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Tethering</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Connect to %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -326,76 +413,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wi-Fi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connecting to %1...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disconnected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wired</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Login Required</source>
-        <comment>Currently behind network Portal</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t get to the Internet</source>
-        <comment>Network Portal</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flight Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connection Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enter the information to connect to a new network</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tethering Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preparing Tethering</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Network</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>icon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are in flight mode. Network access may be limited.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Network Management is not operational</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Check that NetworkManager is running</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SavedNetworksList</name>
-    <message>
-        <source>Saved</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

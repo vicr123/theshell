@@ -63,7 +63,7 @@
     </message>
     <message>
         <location filename="../Input/inputpane.ui" line="95"/>
-        <location filename="../Input/inputpane.cpp" line="50"/>
+        <location filename="../Input/inputpane.cpp" line="52"/>
         <source>Input</source>
         <translation type="unfinished"></translation>
     </message>
@@ -106,22 +106,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/keyboardpane.ui" line="220"/>
+        <location filename="../Input/keyboardpane.ui" line="219"/>
+        <source>TEST SETTINGS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/keyboardpane.ui" line="226"/>
+        <source>Type something here to check your keyboard layout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/keyboardpane.ui" line="233"/>
+        <source>Type here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/keyboardpane.ui" line="279"/>
         <source>Use Super Key to open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/keyboardpane.ui" line="246"/>
+        <location filename="../Input/keyboardpane.ui" line="305"/>
         <source>SYSTEM SHORTCUTS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/keyboardpane.ui" line="253"/>
+        <location filename="../Input/keyboardpane.ui" line="312"/>
         <source>If you&apos;d like to use the Super Key for a different app, turn this off so theShell won&apos;t take control of it. &lt;b&gt;Requires a theShell restart&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/keyboardpane.ui" line="324"/>
+        <location filename="../Input/keyboardpane.ui" line="383"/>
         <source>Add Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -149,63 +164,112 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="40"/>
+        <location filename="../Input/mousepane.ui" line="45"/>
         <source>Mouse and Touchpad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="173"/>
+        <location filename="../Input/mousepane.ui" line="178"/>
+        <location filename="../Input/mousepane.cpp" line="309"/>
         <source>Primary Button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="193"/>
+        <location filename="../Input/mousepane.ui" line="198"/>
         <source>Tap to click</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="239"/>
+        <location filename="../Input/mousepane.ui" line="244"/>
         <source>Pointer Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="265"/>
+        <location filename="../Input/mousepane.ui" line="270"/>
         <source>MOVEMENT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="304"/>
+        <location filename="../Input/mousepane.ui" line="309"/>
         <source>Natural Mouse Scrolling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="318"/>
+        <location filename="../Input/mousepane.ui" line="323"/>
         <source>Natural Touchpad Scrolling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="351"/>
+        <location filename="../Input/mousepane.ui" line="356"/>
         <source>SCROLLING</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="358"/>
+        <location filename="../Input/mousepane.ui" line="363"/>
         <source>Natural Scrolling moves content in the direction of your finger instead of the scrollbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="131"/>
+        <location filename="../Input/mousepane.ui" line="436"/>
+        <source>Test Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/mousepane.ui" line="459"/>
+        <source>Test your settings here. You can try clicking, double clicking and scrolling.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/mousepane.ui" line="485"/>
+        <source>Click me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/mousepane.ui" line="136"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="144"/>
+        <location filename="../Input/mousepane.ui" line="149"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/mousepane.ui" line="186"/>
+        <location filename="../Input/mousepane.ui" line="191"/>
         <source>CLICKING</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/mousepane.cpp" line="312"/>
+        <source>Middle Button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/mousepane.cpp" line="315"/>
+        <source>Secondary Button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/mousepane.cpp" line="318"/>
+        <location filename="../Input/mousepane.cpp" line="321"/>
+        <location filename="../Input/mousepane.cpp" line="324"/>
+        <location filename="../Input/mousepane.cpp" line="327"/>
+        <source>Button %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/mousepane.cpp" line="330"/>
+        <source>Button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/mousepane.cpp" line="335"/>
+        <source>%1 Single Click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/mousepane.cpp" line="337"/>
+        <source>%1 Double Click</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

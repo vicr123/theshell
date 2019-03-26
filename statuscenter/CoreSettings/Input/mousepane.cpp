@@ -20,10 +20,13 @@
 #include "mousepane.h"
 #include "ui_mousepane.h"
 
+#include "mousepanetester.h"
+
 #include <math.h>
 #include <QSettings>
 #include <QX11Info>
 #include <QDebug>
+#include <QMouseEvent>
 
 #include <libinput-properties.h>
 #include <synaptics-properties.h>
@@ -151,16 +154,24 @@ MousePane::MousePane(QWidget *parent) :
     ui->naturalMouseScrolling->setChecked(d->settings.value("mouse/naturalScroll", false).toBool());
     ui->naturalTouchpadScrolling->setChecked(d->settings.value("mouse/naturalTouchpadScroll", false).toBool());
 
+    ui->testAreaWidget->setFixedWidth(300 * theLibsGlobal::getDPIScaling());
+    for (int i = 0; i < 30; i++) {
+        MousePaneTester* tester = new MousePaneTester();
+        tester->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        ui->mouseTestLayout->addWidget(tester);
+    }
+    ui->testClickButton->installEventFilter(this);
+
     if (XInternAtom(QX11Info::display(), LIBINPUT_PROP_ACCEL, True)) {
         //We have libinput
         qDebug() << "Using libinput";
         d->useLibInput = true;
-    }
-
-    unsigned char pointerMapping[256];
-    d->numButtons = XGetPointerMapping(QX11Info::display(), pointerMapping, 256);
-    if (d->numButtons >= 3) {
-        d->middleButton = pointerMapping[1];
+    } else {
+        unsigned char pointerMapping[256];
+        d->numButtons = XGetPointerMapping(QX11Info::display(), pointerMapping, 256);
+        if (d->numButtons >= 3) {
+            d->middleButton = pointerMapping[1];
+        }
     }
 
     applySettings();
@@ -285,4 +296,48 @@ void MousePane::on_naturalTouchpadScrolling_toggled(bool checked)
 {
     d->settings.setValue("mouse/naturalTouchpadScroll", checked);
     applySettings();
+}
+
+bool MousePane::eventFilter(QObject *watched, QEvent *event) {
+    if (watched == ui->testClickButton) {
+        if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick) {
+            QMouseEvent* e = static_cast<QMouseEvent*>(event);
+            QString button;
+
+            switch (e->button()) {
+                case Qt::LeftButton:
+                    button = tr("Primary Button");
+                    break;
+                case Qt::MiddleButton:
+                    button = tr("Middle Button");
+                    break;
+                case Qt::RightButton:
+                    button = tr("Secondary Button");
+                    break;
+                case Qt::ExtraButton1:
+                    button = tr("Button %1").arg("1");
+                    break;
+                case Qt::ExtraButton2:
+                    button = tr("Button %1").arg("2");
+                    break;
+                case Qt::ExtraButton3:
+                    button = tr("Button %1").arg("3");
+                    break;
+                case Qt::ExtraButton4:
+                    button = tr("Button %1").arg("4");
+                    break;
+                default:
+                    button = tr("Button");
+                    break;
+            }
+
+            if (event->type() == QEvent::MouseButtonPress) {
+                ui->testClickButton->setText(tr("%1 Single Click").arg(button));
+            } else {
+                ui->testClickButton->setText(tr("%1 Double Click").arg(button));
+            }
+            return true;
+        }
+    }
+    return false;
 }

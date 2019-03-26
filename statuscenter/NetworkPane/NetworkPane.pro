@@ -80,18 +80,24 @@ HEADERS += \
     networkmanager/availablenetworkslist.h \
     networkmanager/networkwidget.h \
     networkmanager/savednetworkslist.h \
-    networkmanager/chunkwidget.h
+    networkmanager/chunkwidget.h \
+    networkmanager/securityinformationwidget.h \
+    networkmanager/editwidget.h
 
 SOURCES += \
     plugin.cpp \
     networkmanager/availablenetworkslist.cpp \
     networkmanager/networkwidget.cpp \
     networkmanager/savednetworkslist.cpp \
-    networkmanager/chunkwidget.cpp
+    networkmanager/chunkwidget.cpp \
+    networkmanager/securityinformationwidget.cpp \
+    networkmanager/editwidget.cpp
 
 DISTFILES += \
     NetworkPane.json
 
 FORMS += \
     networkmanager/networkwidget.ui \
-    networkmanager/chunkwidget.ui
+    networkmanager/chunkwidget.ui \
+    networkmanager/securityinformationwidget.ui \
+    networkmanager/editwidget.ui

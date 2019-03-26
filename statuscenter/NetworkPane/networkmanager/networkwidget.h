@@ -103,12 +103,6 @@ class NetworkWidget : public QWidget, public StatusCenterPaneObject
 
         void on_networksManualButton_clicked();
 
-        void on_SecurityType_currentIndexChanged(int index);
-
-        void on_EnterpriseAuthMethod_currentIndexChanged(int index);
-
-        QString selectCertificate();
-
         void on_EnterpriseTLSUserCertificateSelect_clicked();
 
         void on_EnterpriseTLSCACertificateSelect_clicked();
@@ -116,8 +110,6 @@ class NetworkWidget : public QWidget, public StatusCenterPaneObject
         void on_knownNetworksButton_clicked();
 
         void on_knownNetworksBackButton_clicked();
-
-        void on_EnterprisePEAPCaCertificateSelect_clicked();
 
         void on_knownNetworksDeleteButton_clicked();
 

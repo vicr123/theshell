@@ -3588,6 +3588,8 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         emit newSnack(args.first().value<QWidget*>());
     } else if (message == "reload-keyboard-layouts") {
         loadNewKeyboardLayoutMenu();
+    } else if (message == "set-keyboard-layout") {
+        setKeyboardLayout(args.first().toString());
     }
 }
 

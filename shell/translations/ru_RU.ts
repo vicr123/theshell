@@ -1861,174 +1861,167 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>Menu</name>
     <message>
-        <location filename="../menu.ui" line="75"/>
+        <location filename="../menu.ui" line="96"/>
         <source>Install theShell OS</source>
         <translation>Установка theShell OS</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="82"/>
+        <location filename="../menu.ui" line="160"/>
         <source>Give theShell OS a permanant place on your PC. Install theOS on your hard drive, either replacing another operating system or next to another operating system.</source>
         <translation>Предоставьте theShell OS постоянное место на вашем компьютере. Установите theShell OS на ваш жёсткий диск рядом с другой операционной системой, либо заменяя её.</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="107"/>
+        <location filename="../menu.ui" line="149"/>
         <source>Open theShell OS Installer</source>
         <translation>Открыть установщик theShell OS</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="137"/>
+        <location filename="../menu.ui" line="198"/>
         <source>Gateway</source>
         <translation>Врата</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="157"/>
+        <location filename="../menu.ui" line="250"/>
         <source>Start typing to search, run a command, or open a web address</source>
         <translation>Начните печатать, чтобы искать, выполнить команду или открыть веб-браузер</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="223"/>
-        <location filename="../menu.ui" line="271"/>
-        <location filename="../menu.ui" line="591"/>
+        <location filename="../menu.ui" line="307"/>
+        <source>File Bug</source>
+        <translation type="unfinished">Сообщить об ошибке</translation>
+    </message>
+    <message>
+        <location filename="../menu.ui" line="341"/>
+        <location filename="../menu.ui" line="417"/>
+        <location filename="../menu.ui" line="774"/>
         <source>End Session</source>
         <translation>Завершить сеанс</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="284"/>
+        <location filename="../menu.ui" line="448"/>
         <source>You&apos;re about to power off your PC. Are you sure?</source>
         <translation>Вы сейчас выключите этот компьютер. Всё верно?</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="299"/>
+        <location filename="../menu.ui" line="479"/>
         <source>Exit theShell</source>
         <translation>Выйти из theShell</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="312"/>
+        <location filename="../menu.ui" line="492"/>
         <source>Exits theShell, leaving everything else open</source>
         <translation>Выходим из theShell, всё остальное останется открытым</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="319"/>
+        <location filename="../menu.ui" line="499"/>
         <source>Fake Exit</source>
         <translation>Ложный выход</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="336"/>
+        <location filename="../menu.ui" line="516"/>
         <source>Power Off</source>
         <translation>Выключение</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="349"/>
+        <location filename="../menu.ui" line="529"/>
         <source>Turns off your computer</source>
         <translation>Выключаем ваш компьютер</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="360"/>
+        <location filename="../menu.ui" line="540"/>
         <source>Reboot</source>
         <translation>Перезагрузка</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="373"/>
+        <location filename="../menu.ui" line="553"/>
         <source>Turns off your computer and turns it back on again</source>
         <translation>Выключаем ваш компьютер, а затем включаем его снова</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="380"/>
+        <location filename="../menu.ui" line="560"/>
         <source>Log Out</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="393"/>
+        <location filename="../menu.ui" line="573"/>
         <source>Ends your session and keeps the computer on for other people to use</source>
         <translation>Завершает ваш сеанс и предоставляет ваш компьютер к использованию другими людьми</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="446"/>
+        <location filename="../menu.ui" line="626"/>
         <source>Turn Off Screen</source>
         <translation>Выключить экран</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="459"/>
+        <location filename="../menu.ui" line="639"/>
         <source>Turns off the screen, but keeps everything else running in the background</source>
         <translation>Выключаем экран, но всё продолжает работать за занавесой</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="598"/>
+        <location filename="../menu.ui" line="799"/>
         <source>Before you end your session, here are some things you might want to know</source>
         <translation>Прежде, чем вы завершите сессию, вот что вам нужно знать</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="691"/>
+        <location filename="../menu.ui" line="952"/>
         <source>Who are you switching to?</source>
         <translation>На кого вы переключаетесь?</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="727"/>
+        <location filename="../menu.ui" line="993"/>
         <source>Start a new session</source>
         <translation>Начать новую сессию</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="761"/>
+        <location filename="../menu.ui" line="1030"/>
         <source>Failed to start app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="426"/>
+        <location filename="../menu.ui" line="606"/>
         <source>Lock</source>
         <translation>Заблокировать</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="439"/>
+        <location filename="../menu.ui" line="619"/>
         <source>Locks your workspace with your password</source>
         <translation>Блокируем ваше рабочее место вашим паролем</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="403"/>
+        <location filename="../menu.ui" line="583"/>
         <source>Suspend</source>
         <translation>Сон</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="416"/>
+        <location filename="../menu.ui" line="596"/>
         <source>Puts your computer in a low power state so that it opens up quickly</source>
         <translation>Укладываем спать ваш компьютер, чтобы он включился быстрее</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="475"/>
-        <location filename="../menu.ui" line="684"/>
+        <location filename="../menu.ui" line="655"/>
+        <location filename="../menu.ui" line="927"/>
         <source>Switch Users</source>
         <translation>Смена пользователей</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="488"/>
+        <location filename="../menu.ui" line="668"/>
         <source>Switches to the logon screen and keeps your session in the background</source>
         <translation>Переключаемся к экрану входа и сохраняем вашу сессию за занавесом</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="498"/>
+        <location filename="../menu.ui" line="678"/>
         <source>Hibernate</source>
         <translation>Гибернация</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="514"/>
+        <location filename="../menu.ui" line="694"/>
         <source>Powers off your computer, but when powered back on, restores the session.</source>
         <translation>Выключаем ваш компьютер, но когда он включиться, всё вернётся на свои места.</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="551"/>
-        <location filename="../menu.ui" line="623"/>
-        <location filename="../menu.ui" line="703"/>
-        <source>Cancel</source>
-        <translation>Отмена</translation>
-    </message>
-    <message>
-        <location filename="../menu.ui" line="206"/>
+        <location filename="../menu.ui" line="324"/>
         <source>Help</source>
         <translation>Помощь</translation>
-    </message>
-    <message>
-        <location filename="../menu.ui" line="189"/>
-        <source>Report Bug</source>
-        <translation>Сообщить об ошибке</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="77"/>
@@ -2037,47 +2030,47 @@ Items that will be kept if you choose to keep files:
         <translation>Привет, %1!</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="324"/>
+        <location filename="../menu.cpp" line="326"/>
         <source>Power Off Anyway</source>
         <translation>Всё равно выключить</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="336"/>
+        <location filename="../menu.cpp" line="338"/>
         <source>Reboot Anyway</source>
         <translation>Всё равно перезагрузить</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="348"/>
+        <location filename="../menu.cpp" line="350"/>
         <source>Log Out Anyway</source>
         <translation>Всё равно выйти</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="589"/>
+        <location filename="../menu.cpp" line="591"/>
         <source>%1 on X11 display %2</source>
         <translation>%1 на экране %2 X11</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="591"/>
+        <location filename="../menu.cpp" line="593"/>
         <source>on %1</source>
         <translation>на %1</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="593"/>
+        <location filename="../menu.cpp" line="595"/>
         <source>%1 on VT #%2</source>
         <translation>%1 на VT #%2</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="595"/>
+        <location filename="../menu.cpp" line="597"/>
         <source>Session</source>
         <translation>Сессия</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="715"/>
+        <location filename="../menu.cpp" line="717"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation>Действия для &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="752"/>
+        <location filename="../menu.cpp" line="754"/>
         <source>For &quot;%1&quot;</source>
         <translation>Для &quot;%1&quot;</translation>
     </message>
@@ -2393,7 +2386,7 @@ Items that will be kept if you choose to keep files:
     <message>
         <location filename="../rundialog.ui" line="50"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Отменить</translation>
     </message>
     <message>
         <location filename="../rundialog.ui" line="81"/>

@@ -262,36 +262,7 @@ void NetworkWidget::on_AvailableNetworksList_clicked(const QModelIndex &index)
 
     //Try to connect using all matching settings
     if (availableSettings.count() == 0) {
-        ui->SecuritySsidEdit->setText(ssid);
-        ui->SecuritySsidEdit->setVisible(false);
-
-        switch (ap.security) {
-            case NoSecurity:
-                ui->SecurityType->setCurrentIndex(0);
-                ui->securityDescriptionLabel->setText(tr("Connect to %1?").arg(ssid));
-                break;
-            case Leap:
-            case StaticWep:
-                ui->SecurityType->setCurrentIndex(1);
-                ui->securityDescriptionLabel->setText(tr("To connect to %1, you'll need to provide a key.").arg(ssid));
-                break;
-            case DynamicWep:
-                ui->SecurityType->setCurrentIndex(2);
-                ui->securityDescriptionLabel->setText(tr("To connect to %1, you'll need to provide a key.").arg(ssid));
-                break;
-            case WpaPsk:
-            case Wpa2Psk:
-                ui->SecurityType->setCurrentIndex(3);
-                ui->securityDescriptionLabel->setText(tr("To connect to %1, you'll need to provide a key.").arg(ssid));
-                break;
-            case WpaEnterprise:
-            case Wpa2Enterprise:
-                ui->SecurityType->setCurrentIndex(4);
-                ui->securityDescriptionLabel->setText(tr("To connect to %1, you'll need to provide authentication details.").arg(ssid));
-                break;
-        }
-        ui->SecurityType->setVisible(false);
-
+        ui->securityWidget->addNewNetwork(ssid, ap.security);
         ui->stackedWidget->setCurrentIndex(3);
     } else {
         tToast* toast = new tToast();
@@ -682,6 +653,14 @@ void NetworkWidget::updateGlobals() {
             icon = QIcon::fromTheme("network-wired-unavailable");
             deviceType = Generic;
         } else {
+            //Check connectivity
+            uint connectivity = d->nmInterface->property("Connectivity").toUInt();
+            if (connectivity == 2) {
+                supplementaryText = tr("Login Required", "Currently behind network Portal");
+            } else if (connectivity == 3) {
+                supplementaryText = tr("Can't get to the Internet", "Network Portal");
+            }
+
             QDBusInterface activeConnection(d->nmInterface->service(), primaryConnection.path(), "org.freedesktop.NetworkManager.Connection.Active", QDBusConnection::systemBus());
             QList<QDBusObjectPath> devices = activeConnection.property("Devices").value<QList<QDBusObjectPath>>();
 
@@ -711,20 +690,30 @@ void NetworkWidget::updateGlobals() {
                         } else {
                             QDBusInterface activeNetworkInterface(d->nmInterface->service(), activeNetwork.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus());
 
+                            QString iconName;
+                            QString backupIcon;
                             int strength = activeNetworkInterface.property("Strength").toInt();
                             if (strength < 15) {
-                                icon = QIcon::fromTheme("network-wireless-connected-00");
+                                iconName = "network-wireless-%1-00";
                             } else if (strength < 35) {
-                                icon = QIcon::fromTheme("network-wireless-connected-25");
+                                iconName = "network-wireless-%1-25";
                             } else if (strength < 65) {
-                                icon = QIcon::fromTheme("network-wireless-connected-50");
+                                iconName = "network-wireless-%1-50";
                             } else if (strength < 85) {
-                                icon = QIcon::fromTheme("network-wireless-connected-75");
+                                iconName = "network-wireless-%1-75";
                             } else {
-                                icon = QIcon::fromTheme("network-wireless-connected-100");
+                                iconName = "network-wireless-%1-100";
+                            }
+
+                            if (connectivity == 2 || connectivity == 3) {
+                                iconName = iconName.arg("error");
+                                backupIcon = "network-wireless-error";
+                            } else {
+                                iconName = iconName.arg("connected");
                             }
 
                             text = activeNetworkInterface.property("Ssid").toString();
+                            icon = QIcon::fromTheme(iconName, QIcon::fromTheme(backupIcon));
                         }
                         break;
                     }
@@ -741,14 +730,6 @@ void NetworkWidget::updateGlobals() {
                         break;
                     }
                 }
-            }
-
-            //Check connectivity
-            uint connectivity = d->nmInterface->property("Connectivity").toUInt();
-            if (connectivity == 2) {
-                supplementaryText = tr("Login Required", "Currently behind network Portal");
-            } else if (connectivity == 3) {
-                supplementaryText = tr("Can't get to the Internet", "Network Portal");
             }
         }
 
@@ -788,111 +769,12 @@ void NetworkWidget::on_SecurityConnectButton_clicked()
     connection.insert("type", "802-11-wireless");
     settings.insert("connection", connection);
 
-    QVariantMap wireless;
-    wireless.insert("ssid", ui->SecuritySsidEdit->text().toUtf8());
-    wireless.insert("mode", "infrastructure");
-
-    if (ui->SecuritySsidEdit->isVisible()) {
-        wireless.insert("hidden", true);
+    QVariantMap wireless = ui->securityWidget->getNetwork();
+    QVariantMap security = ui->securityWidget->getSecurity();
+    if (security.value("key-mgmt") == "wpa-eap") {
+        settings.insert("802-1x", ui->securityWidget->getEap());
     }
 
-    QVariantMap security;
-    switch (ui->SecurityType->currentIndex()) {
-        case 0: //No security
-            security.insert("key-mgmt", "none");
-            break;
-        case 1: //Static WEP
-            security.insert("key-mgmt", "none");
-            security.insert("auth-alg", "shared");
-            security.insert("wep-key0", ui->securityKey->text());
-            break;
-        case 2: //Dynamic WEP
-            security.insert("key-mgmt", "none");
-            security.insert("auth-alg", "shared");
-            security.insert("wep-key0", ui->securityKey->text());
-            break;
-        case 3: //WPA(2)-PSK
-            security.insert("key-mgmt", "wpa-psk");
-            security.insert("psk", ui->securityKey->text());
-            break;
-        case 4: { //WPA(2)-Enterprise
-            QVariantMap enterpriseSettings;
-            security.insert("key-mgmt", "wpa-eap");
-            enterpriseSettings.insert("eap", QStringList() << "ttls");
-
-            switch (ui->EnterpriseAuthMethod->currentIndex()) {
-                case 0: //TLS
-                    enterpriseSettings.insert("eap", QStringList() << "tls");
-                    enterpriseSettings.insert("identity", ui->EnterpriseTLSIdentity->text());
-                    enterpriseSettings.insert("client-cert", QUrl::fromLocalFile(ui->EnterpriseTLSUserCertificate->text()).toEncoded());
-                    enterpriseSettings.insert("ca-cert", QUrl::fromLocalFile(ui->EnterpriseTLSCACertificate->text()).toEncoded());
-                    enterpriseSettings.insert("subject-match", ui->EnterpriseTLSSubjectMatch->text());
-                    enterpriseSettings.insert("altsubject-matches", ui->EnterpriseTLSAlternateSubjectMatch->text().split(","));
-                    enterpriseSettings.insert("private-key", QUrl::fromLocalFile(ui->EnterpriseTLSPrivateKey->text()).toEncoded());
-                    enterpriseSettings.insert("private-key-password", ui->EnterpriseTLSPrivateKeyPassword->text());
-                    break;
-                case 1: //LEAP
-                    enterpriseSettings.insert("eap", QStringList() << "leap");
-                    enterpriseSettings.insert("identity", ui->EnterpriseLEAPUsername->text());
-                    enterpriseSettings.insert("password", ui->EnterpriseLEAPPassword->text());
-                    break;
-                case 2: { //FAST
-                    enterpriseSettings.insert("eap", QStringList() << "fast");
-                    enterpriseSettings.insert("anonymous-identity", ui->EnterpriseFASTAnonymousIdentity->text());
-                    enterpriseSettings.insert("pac-file", ui->EnterpriseFASTPacFile->text());
-
-                    int provisioning = 0;
-                    if (ui->EnterpriseFASTPacProvisioningAnonymous->isChecked()) provisioning++;
-                    if (ui->EnterpriseFASTPacProvisioningAuthenticated->isChecked()) provisioning += 2;
-                    enterpriseSettings.insert("phase1-fast-provisioning", QString::number(provisioning));
-
-                    if (ui->EnterpriseFASTPhase2Auth->currentIndex() == 0) { //GTC
-                        enterpriseSettings.insert("phase2-auth", "gtc");
-                    } else if (ui->EnterpriseFASTPhase2Auth->currentIndex() == 1) { //MSCHAPv2
-                        enterpriseSettings.insert("phase2-auth", "mschapv2");
-                    }
-
-                    enterpriseSettings.insert("identity", ui->EnterpriseFASTUsername->text());
-                    enterpriseSettings.insert("password", ui->EnterpriseFASTPassword->text());
-
-                    break;
-                }
-                case 4: //PEAP
-                    enterpriseSettings.insert("eap", QStringList() << "peap");
-
-                    if (ui->EnterprisePEAPVer0->isChecked()) { //Force version 0
-                        enterpriseSettings.insert("phase1-peapver", "0");
-                    } else if (ui->EnterprisePEAPVer1->isChecked()) { //Force version 1
-                        enterpriseSettings.insert("phase1-peapver", "1");
-                    }
-
-                    //fall through
-                case 3: //TTLS
-                    if (ui->EnterprisePEAPAnonymousIdentity->text() != "") {
-                        enterpriseSettings.insert("anonymous-identity", ui->EnterprisePEAPAnonymousIdentity->text());
-                    }
-
-                    if (ui->EnterprisePEAPCaCertificate->text() != "") {
-                        enterpriseSettings.insert("client-cert", QUrl::fromLocalFile(ui->EnterprisePEAPCaCertificate->text()).toEncoded());
-                    }
-
-                    if (ui->EnterprisePEAPPhase2Auth->currentIndex() == 0) { //MSCHAPv2
-                        enterpriseSettings.insert("phase2-auth", "mschapv2");
-                    } else if (ui->EnterprisePEAPPhase2Auth->currentIndex() == 1) { //MD5
-                        enterpriseSettings.insert("phase2-auth", "md5");
-                    } else if (ui->EnterprisePEAPPhase2Auth->currentIndex() == 2) { //GTC
-                        enterpriseSettings.insert("phase2-auth", "gtc");
-                    }
-
-                    enterpriseSettings.insert("identity", ui->EnterprisePEAPUsername->text());
-                    enterpriseSettings.insert("password", ui->EnterprisePEAPPassword->text());
-                    break;
-            }
-
-            settings.insert("802-1x", enterpriseSettings);
-            break;
-        }
-    }
     settings.insert("802-11-wireless", wireless);
     settings.insert("802-11-wireless-security", security);
 
@@ -913,7 +795,7 @@ void NetworkWidget::on_SecurityConnectButton_clicked()
 
     tToast* toast = new tToast();
     toast->setTitle(tr("Wi-Fi"));
-    toast->setText(tr("Connecting to %1...").arg(ui->SecuritySsidEdit->text()));
+    toast->setText(tr("Connecting to %1...").arg(wireless.value("ssid").toString()));
     connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
     toast->show(this->window());
     ui->stackedWidget->setCurrentIndex(0);
@@ -921,65 +803,8 @@ void NetworkWidget::on_SecurityConnectButton_clicked()
 
 void NetworkWidget::on_networksManualButton_clicked()
 {
-    ui->SecuritySsidEdit->setVisible(true);
-    ui->SecurityType->setVisible(true);
-    ui->securityDescriptionLabel->setText(tr("Enter the information to connect to a new network"));
+    ui->securityWidget->addNewNetwork();
     ui->stackedWidget->setCurrentIndex(3);
-}
-
-void NetworkWidget::on_SecurityType_currentIndexChanged(int index)
-{
-    switch (index) {
-        case 0: //No security
-            ui->SecurityKeysStack->setCurrentIndex(0);
-            break;
-        case 1: //Static WEP
-            ui->SecurityKeysStack->setCurrentIndex(1);
-            break;
-        case 2: //Dynamic WEP
-            ui->SecurityKeysStack->setCurrentIndex(1);
-            break;
-        case 3: //WPA(2)-PSK
-            ui->SecurityKeysStack->setCurrentIndex(1);
-            break;
-        case 4: //WPA(2) Enterprise
-            ui->SecurityKeysStack->setCurrentIndex(2);
-            break;
-    }
-}
-
-void NetworkWidget::on_EnterpriseAuthMethod_currentIndexChanged(int index)
-{
-    if (index == 4) {
-        ui->peapVersionButtons->setVisible(true);
-        ui->peapVersionLabel->setVisible(true);
-        ui->WpaEnterpriseAuthDetails->setCurrentIndex(3);
-    } else {
-        ui->peapVersionButtons->setVisible(false);
-        ui->peapVersionLabel->setVisible(false);
-        ui->WpaEnterpriseAuthDetails->setCurrentIndex(index);
-    }
-}
-
-QString NetworkWidget::selectCertificate() {
-    QFileDialog* dialog = new QFileDialog(this);
-    dialog->setNameFilter("Certificates (*.der *.pem *.crt *.cer)");
-    if (dialog->exec() == QFileDialog::Accepted) {
-        dialog->deleteLater();
-        return dialog->selectedFiles().first();
-    } else {
-        dialog->deleteLater();
-        return "";
-    }
-}
-void NetworkWidget::on_EnterpriseTLSUserCertificateSelect_clicked()
-{
-    ui->EnterpriseTLSUserCertificate->setText(selectCertificate());
-}
-
-void NetworkWidget::on_EnterpriseTLSCACertificateSelect_clicked()
-{
-    ui->EnterpriseTLSCACertificate->setText(selectCertificate());
 }
 
 void NetworkWidget::on_knownNetworksButton_clicked()
@@ -990,11 +815,6 @@ void NetworkWidget::on_knownNetworksButton_clicked()
 void NetworkWidget::on_knownNetworksBackButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
-}
-
-void NetworkWidget::on_EnterprisePEAPCaCertificateSelect_clicked()
-{
-    ui->EnterprisePEAPCaCertificate->setText(selectCertificate());
 }
 
 void NetworkWidget::on_knownNetworksDeleteButton_clicked()
@@ -1070,7 +890,7 @@ void NetworkWidget::on_tetheringEnableTetheringButton_clicked()
 
     tToast* toast = new tToast();
     toast->setTitle(tr("Tethering"));
-    toast->setText(tr("Preparing Tethering").arg(ui->SecuritySsidEdit->text()));
+    //toast->setText(tr("Preparing Tethering").arg(ui->SecuritySsidEdit->text()));
     connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
     toast->show(this->window());
     ui->stackedWidget->setCurrentIndex(0);

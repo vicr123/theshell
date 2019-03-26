@@ -96,6 +96,13 @@
     </message>
 </context>
 <context>
+    <name>EditWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NetworkWidget</name>
     <message>
         <source>Network Devices</source>
@@ -142,146 +149,6 @@
         <translation>Không bảo mật</translation>
     </message>
     <message>
-        <source>Static WEP</source>
-        <translation>WEP tĩnh</translation>
-    </message>
-    <message>
-        <source>Dynamic WEP</source>
-        <translation>WEP Năng động</translation>
-    </message>
-    <message>
-        <source>WPA/WPA2 PSK</source>
-        <translation>WPA/WPA2 PSK</translation>
-    </message>
-    <message>
-        <source>WPA/WPA2 Enterprise</source>
-        <translation>WPA/WPA2 Doanh nghiệp</translation>
-    </message>
-    <message>
-        <source>Security Key</source>
-        <translation>Mật khẩu</translation>
-    </message>
-    <message>
-        <source>TLS</source>
-        <translation>TLS</translation>
-    </message>
-    <message>
-        <source>LEAP</source>
-        <translation>LEAP</translation>
-    </message>
-    <message>
-        <source>FAST</source>
-        <translation>FAST</translation>
-    </message>
-    <message>
-        <source>TTLS</source>
-        <translation>TTLS</translation>
-    </message>
-    <message>
-        <source>PEAP</source>
-        <translation>PEAP</translation>
-    </message>
-    <message>
-        <source>EAP Method</source>
-        <translation>Phương pháp EAP</translation>
-    </message>
-    <message>
-        <source>Servers</source>
-        <translation>Máy chủ</translation>
-    </message>
-    <message>
-        <source>Private Key</source>
-        <translation>Khóa riêng tư</translation>
-    </message>
-    <message>
-        <source>CA Certificate</source>
-        <translation>Chứng chỉ CA</translation>
-    </message>
-    <message>
-        <source>User Certificate</source>
-        <translation>Chứng chỉ người dùng</translation>
-    </message>
-    <message>
-        <source>Subject Match</source>
-        <translation>Đối tượng phù hợp</translation>
-    </message>
-    <message>
-        <source>Identity</source>
-        <translation>Danh tính</translation>
-    </message>
-    <message>
-        <source>Alternative Subject Matches</source>
-        <translation>Đối tượng phù hợp thay thế</translation>
-    </message>
-    <message>
-        <source>Private Key Password</source>
-        <translation>Mật khẩu khóa riêng tư</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation>Chọn</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Tên người dùng</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Mật khẩu</translation>
-    </message>
-    <message>
-        <source>Phase 2 Authentication</source>
-        <translation>Xác thực giai đoạn thử 2</translation>
-    </message>
-    <message>
-        <source>Anonymous Identity</source>
-        <translation>Danh tính vô danh</translation>
-    </message>
-    <message>
-        <source>PAC file</source>
-        <translation>Tệp PAC</translation>
-    </message>
-    <message>
-        <source>Anonymous</source>
-        <translation>Vô danh</translation>
-    </message>
-    <message>
-        <source>Authenticated</source>
-        <translation>Xác thực</translation>
-    </message>
-    <message>
-        <source>Automatic PAC Provisioning</source>
-        <translation>Tự động dự liệu PAC</translation>
-    </message>
-    <message>
-        <source>GTC</source>
-        <translation>GTC</translation>
-    </message>
-    <message>
-        <source>MSCHAPv2</source>
-        <translation>MSCHAPv2</translation>
-    </message>
-    <message>
-        <source>PEAP version</source>
-        <translation>Phiên bản PEAP</translation>
-    </message>
-    <message>
-        <source>MD5</source>
-        <translation>MD5</translation>
-    </message>
-    <message>
-        <source>Auto&amp;matic</source>
-        <translation>Tự động</translation>
-    </message>
-    <message>
-        <source>Version &amp;0</source>
-        <translation>Phiên bản &amp;0</translation>
-    </message>
-    <message>
-        <source>Version &amp;1</source>
-        <translation>Phiên bản &amp;1</translation>
-    </message>
-    <message>
         <source>Connect</source>
         <translation>Kết nối</translation>
     </message>
@@ -312,18 +179,6 @@
     <message>
         <source>Enable Tethering</source>
         <translation>Bật điểm truy cập mạng</translation>
-    </message>
-    <message>
-        <source>Connect to %1?</source>
-        <translation>Kết nối với %1?</translation>
-    </message>
-    <message>
-        <source>To connect to %1, you&apos;ll need to provide a key.</source>
-        <translation>Để kết nối với %1, bạn sẽ cần điền vào mật khẩu.</translation>
-    </message>
-    <message>
-        <source>To connect to %1, you&apos;ll need to provide authentication details.</source>
-        <translation>Để kết nối với %1, bạn sẽ cần điền vào chi tiết đẻ xác thực.</translation>
     </message>
     <message>
         <source>Wi-Fi</source>
@@ -360,16 +215,8 @@
         <translation>Lỗi khi kết nối</translation>
     </message>
     <message>
-        <source>Enter the information to connect to a new network</source>
-        <translation>Điền vào thông tin để kết nối với mạng mới</translation>
-    </message>
-    <message>
         <source>Tethering Error</source>
         <translation>Lỗi khi điểm truy cập mạng</translation>
-    </message>
-    <message>
-        <source>Preparing Tethering</source>
-        <translation>Đang chuản bị điểm truy cập mạng</translation>
     </message>
     <message>
         <source>Network</source>
@@ -397,6 +244,177 @@
     <message>
         <source>Saved</source>
         <translation>Đã lưu</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityInformationWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSID</source>
+        <translation type="unfinished">SSID</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Không bảo mật</translation>
+    </message>
+    <message>
+        <source>Static WEP</source>
+        <translation type="unfinished">WEP tĩnh</translation>
+    </message>
+    <message>
+        <source>Dynamic WEP</source>
+        <translation type="unfinished">WEP Năng động</translation>
+    </message>
+    <message>
+        <source>WPA/WPA2 PSK</source>
+        <translation type="unfinished">WPA/WPA2 PSK</translation>
+    </message>
+    <message>
+        <source>WPA/WPA2 Enterprise</source>
+        <translation type="unfinished">WPA/WPA2 Doanh nghiệp</translation>
+    </message>
+    <message>
+        <source>Security Key</source>
+        <translation type="unfinished">Mật khẩu</translation>
+    </message>
+    <message>
+        <source>TLS</source>
+        <translation type="unfinished">TLS</translation>
+    </message>
+    <message>
+        <source>LEAP</source>
+        <translation type="unfinished">LEAP</translation>
+    </message>
+    <message>
+        <source>FAST</source>
+        <translation type="unfinished">FAST</translation>
+    </message>
+    <message>
+        <source>TTLS</source>
+        <translation type="unfinished">TTLS</translation>
+    </message>
+    <message>
+        <source>PEAP</source>
+        <translation type="unfinished">PEAP</translation>
+    </message>
+    <message>
+        <source>EAP Method</source>
+        <translation type="unfinished">Phương pháp EAP</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation type="unfinished">Máy chủ</translation>
+    </message>
+    <message>
+        <source>Private Key</source>
+        <translation type="unfinished">Khóa riêng tư</translation>
+    </message>
+    <message>
+        <source>CA Certificate</source>
+        <translation type="unfinished">Chứng chỉ CA</translation>
+    </message>
+    <message>
+        <source>User Certificate</source>
+        <translation type="unfinished">Chứng chỉ người dùng</translation>
+    </message>
+    <message>
+        <source>Subject Match</source>
+        <translation type="unfinished">Đối tượng phù hợp</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation type="unfinished">Danh tính</translation>
+    </message>
+    <message>
+        <source>Alternative Subject Matches</source>
+        <translation type="unfinished">Đối tượng phù hợp thay thế</translation>
+    </message>
+    <message>
+        <source>Private Key Password</source>
+        <translation type="unfinished">Mật khẩu khóa riêng tư</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">Chọn</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished">Tên người dùng</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished">Mật khẩu</translation>
+    </message>
+    <message>
+        <source>Phase 2 Authentication</source>
+        <translation type="unfinished">Xác thực giai đoạn thử 2</translation>
+    </message>
+    <message>
+        <source>Anonymous Identity</source>
+        <translation type="unfinished">Danh tính vô danh</translation>
+    </message>
+    <message>
+        <source>PAC file</source>
+        <translation type="unfinished">Tệp PAC</translation>
+    </message>
+    <message>
+        <source>Anonymous</source>
+        <translation type="unfinished">Vô danh</translation>
+    </message>
+    <message>
+        <source>Authenticated</source>
+        <translation type="unfinished">Xác thực</translation>
+    </message>
+    <message>
+        <source>Automatic PAC Provisioning</source>
+        <translation type="unfinished">Tự động dự liệu PAC</translation>
+    </message>
+    <message>
+        <source>GTC</source>
+        <translation type="unfinished">GTC</translation>
+    </message>
+    <message>
+        <source>MSCHAPv2</source>
+        <translation type="unfinished">MSCHAPv2</translation>
+    </message>
+    <message>
+        <source>PEAP version</source>
+        <translation type="unfinished">Phiên bản PEAP</translation>
+    </message>
+    <message>
+        <source>MD5</source>
+        <translation type="unfinished">MD5</translation>
+    </message>
+    <message>
+        <source>Auto&amp;matic</source>
+        <translation type="unfinished">Tự động</translation>
+    </message>
+    <message>
+        <source>Version &amp;0</source>
+        <translation type="unfinished">Phiên bản &amp;0</translation>
+    </message>
+    <message>
+        <source>Version &amp;1</source>
+        <translation type="unfinished">Phiên bản &amp;1</translation>
+    </message>
+    <message>
+        <source>Connect to %1?</source>
+        <translation type="unfinished">Kết nối với %1?</translation>
+    </message>
+    <message>
+        <source>To connect to %1, you&apos;ll need to provide a key.</source>
+        <translation type="unfinished">Để kết nối với %1, bạn sẽ cần điền vào mật khẩu.</translation>
+    </message>
+    <message>
+        <source>To connect to %1, you&apos;ll need to provide authentication details.</source>
+        <translation type="unfinished">Để kết nối với %1, bạn sẽ cần điền vào chi tiết đẻ xác thực.</translation>
+    </message>
+    <message>
+        <source>Enter the information to connect to a new network</source>
+        <translation type="unfinished">Điền vào thông tin để kết nối với mạng mới</translation>
     </message>
 </context>
 </TS>

@@ -145,18 +145,20 @@ void Menu::prepareForShow() {
         left = MainWin->x() - this->width();
     }
 
-    if (settings.value("bar/onTop", true).toBool()) {
-        this->setGeometry(left, MainWin->y() + MainWin->height() - 1, this->width(), availableGeometry.height() - (MainWin->height() + (MainWin->y() - availableGeometry.y())) + 1);
+    /*if (settings.value("bar/onTop", true).toBool()) {
+        this->setGeometry(left, MainWin->y() + MainWin->height(), this->width(), availableGeometry.height() - (MainWin->height() + (MainWin->y() - availableGeometry.y())));
     } else {
         int height;
 
         if (availableGeometry.bottom() < screenGeometry.height() - MainWin->height()) {
             height = availableGeometry.height();
         } else {
-            height = MainWin->y() - screenGeometry.top() + 1;
+            height = MainWin->y() - screenGeometry.top();
         }
         this->setGeometry(left, availableGeometry.y() , this->width(), height);
-    }
+    }*/
+
+    this->setGeometry(left, screenGeometry.y() , this->width(), screenGeometry.height());
 
     ui->stackedWidget->setCurrentIndex(0);
     ui->lineEdit->setText("");

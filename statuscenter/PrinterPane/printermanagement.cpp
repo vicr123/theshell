@@ -21,19 +21,26 @@
 #include "printermanagement.h"
 #include "ui_printermanagement.h"
 
+struct PrinterManagementPrivate {
+    int destCount;
+    cups_dest_t* dests;
+};
+
 PrinterManagement::PrinterManagement(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PrinterManagement)
 {
     ui->setupUi(this);
+    d = new PrinterManagementPrivate();
 
     this->settingAttributes.icon = QIcon::fromTheme("preferences-desktop-printers", QIcon::fromTheme("printer"));
     this->settingAttributes.menuWidget = ui->menuWidget;
 
-    destCount = cupsGetDests(&dests);
-    for (int i = 0; i < destCount; i++) {
+
+    d->destCount = cupsGetDests(&d->dests);
+    for (int i = 0; i < d->destCount; i++) {
         QListWidgetItem* item = new QListWidgetItem();
-        item->setText(QString::fromLocal8Bit(dests[i].name));
+        item->setText(QString::fromLocal8Bit(d->dests[i].name));
         item->setIcon(QIcon::fromTheme("printer"));
         ui->printerList->addItem(item);
     }
@@ -41,6 +48,7 @@ PrinterManagement::PrinterManagement(QWidget *parent) :
 
 PrinterManagement::~PrinterManagement()
 {
+    delete d;
     delete ui;
 }
 

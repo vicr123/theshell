@@ -1859,172 +1859,165 @@ If you say yeah, we&apos;re gonna keep the following from them:
 <context>
     <name>Menu</name>
     <message>
-        <location filename="../menu.ui" line="75"/>
+        <location filename="../menu.ui" line="96"/>
         <source>Install theShell OS</source>
         <translation>Give a go at theShell OS</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="82"/>
+        <location filename="../menu.ui" line="160"/>
         <source>Give theShell OS a permanant place on your PC. Install theOS on your hard drive, either replacing another operating system or next to another operating system.</source>
         <translation>Give theShell OS a nice place on ya hard disk. Install theOS on ya hard drive, either replacing some other stuff on the drive or y&apos;know you could have it next to another system.</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="107"/>
+        <location filename="../menu.ui" line="149"/>
         <source>Open theShell OS Installer</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="137"/>
+        <location filename="../menu.ui" line="198"/>
         <source>Gateway</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="157"/>
+        <location filename="../menu.ui" line="250"/>
         <source>Start typing to search, run a command, or open a web address</source>
         <translation>Have a go at typing to search, run something or do other stuff</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="189"/>
-        <source>Report Bug</source>
-        <translation>Report a nasty one</translation>
+        <location filename="../menu.ui" line="307"/>
+        <source>File Bug</source>
+        <translation type="unfinished">File something wrong</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="206"/>
+        <location filename="../menu.ui" line="324"/>
         <source>Help</source>
         <translation>Support</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="223"/>
-        <location filename="../menu.ui" line="271"/>
-        <location filename="../menu.ui" line="591"/>
+        <location filename="../menu.ui" line="341"/>
+        <location filename="../menu.ui" line="417"/>
+        <location filename="../menu.ui" line="774"/>
         <source>End Session</source>
         <translation>Stop running this one</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="284"/>
+        <location filename="../menu.ui" line="448"/>
         <source>You&apos;re about to power off your PC. Are you sure?</source>
         <translation>Watch out becauseya computer&apos;s about to turn off. Are ya sure?</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="299"/>
+        <location filename="../menu.ui" line="479"/>
         <source>Exit theShell</source>
         <translation>Get out of theShell</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="312"/>
+        <location filename="../menu.ui" line="492"/>
         <source>Exits theShell, leaving everything else open</source>
         <translation>Gets out of theShell, leaving ya other stuff open</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="319"/>
+        <location filename="../menu.ui" line="499"/>
         <source>Fake Exit</source>
         <translation>Fake Death</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="336"/>
+        <location filename="../menu.ui" line="516"/>
         <source>Power Off</source>
         <translation>Turn &apos;er off</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="349"/>
+        <location filename="../menu.ui" line="529"/>
         <source>Turns off your computer</source>
         <translation>Turns off ya computer</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="360"/>
+        <location filename="../menu.ui" line="540"/>
         <source>Reboot</source>
         <translation>Switch it off and back on</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="373"/>
+        <location filename="../menu.ui" line="553"/>
         <source>Turns off your computer and turns it back on again</source>
         <translation>Turns off ya computer and put&apos;s it back on again</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="380"/>
+        <location filename="../menu.ui" line="560"/>
         <source>Log Out</source>
         <translation>Bail out</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="393"/>
+        <location filename="../menu.ui" line="573"/>
         <source>Ends your session and keeps the computer on for other people to use</source>
         <translation>It ends your stuff but ya other mates can still use this computer</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="403"/>
+        <location filename="../menu.ui" line="583"/>
         <source>Suspend</source>
         <translation>Stop it</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="416"/>
+        <location filename="../menu.ui" line="596"/>
         <source>Puts your computer in a low power state so that it opens up quickly</source>
         <translation>We&apos;re gonna put you&apos;re computer in a bit of a coma so it&apos;ll open up a bit quicker next time, maybe</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="426"/>
+        <location filename="../menu.ui" line="606"/>
         <source>Lock</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="439"/>
+        <location filename="../menu.ui" line="619"/>
         <source>Locks your workspace with your password</source>
         <translation>Just so ya other mates can&apos;t get in</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="446"/>
+        <location filename="../menu.ui" line="626"/>
         <source>Turn Off Screen</source>
         <translation>Cark the screen</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="459"/>
+        <location filename="../menu.ui" line="639"/>
         <source>Turns off the screen, but keeps everything else running in the background</source>
         <translation>Turn the lights off, but everything is still going</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="475"/>
-        <location filename="../menu.ui" line="684"/>
+        <location filename="../menu.ui" line="655"/>
+        <location filename="../menu.ui" line="927"/>
         <source>Switch Users</source>
         <translation>Switch mates</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="488"/>
+        <location filename="../menu.ui" line="668"/>
         <source>Switches to the logon screen and keeps your session in the background</source>
         <translation>We&apos;ll send you off to the login screen but we&apos;ll keep this session going</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="498"/>
+        <location filename="../menu.ui" line="678"/>
         <source>Hibernate</source>
         <translation>Go out for winter</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="514"/>
+        <location filename="../menu.ui" line="694"/>
         <source>Powers off your computer, but when powered back on, restores the session.</source>
         <translation>Say goodbye to the computer, but not really because when you turn it on again we&apos;ll put it back the way it was</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="551"/>
-        <location filename="../menu.ui" line="623"/>
-        <location filename="../menu.ui" line="703"/>
-        <source>Cancel</source>
-        <translation>none of that</translation>
-    </message>
-    <message>
-        <location filename="../menu.ui" line="598"/>
+        <location filename="../menu.ui" line="799"/>
         <source>Before you end your session, here are some things you might want to know</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="691"/>
+        <location filename="../menu.ui" line="952"/>
         <source>Who are you switching to?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="727"/>
+        <location filename="../menu.ui" line="993"/>
         <source>Start a new session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="761"/>
+        <location filename="../menu.ui" line="1030"/>
         <source>Failed to start app</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2035,47 +2028,47 @@ If you say yeah, we&apos;re gonna keep the following from them:
         <translation>G&apos;day, %1!</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="324"/>
+        <location filename="../menu.cpp" line="326"/>
         <source>Power Off Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="336"/>
+        <location filename="../menu.cpp" line="338"/>
         <source>Reboot Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="348"/>
+        <location filename="../menu.cpp" line="350"/>
         <source>Log Out Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="589"/>
+        <location filename="../menu.cpp" line="591"/>
         <source>%1 on X11 display %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="591"/>
+        <location filename="../menu.cpp" line="593"/>
         <source>on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="593"/>
+        <location filename="../menu.cpp" line="595"/>
         <source>%1 on VT #%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="595"/>
+        <location filename="../menu.cpp" line="597"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="715"/>
+        <location filename="../menu.cpp" line="717"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation>Stuff for &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="752"/>
+        <location filename="../menu.cpp" line="754"/>
         <source>For &quot;%1&quot;</source>
         <translation></translation>
     </message>
@@ -2392,7 +2385,7 @@ If you say yeah, we&apos;re gonna keep the following from them:
     <message>
         <location filename="../rundialog.ui" line="50"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Stop it</translation>
     </message>
     <message>
         <location filename="../rundialog.ui" line="81"/>

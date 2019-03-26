@@ -1853,174 +1853,167 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>Menu</name>
     <message>
-        <location filename="../menu.ui" line="75"/>
+        <location filename="../menu.ui" line="96"/>
         <source>Install theShell OS</source>
         <translation>Instalar theShell OS</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="82"/>
+        <location filename="../menu.ui" line="160"/>
         <source>Give theShell OS a permanant place on your PC. Install theOS on your hard drive, either replacing another operating system or next to another operating system.</source>
         <translation>Dale a theShell OS un espacio permanente en tu PC. Instala theOS en tu disco duro, remplacando otro sistema operativo o al lado de otro sistema operativo.</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="107"/>
+        <location filename="../menu.ui" line="149"/>
         <source>Open theShell OS Installer</source>
         <translation>Abrir el Instalador de theShell OS</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="137"/>
+        <location filename="../menu.ui" line="198"/>
         <source>Gateway</source>
         <translation>La Puerta</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="157"/>
+        <location filename="../menu.ui" line="250"/>
         <source>Start typing to search, run a command, or open a web address</source>
         <translation>Empieza a escribir para buscar, correr un comando, o abrir una pagina web</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="223"/>
-        <location filename="../menu.ui" line="271"/>
-        <location filename="../menu.ui" line="591"/>
+        <location filename="../menu.ui" line="307"/>
+        <source>File Bug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.ui" line="341"/>
+        <location filename="../menu.ui" line="417"/>
+        <location filename="../menu.ui" line="774"/>
         <source>End Session</source>
         <translation>Terminar Sesión</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="284"/>
+        <location filename="../menu.ui" line="448"/>
         <source>You&apos;re about to power off your PC. Are you sure?</source>
         <translation>Estas por apagar tu PC. Estas seguro?</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="299"/>
+        <location filename="../menu.ui" line="479"/>
         <source>Exit theShell</source>
         <translation>Salir de theShell</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="312"/>
+        <location filename="../menu.ui" line="492"/>
         <source>Exits theShell, leaving everything else open</source>
         <translation>Sale de theShell, dejando todo lo demas abierto</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="319"/>
+        <location filename="../menu.ui" line="499"/>
         <source>Fake Exit</source>
         <translation>Salida Falsa</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="336"/>
+        <location filename="../menu.ui" line="516"/>
         <source>Power Off</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="349"/>
+        <location filename="../menu.ui" line="529"/>
         <source>Turns off your computer</source>
         <translation>Apaga tu computadora</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="360"/>
+        <location filename="../menu.ui" line="540"/>
         <source>Reboot</source>
         <translation>Reiniciar</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="373"/>
+        <location filename="../menu.ui" line="553"/>
         <source>Turns off your computer and turns it back on again</source>
         <translation>Apaga tu computadora y la vuelve a prender</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="380"/>
+        <location filename="../menu.ui" line="560"/>
         <source>Log Out</source>
         <translation>Cerrar Sesión</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="393"/>
+        <location filename="../menu.ui" line="573"/>
         <source>Ends your session and keeps the computer on for other people to use</source>
         <translation>Termina tu sesión y deja la computadora encendida para que otras personas la usen</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="446"/>
+        <location filename="../menu.ui" line="626"/>
         <source>Turn Off Screen</source>
         <translation>Apaga tu Pantalla</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="459"/>
+        <location filename="../menu.ui" line="639"/>
         <source>Turns off the screen, but keeps everything else running in the background</source>
         <translation>Apaga la pantalla, pero mantiene todo lo demas corriendo en el fondo</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="598"/>
+        <location filename="../menu.ui" line="799"/>
         <source>Before you end your session, here are some things you might want to know</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="691"/>
+        <location filename="../menu.ui" line="952"/>
         <source>Who are you switching to?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="727"/>
+        <location filename="../menu.ui" line="993"/>
         <source>Start a new session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="761"/>
+        <location filename="../menu.ui" line="1030"/>
         <source>Failed to start app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="426"/>
+        <location filename="../menu.ui" line="606"/>
         <source>Lock</source>
         <translation>Bloquear</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="439"/>
+        <location filename="../menu.ui" line="619"/>
         <source>Locks your workspace with your password</source>
         <translation>Bloquea tu área de trabajo con tu contraseña</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="403"/>
+        <location filename="../menu.ui" line="583"/>
         <source>Suspend</source>
         <translation>Suspender</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="416"/>
+        <location filename="../menu.ui" line="596"/>
         <source>Puts your computer in a low power state so that it opens up quickly</source>
         <translation>Pone tu computadora en un estado de bajo poder asi se vuelve a abrir rapido</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="475"/>
-        <location filename="../menu.ui" line="684"/>
+        <location filename="../menu.ui" line="655"/>
+        <location filename="../menu.ui" line="927"/>
         <source>Switch Users</source>
         <translation>Cambiar Usuarios</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="488"/>
+        <location filename="../menu.ui" line="668"/>
         <source>Switches to the logon screen and keeps your session in the background</source>
         <translation>Cambia a la pantalla de inicio de sesión y guarda tu sesión en el fondo</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="498"/>
+        <location filename="../menu.ui" line="678"/>
         <source>Hibernate</source>
         <translation>Hibernar</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="514"/>
+        <location filename="../menu.ui" line="694"/>
         <source>Powers off your computer, but when powered back on, restores the session.</source>
         <translation>Apaga tu computadora, pero cuando prendida otra vez, restora la sesión.</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="551"/>
-        <location filename="../menu.ui" line="623"/>
-        <location filename="../menu.ui" line="703"/>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <location filename="../menu.ui" line="206"/>
+        <location filename="../menu.ui" line="324"/>
         <source>Help</source>
         <translation>Ayuda</translation>
-    </message>
-    <message>
-        <location filename="../menu.ui" line="189"/>
-        <source>Report Bug</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="77"/>
@@ -2029,47 +2022,47 @@ Items that will be kept if you choose to keep files:
         <translation>Hola, %1!</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="324"/>
+        <location filename="../menu.cpp" line="326"/>
         <source>Power Off Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="336"/>
+        <location filename="../menu.cpp" line="338"/>
         <source>Reboot Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="348"/>
+        <location filename="../menu.cpp" line="350"/>
         <source>Log Out Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="589"/>
+        <location filename="../menu.cpp" line="591"/>
         <source>%1 on X11 display %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="591"/>
+        <location filename="../menu.cpp" line="593"/>
         <source>on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="593"/>
+        <location filename="../menu.cpp" line="595"/>
         <source>%1 on VT #%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="595"/>
+        <location filename="../menu.cpp" line="597"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="715"/>
+        <location filename="../menu.cpp" line="717"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="752"/>
+        <location filename="../menu.cpp" line="754"/>
         <source>For &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
