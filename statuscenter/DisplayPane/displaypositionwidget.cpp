@@ -23,6 +23,7 @@
 #include <math.h>
 #include <QX11Info>
 #include <QDebug>
+#include <QMessageBox>
 #include <the-libs_global.h>
 
 #include "displayarrangementwidget.h"
@@ -74,6 +75,19 @@ void DisplayPositionWidget::reloadDisplays() {
             configurator->move(topLeftGeom);
             configurator->show();
         });
+        connect(this, &DisplayPositionWidget::setDefault, daw, [=] {
+            daw->setDefaultOutput(false);
+        });
+        connect(daw, &DisplayArrangementWidget::setDefault, this, &DisplayPositionWidget::setDefault);
+        connect(daw, &DisplayArrangementWidget::setOtherDefault, this, [=] {
+            emit setDefault();
+            for (DisplayArrangementWidget* daw : d->daws) {
+                if (daw->powered()) {
+                    daw->setDefaultOutput(true);
+                    return;
+                }
+            }
+        });
         d->dawSize = d->dawSize.united(daw->requestedGeometry());
         d->daws.append(daw);
     }
@@ -103,6 +117,19 @@ bool DisplayPositionWidget::eventFilter(QObject *watched, QEvent *event) {
 
 void DisplayPositionWidget::on_setButton_clicked()
 {
+    //Perform some sanity checks
+    bool havePoweredDisplay = false;
+    for (DisplayArrangementWidget* daw : d->daws) {
+        if (daw->powered()) havePoweredDisplay = true;
+    }
+
+    if (!havePoweredDisplay) {
+        if (QMessageBox::warning(this, tr("No Powered Displays"), tr("All available displays in your configuration are off. Are you sure you want to set this screen configuration?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No) {
+            //Bail out
+            return;
+        }
+    }
+
     QRect rootWindowRect;
     for (DisplayArrangementWidget* daw : d->daws) {
         if (daw->powered()) {

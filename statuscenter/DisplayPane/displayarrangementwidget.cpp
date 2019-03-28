@@ -21,6 +21,8 @@
 #include <QPainter>
 #include <QX11Info>
 #include <QMouseEvent>
+#include <QIcon>
+#include <the-libs_global.h>
 
 #include "ui_displayarrangementwidget.h"
 #include "displayarrangementwidget.h"
@@ -36,6 +38,7 @@ struct DisplayArrangementWidgetPrivate {
 
     QRectF requestedGeometry;
     bool moved;
+    bool primary = false;
 
     QPoint clickLocation;
     QPoint origin;
@@ -49,6 +52,8 @@ DisplayArrangementWidget::DisplayArrangementWidget(RROutput output, QWidget *par
 {
     ui->setupUi(this);
     d = new DisplayArrangementWidgetPrivate;
+
+    ui->defaultLabel->setPixmap(QIcon::fromTheme("default").pixmap(QSize(16, 16) * theLibsGlobal::getDPIScaling()));
 
     d->output = output;
     d->screenResources = XRRGetScreenResources(QX11Info::display(), QX11Info::appRootWindow());
@@ -70,9 +75,20 @@ DisplayArrangementWidget::DisplayArrangementWidget(RROutput output, QWidget *par
         QPalette pal = QApplication::palette("QWidget");
         if (!powered) { //Display is off
             pal.setColor(QPalette::WindowText, pal.color(QPalette::Disabled, QPalette::WindowText));
+            if (d->primary) emit setOtherDefault();
         }
         this->setPalette(pal);
     });
+    connect(d->configurator, &DisplayConfigurationWidget::setDefault, [=] {
+        emit setDefault();
+        setDefaultOutput(true);
+    });
+
+    if (XRRGetOutputPrimary(QX11Info::display(), QX11Info::appRootWindow()) == output) {
+        setDefaultOutput(true);
+    } else {
+        setDefaultOutput(false);
+    }
 
     QList<XRRModeInfo> availableModes;
     for (int i = 0; i < d->outputInfo->nmode; i++) {
@@ -125,7 +141,6 @@ void DisplayArrangementWidget::doPosition(QPoint origin) {
 void DisplayArrangementWidget::paintEvent(QPaintEvent *paintEvent) {
     QPainter painter(this);
     painter.setBrush(this->palette().color(QPalette::Window));
-    //painter.setBrush(QColor(0, 150, 0));
     painter.setPen(this->palette().color(QPalette::WindowText));
     painter.drawRect(0, 0, this->width() - 1, this->height() - 1);
 }
@@ -151,6 +166,10 @@ void DisplayArrangementWidget::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void DisplayArrangementWidget::set() {
+    if (d->primary && XRRGetOutputPrimary(QX11Info::display(), QX11Info::appRootWindow()) != d->output) {
+        XRRSetOutputPrimary(QX11Info::display(), QX11Info::appRootWindow(), d->output);
+    }
+
     if (d->outputInfo->crtc == 0) {
         if (d->configurator->powered()) {
             //Find a suitable CRTC for this output
@@ -182,8 +201,6 @@ void DisplayArrangementWidget::set() {
                 //Configure the output on this CRTC
                 XRRSetCrtcConfig(QX11Info::display(), d->screenResources, crtc, CurrentTime, d->requestedGeometry.left() * 10, d->requestedGeometry.top() * 10, d->configurator->mode(), RR_Rotate_0, &d->output, 1);
             }
-
-            return;
         } else {
             //Do nothing; the screen isn't powered and doesn't need to be powered
             return;
@@ -208,4 +225,10 @@ void DisplayArrangementWidget::offset(QPoint distance) {
 
 bool DisplayArrangementWidget::powered() {
     return d->configurator->powered();
+}
+
+void DisplayArrangementWidget::setDefaultOutput(bool isDefault) {
+    d->primary = isDefault;
+    d->configurator->setIsDefault(isDefault);
+    ui->defaultLabel->setVisible(isDefault);
 }

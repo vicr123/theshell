@@ -246,7 +246,6 @@ int main(int argc, char *argv[])
     a.installTranslator(&tsVnTranslator);*/
 
     bool autoStart = true;
-    bool startKscreen = true;
     bool startOnboarding = false;
     bool startWm = true;
     bool tutorialDoSettings = false;
@@ -259,7 +258,6 @@ int main(int argc, char *argv[])
             qDebug() << "theShell";
             qDebug() << "Usage: theshell [OPTIONS]";
             qDebug() << "  -a, --no-autostart           Don't autostart executables";
-            qDebug() << "  -k, --no-kscreen             Don't autostart KScreen";
             qDebug() << "      --no-wm                  Don't autostart the window manager";
             qDebug() << "      --onboard                Start with onboarding screen";
             qDebug() << "      --tutorial               Show all tutorials";
@@ -268,8 +266,6 @@ int main(int argc, char *argv[])
             return 0;
         } else if (arg == "-a" || arg == "--no-autostart") {
             autoStart = false;
-        } else if (arg == "-k" || arg == "--no-kscreen") {
-            startKscreen = false;
         } else if (arg == "--no-wm") {
             startWm = false;
         } else if (arg == "--onboard") {
@@ -338,22 +334,6 @@ int main(int argc, char *argv[])
     dbus.registerService("org.thesuite.theshell");
 
     dbusSignals = new DBusSignals();
-
-    if (startKscreen) {
-        QDBusMessage kscreen = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
-        QVariantList args;
-        args.append("kscreen");
-        kscreen.setArguments(args);
-        QDBusConnection::sessionBus().call(kscreen);
-    }
-
-    {
-        QDBusMessage touchpad = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");
-        QVariantList args;
-        args.append("touchpad");
-        touchpad.setArguments(args);
-        QDBusConnection::sessionBus().call(touchpad);
-    }
 
     {
         QDBusMessage sni = QDBusMessage::createMethodCall("org.kde.kded5", "/kded", "org.kde.kded5", "loadModule");

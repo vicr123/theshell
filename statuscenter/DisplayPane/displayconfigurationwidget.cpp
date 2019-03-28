@@ -101,4 +101,18 @@ bool DisplayConfigurationWidget::powered() {
 void DisplayConfigurationWidget::on_displayPower_toggled(bool checked)
 {
     emit poweredChanged(checked);
+    ui->defaultButton->setEnabled(checked);
+}
+
+void DisplayConfigurationWidget::on_defaultButton_toggled(bool checked)
+{
+    if (checked) {
+        emit setDefault();
+    }
+}
+
+void DisplayConfigurationWidget::setIsDefault(bool isDefault) {
+    ui->defaultButton->blockSignals(true);
+    ui->defaultButton->setChecked(isDefault);
+    ui->defaultButton->blockSignals(false);
 }

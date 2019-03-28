@@ -42,9 +42,12 @@ class DisplayArrangementWidget : public QWidget
     public slots:
         void doPosition(QPoint origin);
         void set();
+        void setDefaultOutput(bool isDefault);
 
     signals:
         void configureMe(QWidget* configurator);
+        void setDefault();
+        void setOtherDefault();
 
     private:
         Ui::DisplayArrangementWidget *ui;

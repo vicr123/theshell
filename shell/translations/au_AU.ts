@@ -2603,32 +2603,32 @@ If you say yeah, we&apos;re gonna keep the following from them:
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="288"/>
+        <location filename="../main.cpp" line="284"/>
         <source>Start in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="289"/>
+        <location filename="../main.cpp" line="285"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="313"/>
+        <location filename="../main.cpp" line="309"/>
         <source>theShell already running</source>
         <translation>theShell&apos;s already running, silly</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="314"/>
+        <location filename="../main.cpp" line="310"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell&apos;s already running which is alright but are you sure you wanna start a new one?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="371"/>
+        <location filename="../main.cpp" line="351"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Couldn&apos;t start the manager of windows</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="372"/>
+        <location filename="../main.cpp" line="352"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

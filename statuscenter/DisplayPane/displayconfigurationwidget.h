@@ -39,6 +39,7 @@ class DisplayConfigurationWidget : public QFrame
         void setPowered(bool powered);
         void setModes(QList<XRRModeInfo> modes);
         void setCurrentMode(XRRModeInfo mode);
+        void setIsDefault(bool isDefault);
 
         RRMode mode();
         bool powered();
@@ -48,9 +49,12 @@ class DisplayConfigurationWidget : public QFrame
 
         void on_displayPower_toggled(bool checked);
 
+        void on_defaultButton_toggled(bool checked);
+
     signals:
         void resolutionChanged(QSize resolution);
         void poweredChanged(bool powered);
+        void setDefault();
 
     private:
         Ui::DisplayConfigurationWidget *ui;
