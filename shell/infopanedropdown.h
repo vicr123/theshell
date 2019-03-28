@@ -114,7 +114,6 @@ class InfoPaneDropdown : public QDialog
         void flightModeChanged(bool flight);
         void updateStrutsSignal();
         void updateBarSignal();
-        void redshiftEnabledChanged(bool enabled);
         void keyboardLayoutChanged(QString code);
         void newKeyboardLayoutMenuAvailable(QMenu* menu);
         void statusBarProgress(QString title, QString description, int progress);
@@ -135,29 +134,9 @@ class InfoPaneDropdown : public QDialog
 
         void on_pushButton_7_clicked();
 
-        void on_resolutionButton_clicked();
-
-        void on_startRedshift_timeChanged(const QTime &time);
-
-        void on_endRedshift_timeChanged(const QTime &time);
-
-        void on_redshiftIntensity_sliderMoved(int position);
-
-        void on_redshiftIntensity_sliderReleased();
-
         void processTimer();
 
-        void on_redshiftIntensity_valueChanged(int value);
-
-        void on_redshiftPause_toggled(bool checked);
-
         void on_resetButton_clicked();
-
-        void on_TouchFeedbackSwitch_toggled(bool checked);
-
-        void on_brightnessSlider_sliderMoved(int position);
-
-        void on_brightnessSlider_valueChanged(int value);
 
         void on_settingsList_currentRowChanged(int currentRow);
 
@@ -172,8 +151,6 @@ class InfoPaneDropdown : public QDialog
         void on_windowManager_textEdited(const QString &arg1);
 
         void on_barDesktopsSwitch_toggled(bool checked);
-
-        void on_SuperkeyGatewaySwitch_toggled(bool checked);
 
         void updateSysInfo();
 
@@ -247,8 +224,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_StatusBarSwitch_toggled(bool checked);
 
-        void on_TouchInputSwitch_toggled(bool checked);
-
         void on_SuspendLockScreen_toggled(bool checked);
 
         void on_BatteryChargeScrollBar_valueChanged(int value);
@@ -289,14 +264,6 @@ class InfoPaneDropdown : public QDialog
 
         void updateAccentColourBox();
 
-        void on_dpi100_toggled(bool checked);
-
-        void on_dpi150_toggled(bool checked);
-
-        void on_dpi200_toggled(bool checked);
-
-        void on_dpi300_toggled(bool checked);
-
         void on_AutoShowBarSwitch_toggled(bool checked);
 
         void on_userSettingsStandardAccount_toggled(bool checked);
@@ -318,8 +285,6 @@ class InfoPaneDropdown : public QDialog
         void on_enterCommandAutoStartApps_clicked();
 
         void on_addAutostartApp_clicked();
-
-        void on_redshiftSwitch_toggled(bool checked);
 
         void on_grayColorThemeRadio_toggled(bool checked);
 
@@ -354,10 +319,6 @@ class InfoPaneDropdown : public QDialog
         void on_removeAutostartButton_clicked();
 
         void on_resetDeviceButton_clicked();
-
-        void on_sunlightRedshift_toggled(bool checked);
-
-        void updateRedshiftTime();
 
         void on_systemGTK3Theme_currentIndexChanged(int index);
 

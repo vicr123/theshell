@@ -67,15 +67,11 @@ class InfoPaneDropdownPrivate {
             locationSettings = new QSettings("theSuite", "theShell-location", parent);
         }
 
-        bool isRedshiftOn = false;
-        bool isNewRedshift = true;
         int mouseClickPoint;
         int initialPoint;
         bool mouseMovedUp = false;
         QRect dragRect;
-        bool effectiveRedshiftOn = false;
         bool draggingInfoPane = false;
-        int overrideRedshift = 0;
 
         QMap<QString, QFrame*> printersFrames;
         QMap<QString, QLabel*> printersStats;
@@ -159,7 +155,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     d->startTime.start();
 
     ui->copyrightNotice->setText(tr("Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.").arg("2019"));
-    ui->usesLocation->setPixmap(QIcon::fromTheme("gps").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
 
     d->MainWindowId = MainWindowId;
 
@@ -244,33 +239,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     updateBatteryChart();
 
-    //Check Redshift
-    QProcess* redshiftQuery = new QProcess;
-    redshiftQuery->start("redshift -V");
-    connect(redshiftQuery, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [=](int exitCode, QProcess::ExitStatus exitStatus) {
-        QString output = redshiftQuery->readAll().trimmed();
-        output.remove("redshift ");
-
-        QStringList parts = output.split(".");
-        for (int i = 0; i < parts.count(); i++) {
-            int version = parts.at(i).toInt();
-            if (i == 0) {
-                if (version > 1) {
-                    break;
-                } else if (version < 1) {
-                    d->isNewRedshift = false;
-                    break;
-                }
-            } else if (i == 1) {
-                if (version < 11) {
-                    d->isNewRedshift = false;
-                }
-                break;
-            }
-        }
-        redshiftQuery->deleteLater();
-    });
-
     if (!QFile("/usr/bin/scallop").exists()) {
         ui->resetDeviceButton->setVisible(false);
     }
@@ -351,27 +319,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->systemGTK3Theme->blockSignals(false);
     }
 
-    QString redshiftStart = d->settings.value("display/redshiftStart", "").toString();
-    if (redshiftStart == "") {
-        redshiftStart = ui->startRedshift->time().toString();
-        d->settings.setValue("display/redshiftStart", redshiftStart);
-    }
-    ui->startRedshift->setTime(QTime::fromString(redshiftStart));
-
-    QString redshiftEnd = d->settings.value("display/redshiftEnd", "").toString();
-    if (redshiftEnd == "") {
-        redshiftEnd = ui->endRedshift->time().toString();
-        d->settings.setValue("display/redshiftEnd", redshiftEnd);
-    }
-    ui->endRedshift->setTime(QTime::fromString(redshiftEnd));
-
-    QString redshiftVal = d->settings.value("display/redshiftIntensity", "").toString();
-    if (redshiftVal == "") {
-        redshiftVal = ui->endRedshift->time().toString();
-        d->settings.setValue("display/redshiftIntensity", redshiftVal);
-    }
-    ui->redshiftIntensity->setValue(redshiftVal.toInt());
-
     if (d->settings.value("ui/useFullScreenEndSession", false).toBool()) {
         ui->endSessionConfirmFullScreen->setChecked(true);
         ui->endSessionConfirmInMenu->setChecked(false);
@@ -403,28 +350,12 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->decorativeColorThemeRadio->setChecked(true);
     }
 
-    int dpi = d->settings.value("screen/dpi", 96).toInt();
-    switch (dpi) {
-        case 96:
-            ui->dpi100->setChecked(true);
-            break;
-        case 144:
-            ui->dpi150->setChecked(true);
-            break;
-        case 192:
-            ui->dpi200->setChecked(true);
-            break;
-        case 288:
-            ui->dpi300->setChecked(true);
-            break;
-    }
 
     //Populate the language box
     Internationalisation::fillLanguageBox(ui->localeList);
 
     ui->lockScreenBackground->setText(d->lockScreenSettings->value("background", "/usr/share/tsscreenlock/triangles.svg").toString());
     //ui->lineEdit_2->setText(d->settings.value("startup/autostart", "").toString());
-    ui->redshiftPause->setChecked(!d->settings.value("display/redshiftPaused", true).toBool());
     ui->TextSwitch->setChecked(d->settings.value("bar/showText", true).toBool());
     ui->windowManager->setText(d->settings.value("startup/WindowManagerCommand", "kwin_x11 --no-kactivities").toString());
     ui->barDesktopsSwitch->setChecked(d->settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
@@ -445,7 +376,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->batterySuspend->setValue(d->settings.value("power/batterySuspend", 30).toInt());
     ui->powerScreenOff->setValue(d->settings.value("power/powerScreenOff", 30).toInt());
     ui->powerSuspend->setValue(d->settings.value("power/powerSuspend", 90).toInt());
-    ui->sunlightRedshift->setChecked(d->settings.value("display/redshiftSunlightCycle", false).toBool());
     ui->EmphasiseAppSwitch->setChecked(d->settings.value("notifications/emphasiseApp", true).toBool());
     ui->CompactBarSwitch->setChecked(d->settings.value("bar/compact", false).toBool());
     ui->LocationMasterSwitch->setChecked(d->locationSettings->value("master/master", true).toBool());
@@ -453,7 +383,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->notifyOnConnectPower->setChecked(d->settings.value("power/notifyConnectPower", true).toBool());
     ui->notifyOnUnplug->setChecked(d->settings.value("power/notifyUnplugPower", true).toBool());
     updateAccentColourBox();
-    updateRedshiftTime();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
 
     if (QFile(QDir::homePath() + "/.theshell/mousepassword").exists()) {
@@ -884,105 +813,6 @@ InfoPaneNotOnTopLocker::~InfoPaneNotOnTopLocker() {
 }
 
 void InfoPaneDropdown::processTimer() {
-    QTime time = QTime::currentTime();
-    {
-        int currentMsecs = time.msecsSinceStartOfDay();
-        int startMsecs = ui->startRedshift->time().msecsSinceStartOfDay();
-        int endMsecs = ui->endRedshift->time().msecsSinceStartOfDay();
-        int endIntensity = ui->redshiftIntensity->value();
-        const int oneHour = 3600000;
-        QString redshiftCommand;
-
-        if (ui->redshiftPause->isChecked()) {
-            //Calculate redshift value
-            //Transition to redshift is 1 hour from the start.
-
-            int intensity;
-            if (startMsecs > endMsecs) { //Start time is later then end time
-                if (currentMsecs < endMsecs || currentMsecs > startMsecs) {
-                    intensity = endIntensity;
-                } else if (currentMsecs < startMsecs && currentMsecs > startMsecs - oneHour) {
-                    int timeFrom = currentMsecs - (startMsecs - oneHour);
-                    float percentage = ((float) timeFrom / (float) oneHour);
-                    int progress = (6500 - endIntensity) * percentage;
-                    intensity = 6500 - progress;
-                } else if (currentMsecs > endMsecs && currentMsecs < endMsecs + oneHour) {
-                    int timeFrom = endMsecs - (currentMsecs - oneHour);
-                    float percentage = ((float) timeFrom / (float) oneHour);
-                    int progress = (6500 - endIntensity) * percentage;
-                    intensity = 6500 - progress;
-                } else {
-                    intensity = 6500;
-                }
-            } else { //Start time is earlier then end time
-                if (currentMsecs < endMsecs && currentMsecs > startMsecs) {
-                    intensity = endIntensity;
-                } else if (currentMsecs < startMsecs && currentMsecs > startMsecs - oneHour) {
-                    int timeFrom = currentMsecs - (startMsecs - oneHour);
-                    float percentage = ((float) timeFrom / (float) oneHour);
-                    int progress = (6500 - endIntensity) * percentage;
-                    intensity = 6500 - progress;
-                } else if (currentMsecs > endMsecs && currentMsecs < endMsecs + oneHour) {
-                    int timeFrom = endMsecs - (currentMsecs - oneHour);
-                    float percentage = ((float) timeFrom / (float) oneHour);
-                    int progress = (6500 - endIntensity) * percentage;
-                    intensity = 6500 - progress;
-                } else {
-                    intensity = 6500;
-                }
-            }
-
-            //Check Redshift override
-            if (d->overrideRedshift != 0) {
-                if (intensity == 6500 && d->overrideRedshift == 1) {
-                    d->overrideRedshift = 0; //Reset Redshift override
-                } else if (intensity != 6500 && d->overrideRedshift == 2) {
-                    d->overrideRedshift = 0; //Reset Redshift override
-                } else {
-                    if (d->overrideRedshift == 1) {
-                        intensity = 6500;
-                    } else {
-                        intensity = endIntensity;
-                    }
-                }
-            }
-
-            redshiftCommand = "redshift -O " + QString::number(intensity);
-
-            d->isRedshiftOn = true;
-            if (intensity == 6500 && d->effectiveRedshiftOn) {
-                d->effectiveRedshiftOn = false;
-                ui->redshiftSwitch->setChecked(false);
-                emit redshiftEnabledChanged(false);
-            } else if (intensity != 6500 && !d->effectiveRedshiftOn) {
-                d->effectiveRedshiftOn = true;
-                ui->redshiftSwitch->setChecked(true);
-                emit redshiftEnabledChanged(true);
-            }
-        } else {
-            //Check Redshift Override
-            if (d->overrideRedshift == 2) {
-                redshiftCommand = "redshift -O " + QString::number(endIntensity);
-            } else {
-                redshiftCommand = "redshift -O 6500";
-            }
-
-            if (d->isRedshiftOn) {
-                d->isRedshiftOn = false;
-                d->effectiveRedshiftOn = false;
-                ui->redshiftSwitch->setChecked(false);
-                emit redshiftEnabledChanged(false);
-            }
-        }
-
-        if (d->isNewRedshift) {
-            redshiftCommand += " -P";
-        }
-
-        QProcess* redshiftAdjust = new QProcess();
-        redshiftAdjust->start(redshiftCommand);
-        connect(redshiftAdjust, SIGNAL(finished(int)), redshiftAdjust, SLOT(deleteLater()));
-    }
 
     /*{
         cups_dest_t *destinations;
@@ -1106,15 +936,6 @@ void InfoPaneDropdown::show(dropdownType showWith) {
         }
         completeDragDown();
     }
-
-    //Get Current Brightness
-    QProcess* backlight = new QProcess(this);
-    backlight->start("xbacklight -get");
-    backlight->waitForFinished();
-    float output = ceil(QString(backlight->readAll()).toFloat());
-    delete backlight;
-
-    ui->brightnessSlider->setValue((int) output);
 }
 
 void InfoPaneDropdown::showNoAnimation() {
@@ -1291,55 +1112,6 @@ void InfoPaneDropdown::setGeometry(QRect geometry) {
     this->setGeometry(geometry.x(), geometry.y(), geometry.width(), geometry.height());
 }
 
-void InfoPaneDropdown::on_resolutionButton_clicked()
-{
-    QProcess::startDetached("kcmshell5 kcm_kscreen");
-    this->close();
-}
-
-void InfoPaneDropdown::on_startRedshift_timeChanged(const QTime &time)
-{
-    d->settings.setValue("display/redshiftStart", time.toString());
-    processTimer();
-}
-
-void InfoPaneDropdown::on_endRedshift_timeChanged(const QTime &time)
-{
-    d->settings.setValue("display/redshiftEnd", time.toString());
-    processTimer();
-}
-
-void InfoPaneDropdown::on_redshiftIntensity_sliderMoved(int position)
-{
-    if (d->isNewRedshift) {
-        QProcess::startDetached("redshift -P -O " + QString::number(position));
-    } else {
-        QProcess::startDetached("redshift -O " + QString::number(position));
-    }
-}
-
-void InfoPaneDropdown::on_redshiftIntensity_sliderReleased()
-{
-    if (!d->isRedshiftOn) {
-        if (d->isNewRedshift) {
-            QProcess::startDetached("redshift -P -O 6500");
-        } else {
-            QProcess::startDetached("redshift -O 6500");
-        }
-    }
-}
-
-void InfoPaneDropdown::on_redshiftIntensity_valueChanged(int value)
-{
-    d->settings.setValue("display/redshiftIntensity", value);
-}
-
-void InfoPaneDropdown::on_redshiftPause_toggled(bool checked)
-{
-    processTimer();
-    d->settings.setValue("display/redshiftPaused", !checked);
-}
-
 void InfoPaneDropdown::updateSysInfo() {
     ui->currentBattery->setText(tr("Current Battery Percentage: %1").arg(QString::number(updbus->currentBattery()).append("%")));
 
@@ -1449,23 +1221,6 @@ void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
     }
 }
 
-void InfoPaneDropdown::on_TouchFeedbackSwitch_toggled(bool checked)
-{
-    d->settings.setValue("input/touchFeedbackSound", checked);
-}
-
-void InfoPaneDropdown::on_brightnessSlider_sliderMoved(int position)
-{
-    QProcess* backlight = new QProcess(this);
-    backlight->start("xbacklight -set " + QString::number(position));
-    connect(backlight, SIGNAL(finished(int)), backlight, SLOT(deleteLater()));
-}
-
-void InfoPaneDropdown::on_brightnessSlider_valueChanged(int value)
-{
-    on_brightnessSlider_sliderMoved(value);
-}
-
 void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
 {
     ui->settingsTabs->setCurrentIndex(currentRow);
@@ -1534,11 +1289,6 @@ void InfoPaneDropdown::on_windowManager_textEdited(const QString &arg1)
 void InfoPaneDropdown::on_barDesktopsSwitch_toggled(bool checked)
 {
     d->settings.setValue("bar/showWindowsFromOtherDesktops", checked);
-}
-
-void InfoPaneDropdown::on_SuperkeyGatewaySwitch_toggled(bool checked)
-{
-    d->settings.setValue("input/superkeyGateway", checked);
 }
 
 void InfoPaneDropdown::reject() {
@@ -1990,15 +1740,6 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
         this->setFixedHeight(screenGeometry.height() + 1);
     }
 
-    //Get Current Brightness
-    QProcess* backlight = new QProcess(this);
-    backlight->start("xbacklight -get");
-    backlight->waitForFinished();
-    float output = ceil(QString(backlight->readAll()).toFloat());
-    delete backlight;
-
-    ui->brightnessSlider->setValue((int) output);
-
     d->previousDrags.prepend(y);
     if (d->previousDrags.count() > 10) d->previousDrags.removeLast();
 }
@@ -2381,11 +2122,6 @@ void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
     ui->AutoShowBarExplanation->setEnabled(checked);
 }
 
-void InfoPaneDropdown::on_TouchInputSwitch_toggled(bool checked)
-{
-    d->settings.setValue("input/touch", checked);
-}
-
 void InfoPaneDropdown::on_SuspendLockScreen_toggled(bool checked)
 {
     d->settings.setValue("lockScreen/showOnSuspend", checked);
@@ -2557,34 +2293,6 @@ void InfoPaneDropdown::updateAccentColourBox() {
     }
 }
 
-void InfoPaneDropdown::on_dpi100_toggled(bool checked)
-{
-    if (checked) {
-        d->settings.setValue("screen/dpi", 96);
-    }
-}
-
-void InfoPaneDropdown::on_dpi150_toggled(bool checked)
-{
-    if (checked) {
-        d->settings.setValue("screen/dpi", 144);
-    }
-}
-
-void InfoPaneDropdown::on_dpi200_toggled(bool checked)
-{
-    if (checked) {
-        d->settings.setValue("screen/dpi", 192);
-    }
-}
-
-void InfoPaneDropdown::on_dpi300_toggled(bool checked)
-{
-    if (checked) {
-        d->settings.setValue("screen/dpi", 288);
-    }
-}
-
 void InfoPaneDropdown::on_AutoShowBarSwitch_toggled(bool checked)
 {
     d->settings.setValue("bar/autoshow", checked);
@@ -2753,23 +2461,6 @@ void InfoPaneDropdown::on_addAutostartApp_clicked()
 
     updateAutostart();
     ui->startupStack->setCurrentIndex(0);
-}
-
-void InfoPaneDropdown::on_redshiftSwitch_toggled(bool checked)
-{
-    if (d->effectiveRedshiftOn) {
-        if (checked) { //Turn Redshift back on
-            d->overrideRedshift = 0;
-        } else { //Temporarily disable Redshift
-            d->overrideRedshift = 1;
-        }
-    } else {
-        if (checked) { //Temporarily enable Redshift
-            d->overrideRedshift = 2;
-        } else { //Turn Redshift back off
-            d->overrideRedshift = 0;
-        }
-    }
 }
 
 void InfoPaneDropdown::on_grayColorThemeRadio_toggled(bool checked)
@@ -3025,54 +2716,6 @@ void InfoPaneDropdown::changeEvent(QEvent *event) {
         currentTranslateIndex++;
     }
     QDialog::changeEvent(event);
-}
-
-void InfoPaneDropdown::on_sunlightRedshift_toggled(bool checked)
-{
-    d->settings.setValue("display/redshiftSunlightCycle", checked);
-    updateRedshiftTime();
-}
-
-void InfoPaneDropdown::updateRedshiftTime() {
-    if (!d->settings.value("display/redshiftSunlightCycle", false).toBool()) {
-        //Don't grab location if user doesn't want
-        ui->startRedshift->setEnabled(true);
-        ui->endRedshift->setEnabled(true);
-        return;
-    }
-    ui->startRedshift->setEnabled(false);
-    ui->endRedshift->setEnabled(false);
-
-    geolocation->singleShot()->then([=](Geolocation loc) {
-        QNetworkAccessManager* manager = new QNetworkAccessManager();
-        QNetworkRequest sunriseApi(QUrl(QString("https://api.sunrise-sunset.org/json?lat=%1&lng=%2&formatted=0").arg(loc.latitude).arg(loc.longitude)));
-        sunriseApi.setHeader(QNetworkRequest::UserAgentHeader, QString("theShell/%1").arg(TS_VERSION));
-
-        QNetworkReply* reply = manager->get(sunriseApi);
-        connect(reply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
-            [=](QNetworkReply::NetworkError code){
-            qDebug() << "Error";
-        });
-        connect(reply, &QNetworkReply::finished, [=] {
-            QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-            QJsonObject root = doc.object();
-            if (root.value("status").toString() != "OK") {
-                qDebug() << root.value("status").toString();
-                return;
-            }
-
-            //The time returned should be midway into the transition period, add/remove 30 minutes to compensate
-            QJsonObject results = root.value("results").toObject();
-            QDateTime sunrise = QDateTime::fromString(results.value("sunrise").toString(), Qt::ISODate).toLocalTime().addSecs(-1800);
-            QDateTime sunset = QDateTime::fromString(results.value("sunset").toString(), Qt::ISODate).toLocalTime().addSecs(1800);
-
-            ui->startRedshift->setDateTime(sunset);
-            ui->endRedshift->setDateTime(sunrise);
-
-            reply->deleteLater();
-            manager->deleteLater();
-        });
-    });
 }
 
 void InfoPaneDropdown::paintEvent(QPaintEvent *event) {

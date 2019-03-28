@@ -192,10 +192,6 @@ private slots:
 
     void on_batteryLabel_mouseReleased();
 
-    void on_notifications_dragging(int , int );
-
-    void on_notifications_mouseReleased();
-
     void on_actionNone_triggered();
 
     void on_actionNotifications_triggered();

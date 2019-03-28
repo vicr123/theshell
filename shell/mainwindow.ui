@@ -1034,13 +1034,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="StatusBarRedshift">
-         <property name="text">
-          <string notr="true">Redshift</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="StatusBarRecording">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(200, 0, 0);

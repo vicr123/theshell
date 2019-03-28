@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets dbus thelib svg x11extras
+QT       += core gui widgets dbus thelib svg x11extras network
 
 TARGET = tsdisplay
 TEMPLATE = lib
@@ -88,14 +88,16 @@ HEADERS += \
     displaypane.h \
     displaypositionwidget.h \
     displayarrangementwidget.h \
-    displayconfigurationwidget.h
+    displayconfigurationwidget.h \
+    redshiftengine.h
 
 SOURCES += \
     plugin.cpp \
     displaypane.cpp \
     displaypositionwidget.cpp \
     displayarrangementwidget.cpp \
-    displayconfigurationwidget.cpp
+    displayconfigurationwidget.cpp \
+    redshiftengine.cpp
 
 FORMS += \
     displaypane.ui \

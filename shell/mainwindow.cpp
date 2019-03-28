@@ -118,9 +118,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(infoPane, &InfoPaneDropdown::flightModeChanged, [=](bool flight) {
         ui->StatusBarFlight->setVisible(flight);
     });
-    connect(infoPane, &InfoPaneDropdown::redshiftEnabledChanged, [=](bool enabled) {
-        ui->StatusBarRedshift->setVisible(enabled);
-    });
     connect(infoPane, &InfoPaneDropdown::keyboardLayoutChanged, [=](QString code) {
         ui->keyboardButton->setText(code);
     });
@@ -189,7 +186,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(infoPane, &InfoPaneDropdown::newSnack, [=](QWidget* snack) {
         ui->StatusBarSnacks->addWidget(snack);
     });
-    ui->StatusBarRedshift->setVisible(false);
     ui->keyboardButton->setVisible(false);
 
     connect(ui->openMenuCompact, SIGNAL(customContextMenuRequested(QPoint)), ui->openMenu, SIGNAL(customContextMenuRequested(QPoint)));
@@ -291,7 +287,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarFlight->setPixmap(QIcon::fromTheme("flight-mode").pixmap(ic16));
     ui->StatusBarFlight->setVisible(settings.value("flightmode/on", false).toBool());
     ui->StatusBarFrame->installEventFilter(this);
-    ui->StatusBarRedshift->setPixmap(QIcon::fromTheme("redshift-on").pixmap(ic16));
     ui->StatusBarRecording->setPixmap(QIcon::fromTheme("media-record").pixmap(ic16));
 
     ((QBoxLayout*) ui->centralWidget->layout())->removeWidget(ui->StatusBarHoverFrame);
@@ -1921,17 +1916,6 @@ void MainWindow::on_batteryLabel_dragging(int x, int y)
 }
 
 void MainWindow::on_batteryLabel_mouseReleased()
-{
-    infoPane->completeDragDown();
-}
-
-void MainWindow::on_notifications_dragging(int x, int y)
-{
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    infoPane->dragDown(InfoPaneDropdown::Clock, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
-}
-
-void MainWindow::on_notifications_mouseReleased()
 {
     infoPane->completeDragDown();
 }
