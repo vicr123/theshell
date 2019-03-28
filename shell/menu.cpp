@@ -49,6 +49,7 @@ Menu::Menu(QWidget *parent) :
 
     ui->commandLinkButton->setProperty("type", "destructive");
     ui->commandLinkButton_2->setProperty("type", "destructive");
+    ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
 
     if (!QApplication::arguments().contains("--debug")) {
         ui->exitButton->setVisible(false);
@@ -160,7 +161,7 @@ void Menu::prepareForShow() {
 
     this->setGeometry(left, screenGeometry.y() , this->width(), screenGeometry.height());
 
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(0, false);
     ui->lineEdit->setText("");
     on_lineEdit_textEdited("");
     ui->appsListView->scrollToTop();

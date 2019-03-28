@@ -2024,53 +2024,53 @@ Items that will be kept if you choose to keep files:
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="77"/>
-        <location filename="../menu.cpp" line="79"/>
+        <location filename="../menu.cpp" line="78"/>
+        <location filename="../menu.cpp" line="80"/>
         <source>Hey, %1!</source>
         <translation>Привет, %1!</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="326"/>
+        <location filename="../menu.cpp" line="327"/>
         <source>Power Off Anyway</source>
         <translation>Всё равно выключить</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="338"/>
+        <location filename="../menu.cpp" line="339"/>
         <source>Reboot Anyway</source>
         <translation>Всё равно перезагрузить</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="350"/>
+        <location filename="../menu.cpp" line="351"/>
         <source>Log Out Anyway</source>
         <translation>Всё равно выйти</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="591"/>
+        <location filename="../menu.cpp" line="592"/>
         <source>%1 on X11 display %2</source>
         <translation>%1 на экране %2 X11</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="593"/>
+        <location filename="../menu.cpp" line="594"/>
         <source>on %1</source>
         <translation>на %1</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="595"/>
+        <location filename="../menu.cpp" line="596"/>
         <source>%1 on VT #%2</source>
         <translation>%1 на VT #%2</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="597"/>
+        <location filename="../menu.cpp" line="598"/>
         <source>Session</source>
         <translation>Сессия</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="717"/>
+        <location filename="../menu.cpp" line="718"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation>Действия для &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="754"/>
+        <location filename="../menu.cpp" line="755"/>
         <source>For &quot;%1&quot;</source>
         <translation>Для &quot;%1&quot;</translation>
     </message>

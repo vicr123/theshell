@@ -2022,53 +2022,53 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="77"/>
-        <location filename="../menu.cpp" line="79"/>
+        <location filename="../menu.cpp" line="78"/>
+        <location filename="../menu.cpp" line="80"/>
         <source>Hey, %1!</source>
         <translation>Hey, %1!</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="326"/>
+        <location filename="../menu.cpp" line="327"/>
         <source>Power Off Anyway</source>
         <translation>Trotzdem ausschalten</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="338"/>
+        <location filename="../menu.cpp" line="339"/>
         <source>Reboot Anyway</source>
         <translation>Trotzdem Neu starten</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="350"/>
+        <location filename="../menu.cpp" line="351"/>
         <source>Log Out Anyway</source>
         <translation>Trotzdem Abmelden</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="591"/>
+        <location filename="../menu.cpp" line="592"/>
         <source>%1 on X11 display %2</source>
         <translation>%1 auf X11 display %2</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="593"/>
+        <location filename="../menu.cpp" line="594"/>
         <source>on %1</source>
         <translation>auf %1</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="595"/>
+        <location filename="../menu.cpp" line="596"/>
         <source>%1 on VT #%2</source>
         <translation>%1 auf VT #%2</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="597"/>
+        <location filename="../menu.cpp" line="598"/>
         <source>Session</source>
         <translation>Sitzung</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="717"/>
+        <location filename="../menu.cpp" line="718"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation>Aktionen für &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="754"/>
+        <location filename="../menu.cpp" line="755"/>
         <source>For &quot;%1&quot;</source>
         <translation>Für &quot;%1&quot;</translation>
     </message>

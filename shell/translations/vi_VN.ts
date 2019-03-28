@@ -2018,53 +2018,53 @@ Tập tin này có thể giữ lại:
         <translation>Giúp</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="77"/>
-        <location filename="../menu.cpp" line="79"/>
+        <location filename="../menu.cpp" line="78"/>
+        <location filename="../menu.cpp" line="80"/>
         <source>Hey, %1!</source>
         <translation>Chào %1!</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="326"/>
+        <location filename="../menu.cpp" line="327"/>
         <source>Power Off Anyway</source>
         <translation>Vẫn tắt nguồn</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="338"/>
+        <location filename="../menu.cpp" line="339"/>
         <source>Reboot Anyway</source>
         <translation>Vẫn khởi động lại</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="350"/>
+        <location filename="../menu.cpp" line="351"/>
         <source>Log Out Anyway</source>
         <translation>Vẫn đang xuất</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="591"/>
+        <location filename="../menu.cpp" line="592"/>
         <source>%1 on X11 display %2</source>
         <translation>%1 ở màn hình X11 %2</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="593"/>
+        <location filename="../menu.cpp" line="594"/>
         <source>on %1</source>
         <translation>ở %1</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="595"/>
+        <location filename="../menu.cpp" line="596"/>
         <source>%1 on VT #%2</source>
         <translation>%1 ở VT #%2</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="597"/>
+        <location filename="../menu.cpp" line="598"/>
         <source>Session</source>
         <translation>Phiên</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="717"/>
+        <location filename="../menu.cpp" line="718"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation>Hoạt động cho &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="754"/>
+        <location filename="../menu.cpp" line="755"/>
         <source>For &quot;%1&quot;</source>
         <translation>Cho &quot;%1&quot;</translation>
     </message>
