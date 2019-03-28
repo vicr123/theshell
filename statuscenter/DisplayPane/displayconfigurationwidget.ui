@@ -75,6 +75,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="toolTip">
+        <string>Set as Default monitor</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -99,6 +102,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Done</string>
        </property>
        <property name="text">
         <string/>

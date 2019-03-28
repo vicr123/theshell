@@ -30,6 +30,8 @@
 
 #include <X11/extensions/Xrandr.h>
 
+const float ScreenScalingFactor = 10 * theLibsGlobal::getDPIScaling();
+
 struct DisplayArrangementWidgetPrivate {
     RROutput output;
 
@@ -68,7 +70,7 @@ DisplayArrangementWidget::DisplayArrangementWidget(RROutput output, QWidget *par
 
     d->configurator = new DisplayConfigurationWidget(QString::fromLatin1(d->outputInfo->name));
     connect(d->configurator, &DisplayConfigurationWidget::resolutionChanged, this, [=](QSize resolution) {
-        d->requestedGeometry.setSize(QSizeF(resolution) / 10);
+        d->requestedGeometry.setSize(QSizeF(resolution) / ScreenScalingFactor);
         this->resize(d->requestedGeometry.size().toSize());
     });
     connect(d->configurator, &DisplayConfigurationWidget::poweredChanged, this, [=](bool powered) {
@@ -98,12 +100,12 @@ DisplayArrangementWidget::DisplayArrangementWidget(RROutput output, QWidget *par
 
     if (d->outputInfo->crtc == 0) {
         d->configurator->setPowered(false);
-        d->requestedGeometry = QRectF(0, 0, modes.first().width / 10, modes.first().height / 10);
+        d->requestedGeometry = QRectF(0, 0, modes.first().width / ScreenScalingFactor, modes.first().height / ScreenScalingFactor);
         d->configurator->setCurrentMode(modes.first());
     } else {
         d->configurator->setPowered(true);
         XRRCrtcInfo* currentCrtc = XRRGetCrtcInfo(QX11Info::display(), d->screenResources, d->outputInfo->crtc);
-        d->requestedGeometry = QRectF(QPointF(currentCrtc->x, currentCrtc->y) / 10, QSizeF(currentCrtc->width, currentCrtc->height) / 10);
+        d->requestedGeometry = QRectF(QPointF(currentCrtc->x, currentCrtc->y) / ScreenScalingFactor, QSizeF(currentCrtc->width, currentCrtc->height) / ScreenScalingFactor);
         d->configurator->setCurrentMode(modes.value(currentCrtc->mode));
         XRRFreeCrtcInfo(currentCrtc);
     }
@@ -126,7 +128,7 @@ QRect DisplayArrangementWidget::requestedGeometry() {
 void DisplayArrangementWidget::doPosition(QPoint origin) {
     d->origin = origin;
     this->setGeometry(QRect(d->requestedGeometry.topLeft().toPoint() + origin, d->requestedGeometry.size().toSize()));
-    ui->geom->setText(QString("%1,%2").arg(d->requestedGeometry.left() * 10).arg(d->requestedGeometry.top() * 10));
+    ui->geom->setText(QString("%1,%2").arg(d->requestedGeometry.left() * ScreenScalingFactor).arg(d->requestedGeometry.top() * ScreenScalingFactor));
     this->setVisible(true);
 
     QPalette pal = QApplication::palette("QWidget");
@@ -155,7 +157,7 @@ void DisplayArrangementWidget::mousePressEvent(QMouseEvent *event) {
 void DisplayArrangementWidget::mouseMoveEvent(QMouseEvent *event) {
     move(mapToParent(event->pos() - d->clickLocation));
     d->requestedGeometry.moveTopLeft(this->geometry().topLeft() - d->origin);
-    ui->geom->setText(QString("%1,%2").arg(d->requestedGeometry.left() * 10).arg(d->requestedGeometry.top() * 10));
+    ui->geom->setText(QString("%1,%2").arg(d->requestedGeometry.left() * ScreenScalingFactor).arg(d->requestedGeometry.top() * ScreenScalingFactor));
     d->moved = true;
 }
 
@@ -183,8 +185,8 @@ void DisplayArrangementWidget::set() {
                 if (crtcInfo->noutput > 0) {
                     //This CRTC is already being used, but let's check if we can clone the displays
                     if (crtcInfo->mode != d->configurator->mode()) continue;
-                    if (crtcInfo->x != d->requestedGeometry.left() * 10) continue;
-                    if (crtcInfo->y != d->requestedGeometry.top() * 10) continue;
+                    if (crtcInfo->x != d->requestedGeometry.left() * ScreenScalingFactor) continue;
+                    if (crtcInfo->y != d->requestedGeometry.top() * ScreenScalingFactor) continue;
                     if (crtcInfo->rotation != RR_Rotate_0) continue;
 
                     //We can use this CRTC
@@ -199,7 +201,7 @@ void DisplayArrangementWidget::set() {
 
             if (crtc != None) {
                 //Configure the output on this CRTC
-                XRRSetCrtcConfig(QX11Info::display(), d->screenResources, crtc, CurrentTime, d->requestedGeometry.left() * 10, d->requestedGeometry.top() * 10, d->configurator->mode(), RR_Rotate_0, &d->output, 1);
+                XRRSetCrtcConfig(QX11Info::display(), d->screenResources, crtc, CurrentTime, d->requestedGeometry.left() * ScreenScalingFactor, d->requestedGeometry.top() * ScreenScalingFactor, d->configurator->mode(), RR_Rotate_0, &d->output, 1);
             }
         } else {
             //Do nothing; the screen isn't powered and doesn't need to be powered
@@ -208,7 +210,7 @@ void DisplayArrangementWidget::set() {
     } else {
         if (d->configurator->powered()) {
             //Adjust this CRTC
-            XRRSetCrtcConfig(QX11Info::display(), d->screenResources, d->outputInfo->crtc, CurrentTime, d->requestedGeometry.left() * 10, d->requestedGeometry.top() * 10, d->configurator->mode(), RR_Rotate_0, &d->output, 1);
+            XRRSetCrtcConfig(QX11Info::display(), d->screenResources, d->outputInfo->crtc, CurrentTime, d->requestedGeometry.left() * ScreenScalingFactor, d->requestedGeometry.top() * ScreenScalingFactor, d->configurator->mode(), RR_Rotate_0, &d->output, 1);
         } else {
             //Turn off this CRTC
             XRRSetCrtcConfig(QX11Info::display(), d->screenResources, d->outputInfo->crtc, CurrentTime, 0, 0, None, RR_Rotate_0, nullptr, 0);
@@ -220,7 +222,7 @@ void DisplayArrangementWidget::offset(QPoint distance) {
     //Offset the displays so the top left is always 0,0
     d->requestedGeometry.moveTopLeft(d->requestedGeometry.topLeft() + distance);
     d->origin -= distance;
-    ui->geom->setText(QString("%1,%2").arg(d->requestedGeometry.left() * 10).arg(d->requestedGeometry.top() * 10));
+    ui->geom->setText(QString("%1,%2").arg(d->requestedGeometry.left() * ScreenScalingFactor).arg(d->requestedGeometry.top() * ScreenScalingFactor));
 }
 
 bool DisplayArrangementWidget::powered() {

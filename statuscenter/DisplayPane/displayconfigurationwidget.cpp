@@ -34,7 +34,7 @@ DisplayConfigurationWidget::DisplayConfigurationWidget(QString displayName, QWid
 
     ui->displayName->setText(displayName);
 
-    this->setFixedWidth(300);
+    this->setFixedWidth(300 * theLibsGlobal::getDPIScaling());
     this->setFixedHeight(this->sizeHint().height());
 }
 

@@ -28,6 +28,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QTimer>
+#include <QScroller>
 
 struct DisplayPanePrivate {
     QSettings settings;
@@ -95,6 +96,8 @@ DisplayPane::DisplayPane(QWidget *parent) :
         sendMessage("set-switch", {d->redshiftSwitch, enabled});
         snack->setVisible(enabled);
     });
+
+    QScroller::grabGesture(ui->scrollArea->viewport(), QScroller::LeftMouseButtonGesture);
 }
 
 DisplayPane::~DisplayPane()
