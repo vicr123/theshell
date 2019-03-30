@@ -33,13 +33,14 @@ class DisplayConfigurationWidget : public QFrame
         Q_OBJECT
 
     public:
-        explicit DisplayConfigurationWidget(QString displayName, QWidget *parent = nullptr);
+        explicit DisplayConfigurationWidget(QWidget *parent = nullptr);
         ~DisplayConfigurationWidget();
 
         void setPowered(bool powered);
         void setModes(QList<XRRModeInfo> modes);
         void setCurrentMode(XRRModeInfo mode);
         void setIsDefault(bool isDefault);
+        void setDisplayName(QString displayName);
 
         RRMode mode();
         bool powered();

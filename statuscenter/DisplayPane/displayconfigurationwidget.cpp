@@ -25,14 +25,12 @@ struct DisplayConfigurationWidgetPrivate {
     QList<XRRModeInfo> modes;
 };
 
-DisplayConfigurationWidget::DisplayConfigurationWidget(QString displayName, QWidget *parent) :
+DisplayConfigurationWidget::DisplayConfigurationWidget(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::DisplayConfigurationWidget)
 {
     ui->setupUi(this);
     d = new DisplayConfigurationWidgetPrivate();
-
-    ui->displayName->setText(displayName);
 
     this->setFixedWidth(300 * theLibsGlobal::getDPIScaling());
     this->setFixedHeight(this->sizeHint().height());
@@ -42,6 +40,10 @@ DisplayConfigurationWidget::~DisplayConfigurationWidget()
 {
     delete d;
     delete ui;
+}
+
+void DisplayConfigurationWidget::setDisplayName(QString displayName) {
+    ui->displayName->setText(displayName);
 }
 
 void DisplayConfigurationWidget::setModes(QList<XRRModeInfo> modes) {

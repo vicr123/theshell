@@ -43,6 +43,7 @@ class DisplayArrangementWidget : public QWidget
         void doPosition(QPoint origin);
         void set();
         void setDefaultOutput(bool isDefault);
+        void updateOutput();
 
     signals:
         void configureMe(QWidget* configurator);

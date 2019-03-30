@@ -21,6 +21,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QScroller>
+
 #include "menu.h"
 #include "infopanedropdown.h"
 
@@ -398,6 +400,8 @@ MainWindow::MainWindow(QWidget *parent) :
         if (statusBarPercentage == -2) statusBarProgressTimer->stop();
     });
     ui->StatusBarProgressSpinner->setFixedSize(QSize(16, 16) * getDPIScaling());
+
+    QScroller::grabGesture(ui->infoScrollArea->viewport(), QScroller::LeftMouseButtonGesture);
 
     //ui->infoScrollArea->setFixedHeight(ui->InfoScrollWidget->height());
 

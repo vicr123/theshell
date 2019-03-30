@@ -571,6 +571,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         d->keyboardLayouts = layouts;
         setKeyboardLayout(d->settings.value("input/currentLayout", "us(basic)").toString());
     });
+    connect(tVirtualKeyboard::instance(), &tVirtualKeyboard::keyboardVisibleChanged, this, &InfoPaneDropdown::loadNewKeyboardLayoutMenu);
 
     //Set up timer ringtones
     d->ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
@@ -1228,7 +1229,7 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     //Set up settings
     if (ui->settingsTabs->currentWidget() == ui->NotificationsSettings) { //Notifications
         setupNotificationsSettingsPane();
-    } else if (currentRow == 5) { //Location
+    } else if (currentRow == 4) { //Location
         setupLocationSettingsPane();
     } else if (currentRow == ui->settingsTabs->indexOf(ui->UserSettings)) { //Users
         setupUsersSettingsPane();
@@ -2990,6 +2991,14 @@ void InfoPaneDropdown::loadNewKeyboardLayoutMenu() {
                 action->setChecked(true);
             }
         }
+
+        if (tVirtualKeyboard::instance()->isKeyboardRunning()) {
+            menu->addSeparator();
+            menu->addAction(tr("Show Touch Keyboard"), [=] {
+                tVirtualKeyboard::instance()->showKeyboard();
+            });
+        }
+
         emit newKeyboardLayoutMenuAvailable(menu);
     }
     QApplication::processEvents();

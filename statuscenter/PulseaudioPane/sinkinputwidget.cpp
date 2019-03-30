@@ -20,6 +20,8 @@
 #include "sinkinputwidget.h"
 #include "ui_sinkinputwidget.h"
 
+#include <QPointer>
+
 SinkInputWidget::SinkInputWidget(pa_context* ctx, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SinkInputWidget)
@@ -45,11 +47,14 @@ void SinkInputWidget::updateInfo(pa_sink_input_info info) {
         ui->nameLabel->setText(tr("Playback Stream").toUpper());
     } else {
         pa_context_get_client_info(ctx, info.client, [](pa_context* ctx, const pa_client_info* info, int eol, void* userdata) {
-            if (info) {
-                SinkInputWidget* w = static_cast<SinkInputWidget*>(userdata);
-                w->ui->nameLabel->setText(QString::fromLocal8Bit(info->name).toUpper());
+
+            QPointer<SinkInputWidget>* w = static_cast<QPointer<SinkInputWidget>*>(userdata);
+            if (info && !w->isNull()) {
+                w->data()->ui->nameLabel->setText(QString::fromLocal8Bit(info->name).toUpper());
+            } else if (eol) {
+                delete w;
             }
-        }, this);
+        }, new QPointer<SinkInputWidget>(this));
     }
     ui->descriptionLabel->setText(QString::fromLocal8Bit(info.name));
     ui->muteButton->setChecked(info.mute);

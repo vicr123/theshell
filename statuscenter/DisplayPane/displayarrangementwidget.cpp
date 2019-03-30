@@ -35,8 +35,8 @@ const float ScreenScalingFactor = 10 * theLibsGlobal::getDPIScaling();
 struct DisplayArrangementWidgetPrivate {
     RROutput output;
 
-    XRRScreenResources* screenResources;
-    XRROutputInfo* outputInfo;
+    XRRScreenResources* screenResources = nullptr;
+    XRROutputInfo* outputInfo = nullptr;
 
     QRectF requestedGeometry;
     bool moved;
@@ -58,17 +58,8 @@ DisplayArrangementWidget::DisplayArrangementWidget(RROutput output, QWidget *par
     ui->defaultLabel->setPixmap(QIcon::fromTheme("default").pixmap(QSize(16, 16) * theLibsGlobal::getDPIScaling()));
 
     d->output = output;
-    d->screenResources = XRRGetScreenResources(QX11Info::display(), QX11Info::appRootWindow());
-    d->outputInfo = XRRGetOutputInfo(QX11Info::display(), d->screenResources, output);
 
-    QMap<RRMode, XRRModeInfo> modes;
-    for (int i = 0; i < d->screenResources->nmode; i++) {
-        modes.insert(d->screenResources->modes[i].id, d->screenResources->modes[i]);
-    }
-
-    ui->screenName->setText(QString::fromLatin1(d->outputInfo->name));
-
-    d->configurator = new DisplayConfigurationWidget(QString::fromLatin1(d->outputInfo->name));
+    d->configurator = new DisplayConfigurationWidget();
     connect(d->configurator, &DisplayConfigurationWidget::resolutionChanged, this, [=](QSize resolution) {
         d->requestedGeometry.setSize(QSizeF(resolution) / ScreenScalingFactor);
         this->resize(d->requestedGeometry.size().toSize());
@@ -86,7 +77,34 @@ DisplayArrangementWidget::DisplayArrangementWidget(RROutput output, QWidget *par
         setDefaultOutput(true);
     });
 
-    if (XRRGetOutputPrimary(QX11Info::display(), QX11Info::appRootWindow()) == output) {
+    updateOutput();
+}
+
+DisplayArrangementWidget::~DisplayArrangementWidget()
+{
+    XRRFreeScreenResources(d->screenResources);
+    d->configurator->deleteLater();
+
+    delete d;
+    delete ui;
+}
+
+void DisplayArrangementWidget::updateOutput() {
+    if (d->outputInfo != nullptr) XRRFreeOutputInfo(d->outputInfo);
+    if (d->screenResources != nullptr) XRRFreeScreenResources(d->screenResources);
+    d->screenResources = XRRGetScreenResources(QX11Info::display(), QX11Info::appRootWindow());
+    d->outputInfo = XRRGetOutputInfo(QX11Info::display(), d->screenResources, d->output);
+
+    ui->screenName->setText(QString::fromLatin1(d->outputInfo->name));
+    d->configurator->setDisplayName(QString::fromLatin1(d->outputInfo->name));
+
+    QMap<RRMode, XRRModeInfo> modes;
+    for (int i = 0; i < d->screenResources->nmode; i++) {
+        modes.insert(d->screenResources->modes[i].id, d->screenResources->modes[i]);
+    }
+
+
+    if (XRRGetOutputPrimary(QX11Info::display(), QX11Info::appRootWindow()) == d->output) {
         setDefaultOutput(true);
     } else {
         setDefaultOutput(false);
@@ -109,16 +127,6 @@ DisplayArrangementWidget::DisplayArrangementWidget(RROutput output, QWidget *par
         d->configurator->setCurrentMode(modes.value(currentCrtc->mode));
         XRRFreeCrtcInfo(currentCrtc);
     }
-
-}
-
-DisplayArrangementWidget::~DisplayArrangementWidget()
-{
-    XRRFreeScreenResources(d->screenResources);
-    d->configurator->deleteLater();
-
-    delete d;
-    delete ui;
 }
 
 QRect DisplayArrangementWidget::requestedGeometry() {

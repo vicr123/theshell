@@ -26,6 +26,7 @@
 #include <QMessageBox>
 #include <the-libs_global.h>
 
+#include "nativeeventfilter.h"
 #include "displayarrangementwidget.h"
 
 #include <X11/Xlib.h>
@@ -49,7 +50,10 @@ DisplayPositionWidget::DisplayPositionWidget(QWidget *parent) :
     ui->screensArea->installEventFilter(this);
     ui->screensArea->setFixedHeight(300 * theLibsGlobal::getDPIScaling());
 
-    reloadDisplays();
+    //Register for XRandR events
+    QApplication::instance()->installNativeEventFilter(new NativeEventFilter(this));
+    XRRSelectInput(QX11Info::display(), QX11Info::appRootWindow(), RRScreenChangeNotifyMask | RRCrtcChangeNotifyMask | RROutputChangeNotifyMask | RROutputPropertyNotifyMask);
+    loadDisplays();
 }
 
 DisplayPositionWidget::~DisplayPositionWidget()
@@ -58,7 +62,7 @@ DisplayPositionWidget::~DisplayPositionWidget()
     delete ui;
 }
 
-void DisplayPositionWidget::reloadDisplays() {
+void DisplayPositionWidget::loadDisplays() {
     //Generate all DAWs and calculate encompassing rectangle
     XRRMonitorInfo* monitorInfo;
     int monitorCount;
@@ -73,7 +77,12 @@ void DisplayPositionWidget::reloadDisplays() {
             QPoint topLeftGeom = ui->screensContent->mapTo(this, daw->geometry().topRight()) + QPoint(10,0);
             configurator->setParent(this);
             configurator->move(topLeftGeom);
+            if (configurator->geometry().right() > this->width()) {
+                topLeftGeom = ui->screensContent->mapTo(this, daw->geometry().topLeft()) - QPoint(10 + configurator->width(), 0);
+                configurator->move(topLeftGeom);
+            }
             configurator->show();
+            configurator->raise();
         });
         connect(this, &DisplayPositionWidget::setDefault, daw, [=] {
             daw->setDefaultOutput(false);
@@ -99,6 +108,14 @@ void DisplayPositionWidget::reloadDisplays() {
     d->dawSize.moveCenter(QPoint(ui->screensArea->width() / 2, ui->screensArea->height() / 2));
 
     //Render each DAW
+    emit repositionDisplays(d->dawSize.topLeft());
+}
+
+void DisplayPositionWidget::reloadDisplays() {
+    for (DisplayArrangementWidget* daw : d->daws) {
+        daw->updateOutput();
+    }
+
     emit repositionDisplays(d->dawSize.topLeft());
 }
 

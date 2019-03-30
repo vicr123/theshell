@@ -59,7 +59,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sinkinputwidget.cpp" line="45"/>
+        <location filename="../sinkinputwidget.cpp" line="47"/>
         <source>Playback Stream</source>
         <translation type="unfinished"></translation>
     </message>

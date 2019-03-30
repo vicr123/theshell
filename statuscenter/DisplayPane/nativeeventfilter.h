@@ -17,40 +17,28 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef DISPLAYPOSITIONWIDGET_H
-#define DISPLAYPOSITIONWIDGET_H
+#ifndef NATIVEEVENTFILTER_H
+#define NATIVEEVENTFILTER_H
 
-#include <QWidget>
+#include <QObject>
+#include <QAbstractNativeEventFilter>
+#include "displaypositionwidget.h"
 
-namespace Ui {
-    class DisplayPositionWidget;
-}
-
-struct DisplayPositionWidgetPrivate;
-class DisplayPositionWidget : public QWidget
+struct NativeEventFilterPrivate;
+class NativeEventFilter : public QObject, public QAbstractNativeEventFilter
 {
         Q_OBJECT
-
     public:
-        explicit DisplayPositionWidget(QWidget *parent = nullptr);
-        ~DisplayPositionWidget();
+        explicit NativeEventFilter(DisplayPositionWidget *parent = nullptr);
+        ~NativeEventFilter();
+
+        bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
+    signals:
 
     public slots:
-        void loadDisplays();
-        void reloadDisplays();
-
-    signals:
-        void repositionDisplays(QPoint origin);
-        void setDefault();
-
-    private slots:
-        void on_setButton_clicked();
 
     private:
-        Ui::DisplayPositionWidget *ui;
-
-        DisplayPositionWidgetPrivate* d;
-        bool eventFilter(QObject* watched, QEvent* event);
+        NativeEventFilterPrivate* d;
 };
 
-#endif // DISPLAYPOSITIONWIDGET_H
+#endif // NATIVEEVENTFILTER_H

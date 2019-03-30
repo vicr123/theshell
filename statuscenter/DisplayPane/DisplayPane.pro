@@ -89,7 +89,8 @@ HEADERS += \
     displaypositionwidget.h \
     displayarrangementwidget.h \
     displayconfigurationwidget.h \
-    redshiftengine.h
+    redshiftengine.h \
+    nativeeventfilter.h
 
 SOURCES += \
     plugin.cpp \
@@ -97,7 +98,8 @@ SOURCES += \
     displaypositionwidget.cpp \
     displayarrangementwidget.cpp \
     displayconfigurationwidget.cpp \
-    redshiftengine.cpp
+    redshiftengine.cpp \
+    nativeeventfilter.cpp
 
 FORMS += \
     displaypane.ui \
