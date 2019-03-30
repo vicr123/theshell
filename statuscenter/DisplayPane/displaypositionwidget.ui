@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -30,7 +30,7 @@
    <item>
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Select a screen to configure it, or drag it around to reposition it.</string>
+      <string>Select a screen to configure it, or drag it around to reposition it. To duplicate displays, drag them on top of each other and set them to have the same resolution.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -51,7 +51,7 @@
         <x>0</x>
         <y>0</y>
         <width>436</width>
-        <height>232</height>
+        <height>202</height>
        </rect>
       </property>
      </widget>

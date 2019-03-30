@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Frame</string>
+   <string notr="true">Frame</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -82,7 +82,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="default"/>
+        <iconset theme="default">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -110,7 +111,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="dialog-ok"/>
+        <iconset theme="dialog-ok">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="flat">
         <bool>true</bool>

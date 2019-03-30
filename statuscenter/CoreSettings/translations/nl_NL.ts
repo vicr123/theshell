@@ -4,11 +4,6 @@
 <context>
     <name>GesturePane</name>
     <message>
-        <location filename="../Input/gesturepane.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../Input/gesturepane.ui" line="40"/>
         <source>Gestures</source>
         <translation type="unfinished"></translation>
@@ -57,11 +52,6 @@
 <context>
     <name>InputPane</name>
     <message>
-        <location filename="../Input/inputpane.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../Input/inputpane.ui" line="95"/>
         <location filename="../Input/inputpane.cpp" line="52"/>
         <source>Input</source>
@@ -73,23 +63,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/inputpane.ui" line="138"/>
+        <location filename="../Input/inputpane.ui" line="139"/>
         <source>Mouse and Touchpad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/inputpane.ui" line="146"/>
+        <location filename="../Input/inputpane.ui" line="148"/>
         <source>Gestures</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>KeyboardPane</name>
-    <message>
-        <location filename="../Input/keyboardpane.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../Input/keyboardpane.ui" line="62"/>
         <source>Keyboard</source>
@@ -158,11 +143,6 @@
 </context>
 <context>
     <name>MousePane</name>
-    <message>
-        <location filename="../Input/mousepane.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../Input/mousepane.ui" line="45"/>
         <source>Mouse and Touchpad</source>

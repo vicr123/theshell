@@ -95,6 +95,8 @@ void DisplayArrangementWidget::updateOutput() {
     d->screenResources = XRRGetScreenResources(QX11Info::display(), QX11Info::appRootWindow());
     d->outputInfo = XRRGetOutputInfo(QX11Info::display(), d->screenResources, d->output);
 
+
+
     ui->screenName->setText(QString::fromLatin1(d->outputInfo->name));
     d->configurator->setDisplayName(QString::fromLatin1(d->outputInfo->name));
 

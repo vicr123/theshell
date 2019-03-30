@@ -2,25 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="id_ID" sourcelanguage="en_US">
 <context>
-    <name>DisplayArrangementWidget</name>
-    <message>
-        <location filename="../displayarrangementwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../displayarrangementwidget.ui" line="28"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DisplayConfigurationWidget</name>
-    <message>
-        <location filename="../displayconfigurationwidget.ui" line="20"/>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../displayconfigurationwidget.ui" line="63"/>
         <source>Display Name</source>
@@ -32,33 +14,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../displayconfigurationwidget.ui" line="107"/>
+        <location filename="../displayconfigurationwidget.ui" line="108"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../displayconfigurationwidget.ui" line="155"/>
+        <location filename="../displayconfigurationwidget.ui" line="157"/>
         <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../displayconfigurationwidget.ui" line="162"/>
+        <location filename="../displayconfigurationwidget.ui" line="164"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../displayconfigurationwidget.ui" line="186"/>
+        <location filename="../displayconfigurationwidget.ui" line="188"/>
         <source>Refresh Rate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DisplayPane</name>
-    <message>
-        <location filename="../displaypane.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../displaypane.ui" line="40"/>
         <location filename="../displaypane.cpp" line="115"/>
@@ -159,18 +136,13 @@
 <context>
     <name>DisplayPositionWidget</name>
     <message>
-        <location filename="../displaypositionwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../displaypositionwidget.ui" line="26"/>
         <source>SCREENS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../displaypositionwidget.ui" line="33"/>
-        <source>Select a screen to configure it, or drag it around to reposition it.</source>
+        <source>Select a screen to configure it, or drag it around to reposition it. To duplicate displays, drag them on top of each other and set them to have the same resolution.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
