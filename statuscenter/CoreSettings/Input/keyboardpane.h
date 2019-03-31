@@ -56,6 +56,7 @@ class KeyboardPane : public QWidget
         Ui::KeyboardPane *ui;
 
         KeyboardPanePrivate* d;
+        void changeEvent(QEvent* event);
 };
 
 #endif // KEYBOARDPANE_H

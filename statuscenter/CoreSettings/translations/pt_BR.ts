@@ -34,11 +34,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/gesturepane.ui" line="251"/>
-        <source>SwipeOpenGatewaySwitch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../Input/gesturepane.ui" line="277"/>
         <source>Swipe from the left side of the screen to open the Gateway</source>
         <translation type="unfinished"></translation>

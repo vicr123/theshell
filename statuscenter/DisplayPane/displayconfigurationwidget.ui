@@ -60,7 +60,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Display Name</string>
+        <string notr="true">Display Name</string>
        </property>
        <property name="margin">
         <number>9</number>

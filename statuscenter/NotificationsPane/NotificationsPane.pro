@@ -12,11 +12,18 @@ CONFIG += plugin
 
 INCLUDEPATH += ../../shell/statuscenter/
 
+LIBS += -L$$OUT_PWD/../../theshell-lib/
+
+INCLUDEPATH += $$PWD/../../theshell-lib
+DEPENDPATH += $$PWD/../../theshell-lib
+
 blueprint {
     DEFINES += "BLUEPRINT"
+    LIBS += -ltheshell-libb
 
     DEFINES += "SHAREDIR=\\\"/usr/share/theshellb/notificationpane/\\\""
 } else {
+    LIBS += -ltheshell-lib
     DEFINES += "SHAREDIR=\\\"/usr/share/theshell/notificationpane/\\\""
 }
 
@@ -94,7 +101,9 @@ HEADERS += \
     notificationsWidget/notificationpopup.h \
     notificationsWidget/notificationsdbusadaptor.h \
     notificationsWidget/notificationswidget.h \
-    kjob/jobviewwidget.h
+    kjob/jobviewwidget.h \
+    settings/settingspane.h \
+    settings/applicationnotificationmodel.h
 
 SOURCES += \
     plugin.cpp \
@@ -109,7 +118,9 @@ SOURCES += \
     notificationsWidget/notificationpopup.cpp \
     notificationsWidget/notificationsdbusadaptor.cpp \
     notificationsWidget/notificationswidget.cpp \
-    kjob/jobviewwidget.cpp
+    kjob/jobviewwidget.cpp \
+    settings/settingspane.cpp \
+    settings/applicationnotificationmodel.cpp
 
 FORMS += \
     notificationsWidget/notificationswidget.ui \
@@ -117,4 +128,6 @@ FORMS += \
     notificationsWidget/notificationappgroup.ui \
     notificationsWidget/notificationpanel.ui \
     notificationsWidget/mediaplayernotification.ui \
-    kjob/jobviewwidget.ui
+    kjob/jobviewwidget.ui \
+    settings/settingspane.ui
+

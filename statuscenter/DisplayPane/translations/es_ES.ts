@@ -4,11 +4,6 @@
 <context>
     <name>DisplayConfigurationWidget</name>
     <message>
-        <location filename="../displayconfigurationwidget.ui" line="63"/>
-        <source>Display Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../displayconfigurationwidget.ui" line="79"/>
         <source>Set as Default monitor</source>
         <translation type="unfinished"></translation>

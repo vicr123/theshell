@@ -341,3 +341,9 @@ bool MousePane::eventFilter(QObject *watched, QEvent *event) {
     }
     return false;
 }
+
+void MousePane::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

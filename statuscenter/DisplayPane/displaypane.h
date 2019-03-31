@@ -73,6 +73,7 @@ class DisplayPane : public QWidget, public StatusCenterPaneObject
         Ui::DisplayPane *ui;
 
         DisplayPanePrivate* d;
+        void changeEvent(QEvent* event);
 };
 
 #endif // DISPLAYPANE_H

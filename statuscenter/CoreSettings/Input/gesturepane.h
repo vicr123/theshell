@@ -44,6 +44,7 @@ class GesturePane : public QWidget
         Ui::GesturePane *ui;
 
         bool eventFilter(QObject* watched, QEvent* event);
+        void changeEvent(QEvent* event);
 
         GesturePanePrivate* d;
 };

@@ -267,3 +267,9 @@ void AudioPane::updatePulseState(AudioPane *pane) {
 void AudioPane::setDefaultSink(QString sink) {
     pa_context_set_default_sink(d->ctx, sink.toLocal8Bit().data(), nullptr, nullptr);
 }
+
+void AudioPane::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

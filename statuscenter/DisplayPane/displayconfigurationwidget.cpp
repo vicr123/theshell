@@ -118,3 +118,9 @@ void DisplayConfigurationWidget::setIsDefault(bool isDefault) {
     ui->defaultButton->setChecked(isDefault);
     ui->defaultButton->blockSignals(false);
 }
+
+void DisplayConfigurationWidget::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

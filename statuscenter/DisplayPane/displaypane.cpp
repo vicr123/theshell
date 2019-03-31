@@ -252,3 +252,9 @@ void DisplayPane::updateRedshiftTime(double latitude, double longitude) {
         manager->deleteLater();
     });
 }
+
+void DisplayPane::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

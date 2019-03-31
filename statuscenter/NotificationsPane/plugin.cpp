@@ -24,11 +24,31 @@
 #include "kjob/jobserver.h"
 
 #include "audiomanager.h"
+#include "settings/settingspane.h"
+
+QSettings::Format desktopFileFormat;
 
 Plugin::Plugin(QObject *parent) :
     QObject(parent)
 {
     translator = new QTranslator;
+
+    desktopFileFormat = QSettings::registerFormat("desktop", [](QIODevice &device, QSettings::SettingsMap &map) -> bool {
+        QString group;
+        while (!device.atEnd()) {
+            QString line = device.readLine().trimmed();
+            if (line.startsWith("[") && line.endsWith("]")) {
+                group = line.mid(1, line.length() - 2);
+            } else {
+                QString key = line.left(line.indexOf("="));
+                QString value = line.mid(line.indexOf("=") + 1);
+                map.insert(group + "/" + key, value);
+            }
+        }
+        return true;
+    }, [](QIODevice &device, const QSettings::SettingsMap &map) -> bool {
+        return false;
+    }, Qt::CaseInsensitive);
 
     panes.append(AudioManager::instance());
 
@@ -44,6 +64,7 @@ Plugin::Plugin(QObject *parent) :
     widget->setAdaptor(adaptor);
 
     panes.append(new JobServer(widget));
+    panes.append(new SettingsPane());
 }
 
 QList<StatusCenterPaneObject*> Plugin::availablePanes() {

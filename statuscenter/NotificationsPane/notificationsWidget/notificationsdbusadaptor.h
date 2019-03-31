@@ -98,7 +98,6 @@ signals: // SIGNALS
 private:
     NotificationsWidget* pt = NULL;
     QSettings settings;
-    QSettings* applicationNotifications;
 };
 
 struct ImageData {

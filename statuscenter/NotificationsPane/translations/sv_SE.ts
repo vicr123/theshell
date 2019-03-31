@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="se_NO" sourcelanguage="en_US">
 <context>
+    <name>ApplicationNotificationModel</name>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>JobServer</name>
     <message numerus="yes">
         <source>%n jobs running</source>
@@ -137,6 +144,17 @@
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPane</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

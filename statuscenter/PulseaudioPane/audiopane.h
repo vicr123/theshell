@@ -76,6 +76,8 @@ class AudioPane : public QWidget, public StatusCenterPaneObject
         static void addSinkInput(AudioPane* pane, pa_sink_input_info info);
         static void updateSinkInput(AudioPane* pane, int index);
         static void removeSinkInput(AudioPane* pane, int index);
+
+        void changeEvent(QEvent* event);
 };
 
 #endif // AUDIOPANE_H

@@ -9,9 +9,11 @@ SUBDIRS += \
     polkitagent \
     mousepass \
     statuscenter \
-    daemons
+    daemons \
+    theshell-lib
 
-statuscenter.depends = shell
+statuscenter.depends = theshell-lib
+shell.depends = theshell-lib
 
 blueprint {
     message(Configuring theShell to be built as blueprint)

@@ -81,3 +81,9 @@ void GesturePane::on_swipeGatewaySwitch_toggled(bool checked)
 {
     d->settings.setValue("gestures/swipeGateway", checked);
 }
+
+void GesturePane::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

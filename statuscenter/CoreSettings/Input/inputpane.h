@@ -46,6 +46,7 @@ class InputPane : public QWidget, public StatusCenterPaneObject
 
     private:
         Ui::InputPane *ui;
+        void changeEvent(QEvent* event);
 };
 
 #endif // INPUTPANE_H

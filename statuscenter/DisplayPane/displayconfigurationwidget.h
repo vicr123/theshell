@@ -61,6 +61,7 @@ class DisplayConfigurationWidget : public QFrame
         Ui::DisplayConfigurationWidget *ui;
 
         DisplayConfigurationWidgetPrivate* d;
+        void changeEvent(QEvent* event);
 };
 
 #undef Bool

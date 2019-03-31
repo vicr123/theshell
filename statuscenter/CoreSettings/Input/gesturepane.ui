@@ -248,7 +248,7 @@
          <item row="2" column="2">
           <widget class="tSwitch" name="swipeGatewaySwitch">
            <property name="text">
-            <string>SwipeOpenGatewaySwitch</string>
+            <string notr="true">SwipeOpenGatewaySwitch</string>
            </property>
           </widget>
          </item>

@@ -19,6 +19,7 @@
  * *************************************/
 
 #include "notificationobject.h"
+#include "notificationspermissionengine.h"
 
 int NotificationObject::currentId = 0;
 
@@ -67,44 +68,8 @@ void NotificationObject::setParameters(QString &app_name, QString &app_icon, QSt
     } else if (QIcon::hasThemeIcon(appName.toLower().replace(" ", ""))) {
         appIc = QIcon::fromTheme(appName.toLower().replace(" ", ""));
     } else {
-        QString filename = hints.value("desktop-entry", "").toString() + ".desktop";
-
-        QDir appFolder("/usr/share/applications/");
-        QDirIterator iterator(appFolder, QDirIterator::Subdirectories);
-
-        while (iterator.hasNext()) {
-            iterator.next();
-            QFileInfo info = iterator.fileInfo();
-            if (info.fileName() == filename || info.baseName().toLower() == appName.toLower()) {
-                QFile file(info.filePath());
-                file.open(QFile::ReadOnly);
-                QString appinfo(file.readAll());
-
-                QStringList desktopLines;
-                QString currentDesktopLine;
-                for (QString desktopLine : appinfo.split("\n")) {
-                    if (desktopLine.startsWith("[") && currentDesktopLine != "") {
-                        desktopLines.append(currentDesktopLine);
-                        currentDesktopLine = "";
-                    }
-                    currentDesktopLine.append(desktopLine + "\n");
-                }
-                desktopLines.append(currentDesktopLine);
-
-                for (QString desktopPart : desktopLines) {
-                    for (QString line : desktopPart.split("\n")) {
-                        if (line.startsWith("icon=", Qt::CaseInsensitive)) {
-                            QString iconname = line.split("=")[1];
-                            if (QFile(iconname).exists()) {
-                                appIc = QIcon(iconname);
-                            } else {
-                                appIc = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        NotificationsPermissionEngine permissions(appName, hints.value("desktop-entry", "").toString());
+        appIc = permissions.appIcon();
     }
 
     bigIc = QIcon();
@@ -182,6 +147,7 @@ void NotificationObject::setParameters(QString &app_name, QString &app_icon, QSt
 }
 
 void NotificationObject::post() {
+    NotificationsPermissionEngine permissions(appName, hints.value("desktop-entry", "").toString());
     dialog->setHints(hints);
     dialog->setApp(appName, appIc);
     dialog->setSummary(summary);
@@ -194,12 +160,12 @@ void NotificationObject::post() {
     }
     dialog->setTimeout(timeout);
 
-    if (notificationAppSettings->value(appName + "/popup", true).toBool() && !dialog->isVisible()) {
+    if (permissions.showPopups() && !dialog->isVisible()) {
         dialog->show();
     }
 
     //Play sounds if requested
-    if (!hints.value("suppress-sound", false).toBool() && !(AudioManager::instance()->QuietMode() == AudioManager::notifications || AudioManager::instance()->QuietMode() == AudioManager::mute) && notificationAppSettings->value(appName + "/sounds", true).toBool()) {
+    if (!hints.value("suppress-sound", false).toBool() && !(AudioManager::instance()->QuietMode() == AudioManager::notifications || AudioManager::instance()->QuietMode() == AudioManager::mute) && permissions.playSound()) {
         if (settings.value("notifications/attenuate", true).toBool()) {
             AudioManager::instance()->attenuateStreams();
         }

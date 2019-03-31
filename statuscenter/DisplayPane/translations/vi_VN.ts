@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="vi_VN">
+<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
 <context>
     <name>DisplayConfigurationWidget</name>
-    <message>
-        <location filename="../displayconfigurationwidget.ui" line="63"/>
-        <source>Display Name</source>
-        <translation>Tên màn hình</translation>
-    </message>
     <message>
         <location filename="../displayconfigurationwidget.ui" line="79"/>
         <source>Set as Default monitor</source>

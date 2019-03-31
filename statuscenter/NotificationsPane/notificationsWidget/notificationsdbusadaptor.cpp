@@ -23,11 +23,12 @@
 #include "notificationobject.h"
 #include "audiomanager.h"
 
+#include "notificationspermissionengine.h"
+
 NotificationsDBusAdaptor::NotificationsDBusAdaptor(QObject *parent)
     : QDBusAbstractAdaptor(parent)
 {
     this->setAutoRelaySignals(true);
-    applicationNotifications = new QSettings("theSuite", "theShell-notifications");
 }
 
 NotificationsDBusAdaptor::~NotificationsDBusAdaptor()
@@ -62,27 +63,9 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
 {
     if (this->parentWidget() != nullptr) {
         QStringList knownApplications;
-        int amount = applicationNotifications->beginReadArray("notifications/knownApplications");
-        for (int i = 0; i < amount; i++) {
-            applicationNotifications->setArrayIndex(i);
-            knownApplications.append(applicationNotifications->value("appname").toString());
-        }
-        applicationNotifications->endArray();
+        NotificationsPermissionEngine permissions(app_name, hints.value("desktop-entry", "").toString());
 
-        if (!knownApplications.contains(app_name)) {
-            knownApplications.append(app_name);
-            applicationNotifications->beginWriteArray("notifications/knownApplications");
-
-            int i = 0;
-            for (QString appname : knownApplications) {
-                applicationNotifications->setArrayIndex(i);
-                applicationNotifications->setValue("appname", appname);
-                i++;
-            }
-            applicationNotifications->endArray();
-        }
-
-        if (!applicationNotifications->value(app_name + "/allow", true).toBool()) {
+        if (!permissions.allowNotifications()) {
             //User doesn't want this app to post notifications
             emit NotificationClosed(999999, 2);
             return 999999;
@@ -105,7 +88,7 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
         }
 
         bool postNotification = true;
-        if (AudioManager::instance()->QuietMode() == AudioManager::notifications && !applicationNotifications->value(app_name + "/bypassQuiet", false).toBool()) {
+        if (AudioManager::instance()->QuietMode() == AudioManager::notifications && !permissions.bypassesQuietMode()) {
             QStringList allowedCategories;
             allowedCategories.append("battery.low");
             allowedCategories.append("battery.critical");
@@ -114,7 +97,7 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
                 postNotification = false;
                 emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
             }
-        } else if (AudioManager::instance()->QuietMode() == AudioManager::critical && !applicationNotifications->value(app_name + "/bypassQuiet", false).toBool()) {
+        } else if (AudioManager::instance()->QuietMode() == AudioManager::critical && !permissions.bypassesQuietMode()) {
             if (hints.value("urgency", 1).toInt() != 2) {
                 postNotification = false;
                 emit NotificationClosed(notification->getId(), NotificationObject::Undefined);

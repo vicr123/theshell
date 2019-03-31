@@ -51,6 +51,7 @@ class DisplayPositionWidget : public QWidget
 
         DisplayPositionWidgetPrivate* d;
         bool eventFilter(QObject* watched, QEvent* event);
+        void changeEvent(QEvent* event);
 };
 
 #endif // DISPLAYPOSITIONWIDGET_H

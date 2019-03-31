@@ -68,3 +68,9 @@ void InputPane::on_backButton_clicked()
 {
     sendMessage("main-menu", QVariantList());
 }
+
+void InputPane::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

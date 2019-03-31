@@ -76,7 +76,6 @@ private:
 
     QIcon appIc, bigIc;
     QSettings settings;
-    QSettings* notificationAppSettings = new QSettings("theSuite", "theShell-notifications", this);
 };
 
 #endif // NOTIFICATIONOBJECT_H

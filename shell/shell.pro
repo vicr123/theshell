@@ -6,7 +6,10 @@
 
 QT       += core gui dbus multimedia xml network positioning svg charts concurrent
 CONFIG   += c++14
-LIBS     += -lcrypt
+LIBS     += -lcrypt -L$$OUT_PWD/../../theshell-lib/
+
+INCLUDEPATH += $$PWD/../../theshell-lib
+DEPENDPATH += $$PWD/../../theshell-lib
 
 unix {
     CONFIG += link_pkgconfig
@@ -24,10 +27,12 @@ unix {
 blueprint {
     TARGET = theshellb
     DEFINES += "BLUEPRINT"
+    LIBS += -ltheshell-libb
 
     DEFINES += "SHAREDIR=\\\"/usr/share/theshellb/\\\""
 } else {
     TARGET = theshell
+    LIBS += -ltheshell-lib
 
     DEFINES += "SHAREDIR=\\\"/usr/share/theshell/\\\""
 }

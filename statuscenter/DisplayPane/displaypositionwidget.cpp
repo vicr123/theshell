@@ -167,3 +167,9 @@ void DisplayPositionWidget::on_setButton_clicked()
     //qDebug() << "XRRSetScreenSize" << rootWindowRect.width() << rootWindowRect.height() << (25.4 * rootWindowRect.width()) / dpi << (25.4 * rootWindowRect.height()) / dpi;
     XRRSetScreenSize(QX11Info::display(), QX11Info::appRootWindow(), rootWindowRect.width(), rootWindowRect.height(), round((25.4 * rootWindowRect.width()) / dpi), round((25.4 * rootWindowRect.height()) / dpi));
 }
+
+void DisplayPositionWidget::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

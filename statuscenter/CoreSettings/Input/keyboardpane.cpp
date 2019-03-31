@@ -191,3 +191,9 @@ void KeyboardPane::on_SuperKeyOpenGatewaySwitch_toggled(bool checked)
 {
     d->settings.setValue("input/superkeyGateway", checked);
 }
+
+void KeyboardPane::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

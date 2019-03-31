@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="vi_VN">
+<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
 <context>
     <name>GesturePane</name>
     <message>
@@ -32,11 +32,6 @@
         <location filename="../Input/gesturepane.ui" line="244"/>
         <source>Swipe to open Gateway</source>
         <translation>Vuốt để mở cửa</translation>
-    </message>
-    <message>
-        <location filename="../Input/gesturepane.ui" line="251"/>
-        <source>SwipeOpenGatewaySwitch</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Input/gesturepane.ui" line="277"/>
