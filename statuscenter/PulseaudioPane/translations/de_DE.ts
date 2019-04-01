@@ -22,31 +22,31 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="129"/>
-        <location filename="../audiopane.ui" line="425"/>
+        <location filename="../audiopane.ui" line="428"/>
         <source>Playback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="134"/>
-        <location filename="../audiopane.ui" line="532"/>
+        <location filename="../audiopane.ui" line="535"/>
         <source>Recording</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="139"/>
-        <location filename="../audiopane.ui" line="649"/>
+        <location filename="../audiopane.ui" line="652"/>
         <source>Output Devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="144"/>
-        <location filename="../audiopane.ui" line="756"/>
+        <location filename="../audiopane.ui" line="759"/>
         <source>Input Devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="149"/>
-        <location filename="../audiopane.ui" line="873"/>
+        <location filename="../audiopane.ui" line="876"/>
         <source>Advanced Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -66,18 +66,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="339"/>
+        <location filename="../audiopane.ui" line="342"/>
         <source>Volume change sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="372"/>
+        <location filename="../audiopane.ui" line="375"/>
         <source>SOUNDS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="595"/>
-        <location filename="../audiopane.ui" line="819"/>
+        <location filename="../audiopane.ui" line="598"/>
+        <location filename="../audiopane.ui" line="822"/>
         <source>Coming soon. Stay tuned!</source>
         <translation type="unfinished"></translation>
     </message>

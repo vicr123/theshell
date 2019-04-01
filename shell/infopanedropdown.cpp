@@ -180,8 +180,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     emit batteryStretchChanged(updbus->powerStretch());
 
     ui->BatteryChargeScrollBar->setVisible(false);
-    //ui->networkKey->setVisible(false);
-    //ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
     ui->userSettingsDeleteUser->setProperty("type", "destructive");
     ui->userSettingsDeleteUserAndData->setProperty("type", "destructive");
@@ -190,6 +188,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->partFrame->installEventFilter(this);
     ui->pageStack->setCurrentAnimation(tStackedWidget::SlideHorizontal);
     ui->settingsTabs->setCurrentAnimation(tStackedWidget::Lift);
+    ui->settingsList->setItemDelegate(new InfoPaneSettingsListDelegate());
 
     //Set up shortcuts
     QShortcut* leftShortcut = new QShortcut(Qt::Key_Left, this);
@@ -337,12 +336,10 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->decorativeColorThemeRadio->setChecked(true);
     }
 
-
     //Populate the language box
     Internationalisation::fillLanguageBox(ui->localeList);
 
     ui->lockScreenBackground->setText(d->lockScreenSettings->value("background", "/usr/share/tsscreenlock/triangles.svg").toString());
-    //ui->lineEdit_2->setText(d->settings.value("startup/autostart", "").toString());
     ui->TextSwitch->setChecked(d->settings.value("bar/showText", true).toBool());
     ui->windowManager->setText(d->settings.value("startup/WindowManagerCommand", "kwin_x11 --no-kactivities").toString());
     ui->barDesktopsSwitch->setChecked(d->settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
@@ -740,26 +737,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     if (d->settings.value("flightmode/on", false).toBool()) {
         ui->FlightSwitch->setChecked(true);
     }
-
-    /*QTimer::singleShot(5000, [=] {
-        this->setProperty("aw", 0);
-        QTimer* timer = new QTimer();
-        timer->setInterval(1000);
-        connect(timer, &QTimer::timeout, [=] {
-            int number = this->property("aw").toInt();
-            number++;
-
-            if (number == 100) {
-                timer->stop();
-                emit statusBarProgressFinished("Copied", "lirios-2018-04-28.iso");
-            } else {
-                emit statusBarProgress("Copying", "lirios-2018.04.28.iso", number);
-            }
-
-            this->setProperty("aw", number);
-        });
-        timer->start();
-    });*/
 }
 
 InfoPaneDropdown::~InfoPaneDropdown()
@@ -2735,7 +2712,7 @@ void InfoPaneDropdown::on_allowGeoclueAgent_clicked()
     locationServices->reloadAuthorizationRequired();
 
     QTimer::singleShot(500, [=] {
-        on_settingsList_currentRowChanged(6);
+        on_settingsList_currentRowChanged(3);
     });
 }
 
@@ -3116,4 +3093,31 @@ void InfoPaneDropdown::on_powerSuspendHibernate_toggled(bool checked)
 void InfoPaneDropdown::on_powerButtonPressed_currentIndexChanged(int index)
 {
     d->settings.setValue("power/onPowerButtonPressed", index);
+}
+
+InfoPaneSettingsListDelegate::InfoPaneSettingsListDelegate(QObject* parent) : QStyledItemDelegate(parent) {
+
+}
+
+InfoPaneSettingsListDelegate::~InfoPaneSettingsListDelegate() {
+
+}
+
+void InfoPaneSettingsListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    QStyledItemDelegate::paint(painter, option, index);
+
+    QVariant setting = index.data(Qt::UserRole);
+    if (!setting.isNull() && setting.toInt() != -1) {
+        //Draw the arrow
+        QRect iconRect;
+        iconRect.setSize(QSize(16, 16) * theLibsGlobal::getDPIScaling());
+        iconRect.moveCenter(option.rect.center());
+        iconRect.moveRight(option.rect.right() - 9 * theLibsGlobal::getDPIScaling());
+
+        if (option.direction == Qt::RightToLeft) {
+            iconRect.moveLeft(option.rect.left() + 9 * getDPIScaling());
+        }
+
+        painter->drawPixmap(iconRect, QIcon::fromTheme("arrow-right").pixmap(iconRect.size()));
+    }
 }

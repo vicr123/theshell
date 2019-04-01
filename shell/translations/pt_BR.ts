@@ -440,7 +440,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="405"/>
-        <location filename="../infopanedropdown.cpp" line="2045"/>
+        <location filename="../infopanedropdown.cpp" line="2022"/>
         <source>Charge History</source>
         <translation>História de Carga</translation>
     </message>
@@ -473,7 +473,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="748"/>
         <location filename="../infopanedropdown.ui" line="3946"/>
-        <location filename="../infopanedropdown.cpp" line="2544"/>
+        <location filename="../infopanedropdown.cpp" line="2521"/>
         <source>Unavailable Panes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -612,7 +612,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="757"/>
         <location filename="../infopanedropdown.ui" line="4026"/>
-        <location filename="../infopanedropdown.cpp" line="2548"/>
+        <location filename="../infopanedropdown.cpp" line="2525"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
@@ -906,7 +906,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2813"/>
+        <location filename="../infopanedropdown.cpp" line="2790"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -952,8 +952,8 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2712"/>
-        <location filename="../infopanedropdown.cpp" line="2908"/>
-        <location filename="../infopanedropdown.cpp" line="2914"/>
+        <location filename="../infopanedropdown.cpp" line="2885"/>
+        <location filename="../infopanedropdown.cpp" line="2891"/>
         <source>Mouse Password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -974,7 +974,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2943"/>
-        <location filename="../infopanedropdown.cpp" line="1740"/>
+        <location filename="../infopanedropdown.cpp" line="1717"/>
         <source>Edit User</source>
         <translation type="unfinished"></translation>
     </message>
@@ -991,15 +991,15 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3004"/>
         <location filename="../infopanedropdown.ui" line="3027"/>
-        <location filename="../infopanedropdown.cpp" line="1744"/>
-        <location filename="../infopanedropdown.cpp" line="1745"/>
+        <location filename="../infopanedropdown.cpp" line="1721"/>
+        <location filename="../infopanedropdown.cpp" line="1722"/>
         <source>(unchanged)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3011"/>
-        <location filename="../infopanedropdown.cpp" line="1784"/>
-        <location filename="../infopanedropdown.cpp" line="1789"/>
+        <location filename="../infopanedropdown.cpp" line="1761"/>
+        <location filename="../infopanedropdown.cpp" line="1766"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1174,7 +1174,7 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4090"/>
-        <location filename="../infopanedropdown.cpp" line="1108"/>
+        <location filename="../infopanedropdown.cpp" line="1085"/>
         <source>Reset theShell</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1194,58 +1194,58 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2172"/>
+        <location filename="../infopanedropdown.cpp" line="2149"/>
         <source>Blue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2173"/>
+        <location filename="../infopanedropdown.cpp" line="2150"/>
         <source>Green</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2174"/>
+        <location filename="../infopanedropdown.cpp" line="2151"/>
         <source>Orange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2175"/>
+        <location filename="../infopanedropdown.cpp" line="2152"/>
         <source>Pink</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2176"/>
+        <location filename="../infopanedropdown.cpp" line="2153"/>
         <source>Turquoise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="766"/>
-        <location filename="../infopanedropdown.cpp" line="2550"/>
+        <location filename="../infopanedropdown.cpp" line="2527"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="488"/>
+        <location filename="../infopanedropdown.cpp" line="485"/>
         <source>theShell %1 - Blueprint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="489"/>
+        <location filename="../infopanedropdown.cpp" line="486"/>
         <source>You compiled theShell on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="491"/>
+        <location filename="../infopanedropdown.cpp" line="488"/>
         <source>theShell %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1082"/>
+        <location filename="../infopanedropdown.cpp" line="1059"/>
         <source>Current Battery Percentage: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1086"/>
+        <location filename="../infopanedropdown.cpp" line="1063"/>
         <source>theShell Uptime: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1255,199 +1255,199 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="481"/>
+        <location filename="../infopanedropdown.cpp" line="478"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="714"/>
+        <location filename="../infopanedropdown.cpp" line="711"/>
         <source>No plugins were loaded because you&apos;ve started theShell in Safe Mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="1095"/>
+        <location filename="../infopanedropdown.cpp" line="1072"/>
         <source>%n days</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1099"/>
+        <location filename="../infopanedropdown.cpp" line="1076"/>
         <source>System Uptime: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1101"/>
+        <location filename="../infopanedropdown.cpp" line="1078"/>
         <source>Couldn&apos;t get system uptime</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1109"/>
+        <location filename="../infopanedropdown.cpp" line="1086"/>
         <source>All settings will be reset to default, and you will be logged out. Are you sure you want to do this?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1539"/>
+        <location filename="../infopanedropdown.cpp" line="1516"/>
         <source>Last updated %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1577"/>
+        <location filename="../infopanedropdown.cpp" line="1554"/>
         <source>Log in to network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1583"/>
+        <location filename="../infopanedropdown.cpp" line="1560"/>
         <source>Network Login</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1584"/>
+        <location filename="../infopanedropdown.cpp" line="1561"/>
         <source>Your connection to the internet is blocked by a login page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1707"/>
+        <location filename="../infopanedropdown.cpp" line="1684"/>
         <source>Add New User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1719"/>
-        <location filename="../infopanedropdown.cpp" line="2864"/>
-        <location filename="../infopanedropdown.cpp" line="2884"/>
+        <location filename="../infopanedropdown.cpp" line="1696"/>
+        <location filename="../infopanedropdown.cpp" line="2841"/>
+        <location filename="../infopanedropdown.cpp" line="2861"/>
         <source>Unauthorized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1719"/>
+        <location filename="../infopanedropdown.cpp" line="1696"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1731"/>
+        <location filename="../infopanedropdown.cpp" line="1708"/>
         <source>New User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1734"/>
-        <location filename="../infopanedropdown.cpp" line="1735"/>
-        <location filename="../infopanedropdown.cpp" line="1750"/>
-        <location filename="../infopanedropdown.cpp" line="1751"/>
+        <location filename="../infopanedropdown.cpp" line="1711"/>
+        <location filename="../infopanedropdown.cpp" line="1712"/>
+        <location filename="../infopanedropdown.cpp" line="1727"/>
+        <location filename="../infopanedropdown.cpp" line="1728"/>
         <source>(none)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1747"/>
-        <location filename="../infopanedropdown.cpp" line="1748"/>
+        <location filename="../infopanedropdown.cpp" line="1724"/>
+        <location filename="../infopanedropdown.cpp" line="1725"/>
         <source>(set at next login)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1779"/>
+        <location filename="../infopanedropdown.cpp" line="1756"/>
         <source>Password Check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1779"/>
+        <location filename="../infopanedropdown.cpp" line="1756"/>
         <source>The passwords don&apos;t match.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1784"/>
+        <location filename="../infopanedropdown.cpp" line="1761"/>
         <source>The username must not contain spaces.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1789"/>
+        <location filename="../infopanedropdown.cpp" line="1766"/>
         <source>The username must not contain capital letters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2056"/>
+        <location filename="../infopanedropdown.cpp" line="2033"/>
         <source>Rate History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2067"/>
+        <location filename="../infopanedropdown.cpp" line="2044"/>
         <source>Application Power Usage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2168"/>
+        <location filename="../infopanedropdown.cpp" line="2145"/>
         <source>Oxygen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2169"/>
+        <location filename="../infopanedropdown.cpp" line="2146"/>
         <source>Breeze</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2462"/>
-        <location filename="../infopanedropdown.cpp" line="2472"/>
-        <location filename="../infopanedropdown.cpp" line="2482"/>
-        <location filename="../infopanedropdown.cpp" line="2492"/>
+        <location filename="../infopanedropdown.cpp" line="2439"/>
+        <location filename="../infopanedropdown.cpp" line="2449"/>
+        <location filename="../infopanedropdown.cpp" line="2459"/>
+        <location filename="../infopanedropdown.cpp" line="2469"/>
         <source>Never</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="2464"/>
-        <location filename="../infopanedropdown.cpp" line="2474"/>
-        <location filename="../infopanedropdown.cpp" line="2484"/>
-        <location filename="../infopanedropdown.cpp" line="2494"/>
+        <location filename="../infopanedropdown.cpp" line="2441"/>
+        <location filename="../infopanedropdown.cpp" line="2451"/>
+        <location filename="../infopanedropdown.cpp" line="2461"/>
+        <location filename="../infopanedropdown.cpp" line="2471"/>
         <source>%n min(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2690"/>
+        <location filename="../infopanedropdown.cpp" line="2667"/>
         <source>Log Out Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2693"/>
+        <location filename="../infopanedropdown.cpp" line="2670"/>
         <source>Logoff Required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2696"/>
+        <location filename="../infopanedropdown.cpp" line="2673"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2698"/>
+        <location filename="../infopanedropdown.cpp" line="2675"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2826"/>
+        <location filename="../infopanedropdown.cpp" line="2803"/>
         <source>Show Touch Keyboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2864"/>
-        <location filename="../infopanedropdown.cpp" line="2884"/>
+        <location filename="../infopanedropdown.cpp" line="2841"/>
+        <location filename="../infopanedropdown.cpp" line="2861"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2879"/>
+        <location filename="../infopanedropdown.cpp" line="2856"/>
         <source>Remove Mouse Password?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2879"/>
+        <location filename="../infopanedropdown.cpp" line="2856"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2909"/>
+        <location filename="../infopanedropdown.cpp" line="2886"/>
         <source>Mouse Password was removed successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2915"/>
+        <location filename="../infopanedropdown.cpp" line="2892"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation type="unfinished"></translation>
     </message>

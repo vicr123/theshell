@@ -92,14 +92,12 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
         } else {
             ui->quietModeMute->setChecked(true);
         }
-        //ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
         ui->quietModeDescription->setText(getProperty("current-quiet-mode-description").toString());
     });
     ui->quietModeForeverButton->setChecked(true);
     ui->quietModeForeverButton->setEnabled(false);
     ui->quietModeTurnOffAt->setEnabled(false);
     ui->quietModeTurnOffIn->setEnabled(false);
-    //ui->quietModeDescription->setText(AudioMan->getCurrentQuietModeDescription());
     ui->quietModeExtras->setFixedHeight(0);
 
     chunk = new QLabel();

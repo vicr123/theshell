@@ -380,4 +380,13 @@ class InfoPaneNotOnTopLocker {
         InfoPaneDropdown* infoPane;
 };
 
+class InfoPaneSettingsListDelegate : public QStyledItemDelegate {
+    Q_OBJECT
+    public:
+        InfoPaneSettingsListDelegate(QObject* parent = nullptr);
+        ~InfoPaneSettingsListDelegate() override;
+
+        void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+};
+
 #endif // INFOPANEDROPDOWN_H

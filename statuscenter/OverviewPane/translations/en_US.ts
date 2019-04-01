@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" language="en_US" sourcelanguage="en_US">
 <context>
     <name>Overview</name>
     <message>
@@ -46,8 +46,9 @@
     <message numerus="yes">
         <location filename="../overview.cpp" line="419"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour.</numerusform>
+            <numerusform>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hours.</numerusform>
         </translation>
     </message>
     <message>
@@ -282,12 +283,14 @@
         <source>Timer %n</source>
         <translation type="unfinished">
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../Timers/timerpage.cpp" line="92"/>
         <source>%n timers elapsed</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
