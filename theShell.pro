@@ -3,17 +3,20 @@ TEMPLATE = subdirs
 DISTFILES += \
     version
 
+shellproj.subdir = shell
+shellproj.depends = theshell-lib
+
+statcenterproj.subdir = statuscenter
+statcenterproj.depends = theshell-lib
+
 SUBDIRS += \
-    shell \
+    shellproj \
     startsession \
+    statcenterproj \
     polkitagent \
     mousepass \
-    statuscenter \
     daemons \
     theshell-lib
-
-statuscenter.depends = theshell-lib
-shell.depends = theshell-lib
 
 blueprint {
     message(Configuring theShell to be built as blueprint)
