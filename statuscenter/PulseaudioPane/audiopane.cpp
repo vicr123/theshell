@@ -38,9 +38,10 @@ struct AudioPanePrivate {
 
     QString defaultSink;
 
-
     QMap<QString, SinkWidget*> sinkWidgets;
     QMap<QString, SinkInputWidget*> sinkInputWidgets;
+
+    QSettings settings;
 };
 
 AudioPane::AudioPane(QWidget *parent) :
@@ -57,6 +58,10 @@ AudioPane::AudioPane(QWidget *parent) :
     ui->LeftPaneWidget->setFixedWidth(250 * theLibsGlobal::getDPIScaling());
 
     ui->audioStack->setCurrentAnimation(tStackedWidget::Lift);
+
+
+    ui->volumeChangeSoundSwitch->setChecked(d->settings.value("sound/feedbackSound", true).toBool());
+    ui->volumeOverdrive->setChecked(d->settings.value("sound/volumeOverdrive", true).toBool());
 
     connectToPulse();
 }
@@ -272,4 +277,14 @@ void AudioPane::changeEvent(QEvent *event) {
     if (event->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
     }
+}
+
+void AudioPane::on_volumeOverdrive_toggled(bool checked)
+{
+    d->settings.setValue("sound/volumeOverdrive", checked);
+}
+
+void AudioPane::on_volumeChangeSoundSwitch_toggled(bool checked)
+{
+    d->settings.setValue("sound/feedbackSound", checked);
 }

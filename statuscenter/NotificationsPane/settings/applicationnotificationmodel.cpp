@@ -46,7 +46,7 @@ int ApplicationNotificationModel::rowCount(const QModelIndex &parent) const
         return 0;
     }
 
-    return d->appInformation.count() + 2;
+    return d->appInformation.count() + 1;
 }
 
 QVariant ApplicationNotificationModel::data(const QModelIndex &index, int role) const
@@ -64,7 +64,7 @@ QVariant ApplicationNotificationModel::data(const QModelIndex &index, int role) 
                 return QIcon::fromTheme("preferences-system-notifications");
         }
     } else {
-        row -= 2;
+        row -= 1;
         ApplicationInformation info = d->appInformation.at(row);
         switch (role) {
             case Qt::DisplayRole:
@@ -97,7 +97,7 @@ void ApplicationNotificationModel::loadData() {
         ApplicationInformation info;
         info.isDesktopEntry = false;
         info.name = permissions.appName();
-        info.icon = info.permissionsEngine().appIcon();
+        info.icon = info.permissionsEngine()->appIcon();
         d->appInformation.append(info);
     }
 
@@ -110,18 +110,17 @@ ApplicationNotificationModelDelegate::ApplicationNotificationModelDelegate(QObje
 }
 
 void ApplicationNotificationModelDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    if (index.row() == 1) {
+    QStyledItemDelegate::paint(painter, option, index);
+    if (index.row() == 0) {
         painter->setPen(option.palette.color(QPalette::WindowText));
-        painter->drawLine(option.rect.topLeft(), option.rect.topRight());
-    } else {
-        QStyledItemDelegate::paint(painter, option, index);
+        painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
     }
 }
 
 QSize ApplicationNotificationModelDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    if (index.row() == 1) {
-        QSize sz = option.rect.size();
-        sz.setHeight(1);
+    if (index.row() == 0) {
+        QSize sz = QStyledItemDelegate::sizeHint(option, index);
+        sz.rheight() += 1;
         return sz;
     } else {
         return QStyledItemDelegate::sizeHint(option, index);

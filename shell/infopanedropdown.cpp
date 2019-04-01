@@ -180,7 +180,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     emit batteryStretchChanged(updbus->powerStretch());
 
     ui->BatteryChargeScrollBar->setVisible(false);
-    ui->appNotificationsConfigureLock->setVisible(false);
     //ui->networkKey->setVisible(false);
     //ui->networkConnect->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
@@ -327,18 +326,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->endSessionConfirmInMenu->setChecked(true);
     }
 
-    if (d->settings.contains("notifications/lockScreen")) {
-        if (d->settings.value("notifications/lockScreen").toString() == "contents") {
-            ui->showNotificationsContents->setChecked(true);
-        } else if (d->settings.value("notifications/lockScreen").toString() == "none") {
-            ui->showNotificationsNo->setChecked(true);
-        } else {
-            ui->showNotificationsOnly->setChecked(true);
-        }
-    } else {
-        ui->showNotificationsOnly->setChecked(true);
-    }
-
     QString themeType = d->themeSettings->value("color/type", "dark").toString();
     if (themeType == "light") {
         ui->lightColorThemeRadio->setChecked(true);
@@ -359,7 +346,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->TextSwitch->setChecked(d->settings.value("bar/showText", true).toBool());
     ui->windowManager->setText(d->settings.value("startup/WindowManagerCommand", "kwin_x11 --no-kactivities").toString());
     ui->barDesktopsSwitch->setChecked(d->settings.value("bar/showWindowsFromOtherDesktops", true).toBool());
-    ui->MediaSwitch->setChecked(d->settings.value("notifications/mediaInsert", true).toBool());
     ui->StatusBarSwitch->setChecked(d->settings.value("bar/statusBar", false).toBool());
     ui->SuspendLockScreen->setChecked(d->settings.value("lockScreen/showOnSuspend", true).toBool());
     ui->LargeTextSwitch->setChecked(d->themeSettings->value("accessibility/largeText", false).toBool());
@@ -367,21 +353,15 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->systemAnimationsAccessibilitySwitch->setChecked(d->themeSettings->value("accessibility/systemAnimations", true).toBool());
     ui->CapsNumLockBellSwitch->setChecked(d->themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool());
     ui->TwentyFourHourSwitch->setChecked(d->settings.value("time/use24hour", true).toBool());
-    ui->AttenuateSwitch->setChecked(d->settings.value("notifications/attenuate", true).toBool());
     ui->BarOnBottom->setChecked(!d->settings.value("bar/onTop", true).toBool());
     ui->AutoShowBarSwitch->setChecked(d->settings.value("bar/autoshow", true).toBool());
-    ui->SoundFeedbackSoundSwitch->setChecked(d->settings.value("sound/feedbackSound", true).toBool());
-    ui->VolumeOverdriveSwitch->setChecked(d->settings.value("sound/volumeOverdrive", true).toBool());
     ui->batteryScreenOff->setValue(d->settings.value("power/batteryScreenOff", 15).toInt());
     ui->batterySuspend->setValue(d->settings.value("power/batterySuspend", 30).toInt());
     ui->powerScreenOff->setValue(d->settings.value("power/powerScreenOff", 30).toInt());
     ui->powerSuspend->setValue(d->settings.value("power/powerSuspend", 90).toInt());
-    ui->EmphasiseAppSwitch->setChecked(d->settings.value("notifications/emphasiseApp", true).toBool());
     ui->CompactBarSwitch->setChecked(d->settings.value("bar/compact", false).toBool());
     ui->LocationMasterSwitch->setChecked(d->locationSettings->value("master/master", true).toBool());
     ui->powerButtonPressed->setCurrentIndex(d->settings.value("power/onPowerButtonPressed", 0).toInt());
-    ui->notifyOnConnectPower->setChecked(d->settings.value("power/notifyConnectPower", true).toBool());
-    ui->notifyOnUnplug->setChecked(d->settings.value("power/notifyUnplugPower", true).toBool());
     updateAccentColourBox();
     on_StatusBarSwitch_toggled(ui->StatusBarSwitch->isChecked());
 
@@ -431,21 +411,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     QObjectList allObjects;
     allObjects.append(this);
-
-    ui->notificationSoundBox->blockSignals(true);
-    ui->notificationSoundBox->addItem("Triple Ping");
-    ui->notificationSoundBox->addItem("Upside Down");
-    ui->notificationSoundBox->addItem("Echo");
-
-    QString notificationSound = d->settings.value("notifications/sound", "tripleping").toString();
-    if (notificationSound == "tripleping") {
-        ui->notificationSoundBox->setCurrentIndex(0);
-    } else if (notificationSound == "upsidedown") {
-        ui->notificationSoundBox->setCurrentIndex(1);
-    } else if (notificationSound == "echo") {
-        ui->notificationSoundBox->setCurrentIndex(2);
-    }
-    ui->notificationSoundBox->blockSignals(false);
 
     //Get distribution information
     {
@@ -1227,32 +1192,12 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     ui->settingsTabs->setCurrentIndex(currentRow);
 
     //Set up settings
-    if (ui->settingsTabs->currentWidget() == ui->NotificationsSettings) { //Notifications
-        setupNotificationsSettingsPane();
-    } else if (currentRow == 4) { //Location
+    if (currentRow == ui->settingsTabs->indexOf(ui->LocationSettings)) { //Location
         setupLocationSettingsPane();
     } else if (currentRow == ui->settingsTabs->indexOf(ui->UserSettings)) { //Users
         setupUsersSettingsPane();
     } else if (currentRow == ui->settingsTabs->indexOf(ui->DateTimeSettings)) { //Date and Time
         setupDateTimeSettingsPane();
-    }
-}
-
-void InfoPaneDropdown::setupNotificationsSettingsPane() {
-    ui->AppNotifications->clear();
-
-    QStringList knownApplications;
-    int amount = d->notificationAppSettings->beginReadArray("notifications/knownApplications");
-    for (int i = 0; i < amount; i++) {
-        d->notificationAppSettings->setArrayIndex(i);
-        knownApplications.append(d->notificationAppSettings->value("appname").toString());
-    }
-    d->notificationAppSettings->endArray();
-
-    for (QString app : knownApplications) {
-        QListWidgetItem* item = new QListWidgetItem();
-        item->setText(app);
-        ui->AppNotifications->addItem(item);
     }
 }
 
@@ -1324,32 +1269,6 @@ void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
     /*} else if (switchingWidget == ui->printFrame) {
         ui->printLabel->setShowDisabled(false);*/
     }
-}
-
-void InfoPaneDropdown::on_showNotificationsContents_toggled(bool checked)
-{
-    if (checked) {
-        d->settings.setValue("notifications/lockScreen", "contents");
-    }
-}
-
-void InfoPaneDropdown::on_showNotificationsOnly_toggled(bool checked)
-{
-    if (checked) {
-        d->settings.setValue("notifications/lockScreen", "noContents");
-    }
-}
-
-void InfoPaneDropdown::on_showNotificationsNo_toggled(bool checked)
-{
-    if (checked) {
-        d->settings.setValue("notifications/lockScreen", "none");
-    }
-}
-
-void InfoPaneDropdown::on_MediaSwitch_toggled(bool checked)
-{
-    d->settings.setValue("notifications/mediaInsert", checked);
 }
 
 void InfoPaneDropdown::on_lightColorThemeRadio_toggled(bool checked)
@@ -1761,27 +1680,6 @@ void InfoPaneDropdown::completeDragDown() {
         a->start();
     }
     d->previousDrags.clear();
-}
-
-void InfoPaneDropdown::on_notificationSoundBox_currentIndexChanged(int index)
-{
-    QSoundEffect* sound = new QSoundEffect();
-    switch (index) {
-        case 0:
-            d->settings.setValue("notifications/sound", "tripleping");
-            sound->setSource(QUrl("qrc:/sounds/notifications/tripleping.wav"));
-            break;
-        case 1:
-            d->settings.setValue("notifications/sound", "upsidedown");
-            sound->setSource(QUrl("qrc:/sounds/notifications/upsidedown.wav"));
-            break;
-        case 2:
-            d->settings.setValue("notifications/sound", "echo");
-            sound->setSource(QUrl("qrc:/sounds/notifications/echo.wav"));
-            break;
-    }
-    sound->play();
-    connect(sound, SIGNAL(playingChanged()), sound, SLOT(deleteLater()));
 }
 
 void InfoPaneDropdown::setupUsersSettingsPane() {
@@ -2219,11 +2117,6 @@ void InfoPaneDropdown::on_systemIconTheme_currentIndexChanged(int index)
     d->themeSettings->setValue("icons/theme", ui->systemIconTheme->itemData(index).toString());
 }
 
-void InfoPaneDropdown::on_AttenuateSwitch_toggled(bool checked)
-{
-    d->settings.setValue("notifications/attenuate", checked);
-}
-
 void InfoPaneDropdown::on_BarOnBottom_toggled(bool checked)
 {
     d->settings.setValue("bar/onTop", !checked);
@@ -2263,14 +2156,6 @@ void InfoPaneDropdown::on_decorativeColorThemeRadio_toggled(bool checked)
         updateAccentColourBox();
         resetStyle();
     }
-}
-
-void InfoPaneDropdown::on_SoundFeedbackSoundSwitch_toggled(bool checked) {
-    d->settings.setValue("sound/feedbackSound", checked);
-}
-
-void InfoPaneDropdown::on_VolumeOverdriveSwitch_toggled(bool checked) {
-    d->settings.setValue("sound/volumeOverdrive", checked);
 }
 
 void InfoPaneDropdown::updateAccentColourBox() {
@@ -2471,57 +2356,6 @@ void InfoPaneDropdown::on_grayColorThemeRadio_toggled(bool checked)
         updateAccentColourBox();
         resetStyle();
         changeDropDown(Settings, false);
-    }
-}
-
-void InfoPaneDropdown::on_AppNotifications_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
-{
-    if (current == NULL) {
-        ui->appNotificationsPane->setEnabled(false);
-        ui->appNotificationsConfigureLock->setVisible(false);
-    } else {
-        ui->appNotificationsTitle->setText(tr("Notifications for %1").arg(current->text()));
-        ui->appAllowNotifications->setChecked(d->notificationAppSettings->value(current->text() + "/allow", true).toBool());
-        ui->appAllowSounds->setChecked(d->notificationAppSettings->value(current->text() + "/sounds", true).toBool());
-        ui->appAllowPopup->setChecked(d->notificationAppSettings->value(current->text() + "/popup", true).toBool());
-        ui->appBypassQuiet->setChecked(d->notificationAppSettings->value(current->text() + "/bypassQuiet", false).toBool());
-
-        if (current->text() == "theShell") {
-            ui->appNotificationsPane->setEnabled(false);
-            ui->appNotificationsConfigureLock->setText(tr("You can't configure notifications for %1").arg(current->text()));
-            ui->appNotificationsConfigureLock->setVisible(true);
-        } else {
-            ui->appNotificationsPane->setEnabled(true);
-            ui->appNotificationsConfigureLock->setVisible(false);
-        }
-    }
-}
-
-void InfoPaneDropdown::on_appAllowNotifications_toggled(bool checked)
-{
-    if (ui->AppNotifications->currentItem() != NULL) {
-        d->notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/allow", checked);
-    }
-}
-
-void InfoPaneDropdown::on_appAllowSounds_toggled(bool checked)
-{
-    if (ui->AppNotifications->currentItem() != NULL) {
-        d->notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/sounds", checked);
-    }
-}
-
-void InfoPaneDropdown::on_appAllowPopup_toggled(bool checked)
-{
-    if (ui->AppNotifications->currentItem() != NULL) {
-        d->notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/popup", checked);
-    }
-}
-
-void InfoPaneDropdown::on_appBypassQuiet_toggled(bool checked)
-{
-    if (ui->AppNotifications->currentItem() != NULL) {
-        d->notificationAppSettings->setValue(ui->AppNotifications->currentItem()->text() + "/bypassQuiet", checked);
     }
 }
 
@@ -2845,11 +2679,6 @@ bool InfoPaneDropdown::eventFilter(QObject *obj, QEvent *e) {
         }
     }
     return false;
-}
-
-void InfoPaneDropdown::on_EmphasiseAppSwitch_toggled(bool checked)
-{
-    d->settings.setValue("notifications/emphasiseApp", checked);
 }
 
 void InfoPaneDropdown::on_CompactBarSwitch_toggled(bool checked)
@@ -3287,14 +3116,4 @@ void InfoPaneDropdown::on_powerSuspendHibernate_toggled(bool checked)
 void InfoPaneDropdown::on_powerButtonPressed_currentIndexChanged(int index)
 {
     d->settings.setValue("power/onPowerButtonPressed", index);
-}
-
-void InfoPaneDropdown::on_notifyOnConnectPower_toggled(bool checked)
-{
-    d->settings.setValue("power/notifyConnectPower", checked);
-}
-
-void InfoPaneDropdown::on_notifyOnUnplug_toggled(bool checked)
-{
-    d->settings.setValue("power/notifyUnplugPower", checked);
 }

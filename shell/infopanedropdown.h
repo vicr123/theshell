@@ -160,14 +160,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_pageStack_switchingFrame(int switchTo);
 
-        void on_showNotificationsContents_toggled(bool checked);
-
-        void on_showNotificationsOnly_toggled(bool checked);
-
-        void on_showNotificationsNo_toggled(bool checked);
-
-        void on_MediaSwitch_toggled(bool checked);
-
         void on_lightColorThemeRadio_toggled(bool checked);
 
         void on_darkColorThemeRadio_toggled(bool checked);
@@ -187,8 +179,6 @@ class InfoPaneDropdown : public QDialog
         void on_PowerStretchSwitch_toggled(bool checked);
 
         void doNetworkCheck();
-
-        void on_notificationSoundBox_currentIndexChanged(int index);
 
         void setupUsersSettingsPane();
 
@@ -211,8 +201,6 @@ class InfoPaneDropdown : public QDialog
         void on_userSettingsDeleteUserAndData_clicked();
 
         void setupDateTimeSettingsPane();
-
-        void setupNotificationsSettingsPane();
 
         void launchDateTimeService();
 
@@ -248,8 +236,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_systemIconTheme_currentIndexChanged(int index);
 
-        void on_AttenuateSwitch_toggled(bool checked);
-
         void on_BarOnBottom_toggled(bool checked);
 
         void on_systemWidgetTheme_currentIndexChanged(int index);
@@ -257,10 +243,6 @@ class InfoPaneDropdown : public QDialog
         void resetStyle();
 
         void on_decorativeColorThemeRadio_toggled(bool checked);
-
-        void on_SoundFeedbackSoundSwitch_toggled(bool checked);
-
-        void on_VolumeOverdriveSwitch_toggled(bool checked);
 
         void updateAccentColourBox();
 
@@ -287,16 +269,6 @@ class InfoPaneDropdown : public QDialog
         void on_addAutostartApp_clicked();
 
         void on_grayColorThemeRadio_toggled(bool checked);
-
-        void on_AppNotifications_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
-
-        void on_appAllowNotifications_toggled(bool checked);
-
-        void on_appAllowSounds_toggled(bool checked);
-
-        void on_appAllowPopup_toggled(bool checked);
-
-        void on_appBypassQuiet_toggled(bool checked);
 
         void on_SetSystemTimezoneButton_clicked();
 
@@ -331,8 +303,6 @@ class InfoPaneDropdown : public QDialog
         void on_useSystemFontForGTKButton_clicked();
 
         void setHeaderColour(QColor col);
-
-        void on_EmphasiseAppSwitch_toggled(bool checked);
 
         void on_CompactBarSwitch_toggled(bool checked);
 
@@ -377,10 +347,6 @@ class InfoPaneDropdown : public QDialog
         void on_powerSuspendHibernate_toggled(bool checked);
 
         void on_powerButtonPressed_currentIndexChanged(int index);
-
-        void on_notifyOnConnectPower_toggled(bool checked);
-
-        void on_notifyOnUnplug_toggled(bool checked);
 
     public slots:
         void updateStruts();

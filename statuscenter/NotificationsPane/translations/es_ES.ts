@@ -150,5 +150,97 @@
         <source>Notifications</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t Show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On lock screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DISPLAY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emphasise sending app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attenuate other sounds on notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triple Ping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upside Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Echo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notification Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SOUNDS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BEHAVIOUR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pop up onscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play Sounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bypass Quiet Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Even when Quiet Mode is set to No Notifications or Critical Only, notifications from this app will continue to show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Media Connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SYSTEM NOTIFICATIONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Charging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unplugged</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -427,7 +427,7 @@
          <item row="1" column="0" colspan="2">
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>Redshift tints the display a warmer shade at night, which may help you get a better night's sleep.</string>
+            <string>Redshift blocks blue light so that you can sleep better at night.</string>
            </property>
           </widget>
          </item>

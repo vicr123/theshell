@@ -29,11 +29,11 @@ struct ApplicationInformation {
     bool isDesktopEntry;
     QIcon icon;
 
-    NotificationsPermissionEngine permissionsEngine() {
+    QSharedPointer<NotificationsPermissionEngine> permissionsEngine() {
         if (isDesktopEntry) {
-            return NotificationsPermissionEngine("", name);
+            return QSharedPointer<NotificationsPermissionEngine>(new NotificationsPermissionEngine("", name));
         } else {
-            return NotificationsPermissionEngine(name);
+            return QSharedPointer<NotificationsPermissionEngine>(new NotificationsPermissionEngine(name));
         }
     }
 };

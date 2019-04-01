@@ -45,6 +45,32 @@ class SettingsPane : public QWidget, public StatusCenterPaneObject
     private slots:
         void on_backButton_clicked();
 
+        void on_showContentsButton_toggled(bool checked);
+
+        void on_hideContentsButton_toggled(bool checked);
+
+        void on_dontShowButton_toggled(bool checked);
+
+        void on_emphasiseSendingAppSwitch_toggled(bool checked);
+
+        void on_notificationSoundBox_currentIndexChanged(int index);
+
+        void on_attenuateOnNotification_toggled(bool checked);
+
+        void on_allowNotificationsMasterSwitch_toggled(bool checked);
+
+        void on_allowPopupsSwitch_toggled(bool checked);
+
+        void on_allowSoundsSwitch_toggled(bool checked);
+
+        void on_bypassQuietModeSwitch_toggled(bool checked);
+
+        void on_connectMediaSwitch_toggled(bool checked);
+
+        void on_chargingSwitch_toggled(bool checked);
+
+        void on_unplugSwitch_toggled(bool checked);
+
     private:
         Ui::SettingsPane *ui;
         SettingsPanePrivate* d;

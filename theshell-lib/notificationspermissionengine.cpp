@@ -33,11 +33,13 @@ struct NotificationsPermissionEnginePrivate {
     QSettings* appSettings;
     QSettings* desktopFile = nullptr;
     bool isValidApp = true;
+    bool istheshell = false;
 };
 
 NotificationsPermissionEngine::NotificationsPermissionEngine(QString appName, QString desktopFile)
 {
     d = new NotificationsPermissionEnginePrivate();
+    d->isValidApp = true;
     d->appSettings = new QSettings("theSuite", "theShell-notifications");
 
     //Determine the name of the group used to store these settings
@@ -70,6 +72,9 @@ NotificationsPermissionEngine::NotificationsPermissionEngine(QString appName, QS
         }
     } else {
         groupName = "app-" + appName;
+        if (appName == "theShell") {
+            d->istheshell = true;
+        }
     }
 
     //Check if notification settings for this app exist
@@ -95,7 +100,7 @@ NotificationsPermissionEngine::NotificationsPermissionEngine() {
 }
 
 NotificationsPermissionEngine::~NotificationsPermissionEngine() {
-    if (d->desktopFile != nullptr) delete d->desktopFile;
+    if (d->desktopFile != nullptr) d->desktopFile->deleteLater();
     d->appSettings->endGroup();
     d->appSettings->deleteLater();
     delete d;
@@ -106,7 +111,7 @@ QStringList NotificationsPermissionEngine::knownApps() {
     QSettings appSettings("theSuite", "theShell-notifications");
     for (QString group : appSettings.childGroups()) {
         appSettings.beginGroup(group);
-        if (appSettings.contains("identifier") && appSettings.value("isDesktopFile").toBool() == false) {
+        if (appSettings.contains("identifier") && appSettings.value("isDesktopFile").toBool() == false && appSettings.value("identifier").toString() != "theShell") {
             returnValue.append(appSettings.value("identifier").toString());
         }
         appSettings.endGroup();
@@ -143,6 +148,7 @@ QString NotificationsPermissionEngine::identifier() {
 
 QIcon NotificationsPermissionEngine::appIcon() {
     if (!d->isValidApp) return QIcon::fromTheme("generic-app");
+    if (d->istheshell) return QIcon::fromTheme("theshell");
     if (d->desktopFile == nullptr) {
         if (QIcon::hasThemeIcon(identifier().toLower().replace(" ", "-"))) {
            return QIcon::fromTheme(identifier().toLower().replace(" ", "-"));
@@ -182,7 +188,7 @@ void NotificationsPermissionEngine::remove() {
 }
 
 void NotificationsPermissionEngine::setAllowNotifications(bool allowNotifications) {
-    if (!d->isValidApp) return;
+    if (!d->isValidApp || d->istheshell) return;
     d->appSettings->setValue("allow", allowNotifications);
 }
 
@@ -192,7 +198,7 @@ bool NotificationsPermissionEngine::allowNotifications() {
 }
 
 void NotificationsPermissionEngine::setBypassesQuietMode(bool bypassesQuietMode) {
-    if (!d->isValidApp) return;
+    if (!d->isValidApp || d->istheshell) return;
     d->appSettings->setValue("bypassQuiet", bypassesQuietMode);
 }
 
@@ -202,7 +208,7 @@ bool NotificationsPermissionEngine::bypassesQuietMode() {
 }
 
 void NotificationsPermissionEngine::setShowPopups(bool popups) {
-    if (!d->isValidApp) return;
+    if (!d->isValidApp || d->istheshell) return;
     d->appSettings->setValue("popup", popups);
 }
 
@@ -212,7 +218,7 @@ bool NotificationsPermissionEngine::showPopups() {
 }
 
 void NotificationsPermissionEngine::setPlaySound(bool playSound) {
-    if (!d->isValidApp) return;
+    if (!d->isValidApp || d->istheshell) return;
     d->appSettings->setValue("sounds", playSound);
 }
 

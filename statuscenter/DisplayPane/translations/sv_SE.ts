@@ -119,7 +119,7 @@
     </message>
     <message>
         <location filename="../displaypane.ui" line="430"/>
-        <source>Redshift tints the display a warmer shade at night, which may help you get a better night&apos;s sleep.</source>
+        <source>Redshift blocks blue light so that you can sleep better at night.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

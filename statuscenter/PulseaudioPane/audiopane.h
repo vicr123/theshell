@@ -56,6 +56,10 @@ class AudioPane : public QWidget, public StatusCenterPaneObject
 
         void updateSinkInputMute(bool mute, int index);
 
+        void on_volumeOverdrive_toggled(bool checked);
+
+        void on_volumeChangeSoundSwitch_toggled(bool checked);
+
     signals:
         void defaultSinkChanged(QString defaultSink);
 
