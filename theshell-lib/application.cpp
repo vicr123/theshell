@@ -24,6 +24,8 @@
 #include <QDirIterator>
 #include <QLocale>
 #include <QSet>
+#include <QFileSystemWatcher>
+
 
 struct ApplicationPrivate {
     QSettings* appSettings = nullptr;
@@ -37,6 +39,7 @@ const QStringList searchPaths = {
     QDir::homePath() + "/.local/share/applications",
     "/usr/share/applications"
 };
+ApplicationDaemon* ApplicationDaemon::d = nullptr;
 
 Application::Application(QString desktopEntry) {
     d = new ApplicationPrivate();
@@ -50,6 +53,7 @@ Application::Application(QString desktopEntry) {
                 d->appSettings = new QSettings(iterator.filePath(), QSettingsFormats::desktopFormat());
                 d->desktopEntry = desktopEntry;
                 d->useSettings = true;
+                return;
             }
         }
     }
@@ -140,4 +144,17 @@ QStringList Application::allApplications() {
 
 QString Application::desktopEntry() const {
     return d->desktopEntry;
+}
+
+#include <QDebug>
+ApplicationDaemon::ApplicationDaemon() : QObject(nullptr) {
+    QFileSystemWatcher* watcher = new QFileSystemWatcher();
+    watcher->addPaths(searchPaths);
+    connect(watcher, &QFileSystemWatcher::directoryChanged, this, &ApplicationDaemon::appsUpdateRequired);
+    connect(watcher, &QFileSystemWatcher::fileChanged, this, &ApplicationDaemon::appsUpdateRequired);
+}
+
+ApplicationDaemon* ApplicationDaemon::instance() {
+    if (d == nullptr) d = new ApplicationDaemon();
+    return d;
 }

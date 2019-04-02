@@ -47,4 +47,17 @@ class Application
 typedef QSharedPointer<Application> ApplicationPointer;
 Q_DECLARE_METATYPE(ApplicationPointer)
 
+class ApplicationDaemon : public QObject {
+    Q_OBJECT
+    public:
+        static ApplicationDaemon* instance();
+
+    signals:
+        void appsUpdateRequired();
+
+    private:
+        ApplicationDaemon();
+        static ApplicationDaemon* d;
+};
+
 #endif // APPLICATION_H

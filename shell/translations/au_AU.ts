@@ -4,67 +4,67 @@
 <context>
     <name>AppsListModel</name>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="67"/>
+        <location filename="../apps/appslistmodel.cpp" line="70"/>
         <source>Application</source>
         <translation>App</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="125"/>
+        <location filename="../apps/appslistmodel.cpp" line="128"/>
         <source>Power Off</source>
         <translation>Turn &apos;er off</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="127"/>
+        <location filename="../apps/appslistmodel.cpp" line="130"/>
         <source>Power off this device</source>
         <translation>Shut &apos;er down</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="132"/>
+        <location filename="../apps/appslistmodel.cpp" line="135"/>
         <source>Reboot</source>
         <translation>Switch it off and back on</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="134"/>
+        <location filename="../apps/appslistmodel.cpp" line="137"/>
         <source>Reboot this device</source>
         <translation>Close &apos;er down and start &apos;er up again</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="139"/>
+        <location filename="../apps/appslistmodel.cpp" line="142"/>
         <source>Log Out</source>
         <translation>Bail out</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="141"/>
+        <location filename="../apps/appslistmodel.cpp" line="144"/>
         <source>End your session</source>
         <translation>End it all</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="150"/>
+        <location filename="../apps/appslistmodel.cpp" line="153"/>
         <source>Run Command</source>
         <translation>Do the thing</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="160"/>
+        <location filename="../apps/appslistmodel.cpp" line="163"/>
         <source>Open webpage</source>
         <translation>Let&apos;s go surfing</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="168"/>
+        <location filename="../apps/appslistmodel.cpp" line="171"/>
         <source>Open Folder</source>
         <translation>Open holder</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="178"/>
+        <location filename="../apps/appslistmodel.cpp" line="181"/>
         <source>Open File</source>
         <translation>Open ya data</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="204"/>
+        <location filename="../apps/appslistmodel.cpp" line="207"/>
         <source>System settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="206"/>
+        <location filename="../apps/appslistmodel.cpp" line="209"/>
         <source>System Configuration</source>
         <translation>Play around with your system</translation>
     </message>

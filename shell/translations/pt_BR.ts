@@ -4,67 +4,67 @@
 <context>
     <name>AppsListModel</name>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="67"/>
+        <location filename="../apps/appslistmodel.cpp" line="70"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="125"/>
+        <location filename="../apps/appslistmodel.cpp" line="128"/>
         <source>Power Off</source>
         <translation type="unfinished">Desligar</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="127"/>
+        <location filename="../apps/appslistmodel.cpp" line="130"/>
         <source>Power off this device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="132"/>
+        <location filename="../apps/appslistmodel.cpp" line="135"/>
         <source>Reboot</source>
         <translation type="unfinished">Reiniciar</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="134"/>
+        <location filename="../apps/appslistmodel.cpp" line="137"/>
         <source>Reboot this device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="139"/>
+        <location filename="../apps/appslistmodel.cpp" line="142"/>
         <source>Log Out</source>
         <translation type="unfinished">Trocar usuário</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="141"/>
+        <location filename="../apps/appslistmodel.cpp" line="144"/>
         <source>End your session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="150"/>
+        <location filename="../apps/appslistmodel.cpp" line="153"/>
         <source>Run Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="160"/>
+        <location filename="../apps/appslistmodel.cpp" line="163"/>
         <source>Open webpage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="168"/>
+        <location filename="../apps/appslistmodel.cpp" line="171"/>
         <source>Open Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="178"/>
+        <location filename="../apps/appslistmodel.cpp" line="181"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="204"/>
+        <location filename="../apps/appslistmodel.cpp" line="207"/>
         <source>System settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="206"/>
+        <location filename="../apps/appslistmodel.cpp" line="209"/>
         <source>System Configuration</source>
         <translation type="unfinished"></translation>
     </message>

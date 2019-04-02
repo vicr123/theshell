@@ -43,6 +43,9 @@ AppsListModel::AppsListModel(QObject *parent) : QAbstractListModel(parent) {
     //this->bt = bt;
     d = new AppsListModelPrivate();
 
+    connect(ApplicationDaemon::instance(), &ApplicationDaemon::appsUpdateRequired, this, [=] {
+        loadData();
+    });
     loadData();
 }
 
@@ -238,8 +241,8 @@ void AppsListModel::loadData() {
     d->apps.append(pinnedApps);
     d->apps.append(normalApps);
 
-    //Perform a search for nothing to initialize the list
-    search("");
+    //Perform a search to initialize the list
+    search(currentQuery);
 }
 
 AppsDelegate::AppsDelegate(QWidget *parent, bool drawArrows) : QStyledItemDelegate(parent) {
