@@ -4,67 +4,67 @@
 <context>
     <name>AppsListModel</name>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="66"/>
+        <location filename="../apps/appslistmodel.cpp" line="67"/>
         <source>Application</source>
         <translation>Applicatie</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="124"/>
+        <location filename="../apps/appslistmodel.cpp" line="125"/>
         <source>Power Off</source>
         <translation>Zet uit</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="126"/>
+        <location filename="../apps/appslistmodel.cpp" line="127"/>
         <source>Power off this device</source>
         <translation>Zet dit apparaat uit</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="131"/>
+        <location filename="../apps/appslistmodel.cpp" line="132"/>
         <source>Reboot</source>
         <translation>Herstarten</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="133"/>
+        <location filename="../apps/appslistmodel.cpp" line="134"/>
         <source>Reboot this device</source>
         <translation>Herstart dit apparaat</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="138"/>
+        <location filename="../apps/appslistmodel.cpp" line="139"/>
         <source>Log Out</source>
         <translation>Uitloggen</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="140"/>
+        <location filename="../apps/appslistmodel.cpp" line="141"/>
         <source>End your session</source>
         <translation>Beëindig uw sessie</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="149"/>
+        <location filename="../apps/appslistmodel.cpp" line="150"/>
         <source>Run Command</source>
         <translation>Commando uitvoeren</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="159"/>
+        <location filename="../apps/appslistmodel.cpp" line="160"/>
         <source>Open webpage</source>
         <translation>Open webpagina</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="167"/>
+        <location filename="../apps/appslistmodel.cpp" line="168"/>
         <source>Open Folder</source>
         <translation>Open map</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="177"/>
+        <location filename="../apps/appslistmodel.cpp" line="178"/>
         <source>Open File</source>
         <translation>Open bestand</translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="203"/>
+        <location filename="../apps/appslistmodel.cpp" line="204"/>
         <source>System settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../apps/appslistmodel.cpp" line="205"/>
+        <location filename="../apps/appslistmodel.cpp" line="206"/>
         <source>System Configuration</source>
         <translation></translation>
     </message>

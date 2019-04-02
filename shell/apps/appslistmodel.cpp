@@ -42,6 +42,7 @@ struct AppsListModelPrivate {
 AppsListModel::AppsListModel(QObject *parent) : QAbstractListModel(parent) {
     //this->bt = bt;
     d = new AppsListModelPrivate();
+
     loadData();
 }
 
@@ -237,7 +238,8 @@ void AppsListModel::loadData() {
     d->apps.append(pinnedApps);
     d->apps.append(normalApps);
 
-    updateData();
+    //Perform a search for nothing to initialize the list
+    search("");
 }
 
 AppsDelegate::AppsDelegate(QWidget *parent, bool drawArrows) : QStyledItemDelegate(parent) {
