@@ -6,10 +6,10 @@
 
 QT       += core gui dbus multimedia xml network positioning svg charts concurrent
 CONFIG   += c++14
-LIBS     += -lcrypt -L$$OUT_PWD/../../theshell-lib/
+LIBS     += -lcrypt -L$$OUT_PWD/../theshell-lib/
 
-INCLUDEPATH += $$PWD/../../theshell-lib
-DEPENDPATH += $$PWD/../../theshell-lib
+INCLUDEPATH += $$PWD/../theshell-lib
+DEPENDPATH += $$PWD/../theshell-lib
 
 unix {
     CONFIG += link_pkgconfig
@@ -91,7 +91,6 @@ SOURCES += main.cpp\
     taskbarmanager.cpp \
     dbussignals.cpp \
     apps/appslistmodel.cpp \
-    apps/app.cpp \
     screenrecorder.cpp \
     location/locationservices.cpp \
     location/locationrequestdialog.cpp \
@@ -132,7 +131,6 @@ HEADERS  += mainwindow.h \
     taskbarmanager.h \
     dbussignals.h \
     apps/appslistmodel.h \
-    apps/app.h \
     screenrecorder.h \
     location/locationservices.h \
     location/locationrequestdialog.h \

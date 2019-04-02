@@ -22,6 +22,7 @@
 #include "ui_menu.h"
 
 #include <QScroller>
+#include <application.h>
 
 extern void EndSession(EndSessionWait::shutdownType type);
 extern float getDPIScaling();
@@ -388,7 +389,7 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
             }
         } else if ((QApplication::layoutDirection() == Qt::RightToLeft
                    ? e->key() == Qt::Key_Left
-                   : e->key() == Qt::Key_Right) && ui->appsListView->model()->index(currentRow, 0).data(Qt::UserRole + 3).value<App>().actions().count() > 0) {
+                   : e->key() == Qt::Key_Right) && ui->appsListView->model()->index(currentRow, 0).data(Qt::UserRole + 3).value<ApplicationPointer>()->getStringList("Actions").count() > 0) {
             showActionMenuByIndex(ui->appsListView->model()->index(currentRow, 0));
             return true;
         } else if (e->key() == Qt::Key_Down) {
@@ -434,7 +435,7 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
             return false;
         }
 
-        QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
+        QStringList acts = index.data(Qt::UserRole + 3).value<ApplicationPointer>()->getStringList("Actions");
         if (acts.count() > 0 &&
                 QApplication::layoutDirection() == Qt::RightToLeft
                 ?(e->pos().x() < 34 * getDPIScaling())
@@ -717,10 +718,11 @@ void Menu::showActionMenuByIndex(QModelIndex index) {
     QMenu* menu = new QMenu();
     menu->addSection(index.data(Qt::DecorationRole).value<QIcon>(), tr("Actions for \"%1\"").arg(index.data(Qt::DisplayRole).toString()));
 
-    QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
-    for (App action : acts) {
-        menu->addAction(QIcon::fromTheme("arrow-right"), action.name(), [=] {
-            QString command = action.command();
+    ApplicationPointer app = index.data(Qt::UserRole + 3).value<ApplicationPointer>();
+    QStringList acts = app->getStringList("Actions");
+    for (QString action : acts) {
+        menu->addAction(QIcon::fromTheme("arrow-right"), app->getActionProperty(action, "Name").toString(), [=] {
+            QString command = app->getActionProperty(action, "Exec").toString();
             command.remove("env ");
             QProcess* process = new QProcess();
             QStringList environment = process->environment();

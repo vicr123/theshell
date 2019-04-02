@@ -21,6 +21,8 @@
 #include "locationservices.h"
 #include "agent_adaptor.h"
 
+#include <application.h>
+
 LocationServices::LocationServices(QObject *parent) : QObject(parent)
 {
     QDBusConnection::systemBus().interface()->startService("org.freedesktop.GeoClue2");
@@ -60,14 +62,9 @@ bool LocationServices::AuthorizeApp(QString desktop_id, uint req_accuracy_level,
         return true;
     }
 
-    App a = App::invalidApp();
-    if (QFile("/usr/share/applications/" + desktop_id + ".desktop").exists()) {
-        a = AppsListModel::readAppFile("/usr/share/applications/" + desktop_id + ".desktop");
-    } else if (QFile(QDir::homePath() + "/.local/share/applications" + desktop_id + ".desktop").exists()) {
-        a = AppsListModel::readAppFile(QDir::homePath() + "/.local/share/applications" + desktop_id + ".desktop");
-    }
+    Application a(desktop_id);
 
-    if (a.invalid()) {
+    if (a.getProperty("Name") == "") {
         //Invalid app
         return false;
     }
@@ -77,11 +74,11 @@ bool LocationServices::AuthorizeApp(QString desktop_id, uint req_accuracy_level,
     }
 
     LocationRequestDialog dialog;
-    dialog.setAppName(a.name());
-    dialog.setIcon(a.icon());
+    dialog.setAppName(a.getProperty("Name").toString());
+    dialog.setIcon(QIcon::fromTheme(a.getProperty("Icon").toString()));
 
-    if (a.hasAdditionalProperty("geoclueReason")) {
-        dialog.setReason(a.additionalProperty("geoclueReason").toString());
+    if (a.hasProperty("X-Geoclue-Reason")) {
+        dialog.setReason(a.getProperty("X-Geoclue-Reason").toString());
     }
 
     dialog.showFullScreen();

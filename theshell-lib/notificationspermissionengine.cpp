@@ -19,6 +19,7 @@
  * *************************************/
 #include "notificationspermissionengine.h"
 
+#include "qsettingsformats.h"
 #include <QSettings>
 #include <QCryptographicHash>
 #include <QIcon>
@@ -26,8 +27,6 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QLocale>
-
-extern QSettings::Format desktopFileFormat;
 
 struct NotificationsPermissionEnginePrivate {
     QSettings* appSettings;
@@ -54,7 +53,7 @@ NotificationsPermissionEngine::NotificationsPermissionEngine(QString appName, QS
                 iterator.next();
                 QFileInfo info = iterator.fileInfo();
                 if (info.fileName() == filename) {
-                    d->desktopFile = new QSettings(filename, desktopFileFormat);
+                    d->desktopFile = new QSettings(filename, QSettingsFormats::desktopFormat());
                     d->desktopFile->beginGroup("Desktop Entry");
                     break;
                 }

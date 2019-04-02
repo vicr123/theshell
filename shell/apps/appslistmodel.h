@@ -38,48 +38,35 @@
 #include <QPainter>
 #include <QListView>
 #include "bthandsfree.h"
-#include "app.h"
 #include "nativeeventfilter.h"
 
+struct AppsListModelPrivate;
 class AppsListModel : public QAbstractListModel
 {
     Q_OBJECT
 
-public:
-    AppsListModel(QObject *parent = 0);
-    ~AppsListModel();
+    public:
+        AppsListModel(QObject *parent = 0);
+        ~AppsListModel();
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    void updateData();
-    int pinnedAppsCount;
-    bool launchApp(QModelIndex index);
-    void search(QString query);
+        void updateData();
+        bool launchApp(QModelIndex index);
+        void search(QString query);
 
-    QList<App> availableApps();
+        int pinnedAppsCount();
 
-    QString currentQuery = "";
+        QString currentQuery = "";
 
-    static App readAppFile(QString appFile, QStringList pinnedAppsList = QStringList());
+    public slots:
+        void loadData();
 
-public slots:
-    void loadData();
+    signals:
 
-signals:
-
-private:
-    struct dataLoad {
-        QList<App> apps;
-        int pinnedAppsCount;
-    };
-
-    QSettings settings;
-    QList<App> apps;
-    QList<App> appsShown;
-    QFuture<dataLoad> loadDataFuture;
-    bool queueLoadData = false;
-    BTHandsfree* bt;
+    private:
+        AppsListModelPrivate* d;
 };
 
 class AppsDelegate : public QStyledItemDelegate

@@ -19,48 +19,57 @@
  * *************************************/
 
 #include "appslistmodel.h"
+#include <qsettingsformats.h>
+#include <application.h>
 
 #include "mainwindow.h"
 
 extern float getDPIScaling();
 extern NativeEventFilter* NativeFilter;
 extern MainWindow* MainWin;
-extern QSettings::Format desktopFileFormat;
 extern void EndSession(EndSessionWait::shutdownType type);
+
+struct AppsListModelPrivate {
+    QSettings settings;
+    QList<ApplicationPointer> apps;
+    QList<ApplicationPointer> appsShown;
+    bool queueLoadData = false;
+    BTHandsfree* bt;
+
+    QStringList pinnedAppsList;
+};
 
 AppsListModel::AppsListModel(QObject *parent) : QAbstractListModel(parent) {
     //this->bt = bt;
+    d = new AppsListModelPrivate();
     loadData();
 }
 
 AppsListModel::~AppsListModel() {
-
+    delete d;
 }
 
 int AppsListModel::rowCount(const QModelIndex &parent) const {
     Q_UNUSED(parent)
 
-    return appsShown.count();
+    return d->appsShown.count();
 }
 
 QVariant AppsListModel::data(const QModelIndex &index, int role) const {
-    if (appsShown.count() > index.row()) {
+    ApplicationPointer a = d->appsShown.at(index.row());
+    if (d->appsShown.count() > index.row()) {
         if (role == Qt::DisplayRole) {
-            return appsShown.at(index.row()).name();
+            return a->getProperty("Name", a->desktopEntry());
         } else if (role == Qt::DecorationRole) {
-            return appsShown.at(index.row()).icon().pixmap(32 * getDPIScaling(), 32 * getDPIScaling());
+            return QIcon::fromTheme(a->getProperty("Icon").toString()).pixmap(QSize(32, 32) * theLibsGlobal::getDPIScaling());
         } else if (role == Qt::UserRole) { //Description
-            if (appsShown.at(index.row()).description() == "") {
-                return tr("Application");
-            } else {
-                return appsShown.at(index.row()).description();
-            }
+            return a->getProperty("GenericName", tr("Application"));
         } else if (role == Qt::UserRole + 1) { //Pinned
-            return appsShown.at(index.row()).isPinned();
+            return d->pinnedAppsList.contains(a->desktopEntry());
         } else if (role == Qt::UserRole + 2) { //Desktop Entry
-            return appsShown.at(index.row()).desktopEntry();
+            return a->desktopEntry();
         } else if (role == Qt::UserRole + 3) { //App
-            return QVariant::fromValue(appsShown.at(index.row()));
+            return QVariant::fromValue(a);
         }
     }
     return QVariant();
@@ -72,9 +81,9 @@ void AppsListModel::updateData() {
 
 void AppsListModel::search(QString query) {
     currentQuery = query;
-    appsShown.clear();
+    d->appsShown.clear();
     if (query == "") {
-        appsShown.append(apps);
+        d->appsShown.append(d->apps);
         updateData();
     } else {
         if (query.toLower().startsWith("call")) {
@@ -93,77 +102,81 @@ void AppsListModel::search(QString query) {
         }
 
         int i = 0;
-        for (App app : apps) {
-            if (i >= pinnedAppsCount || pinnedAppsCount == 0) {
-                if (app.name().contains(query, Qt::CaseInsensitive) || app.description().contains(query, Qt::CaseInsensitive)) {
-                    appsShown.append(app);
+        for (ApplicationPointer app : d->apps) {
+            if (i >= d->pinnedAppsList.count() || d->pinnedAppsList.count() == 0) {
+                QStringList possibleWords;
+                possibleWords.append(app->getProperty("Name").toString());
+                possibleWords.append(app->getProperty("GenericName").toString());
+                possibleWords.append(app->getStringList("Keywords"));
+
+                for (QString s : possibleWords) {
+                    if (s.contains(query, Qt::CaseInsensitive)) {
+                        d->appsShown.append(app);
+                        break;
+                    }
                 }
             }
             i++;
         }
 
         if (QString("shutdown").contains(query, Qt::CaseInsensitive) || QString("power off").contains(query, Qt::CaseInsensitive) ||  QString("shut down").contains(query, Qt::CaseInsensitive)) {
-            App app;
-            app.setName(tr("Power Off"));
-            app.setCommand("::poweroff");
-            app.setDescription(tr("Power off this device"));
-            app.setIcon(QIcon::fromTheme("system-shutdown"));
-            appsShown.append(app);
+            d->appsShown.append(ApplicationPointer(new Application({
+                {"Name", tr("Power Off")},
+                {"Exec", "::poweroff"},
+                {"GenericName", tr("Power off this device")},
+                {"Icon", "system-shutdown"}
+            })));
         } else if (QString("restart").contains(query, Qt::CaseInsensitive) || QString("reboot").contains(query, Qt::CaseInsensitive)) {
-            App app;
-            app.setName(tr("Reboot"));
-            app.setCommand("::reboot");
-            app.setDescription(tr("Reboot this device"));
-            app.setIcon(QIcon::fromTheme("system-reboot"));
-            appsShown.append(app);
+            d->appsShown.append(ApplicationPointer(new Application({
+                {"Name", tr("Reboot")},
+                {"Exec", "::reboot"},
+                {"GenericName", tr("Reboot this device")},
+                {"Icon", "system-reboot"}
+            })));
         } else if (QString("logout").contains(query, Qt::CaseInsensitive) || QString("logoff").contains(query, Qt::CaseInsensitive)) {
-            App app;
-            app.setName(tr("Log Out"));
-            app.setCommand("::logout");
-            app.setDescription(tr("End your session"));
-            app.setIcon(QIcon::fromTheme("system-log-out"));
-            appsShown.append(app);
+            d->appsShown.append(ApplicationPointer(new Application({
+                {"Name", tr("Log Out")},
+                {"Exec", "::logout"},
+                {"GenericName", tr("End your session")},
+                {"Icon", "system-log-out"}
+            })));
         }
 
-        QString pathEnv = QProcessEnvironment::systemEnvironment().value("PATH");
-        for (QString env : pathEnv.split(":")) {
-            if (QFile(env.append("/" + query.split(" ")[0])).exists()) {
-                App app;
-                app.setName(query);
-                app.setCommand(query);
-                app.setDescription(tr("Run Command"));
-                app.setIcon(QIcon::fromTheme("system-run"));
-                appsShown.append(app);
-                break;
-            }
+        if (theLibsGlobal::searchInPath(query.split(" ")[0]).count() > 0) {
+            d->appsShown.append(ApplicationPointer(new Application({
+                {"Name", query},
+                {"Exec", query},
+                {"GenericName", tr("Run Command")},
+                {"Icon", "system-run"}
+            })));
         }
 
         QUrl uri = QUrl::fromUserInput(query);
         if (uri.scheme() == "http" || uri.scheme() == "https") {
-            App app;
-            app.setName(uri.toDisplayString());
-            app.setDescription(tr("Open webpage"));
-            app.setCommand("xdg-open \"" + uri.toString() + "\"");
-            app.setIcon(QIcon::fromTheme("text-html"));
-            appsShown.append(app);
+            d->appsShown.append(ApplicationPointer(new Application({
+                {"Name", uri.toDisplayString()},
+                {"Exec", "xdg-open \"" + uri.toString() + "\""},
+                {"GenericName", tr("Open webpage")},
+                {"Icon", "text-html"}
+            })));
         } else if (uri.scheme() == "file") {
             if (QDir(uri.path() + "/").exists()) {
-                App app;
-                app.setName(uri.path());
-                app.setDescription(tr("Open Folder"));
-                app.setCommand("xdg-open \"" + uri.toString() + "\"");
-                app.setIcon(QIcon::fromTheme("system-file-manager"));
-                appsShown.append(app);
+                d->appsShown.append(ApplicationPointer(new Application({
+                    {"Name", uri.path()},
+                    {"Exec", "xdg-open \"" + uri.toString() + "\""},
+                    {"GenericName", tr("Open Folder")},
+                    {"Icon", "system-file-manager"}
+                })));
             } else if (QFile(uri.path()).exists()) {
-                App app;
-                app.setName(uri.path());
-                app.setDescription(tr("Open File"));
-                app.setCommand("xdg-open \"" + uri.toString() + "\"");
-                QFile f(uri.toString());
-                QFileInfo info(f);
-                QMimeType mime = (new QMimeDatabase())->mimeTypeForFile(info);
-                app.setIcon(QIcon::fromTheme(mime.iconName(), QIcon::fromTheme("application-octet-stream")));
-                appsShown.append(app);
+                QFileInfo info(uri.toLocalFile());
+                QMimeType mime = QMimeDatabase().mimeTypeForFile(info);
+
+                d->appsShown.append(ApplicationPointer(new Application({
+                    {"Name", uri.path()},
+                    {"Exec", "xdg-open \"" + uri.toString() + "\""},
+                    {"GenericName", tr("Open File")},
+                    {"Icon", mime.iconName()}
+                })));
             }
         }
 
@@ -172,192 +185,59 @@ void AppsListModel::search(QString query) {
 }
 
 void AppsListModel::loadData() {
-    if (loadDataFuture.isRunning()) {
-        queueLoadData = true;
-    } else {
-        loadDataFuture = QtConcurrent::run([=]() -> dataLoad {
-            QList<App> apps;
-            int pinnedAppsCount;
-            QStringList appList, pinnedAppsList;
+    d->pinnedAppsList.clear();
+    d->apps.clear();
 
-            settings.beginGroup("gateway");
-            int count = settings.beginReadArray("pinnedItems");
-            for (int i = 0; i < count; i++) {
-                settings.setArrayIndex(i);
-                //appList.append(settings.value("desktopEntry").toString());
-                pinnedAppsList.append(settings.value("desktopEntry").toString());
-            }
-            settings.endArray();
-            settings.endGroup();
-            pinnedAppsCount = pinnedAppsList.count();
+    QList<ApplicationPointer> normalApps;
+    for (QString desktopEntry : Application::allApplications()) {
+        ApplicationPointer a(new Application(desktopEntry));
 
-            QDir appFolder("/usr/share/applications/");
-            QDirIterator* iterator = new QDirIterator(appFolder, QDirIterator::Subdirectories);
-
-            while (iterator->hasNext()) {
-                appList.append(iterator->next());
-            }
-
-            delete iterator;
-
-            App settingsApp;
-            settingsApp.setCommand("::settings");
-            settingsApp.setIcon(QIcon::fromTheme("configure"));
-            settingsApp.setName(tr("System Settings"));
-            settingsApp.setDescription(tr("System Configuration"));
-            apps.append(settingsApp);
-
-            appFolder = QDir(QDir::homePath() + "/.local/share/applications");
-            if (appFolder.exists()) {
-                iterator = new QDirIterator(appFolder, QDirIterator::Subdirectories);
-                while (iterator->hasNext()) {
-                    appList.append(iterator->next());
-                }
-                delete iterator;
-            }
-
-            for (QString appFile : appList) {
-                App app = readAppFile(appFile, pinnedAppsList);
-                if (!app.invalid()) {
-                    apps.prepend(app);
-                }
-            }
-
-            std::sort(apps.begin(), apps.end());
-
-            for (int i = pinnedAppsList.count() - 1; i >= 0; i--) {
-                App app = readAppFile(pinnedAppsList.at(i), pinnedAppsList);
-                if (!app.invalid()) {
-                    apps.prepend(app);
-                }
-            }
-
-            dataLoad r;
-            r.apps = apps;
-            r.pinnedAppsCount = pinnedAppsCount;
-            return r;
-        });
-
-        QFutureWatcher<dataLoad>* watcher = new QFutureWatcher<dataLoad>();
-        connect(watcher, &QFutureWatcher<dataLoad>::finished, [=] {
-            watcher->deleteLater();
-            dataLoad r = loadDataFuture.result();
-            this->apps = r.apps;
-            this->pinnedAppsCount = r.pinnedAppsCount;
-
-            if (queueLoadData) {
-                queueLoadData = false;
-                loadData();
-            } else {
-                search(currentQuery);
-            }
-        });
-        watcher->setFuture(loadDataFuture);
+        //Make sure this app is good to be shown
+        if (a->getProperty("Type", "").toString() != "Application") continue;
+        if (a->getProperty("NoDisplay", false).toBool()) continue;
+        if (!a->getStringList("OnlyShowIn", {"theshell"}).contains("theshell")) continue;
+        if (a->getStringList("NotShowIn").contains("theshell")) continue;
+        normalApps.append(a);
     }
-}
+    normalApps.append(ApplicationPointer(new Application({
+        {"Name", tr("System settings")},
+        {"Exec", "::settings"},
+        {"GenericName", tr("System Configuration")},
+        {"Icon", "configure"}
+    })));
 
-QList<App> AppsListModel::availableApps() {
-    return apps;
-}
-
-App AppsListModel::readAppFile(QString appFile, QStringList pinnedAppsList) {
-    QSettings desc(appFile, desktopFileFormat);
-    App app;
-    QString lang = QLocale().name().split('_').first();
-    desc.beginGroup("Desktop Entry");
-
-    if (desc.value("Type", "").toString() != "Application") {
-        return App::invalidApp();
-    }
-    if (desc.value("NoDisplay", false).toBool() == true) {
-        return App::invalidApp();
-    }
-    if (!desc.value("OnlyShowIn", "theshell;").toString().contains("theshell;")) {
-        return App::invalidApp();
-    }
-    if (desc.value("NotShowIn", "").toString().contains("theshell;")) {
-        return App::invalidApp();
-    }
-
-    if (desc.contains("Name[" + lang + "]")) {
-        app.setName(desc.value("Name[" + lang + "]").toString());
-    } else {
-        app.setName(desc.value("Name").toString());
-    }
-
-    QString commandLine = desc.value("Exec").toString();
-    commandLine.remove("%u");
-    commandLine.remove("%U");
-    commandLine.remove("%f");
-    commandLine.remove("%F");
-    commandLine.remove("%k");
-    commandLine.remove("%i");
-    commandLine.replace("%c", "\"" + app.name() + "\"");
-    app.setCommand(commandLine);
-
-    if (desc.contains("GenericName[" + lang + "]")) {
-        app.setDescription(desc.value("GenericName[" + lang + "]").toString());
-    } else {
-        app.setDescription(desc.value("GenericName").toString());
-    }
-
-    if (desc.contains("Icon")) {
-        QString iconname = desc.value("Icon").toString();
-        QIcon icon;
-        if (QFile(iconname).exists()) {
-            icon = QIcon(iconname);
+    std::sort(normalApps.begin(), normalApps.end(), [](const ApplicationPointer& a, const ApplicationPointer& b) -> bool {
+        if (a->getProperty("Name").toString().localeAwareCompare(b->getProperty("Name").toString()) < 0) {
+            return true;
         } else {
-            icon = QIcon::fromTheme(iconname, QIcon::fromTheme("application-x-executable"));
+            return false;
         }
-        app.setIcon(icon);
-    }
+    });
 
-    if (desc.contains("Actions")) {
-        QString currentGroup = desc.group();
-        QStringList availableActions = desc.value("Actions").toString().split(";", QString::SkipEmptyParts);
-        desc.endGroup();
+    //Add in pinned apps
+    QList<ApplicationPointer> pinnedApps;
+    d->settings.beginGroup("gateway");
+    int count = d->settings.beginReadArray("pinnedItems");
+    for (int i = 0; i < count; i++) {
+        d->settings.setArrayIndex(i);
 
-        for (QString action : availableActions) {
-            desc.beginGroup("Desktop Action " + action);
-
-            App act;
-            if (desc.contains("Name[" + lang + "]")) {
-                act.setName(desc.value("Name[" + lang + "]").toString());
-            } else {
-                act.setName(desc.value("Name").toString());
-            }
-
-            QString commandLine = desc.value("Exec").toString();
-            commandLine.remove("%u");
-            commandLine.remove("%U");
-            commandLine.remove("%f");
-            commandLine.remove("%F");
-            commandLine.remove("%k");
-            commandLine.remove("%i");
-            commandLine.replace("%c", "\"" + app.name() + "\"");
-            act.setCommand(commandLine);
-
-            app.addAction(act);
-
-            desc.endGroup();
+        QString desktopEntry = d->settings.value("desktopEntry").toString();
+        if (desktopEntry.startsWith("/")) {
+            QFileInfo file(desktopEntry);
+            desktopEntry = file.completeBaseName();
         }
-        desc.beginGroup(currentGroup);
+
+        d->pinnedAppsList.append(desktopEntry);
+
+        pinnedApps.append(ApplicationPointer(new Application(desktopEntry)));
     }
+    d->settings.endArray();
+    d->settings.endGroup();
 
+    d->apps.append(pinnedApps);
+    d->apps.append(normalApps);
 
-    if (desc.contains("X-Geoclue-Reason[" + lang + "]")) {
-        app.setAdditionalProperty("geoclueReason", desc.value("X-Geoclue-Reason[" + lang + "]"));
-    } else if (desc.contains("X-Geoclue-Reason")) {
-        app.setAdditionalProperty("geoclueReason", desc.value("X-Geoclue-Reason"));
-    }
-    desc.endGroup();
-
-    if (pinnedAppsList.contains(appFile)) {
-        app.setPinned(true);
-    }
-
-    app.setDesktopEntry(appFile);
-    return app;
+    updateData();
 }
 
 AppsDelegate::AppsDelegate(QWidget *parent, bool drawArrows) : QStyledItemDelegate(parent) {
@@ -459,8 +339,8 @@ void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     painter->drawPixmap(iconRect, index.data(Qt::DecorationRole).value<QPixmap>());
 
     if (drawArrows) {
-        App a = index.data(Qt::UserRole + 3).value<App>();
-        if (a.actions().count() > 0) { //Actions included
+        ApplicationPointer a = index.data(Qt::UserRole + 3).value<ApplicationPointer>();
+        if (a->getStringList("Actions").count() > 0) { //Actions included
             QRect actionsRect;
             actionsRect.setWidth(16 * getDPIScaling());
             actionsRect.setHeight(16 * getDPIScaling());
@@ -475,7 +355,7 @@ void AppsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
         }
     }
 
-    int pinned = ((AppsListModel*) index.model())->pinnedAppsCount;
+    int pinned = ((AppsListModel*) index.model())->pinnedAppsCount();
     if (index.row() == pinned - 1 && ((AppsListModel*) index.model())->currentQuery == "") {
         painter->setPen(option.palette.color(QPalette::WindowText));
         painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
@@ -496,7 +376,7 @@ QSize AppsDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 }
 
 bool AppsListModel::launchApp(QModelIndex index) {
-    QString command = appsShown.at(index.row()).command().remove("%u");
+    QString command = d->appsShown.at(index.row())->getProperty("Exec").toString().remove("%u");
     /*if (command.startsWith("call:")) {
         QString callCommand = command.mid(5);
         QStringList parts = callCommand.split(":");
@@ -543,4 +423,8 @@ bool AppsListModel::launchApp(QModelIndex index) {
         });
         return true;
     }
+}
+
+int AppsListModel::pinnedAppsCount() {
+    return d->pinnedAppsList.count();
 }

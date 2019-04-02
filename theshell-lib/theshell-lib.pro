@@ -29,11 +29,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        notificationspermissionengine.cpp
+        notificationspermissionengine.cpp \
+    application.cpp \
+    qsettingsformats.cpp
 
 HEADERS += \
         notificationspermissionengine.h \
-        theshell-lib_global.h 
+        theshell-lib_global.h \ 
+    application.h \
+    qsettingsformats.h
 
 unix {
     target.path = /usr/lib

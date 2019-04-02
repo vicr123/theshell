@@ -32,6 +32,7 @@
 #include "audiomanager.h"
 #include "nativeeventfilter.h"
 #include "dbussignals.h"
+#include <application.h>
 
 #include <QShortcut>
 #include <QMenu>
@@ -2280,10 +2281,10 @@ void InfoPaneDropdown::on_backAutoStartNewApp_clicked()
 
 void InfoPaneDropdown::on_autostartAppList_clicked(const QModelIndex &index)
 {
-    App app = index.data(Qt::UserRole + 3).value<App>();
+    ApplicationPointer app = index.data(Qt::UserRole + 3).value<ApplicationPointer>();
 
-    ui->autostartAppName->setText(app.name());
-    ui->autostartAppCommand->setText(app.command().trimmed());
+    ui->autostartAppName->setText(app->getProperty("Name").toString());
+    ui->autostartAppCommand->setText(app->getProperty("Exec").toString().trimmed());
     ui->autostartInTheshell->setChecked(false);
 
     ui->startupStack->setCurrentIndex(2);
@@ -2735,20 +2736,11 @@ void InfoPaneDropdown::setupLocationSettingsPane() {
             d->locationSettings->beginGroup(app);
             bool allow = d->locationSettings->value("allow").toBool();
 
-            App a = App::invalidApp();
-            if (QFile("/usr/share/applications/" + app + ".desktop").exists()) {
-                a = AppsListModel::readAppFile("/usr/share/applications/" + app + ".desktop");
-            } else if (QFile(QDir::homePath() + "/.local/share/applications" + app + ".desktop").exists()) {
-                a = AppsListModel::readAppFile(QDir::homePath() + "/.local/share/applications" + app + ".desktop");
-            }
+            Application a(app);
 
             QListWidgetItem* i = new QListWidgetItem();
-            if (a.invalid()) {
-                i->setText(app);
-            } else {
-                i->setIcon(a.icon());
-                i->setText(a.name());
-            }
+            i->setIcon(QIcon::fromTheme(a.getProperty("Icon").toString()));
+            i->setText(a.getProperty("Name", app).toString());
 
             i->setFlags(i->flags() | Qt::ItemIsUserCheckable);
             if (allow) {

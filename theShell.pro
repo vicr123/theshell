@@ -9,13 +9,16 @@ shellproj.depends = theshell-lib
 statcenterproj.subdir = statuscenter
 statcenterproj.depends = theshell-lib
 
+daemonproj.subdir = daemons
+daemonproj.depends = theshell-lib
+
 SUBDIRS += \
     shellproj \
     startsession \
     statcenterproj \
     polkitagent \
     mousepass \
-    daemons \
+    daemonproj \
     theshell-lib
 
 blueprint {
