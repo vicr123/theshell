@@ -103,10 +103,6 @@ class NetworkWidget : public QWidget, public StatusCenterPaneObject
 
         void on_networksManualButton_clicked();
 
-        void on_EnterpriseTLSUserCertificateSelect_clicked();
-
-        void on_EnterpriseTLSCACertificateSelect_clicked();
-
         void on_knownNetworksButton_clicked();
 
         void on_knownNetworksBackButton_clicked();

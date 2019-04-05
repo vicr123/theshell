@@ -30,7 +30,7 @@
 
 #include <X11/extensions/Xrandr.h>
 
-const float ScreenScalingFactor = 10 * theLibsGlobal::getDPIScaling();
+const float ScreenScalingFactor = 10 / theLibsGlobal::getDPIScaling();
 
 struct DisplayArrangementWidgetPrivate {
     RROutput output;

@@ -40,6 +40,8 @@ SettingsPane::SettingsPane(QWidget *parent) :
     this->settingAttributes.menuWidget = ui->LeftPaneWidget;
     this->settingAttributes.providesLeftPane = true;
 
+    ui->LeftPaneWidget->setFixedWidth(300 * theLibsGlobal::getDPIScaling());
+
     ui->appList->setModel(new ApplicationNotificationModel());
     ui->appList->setItemDelegate(new ApplicationNotificationModelDelegate());
     ui->appList->setIconSize(QSize(32, 32) * theLibsGlobal::getDPIScaling());

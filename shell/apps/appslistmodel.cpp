@@ -381,7 +381,8 @@ QSize AppsDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 }
 
 bool AppsListModel::launchApp(QModelIndex index) {
-    QString command = d->appsShown.at(index.row())->getProperty("Exec").toString().remove("%u");
+    ApplicationPointer app = d->appsShown.at(index.row());
+    QString command = app->getProperty("Exec").toString().remove("%u");
     /*if (command.startsWith("call:")) {
         QString callCommand = command.mid(5);
         QStringList parts = callCommand.split(":");
@@ -413,7 +414,21 @@ bool AppsListModel::launchApp(QModelIndex index) {
             }
         }
         commandSpace.removeAll("");
-        //process->setEnvironment(environment);
+
+        commandSpace.removeAll("%f");
+        commandSpace.removeAll("%F");
+        commandSpace.removeAll("%u");
+        commandSpace.removeAll("%U");
+        if (commandSpace.contains("%i")) {
+            if (app->hasProperty("Icon")) {
+                commandSpace.replaceInStrings("%i", "--icon " + app->getProperty("Icon").toString());
+            } else {
+                commandSpace.removeAll("%i");
+            }
+        }
+        commandSpace.replaceInStrings("%c", app->getProperty("Name").toString());
+        commandSpace.replaceInStrings("%%", "%");
+
         QString finalCommand = commandSpace.join(" ");
         qDebug() << "Starting command:" << finalCommand;
         process->start(finalCommand);

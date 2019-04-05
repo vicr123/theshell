@@ -1,6 +1,6 @@
 TEMPLATE = lib
 CONFIG += plugin
-QT += widgets
+QT += widgets thelib
 TARGET = tsprint
 
 LIBS += -lcups

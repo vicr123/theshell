@@ -21,6 +21,8 @@
 #include "printermanagement.h"
 #include "ui_printermanagement.h"
 
+#include <the-libs_global.h>
+
 struct PrinterManagementPrivate {
     int destCount;
     cups_dest_t* dests;
@@ -35,7 +37,7 @@ PrinterManagement::PrinterManagement(QWidget *parent) :
 
     this->settingAttributes.icon = QIcon::fromTheme("preferences-desktop-printers", QIcon::fromTheme("printer"));
     this->settingAttributes.menuWidget = ui->menuWidget;
-
+    ui->menuWidget->setFixedWidth(300 * theLibsGlobal::getDPIScaling());
 
     d->destCount = cupsGetDests(&d->dests);
     for (int i = 0; i < d->destCount; i++) {
