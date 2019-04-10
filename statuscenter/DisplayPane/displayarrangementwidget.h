@@ -44,11 +44,13 @@ class DisplayArrangementWidget : public QWidget
         void set();
         void setDefaultOutput(bool isDefault);
         void updateOutput();
+        bool checkNewOutput();
 
     signals:
         void configureMe(QWidget* configurator);
         void setDefault();
         void setOtherDefault();
+        void showDisplayPanel();
 
     private:
         Ui::DisplayArrangementWidget *ui;

@@ -2,6 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" sourcelanguage="en_US">
 <context>
+    <name>DisplayArrangementWidget</name>
+    <message>
+        <location filename="../displayarrangementwidget.cpp" line="103"/>
+        <source>Screen %1 connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../displayarrangementwidget.cpp" line="104"/>
+        <source>To start using it, configure your screens.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../displayarrangementwidget.cpp" line="105"/>
+        <source>Configure Screens</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DisplayConfigurationWidget</name>
     <message>
         <location filename="../displayconfigurationwidget.ui" line="79"/>
@@ -146,12 +164,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../displaypositionwidget.cpp" line="144"/>
+        <location filename="../displaypositionwidget.cpp" line="164"/>
         <source>No Powered Displays</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../displaypositionwidget.cpp" line="144"/>
+        <location filename="../displaypositionwidget.cpp" line="164"/>
         <source>All available displays in your configuration are off. Are you sure you want to set this screen configuration?</source>
         <translation type="unfinished"></translation>
     </message>

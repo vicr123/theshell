@@ -53,7 +53,6 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     event->response_type & (d->randrEventBase + XCB_RANDR_NOTIFY_MASK_OUTPUT_CHANGE) ||
                     event->response_type & (d->randrEventBase + XCB_RANDR_NOTIFY_MASK_OUTPUT_PROPERTY)) {*/
                 //RandR has changed, update all the displays
-                qDebug() << "RandR changed!";
                 d->parent->reloadDisplays();
             //}
         }

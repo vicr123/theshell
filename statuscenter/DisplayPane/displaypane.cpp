@@ -258,3 +258,8 @@ void DisplayPane::changeEvent(QEvent *event) {
         ui->retranslateUi(this);
     }
 }
+
+void DisplayPane::on_displayPositioning_showDisplayPanel()
+{
+    sendMessage("show", QVariantList());
+}

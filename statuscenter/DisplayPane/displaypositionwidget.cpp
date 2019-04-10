@@ -37,6 +37,7 @@ struct DisplayPositionWidgetPrivate {
     QList<DisplayArrangementWidget*> daws;
 
     QSettings settings;
+    bool currentlyUpdating = false;
 };
 
 DisplayPositionWidget::DisplayPositionWidget(QWidget *parent) :
@@ -97,6 +98,7 @@ void DisplayPositionWidget::loadDisplays() {
                 }
             }
         });
+        connect(daw, &DisplayArrangementWidget::showDisplayPanel, this, &DisplayPositionWidget::showDisplayPanel);
         d->dawSize = d->dawSize.united(daw->requestedGeometry());
         d->daws.append(daw);
     }
@@ -112,11 +114,29 @@ void DisplayPositionWidget::loadDisplays() {
 }
 
 void DisplayPositionWidget::reloadDisplays() {
+    if (d->currentlyUpdating) return; //Don't do anything if we're currently updating our displays
+
+    d->currentlyUpdating = true;
+    qDebug() << "RandR changed!";
+    bool configurationNeedsSet = false;
     for (DisplayArrangementWidget* daw : d->daws) {
-        daw->updateOutput();
+        if (daw->checkNewOutput()) configurationNeedsSet = true;
+    }
+
+    if (configurationNeedsSet) {
+        //Set the requested screen configuration
+        d->currentlyUpdating = false;
+        ui->setButton->click();
+        d->currentlyUpdating = true;
+
+        //Manually update each output
+        for (DisplayArrangementWidget* daw : d->daws) {
+            daw->updateOutput();
+        }
     }
 
     emit repositionDisplays(d->dawSize.topLeft());
+    d->currentlyUpdating = false;
 }
 
 bool DisplayPositionWidget::eventFilter(QObject *watched, QEvent *event) {
@@ -147,6 +167,9 @@ void DisplayPositionWidget::on_setButton_clicked()
         }
     }
 
+    //We're updating now
+    d->currentlyUpdating = true;
+
     QRect rootWindowRect;
     for (DisplayArrangementWidget* daw : d->daws) {
         if (daw->powered()) {
@@ -166,6 +189,8 @@ void DisplayPositionWidget::on_setButton_clicked()
     int dpi = d->settings.value("screen/dpi", 96).toInt();
     //qDebug() << "XRRSetScreenSize" << rootWindowRect.width() << rootWindowRect.height() << (25.4 * rootWindowRect.width()) / dpi << (25.4 * rootWindowRect.height()) / dpi;
     XRRSetScreenSize(QX11Info::display(), QX11Info::appRootWindow(), rootWindowRect.width(), rootWindowRect.height(), round((25.4 * rootWindowRect.width()) / dpi), round((25.4 * rootWindowRect.height()) / dpi));
+
+    d->currentlyUpdating = false;
 }
 
 void DisplayPositionWidget::changeEvent(QEvent *event) {

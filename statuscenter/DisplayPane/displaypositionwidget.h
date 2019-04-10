@@ -42,6 +42,7 @@ class DisplayPositionWidget : public QWidget
     signals:
         void repositionDisplays(QPoint origin);
         void setDefault();
+        void showDisplayPanel();
 
     private slots:
         void on_setButton_clicked();

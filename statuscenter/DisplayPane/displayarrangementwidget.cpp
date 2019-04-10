@@ -22,7 +22,7 @@
 #include <QX11Info>
 #include <QMouseEvent>
 #include <QIcon>
-#include <the-libs_global.h>
+#include <tnotification.h>
 
 #include "ui_displayarrangementwidget.h"
 #include "displayarrangementwidget.h"
@@ -89,13 +89,50 @@ DisplayArrangementWidget::~DisplayArrangementWidget()
     delete ui;
 }
 
+bool DisplayArrangementWidget::checkNewOutput() {
+    bool changedConfiguration = false;
+    //Check if this output has just been connected or detached
+    XRRScreenResources* newResources = XRRGetScreenResources(QX11Info::display(), QX11Info::appRootWindow());
+    XRROutputInfo* newOutputInfo = XRRGetOutputInfo(QX11Info::display(), newResources, d->output);
+
+    if (d->outputInfo->connection != newOutputInfo->connection) {
+        //Connection state has changed
+        if (newOutputInfo->connection == RR_Connected) {
+            //This screen has just been connected
+            tNotification* n = new tNotification();
+            n->setSummary(tr("Screen %1 connected").arg(newOutputInfo->name));
+            n->setText(tr("To start using it, configure your screens."));
+            n->insertAction("configure", tr("Configure Screens"));
+            n->setTransient(true);
+            connect(n, &tNotification::actionClicked, [=] {
+                emit showDisplayPanel();
+            });
+            n->post(false);
+
+        } else if (newOutputInfo->connection == RR_Disconnected) {
+            //This screen has just been disconnected
+            //Turn off this screen
+
+            d->configurator->setPowered(false);
+            changedConfiguration = true;
+            //XRRSetCrtcConfig(QX11Info::display(), newResources, newOutputInfo->crtc, CurrentTime, 0, 0, None, RR_Rotate_0, nullptr, 0);
+        }
+    }
+
+    XRRFreeOutputInfo(newOutputInfo);
+    XRRFreeScreenResources(newResources);
+
+    if (!changedConfiguration) {
+        updateOutput();
+    }
+    return changedConfiguration;
+}
+
 void DisplayArrangementWidget::updateOutput() {
     if (d->outputInfo != nullptr) XRRFreeOutputInfo(d->outputInfo);
     if (d->screenResources != nullptr) XRRFreeScreenResources(d->screenResources);
     d->screenResources = XRRGetScreenResources(QX11Info::display(), QX11Info::appRootWindow());
     d->outputInfo = XRRGetOutputInfo(QX11Info::display(), d->screenResources, d->output);
-
-
 
     ui->screenName->setText(QString::fromLatin1(d->outputInfo->name));
     d->configurator->setDisplayName(QString::fromLatin1(d->outputInfo->name));
@@ -104,7 +141,6 @@ void DisplayArrangementWidget::updateOutput() {
     for (int i = 0; i < d->screenResources->nmode; i++) {
         modes.insert(d->screenResources->modes[i].id, d->screenResources->modes[i]);
     }
-
 
     if (XRRGetOutputPrimary(QX11Info::display(), QX11Info::appRootWindow()) == d->output) {
         setDefaultOutput(true);

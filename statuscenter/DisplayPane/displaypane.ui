@@ -91,7 +91,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="DisplayPositionWidget" name="widget" native="true"/>
+        <widget class="DisplayPositionWidget" name="displayPositioning" native="true"/>
        </item>
        <item>
         <widget class="Line" name="line_2">
@@ -463,6 +463,9 @@
    <extends>QWidget</extends>
    <header>displaypositionwidget.h</header>
    <container>1</container>
+   <slots>
+    <signal>showDisplayPanel()</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>

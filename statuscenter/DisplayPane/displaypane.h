@@ -69,6 +69,9 @@ class DisplayPane : public QWidget, public StatusCenterPaneObject
 
         void updateRedshiftTime(double latitude, double longitude);
 
+    private slots:
+        void on_displayPositioning_showDisplayPanel();
+
     private:
         Ui::DisplayPane *ui;
 
