@@ -710,6 +710,26 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         //We're starting in safe mode; hide the overview label
         ui->clockLabel->setVisible(false);
         ui->unavailablePaneMessage->setText(tr("No plugins were loaded because you've started theShell in Safe Mode."));
+
+        //Register a chunk to let the user know they're in safe mode
+        ClickableLabel* label = new ClickableLabel(nullptr);
+        label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        label->setText(tr("Safe Mode"));
+        label->setStyleSheet("QLabel {background-color: rgb(200,0,0);color:white;}");
+        label->setAutoFillBackground(true);
+
+        connect(label, &ClickableLabel::clicked, [=] {
+            //Show the settings
+            this->show(Settings);
+
+            int row = ui->settingsTabs->indexOf(ui->UnavailablePanesPage);
+            ui->settingsList->setCurrentRow(row);
+            on_settingsList_itemActivated(ui->settingsList->item(row));
+        });
+
+        QTimer::singleShot(0, [=] {
+            pluginMessage("register-chunk", QVariantList() << QVariant::fromValue(label), nullptr);
+        });
     }
 
     //Don't forget to change settings pane setup things

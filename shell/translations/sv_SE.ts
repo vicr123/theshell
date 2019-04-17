@@ -436,7 +436,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="405"/>
-        <location filename="../infopanedropdown.cpp" line="2023"/>
+        <location filename="../infopanedropdown.cpp" line="2043"/>
         <source>Charge History</source>
         <translation>Batteriladdningshistorik</translation>
     </message>
@@ -469,7 +469,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="748"/>
         <location filename="../infopanedropdown.ui" line="3946"/>
-        <location filename="../infopanedropdown.cpp" line="2522"/>
+        <location filename="../infopanedropdown.cpp" line="2542"/>
         <source>Unavailable Panes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -608,7 +608,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="757"/>
         <location filename="../infopanedropdown.ui" line="4026"/>
-        <location filename="../infopanedropdown.cpp" line="2526"/>
+        <location filename="../infopanedropdown.cpp" line="2546"/>
         <source>Advanced</source>
         <translation>Avancerat</translation>
     </message>
@@ -902,7 +902,7 @@
         <translation>Tillåt appar att komma åt din fysiska plats</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2782"/>
+        <location filename="../infopanedropdown.cpp" line="2802"/>
         <source>Keyboard Layout</source>
         <translation>Tangentbordslayout</translation>
     </message>
@@ -948,8 +948,8 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2712"/>
-        <location filename="../infopanedropdown.cpp" line="2877"/>
-        <location filename="../infopanedropdown.cpp" line="2883"/>
+        <location filename="../infopanedropdown.cpp" line="2897"/>
+        <location filename="../infopanedropdown.cpp" line="2903"/>
         <source>Mouse Password</source>
         <translation>Muslösenord</translation>
     </message>
@@ -970,7 +970,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2943"/>
-        <location filename="../infopanedropdown.cpp" line="1718"/>
+        <location filename="../infopanedropdown.cpp" line="1738"/>
         <source>Edit User</source>
         <translation>Ändra Användare</translation>
     </message>
@@ -987,15 +987,15 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3004"/>
         <location filename="../infopanedropdown.ui" line="3027"/>
-        <location filename="../infopanedropdown.cpp" line="1722"/>
-        <location filename="../infopanedropdown.cpp" line="1723"/>
+        <location filename="../infopanedropdown.cpp" line="1742"/>
+        <location filename="../infopanedropdown.cpp" line="1743"/>
         <source>(unchanged)</source>
         <translation>(oändrat)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3011"/>
-        <location filename="../infopanedropdown.cpp" line="1762"/>
-        <location filename="../infopanedropdown.cpp" line="1767"/>
+        <location filename="../infopanedropdown.cpp" line="1782"/>
+        <location filename="../infopanedropdown.cpp" line="1787"/>
         <source>Username</source>
         <translation>Användarnamn</translation>
     </message>
@@ -1175,7 +1175,7 @@ Saker som kommer sparas ifall du väljer att spara filer
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4090"/>
-        <location filename="../infopanedropdown.cpp" line="1086"/>
+        <location filename="../infopanedropdown.cpp" line="1106"/>
         <source>Reset theShell</source>
         <translation>Nollställ theShell</translation>
     </message>
@@ -1195,33 +1195,33 @@ Saker som kommer sparas ifall du väljer att spara filer
         <translation>Skrivbordsmiljö</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2150"/>
+        <location filename="../infopanedropdown.cpp" line="2170"/>
         <source>Blue</source>
         <translation>Blå</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2151"/>
+        <location filename="../infopanedropdown.cpp" line="2171"/>
         <source>Green</source>
         <translation>Grön</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2152"/>
+        <location filename="../infopanedropdown.cpp" line="2172"/>
         <source>Orange</source>
         <translation>Orange</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2153"/>
+        <location filename="../infopanedropdown.cpp" line="2173"/>
         <source>Pink</source>
         <translation>Rosa</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2154"/>
+        <location filename="../infopanedropdown.cpp" line="2174"/>
         <source>Turquoise</source>
         <translation>Turkos</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="766"/>
-        <location filename="../infopanedropdown.cpp" line="2528"/>
+        <location filename="../infopanedropdown.cpp" line="2548"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
@@ -1241,12 +1241,12 @@ Saker som kommer sparas ifall du väljer att spara filer
         <translation>theShell %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1060"/>
+        <location filename="../infopanedropdown.cpp" line="1080"/>
         <source>Current Battery Percentage: %1</source>
         <translation>Nuvarande Batteriprocent: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1064"/>
+        <location filename="../infopanedropdown.cpp" line="1084"/>
         <source>theShell Uptime: %1</source>
         <translation>theShell Drifttid: %1</translation>
     </message>
@@ -1265,8 +1265,13 @@ Saker som kommer sparas ifall du väljer att spara filer
         <source>No plugins were loaded because you&apos;ve started theShell in Safe Mode.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="717"/>
+        <source>Safe Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="1073"/>
+        <location filename="../infopanedropdown.cpp" line="1093"/>
         <source>%n days</source>
         <translation>
             <numerusform>%n dag</numerusform>
@@ -1274,129 +1279,129 @@ Saker som kommer sparas ifall du väljer att spara filer
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1077"/>
+        <location filename="../infopanedropdown.cpp" line="1097"/>
         <source>System Uptime: %1</source>
         <translation>System Drifttid: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1079"/>
+        <location filename="../infopanedropdown.cpp" line="1099"/>
         <source>Couldn&apos;t get system uptime</source>
         <translation>Kunde inte hämta systemets drifttid</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1087"/>
+        <location filename="../infopanedropdown.cpp" line="1107"/>
         <source>All settings will be reset to default, and you will be logged out. Are you sure you want to do this?</source>
         <translation>Alla inställningar återställs till standard och du kommer att loggas ut. Är du säker på att du vill göra det här?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1517"/>
+        <location filename="../infopanedropdown.cpp" line="1537"/>
         <source>Last updated %1</source>
         <translation>Senast uppdaterad %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1555"/>
+        <location filename="../infopanedropdown.cpp" line="1575"/>
         <source>Log in to network</source>
         <translation>Logga in till nätverk</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1561"/>
+        <location filename="../infopanedropdown.cpp" line="1581"/>
         <source>Network Login</source>
         <translation>Nätverksinloggning</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1562"/>
+        <location filename="../infopanedropdown.cpp" line="1582"/>
         <source>Your connection to the internet is blocked by a login page.</source>
         <translation>Din anslutning till internet är blockerad av en inloggningssida.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1685"/>
+        <location filename="../infopanedropdown.cpp" line="1705"/>
         <source>Add New User</source>
         <translation>Lägg till Ny Användare</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1697"/>
-        <location filename="../infopanedropdown.cpp" line="2833"/>
+        <location filename="../infopanedropdown.cpp" line="1717"/>
         <location filename="../infopanedropdown.cpp" line="2853"/>
+        <location filename="../infopanedropdown.cpp" line="2873"/>
         <source>Unauthorized</source>
         <translation>Obehörig</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1697"/>
+        <location filename="../infopanedropdown.cpp" line="1717"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation>Polkit tillåter inte dig att hantera användare på systemet.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1709"/>
+        <location filename="../infopanedropdown.cpp" line="1729"/>
         <source>New User</source>
         <translation>Ny Användare</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1712"/>
-        <location filename="../infopanedropdown.cpp" line="1713"/>
-        <location filename="../infopanedropdown.cpp" line="1728"/>
-        <location filename="../infopanedropdown.cpp" line="1729"/>
+        <location filename="../infopanedropdown.cpp" line="1732"/>
+        <location filename="../infopanedropdown.cpp" line="1733"/>
+        <location filename="../infopanedropdown.cpp" line="1748"/>
+        <location filename="../infopanedropdown.cpp" line="1749"/>
         <source>(none)</source>
         <translation>(ingen)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1725"/>
-        <location filename="../infopanedropdown.cpp" line="1726"/>
+        <location filename="../infopanedropdown.cpp" line="1745"/>
+        <location filename="../infopanedropdown.cpp" line="1746"/>
         <source>(set at next login)</source>
         <translation>(sätts vid nästa inloggning)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1757"/>
+        <location filename="../infopanedropdown.cpp" line="1777"/>
         <source>Password Check</source>
         <translation>Lösenordskontroll</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1757"/>
+        <location filename="../infopanedropdown.cpp" line="1777"/>
         <source>The passwords don&apos;t match.</source>
         <translation>Lösenorden stämmer inte.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1762"/>
+        <location filename="../infopanedropdown.cpp" line="1782"/>
         <source>The username must not contain spaces.</source>
         <translation>Användarnamnet får inte innehålla mellanslag.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1767"/>
+        <location filename="../infopanedropdown.cpp" line="1787"/>
         <source>The username must not contain capital letters.</source>
         <translation>Användarnamnet får inte innehålla stora bokstäver.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2034"/>
+        <location filename="../infopanedropdown.cpp" line="2054"/>
         <source>Rate History</source>
         <translation>Betygsätt Historik</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2045"/>
+        <location filename="../infopanedropdown.cpp" line="2065"/>
         <source>Application Power Usage</source>
         <translation>Applikationens strömförbrukning</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2146"/>
+        <location filename="../infopanedropdown.cpp" line="2166"/>
         <source>Oxygen</source>
         <translation>Oxygen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2147"/>
+        <location filename="../infopanedropdown.cpp" line="2167"/>
         <source>Breeze</source>
         <translation>Breeze</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2440"/>
-        <location filename="../infopanedropdown.cpp" line="2450"/>
         <location filename="../infopanedropdown.cpp" line="2460"/>
         <location filename="../infopanedropdown.cpp" line="2470"/>
+        <location filename="../infopanedropdown.cpp" line="2480"/>
+        <location filename="../infopanedropdown.cpp" line="2490"/>
         <source>Never</source>
         <translation>Aldrig</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="2442"/>
-        <location filename="../infopanedropdown.cpp" line="2452"/>
         <location filename="../infopanedropdown.cpp" line="2462"/>
         <location filename="../infopanedropdown.cpp" line="2472"/>
+        <location filename="../infopanedropdown.cpp" line="2482"/>
+        <location filename="../infopanedropdown.cpp" line="2492"/>
         <source>%n min(s)</source>
         <translation>
             <numerusform>%n minut</numerusform>
@@ -1404,53 +1409,53 @@ Saker som kommer sparas ifall du väljer att spara filer
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2668"/>
+        <location filename="../infopanedropdown.cpp" line="2688"/>
         <source>Log Out Now</source>
         <translation>Logga ut nu</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2671"/>
+        <location filename="../infopanedropdown.cpp" line="2691"/>
         <source>Logoff Required</source>
         <translation>Utloggning krävs</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2674"/>
+        <location filename="../infopanedropdown.cpp" line="2694"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation>För att aktivera den kompakta Baren, måste du logga ut och in igen.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2676"/>
+        <location filename="../infopanedropdown.cpp" line="2696"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation>För att inaktivera den kompakta Baren, måste du logga ut och in igen.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2795"/>
+        <location filename="../infopanedropdown.cpp" line="2815"/>
         <source>Show Touch Keyboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2833"/>
         <location filename="../infopanedropdown.cpp" line="2853"/>
+        <location filename="../infopanedropdown.cpp" line="2873"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation>Polkit tillåter dig inte att ställa in ett muslösenord.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2848"/>
+        <location filename="../infopanedropdown.cpp" line="2868"/>
         <source>Remove Mouse Password?</source>
         <translation>Ta bort muslösenord?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2848"/>
+        <location filename="../infopanedropdown.cpp" line="2868"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation>Vill du tabort muslösenordet för detta konto?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2878"/>
+        <location filename="../infopanedropdown.cpp" line="2898"/>
         <source>Mouse Password was removed successfully</source>
         <translation>Muslösenordet var lyckat borttaget</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2884"/>
+        <location filename="../infopanedropdown.cpp" line="2904"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation>Muslösenordet kunde ej tas bort</translation>
     </message>
