@@ -32,7 +32,7 @@ bool setMousePassword(QString mousePassword, QString passwordFile) {
     const char* saltCharacters = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
     for (int i = 0; i < 8; i++) {
-        salt.append(saltCharacters[QRandomGenerator::securelySeeded().bounded(0, strlen(saltCharacters))]);
+        salt.append(saltCharacters[(int)(QRandomGenerator::securelySeeded().bounded(0, strlen(saltCharacters)))]);
     }
 
     QString hashedPassword = QString::fromLocal8Bit(crypt(mousePassword.toLocal8Bit().data(), salt.data()));
