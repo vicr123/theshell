@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia thelib
 
 blueprint {
     TARGET = theshell-libb
@@ -31,13 +31,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         notificationspermissionengine.cpp \
     application.cpp \
-    qsettingsformats.cpp
+    qsettingsformats.cpp \
+    soundengine.cpp
 
 HEADERS += \
         notificationspermissionengine.h \
         theshell-lib_global.h \ 
     application.h \
-    qsettingsformats.h
+    qsettingsformats.h \
+    soundengine.h
 
 unix {
     target.path = /usr/lib

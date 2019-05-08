@@ -21,11 +21,15 @@
 #include "ui_audiopane.h"
 
 #include <the-libs_global.h>
+#include <QDir>
 
 #include <pulse/context.h>
 #include <pulse/subscribe.h>
 #include <pulse/glib-mainloop.h>
 #include <pulse/introspect.h>
+
+#include <qsettingsformats.h>
+#include <tsystemsound.h>
 
 #include "sinkwidget.h"
 #include "sinkinputwidget.h"
@@ -42,6 +46,7 @@ struct AudioPanePrivate {
     QMap<QString, SinkInputWidget*> sinkInputWidgets;
 
     QSettings settings;
+    int currentSoundSettingRow = 0;
 };
 
 AudioPane::AudioPane(QWidget *parent) :
@@ -59,9 +64,43 @@ AudioPane::AudioPane(QWidget *parent) :
 
     ui->audioStack->setCurrentAnimation(tStackedWidget::Lift);
 
+    //Populate the sound theme box
+    QSignalBlocker blocker(ui->soundThemeComboBox);
+    QStringList foundThemes;
+    QStringList themeSearchPaths = {
+        QDir::homePath() + "/.local/share/sounds",
+        "/usr/share/sounds"
+    };
 
-    ui->volumeChangeSoundSwitch->setChecked(d->settings.value("sound/feedbackSound", true).toBool());
+    QStringList folderSearches;
+    for (QString searchPath : themeSearchPaths) {
+        QDir dir(searchPath);
+        for (QString folderName : dir.entryList(QDir::Dirs)) {
+            QDir themeDir(dir.absoluteFilePath(folderName));
+            if (themeDir.exists("index.theme")) {
+                //Read in the index.theme file
+                QSettings themeFile(themeDir.absoluteFilePath("index.theme"), QSettingsFormats::desktopFormat());
+                QString theme = themeFile.value("Sound Theme/Name").toString();
+                if (!foundThemes.contains(theme)) foundThemes.append(theme);
+            }
+        }
+    }
+    ui->soundThemeComboBox->addItems(foundThemes);
+
+    QSettings platformSettings("theSuite", "ts-qtplatform");
+    QString soundTheme = platformSettings.value("sound/theme", "Contemporary").toString();
+    ui->soundThemeComboBox->setCurrentIndex(foundThemes.indexOf(soundTheme));
+
     ui->volumeOverdrive->setChecked(d->settings.value("sound/volumeOverdrive", true).toBool());
+
+    addSoundSetting(tr("Login"), "desktop-login", "login");
+    addSoundSetting(tr("Logout"), "desktop-logout", "logout");
+    addSoundSetting(tr("Information"), "dialog-information", "dialoginfo");
+    addSoundSetting(tr("Question"), "dialog-question", "dialogquestion");
+    addSoundSetting(tr("Warning"), "dialog-warning", "dialogwarn");
+    addSoundSetting(tr("Error"), "dialog-error", "dialogerr");
+    addSoundSetting(tr("Screenshot"), "screen-capture", "screenshot");
+    addSoundSetting(tr("Volume Change"), "audio-volume-change", "volfeedback");
 
     connectToPulse();
 }
@@ -95,6 +134,33 @@ void AudioPane::message(QString name, QVariantList args) {
 void AudioPane::on_backButton_clicked()
 {
     sendMessage("main-menu", QVariantList());
+}
+
+void AudioPane::addSoundSetting(QString name, QString soundName, QString soundPermission) {
+    QLabel* label = new QLabel();
+    label->setText(name);
+
+    tSwitch* s = new tSwitch();
+    s->setChecked(tSystemSound::isSoundEnabled(soundPermission));
+    connect(s, &tSwitch::toggled, [=](bool checked) {
+        tSystemSound::setSoundEnabled(soundPermission, checked);
+    });
+
+    QPushButton* playButton = new QPushButton();
+    playButton->setIcon(QIcon::fromTheme("audio-volume-high"));
+    playButton->setFlat(true);
+    connect(playButton, &QPushButton::clicked, [=] {
+        tSystemSound::play(soundName);
+    });
+
+    QSpacerItem* spacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    ui->soundsGridLayout->addWidget(label, d->currentSoundSettingRow, 0);
+    ui->soundsGridLayout->addWidget(s, d->currentSoundSettingRow, 1);
+    ui->soundsGridLayout->addWidget(playButton, d->currentSoundSettingRow, 2);
+    ui->soundsGridLayout->addItem(spacer, d->currentSoundSettingRow, 3);
+
+    d->currentSoundSettingRow++;
 }
 
 void AudioPane::connectToPulse() {
@@ -284,7 +350,8 @@ void AudioPane::on_volumeOverdrive_toggled(bool checked)
     d->settings.setValue("sound/volumeOverdrive", checked);
 }
 
-void AudioPane::on_volumeChangeSoundSwitch_toggled(bool checked)
+void AudioPane::on_soundThemeComboBox_currentIndexChanged(int index)
 {
-    d->settings.setValue("sound/feedbackSound", checked);
+    QSettings platformSettings("theSuite", "ts-qtplatform");
+    platformSettings.setValue("sound/theme", ui->soundThemeComboBox->itemText(index));
 }

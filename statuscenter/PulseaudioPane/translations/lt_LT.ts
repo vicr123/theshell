@@ -10,7 +10,7 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="95"/>
-        <location filename="../audiopane.cpp" line="80"/>
+        <location filename="../audiopane.cpp" line="119"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22,31 +22,31 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="129"/>
-        <location filename="../audiopane.ui" line="428"/>
+        <location filename="../audiopane.ui" line="435"/>
         <source>Playback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="134"/>
-        <location filename="../audiopane.ui" line="535"/>
+        <location filename="../audiopane.ui" line="542"/>
         <source>Recording</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="139"/>
-        <location filename="../audiopane.ui" line="652"/>
+        <location filename="../audiopane.ui" line="659"/>
         <source>Output Devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="144"/>
-        <location filename="../audiopane.ui" line="759"/>
+        <location filename="../audiopane.ui" line="766"/>
         <source>Input Devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="149"/>
-        <location filename="../audiopane.ui" line="876"/>
+        <location filename="../audiopane.ui" line="883"/>
         <source>Advanced Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -66,19 +66,64 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="342"/>
-        <source>Volume change sound</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../audiopane.ui" line="375"/>
+        <location filename="../audiopane.ui" line="365"/>
         <source>SOUNDS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="598"/>
-        <location filename="../audiopane.ui" line="822"/>
+        <location filename="../audiopane.cpp" line="96"/>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.cpp" line="98"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.cpp" line="99"/>
+        <source>Question</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.cpp" line="100"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.cpp" line="101"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.ui" line="349"/>
+        <source>You can change notification sounds in the Notifications pane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.cpp" line="103"/>
+        <source>Volume Change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.cpp" line="97"/>
+        <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.ui" line="342"/>
+        <source>Sound Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.ui" line="605"/>
+        <location filename="../audiopane.ui" line="829"/>
         <source>Coming soon. Stay tuned!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.cpp" line="102"/>
+        <source>Screenshot</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

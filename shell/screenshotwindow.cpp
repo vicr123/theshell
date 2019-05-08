@@ -22,6 +22,8 @@
 #include "ui_screenshotwindow.h"
 
 #include <QTimer>
+#include <soundengine.h>
+
 extern float getDPIScaling();
 
 screenshotWindow::screenshotWindow(bool screenshotMode, QWidget *parent) :
@@ -71,13 +73,7 @@ screenshotWindow::screenshotWindow(bool screenshotMode, QWidget *parent) :
         savePixmap = screenshotPixmap;
         selectedRegion.setCoords(0, 0, originalPixmap.width(), originalPixmap.height());
 
-        if (screenshotMode) {
-            QSoundEffect* takeScreenshot = new QSoundEffect();
-            takeScreenshot->setSource(QUrl("qrc:/sounds/screenshot.wav"));
-            takeScreenshot->play();
-            connect(takeScreenshot, SIGNAL(playingChanged()), takeScreenshot, SLOT(deleteLater()));
-        }
-
+        if (screenshotMode) SoundEngine::play(SoundEngine::Screenshot);
 
         this->setGeometry(currentScreen->geometry());
         this->setFixedSize(currentScreen->geometry().size());

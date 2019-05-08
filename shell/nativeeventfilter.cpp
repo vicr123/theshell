@@ -48,6 +48,8 @@
 #include "mainwindow.h"
 #include "menu.h"
 
+#include "soundengine.h"
+
 #include <X11/XF86keysym.h>
 #include <X11/keysym.h>
 #include <X11/Xlib.h>
@@ -376,13 +378,8 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                                 }
                                 AudioMan->changeVolume(5);
 
-                                //Check if the user has feedback sound on
-                                if (d->settings.value("sound/feedbackSound", true).toBool()) {
-                                    QSoundEffect* volumeSound = new QSoundEffect();
-                                    volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
-                                    volumeSound->play();
-                                    connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
-                                }
+                                //Play the audio change sound
+                                SoundEngine::play(SoundEngine::Volume);
 
                                 d->Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
                         }
@@ -411,13 +408,8 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                             if (volume < 0) volume = 0;
                             AudioMan->changeVolume(-5);
 
-                            //Check if the user has feedback sound on
-                            if (d->settings.value("sound/feedbackSound", true).toBool()) {
-                            QSoundEffect* volumeSound = new QSoundEffect();
-                            volumeSound->setSource(QUrl("qrc:/sounds/volfeedback.wav"));
-                            volumeSound->play();
-                            connect(volumeSound, SIGNAL(playingChanged()), volumeSound, SLOT(deleteLater()));
-                            }
+                            //Play the audio change sound
+                            SoundEngine::play(SoundEngine::Volume);
 
                             d->Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
                         }

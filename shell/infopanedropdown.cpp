@@ -296,13 +296,22 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         QString currentWidgetTheme = d->gtk3Settings->value("Settings/gtk-theme-name", "Contemporary").toString();
         QStringList themes;
 
-        QString themeSearchDirectory = "/usr/share/themes/";
+        for (QString themeSearchDirectory : {QString("/usr/share/themes"), QDir::homePath() + "/.local/share/themes"}) {
+            QDir themeDir(themeSearchDirectory);
+            QStringList themeDirEntries = themeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+            for (QString entry : themeDirEntries) {
+                bool validEntry = false;
+                QDir entryDir(themeDir.absoluteFilePath(entry));
+                for (QString entry : entryDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
+                    if (entry.startsWith("gtk-3.")) {
+                        validEntry = true;
+                        break;
+                    }
+                }
 
-        QDir themeDir(themeSearchDirectory);
-        QStringList themeDirEntries = themeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-        for (QString entry : themeDirEntries) {
-            if (QDir(themeSearchDirectory + entry + "/gtk-3.0/").exists()) {
-                themes.append(entry);
+                if (validEntry && !themes.contains(entry)) {
+                    themes.append(entry);
+                }
             }
         }
 

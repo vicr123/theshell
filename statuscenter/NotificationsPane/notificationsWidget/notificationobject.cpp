@@ -21,6 +21,8 @@
 #include "notificationobject.h"
 #include "notificationspermissionengine.h"
 
+#include "soundengine.h"
+
 int NotificationObject::currentId = 0;
 
 const QDBusArgument &operator<<(QDBusArgument &argument, const ImageData &d) {
@@ -171,37 +173,23 @@ void NotificationObject::post() {
         }
 
         if (hints.contains("sound-file")) {
-            QMediaPlayer* player = new QMediaPlayer();
+            QUrl soundFileUrl;
             if (hints.value("sound-file").toString().startsWith("qrc:")) {
-                player->setMedia(QMediaContent(QUrl(hints.value("sound-file").toString())));
+                soundFileUrl = QUrl(hints.value("sound-file").toString());
             } else {
-                player->setMedia(QMediaContent(QUrl::fromLocalFile(hints.value("sound-file").toString())));
+                soundFileUrl = QUrl::fromLocalFile(hints.value("sound-file").toString());
             }
-            player->play();
-            connect(player, &QMediaPlayer::stateChanged, [=](QMediaPlayer::State state) {
-                if (state == QMediaPlayer::StoppedState) {
-                    player->deleteLater();
-                    if (settings.value("notifications/attenuate", true).toBool()) {
-                        AudioManager::instance()->restoreStreams();
-                    }
-                }
-            });
-        } else {
-            QSoundEffect* sound = new QSoundEffect();
-
-            QString notificationSound = settings.value("notifications/sound", "tripleping").toString();
-            if (notificationSound == "tripleping") {
-                sound->setSource(QUrl("qrc:/sounds/notifications/tripleping.wav"));
-            } else if (notificationSound == "upsidedown") {
-                sound->setSource(QUrl("qrc:/sounds/notifications/upsidedown.wav"));
-            } else if (notificationSound == "echo") {
-                sound->setSource(QUrl("qrc:/sounds/notifications/echo.wav"));
-            }
-            sound->play();
-            connect(sound, SIGNAL(playingChanged()), sound, SLOT(deleteLater()));
-
+            SoundEngine* engine = SoundEngine::play(soundFileUrl);
             if (settings.value("notifications/attenuate", true).toBool()) {
-                connect(sound, &QSoundEffect::playingChanged, [=]() {
+                connect(engine, &SoundEngine::done, [=]() {
+                    AudioManager::instance()->restoreStreams();
+                });
+            }
+        } else {
+            //Play the default notification sound
+            SoundEngine* engine = SoundEngine::play(SoundEngine::Notification);
+            if (settings.value("notifications/attenuate", true).toBool()) {
+                connect(engine, &SoundEngine::done, [=]() {
                     AudioManager::instance()->restoreStreams();
                 });
             }

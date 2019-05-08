@@ -30,6 +30,7 @@
 #include "audiomanager.h"
 #include "dbussignals.h"
 #include "screenrecorder.h"
+#include <soundengine.h>
 #include <iostream>
 //#include "dbusmenuregistrar.h"
 #include <nativeeventfilter.h>
@@ -396,6 +397,9 @@ int main(int argc, char *argv[])
     MainWin->show();
 
     QTimer::singleShot(0, dbusSignals, SIGNAL(Ready()));
+
+    //Play the startup sound
+    SoundEngine::play(SoundEngine::Login);
 
     return a.exec();
 }

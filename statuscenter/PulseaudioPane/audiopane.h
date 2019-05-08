@@ -58,7 +58,9 @@ class AudioPane : public QWidget, public StatusCenterPaneObject
 
         void on_volumeOverdrive_toggled(bool checked);
 
-        void on_volumeChangeSoundSwitch_toggled(bool checked);
+        void on_soundThemeComboBox_currentIndexChanged(int index);
+
+        void addSoundSetting(QString name, QString soundName, QString soundPermission);
 
     signals:
         void defaultSinkChanged(QString defaultSink);

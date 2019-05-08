@@ -21,6 +21,8 @@
 #include "endsessionwait.h"
 #include "ui_endsessionwait.h"
 
+#include <soundengine.h>
+
 extern float getDPIScaling();
 extern void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0, long data2 = 0, long data3 = 0, long data4 = 0);
 
@@ -409,25 +411,6 @@ void EndSessionWait::on_killAllButton_clicked()
 }
 
 void EndSessionWait::performEndSession() {
-    QSettings settings;
-    QString logoutSoundPath = settings.value("sounds/logout", "").toString();
-    if (logoutSoundPath == "") {
-        logoutSoundPath = "/usr/share/sounds/contemporary/logout.ogg";
-        settings.setValue("sounds/logout", logoutSoundPath);
-    }
-
-    QMediaPlayer* sound = new QMediaPlayer();
-
-    connect(sound, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(EndSessionNow()));
-    connect(sound, &QMediaPlayer::stateChanged, [=]() {
-        if (sound->state() == QMediaPlayer::StoppedState) {
-            EndSessionNow();
-        }
-    });
-
-    sound->setMedia(QUrl::fromLocalFile(logoutSoundPath));
-    sound->play();
-
     QParallelAnimationGroup* animGroup = new QParallelAnimationGroup();
     QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
     ui->poweringOff->setGraphicsEffect(fadeEffect);
@@ -451,26 +434,37 @@ void EndSessionWait::performEndSession() {
 }
 
 void EndSessionWait::EndSessionNow() {
-    QDBusMessage message;
-    QList<QVariant> arguments;
-    arguments.append(true);
-    switch (type) {
-    case powerOff:
-        //Power off the PC
-        message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "PowerOff");
-        message.setArguments(arguments);
-        QDBusConnection::systemBus().send(message);
+    auto endSessionFunction = [=] {
+        QDBusMessage message;
+        QList<QVariant> arguments;
+        arguments.append(true);
+        switch (type) {
+        case powerOff:
+            //Power off the PC
+            message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "PowerOff");
+            message.setArguments(arguments);
+            QDBusConnection::systemBus().send(message);
 
-        break;
-    case reboot:
-        //Reboot the PC
-        message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Reboot");
-        message.setArguments(arguments);
-        QDBusConnection::systemBus().send(message);
-        break;
-    case logout:
-        QApplication::exit(0);
+            break;
+        case reboot:
+            //Reboot the PC
+            message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Reboot");
+            message.setArguments(arguments);
+            QDBusConnection::systemBus().send(message);
+            break;
+        case logout:
+            QApplication::exit(0);
+        }
+    };
+
+    //Play the logout sound
+    SoundEngine* engine = SoundEngine::play(SoundEngine::Logout);
+    if (engine == nullptr) {
+        endSessionFunction();
+    } else {
+        connect(engine, &SoundEngine::done, endSessionFunction);
     }
+
 }
 
 void EndSessionWait::on_cancelButton_clicked()

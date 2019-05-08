@@ -23,6 +23,7 @@
 
 #include "notificationsdbusadaptor.h"
 #include <tpromise.h>
+#include <tsystemsound.h>
 
 extern void EndSession(EndSessionWait::shutdownType type);
 
@@ -140,7 +141,7 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                                 QVariantMap hints;
                                 hints.insert("category", "battery.charging");
                                 hints.insert("transient", true);
-                                hints.insert("sound-file", "qrc:/sounds/charging.wav");
+                                hints.insert("sound-file", tSystemSound::soundLocation("power-plug"));
 
                                 if (settings.value("power/notifyConnectPower", true).toBool()) {
                                     NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Charging"), message, QStringList(), hints, 10000);
@@ -191,7 +192,7 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                                     QVariantMap hints;
                                     hints.insert("urgency", 2);
                                     hints.insert("category", "battery.critical");
-                                    hints.insert("sound-file", "qrc:/sounds/powerlow.wav");
+                                    hints.insert("sound-file", tSystemSound::soundLocation("battery-caution"));
 
                                     QStringList actions;
                                     if (!isPowerStretchOn) {
@@ -212,7 +213,7 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                                     QVariantMap hints;
                                     hints.insert("urgency", 2);
                                     hints.insert("category", "battery.low");
-                                    hints.insert("sound-file", "qrc:/sounds/powerlow.wav");
+                                    hints.insert("sound-file", tSystemSound::soundLocation("battery-caution"));
 
                                     QStringList actions;
                                     if (!isPowerStretchOn) {
@@ -233,7 +234,7 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                                     QVariantMap hints;
                                     hints.insert("urgency", 2);
                                     hints.insert("category", "battery.low");
-                                    hints.insert("sound-file", "qrc:/sounds/powerlow.wav");
+                                    hints.insert("sound-file", tSystemSound::soundLocation("battery-low"));
 
                                     QStringList actions;
                                     if (!isPowerStretchOn) {
