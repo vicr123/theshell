@@ -61,7 +61,7 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="207"/>
         <source>System settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemeinstellungen</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="209"/>
