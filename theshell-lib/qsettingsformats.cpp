@@ -38,6 +38,7 @@ QSettings::Format QSettingsFormats::desktopFormat() {
             QString group;
             while (!device.atEnd()) {
                 QString line = device.readLine().trimmed();
+                if (line.startsWith("#")) continue;
                 if (line.startsWith("[") && line.endsWith("]")) {
                     group = line.mid(1, line.length() - 2);
                 } else {

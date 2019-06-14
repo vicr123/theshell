@@ -71,6 +71,8 @@ class SettingsPane : public QWidget, public StatusCenterPaneObject
 
         void on_unplugSwitch_toggled(bool checked);
 
+        void on_notificationVolumeSlider_valueChanged(int value);
+
     private:
         Ui::SettingsPane *ui;
         SettingsPanePrivate* d;

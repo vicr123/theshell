@@ -360,10 +360,17 @@
              <property name="spacing">
               <number>6</number>
              </property>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_8">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_7">
                <property name="text">
-                <string>Attenuate other sounds on notification</string>
+                <string>Notification Sound</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="tSwitch" name="attenuateOnNotification">
+               <property name="text">
+                <string notr="true">AttenuateOnNotification</string>
                </property>
               </widget>
              </item>
@@ -392,10 +399,10 @@
                </item>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_7">
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_8">
                <property name="text">
-                <string>Notification Sound</string>
+                <string>Attenuate other sounds on notification</string>
                </property>
               </widget>
              </item>
@@ -412,10 +419,20 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="tSwitch" name="attenuateOnNotification">
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_19">
                <property name="text">
-                <string notr="true">AttenuateOnNotification</string>
+                <string>Notification Volume</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QSlider" name="notificationVolumeSlider">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
@@ -598,8 +615,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>517</width>
-            <height>408</height>
+            <width>344</width>
+            <height>280</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">

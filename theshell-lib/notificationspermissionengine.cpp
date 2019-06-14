@@ -27,10 +27,11 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QLocale>
+#include "application.h"
 
 struct NotificationsPermissionEnginePrivate {
     QSettings* appSettings;
-    QSettings* desktopFile = nullptr;
+    QScopedPointer<Application> desktopApp;
     bool isValidApp = true;
     bool istheshell = false;
 };
@@ -38,6 +39,7 @@ struct NotificationsPermissionEnginePrivate {
 NotificationsPermissionEngine::NotificationsPermissionEngine(QString appName, QString desktopFile)
 {
     d = new NotificationsPermissionEnginePrivate();
+    d->desktopApp.reset(new Application());
     d->isValidApp = true;
     d->appSettings = new QSettings("theSuite", "theShell-notifications");
 
@@ -45,24 +47,9 @@ NotificationsPermissionEngine::NotificationsPermissionEngine(QString appName, QS
     QString groupName;
     if (desktopFile != "") {
         //Search for desktop file
-        QString filename = desktopFile + ".desktop";
-        for (QString appFolder : {QString("/usr/share/applications"), QDir::homePath() + "/.local/share/applications"}) {
-            QDirIterator iterator(appFolder, QDirIterator::Subdirectories);
+        d->desktopApp.reset(new Application(desktopFile));
 
-            while (iterator.hasNext()) {
-                iterator.next();
-                QFileInfo info = iterator.fileInfo();
-                if (info.fileName() == filename) {
-                    d->desktopFile = new QSettings(filename, QSettingsFormats::desktopFormat());
-                    d->desktopFile->beginGroup("Desktop Entry");
-                    break;
-                }
-            }
-
-            if (d->desktopFile != nullptr) break;
-        }
-
-        if (d->desktopFile != nullptr) {
+        if (d->desktopApp->isValid()) {
             //Desktop file was found, use desktop settings
             groupName = "dsk-" + desktopFile;
         } else {
@@ -80,7 +67,7 @@ NotificationsPermissionEngine::NotificationsPermissionEngine(QString appName, QS
     if (!d->appSettings->childGroups().contains(groupName)) {
         //Notification settings don't exist, create them now
         d->appSettings->beginGroup(groupName);
-        if (d->desktopFile == nullptr) {
+        if (!d->desktopApp->isValid()) {
             d->appSettings->setValue("isDesktopFile", false);
             d->appSettings->setValue("identifier", appName);
         } else {
@@ -96,10 +83,10 @@ NotificationsPermissionEngine::NotificationsPermissionEngine(QString appName, QS
 NotificationsPermissionEngine::NotificationsPermissionEngine() {
     d = new NotificationsPermissionEnginePrivate();
     d->isValidApp = false;
+    d->desktopApp.reset(new Application());
 }
 
 NotificationsPermissionEngine::~NotificationsPermissionEngine() {
-    if (d->desktopFile != nullptr) d->desktopFile->deleteLater();
     d->appSettings->endGroup();
     d->appSettings->deleteLater();
     delete d;
@@ -148,7 +135,7 @@ QString NotificationsPermissionEngine::identifier() {
 QIcon NotificationsPermissionEngine::appIcon() {
     if (!d->isValidApp) return QIcon::fromTheme("generic-app");
     if (d->istheshell) return QIcon::fromTheme("theshell");
-    if (d->desktopFile == nullptr) {
+    if (!d->desktopApp->isValid()) {
         if (QIcon::hasThemeIcon(identifier().toLower().replace(" ", "-"))) {
            return QIcon::fromTheme(identifier().toLower().replace(" ", "-"));
         } else if (QIcon::hasThemeIcon(identifier().toLower().replace(" ", ""))) {
@@ -157,7 +144,7 @@ QIcon NotificationsPermissionEngine::appIcon() {
             return QIcon::fromTheme("generic-app");
         }
     } else {
-         QString iconName = d->desktopFile->value("Icon").toString();
+         QString iconName = d->desktopApp->getProperty("Icon").toString();
          if (QFile(iconName).exists()) {
              return QIcon(iconName);
          } else {
@@ -168,15 +155,10 @@ QIcon NotificationsPermissionEngine::appIcon() {
 
 QString NotificationsPermissionEngine::appName() {
     if (!d->isValidApp) return "";
-    if (d->desktopFile == nullptr) {
+    if (!d->desktopApp->isValid()) {
         return identifier();
     } else {
-        QString lang = QLocale().name().split("_").first();
-        if (d->desktopFile->contains("Name[" + lang + "]")) {
-            return d->desktopFile->value("Name[" + lang + "]").toString();
-        } else {
-            return d->desktopFile->value("Name", identifier()).toString();
-        }
+        return d->desktopApp->getProperty("Name").toString();
     }
 }
 

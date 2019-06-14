@@ -40,15 +40,15 @@ class SoundEngine : public QObject
         void done();
 
     public slots:
-        static SoundEngine* play(QString soundName);
-        static SoundEngine* play(QUrl path);
-        static SoundEngine* play(KnownSound sound);
+        static SoundEngine* play(QString soundName, qreal volume = 1);
+        static SoundEngine* play(QUrl path, qreal volume = 1);
+        static SoundEngine* play(KnownSound sound, qreal volume = 1);
 
     private:
         SoundEnginePrivate* d;
 
         explicit SoundEngine(QObject *parent = nullptr);
-        static SoundEngine* playKnownSound(QString soundName, QString soundSetting);
+        static SoundEngine* playKnownSound(QString soundName, QString soundSetting, qreal volume = 1);
 };
 
 #endif // SOUNDENGINE_H

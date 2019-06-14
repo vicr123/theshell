@@ -90,6 +90,7 @@ SettingsPane::SettingsPane(QWidget *parent) :
     ui->connectMediaSwitch->setChecked(d->settings.value("notifications/mediaInsert", true).toBool());
     ui->chargingSwitch->setChecked(d->settings.value("power/notifyConnectPower", true).toBool());
     ui->unplugSwitch->setChecked(d->settings.value("power/notifyUnplugPower", true).toBool());
+    ui->notificationVolumeSlider->setValue(static_cast<int>(d->settings.value("notifications/volume", 1).toDouble() * 100));
 
     QScroller::grabGesture(ui->appList, QScroller::LeftMouseButtonGesture);
 }
@@ -212,4 +213,9 @@ void SettingsPane::on_chargingSwitch_toggled(bool checked)
 void SettingsPane::on_unplugSwitch_toggled(bool checked)
 {
     d->settings.setValue("power/notifyUnplugPower", checked);
+}
+
+void SettingsPane::on_notificationVolumeSlider_valueChanged(int value)
+{
+    d->settings.setValue("notifications/volume", static_cast<float>(value) / 100);
 }

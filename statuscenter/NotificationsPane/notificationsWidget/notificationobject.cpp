@@ -167,6 +167,7 @@ void NotificationObject::post() {
     }
 
     //Play sounds if requested
+    qreal soundVolume = settings.value("notifications/volume", 1).toDouble();
     if (!hints.value("suppress-sound", false).toBool() && !(AudioManager::instance()->QuietMode() == AudioManager::notifications || AudioManager::instance()->QuietMode() == AudioManager::mute) && permissions.playSound()) {
         if (settings.value("notifications/attenuate", true).toBool()) {
             AudioManager::instance()->attenuateStreams();
@@ -179,7 +180,7 @@ void NotificationObject::post() {
             } else {
                 soundFileUrl = QUrl::fromLocalFile(hints.value("sound-file").toString());
             }
-            SoundEngine* engine = SoundEngine::play(soundFileUrl);
+            SoundEngine* engine = SoundEngine::play(soundFileUrl, soundVolume);
             if (settings.value("notifications/attenuate", true).toBool()) {
                 connect(engine, &SoundEngine::done, [=]() {
                     AudioManager::instance()->restoreStreams();
@@ -187,7 +188,7 @@ void NotificationObject::post() {
             }
         } else {
             //Play the default notification sound
-            SoundEngine* engine = SoundEngine::play(SoundEngine::Notification);
+            SoundEngine* engine = SoundEngine::play(SoundEngine::Notification, soundVolume);
             if (settings.value("notifications/attenuate", true).toBool()) {
                 connect(engine, &SoundEngine::done, [=]() {
                     AudioManager::instance()->restoreStreams();

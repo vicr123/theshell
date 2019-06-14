@@ -27,10 +27,12 @@ struct ApplicationPrivate;
 class Application
 {
     public:
+        Application();
         Application(QString desktopEntry);
         Application(QVariantMap details);
         ~Application();
 
+        bool isValid();
         bool hasProperty(QString propertyName) const;
         QVariant getProperty(QString propertyName, QVariant defaultValue = QVariant()) const;
         QStringList getStringList(QString propertyName, QStringList defaultValue = QStringList()) const;

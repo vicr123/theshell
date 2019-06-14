@@ -32,6 +32,7 @@ struct ApplicationPrivate {
     QVariantMap details;
 
     bool useSettings = false;
+    bool isValid = false;
     QString desktopEntry;
 };
 
@@ -40,6 +41,10 @@ const QStringList searchPaths = {
     "/usr/share/applications"
 };
 ApplicationDaemon* ApplicationDaemon::d = nullptr;
+
+Application::Application() {
+    d = new ApplicationPrivate();
+}
 
 Application::Application(QString desktopEntry) {
     d = new ApplicationPrivate();
@@ -53,6 +58,7 @@ Application::Application(QString desktopEntry) {
                 d->appSettings = new QSettings(iterator.filePath(), QSettingsFormats::desktopFormat());
                 d->desktopEntry = desktopEntry;
                 d->useSettings = true;
+                d->isValid = true;
                 return;
             }
         }
@@ -64,13 +70,19 @@ Application::Application(QVariantMap details) {
 
     d->details = details;
     d->useSettings = false;
+    d->isValid = true;
 }
 
 Application::~Application() {
     delete d;
 }
 
+bool Application::isValid() {
+    return d->isValid;
+}
+
 bool Application::hasProperty(QString propertyName) const {
+    if (!d->isValid) return false;
     QLocale locale;
     if (d->useSettings) d->appSettings->beginGroup("Desktop Entry");
 
@@ -86,8 +98,13 @@ bool Application::hasProperty(QString propertyName) const {
 }
 
 QVariant Application::getProperty(QString propertyName, QVariant defaultValue) const {
+    if (!d->isValid) return QVariant();
+
     QLocale locale;
-    if (d->useSettings) d->appSettings->beginGroup("Desktop Entry");
+    if (d->useSettings) {
+        QString name = d->appSettings->value("Desktop Entry/Name").toString();
+        d->appSettings->beginGroup("Desktop Entry");
+    }
 
     //Check to see if there's a localised version of the property name
     QString usedKey = propertyName;
@@ -106,6 +123,8 @@ QVariant Application::getProperty(QString propertyName, QVariant defaultValue) c
 }
 
 QVariant Application::getActionProperty(QString action, QString propertyName, QVariant defaultValue) const {
+    if (!d->isValid) return QVariant();
+
     QLocale locale;
     if (d->useSettings) d->appSettings->beginGroup("Desktop Action " + action);
 
@@ -126,6 +145,8 @@ QVariant Application::getActionProperty(QString action, QString propertyName, QV
 }
 
 QStringList Application::getStringList(QString propertyName, QStringList defaultValue) const {
+    if (!d->isValid) return QStringList();
+
     QString property = getProperty(propertyName, defaultValue).toString();
     return property.split(";", QString::SkipEmptyParts);
 }
@@ -143,10 +164,11 @@ QStringList Application::allApplications() {
 }
 
 QString Application::desktopEntry() const {
+    if (!d->isValid) return "";
+
     return d->desktopEntry;
 }
 
-#include <QDebug>
 ApplicationDaemon::ApplicationDaemon() : QObject(nullptr) {
     QFileSystemWatcher* watcher = new QFileSystemWatcher();
     watcher->addPaths(searchPaths);

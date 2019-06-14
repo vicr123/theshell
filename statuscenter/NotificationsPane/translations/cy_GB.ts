@@ -236,5 +236,9 @@
         <source>Unplugged</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Notification Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
