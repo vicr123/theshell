@@ -26,14 +26,14 @@
 
 struct ApplicationInformation {
     QString name;
-    bool isDesktopEntry;
+    QString desktopEntry;
     QIcon icon;
 
     QSharedPointer<NotificationsPermissionEngine> permissionsEngine() {
-        if (isDesktopEntry) {
-            return QSharedPointer<NotificationsPermissionEngine>(new NotificationsPermissionEngine("", name));
-        } else {
+        if (desktopEntry.isEmpty()) {
             return QSharedPointer<NotificationsPermissionEngine>(new NotificationsPermissionEngine(name));
+        } else {
+            return QSharedPointer<NotificationsPermissionEngine>(new NotificationsPermissionEngine("", desktopEntry));
         }
     }
 };

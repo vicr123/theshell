@@ -23,10 +23,12 @@
 #include "applicationnotificationmodel.h"
 #include <QSoundEffect>
 #include <QScroller>
+#include <QMessageBox>
 
 struct SettingsPanePrivate {
     QSharedPointer<NotificationsPermissionEngine> currentSettings;
     QSettings settings;
+    ApplicationNotificationModel* appsModel;
 };
 
 SettingsPane::SettingsPane(QWidget *parent) :
@@ -42,7 +44,8 @@ SettingsPane::SettingsPane(QWidget *parent) :
 
     ui->LeftPaneWidget->setFixedWidth(300 * theLibsGlobal::getDPIScaling());
 
-    ui->appList->setModel(new ApplicationNotificationModel());
+    d->appsModel = new ApplicationNotificationModel();
+    ui->appList->setModel(d->appsModel);
     ui->appList->setItemDelegate(new ApplicationNotificationModelDelegate());
     ui->appList->setIconSize(QSize(32, 32) * theLibsGlobal::getDPIScaling());
     connect(ui->appList->selectionModel(), &QItemSelectionModel::currentRowChanged, this, [=](QModelIndex current, QModelIndex previous) {
@@ -58,6 +61,7 @@ SettingsPane::SettingsPane(QWidget *parent) :
             ui->allowSoundsSwitch->setChecked(d->currentSettings->playSound());
             ui->allowPopupsSwitch->setChecked(d->currentSettings->showPopups());
             ui->bypassQuietModeSwitch->setChecked(d->currentSettings->bypassesQuietMode());
+            ui->actionsWidget->setVisible(!d->currentSettings->isDesktopFile());
         }
     });
     ui->appList->setCurrentIndex(ui->appList->model()->index(0, 0));
@@ -218,4 +222,13 @@ void SettingsPane::on_unplugSwitch_toggled(bool checked)
 void SettingsPane::on_notificationVolumeSlider_valueChanged(int value)
 {
     d->settings.setValue("notifications/volume", static_cast<float>(value) / 100);
+}
+
+void SettingsPane::on_removeNotificationButton_clicked()
+{
+    if (QMessageBox::warning(this, tr("Mark as uninstalled?"), tr("This will remove the settings from theShell. If the application sends another notification, it will reappear.\n\nMark \"%1\" as uninstalled?").arg(d->currentSettings->appName()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+        d->currentSettings->remove();
+        d->appsModel->loadData();
+        ui->appList->selectionModel()->setCurrentIndex(d->appsModel->index(0), QItemSelectionModel::ClearAndSelect);
+    }
 }

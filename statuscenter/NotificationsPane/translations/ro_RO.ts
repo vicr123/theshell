@@ -252,5 +252,27 @@
         <source>Notification Volume</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ACTIONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mark as uninstalled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If this application has been uninstalled, you can remove this application from the list of notifications.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mark as uninstalled?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will remove the settings from theShell. If the application sends another notification, it will reappear.
+
+Mark &quot;%1&quot; as uninstalled?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

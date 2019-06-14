@@ -79,12 +79,13 @@ QVariant ApplicationNotificationModel::data(const QModelIndex &index, int role) 
 }
 
 void ApplicationNotificationModel::loadData() {
+    d->appInformation.clear();
     QStringList allDesktopApps = NotificationsPermissionEngine::knownDesktopFiles();
     for (QString app : allDesktopApps) {
         NotificationsPermissionEngine permissions("", app);
 
         ApplicationInformation info;
-        info.isDesktopEntry = true;
+        info.desktopEntry = app;
         info.name = permissions.appName();
         info.icon = permissions.appIcon();
         d->appInformation.append(info);
@@ -95,7 +96,6 @@ void ApplicationNotificationModel::loadData() {
         NotificationsPermissionEngine permissions(app);
 
         ApplicationInformation info;
-        info.isDesktopEntry = false;
         info.name = permissions.appName();
         info.icon = info.permissionsEngine()->appIcon();
         d->appInformation.append(info);

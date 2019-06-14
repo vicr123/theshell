@@ -73,6 +73,8 @@ class SettingsPane : public QWidget, public StatusCenterPaneObject
 
         void on_notificationVolumeSlider_valueChanged(int value);
 
+        void on_removeNotificationButton_clicked();
+
     private:
         Ui::SettingsPane *ui;
         SettingsPanePrivate* d;

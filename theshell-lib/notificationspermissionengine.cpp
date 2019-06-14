@@ -30,7 +30,7 @@
 #include "application.h"
 
 struct NotificationsPermissionEnginePrivate {
-    QSettings* appSettings;
+    QScopedPointer<QSettings> appSettings;
     QScopedPointer<Application> desktopApp;
     bool isValidApp = true;
     bool istheshell = false;
@@ -41,7 +41,7 @@ NotificationsPermissionEngine::NotificationsPermissionEngine(QString appName, QS
     d = new NotificationsPermissionEnginePrivate();
     d->desktopApp.reset(new Application());
     d->isValidApp = true;
-    d->appSettings = new QSettings("theSuite", "theShell-notifications");
+    d->appSettings.reset(new QSettings("theSuite", "theShell-notifications"));
 
     //Determine the name of the group used to store these settings
     QString groupName;
@@ -165,6 +165,7 @@ QString NotificationsPermissionEngine::appName() {
 void NotificationsPermissionEngine::remove() {
     //Clear this app's settings
     d->appSettings->remove("");
+    d->appSettings->sync();
     d->isValidApp = false;
 }
 
