@@ -28,6 +28,7 @@ namespace Ui {
 }
 
 struct SettingsPanePrivate;
+class ApplicationNotificationModel;
 class SettingsPane : public QWidget, public StatusCenterPaneObject
 {
         Q_OBJECT
@@ -41,6 +42,8 @@ class SettingsPane : public QWidget, public StatusCenterPaneObject
         StatusPaneTypes type();
         int position();
         void message(QString name, QVariantList args = QVariantList());
+
+        ApplicationNotificationModel* appModel();
 
     private slots:
         void on_backButton_clicked();

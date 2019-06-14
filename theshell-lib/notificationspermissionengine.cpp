@@ -74,6 +74,7 @@ NotificationsPermissionEngine::NotificationsPermissionEngine(QString appName, QS
             d->appSettings->setValue("isDesktopFile", true);
             d->appSettings->setValue("identifier", desktopFile);
         }
+        d->appSettings->sync();
     } else {
         //Notification settings exist
         d->appSettings->beginGroup(groupName);

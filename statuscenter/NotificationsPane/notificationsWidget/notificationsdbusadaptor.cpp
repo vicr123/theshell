@@ -25,10 +25,11 @@
 
 #include "notificationspermissionengine.h"
 
-NotificationsDBusAdaptor::NotificationsDBusAdaptor(QObject *parent)
+NotificationsDBusAdaptor::NotificationsDBusAdaptor(QObject *parent, ApplicationNotificationModel* appModel)
     : QDBusAbstractAdaptor(parent)
 {
     this->setAutoRelaySignals(true);
+    this->appModel = appModel;
 }
 
 NotificationsDBusAdaptor::~NotificationsDBusAdaptor()
@@ -109,6 +110,7 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
 
         if (postNotification) {
             notification->post();
+            appModel->loadData();
         }
 
         //Send the notification to the lock screen if the user desires

@@ -32,6 +32,7 @@
 #include <QApplication>
 #include <QDBusReply>
 #include <QSettings>
+#include "settings/applicationnotificationmodel.h"
 #include "audiomanager.h"
 
 class NotificationsWidget;
@@ -78,7 +79,7 @@ class NotificationsDBusAdaptor : public QDBusAbstractAdaptor
         "")
 
 public:
-    NotificationsDBusAdaptor(QObject* parent = nullptr);
+    NotificationsDBusAdaptor(QObject* parent = nullptr, ApplicationNotificationModel* appModel = nullptr);
     virtual ~NotificationsDBusAdaptor();
 
     NotificationsWidget* parentWidget();
@@ -97,6 +98,7 @@ signals: // SIGNALS
 
 private:
     NotificationsWidget* pt = NULL;
+    ApplicationNotificationModel* appModel;
     QSettings settings;
 };
 

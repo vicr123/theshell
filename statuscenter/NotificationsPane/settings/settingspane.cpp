@@ -42,7 +42,8 @@ SettingsPane::SettingsPane(QWidget *parent) :
     this->settingAttributes.menuWidget = ui->LeftPaneWidget;
     this->settingAttributes.providesLeftPane = true;
 
-    ui->LeftPaneWidget->setFixedWidth(300 * theLibsGlobal::getDPIScaling());
+    ui->LeftPaneWidget->setFixedWidth(SC_DPI(300));
+    ui->removeNotificationButton->setProperty("type", "destructive");
 
     d->appsModel = new ApplicationNotificationModel();
     ui->appList->setModel(d->appsModel);
@@ -231,4 +232,8 @@ void SettingsPane::on_removeNotificationButton_clicked()
         d->appsModel->loadData();
         ui->appList->selectionModel()->setCurrentIndex(d->appsModel->index(0), QItemSelectionModel::ClearAndSelect);
     }
+}
+
+ApplicationNotificationModel* SettingsPane::appModel() {
+    return d->appsModel;
 }

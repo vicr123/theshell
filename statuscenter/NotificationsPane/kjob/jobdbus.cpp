@@ -82,6 +82,12 @@ void JobDBus::setInfoMessage(QString message) {
 }
 
 void JobDBus::setDescriptionField(uint number, QString name, QString value) {
+    //Special case for Kdenlive
+    if (title() == "kdenlive" && this->p > 95 && number == 1) {
+        terminate("");
+        return;
+    }
+
     view->setDescriptionField(number, name, value);
 }
 
