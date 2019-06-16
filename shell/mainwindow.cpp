@@ -1334,14 +1334,12 @@ void MainWindow::doUpdate() {
             QMenu* menu = ui->mprisSelection->menu();
             menu->clear();
             for (QString app : mprisDetectedApps) {
-                QAction* action = new QAction(nullptr);
+                QAction* action = menu->addAction(app.remove("org.mpris.MediaPlayer2."));
                 action->setData(app);
                 action->setCheckable(true);
                 if (mprisCurrentAppName == app) {
                     action->setChecked(true);
                 }
-                action->setText(app.remove("org.mpris.MediaPlayer2."));
-                menu->addAction(action);
             }
             ui->mprisSelection->setVisible(true);
         } else {
