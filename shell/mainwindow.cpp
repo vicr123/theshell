@@ -1288,11 +1288,11 @@ void MainWindow::setMprisCurrentApp(QAction* app) {
                 statusString = currentPlayer->identity();
             } else {
                 QStringList parts;
-                parts.append(title);
-
                 QString part2 = currentPlayer->metadata().value("xesam:artist").toStringList().join(", ");
                 if (part2 == "") part2 = currentPlayer->metadata().value("xesam:album").toString();
                 if (part2 != "") parts.append(part2);
+                parts.append(title);
+
                 statusString = parts.join(" · ");
             }
 
@@ -1318,13 +1318,15 @@ void MainWindow::setMprisCurrentApp(QAction* app) {
             }
         });
         connect(currentPlayer.data(), &MprisPlayer::gone, mprisContextObject, [=] {
-            QTimer::singleShot(0, [=] {
-                if (ui->mprisSelection->menu()->actions().count() > 2) {
-                    setMprisCurrentApp(ui->mprisSelection->menu()->actions().at(1));
-                } else {
-                    setMprisCurrentApp(nullptr);
-                }
-            });
+            QList<QAction*> actions = ui->mprisSelection->menu()->actions();
+            actions.removeFirst(); //Remove the section heading
+            actions.removeAll(app); //Remove the current player
+
+            if (actions.count() > 0) {
+                setMprisCurrentApp(actions.first());
+            } else {
+                setMprisCurrentApp(nullptr);
+            }
         });
     }
 }

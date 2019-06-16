@@ -1620,43 +1620,43 @@ Items that will be kept if you choose to keep files:
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1935"/>
+        <location filename="../mainwindow.cpp" line="1937"/>
         <source>For Bar</source>
         <translation>Для Панели</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1937"/>
+        <location filename="../mainwindow.cpp" line="1939"/>
         <source>Move to bottom</source>
         <translation>Переместить вниз</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1942"/>
+        <location filename="../mainwindow.cpp" line="1944"/>
         <source>Move to top</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1948"/>
+        <location filename="../mainwindow.cpp" line="1950"/>
         <source>Gateway and Bar Settings</source>
         <translation>Настройки Врат и Панели</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1953"/>
+        <location filename="../mainwindow.cpp" line="1955"/>
         <source>For System</source>
         <translation>Для системы</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1954"/>
+        <location filename="../mainwindow.cpp" line="1956"/>
         <source>Open Status Center</source>
         <translation>Открыть статусный центр</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1957"/>
+        <location filename="../mainwindow.cpp" line="1959"/>
         <source>Open System Settings</source>
         <translation>Открыть параметры системы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1966"/>
+        <location filename="../mainwindow.cpp" line="1968"/>
         <source>Open Gateway</source>
         <translation>Открыть Врата</translation>
     </message>

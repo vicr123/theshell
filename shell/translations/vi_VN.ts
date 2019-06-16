@@ -1614,43 +1614,43 @@ Tập tin này có thể giữ lại:
         <translation>Đóng</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1935"/>
+        <location filename="../mainwindow.cpp" line="1937"/>
         <source>For Bar</source>
         <translation>Cho thanh</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1937"/>
+        <location filename="../mainwindow.cpp" line="1939"/>
         <source>Move to bottom</source>
         <translation>Chuyển xuống</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1942"/>
+        <location filename="../mainwindow.cpp" line="1944"/>
         <source>Move to top</source>
         <translation>Chuyển lên</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1948"/>
+        <location filename="../mainwindow.cpp" line="1950"/>
         <source>Gateway and Bar Settings</source>
         <translation>Cài đặt cửa và thanh</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1953"/>
+        <location filename="../mainwindow.cpp" line="1955"/>
         <source>For System</source>
         <translation>Cho máy</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1954"/>
+        <location filename="../mainwindow.cpp" line="1956"/>
         <source>Open Status Center</source>
         <translation>Mở trạng thái</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1957"/>
+        <location filename="../mainwindow.cpp" line="1959"/>
         <source>Open System Settings</source>
         <translation>Mở cài đặt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1966"/>
+        <location filename="../mainwindow.cpp" line="1968"/>
         <source>Open Gateway</source>
         <translation>Mở Cửa</translation>
     </message>

@@ -1617,43 +1617,43 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
         <translation>Desktop %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1935"/>
+        <location filename="../mainwindow.cpp" line="1937"/>
         <source>For Bar</source>
         <translation>Für die Leiste</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1937"/>
+        <location filename="../mainwindow.cpp" line="1939"/>
         <source>Move to bottom</source>
         <translation>Nach unten bewegen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1942"/>
+        <location filename="../mainwindow.cpp" line="1944"/>
         <source>Move to top</source>
         <translation>Nach oben bewegen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1948"/>
+        <location filename="../mainwindow.cpp" line="1950"/>
         <source>Gateway and Bar Settings</source>
         <translation>Gateway- und Leisteneinstellungen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1953"/>
+        <location filename="../mainwindow.cpp" line="1955"/>
         <source>For System</source>
         <translation>Für das System</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1954"/>
+        <location filename="../mainwindow.cpp" line="1956"/>
         <source>Open Status Center</source>
         <translation>Statuscenter öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1957"/>
+        <location filename="../mainwindow.cpp" line="1959"/>
         <source>Open System Settings</source>
         <translation>Systemeinstellungen öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1966"/>
+        <location filename="../mainwindow.cpp" line="1968"/>
         <source>Open Gateway</source>
         <translation>Gateway öffnen</translation>
     </message>
