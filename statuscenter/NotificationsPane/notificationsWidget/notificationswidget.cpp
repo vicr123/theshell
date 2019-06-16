@@ -24,6 +24,7 @@
 #include <QScroller>
 #include <QDBusConnectionInterface>
 #include "kjob/jobviewwidget.h"
+#include <mpris/mprisengine.h>
 
 NotificationsWidget::NotificationsWidget(QWidget *parent) :
     QWidget(parent),
@@ -36,38 +37,13 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
     this->informationalAttributes.darkColor = QColor(100, 25, 50);
     this->informationalAttributes.lightColor = QColor(200, 50, 100);
 
-    QTimer* t = new QTimer();
-    t->setInterval(1000);
-    connect(t, &QTimer::timeout, [=] {
-        QStringList knownServices;
-        for (QString service : QDBusConnection::sessionBus().interface()->registeredServiceNames().value()) {
-            if (service.startsWith("org.mpris.MediaPlayer2")) {
-                knownServices.append(service);
-                if (!mediaPlayers.keys().contains(service)) {
-                    MediaPlayerNotification* n = new MediaPlayerNotification(service);
-                    mediaPlayers.insert(service, n);
-                    ((QBoxLayout*) ui->notificationGroups->layout())->insertWidget(0, n);
-                    ui->noNotificationsFrame->setVisible(false);
-                    connect(n, &MediaPlayerNotification::destroyed, [=] {
-                        mediaPlayers.remove(service);
-                        ui->notificationGroups->layout()->removeWidget(n);
-
-                        if (notifications.count() == 0 && mediaPlayers.count() == 0) {
-                            ui->noNotificationsFrame->setVisible(true);
-                        }
-                    });
-                }
-            }
-        }
-
-        for (QString service : mediaPlayers.keys()) {
-            if (!knownServices.contains(service)) {
-                mediaPlayers.value(service)->deleteLater();
-            }
-        }
-
+    for (MprisPlayerPtr player : MprisEngine::players()) {
+        addMediaPlayer(player);
+    }
+    connect(MprisEngine::instance(), &MprisEngine::newPlayer, this, [=](QString service, MprisPlayerPtr player) {
+        Q_UNUSED(service)
+        addMediaPlayer(player);
     });
-    t->start();
 
     connect(AudioManager::instance(), &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
         ui->quietModeSound->setChecked(false);
@@ -143,6 +119,21 @@ int NotificationsWidget::position() {
 
 void NotificationsWidget::message(QString name, QVariantList args) {
 
+}
+
+void NotificationsWidget::addMediaPlayer(MprisPlayerPtr player) {
+    MediaPlayerNotification* n = new MediaPlayerNotification(player);
+    mediaPlayers.insert(player, n);
+    ((QBoxLayout*) ui->notificationGroups->layout())->insertWidget(0, n);
+    ui->noNotificationsFrame->setVisible(false);
+    connect(n, &MediaPlayerNotification::destroyed, this, [=] {
+        mediaPlayers.remove(player);
+        ui->notificationGroups->layout()->removeWidget(n);
+
+        if (notifications.count() == 0 && mediaPlayers.count() == 0) {
+            ui->noNotificationsFrame->setVisible(true);
+        }
+    });
 }
 
 void NotificationsWidget::setAdaptor(NotificationsDBusAdaptor* adaptor) {

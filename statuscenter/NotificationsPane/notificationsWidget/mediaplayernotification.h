@@ -35,22 +35,22 @@
 #include <QTimer>
 #include <QSlider>
 #include <QPainter>
+#include <mpris/mprisplayer.h>
 
 namespace Ui {
     class MediaPlayerNotification;
 }
 
+struct MediaPlayerNotificationPrivate;
 class MediaPlayerNotification : public QFrame
 {
         Q_OBJECT
 
     public:
-        explicit MediaPlayerNotification(QString service, QWidget *parent = 0);
+        explicit MediaPlayerNotification(MprisPlayerPtr service, QWidget *parent = 0);
         ~MediaPlayerNotification();
 
     public slots:
-        void updateMpris(QString interfaceName, QMap<QString, QVariant> properties, QStringList changedProperties);
-        void setDetails(QString title, QString artist, QString album, QString albumArt);
 
     private slots:
         void on_backButton_clicked();
@@ -69,13 +69,9 @@ class MediaPlayerNotification : public QFrame
 
     private:
         Ui::MediaPlayerNotification *ui;
-        QString service;
-        QNetworkAccessManager mgr;
-        double rate;
-        QString playbackStatus;
-        QDBusObjectPath trackId;
+        MediaPlayerNotificationPrivate* d;
 
-        QPalette defaultPal;
+        void setDetails(QString title, QString artist, QString album, QString albumArt);
 };
 
 #endif // MEDIAPLAYERNOTIFICATION_H

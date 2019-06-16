@@ -32,6 +32,8 @@
 
 class NotificationsDBusAdaptor;
 class JobViewWidget;
+class MprisPlayer;
+typedef QSharedPointer<MprisPlayer> MprisPlayerPtr;
 
 namespace Ui {
 class NotificationsWidget;
@@ -95,9 +97,11 @@ private:
     bool eventFilter(QObject *watched, QEvent *event);
     void changeEvent(QEvent* event);
 
+    void addMediaPlayer(MprisPlayerPtr player);
+
     QMap<int, NotificationObject*> notifications;
     QList<NotificationAppGroup*> notificationGroups;
-    QMap<QString, MediaPlayerNotification*> mediaPlayers;
+    QMap<MprisPlayerPtr, MediaPlayerNotification*> mediaPlayers;
 
     QLabel *chunk, *snack;
 

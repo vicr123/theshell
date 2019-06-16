@@ -29,12 +29,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    mpris/mprisengine.cpp \
+    mpris/mprisplayer.cpp \
         notificationspermissionengine.cpp \
     application.cpp \
     qsettingsformats.cpp \
     soundengine.cpp
 
 HEADERS += \
+        mpris/mprisengine.h \
+        mpris/mprisplayer.h \
         notificationspermissionengine.h \
         theshell-lib_global.h \ 
     application.h \

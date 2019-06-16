@@ -53,6 +53,8 @@
 
 class Menu;
 class InfoPaneDropdown;
+class MprisPlayer;
+typedef QSharedPointer<MprisPlayer> MprisPlayerPtr;
 
 class ChunkWatcher : public QObject
 {
@@ -93,18 +95,6 @@ public:
     InfoPaneDropdown* getInfoPane();
     Menu* getMenu();
     void show();
-
-    bool isMprisAvailable();
-    bool isMprisPlaying();
-    void nextSong();
-    void playPause();
-    void play();
-    void pause();
-    void previousSong();
-    QString mprisApp();
-    QString songName();
-    QString songArtist();
-    QString songAlbum();
 
 public slots:
     void openMenu();
@@ -152,17 +142,7 @@ private slots:
 
     void on_timer_clicked();
 
-    void DBusNewService(QString name);
-
-    void setMprisCurrentApp(QString app);
-
-    void on_mprisPause_clicked();
-
-    void on_mprisBack_clicked();
-
-    void on_mprisForward_clicked();
-
-    void on_mprisSongName_clicked();
+    void setMprisCurrentApp(QAction* action);
 
     void ActivateWindow();
 
@@ -173,12 +153,6 @@ private slots:
     void on_desktopBack_clicked();
 
     void on_openMenu_clicked();
-
-    void on_mprisSelection_triggered(QAction *arg1);
-
-    void updateMpris();
-
-    void updateMpris(QString interfaceName, QMap<QString, QVariant> properties, QStringList changedProperties);
 
     void on_time_dragging(int , int );
 
@@ -219,6 +193,10 @@ private slots:
     void remakeBar();
     void showStatusBarProgress(bool show);
 
+    void on_mprisSongName_clicked();
+    void on_mprisForward_clicked();
+    void on_mprisBack_clicked();
+    void on_mprisPause_clicked();
     signals:
     void reloadBackgrounds();
 
@@ -243,14 +221,8 @@ private:
     int warningWidth = 0;
     bool forceWindowMove = false;
 
-    QString mprisCurrentAppName = "";
-    QStringList mprisDetectedApps;
-    QString mprisTitle;
-    QString mprisArtist;
-    QString mprisAlbum;
-    bool mprisPlaying;
-    bool pauseMprisMenuUpdate = false;
-    QMutex mprisUpdaterLocker;
+    MprisPlayerPtr currentPlayer;
+    QObject* mprisContextObject = nullptr;
 
     void closeEvent(QCloseEvent*);
     void paintEvent(QPaintEvent *event);
