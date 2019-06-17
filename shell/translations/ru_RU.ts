@@ -413,10 +413,70 @@
 <context>
     <name>HotkeyHud</name>
     <message>
-        <location filename="../hotkeyhud.cpp" line="61"/>
-        <location filename="../hotkeyhud.cpp" line="78"/>
+        <location filename="../hotkeyhud.cpp" line="67"/>
+        <location filename="../hotkeyhud.cpp" line="84"/>
         <source>Brightness</source>
         <translation type="unfinished">Яркость</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="90"/>
+        <location filename="../hotkeyhud.cpp" line="100"/>
+        <location filename="../hotkeyhud.cpp" line="107"/>
+        <location filename="../hotkeyhud.cpp" line="117"/>
+        <source>Volume</source>
+        <translation type="unfinished">Громкость</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="90"/>
+        <location filename="../hotkeyhud.cpp" line="107"/>
+        <source>Quiet Mode is set to Mute.</source>
+        <translation type="unfinished">Тихий режим сейчас загрушает.</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="125"/>
+        <source>Critical Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="129"/>
+        <source>No Notifications</source>
+        <translation type="unfinished">Нет уведомлений</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="133"/>
+        <source>Mute</source>
+        <translation type="unfinished">Заглушить</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="137"/>
+        <source>Sound</source>
+        <translation type="unfinished">Звук</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="144"/>
+        <source>Keyboard Layout</source>
+        <translation type="unfinished">Раскладка клавиатуры</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="144"/>
+        <source>Keyboard Layout set to %1</source>
+        <translation type="unfinished">Установлена %1 раскладка клавиатуры</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="159"/>
+        <location filename="../hotkeyhud.cpp" line="174"/>
+        <source>Keyboard Brightness</source>
+        <translation type="unfinished">Яркость клавиатуры</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="182"/>
+        <source>Eject</source>
+        <translation type="unfinished">Отключить</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="182"/>
+        <source>Attempting to eject disc...</source>
+        <translation type="unfinished">Пытаемся отключить диск...</translation>
     </message>
 </context>
 <context>
@@ -1594,78 +1654,78 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="567"/>
-        <location filename="../mainwindow.cpp" line="353"/>
+        <location filename="../mainwindow.cpp" line="354"/>
         <source>Quiet Mode</source>
         <translation>Тихий режим</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="643"/>
+        <location filename="../mainwindow.cpp" line="652"/>
         <source>Desktop %1</source>
         <translation>Рабочий стол %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="473"/>
+        <location filename="../mainwindow.cpp" line="482"/>
         <source>For %1</source>
         <translation>Для %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="67"/>
+        <location filename="../mainwindow.cpp" line="68"/>
         <source>Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="401"/>
+        <location filename="../mainwindow.cpp" line="402"/>
         <source>Recording Screen</source>
         <translation>Записываем экран</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="407"/>
+        <location filename="../mainwindow.cpp" line="408"/>
         <source>Processing Screen Recording...</source>
         <translation>Обрабатываем запись экрана...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="474"/>
+        <location filename="../mainwindow.cpp" line="483"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1937"/>
+        <location filename="../mainwindow.cpp" line="1946"/>
         <source>For Bar</source>
         <translation>Для Панели</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1939"/>
+        <location filename="../mainwindow.cpp" line="1948"/>
         <source>Move to bottom</source>
         <translation>Переместить вниз</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1944"/>
+        <location filename="../mainwindow.cpp" line="1953"/>
         <source>Move to top</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1950"/>
+        <location filename="../mainwindow.cpp" line="1959"/>
         <source>Gateway and Bar Settings</source>
         <translation>Настройки Врат и Панели</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1955"/>
+        <location filename="../mainwindow.cpp" line="1964"/>
         <source>For System</source>
         <translation>Для системы</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1956"/>
+        <location filename="../mainwindow.cpp" line="1965"/>
         <source>Open Status Center</source>
         <translation>Открыть статусный центр</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1959"/>
+        <location filename="../mainwindow.cpp" line="1968"/>
         <source>Open System Settings</source>
         <translation>Открыть параметры системы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1968"/>
+        <location filename="../mainwindow.cpp" line="1977"/>
         <source>Open Gateway</source>
         <translation>Открыть Врата</translation>
     </message>
@@ -1979,69 +2039,6 @@ Items that will be kept if you choose to keep files:
     </message>
 </context>
 <context>
-    <name>NativeEventFilter</name>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="327"/>
-        <location filename="../nativeeventfilter.cpp" line="338"/>
-        <location filename="../nativeeventfilter.cpp" line="348"/>
-        <location filename="../nativeeventfilter.cpp" line="357"/>
-        <source>Volume</source>
-        <translation>Громкость</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="327"/>
-        <location filename="../nativeeventfilter.cpp" line="348"/>
-        <source>Quiet Mode is set to Mute.</source>
-        <translation>Тихий режим сейчас загрушает.</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="364"/>
-        <source>Critical Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="368"/>
-        <source>No Notifications</source>
-        <translation>Нет уведомлений</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="372"/>
-        <source>Mute</source>
-        <translation>Заглушить</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="376"/>
-        <source>Sound</source>
-        <translation>Звук</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="384"/>
-        <location filename="../nativeeventfilter.cpp" line="390"/>
-        <source>Keyboard Brightness</source>
-        <translation>Яркость клавиатуры</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="406"/>
-        <source>Eject</source>
-        <translation>Отключить</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="406"/>
-        <source>Attempting to eject disc...</source>
-        <translation>Пытаемся отключить диск...</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="484"/>
-        <source>Keyboard Layout</source>
-        <translation>Раскладка клавиатуры</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="484"/>
-        <source>Keyboard Layout set to %1</source>
-        <translation>Установлена %1 раскладка клавиатуры</translation>
-    </message>
-</context>
-<context>
     <name>NewMedia</name>
     <message>
         <location filename="../newmedia.ui" line="25"/>
@@ -2222,30 +2219,30 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>ScreenRecorder</name>
     <message>
-        <location filename="../screenrecorder.cpp" line="36"/>
-        <location filename="../screenrecorder.cpp" line="61"/>
-        <location filename="../screenrecorder.cpp" line="96"/>
-        <location filename="../screenrecorder.cpp" line="108"/>
+        <location filename="../screenrecorder.cpp" line="49"/>
+        <location filename="../screenrecorder.cpp" line="74"/>
+        <location filename="../screenrecorder.cpp" line="109"/>
+        <location filename="../screenrecorder.cpp" line="121"/>
         <source>Screen Recorder</source>
         <translation>Запись экрана</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="36"/>
+        <location filename="../screenrecorder.cpp" line="49"/>
         <source>To record your screen, you&apos;ll need to install ffmpeg</source>
         <translation>Чтобы записывать экран, вам нужно установить ffmpeg</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="61"/>
+        <location filename="../screenrecorder.cpp" line="74"/>
         <source>Couldn&apos;t start screen recording</source>
         <translation>Невозможно начать запись</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="96"/>
+        <location filename="../screenrecorder.cpp" line="109"/>
         <source>Screen Recording saved in Recordings folder</source>
         <translation>Запись сохранена в папке Recordings</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="108"/>
+        <location filename="../screenrecorder.cpp" line="121"/>
         <source>Screen Recording failed</source>
         <translation>Запись не удалась</translation>
     </message>

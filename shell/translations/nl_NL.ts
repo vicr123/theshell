@@ -413,10 +413,70 @@
 <context>
     <name>HotkeyHud</name>
     <message>
-        <location filename="../hotkeyhud.cpp" line="61"/>
-        <location filename="../hotkeyhud.cpp" line="78"/>
+        <location filename="../hotkeyhud.cpp" line="67"/>
+        <location filename="../hotkeyhud.cpp" line="84"/>
         <source>Brightness</source>
         <translation type="unfinished">Helderheid</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="90"/>
+        <location filename="../hotkeyhud.cpp" line="100"/>
+        <location filename="../hotkeyhud.cpp" line="107"/>
+        <location filename="../hotkeyhud.cpp" line="117"/>
+        <source>Volume</source>
+        <translation type="unfinished">Volume</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="90"/>
+        <location filename="../hotkeyhud.cpp" line="107"/>
+        <source>Quiet Mode is set to Mute.</source>
+        <translation type="unfinished">Stille modus is ingesteld op Stil.</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="125"/>
+        <source>Critical Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="129"/>
+        <source>No Notifications</source>
+        <translation type="unfinished">Geen Notificaties</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="133"/>
+        <source>Mute</source>
+        <translation type="unfinished">Stil</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="137"/>
+        <source>Sound</source>
+        <translation type="unfinished">Geluid</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="144"/>
+        <source>Keyboard Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="144"/>
+        <source>Keyboard Layout set to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="159"/>
+        <location filename="../hotkeyhud.cpp" line="174"/>
+        <source>Keyboard Brightness</source>
+        <translation type="unfinished">Toetsenbord Helderheid</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="182"/>
+        <source>Eject</source>
+        <translation type="unfinished">Uitwerpen</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="182"/>
+        <source>Attempting to eject disc...</source>
+        <translation type="unfinished">Aan het proberen de schijf uit te werpen...</translation>
     </message>
 </context>
 <context>
@@ -1590,78 +1650,78 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="567"/>
-        <location filename="../mainwindow.cpp" line="353"/>
+        <location filename="../mainwindow.cpp" line="354"/>
         <source>Quiet Mode</source>
         <translation>Stille modus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="67"/>
+        <location filename="../mainwindow.cpp" line="68"/>
         <source>Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="401"/>
+        <location filename="../mainwindow.cpp" line="402"/>
         <source>Recording Screen</source>
         <translation>Scherm wordt opgenomen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="407"/>
+        <location filename="../mainwindow.cpp" line="408"/>
         <source>Processing Screen Recording...</source>
         <translation>Schermopname verwerken...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="473"/>
+        <location filename="../mainwindow.cpp" line="482"/>
         <source>For %1</source>
         <translation>Voor %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="474"/>
+        <location filename="../mainwindow.cpp" line="483"/>
         <source>Close</source>
         <translation>Sluit</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="643"/>
+        <location filename="../mainwindow.cpp" line="652"/>
         <source>Desktop %1</source>
         <translation>Bureaublad %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1937"/>
+        <location filename="../mainwindow.cpp" line="1946"/>
         <source>For Bar</source>
         <translation>Voor Bar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1939"/>
+        <location filename="../mainwindow.cpp" line="1948"/>
         <source>Move to bottom</source>
         <translation>Verplaats naar de bodem</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1944"/>
+        <location filename="../mainwindow.cpp" line="1953"/>
         <source>Move to top</source>
         <translation>Verplaats naar de top</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1950"/>
+        <location filename="../mainwindow.cpp" line="1959"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1955"/>
+        <location filename="../mainwindow.cpp" line="1964"/>
         <source>For System</source>
         <translation>Voor systeem</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1956"/>
+        <location filename="../mainwindow.cpp" line="1965"/>
         <source>Open Status Center</source>
         <translation type="unfinished">Open Status Center</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1959"/>
+        <location filename="../mainwindow.cpp" line="1968"/>
         <source>Open System Settings</source>
         <translation type="unfinished">Open Systeem Instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1968"/>
+        <location filename="../mainwindow.cpp" line="1977"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1975,69 +2035,6 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     </message>
 </context>
 <context>
-    <name>NativeEventFilter</name>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="327"/>
-        <location filename="../nativeeventfilter.cpp" line="338"/>
-        <location filename="../nativeeventfilter.cpp" line="348"/>
-        <location filename="../nativeeventfilter.cpp" line="357"/>
-        <source>Volume</source>
-        <translation>Volume</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="327"/>
-        <location filename="../nativeeventfilter.cpp" line="348"/>
-        <source>Quiet Mode is set to Mute.</source>
-        <translation>Stille modus is ingesteld op Stil.</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="364"/>
-        <source>Critical Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="368"/>
-        <source>No Notifications</source>
-        <translation>Geen Notificaties</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="372"/>
-        <source>Mute</source>
-        <translation>Stil</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="376"/>
-        <source>Sound</source>
-        <translation>Geluid</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="384"/>
-        <location filename="../nativeeventfilter.cpp" line="390"/>
-        <source>Keyboard Brightness</source>
-        <translation>Toetsenbord Helderheid</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="406"/>
-        <source>Eject</source>
-        <translation>Uitwerpen</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="406"/>
-        <source>Attempting to eject disc...</source>
-        <translation>Aan het proberen de schijf uit te werpen...</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="484"/>
-        <source>Keyboard Layout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="484"/>
-        <source>Keyboard Layout set to %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>NewMedia</name>
     <message>
         <location filename="../newmedia.ui" line="25"/>
@@ -2218,30 +2215,30 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
 <context>
     <name>ScreenRecorder</name>
     <message>
-        <location filename="../screenrecorder.cpp" line="36"/>
-        <location filename="../screenrecorder.cpp" line="61"/>
-        <location filename="../screenrecorder.cpp" line="96"/>
-        <location filename="../screenrecorder.cpp" line="108"/>
+        <location filename="../screenrecorder.cpp" line="49"/>
+        <location filename="../screenrecorder.cpp" line="74"/>
+        <location filename="../screenrecorder.cpp" line="109"/>
+        <location filename="../screenrecorder.cpp" line="121"/>
         <source>Screen Recorder</source>
         <translation>Scherm Opnemen</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="36"/>
+        <location filename="../screenrecorder.cpp" line="49"/>
         <source>To record your screen, you&apos;ll need to install ffmpeg</source>
         <translation>Om uw scherm op te nemen, zal u ffmpeg moeten installeren</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="61"/>
+        <location filename="../screenrecorder.cpp" line="74"/>
         <source>Couldn&apos;t start screen recording</source>
         <translation>Kon de schermopname niet starten</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="96"/>
+        <location filename="../screenrecorder.cpp" line="109"/>
         <source>Screen Recording saved in Recordings folder</source>
         <translation>Schermopname opgeslagen in de Recordings map</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="108"/>
+        <location filename="../screenrecorder.cpp" line="121"/>
         <source>Screen Recording failed</source>
         <translation>Schermopname mislukt</translation>
     </message>

@@ -17,38 +17,35 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef SHORTCUTEDIT_H
-#define SHORTCUTEDIT_H
+#ifndef SHORTCUTINFODIALOG_H
+#define SHORTCUTINFODIALOG_H
 
-#include <QKeySequenceEdit>
-#include <QSettings>
+#include <QDialog>
 
-struct ShortcutEditPrivate;
-class ShortcutEdit : public QWidget
+namespace Ui {
+    class ShortcutInfoDialog;
+}
+
+class GlobalKeyboardKey;
+struct ShortcutInfoDialogPrivate;
+class ShortcutInfoDialog : public QDialog
 {
         Q_OBJECT
-    public:
-        explicit ShortcutEdit(QSettings* settings, QString setting, QString keyName, QString humanReadableName, QString section, QString description, int index, QKeySequence defaultShortcut, QWidget *parent = nullptr);
-        ~ShortcutEdit();
 
-    signals:
-        void activated();
+    public:
+        explicit ShortcutInfoDialog(QWidget *parent = nullptr);
+        ~ShortcutInfoDialog();
+
+        void showChords(QKeySequence currentKey, QList<GlobalKeyboardKey*> availableKeys, QString status);
 
     public slots:
+        void show();
 
     private:
-        ShortcutEditPrivate* d;
+        Ui::ShortcutInfoDialog *ui;
+        ShortcutInfoDialogPrivate* d;
 
-        void focusInEvent(QFocusEvent *event);
-        void focusOutEvent(QFocusEvent *event);
-        void paintEvent(QPaintEvent *event);
-        void keyPressEvent(QKeyEvent *event);
-        void keyReleaseEvent(QKeyEvent *event);
-        QSize sizeHint() const;
-
-        QPixmap getKeyIcon(QString key);
-        bool isModifierKey(Qt::Key key);
-        void editingDone();
+        void paintEvent(QPaintEvent* event);
 };
 
-#endif // SHORTCUTEDIT_H
+#endif // SHORTCUTINFODIALOG_H

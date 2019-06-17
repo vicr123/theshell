@@ -22,9 +22,15 @@
 
 #include "mainwindow.h"
 #include <QThread>
+#include <globalkeyboard/globalkeyboardengine.h>
+
+#include "screenshotwindow.h"
+#include "dbusevents.h"
 
 extern void playSound(QUrl, bool = false);
+extern void EndSession(EndSessionWait::shutdownType type);
 extern MainWindow* MainWin;
+extern DbusEvents* DBusEvents;
 
 Background* firstBackground;
 GlobalFilter::GlobalFilter(QApplication *application, QObject *parent) : QObject(parent)
@@ -35,6 +41,86 @@ GlobalFilter::GlobalFilter(QApplication *application, QObject *parent) : QObject
    connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(reloadScreens()));
    connect(QApplication::desktop(), SIGNAL(primaryScreenChanged()), this, SLOT(reloadScreens()));
    connect(MainWin, SIGNAL(reloadBackgrounds()), this, SLOT(reloadBackgrounds()));
+
+   connect(GlobalKeyboardEngine::instance(), &GlobalKeyboardEngine::keyShortcutRegistered, this, [=](QString name, GlobalKeyboardKey* key) {
+       if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::TakeScreenshot)) {
+           connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+               screenshotWindow* screenshot = new screenshotWindow();
+               screenshot->show();
+           });
+       } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::LockScreen)) {
+           connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+               DBusEvents->LockScreen();
+           });
+       } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::Run)) {
+           connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+               RunDialog* run = new RunDialog();
+               run->show();
+           });
+       } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::Suspend)) {
+           connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+               EndSession(EndSessionWait::suspend);
+           });
+       } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::PowerOff)) {
+           connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+               //Perform an action depending on what the user wants
+               switch (settings.value("power/onPowerButtonPressed", 0).toInt()) {
+                   case 0: { //Ask what to do
+                       EndSessionWait* endSession;
+                       if (settings.value("input/touch", false).toBool()) {
+                           endSession = new EndSessionWait(EndSessionWait::slideOff);
+                       } else {
+                           endSession = new EndSessionWait(EndSessionWait::ask);
+                       }
+                       endSession->showFullScreen();
+                       endSession->exec();
+                       endSession->deleteLater();
+                       break;
+                   }
+                   case 1: { //Power Off
+                       EndSession(EndSessionWait::powerOff);
+                       break;
+                   }
+                   case 2: { //Reboot
+                       EndSession(EndSessionWait::reboot);
+                       break;
+                   }
+                   case 3: { //Log Out
+                       EndSession(EndSessionWait::logout);
+                       break;
+                   }
+                   case 4: { //Suspend
+                       EndSession(EndSessionWait::suspend);
+                       break;
+                   }
+                   case 5: { //Lock
+                       DBusEvents->LockScreen();
+                       break;
+                   }
+                   case 6: { //Turn off screen
+                       EndSession(EndSessionWait::screenOff);
+                       break;
+                   }
+                   case 7: { //Hibernate
+                       EndSession(EndSessionWait::hibernate);
+                       break;
+                   }
+               }
+           });
+       } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::PowerOptions)) {
+           connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+               EndSessionWait* endSession;
+               if (settings.value("input/touch", false).toBool()) {
+                   endSession = new EndSessionWait(EndSessionWait::slideOff);
+               } else {
+                   endSession = new EndSessionWait(EndSessionWait::ask);
+               }
+               endSession->showFullScreen();
+               endSession->exec();
+               endSession->deleteLater();
+           });
+       }
+   });
 
    reloadScreens();
 }

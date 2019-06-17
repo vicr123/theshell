@@ -24,6 +24,7 @@
 #include <QScroller>
 #include <mpris/mprisengine.h>
 #include <mpris/mprisplayer.h>
+#include <globalkeyboard/globalkeyboardengine.h>
 #include "soundengine.h"
 
 #include "menu.h"
@@ -426,6 +427,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->StatusBarProgressSpinner->setFixedSize(QSize(16, 16) * getDPIScaling());
 
     QScroller::grabGesture(ui->infoScrollArea->viewport(), QScroller::LeftMouseButtonGesture);
+
+    connect(GlobalKeyboardEngine::instance(), &GlobalKeyboardEngine::keyShortcutRegistered, this, [=](QString name, GlobalKeyboardKey* key) {
+        if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::OpenGateway)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                this->openMenu();
+            });
+        }
+    });
 
     //ui->infoScrollArea->setFixedHeight(ui->InfoScrollWidget->height());
 

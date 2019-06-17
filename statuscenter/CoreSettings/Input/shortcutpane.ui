@@ -93,7 +93,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>System Shortcuts work everywhere on the system. They'll be paused while you're editing a shortcut here.</string>
+          <string>These shortcuts work everywhere on the system. They'll be paused while you're editing a shortcut here.</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -114,7 +114,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>

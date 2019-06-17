@@ -23,11 +23,18 @@
 #include <QMap>
 #include <QCoreApplication>
 #include <QX11Info>
+#include <QPixmap>
+#include <QFontMetrics>
+#include <QPalette>
+#include "shortcutinfodialog.h"
+#include <the-libs_global.h>
 
 #include <QDebug>
+#include <QPainter>
 #include <X11/Xlib.h>
 #include <X11/XF86keysym.h>
 #include <xcb/xcb.h>
+#include <QTimer>
 
 #include "keyboardtables.h"
 
@@ -38,7 +45,10 @@ struct GlobalKeyboardEnginePrivate {
     int currentChordNumber = 0;
     QList<GlobalKeyboardKey*> chordingKeys;
 
+    ShortcutInfoDialog* shortcutDialog;
+
     int listening = 0;
+    bool heardSuper = false;
 };
 
 GlobalKeyboardEnginePrivate* GlobalKeyboardEngine::d = new GlobalKeyboardEnginePrivate();
@@ -46,15 +56,21 @@ GlobalKeyboardEnginePrivate* GlobalKeyboardEngine::d = new GlobalKeyboardEngineP
 GlobalKeyboardEngine::GlobalKeyboardEngine(QObject *parent) : QObject(parent)
 {
     QCoreApplication::instance()->installNativeEventFilter(this);
+    d->shortcutDialog = new ShortcutInfoDialog();
+
+    //Register a new shortcut for the Super key
+    QTimer::singleShot(0, [=] {
+        registerKey(QKeySequence(Qt::Key_Super_L), keyName(OpenGateway), tr("System"), tr("Open Gateway"), tr("Opens the Gateway"));
+    });
 }
 
-GlobalKeyboardKey* GlobalKeyboardEngine::registerKey(QKeySequence keySequence, QString name) {
+GlobalKeyboardKey* GlobalKeyboardEngine::registerKey(QKeySequence keySequence, QString name, QString section, QString humanReadableName, QString description) {
     //Initialise an instance first
     GlobalKeyboardEngine::instance();
 
     if (d->keyMapping.contains(keySequence)) return nullptr; //Don't allow conflicting keys
 
-    GlobalKeyboardKey* key = new GlobalKeyboardKey(keySequence);
+    GlobalKeyboardKey* key = new GlobalKeyboardKey(keySequence, section, humanReadableName, description);
     d->keyMapping.insert(keySequence, key);
     connect(key, &GlobalKeyboardKey::deregistered, [=] {
         d->keyMapping.remove(keySequence);
@@ -79,8 +95,15 @@ bool GlobalKeyboardEngine::nativeEventFilter(const QByteArray &eventType, void *
         ulong keyState = 0;
         if (button->state & XCB_MOD_MASK_1) keyState |= Mod1Mask;
         if (button->state & XCB_MOD_MASK_CONTROL) keyState |= ControlMask;
-        if (button->state & XCB_MOD_MASK_4) keyState |= Mod4Mask;
+        if (button->state & XCB_MOD_MASK_4) {
+            keyState |= Mod4Mask;
+            d->heardSuper = true;
+        }
         if (button->state & XCB_MOD_MASK_SHIFT) keyState |= ShiftMask;
+
+        for (const int ks : {XK_Control_L, XK_Control_R, XK_Alt_L, XK_Alt_R, XK_Shift_L, XK_Shift_R, XK_Super_L, XK_Super_R, XK_Meta_L, XK_Meta_R, XK_Hyper_L, XK_Hyper_R}) {
+            if (button->detail == XKeysymToKeycode(QX11Info::display(), ks)) return false; //Do nothing; this is a modifier key
+        }
 
         if (d->currentChordNumber == 0) {
             bool beginChording = false;
@@ -96,6 +119,9 @@ bool GlobalKeyboardEngine::nativeEventFilter(const QByteArray &eventType, void *
                 d->chordingKeys = matchingKeys;
                 d->currentChordNumber = 1;
                 XGrabKeyboard(QX11Info::display(), QX11Info::appRootWindow(), true, GrabModeAsync, GrabModeAsync, CurrentTime);
+
+                QKeySequence key = matchingKeys.first()->key();
+                d->shortcutDialog->showChords(QKeySequence(key[0]), matchingKeys, tr("Strike the next key in the chord"));
             } else {
                 if (matchingKeys.count() == 1) {
                     emit matchingKeys.first()->shortcutActivated();
@@ -115,19 +141,24 @@ bool GlobalKeyboardEngine::nativeEventFilter(const QByteArray &eventType, void *
                 }
             }
 
-            if (matchingKeys.count() == 1) {
+            if (matchingKeys.count() == 1 && matchingKeys.first()->chordCount() == d->currentChordNumber + 1) {
                 emit matchingKeys.first()->shortcutActivated();
                 XUngrabKeyboard(QX11Info::display(), CurrentTime);
                 d->currentChordNumber = 0;
+                d->shortcutDialog->hide();
                 return true;
             } else if (matchingKeys.count() == 0) {
                 //No keys matched chord
                 XUngrabKeyboard(QX11Info::display(), CurrentTime);
                 d->currentChordNumber = 0;
+                d->shortcutDialog->hide();
                 return true;
             } else {
                 d->chordingKeys = matchingKeys;
                 d->currentChordNumber++;
+
+                QKeySequence key = matchingKeys.first()->key();
+                d->shortcutDialog->showChords(QKeySequence(key[0], key[1], d->currentChordNumber > 2 ? key[2] : -1, d->currentChordNumber > 3 ? key[3] : -1), matchingKeys, tr("Strike the next key in the chord"));
 
                 if (d->currentChordNumber == 4) {
                     //Conflict!
@@ -135,6 +166,15 @@ bool GlobalKeyboardEngine::nativeEventFilter(const QByteArray &eventType, void *
                     d->currentChordNumber = 0;
                     return true;
                 }
+            }
+        }
+    } else if (event->response_type == XCB_KEY_RELEASE) { //Key Release Event
+        xcb_key_release_event_t* button = static_cast<xcb_key_release_event_t*>(message);
+        if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Super_L)) {
+            if (d->heardSuper) {
+                d->heardSuper = false;
+            } else {
+                emit d->keyMapping.value(QKeySequence(Qt::Key_Super_L))->shortcutActivated();
             }
         }
     }
@@ -159,6 +199,134 @@ void GlobalKeyboardEngine::pauseListening() {
     }
 }
 
+QPixmap GlobalKeyboardEngine::getKeyShortcutImage(QKeySequence keySequence, QFont font, QPalette pal) {
+    QFontMetrics metrics(font);
+    QString sequence = keySequence.toString();
+    QStringList chordParts = sequence.split(", ", QString::SkipEmptyParts);
+    if (chordParts.count() == 0) {
+        QRect textRect;
+        textRect.setWidth(metrics.width(tr("No Shortcut")) + 1);
+        textRect.setHeight(metrics.height());
+        textRect.moveLeft(0);
+        textRect.moveTop(0);
+
+        QPixmap pixmap(textRect.size());
+        pixmap.fill(Qt::transparent);
+
+        QPainter painter(&pixmap);
+        painter.setPen(pal.color(QPalette::WindowText));
+        painter.drawText(textRect, tr("No Shortcut"));
+
+        return pixmap;
+    } else {
+        int width = 0;
+        for (int i = 0; i < chordParts.count(); i++) {
+            QStringList keys = chordParts.at(i).split("+", QString::SkipEmptyParts);
+
+            for (QString key : keys) {
+                QPixmap icon = getKeyIcon(key, font, pal);
+                width += icon.width() + SC_DPI(4);
+            }
+
+            if (chordParts.count() > i + 1) {
+                width += metrics.width(",") + 1 + SC_DPI(4);
+            }
+        }
+        width -= SC_DPI(4);
+
+        QPixmap pixmap(width, qMax(SC_DPI(24), metrics.height() + SC_DPI(8)));
+        pixmap.fill(Qt::transparent);
+        QPainter painter(&pixmap);
+        painter.setPen(pal.color(QPalette::WindowText));
+        int currentX = 0;
+
+        for (int i = 0; i < chordParts.count(); i++) {
+            QStringList keys = chordParts.at(i).split("+", QString::SkipEmptyParts);
+
+            for (QString key : keys) {
+                QPixmap icon = getKeyIcon(key, font, pal);
+                painter.drawPixmap(currentX, SC_DPI(4), icon);
+                currentX += icon.width() + SC_DPI(4);
+            }
+
+            if (chordParts.count() > i + 1) {
+                QRect textRect;
+                textRect.setWidth(metrics.width(",") + 1);
+                textRect.setHeight(metrics.height());
+                textRect.moveLeft(currentX);
+                textRect.moveTop(pixmap.height() / 2 - textRect.height() / 2);
+                painter.drawText(textRect, ",");
+                currentX = textRect.right() + SC_DPI(4);
+            }
+        }
+
+        return pixmap;
+    }
+}
+
+QPixmap GlobalKeyboardEngine::getKeyIcon(QString key, QFont font, QPalette pal) {
+    if (key == "Meta") key = "Super";
+
+    QPixmap squarePx(SC_DPI_T(QSize(16, 16), QSize));
+    squarePx.fill(Qt::transparent);
+
+    QPainter sqPainter(&squarePx);
+    sqPainter.setRenderHint(QPainter::Antialiasing);
+    sqPainter.setPen(Qt::transparent);
+    sqPainter.setBrush(pal.color(QPalette::WindowText));
+    sqPainter.drawRoundedRect(QRect(QPoint(0, 0), squarePx.size()), 50, 50, Qt::RelativeSize);
+
+    QRect squareIconRect;
+    squareIconRect.setWidth(12 * theLibsGlobal::getDPIScaling());
+    squareIconRect.setHeight(12 * theLibsGlobal::getDPIScaling());
+    squareIconRect.moveCenter(QPoint(8, 8) * theLibsGlobal::getDPIScaling());
+
+    /*if (key == "Left") {
+        QImage image = QIcon::fromTheme("go-previous").pixmap(squareIconRect.size()).toImage();
+        tintImage(image, this->palette().color(QPalette::Window));
+        sqPainter.drawImage(squareIconRect, image);
+        return squarePx;
+    } else if (key == "Right") {
+        QImage image = QIcon::fromTheme("go-next").pixmap(squareIconRect.size()).toImage();
+        tintImage(image, this->palette().color(QPalette::Window));
+        sqPainter.drawImage(squareIconRect, image);
+        return squarePx;
+    } else {*/
+
+        //font.setPointSizeF(floor(8));
+        /*while (QFontMetrics(font).height() > 14 * theLibsGlobal::getDPIScaling()) {
+            font.setPointSizeF(font.pointSizeF() - 0.5);
+        }*/
+        font.setPixelSize(SC_DPI(12));
+        QFontMetrics fontMetrics(font);
+
+        QSize pixmapSize;
+        pixmapSize.setHeight(SC_DPI(16));
+        pixmapSize.setWidth(qMax(fontMetrics.width(key) + SC_DPI(6), SC_DPI(16)));
+
+        QPixmap px(pixmapSize);
+        px.fill(Qt::transparent);
+
+        QPainter painter(&px);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setPen(Qt::transparent);
+        painter.setBrush(pal.color(QPalette::WindowText));
+        painter.drawRoundedRect(QRect(QPoint(0, 0), px.size()), 4 * theLibsGlobal::getDPIScaling(), 4 * theLibsGlobal::getDPIScaling());
+
+        painter.setFont(font);
+        painter.setPen(pal.color(QPalette::Window));
+
+        QRect textRect;
+        textRect.setHeight(fontMetrics.height());
+        textRect.setWidth(fontMetrics.width(key));
+        textRect.moveCenter(QPoint(pixmapSize.width() / 2, pixmapSize.height() / 2));
+
+        painter.drawText(textRect, Qt::AlignCenter, key);
+
+        painter.end();
+        return px;
+    //}
+}
 QString GlobalKeyboardEngine::keyName(KnownKeyNames name) {
     switch (name) {
         case BrightnessUp:
@@ -169,8 +337,32 @@ QString GlobalKeyboardEngine::keyName(KnownKeyNames name) {
             return "Audio-VolumeUp";
         case VolumeDown:
             return "Audio-VolumeDown";
-        default:
-            return "";
+        case QuietModeToggle:
+            return "Audio-QuietMode";
+        case TakeScreenshot:
+            return "Screen-TakeScreenshot";
+        case CaptureScreenVideo:
+            return "Screen-CaptureVideo";
+        case LockScreen:
+            return "System-LockScreen";
+        case Run:
+            return "System-Run";
+        case Suspend:
+            return "System-Suspend";
+        case PowerOff:
+            return "System-PowerOff";
+        case NextKeyboardLayout:
+            return "Kbd-NextLayout";
+        case KeyboardBrightnessUp:
+            return "Kbd-BrightnessUp";
+        case KeyboardBrightnessDown:
+            return "Kbd-BrightnessDown";
+        case OpenGateway:
+            return "System-OpenGateway";
+        case PowerOptions:
+            return "System-PowerOptions";
+        case Eject:
+            return "System-Eject";
     }
 }
 
@@ -178,6 +370,7 @@ struct GlobalKeyboardKeyPrivate {
     QKeySequence key;
 
     QString section;
+    QString name;
     QString description;
 
     bool grabbed = false;
@@ -187,11 +380,12 @@ struct GlobalKeyboardKeyPrivate {
 
 QMap<KeyCode, int> GlobalKeyboardKeyPrivate::grabbedKeycodes;
 
-GlobalKeyboardKey::GlobalKeyboardKey(QKeySequence key, QString section, QString description, QObject* parent) : QObject(parent) {
+GlobalKeyboardKey::GlobalKeyboardKey(QKeySequence key, QString section, QString name, QString description, QObject* parent) : QObject(parent) {
     d = new GlobalKeyboardKeyPrivate();
     d->key = key;
     d->section = section;
     d->description = description;
+    d->name = name;
 
     grabKey();
 }
@@ -250,4 +444,12 @@ QString GlobalKeyboardKey::description() {
 
 void GlobalKeyboardKey::deregister() {
     emit deregistered();
+}
+
+QKeySequence GlobalKeyboardKey::key() {
+    return d->key;
+}
+
+QString GlobalKeyboardKey::name() {
+    return d->name;
 }

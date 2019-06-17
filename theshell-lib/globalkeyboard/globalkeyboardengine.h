@@ -28,14 +28,16 @@ class GlobalKeyboardKey : public QObject
 {
         Q_OBJECT
     public:
-        explicit GlobalKeyboardKey(QKeySequence key, QString section = "", QString description = "", QObject* parent = nullptr);
+        explicit GlobalKeyboardKey(QKeySequence key, QString section = "", QString name = "", QString description = "", QObject* parent = nullptr);
         ~GlobalKeyboardKey();
 
         int chordCount();
         unsigned long nativeKey(uint chordNumber);
         unsigned long nativeModifiers(uint chordNumber);
         QString section();
+        QString name();
         QString description();
+        QKeySequence key();
 
         void deregister();
 
@@ -55,7 +57,7 @@ class GlobalKeyboardEngine : public QObject, public QAbstractNativeEventFilter
 {
         Q_OBJECT
     public:
-        static GlobalKeyboardKey* registerKey(QKeySequence keySequence, QString name);
+        static GlobalKeyboardKey* registerKey(QKeySequence keySequence, QString name, QString section, QString humanReadableName, QString description);
 
         static GlobalKeyboardEngine* instance();
 
@@ -63,12 +65,28 @@ class GlobalKeyboardEngine : public QObject, public QAbstractNativeEventFilter
             BrightnessUp,
             BrightnessDown,
             VolumeUp,
-            VolumeDown
+            VolumeDown,
+            QuietModeToggle,
+            TakeScreenshot,
+            CaptureScreenVideo,
+            LockScreen,
+            Run,
+            Suspend,
+            PowerOff,
+            NextKeyboardLayout,
+            KeyboardBrightnessUp,
+            KeyboardBrightnessDown,
+            OpenGateway,
+            PowerOptions,
+            Eject
         };
         static QString keyName(KnownKeyNames name);
 
         static void pauseListening();
         static void startListening();
+
+        static QPixmap getKeyShortcutImage(QKeySequence keySequence, QFont font, QPalette pal);
+        static QPixmap getKeyIcon(QString key, QFont font, QPalette pal);
 
     signals:
         void keyShortcutRegistered(QString name, GlobalKeyboardKey* shortcut);

@@ -22,12 +22,25 @@
 #include <QDebug>
 
 #include "notificationsdbusadaptor.h"
+#include <globalkeyboard/globalkeyboardengine.h>
 
 ScreenRecorder::ScreenRecorder(QObject *parent) : QObject(parent)
 {
     recorderProcess = new QProcess();
     //recorderProcess->setProcessChannelMode(QProcess::ForwardedChannels);
     connect(recorderProcess, SIGNAL(finished(int)), this, SLOT(recorderFinished(int)));
+
+    connect(GlobalKeyboardEngine::instance(), &GlobalKeyboardEngine::keyShortcutRegistered, this, [=](QString name, GlobalKeyboardKey* key) {
+        if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::CaptureScreenVideo)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                if (this->recording()) {
+                    this->stop();
+                } else {
+                    this->start();
+                }
+            });
+        }
+    });
 }
 
 void ScreenRecorder::start() {

@@ -47,6 +47,7 @@ private:
     bool eventFilter(QObject *object, QEvent *event);
 
     QSound* clickSound;
+    QSettings settings;
 };
 
 #endif // GLOBALFILTER_H

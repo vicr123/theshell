@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui multimedia thelib x11extras
+QT       += core gui widgets multimedia thelib x11extras
 
 blueprint {
     TARGET = theshell-libb
@@ -30,6 +30,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     globalkeyboard/globalkeyboardengine.cpp \
+    globalkeyboard/shortcutinfodialog.cpp \
     mpris/mprisengine.cpp \
     mpris/mprisplayer.cpp \
         notificationspermissionengine.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
 HEADERS += \
         globalkeyboard/globalkeyboardengine.h \
         globalkeyboard/keyboardtables.h \
+        globalkeyboard/shortcutinfodialog.h \
         mpris/mprisengine.h \
         mpris/mprisplayer.h \
         notificationspermissionengine.h \
@@ -61,3 +63,6 @@ unix {
 
     INSTALLS += target header
 }
+
+FORMS += \
+    globalkeyboard/shortcutinfodialog.ui

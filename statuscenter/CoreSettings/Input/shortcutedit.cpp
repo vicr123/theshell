@@ -40,9 +40,13 @@ struct ShortcutEditPrivate {
     Qt::Key previousKey;
 
     GlobalKeyboardKey* currentCapture = nullptr;
+
+    QString humanReadableName;
+    QString section;
+    QString description;
 };
 
-ShortcutEdit::ShortcutEdit(QSettings* settings, QString setting, QString keyName, int index, QKeySequence defaultShortcut, QWidget *parent) : QWidget(parent)
+ShortcutEdit::ShortcutEdit(QSettings* settings, QString setting, QString keyName, QString humanReadableName, QString section, QString description, int index, QKeySequence defaultShortcut, QWidget *parent) : QWidget(parent)
 {
     d = new ShortcutEditPrivate();
     d->settings = settings;
@@ -51,7 +55,11 @@ ShortcutEdit::ShortcutEdit(QSettings* settings, QString setting, QString keyName
     d->index = index;
     d->keyName = keyName;
 
-    d->currentSequence = defaultShortcut;
+    d->humanReadableName = humanReadableName;
+    d->section = section;
+    d->description = description;
+
+    d->currentSequence = QKeySequence(d->settings->value(d->setting + "-" + QString::number(d->index), defaultShortcut.toString()).toString());
 
     this->setFocusPolicy(Qt::StrongFocus);
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -84,7 +92,7 @@ void ShortcutEdit::paintEvent(QPaintEvent *event) {
     painter.setPen(this->palette().color(QPalette::WindowText));
 
     int currentX = SC_DPI(4);
-
+    /*
     QString sequence = d->currentSequence.toString();
     QStringList chordParts = sequence.split(", ", QString::SkipEmptyParts);
     if (chordParts.count() == 0) {
@@ -115,7 +123,15 @@ void ShortcutEdit::paintEvent(QPaintEvent *event) {
                 currentX = textRect.right() + SC_DPI(4);
             }
         }
-    }
+    }*/
+
+    QPixmap shortcutPixmap = GlobalKeyboardEngine::getKeyShortcutImage(d->currentSequence, this->font(), this->palette());
+    QRect pxRect;
+    pxRect.setSize(shortcutPixmap.size());
+    pxRect.moveLeft(SC_DPI(4));
+    pxRect.moveTop(this->height() / 2 - pxRect.height() / 2);
+    painter.drawPixmap(pxRect, shortcutPixmap);
+    currentX += shortcutPixmap.width() + SC_DPI(4);
 
     if (d->editing) {
         painter.setPen(this->palette().color(QPalette::Disabled, QPalette::WindowText));
@@ -152,7 +168,7 @@ void ShortcutEdit::keyPressEvent(QKeyEvent *event) {
         if (event->isAutoRepeat()) return;
 
         if (d->currentKey == 0) {
-            d->editingKeys[0] = d->editingKeys[1] = d->editingKeys[2] = d->editingKeys[3] = static_cast<Qt::Key>(-1);
+            d->editingKeys[0] = d->editingKeys[1] = d->editingKeys[2] = d->editingKeys[3] = static_cast<Qt::Key>(0);
         }
 
         int key = event->key();
@@ -175,7 +191,7 @@ void ShortcutEdit::keyPressEvent(QKeyEvent *event) {
 }
 
 void ShortcutEdit::keyReleaseEvent(QKeyEvent *event) {
-    if (isModifierKey(d->editingKeys[d->currentKey])) d->editingKeys[d->currentKey] = static_cast<Qt::Key>(-1);
+    if (isModifierKey(d->editingKeys[d->currentKey])) d->editingKeys[d->currentKey] = static_cast<Qt::Key>(0);
     d->currentSequence = QKeySequence(d->editingKeys[0], d->editingKeys[1], d->editingKeys[2], d->editingKeys[3]);
     this->update();
 }
@@ -252,9 +268,11 @@ void ShortcutEdit::editingDone() {
     d->editing = false;
     this->update();
 
+    d->settings->setValue(d->setting + "-" + QString::number(d->index), d->currentSequence.toString());
+
     if (d->currentCapture != nullptr) {
         d->currentCapture->deregister();
     }
-    d->currentCapture = GlobalKeyboardEngine::registerKey(d->currentSequence, d->keyName);
-    connect(d->currentCapture, &GlobalKeyboardKey::shortcutActivated, this, &ShortcutEdit::activated);
+    d->currentCapture = GlobalKeyboardEngine::registerKey(d->currentSequence, d->keyName, d->section, d->humanReadableName, d->description);
+    if (d->currentCapture != nullptr) connect(d->currentCapture, &GlobalKeyboardKey::shortcutActivated, this, &ShortcutEdit::activated);
 }

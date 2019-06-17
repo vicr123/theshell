@@ -256,29 +256,23 @@
 <context>
     <name>ShortcutEdit</name>
     <message>
-        <location filename="../Input/shortcutedit.cpp" line="62"/>
+        <location filename="../Input/shortcutedit.cpp" line="70"/>
         <source>For Shortcut %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/shortcutedit.cpp" line="63"/>
+        <location filename="../Input/shortcutedit.cpp" line="71"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/shortcutedit.cpp" line="67"/>
+        <location filename="../Input/shortcutedit.cpp" line="75"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/shortcutedit.cpp" line="92"/>
-        <location filename="../Input/shortcutedit.cpp" line="96"/>
-        <source>No Shortcut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../Input/shortcutedit.cpp" line="124"/>
-        <location filename="../Input/shortcutedit.cpp" line="128"/>
+        <location filename="../Input/shortcutedit.cpp" line="140"/>
+        <location filename="../Input/shortcutedit.cpp" line="144"/>
         <source>Type Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
@@ -297,32 +291,187 @@
     </message>
     <message>
         <location filename="../Input/shortcutpane.ui" line="96"/>
-        <source>System Shortcuts work everywhere on the system. They&apos;ll be paused while you&apos;re editing a shortcut here.</source>
+        <source>These shortcuts work everywhere on the system. They&apos;ll be paused while you&apos;re editing a shortcut here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/shortcutpane.cpp" line="60"/>
+        <location filename="../Input/shortcutpane.cpp" line="62"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="63"/>
+        <source>Run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="63"/>
+        <source>Run a command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="64"/>
+        <source>Suspend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="64"/>
+        <source>Suspend the system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="65"/>
+        <source>Power Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="65"/>
+        <source>Power off the system, or show power options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="66"/>
+        <source>Power Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="66"/>
+        <source>Show power options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="67"/>
+        <source>Eject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="67"/>
+        <source>Eject an optical disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="69"/>
         <source>Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/shortcutpane.cpp" line="61"/>
+        <location filename="../Input/shortcutpane.cpp" line="70"/>
         <source>Brightness Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/shortcutpane.cpp" line="61"/>
+        <location filename="../Input/shortcutpane.cpp" line="70"/>
         <source>Adjust the brightness of your screen up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/shortcutpane.cpp" line="62"/>
+        <location filename="../Input/shortcutpane.cpp" line="71"/>
         <source>Brightness Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Input/shortcutpane.cpp" line="62"/>
+        <location filename="../Input/shortcutpane.cpp" line="71"/>
         <source>Adjust the brightness of your screen down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="72"/>
+        <source>Lock Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="72"/>
+        <source>Lock your computer so no one else can access it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="76"/>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="77"/>
+        <source>Volume Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="77"/>
+        <source>Increase the volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="78"/>
+        <source>Decrease the volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="78"/>
+        <source>Volume Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="79"/>
+        <source>Toggle Quiet Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="79"/>
+        <source>Switch between Quiet Mode options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="81"/>
+        <source>Keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="82"/>
+        <source>Next Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="82"/>
+        <source>Switch to the next keyboard layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="83"/>
+        <source>Keyboard Brightness Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="83"/>
+        <source>Turn the keyboard brightness up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="84"/>
+        <source>Keyboard Brightness Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="84"/>
+        <source>Turn the keyboard brightness down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="73"/>
+        <source>Take Screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="73"/>
+        <source>Take a photo of your screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="74"/>
+        <source>Take Screen Recording</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="74"/>
+        <source>Record a video of your screen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -413,10 +413,70 @@
 <context>
     <name>HotkeyHud</name>
     <message>
-        <location filename="../hotkeyhud.cpp" line="61"/>
-        <location filename="../hotkeyhud.cpp" line="78"/>
+        <location filename="../hotkeyhud.cpp" line="67"/>
+        <location filename="../hotkeyhud.cpp" line="84"/>
         <source>Brightness</source>
         <translation type="unfinished">Độ Sáng</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="90"/>
+        <location filename="../hotkeyhud.cpp" line="100"/>
+        <location filename="../hotkeyhud.cpp" line="107"/>
+        <location filename="../hotkeyhud.cpp" line="117"/>
+        <source>Volume</source>
+        <translation type="unfinished">Âm lượng</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="90"/>
+        <location filename="../hotkeyhud.cpp" line="107"/>
+        <source>Quiet Mode is set to Mute.</source>
+        <translation type="unfinished">Chế độ im đang đặt thành Im lặng.</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="125"/>
+        <source>Critical Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="129"/>
+        <source>No Notifications</source>
+        <translation type="unfinished">Không có thông báo</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="133"/>
+        <source>Mute</source>
+        <translation type="unfinished">Im lặng</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="137"/>
+        <source>Sound</source>
+        <translation type="unfinished">Không im</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="144"/>
+        <source>Keyboard Layout</source>
+        <translation type="unfinished">Bố cục bàn phím</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="144"/>
+        <source>Keyboard Layout set to %1</source>
+        <translation type="unfinished">Bố cục bàn phím được đặt thành %1</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="159"/>
+        <location filename="../hotkeyhud.cpp" line="174"/>
+        <source>Keyboard Brightness</source>
+        <translation type="unfinished">Độ sáng Bàn phím</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="182"/>
+        <source>Eject</source>
+        <translation type="unfinished">Trục xuất</translation>
+    </message>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="182"/>
+        <source>Attempting to eject disc...</source>
+        <translation type="unfinished">Cố gắng trục xuất đĩa...</translation>
     </message>
 </context>
 <context>
@@ -1588,78 +1648,78 @@ Tập tin này có thể giữ lại:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="567"/>
-        <location filename="../mainwindow.cpp" line="353"/>
+        <location filename="../mainwindow.cpp" line="354"/>
         <source>Quiet Mode</source>
         <translation>Chế độ im</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="643"/>
+        <location filename="../mainwindow.cpp" line="652"/>
         <source>Desktop %1</source>
         <translation>Màn hình %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="473"/>
+        <location filename="../mainwindow.cpp" line="482"/>
         <source>For %1</source>
         <translation>Cho %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="67"/>
+        <location filename="../mainwindow.cpp" line="68"/>
         <source>Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="401"/>
+        <location filename="../mainwindow.cpp" line="402"/>
         <source>Recording Screen</source>
         <translation>Đang quay phim màn hình</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="407"/>
+        <location filename="../mainwindow.cpp" line="408"/>
         <source>Processing Screen Recording...</source>
         <translation>Đang xử lý phim màn hình...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="474"/>
+        <location filename="../mainwindow.cpp" line="483"/>
         <source>Close</source>
         <translation>Đóng</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1937"/>
+        <location filename="../mainwindow.cpp" line="1946"/>
         <source>For Bar</source>
         <translation>Cho thanh</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1939"/>
+        <location filename="../mainwindow.cpp" line="1948"/>
         <source>Move to bottom</source>
         <translation>Chuyển xuống</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1944"/>
+        <location filename="../mainwindow.cpp" line="1953"/>
         <source>Move to top</source>
         <translation>Chuyển lên</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1950"/>
+        <location filename="../mainwindow.cpp" line="1959"/>
         <source>Gateway and Bar Settings</source>
         <translation>Cài đặt cửa và thanh</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1955"/>
+        <location filename="../mainwindow.cpp" line="1964"/>
         <source>For System</source>
         <translation>Cho máy</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1956"/>
+        <location filename="../mainwindow.cpp" line="1965"/>
         <source>Open Status Center</source>
         <translation>Mở trạng thái</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1959"/>
+        <location filename="../mainwindow.cpp" line="1968"/>
         <source>Open System Settings</source>
         <translation>Mở cài đặt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1968"/>
+        <location filename="../mainwindow.cpp" line="1977"/>
         <source>Open Gateway</source>
         <translation>Mở Cửa</translation>
     </message>
@@ -1973,69 +2033,6 @@ Tập tin này có thể giữ lại:
     </message>
 </context>
 <context>
-    <name>NativeEventFilter</name>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="327"/>
-        <location filename="../nativeeventfilter.cpp" line="338"/>
-        <location filename="../nativeeventfilter.cpp" line="348"/>
-        <location filename="../nativeeventfilter.cpp" line="357"/>
-        <source>Volume</source>
-        <translation>Âm lượng</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="327"/>
-        <location filename="../nativeeventfilter.cpp" line="348"/>
-        <source>Quiet Mode is set to Mute.</source>
-        <translation>Chế độ im đang đặt thành Im lặng.</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="364"/>
-        <source>Critical Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="368"/>
-        <source>No Notifications</source>
-        <translation>Chặn thông báo</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="372"/>
-        <source>Mute</source>
-        <translation>Im lặng</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="376"/>
-        <source>Sound</source>
-        <translation>Không im</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="384"/>
-        <location filename="../nativeeventfilter.cpp" line="390"/>
-        <source>Keyboard Brightness</source>
-        <translation>Độ sáng Bàn phím</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="406"/>
-        <source>Eject</source>
-        <translation>Trục xuất</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="406"/>
-        <source>Attempting to eject disc...</source>
-        <translation>Cố gắng trục xuất đĩa...</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="484"/>
-        <source>Keyboard Layout</source>
-        <translation>Bố cục bàn phím</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="484"/>
-        <source>Keyboard Layout set to %1</source>
-        <translation>Bố cục bàn phím được đặt thành %1</translation>
-    </message>
-</context>
-<context>
     <name>NewMedia</name>
     <message>
         <location filename="../newmedia.ui" line="25"/>
@@ -2216,30 +2213,30 @@ Tập tin này có thể giữ lại:
 <context>
     <name>ScreenRecorder</name>
     <message>
-        <location filename="../screenrecorder.cpp" line="36"/>
-        <location filename="../screenrecorder.cpp" line="61"/>
-        <location filename="../screenrecorder.cpp" line="96"/>
-        <location filename="../screenrecorder.cpp" line="108"/>
+        <location filename="../screenrecorder.cpp" line="49"/>
+        <location filename="../screenrecorder.cpp" line="74"/>
+        <location filename="../screenrecorder.cpp" line="109"/>
+        <location filename="../screenrecorder.cpp" line="121"/>
         <source>Screen Recorder</source>
         <translation>Đồ quay phim màn hình</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="36"/>
+        <location filename="../screenrecorder.cpp" line="49"/>
         <source>To record your screen, you&apos;ll need to install ffmpeg</source>
         <translation>Để quay phim màn hình, bạn cần cài đặt ffmpeg</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="61"/>
+        <location filename="../screenrecorder.cpp" line="74"/>
         <source>Couldn&apos;t start screen recording</source>
         <translation>Không bắt đầu quay phim màn hình được</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="96"/>
+        <location filename="../screenrecorder.cpp" line="109"/>
         <source>Screen Recording saved in Recordings folder</source>
         <translation>Phim màn hình đã lưu trong thư mục Recordings</translation>
     </message>
     <message>
-        <location filename="../screenrecorder.cpp" line="108"/>
+        <location filename="../screenrecorder.cpp" line="121"/>
         <source>Screen Recording failed</source>
         <translation>Phim màn hình thất bại</translation>
     </message>

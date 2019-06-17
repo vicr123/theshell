@@ -23,6 +23,12 @@
 
 #include <math.h>
 #include <globalkeyboard/globalkeyboardengine.h>
+#include "audiomanager.h"
+#include <soundengine.h>
+#include "mainwindow.h"
+
+extern AudioManager* AudioMan;
+extern MainWindow* MainWin;
 
 struct HotkeyHudPrivate {
     HotkeyHud* instance = nullptr;
@@ -76,6 +82,104 @@ HotkeyHud::HotkeyHud(QWidget *parent) :
                 connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
 
                 HotkeyHud::show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
+            });
+        } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::VolumeUp)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                //Increase volume
+                if (AudioMan->QuietMode() == AudioManager::mute) {
+                    HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
+                } else {
+                    int volume = AudioMan->MasterVolume();
+                    volume += 5;
+                    if (volume < 0) volume = 0;
+                    AudioMan->changeVolume(5);
+
+                    //Play the audio change sound
+                    SoundEngine::play(SoundEngine::Volume);
+
+                    HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
+                }
+            });
+        } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::VolumeDown)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                //Decrease volume
+                if (AudioMan->QuietMode() == AudioManager::mute) {
+                    HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
+                } else {
+                    int volume = AudioMan->MasterVolume();
+                    volume -= 5;
+                    if (volume < 0) volume = 0;
+                    AudioMan->changeVolume(-5);
+
+                    //Play the audio change sound
+                    SoundEngine::play(SoundEngine::Volume);
+
+                    HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
+                }
+            });
+        } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::QuietModeToggle)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                switch (AudioMan->QuietMode()) {
+                    case AudioManager::none:
+                        AudioMan->setQuietMode(AudioManager::critical);
+                        HotkeyHud::show(QIcon::fromTheme("quiet-mode-critical-only"), tr("Critical Only"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                        break;
+                    case AudioManager::critical:
+                        AudioMan->setQuietMode(AudioManager::notifications);
+                        HotkeyHud::show(QIcon::fromTheme("quiet-mode"), tr("No Notifications"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                        break;
+                    case AudioManager::notifications:
+                        AudioMan->setQuietMode(AudioManager::mute);
+                        HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Mute"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                        break;
+                    case AudioManager::mute:
+                        AudioMan->setQuietMode(AudioManager::none);
+                        HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Sound"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                        break;
+                }
+            });
+        } else if (name == GlobalKeyboardEngine::NextKeyboardLayout) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                QString newKeyboardLayout = MainWin->getInfoPane()->setNextKeyboardLayout();
+                HotkeyHud::show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout), 5000);
+            });
+        } else if (name == GlobalKeyboardEngine::KeyboardBrightnessUp) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                int kbdBrightness = -1, maxKbdBrightness = -1;
+                QDBusInterface keyboardInterface("org.freedesktop.UPower", "/org/freedesktop/UPower/KbdBacklight", "org.freedesktop.UPower.KbdBacklight", QDBusConnection::systemBus());
+                if (keyboardInterface.isValid()) {
+                    kbdBrightness = keyboardInterface.call("GetBrightness").arguments().first().toInt();
+                    maxKbdBrightness = keyboardInterface.call("GetMaxBrightness").arguments().first().toInt();
+                }
+
+                kbdBrightness += (((float) maxKbdBrightness / 100) * 5);
+                if (kbdBrightness > maxKbdBrightness) kbdBrightness = maxKbdBrightness;
+                keyboardInterface.call("SetBrightness", kbdBrightness);
+
+                HotkeyHud::show(QIcon::fromTheme("keyboard-brightness"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
+            });
+        } else if (name == GlobalKeyboardEngine::KeyboardBrightnessDown) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                int kbdBrightness = -1, maxKbdBrightness = -1;
+                QDBusInterface keyboardInterface("org.freedesktop.UPower", "/org/freedesktop/UPower/KbdBacklight", "org.freedesktop.UPower.KbdBacklight", QDBusConnection::systemBus());
+                if (keyboardInterface.isValid()) {
+                    kbdBrightness = keyboardInterface.call("GetBrightness").arguments().first().toInt();
+                    maxKbdBrightness = keyboardInterface.call("GetMaxBrightness").arguments().first().toInt();
+                }
+
+                kbdBrightness -= (((float) maxKbdBrightness / 100) * 5);
+                if (kbdBrightness < 0) kbdBrightness = 0;
+                keyboardInterface.call("SetBrightness", kbdBrightness);
+
+                HotkeyHud::show(QIcon::fromTheme("keyboard-brightness"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
+            });
+        } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::Eject)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                QProcess* eject = new QProcess(this);
+                eject->start("eject");
+                connect(eject, SIGNAL(finished(int)), eject, SLOT(deleteLater()));
+
+                HotkeyHud::show(QIcon::fromTheme("media-eject"), tr("Eject"), tr("Attempting to eject disc..."));
             });
         }
     });
