@@ -604,7 +604,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2340"/>
         <source>Hibernate</source>
-        <translation type="unfinished">Ruhezustand</translation>
+        <translation>Ruhezustand</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2425"/>
@@ -1697,7 +1697,7 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
     <message>
         <location filename="../menu.ui" line="307"/>
         <source>File Bug</source>
-        <translation type="unfinished">Dateifehler</translation>
+        <translation>Dateifehler</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="324"/>
@@ -2192,7 +2192,7 @@ bereit, gespeichert zu werden = ready to be saved</translatorcomment>
     <message>
         <location filename="../rundialog.ui" line="50"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../rundialog.ui" line="81"/>
