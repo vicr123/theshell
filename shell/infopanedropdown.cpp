@@ -37,6 +37,7 @@
 #include <QShortcut>
 #include <QMenu>
 #include <QAction>
+#include <globalkeyboard/globalkeyboardengine.h>
 #include "location/locationservices.h"
 
 extern void playSound(QUrl, bool = false);

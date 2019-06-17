@@ -138,12 +138,12 @@ HotkeyHud::HotkeyHud(QWidget *parent) :
                         break;
                 }
             });
-        } else if (name == GlobalKeyboardEngine::NextKeyboardLayout) {
+        } else if (name ==  GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::NextKeyboardLayout)) {
             connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
                 QString newKeyboardLayout = MainWin->getInfoPane()->setNextKeyboardLayout();
                 HotkeyHud::show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout), 5000);
             });
-        } else if (name == GlobalKeyboardEngine::KeyboardBrightnessUp) {
+        } else if (name ==  GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::KeyboardBrightnessUp)) {
             connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
                 int kbdBrightness = -1, maxKbdBrightness = -1;
                 QDBusInterface keyboardInterface("org.freedesktop.UPower", "/org/freedesktop/UPower/KbdBacklight", "org.freedesktop.UPower.KbdBacklight", QDBusConnection::systemBus());
@@ -158,7 +158,7 @@ HotkeyHud::HotkeyHud(QWidget *parent) :
 
                 HotkeyHud::show(QIcon::fromTheme("keyboard-brightness"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
             });
-        } else if (name == GlobalKeyboardEngine::KeyboardBrightnessDown) {
+        } else if (name ==  GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::KeyboardBrightnessDown)) {
             connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
                 int kbdBrightness = -1, maxKbdBrightness = -1;
                 QDBusInterface keyboardInterface("org.freedesktop.UPower", "/org/freedesktop/UPower/KbdBacklight", "org.freedesktop.UPower.KbdBacklight", QDBusConnection::systemBus());
