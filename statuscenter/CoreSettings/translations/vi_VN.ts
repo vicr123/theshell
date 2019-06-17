@@ -59,11 +59,16 @@
     </message>
     <message>
         <location filename="../Input/inputpane.ui" line="139"/>
+        <source>Shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/inputpane.ui" line="147"/>
         <source>Mouse and Touchpad</source>
         <translation>Chuột và bàn di chuột</translation>
     </message>
     <message>
-        <location filename="../Input/inputpane.ui" line="148"/>
+        <location filename="../Input/inputpane.ui" line="156"/>
         <source>Gestures</source>
         <translation>Cử chỉ</translation>
     </message>
@@ -246,6 +251,79 @@
         <location filename="../Input/mousepane.cpp" line="337"/>
         <source>%1 Double Click</source>
         <translation>%1 Nhấn Đúp</translation>
+    </message>
+</context>
+<context>
+    <name>ShortcutEdit</name>
+    <message>
+        <location filename="../Input/shortcutedit.cpp" line="62"/>
+        <source>For Shortcut %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutedit.cpp" line="63"/>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutedit.cpp" line="67"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutedit.cpp" line="92"/>
+        <location filename="../Input/shortcutedit.cpp" line="96"/>
+        <source>No Shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutedit.cpp" line="124"/>
+        <location filename="../Input/shortcutedit.cpp" line="128"/>
+        <source>Type Shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShortcutPane</name>
+    <message>
+        <location filename="../Input/shortcutpane.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.ui" line="40"/>
+        <source>Shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.ui" line="96"/>
+        <source>System Shortcuts work everywhere on the system. They&apos;ll be paused while you&apos;re editing a shortcut here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="60"/>
+        <source>Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="61"/>
+        <source>Brightness Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="61"/>
+        <source>Adjust the brightness of your screen up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="62"/>
+        <source>Brightness Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Input/shortcutpane.cpp" line="62"/>
+        <source>Adjust the brightness of your screen down</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -412,6 +412,15 @@
     </message>
 </context>
 <context>
+    <name>HotkeyHud</name>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="61"/>
+        <location filename="../hotkeyhud.cpp" line="78"/>
+        <source>Brightness</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InfoPaneDropdown</name>
     <message>
         <location filename="../infopanedropdown.ui" line="130"/>
@@ -1970,70 +1979,62 @@ If you say yeah, we&apos;re gonna keep the following from them:
 <context>
     <name>NativeEventFilter</name>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="349"/>
-        <location filename="../nativeeventfilter.cpp" line="358"/>
-        <location filename="../nativeeventfilter.cpp" line="369"/>
-        <location filename="../nativeeventfilter.cpp" line="397"/>
-        <source>Brightness</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="373"/>
-        <location filename="../nativeeventfilter.cpp" line="384"/>
-        <location filename="../nativeeventfilter.cpp" line="405"/>
-        <location filename="../nativeeventfilter.cpp" line="414"/>
+        <location filename="../nativeeventfilter.cpp" line="327"/>
+        <location filename="../nativeeventfilter.cpp" line="338"/>
+        <location filename="../nativeeventfilter.cpp" line="348"/>
+        <location filename="../nativeeventfilter.cpp" line="357"/>
         <source>Volume</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="373"/>
-        <location filename="../nativeeventfilter.cpp" line="405"/>
+        <location filename="../nativeeventfilter.cpp" line="327"/>
+        <location filename="../nativeeventfilter.cpp" line="348"/>
         <source>Quiet Mode is set to Mute.</source>
         <translation>Can ya shut up Mode is set to shut up.</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="421"/>
+        <location filename="../nativeeventfilter.cpp" line="364"/>
         <source>Critical Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="425"/>
+        <location filename="../nativeeventfilter.cpp" line="368"/>
         <source>No Notifications</source>
         <translation>Nah none of those notifs</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="429"/>
+        <location filename="../nativeeventfilter.cpp" line="372"/>
         <source>Mute</source>
         <translation>Shut up</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="433"/>
+        <location filename="../nativeeventfilter.cpp" line="376"/>
         <source>Sound</source>
         <translation>Noise</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="441"/>
-        <location filename="../nativeeventfilter.cpp" line="447"/>
+        <location filename="../nativeeventfilter.cpp" line="384"/>
+        <location filename="../nativeeventfilter.cpp" line="390"/>
         <source>Keyboard Brightness</source>
         <translation>Lighten up ya keyboard a bit</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="463"/>
+        <location filename="../nativeeventfilter.cpp" line="406"/>
         <source>Eject</source>
         <translation>Get out</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="463"/>
+        <location filename="../nativeeventfilter.cpp" line="406"/>
         <source>Attempting to eject disc...</source>
         <translation>Give me a sec I&apos;m trying to get it out...</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="541"/>
+        <location filename="../nativeeventfilter.cpp" line="484"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="541"/>
+        <location filename="../nativeeventfilter.cpp" line="484"/>
         <source>Keyboard Layout set to %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2513,32 +2514,32 @@ If you say yeah, we&apos;re gonna keep the following from them:
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="267"/>
+        <location filename="../main.cpp" line="268"/>
         <source>Start in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="268"/>
+        <location filename="../main.cpp" line="269"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="292"/>
+        <location filename="../main.cpp" line="293"/>
         <source>theShell already running</source>
         <translation>theShell&apos;s already running, silly</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="293"/>
+        <location filename="../main.cpp" line="294"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell&apos;s already running which is alright but are you sure you wanna start a new one?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="334"/>
+        <location filename="../main.cpp" line="335"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Couldn&apos;t start the manager of windows</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="335"/>
+        <location filename="../main.cpp" line="336"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

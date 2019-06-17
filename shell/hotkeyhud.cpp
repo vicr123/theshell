@@ -21,13 +21,64 @@
 #include "hotkeyhud.h"
 #include "ui_hotkeyhud.h"
 
-extern float getDPIScaling();
+#include <math.h>
+#include <globalkeyboard/globalkeyboardengine.h>
+
+struct HotkeyHudPrivate {
+    HotkeyHud* instance = nullptr;
+    bool isShowing = false;
+    int value;
+    QTimer* timeout = nullptr;
+};
+
+HotkeyHudPrivate* HotkeyHud::d = new HotkeyHudPrivate();
 
 HotkeyHud::HotkeyHud(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::HotkeyHud)
 {
     ui->setupUi(this);
+
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    this->setAttribute(Qt::WA_ShowWithoutActivating, true);
+
+    connect(GlobalKeyboardEngine::instance(), &GlobalKeyboardEngine::keyShortcutRegistered, this, [=](QString name, GlobalKeyboardKey* key) {
+        if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::BrightnessUp)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                //Get Current Brightness
+                QProcess backlight;
+                backlight.start("xbacklight -get");
+                backlight.waitForFinished();
+                float currentBrightness = ceil(QString(backlight.readAll()).toFloat());
+
+                currentBrightness = currentBrightness + 10;
+                if (currentBrightness > 100) currentBrightness = 100;
+
+                QProcess* backlightAdj = new QProcess(this);
+                backlightAdj->start("xbacklight -set " + QString::number(currentBrightness));
+                connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
+
+                HotkeyHud::show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
+            });
+        } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::BrightnessDown)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                //Get Current Brightness
+                QProcess backlight;
+                backlight.start("xbacklight -get");
+                backlight.waitForFinished();
+                float currentBrightness = ceil(QString(backlight.readAll()).toFloat());
+
+                currentBrightness = currentBrightness - 10;
+                if (currentBrightness < 0) currentBrightness = 0;
+
+                QProcess* backlightAdj = new QProcess(this);
+                backlightAdj->start("xbacklight -set " + QString::number(currentBrightness));
+                connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
+
+                HotkeyHud::show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
+            });
+        }
+    });
 }
 
 HotkeyHud::~HotkeyHud()
@@ -55,7 +106,7 @@ void HotkeyHud::paintEvent(QPaintEvent *event) {
 
     QColor highlightCol = pal.color(QPalette::Window);
     int average = (highlightCol.red() + highlightCol.green() + highlightCol.blue()) / 3;
-    int value = this->value;
+    int value = d->value;
     while (value > 0) {
         if (average < 127) { //Dark color
             highlightCol = highlightCol.light(150);
@@ -72,74 +123,77 @@ void HotkeyHud::paintEvent(QPaintEvent *event) {
 }
 
 void HotkeyHud::show(int timeout) {
-    this->setFixedHeight(this->sizeHint().height() * getDPIScaling());
-    //this->resize(this->width() * getDPIScaling(), this->height());
+    makeInstance(); //Ensure instance exists
+
+    d->instance->setFixedHeight(SC_DPI(d->instance->sizeHint().height()));
 
     Atom atoms[2];
     atoms[0] = XInternAtom(QX11Info::display(), "_KDE_NET_WM_WINDOW_TYPE_ON_SCREEN_DISPLAY", False);
     atoms[1] = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NOTIFICATION", False);
-    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
+    int retval = XChangeProperty(QX11Info::display(), d->instance->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
                      XA_ATOM, 32, PropModeReplace, (unsigned char*) &atoms, 2); //Change Window Type
 
     unsigned long desktop = 0xFFFFFFFF;
-    retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
+    retval = XChangeProperty(QX11Info::display(), d->instance->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
-    QDialog::show();
+    d->instance->QDialog::show();
 
-    if (!isShowing) {
+    if (!d->isShowing) {
         QRect screenGeometry = QApplication::desktop()->screenGeometry();
-        this->setGeometry(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height());
+        d->instance->setGeometry(screenGeometry.x(), screenGeometry.y() - d->instance->height(), screenGeometry.width(), d->instance->height());
 
-        tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
-        anim->setStartValue(this->geometry());
-        anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), this->height()));
+        tPropertyAnimation *anim = new tPropertyAnimation(d->instance, "geometry");
+        anim->setStartValue(d->instance->geometry());
+        anim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width(), d->instance->height()));
         anim->setDuration(100);
         anim->setEasingCurve(QEasingCurve::OutCubic);
         anim->start();
-        connect(anim, &tPropertyAnimation::finished, [=](){
-            this->repaint();
+        connect(anim, &tPropertyAnimation::finished, d->instance, [=](){
+            d->instance->repaint();
         });
     }
 
-    if (this->timeout == nullptr) {
-        this->timeout = new QTimer();
-        this->timeout->setSingleShot(true);
-        this->timeout->setInterval(timeout);
-        connect(this->timeout, SIGNAL(timeout()), this, SLOT(Timeout()));
+    if (d->timeout == nullptr) {
+        d->timeout = new QTimer();
+        d->timeout->setSingleShot(true);
+        d->timeout->setInterval(timeout);
+        connect(d->timeout, &QTimer::timeout, [=] {
+            d->timeout->deleteLater();
+            d->timeout = nullptr;
+            d->instance->close();
+        });
 
     }
-    this->timeout->start();
+    d->timeout->start();
 
-    isShowing = true;
+    d->isShowing = true;
 }
 
 void HotkeyHud::show(QIcon icon, QString control, int value) {
-    ui->icon->setPixmap(icon.pixmap(32));
-    ui->control->setText(control);
-    ui->value->setText(QString::number(value) + "%");
-    ui->explanation->setText("");
-    ui->value->setVisible(true);
-    this->value = value;
-    this->show();
-    this->repaint();
+    makeInstance(); //Ensure instance exists
+
+    d->instance->ui->icon->setPixmap(icon.pixmap(32));
+    d->instance->ui->control->setText(control);
+    d->instance->ui->value->setText(QString::number(value) + "%");
+    d->instance->ui->explanation->setText("");
+    d->instance->ui->value->setVisible(true);
+    d->value = value;
+    d->instance->show();
+    d->instance->repaint();
 }
 
 void HotkeyHud::show(QIcon icon, QString control, QString explanation, int timeout) {
-    ui->icon->setPixmap(icon.pixmap(32));
-    ui->control->setText(control);
-    ui->explanation->setText(explanation);
-    ui->value->setVisible(false);
-    ui->explanation->setVisible(true);
-    this->value = 0;
-    this->show(timeout);
-    this->repaint();
-}
+    makeInstance(); //Ensure instance exists
 
-void HotkeyHud::Timeout() {
-    timeout->deleteLater();
-    timeout = nullptr;
-    this->close();
+    d->instance->ui->icon->setPixmap(icon.pixmap(32));
+    d->instance->ui->control->setText(control);
+    d->instance->ui->explanation->setText(explanation);
+    d->instance->ui->value->setVisible(false);
+    d->instance->ui->explanation->setVisible(true);
+    d->value = 0;
+    d->instance->show(timeout);
+    d->instance->repaint();
 }
 
 void HotkeyHud::close() {
@@ -151,8 +205,12 @@ void HotkeyHud::close() {
     anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::OutCubic);
     connect(anim, &tPropertyAnimation::finished, [=]() {
-        QDialog::close();
-        isShowing = false;
+        d->instance->QDialog::close();
+        d->isShowing = false;
     });
     anim->start();
+}
+
+void HotkeyHud::makeInstance() {
+    if (d->instance == nullptr) d->instance = new HotkeyHud();
 }

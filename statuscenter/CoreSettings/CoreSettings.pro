@@ -12,6 +12,11 @@ CONFIG += plugin
 
 INCLUDEPATH += ../../shell/statuscenter/
 
+LIBS += -L$$OUT_PWD/../../theshell-lib/
+
+INCLUDEPATH += $$PWD/../../theshell-lib
+DEPENDPATH += $$PWD/../../theshell-lib
+
 unix {
     CONFIG += link_pkgconfig
     PKGCONFIG += x11 xi xorg-libinput
@@ -81,6 +86,8 @@ unix {
 }
 
 HEADERS += \
+    Input/shortcutedit.h \
+    Input/shortcutpane.h \
     plugin.h \
     Input/inputpane.h \
     Input/keyboardpane.h \
@@ -89,6 +96,8 @@ HEADERS += \
     Input/mousepanetester.h
 
 SOURCES += \
+    Input/shortcutedit.cpp \
+    Input/shortcutpane.cpp \
     plugin.cpp \
     Input/inputpane.cpp \
     Input/keyboardpane.cpp \
@@ -103,7 +112,8 @@ FORMS += \
     Input/inputpane.ui \
     Input/keyboardpane.ui \
     Input/gesturepane.ui \
-    Input/mousepane.ui
+    Input/mousepane.ui \
+    Input/shortcutpane.ui
 
 RESOURCES += \
     coresettings_resources.qrc

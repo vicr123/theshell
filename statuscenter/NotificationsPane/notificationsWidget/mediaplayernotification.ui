@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>552</width>
-    <height>128</height>
+    <height>130</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,7 +56,8 @@
         <string notr="true"/>
        </property>
        <property name="icon">
-        <iconset theme="window-close"/>
+        <iconset theme="window-close">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="flat">
         <bool>true</bool>
@@ -118,7 +119,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="media-skip-backward"/>
+        <iconset theme="media-skip-backward">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="flat">
         <bool>true</bool>
@@ -131,7 +133,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="media-playback-start"/>
+        <iconset theme="media-playback-start">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -150,7 +153,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="media-skip-forward"/>
+        <iconset theme="media-skip-forward">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="flat">
         <bool>true</bool>

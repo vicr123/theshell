@@ -414,6 +414,15 @@
     </message>
 </context>
 <context>
+    <name>HotkeyHud</name>
+    <message>
+        <location filename="../hotkeyhud.cpp" line="61"/>
+        <location filename="../hotkeyhud.cpp" line="78"/>
+        <source>Brightness</source>
+        <translation type="unfinished">Brillo</translation>
+    </message>
+</context>
+<context>
     <name>InfoPaneDropdown</name>
     <message>
         <location filename="../infopanedropdown.ui" line="130"/>
@@ -1964,70 +1973,62 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>NativeEventFilter</name>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="349"/>
-        <location filename="../nativeeventfilter.cpp" line="358"/>
-        <location filename="../nativeeventfilter.cpp" line="369"/>
-        <location filename="../nativeeventfilter.cpp" line="397"/>
-        <source>Brightness</source>
-        <translation>Brillo</translation>
-    </message>
-    <message>
-        <location filename="../nativeeventfilter.cpp" line="373"/>
-        <location filename="../nativeeventfilter.cpp" line="384"/>
-        <location filename="../nativeeventfilter.cpp" line="405"/>
-        <location filename="../nativeeventfilter.cpp" line="414"/>
+        <location filename="../nativeeventfilter.cpp" line="327"/>
+        <location filename="../nativeeventfilter.cpp" line="338"/>
+        <location filename="../nativeeventfilter.cpp" line="348"/>
+        <location filename="../nativeeventfilter.cpp" line="357"/>
         <source>Volume</source>
         <translation>Volumen</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="373"/>
-        <location filename="../nativeeventfilter.cpp" line="405"/>
+        <location filename="../nativeeventfilter.cpp" line="327"/>
+        <location filename="../nativeeventfilter.cpp" line="348"/>
         <source>Quiet Mode is set to Mute.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="421"/>
+        <location filename="../nativeeventfilter.cpp" line="364"/>
         <source>Critical Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="425"/>
+        <location filename="../nativeeventfilter.cpp" line="368"/>
         <source>No Notifications</source>
         <translation type="unfinished">No hay Notificaciones</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="429"/>
+        <location filename="../nativeeventfilter.cpp" line="372"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="433"/>
+        <location filename="../nativeeventfilter.cpp" line="376"/>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="441"/>
-        <location filename="../nativeeventfilter.cpp" line="447"/>
+        <location filename="../nativeeventfilter.cpp" line="384"/>
+        <location filename="../nativeeventfilter.cpp" line="390"/>
         <source>Keyboard Brightness</source>
         <translation>Brillo del teclado</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="463"/>
+        <location filename="../nativeeventfilter.cpp" line="406"/>
         <source>Eject</source>
         <translation>Ejecutar</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="463"/>
+        <location filename="../nativeeventfilter.cpp" line="406"/>
         <source>Attempting to eject disc...</source>
         <translation>Intentando ejecutar disco...</translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="541"/>
+        <location filename="../nativeeventfilter.cpp" line="484"/>
         <source>Keyboard Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../nativeeventfilter.cpp" line="541"/>
+        <location filename="../nativeeventfilter.cpp" line="484"/>
         <source>Keyboard Layout set to %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2506,32 +2507,32 @@ Items that will be kept if you choose to keep files:
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="267"/>
+        <location filename="../main.cpp" line="268"/>
         <source>Start in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="268"/>
+        <location filename="../main.cpp" line="269"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="292"/>
+        <location filename="../main.cpp" line="293"/>
         <source>theShell already running</source>
         <translation>theShell ya esta iniciado</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="293"/>
+        <location filename="../main.cpp" line="294"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell parece ya estar iniciado. Deseas iniciar theShell de todas maneras?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="334"/>
+        <location filename="../main.cpp" line="335"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Gestor de ventanas no pudo iniciar</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="335"/>
+        <location filename="../main.cpp" line="336"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

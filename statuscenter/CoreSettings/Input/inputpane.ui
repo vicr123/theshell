@@ -136,6 +136,14 @@
         </item>
         <item>
          <property name="text">
+          <string>Shortcuts</string>
+         </property>
+         <property name="icon">
+          <iconset theme="preferences-desktop-shortcuts"/>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Mouse and Touchpad</string>
          </property>
          <property name="icon">
@@ -163,6 +171,7 @@
       <number>1</number>
      </property>
      <widget class="KeyboardPane" name="keyboardPane"/>
+     <widget class="ShortcutPane" name="shortcutsPane"/>
      <widget class="MousePane" name="mousePane"/>
      <widget class="GesturePane" name="gesturePane"/>
     </widget>
@@ -192,6 +201,12 @@
    <class>MousePane</class>
    <extends>QWidget</extends>
    <header>Input/mousepane.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ShortcutPane</class>
+   <extends>QWidget</extends>
+   <header>Input/shortcutpane.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -104,7 +104,6 @@ struct NativeEventFilterPrivate {
     };
 
     QTime lastPress;
-    HotkeyHud* Hotkeys;
 
     bool isEndSessionBoxShowing = false;
     bool ignoreSuper = false;
@@ -127,19 +126,12 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
 {
     d = new NativeEventFilterPrivate();
 
-    //Create the Hotkey window and set appropriate flags
-    d->Hotkeys = new HotkeyHud();
-    d->Hotkeys->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    d->Hotkeys->setAttribute(Qt::WA_ShowWithoutActivating, true);
-
     d->powerButtonTimer = new QTimer();
     d->powerButtonTimer->setInterval(500);
     d->powerButtonTimer->setSingleShot(true);
     connect(d->powerButtonTimer, SIGNAL(timeout()), this, SLOT(handlePowerButton()));
 
     //Capture required keys
-    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessUp), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
-    XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessDown), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessUp), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessDown), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
     XGrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume), AnyModifier, RootWindow(QX11Info::display(), 0), true, GrabModeAsync, GrabModeAsync);
@@ -209,8 +201,6 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent)
 }
 
 NativeEventFilter::~NativeEventFilter() {
-    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessUp), AnyModifier, QX11Info::appRootWindow());
-    XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessDown), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessUp), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessDown), AnyModifier, QX11Info::appRootWindow());
     XUngrabKey(QX11Info::display(), XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume), AnyModifier, QX11Info::appRootWindow());
@@ -321,13 +311,6 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
             if (d->lastPress.restart() > 100) {
                 xcb_key_release_event_t* button = static_cast<xcb_key_release_event_t*>(message);
 
-                //Get Current Brightness
-                QProcess* backlight = new QProcess(this);
-                backlight->start("xbacklight -get");
-                backlight->waitForFinished();
-                float currentBrightness = ceil(QString(backlight->readAll()).toFloat());
-                delete backlight;
-
                 //Get Current Volume
                 int volume = AudioMan->MasterVolume();
 
@@ -338,39 +321,10 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     maxKbdBrightness = keyboardInterface.call("GetMaxBrightness").arguments().first().toInt();
                 }
 
-                if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessUp)) { //Increase brightness by 10%
-                    currentBrightness = currentBrightness + 10;
-                    if (currentBrightness > 100) currentBrightness = 100;
-
-                    QProcess* backlightAdj = new QProcess(this);
-                    backlightAdj->start("xbacklight -set " + QString::number(currentBrightness));
-                    connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
-
-                    d->Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_MonBrightnessDown)) { //Decrease brightness by 10%
-                    currentBrightness = currentBrightness - 10;
-                    if (currentBrightness < 0) currentBrightness = 0;
-
-                    QProcess* backlightAdj = new QProcess(this);
-                    backlightAdj->start("xbacklight -set " + QString::number(currentBrightness));
-                    connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
-
-                    d->Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
-                } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioRaiseVolume)) {
-                    if (button->state & Mod4Mask) {
-                        //Increase brightness
-                        currentBrightness = currentBrightness + 10;
-                        if (currentBrightness > 100) currentBrightness = 100;
-
-                        QProcess* backlightAdj = new QProcess(this);
-                        backlightAdj->start("xbacklight -set " + QString::number(currentBrightness));
-                        connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
-
-                        d->Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
-                    } else {
+                if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioRaiseVolume)) {
                         //Increase volume
                         if (AudioMan->QuietMode() == AudioManager::mute) {
-                            d->Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
+                            HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
                         } else {
                                 volume = volume + 5;
                                 if (volume - 5 < 100 && volume > 100) {
@@ -381,28 +335,17 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                                 //Play the audio change sound
                                 SoundEngine::play(SoundEngine::Volume);
 
-                                d->Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
+                                HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
                         }
-                    }
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioLowerVolume)) { //Decrease Volume by 5%
-                    if (button->state & Mod4Mask) {
-                        //Decrease brightness
-                        currentBrightness = currentBrightness - 10;
-                        if (currentBrightness < 0) currentBrightness = 0;
-
-                        QProcess* backlightAdj = new QProcess(this);
-                        backlightAdj->start("xbacklight -set " + QString::number(currentBrightness));
-                        connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
-
-                        d->Hotkeys->show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
-                    } else if (d->powerPressed) {
+                    if (d->powerPressed) {
                         //Take a screenshot
                         screenshotWindow* screenshot = new screenshotWindow;
                         screenshot->show();
                         d->powerButtonTimer->stop();
                     } else {
                         if (AudioMan->QuietMode() == AudioManager::mute) {
-                            d->Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
+                            HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
                         } else {
                             volume = volume - 5;
                             if (volume < 0) volume = 0;
@@ -411,26 +354,26 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                             //Play the audio change sound
                             SoundEngine::play(SoundEngine::Volume);
 
-                            d->Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
+                            HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
                         }
                     }
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_AudioMute)) { //Toggle Quiet Mode
                     switch (AudioMan->QuietMode()) {
                         case AudioManager::none:
                             AudioMan->setQuietMode(AudioManager::critical);
-                            d->Hotkeys->show(QIcon::fromTheme("quiet-mode-critical-only"), tr("Critical Only"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                            HotkeyHud::show(QIcon::fromTheme("quiet-mode-critical-only"), tr("Critical Only"), AudioMan->getCurrentQuietModeDescription(), 5000);
                             break;
                         case AudioManager::critical:
                             AudioMan->setQuietMode(AudioManager::notifications);
-                            d->Hotkeys->show(QIcon::fromTheme("quiet-mode"), tr("No Notifications"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                            HotkeyHud::show(QIcon::fromTheme("quiet-mode"), tr("No Notifications"), AudioMan->getCurrentQuietModeDescription(), 5000);
                             break;
                         case AudioManager::notifications:
                             AudioMan->setQuietMode(AudioManager::mute);
-                            d->Hotkeys->show(QIcon::fromTheme("audio-volume-muted"), tr("Mute"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                            HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Mute"), AudioMan->getCurrentQuietModeDescription(), 5000);
                             break;
                         case AudioManager::mute:
                             AudioMan->setQuietMode(AudioManager::none);
-                            d->Hotkeys->show(QIcon::fromTheme("audio-volume-high"), tr("Sound"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                            HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Sound"), AudioMan->getCurrentQuietModeDescription(), 5000);
                             break;
                     }
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessUp)) { //Increase keyboard brightness by 5%
@@ -438,13 +381,13 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                     if (kbdBrightness > maxKbdBrightness) kbdBrightness = maxKbdBrightness;
                     keyboardInterface.call("SetBrightness", kbdBrightness);
 
-                    d->Hotkeys->show(QIcon::fromTheme("keyboard-brightness"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
+                    HotkeyHud::show(QIcon::fromTheme("keyboard-brightness"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
                 } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_KbdBrightnessDown)) { //Decrease keyboard brightness by 5%
                     kbdBrightness -= (((float) maxKbdBrightness / 100) * 5);
                     if (kbdBrightness < 0) kbdBrightness = 0;
                     keyboardInterface.call("SetBrightness", kbdBrightness);
 
-                    d->Hotkeys->show(QIcon::fromTheme("keyboard-brightness"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
+                    HotkeyHud::show(QIcon::fromTheme("keyboard-brightness"), tr("Keyboard Brightness"), ((float) kbdBrightness / (float) maxKbdBrightness) * 100);
                 } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff))) {
                     d->powerPressed = true;
                     if (!d->powerButtonTimer->isActive()) {
@@ -460,7 +403,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 eject->start("eject");
                 connect(eject, SIGNAL(finished(int)), eject, SLOT(deleteLater()));
 
-                d->Hotkeys->show(QIcon::fromTheme("media-eject"), tr("Eject"), tr("Attempting to eject disc..."));
+                HotkeyHud::show(QIcon::fromTheme("media-eject"), tr("Eject"), tr("Attempting to eject disc..."));
             } else if ((button->detail == XKeysymToKeycode(QX11Info::display(), XK_P) && (button->state == (Mod4Mask | Mod1Mask))) ||
                        (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Print)) ||
                        (button->detail == XKeysymToKeycode(QX11Info::display(), XF86XK_PowerOff) && button->state == Mod4Mask)) { //Take screenshot
@@ -538,7 +481,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
                 ignoreSuper = true;*/
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Return) && (button->state == Mod4Mask)) {
                 QString newKeyboardLayout = MainWin->getInfoPane()->setNextKeyboardLayout();
-                d->Hotkeys->show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout), 5000);
+                HotkeyHud::show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout), 5000);
                 d->ignoreSuper = true;
             } else if (button->detail == XKeysymToKeycode(QX11Info::display(), XK_Num_Lock) || button->detail == XKeysymToKeycode(QX11Info::display(), XK_Caps_Lock)) {
                 if (d->themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool()) {

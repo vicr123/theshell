@@ -50,35 +50,32 @@ namespace Ui {
 class HotkeyHud;
 }
 
+struct HotkeyHudPrivate;
 class HotkeyHud : public QDialog
 {
     Q_OBJECT
     Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
-public:
-    explicit HotkeyHud(QWidget *parent = 0);
-    ~HotkeyHud();
+    public:
+        ~HotkeyHud();
 
-    void show(QIcon icon, QString control, int value);
-    void show(QIcon icon, QString control, QString explanation, int timeout = 1500);
-    void close();
+        static void show(QIcon icon, QString control, int value);
+        static void show(QIcon icon, QString control, QString explanation, int timeout = 1500);
+        void close();
 
-    void setGeometry(int x, int y, int w, int h);
-    void setGeometry(QRect geometry);
+        void setGeometry(int x, int y, int w, int h);
+        void setGeometry(QRect geometry);
 
-private slots:
-    void Timeout();
+        static void makeInstance();
 
-private:
-    Ui::HotkeyHud *ui;
+    private:
+        explicit HotkeyHud(QWidget *parent = nullptr);
 
-    void paintEvent(QPaintEvent* event);
-    void show(int timeout = 1500);
-    bool isShowing = false;
+        Ui::HotkeyHud *ui;
+        static HotkeyHudPrivate* d;
 
-    int value;
-
-    QTimer* timeout = NULL;
+        void paintEvent(QPaintEvent* event);
+        void show(int timeout = 1500);
 };
 
 #endif // HOTKEYHUD_H

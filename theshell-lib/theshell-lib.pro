@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui multimedia thelib
+QT       += core gui multimedia thelib x11extras
 
 blueprint {
     TARGET = theshell-libb
@@ -29,6 +29,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    globalkeyboard/globalkeyboardengine.cpp \
     mpris/mprisengine.cpp \
     mpris/mprisplayer.cpp \
         notificationspermissionengine.cpp \
@@ -37,6 +38,8 @@ SOURCES += \
     soundengine.cpp
 
 HEADERS += \
+        globalkeyboard/globalkeyboardengine.h \
+        globalkeyboard/keyboardtables.h \
         mpris/mprisengine.h \
         mpris/mprisplayer.h \
         notificationspermissionengine.h \
