@@ -45,6 +45,12 @@ struct Geolocation {
     bool resolved = false;
 };
 
+struct GeoPlace {
+    QString name;
+    QString administrativeName;
+};
+
+struct LocationDaemonPrivate;
 class LocationDaemon : public QObject
 {
         Q_OBJECT
@@ -54,19 +60,17 @@ class LocationDaemon : public QObject
     signals:
 
     public slots:
-        bool startListening();
-        bool stopListening();
-        tPromise<Geolocation>* singleShot();
+        static bool startListening();
+        static bool stopListening();
+        static tPromise<Geolocation>* singleShot();
+        static tPromise<GeoPlace>* reverseGeocode(double latitude, double longitude);
 
     private slots:
         void locationUpdated();
 
     private:
-        QDBusObjectPath geoclueClientPath;
-        QDBusInterface* clientInterface = nullptr;
-        int listeningTimes = 0;
-
-        QMutex listeningMutex;
+        static LocationDaemonPrivate* d;
+        static void makeInstance();
 };
 
 #endif // LOCATIONDAEMON_H

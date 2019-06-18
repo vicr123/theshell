@@ -51,7 +51,6 @@
 #include <libunwind.h>
 #include <cxxabi.h>
 #include <QFile>
-#include "location/locationdaemon.h"
 #include <QDBusMetaType>
 
 MainWindow* MainWin = NULL;
@@ -65,7 +64,6 @@ QDBusServiceWatcher* dbusServiceWatcher = NULL;
 QDBusServiceWatcher* dbusServiceWatcherSystem = NULL;
 UPowerDBus* updbus = NULL;
 DBusSignals* dbusSignals = NULL;
-LocationDaemon* geolocation = nullptr;
 ScreenRecorder* screenRecorder = nullptr;
 bool startSafe = false;
 
@@ -361,7 +359,6 @@ int main(int argc, char *argv[])
     TutorialWin = new TutorialWindow(tutorialDoSettings);
     AudioMan = new AudioManager;
     screenRecorder = new ScreenRecorder;
-    geolocation = new LocationDaemon;
     HotkeyHud::makeInstance();
 
     if (!QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect") && QFile("/usr/lib/kdeconnectd").exists()) {

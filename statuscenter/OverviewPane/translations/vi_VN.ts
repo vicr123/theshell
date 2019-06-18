@@ -4,92 +4,85 @@
 <context>
     <name>Overview</name>
     <message>
-        <location filename="../overview.ui" line="425"/>
+        <location filename="../overview.ui" line="350"/>
+        <source>Weather data sourced from MET Norway. Location data sourced from GeoNames.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../overview.ui" line="405"/>
         <source>Timers</source>
         <translation>Bộ hẹn giờ</translation>
     </message>
     <message>
-        <location filename="../overview.ui" line="451"/>
+        <location filename="../overview.ui" line="431"/>
         <source>Stopwatch</source>
         <translation>Bộ bấm giờ</translation>
     </message>
     <message>
-        <location filename="../overview.ui" line="474"/>
+        <location filename="../overview.ui" line="454"/>
         <source>Reminders</source>
         <translation>Lời nhắc</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="98"/>
+        <location filename="../overview.cpp" line="100"/>
         <source>Hi %1!</source>
         <translation>Xin chào %1!</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="100"/>
+        <location filename="../overview.cpp" line="102"/>
         <source>Good morning, %1!</source>
         <translation>Chào buổi sáng %1!</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="102"/>
+        <location filename="../overview.cpp" line="104"/>
         <source>Good afternoon, %1!</source>
         <translation>Chào buổi trưa %1!</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="104"/>
+        <location filename="../overview.cpp" line="106"/>
         <source>Good evening, %1!</source>
         <translation>Chào buổi tối %1!</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="169"/>
+        <location filename="../overview.cpp" line="172"/>
         <source>Overview</source>
         <translation>Tổng quan</translation>
     </message>
     <message numerus="yes">
-        <location filename="../overview.cpp" line="419"/>
+        <location filename="../overview.cpp" line="414"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
         <translation>
             <numerusform>Vào ngày %1, giờ tiết kiệm ánh sáng ban ngày sẽ %2. Đồng hồ sẽ tự động %3 %n giờ.</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="422"/>
+        <location filename="../overview.cpp" line="417"/>
         <source>end</source>
         <comment>Context: &quot;Daylight Savings Time will end.&quot;</comment>
         <translation>kết thúc</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="422"/>
+        <location filename="../overview.cpp" line="417"/>
         <source>begin</source>
         <comment>Context: &quot;Daylight Savings Time will begin.&quot;</comment>
         <translation>bắt đầu</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="424"/>
+        <location filename="../overview.cpp" line="419"/>
         <source>backwards</source>
         <comment>Context: &quot;The clock will automatically adjust backwards&quot;</comment>
         <translation>quay lại</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="424"/>
+        <location filename="../overview.cpp" line="419"/>
         <source>forwards</source>
         <comment>Context: &quot;The clock will automatically adjust forwards&quot;</comment>
         <translation>đi tiếp</translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="626"/>
-        <location filename="../overview.cpp" line="632"/>
-        <location filename="../overview.cpp" line="639"/>
-        <source>Couldn&apos;t retrieve weather information</source>
-        <translation>Không được tải thông tin thời tiết</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="656"/>
-        <source>%2°%3 in %1 %4.</source>
-        <translation>%2°%3 ở %1 %4.</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="659"/>
-        <source>Expect a high of %1°%2 and a low of %3°%2</source>
-        <translation>Hôm nay nhiệt độ cao là %1°%2 và nhiệt độ thấp là %3°%2</translation>
+        <location filename="../overview.cpp" line="589"/>
+        <source>In %1, it&apos;s %2, with %3. Expect a high temperature of %4 and a low temperature of %5.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -106,22 +99,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overviewsettings.ui" line="87"/>
+        <location filename="../overviewsettings.ui" line="84"/>
         <source>Show weather for current location (coming soon)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overviewsettings.ui" line="109"/>
+        <location filename="../overviewsettings.ui" line="106"/>
         <source>Temperature Unit</source>
         <translation>Đơn vị nhiệt độ</translation>
     </message>
     <message>
-        <location filename="../overviewsettings.ui" line="116"/>
+        <location filename="../overviewsettings.ui" line="113"/>
         <source>Celsius</source>
         <translation>Độ Celsius</translation>
     </message>
     <message>
-        <location filename="../overviewsettings.ui" line="123"/>
+        <location filename="../overviewsettings.ui" line="120"/>
         <source>Fahrenheit</source>
         <translation>Độ Fahrenheit</translation>
     </message>
@@ -298,175 +291,210 @@
     </message>
 </context>
 <context>
-    <name>WeatherCondition</name>
+    <name>WeatherEngine</name>
     <message>
-        <location filename="../overview.cpp" line="674"/>
-        <source>with tornado</source>
-        <translation>với lốc xoáy</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="677"/>
-        <source>with tropical storm</source>
-        <translation>với bão nhiệt đới</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="680"/>
-        <source>with hurricane</source>
-        <translation>với bão</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="683"/>
-        <source>with severe thunderstorms</source>
-        <translation>với giông nặng</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="687"/>
-        <source>with thunderstorms</source>
-        <translation>với giông</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="690"/>
-        <source>with rain and snow</source>
-        <translation>với mưa và tuyết</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="693"/>
-        <source>with rain and sleet</source>
-        <translation>với mưa đá</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="696"/>
-        <source>with snow and sleet</source>
-        <translation>với mưa đá và tuyết</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="699"/>
-        <source>with freezing drizzle</source>
+        <location filename="../weatherengine.cpp" line="39"/>
+        <source>clear skies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="702"/>
-        <source>with a drizzle</source>
+        <location filename="../weatherengine.cpp" line="40"/>
+        <source>light clouds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="705"/>
-        <source>with freezing rain</source>
+        <location filename="../weatherengine.cpp" line="41"/>
+        <source>partial clouds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="709"/>
-        <source>with showers</source>
-        <translation>vòi hoa sen</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="712"/>
-        <source>with snow flurries</source>
+        <location filename="../weatherengine.cpp" line="42"/>
+        <source>clouds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="715"/>
-        <source>with light snow showers</source>
+        <location filename="../weatherengine.cpp" line="43"/>
+        <source>light rain and sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="718"/>
-        <source>with blowing snow</source>
+        <location filename="../weatherengine.cpp" line="44"/>
+        <source>light rain, thunder and sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="721"/>
-        <source>and snowing</source>
-        <translation>với tuyết</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="724"/>
-        <source>with hail</source>
-        <translation>với mưa đá</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="727"/>
-        <source>with sleet</source>
-        <translation>với mưa đá</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="730"/>
-        <source>with dust</source>
+        <location filename="../weatherengine.cpp" line="45"/>
+        <source>sleet and sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="733"/>
-        <source>and foggy</source>
-        <translation>với sương mù</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="736"/>
-        <source>and smoky</source>
-        <translation>với khói</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="739"/>
-        <source>and breezy</source>
-        <translation>với gió nặng</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="742"/>
-        <source>and windy</source>
-        <translation>với gió</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="745"/>
-        <source>and cloudy</source>
-        <translation>với mây</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="749"/>
-        <source>and mostly cloudy</source>
-        <translation>với nhiều mây</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="754"/>
-        <source>and partly cloudy</source>
-        <translation>với mây</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="760"/>
-        <source>and clear</source>
-        <translation>và rõ ràng</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="763"/>
-        <source>with rain and hail</source>
-        <translation>với mưa đá</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="767"/>
-        <source>with isolated thunderstorms</source>
-        <translation>với giông</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="771"/>
-        <source>with scattered thunderstorms</source>
-        <translation>với giông rải rác</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="774"/>
-        <source>with scattered showers</source>
-        <translation>vòi hoa sen rải rác</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="778"/>
-        <source>with heavy snow</source>
-        <translation>với tuyết nặng</translation>
-    </message>
-    <message>
-        <location filename="../overview.cpp" line="781"/>
-        <source>with scattered snow showers</source>
+        <location filename="../weatherengine.cpp" line="46"/>
+        <source>snow and sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="784"/>
-        <source>with snow showers</source>
+        <location filename="../weatherengine.cpp" line="47"/>
+        <source>light rain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="48"/>
+        <source>rain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="49"/>
+        <source>rain and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="50"/>
+        <source>sleet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="51"/>
+        <source>snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="52"/>
+        <source>snow and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="53"/>
+        <source>fog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="54"/>
+        <source>sleet, sun and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="55"/>
+        <source>snow, sun and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="56"/>
+        <source>light rain and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="57"/>
+        <source>sleet and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="58"/>
+        <source>drizzle, thunder and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="59"/>
+        <source>rain, thunder and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="60"/>
+        <source>light sleet, thunder and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="61"/>
+        <source>heavy sleet, thunder and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="62"/>
+        <source>light snow, thunder and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="63"/>
+        <source>heavy snow, thunder and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="64"/>
+        <source>drizzle and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="65"/>
+        <source>light sleet and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="66"/>
+        <source>heavy sleet and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="67"/>
+        <source>light snow and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="68"/>
+        <source>heavy snow and thunder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="69"/>
+        <source>drizzle and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="70"/>
+        <source>rain and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="71"/>
+        <source>light sleet and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="72"/>
+        <source>heavy sleet and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="73"/>
+        <source>light snow and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="74"/>
+        <source>heavy snow and sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="75"/>
+        <source>drizzle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="76"/>
+        <source>light sleet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="77"/>
+        <source>heavy sleet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="78"/>
+        <source>light snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../weatherengine.cpp" line="79"/>
+        <source>heavy snow</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

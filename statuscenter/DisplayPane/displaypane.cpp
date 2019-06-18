@@ -29,6 +29,7 @@
 #include <QJsonObject>
 #include <QTimer>
 #include <QScroller>
+#include <locationdaemon.h>
 
 struct DisplayPanePrivate {
     QSettings settings;
@@ -124,9 +125,7 @@ int DisplayPane::position() {
 }
 
 void DisplayPane::message(QString name, QVariantList args) {
-    if (name == "location") {
-        updateRedshiftTime(args.at(0).toDouble(), args.at(1).toDouble());
-    } else if (name == "switch-registered") {
+    if (name == "switch-registered") {
         if (args.at(1) == "redshift") {
             d->redshiftSwitch = args.at(0).toUInt();
         }
@@ -214,8 +213,9 @@ void DisplayPane::updateRedshiftTime() {
 
     ui->startRedshift->setEnabled(false);
     ui->endRedshift->setEnabled(false);
-    QTimer::singleShot(0, [=] {
-        sendMessage("location", QVariantList() << "theshell-overview");
+
+    LocationDaemon::singleShot()->then([=](Geolocation location) {
+        updateRedshiftTime(location.latitude, location.longitude);
     });
 }
 

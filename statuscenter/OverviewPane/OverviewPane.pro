@@ -4,13 +4,18 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets dbus thelib positioning network multimedia
+QT       += core gui widgets dbus thelib positioning network multimedia xml
 
 TARGET = tsoverview
 TEMPLATE = lib
 CONFIG += plugin
 
 INCLUDEPATH += ../../shell/statuscenter/
+
+LIBS += -L$$OUT_PWD/../../theshell-lib/
+
+INCLUDEPATH += $$PWD/../../theshell-lib
+DEPENDPATH += $$PWD/../../theshell-lib
 
 blueprint {
     DEFINES += "BLUEPRINT"
@@ -86,7 +91,8 @@ HEADERS += \
     Timers/timeritem.h \
     Stopwatch/stopwatchpage.h \
     Reminders/reminderspage.h \
-    Reminders/reminderslistmodel.h
+    Reminders/reminderslistmodel.h \
+    weatherengine.h
 
 SOURCES += \
     plugin.cpp \
@@ -96,7 +102,8 @@ SOURCES += \
     Timers/timeritem.cpp \
     Stopwatch/stopwatchpage.cpp \
     Reminders/reminderspage.cpp \
-    Reminders/reminderslistmodel.cpp
+    Reminders/reminderslistmodel.cpp \
+    weatherengine.cpp
 
 FORMS += \
     overview.ui \

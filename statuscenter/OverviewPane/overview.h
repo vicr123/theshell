@@ -28,6 +28,7 @@
 #include <QDBusObjectPath>
 #include <QNetworkAccessManager>
 #include <QApplication>
+#include "weatherengine.h"
 
 namespace Ui {
     class Overview;
@@ -67,23 +68,6 @@ struct Wind : public BgObject {
     void paint(QPainter *p);
 };
 
-struct WeatherCondition {
-    Q_DECLARE_TR_FUNCTIONS(WeatherCondition)
-
-public:
-    WeatherCondition();
-    WeatherCondition(int code);
-
-    QString explanation;
-    QIcon icon;
-
-    bool isCloudy = false;
-    bool isRainy = false;
-    bool isSnowy = false;
-    bool isWindy = false;
-    bool isNull = true;
-};
-
 class Overview : public QWidget, public StatusCenterPaneObject
 {
         Q_OBJECT
@@ -105,10 +89,6 @@ class Overview : public QWidget, public StatusCenterPaneObject
 
         void updateWeather();
 
-        void updateGeoclueLocation(double latitude, double longitude);
-
-        void setAttribution(int attrib);
-
     private slots:
         void on_timersButton_toggled(bool checked);
 
@@ -125,18 +105,13 @@ class Overview : public QWidget, public StatusCenterPaneObject
         void drawObjects(QPainter* p);
         QTimer *animationTimer, *randomObjectTimer;
 
-        QGeoPositionInfoSource* geolocationSource;
-        QDBusObjectPath geoclueClientPath;
-        QNetworkAccessManager networkMgr;
-        bool weatherAvailable = false;
-
-        WeatherCondition currentWeather;
-        int currentYahooAttrib = 0;
-
         QList<Raindrop*> raindrops;
         QList<Wind*> winds;
         QList<BgObject*> objects;
         QSettings settings;
+
+        WeatherEngine* weatherEngine;
+        WeatherCondition currentCondition;
 
         void changeEvent(QEvent* event);
 

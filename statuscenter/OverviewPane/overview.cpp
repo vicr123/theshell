@@ -47,6 +47,8 @@
 #include "Timers/timerpage.h"
 #include "Stopwatch/stopwatchpage.h"
 #include "Reminders/reminderspage.h"
+#include "weatherengine.h"
+#include <locationdaemon.h>
 
 float getDPIScaling() {
     float currentDPI = QApplication::desktop()->logicalDpiX();
@@ -59,14 +61,14 @@ Overview::Overview(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->weatherEngine = new WeatherEngine();
+
     this->informationalAttributes.lightColor = QColor(0, 150, 0);
     this->informationalAttributes.darkColor = QColor(0, 50, 0);
 
     ui->dstIcon->setPixmap(QIcon::fromTheme("chronometer").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     ui->weatherIcon->setPixmap(QIcon::fromTheme("weather-clear").pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
     ui->overviewLeftPane->installEventFilter(this);
-
-    geolocationSource = QGeoPositionInfoSource::createDefaultSource(this);
 
     QString name = qgetenv("USER");
     if (name.isEmpty()) {
@@ -158,6 +160,7 @@ Overview::Overview(QWidget *parent) :
 
 Overview::~Overview()
 {
+    weatherEngine->deleteLater();
     delete ui;
 }
 
@@ -187,8 +190,6 @@ void Overview::message(QString name, QVariantList args) {
     } else if (name == "hide") {
         animationTimer->stop();
         randomObjectTimer->stop();
-    } else if (name == "location") {
-        updateGeoclueLocation(args.at(0).toDouble(), args.at(1).toDouble());
     }
 }
 
@@ -204,21 +205,18 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
             QColor top, bottom;
             QTime now = QTime::currentTime();
 
-            if (currentWeather.isCloudy) {
+            if (currentCondition.isValid && currentCondition.properties.value(WeatherCondition::isCloudy, false).toBool()) {
                 top = QColor(150, 150, 150);
                 bottom = QColor(100, 100, 100);
                 newTextColor = QColor(Qt::black);
-                setAttribution(2);
             } else if (now.hour() < 4 || now.hour() > 20) { //Assume night
                 top = QColor(0, 36, 85);
                 bottom = QColor(0, 17, 40);
                 newTextColor = QColor(Qt::white);
-                setAttribution(2);
             } else if (now.hour() > 8 && now.hour() < 16) { //Assume day
                 top = QColor(126, 195, 255);
                 bottom = QColor(64, 149, 185);
                 newTextColor = QColor(Qt::black);
-                setAttribution(1);
             } else { //Calculate interpolation
                 int interpolation;
                 //From 4-8 interpolate sunrise
@@ -243,10 +241,8 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
                 bool dark = ((top.red() + top.green() + top.blue()) / 3) < 127;
                 if (dark) {
                     newTextColor = QColor(Qt::white);
-                    setAttribution(2);
                 } else {
                     newTextColor = QColor(Qt::black);
-                    setAttribution(1);
                 }
             }
 
@@ -261,10 +257,9 @@ bool Overview::eventFilter(QObject *watched, QEvent *event) {
             p.drawRect(0, 0, ui->overviewLeftPane->width(), ui->overviewLeftPane->height());
 
             //Draw background objects if neccessary
-            if (currentWeather.isRainy) {
-                drawRaindrops(&p);
-            } else if (currentWeather.isWindy) {
-                drawWind(&p);
+            if (currentCondition.isValid) {
+                if (currentCondition.properties.value(WeatherCondition::isRainy, false).toBool()) drawRaindrops(&p);
+                if (currentCondition.properties.value(WeatherCondition::WindBeaufort, 0).toInt() >= 4) drawWind(&p);
             }
             drawObjects(&p);
 
@@ -562,260 +557,53 @@ void Aircraft::paint(QPainter *p) {
 void Overview::updateWeather() {
     //The Yahoo API has been deprecated.
     ui->weatherPanel->setVisible(false);
-    ui->yahooAttribLabel->setVisible(false);
+    ui->metAttribLabel->setVisible(false);
 
-    /*
     if (settings.value("overview/enableWeather", false).toBool()) {
-        ui->weatherPanel->setVisible(true);
-        ui->yahooAttribLabel->setVisible(true);
-        if (!weatherAvailable) ui->weatherInfo->setText(tr("Waiting for location information..."));
 
-        //Request location from theShell
-        QTimer::singleShot(0, [=] {
-            sendMessage("location", QVariantList() << "theshell-overview");
+        auto errorFunction = [=](QString error) {
+            ui->weatherPanel->setVisible(false);
+            ui->metAttribLabel->setVisible(false);
+            currentCondition = WeatherCondition();
+        };
+        LocationDaemon::singleShot()->then([=](Geolocation location) {
+            if (location.resolved) {
+                weatherEngine->setCoordinates(location.latitude, location.longitude, qRound(location.altitude));
+                weatherEngine->getCurrentWeather()->then([=](WeatherCondition condition) {
+                    weatherEngine->getTodayWeather()->then([=](WeatherCondition todayCondition) {
+                        LocationDaemon::reverseGeocode(location.latitude, location.longitude)->then([=](GeoPlace place) {
+                            QString unit;
+                            double currentTemp = condition.properties.value(WeatherCondition::CurrentTemp).toDouble();
+                            double highTemp = todayCondition.properties.value(WeatherCondition::HighTemp).toDouble();
+                            double lowTemp = todayCondition.properties.value(WeatherCondition::LowTemp).toDouble();
+
+                            if (settings.value("overview/weatherInCelsius", true).toBool()) {
+                                unit = "°C";
+                            } else {
+                                unit = "°F";
+                                currentTemp = currentTemp * 9 / 5 + 32;
+                                highTemp = highTemp * 9 / 5 + 32;
+                                lowTemp = lowTemp * 9 / 5 + 32;
+                            }
+
+                            ui->weatherInfo->setText(tr("In %1, it's %2, with %3. Expect a high temperature of %4 and a low temperature of %5.")
+                                                     .arg(place.name + ", " + place.administrativeName)
+                                                     .arg(QString("%1%2").arg(qRound(currentTemp)).arg(unit))
+                                                     .arg(condition.properties.value(WeatherCondition::Condition).toString())
+                                                     .arg(QString("%1%2").arg(qRound(highTemp)).arg(unit))
+                                                     .arg(QString("%1%2").arg(qRound(lowTemp)).arg(unit)));
+                            ui->weatherPanel->setVisible(true);
+                            ui->metAttribLabel->setVisible(true);
+
+                            currentCondition = condition;
+                        })->error(errorFunction);
+                    })->error(errorFunction);
+                })->error(errorFunction);
+            } else {
+                errorFunction("");
+            }
         });
 
-        //Get Yahoo attribution images
-        if (yahooAttribLight.isNull()) {
-            QNetworkReply* reply = networkMgr.get(QNetworkRequest(QUrl("https://poweredby.yahoo.com/purple.png")));
-            connect(reply, &QNetworkReply::finished, [=] {
-                yahooAttribLight = QPixmap::fromImage(QImage::fromData(reply->readAll()));
-            });
-        }
-
-        if (yahooAttribDark.isNull()) {
-            QNetworkReply* reply = networkMgr.get(QNetworkRequest(QUrl("https://poweredby.yahoo.com/white.png")));
-            connect(reply, &QNetworkReply::finished, [=] {
-                yahooAttribDark = QPixmap::fromImage(QImage::fromData(reply->readAll()));
-            });
-        }
-    } else {
-        ui->weatherPanel->setVisible(false);
-        ui->yahooAttribLabel->setVisible(false);
-    }*/
-}
-
-void Overview::updateGeoclueLocation(double latitude, double longitude) {
-    QString temperatureUnitQuery;
-    if (settings.value("overview/weatherInCelsius", true).toBool()) {
-        temperatureUnitQuery = "c";
-    } else {
-        temperatureUnitQuery = "f";
-    }
-
-    //Request weather data
-    QUrlQuery query;
-    query.addQueryItem("q", QString("SELECT * FROM weather.forecast WHERE woeid IN (SELECT woeid FROM geo.places WHERE text=\"(%1,%2)\") AND u=\"%3\"").arg(latitude).arg(longitude).arg(temperatureUnitQuery));
-    query.addQueryItem("format", "json");
-
-    QUrl url;
-    url.setScheme("https");
-    url.setHost("query.yahooapis.com");
-    url.setPath("/v1/public/yql");
-    //url.setQuery(query.toString(QUrl::FullyEncoded).replace(" ", "%20"));
-    url.setQuery(query);
-
-    QNetworkRequest req(url);
-    req.setHeader(QNetworkRequest::UserAgentHeader, "theShell/1.0");
-
-    QNetworkReply* reply = networkMgr.get(req);
-    connect(reply, &QNetworkReply::finished, [=] {
-        //ui->weatherInfo->setText(tr("Weather"));
-        QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll());
-        if (!jsonDoc.isObject()) {
-            if (!weatherAvailable) ui->weatherInfo->setText(tr("Couldn't retrieve weather information"));
-            return;
-        }
-
-        QJsonObject root = jsonDoc.object();
-        if (!root.contains("query")) {
-            if (!weatherAvailable) ui->weatherInfo->setText(tr("Couldn't retrieve weather information"));
-            return;
-        }
-
-        QJsonObject query = root.value("query").toObject();
-        QJsonObject channel = query.value("results").toObject().value("channel").toObject();
-        if (!channel.contains("item")) {
-            if (!weatherAvailable) ui->weatherInfo->setText(tr("Couldn't retrieve weather information"));
-            return;
-        }
-
-        QJsonObject item = channel.value("item").toObject();
-        QString city, tempUnit, currentTemp, highTemp, lowTemp;
-        tempUnit = channel.value("units").toObject().value("temperature").toString();
-        city = channel.value("location").toObject().value("city").toString();
-        currentTemp = item.value("condition").toObject().value("temp").toString();
-
-        QJsonObject forecast = item.value("forecast").toArray().first().toObject();
-        if (!forecast.isEmpty()) {
-            highTemp = forecast.value("high").toString();
-            lowTemp = forecast.value("low").toString();
-        }
-
-        this->currentWeather = WeatherCondition(item.value("condition").toObject().value("code").toString().toInt());
-        QString weatherText = tr("%2°%3 in %1 %4.").arg(city, currentTemp, tempUnit, currentWeather.explanation);
-
-        if (highTemp != "") {
-            weatherText.append(" ").append(tr("Expect a high of %1°%2 and a low of %3°%2").arg(highTemp, tempUnit, lowTemp));
-        }
-
-        ui->weatherInfo->setText(weatherText);
-        weatherAvailable = true;
-    });
-}
-
-WeatherCondition::WeatherCondition() {
-
-}
-
-WeatherCondition::WeatherCondition(int code) {
-    switch (code) { //From the official Yahoo Weather API Documentation
-        case 0:
-            explanation = tr("with tornado");
-            break;
-        case 1:
-            explanation = tr("with tropical storm");
-            break;
-        case 2:
-            explanation = tr("with hurricane");
-            break;
-        case 3:
-            explanation = tr("with severe thunderstorms");
-            break;
-        case 4:
-        case 45:
-            explanation = tr("with thunderstorms");
-            break;
-        case 5:
-            explanation = tr("with rain and snow");
-            break;
-        case 6:
-            explanation = tr("with rain and sleet");
-            break;
-        case 7:
-            explanation = tr("with snow and sleet");
-            break;
-        case 8:
-            explanation = tr("with freezing drizzle");
-            break;
-        case 9:
-            explanation = tr("with a drizzle");
-            break;
-        case 10:
-            explanation = tr("with freezing rain");
-            break;
-        case 11:
-        case 12:
-            explanation = tr("with showers");
-            break;
-        case 13:
-            explanation = tr("with snow flurries");
-            break;
-        case 14:
-            explanation = tr("with light snow showers");
-            break;
-        case 15:
-            explanation = tr("with blowing snow");
-            break;
-        case 16:
-            explanation = tr("and snowing");
-            break;
-        case 17:
-            explanation = tr("with hail");
-            break;
-        case 18:
-            explanation = tr("with sleet");
-            break;
-        case 19:
-            explanation = tr("with dust");
-            break;
-        case 20:
-            explanation = tr("and foggy");
-            break;
-        case 21:
-            explanation = tr("and smoky");
-            break;
-        case 23:
-            explanation = tr("and breezy");
-            break;
-        case 24:
-            explanation = tr("and windy");
-            break;
-        case 26:
-            explanation = tr("and cloudy");
-            break;
-        case 27:
-        case 28:
-            explanation = tr("and mostly cloudy");
-            break;
-        case 29:
-        case 30:
-        case 44:
-            explanation = tr("and partly cloudy");
-            break;
-        case 31:
-        case 32:
-        case 33:
-        case 34:
-            explanation = tr("and clear");
-            break;
-        case 35:
-            explanation = tr("with rain and hail");
-            break;
-        case 37:
-        case 47:
-            explanation = tr("with isolated thunderstorms");
-            break;
-        case 38:
-        case 39:
-            explanation = tr("with scattered thunderstorms");
-            break;
-        case 40:
-            explanation = tr("with scattered showers");
-            break;
-        case 41:
-        case 43:
-            explanation = tr("with heavy snow");
-            break;
-        case 42:
-            explanation = tr("with scattered snow showers");
-            break;
-        case 46:
-            explanation = tr("with snow showers");
-            break;
-        default:
-            return;
-    }
-
-    int cloudyArray[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-                         20, 21, 22, 27, 28, 35, 37, 38, 39, 40, 41, 42, 43, 45, 46, 47};
-    isCloudy = (std::find(std::begin(cloudyArray), std::end(cloudyArray), code) != std::end(cloudyArray));
-
-    int rainyArray[] = {0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 17, 35, 37, 38, 39, 40, 45, 47};
-    isRainy = (std::find(std::begin(rainyArray), std::end(rainyArray), code) != std::end(rainyArray));
-
-    int snowyArray[] = {5, 7, 14, 15, 16, 41, 42, 43, 46};
-    isSnowy = (std::find(std::begin(snowyArray), std::end(snowyArray), code) != std::end(snowyArray));
-
-    int windyArray[] = {0, 1, 2, 15, 23, 24};
-    isWindy = (std::find(std::begin(windyArray), std::end(windyArray), code) != std::end(windyArray));
-
-    isNull = false;
-}
-
-
-void Overview::setAttribution(int attrib) {
-    if (currentYahooAttrib == attrib) return;
-    if (attrib == 1) {
-        if (!yahooAttribLight.isNull()) {
-            ui->yahooAttribLabel->setPixmap(yahooAttribLight);
-            currentYahooAttrib = 1;
-        }
-    } else {
-        if (!yahooAttribDark.isNull()) {
-            ui->yahooAttribLabel->setPixmap(yahooAttribDark);
-            currentYahooAttrib = 2;
-        }
     }
 }
 

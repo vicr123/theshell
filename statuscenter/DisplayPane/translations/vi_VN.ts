@@ -51,7 +51,7 @@
     <name>DisplayPane</name>
     <message>
         <location filename="../displaypane.ui" line="40"/>
-        <location filename="../displaypane.cpp" line="115"/>
+        <location filename="../displaypane.cpp" line="116"/>
         <source>Display</source>
         <translation>Màn hình</translation>
     </message>
@@ -141,7 +141,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../displaypane.cpp" line="89"/>
+        <location filename="../displaypane.cpp" line="90"/>
         <source>Redshift</source>
         <translation>Redshift</translation>
     </message>

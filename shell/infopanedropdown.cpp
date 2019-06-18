@@ -24,7 +24,6 @@
 
 #include <QScroller>
 #include <tvirtualkeyboard.h>
-#include "location/locationdaemon.h"
 #include <notificationsdbusadaptor.h>
 #include "animatedstackedwidget.h"
 #include "upowerdbus.h"
@@ -39,6 +38,7 @@
 #include <QAction>
 #include <globalkeyboard/globalkeyboardengine.h>
 #include "location/locationservices.h"
+#include <locationdaemon.h>
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
@@ -53,7 +53,6 @@ extern QDBusServiceWatcher* dbusServiceWatcherSystem;
 extern UPowerDBus* updbus;
 extern DBusSignals* dbusSignals;
 extern LocationServices* locationServices;
-extern LocationDaemon* geolocation;
 extern bool startSafe;
 
 #define LOWER_INFOPANE InfoPaneNotOnTopLocker locker(this);
@@ -3036,7 +3035,7 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
             AudioMan->restoreStreams();
         }
     } else if (message == "location") {
-        geolocation->singleShot()->then([=](Geolocation loc) {
+        LocationDaemon::singleShot()->then([=](Geolocation loc) {
             caller->message("location", QVariantList() << loc.latitude << loc.longitude);
         });
     } else if (message == "jobDone") {

@@ -31,6 +31,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     globalkeyboard/globalkeyboardengine.cpp \
     globalkeyboard/shortcutinfodialog.cpp \
+    locationdaemon.cpp \
     mpris/mprisengine.cpp \
     mpris/mprisplayer.cpp \
         notificationspermissionengine.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
         globalkeyboard/globalkeyboardengine.h \
         globalkeyboard/keyboardtables.h \
         globalkeyboard/shortcutinfodialog.h \
+        locationdaemon.h \
         mpris/mprisengine.h \
         mpris/mprisplayer.h \
         notificationspermissionengine.h \

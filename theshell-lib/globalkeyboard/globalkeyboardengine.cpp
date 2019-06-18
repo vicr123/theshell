@@ -265,7 +265,9 @@ QPixmap GlobalKeyboardEngine::getKeyShortcutImage(QKeySequence keySequence, QFon
 }
 
 QPixmap GlobalKeyboardEngine::getKeyIcon(QString key, QFont font, QPalette pal) {
+    //Special Cases
     if (key == "Meta") key = "Super";
+    if (key == "Print") key = "PrtSc";
 
     QPixmap squarePx(SC_DPI_T(QSize(16, 16), QSize));
     squarePx.fill(Qt::transparent);

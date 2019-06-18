@@ -96,7 +96,6 @@ SOURCES += main.cpp\
     location/locationrequestdialog.cpp \
     agent_adaptor.cpp \
     locktypes/mousepassword.cpp \
-    location/locationdaemon.cpp \
     notificationsdbusadaptor.cpp
 
 HEADERS  += mainwindow.h \
@@ -138,7 +137,6 @@ HEADERS  += mainwindow.h \
     locktypes/mousepassword.h \
     statuscenter/statuscenterpane.h \
     statuscenter/statuscenterpaneobject.h \
-    location/locationdaemon.h \
     notificationsdbusadaptor.h
 
 FORMS    += mainwindow.ui \

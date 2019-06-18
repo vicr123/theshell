@@ -80,9 +80,6 @@
      </item>
      <item row="0" column="0">
       <widget class="QCheckBox" name="weatherCheckBox">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="text">
         <string>Show weather for current location (coming soon)</string>
        </property>
