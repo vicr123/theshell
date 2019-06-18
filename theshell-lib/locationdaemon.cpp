@@ -31,7 +31,10 @@ struct LocationDaemonPrivate {
     QDBusInterface* clientInterface = nullptr;
     int listeningTimes = 0;
 
+    QMap<QPair<double, double>, GeoPlace> geocodeCache;
+
     QMutex listeningMutex;
+    QMutex geocodeMutex;
 };
 
 LocationDaemonPrivate* LocationDaemon::d = new LocationDaemonPrivate();
@@ -140,6 +143,15 @@ void LocationDaemon::makeInstance() {
 
 tPromise<GeoPlace>* LocationDaemon::reverseGeocode(double latitude, double longitude) {
     return new tPromise<GeoPlace>([=](QString& error) {
+        QMutexLocker geocodeLocker(&d->geocodeMutex);
+        for (QPair<double, double> coordinates : d->geocodeCache.keys()) {
+            if (coordinates.first - 0.05 < latitude && coordinates.first + 0.05 > latitude && coordinates.second - 0.05 < longitude && coordinates.second + 0.05 > longitude) {
+                //Use this one here, it's close enough
+                return d->geocodeCache.value(coordinates);
+            }
+        }
+        geocodeLocker.unlock();
+
         QSharedPointer<QEventLoop> loop(new QEventLoop());
 
         QNetworkAccessManager mgr;
@@ -175,6 +187,9 @@ tPromise<GeoPlace>* LocationDaemon::reverseGeocode(double latitude, double longi
         GeoPlace place;
         place.name = placeObject.value("name").toString();
         place.administrativeName = placeObject.value("adminName1").toString();
+
+        geocodeLocker.relock();
+        d->geocodeCache.insert(QPair<double, double>(latitude, longitude), place);
         return place;
     });
 }
