@@ -116,12 +116,14 @@ bool GlobalKeyboardEngine::nativeEventFilter(const QByteArray &eventType, void *
             }
 
             if (beginChording) {
-                d->chordingKeys = matchingKeys;
-                d->currentChordNumber = 1;
-                XGrabKeyboard(QX11Info::display(), QX11Info::appRootWindow(), true, GrabModeAsync, GrabModeAsync, CurrentTime);
+                //d->chordingKeys = matchingKeys;
+                //d->currentChordNumber = 1;
+                //XGrabKeyboard(QX11Info::display(), QX11Info::appRootWindow(), true, GrabModeAsync, GrabModeAsync, CurrentTime);
 
                 QKeySequence key = matchingKeys.first()->key();
-                d->shortcutDialog->showChords(QKeySequence(key[0]), matchingKeys, tr("Strike the next key in the chord"));
+                //d->shortcutDialog->showChords(QKeySequence(key[0]), matchingKeys, tr("Strike the next key in the chord"));
+                d->shortcutDialog->showChords(QKeySequence(key[0]), QList<GlobalKeyboardKey*>(), "Chorded shortcuts have been disabled for now");
+                QTimer::singleShot(2000, d->shortcutDialog, &ShortcutInfoDialog::hide);
             } else {
                 if (matchingKeys.count() == 1) {
                     emit matchingKeys.first()->shortcutActivated();
@@ -164,6 +166,7 @@ bool GlobalKeyboardEngine::nativeEventFilter(const QByteArray &eventType, void *
                     //Conflict!
                     XUngrabKeyboard(QX11Info::display(), CurrentTime);
                     d->currentChordNumber = 0;
+                    d->shortcutDialog->hide();
                     return true;
                 }
             }
