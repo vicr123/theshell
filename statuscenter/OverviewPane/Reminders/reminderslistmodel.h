@@ -27,13 +27,14 @@
 #include <QStyledItemDelegate>
 #include <the-libs_global.h>
 #include <QDateTime>
+#include <debuginformationcollector.h>
 
 class RemindersListModel : public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    RemindersListModel(QObject *parent = nullptr);
+    RemindersListModel(QObject *parent = T_QOBJECT_ROOT);
     ~RemindersListModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

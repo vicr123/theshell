@@ -23,6 +23,7 @@
 #include <QObject>
 #include <tpromise.h>
 #include <QIcon>
+#include <debuginformationcollector.h>
 
 struct WeatherCondition {
     QDateTime startTime, endTime;
@@ -48,7 +49,7 @@ class WeatherEngine : public QObject
 {
         Q_OBJECT
     public:
-        explicit WeatherEngine(QObject *parent = nullptr);
+        explicit WeatherEngine(QObject *parent = T_QOBJECT_ROOT);
         ~WeatherEngine();
 
         void setCoordinates(double latitude, double longitude, int altitude);

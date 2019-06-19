@@ -17,39 +17,31 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef SOUNDENGINE_H
-#define SOUNDENGINE_H
+#ifndef DEBUGINFORMATIONCOLLECTOR_H
+#define DEBUGINFORMATIONCOLLECTOR_H
 
 #include <QObject>
-#include <QUrl>
-#include "debuginformationcollector.h"
 
-struct SoundEnginePrivate;
-class SoundEngine : public QObject
+#define T_QOBJECT_ROOT DebugInformationCollector::rootParent()
+
+class QIODevice;
+struct DebugInformationCollectorPrivate;
+class DebugInformationCollector : public QObject
 {
         Q_OBJECT
     public:
-        enum KnownSound {
-            Notification,
-            Volume,
-            Login,
-            Logout,
-            Screenshot
-        };
+        explicit DebugInformationCollector(QObject *parent = nullptr);
 
+        static QObject* rootParent();
+        static void getDebugInformation(QIODevice* data);
     signals:
-        void done();
 
     public slots:
-        static SoundEngine* play(QString soundName, qreal volume = 1);
-        static SoundEngine* play(QUrl path, qreal volume = 1);
-        static SoundEngine* play(KnownSound sound, qreal volume = 1);
 
     private:
-        SoundEnginePrivate* d;
+        static DebugInformationCollectorPrivate* d;
 
-        explicit SoundEngine(QObject *parent = T_QOBJECT_ROOT);
-        static SoundEngine* playKnownSound(QString soundName, QString soundSetting, qreal volume = 1);
+        static void makeInstance();
 };
 
-#endif // SOUNDENGINE_H
+#endif // DEBUGINFORMATIONCOLLECTOR_H

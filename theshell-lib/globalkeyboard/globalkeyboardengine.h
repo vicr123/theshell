@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QAbstractNativeEventFilter>
+#include "debuginformationcollector.h"
 
 struct GlobalKeyboardKeyPrivate;
 class GlobalKeyboardKey : public QObject
@@ -94,7 +95,7 @@ class GlobalKeyboardEngine : public QObject, public QAbstractNativeEventFilter
     public slots:
 
     private:
-        explicit GlobalKeyboardEngine(QObject *parent = nullptr);
+        explicit GlobalKeyboardEngine(QObject *parent = T_QOBJECT_ROOT);
         static GlobalKeyboardEnginePrivate* d;
 
         bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);

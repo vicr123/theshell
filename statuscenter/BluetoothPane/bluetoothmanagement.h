@@ -21,6 +21,7 @@
 #ifndef BLUETOOTHMANAGEMENT_H
 #define BLUETOOTHMANAGEMENT_H
 
+#include <debuginformationcollector.h>
 #include <QStackedWidget>
 #include <BluezQt/Adapter>
 #include <BluezQt/PendingCall>

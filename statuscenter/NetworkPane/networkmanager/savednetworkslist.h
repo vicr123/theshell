@@ -26,6 +26,7 @@
 #include <QDebug>
 #include <QDBusArgument>
 #include <QIcon>
+#include <debuginformationcollector.h>
 
 class Setting {
     public:
@@ -51,7 +52,7 @@ class SavedNetworksList : public QAbstractListModel
         Q_OBJECT
 
     public:
-        explicit SavedNetworksList(QObject *parent = nullptr);
+        explicit SavedNetworksList(QObject *parent = T_QOBJECT_ROOT);
 
         // Basic functionality:
         int rowCount(const QModelIndex &parent = QModelIndex()) const override;

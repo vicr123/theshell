@@ -25,6 +25,7 @@
 #include <QVariant>
 #include <statuscenterpaneobject.h>
 #include "autorotation.h"
+#include <debuginformationcollector.h>
 
 class AutoRotation;
 
@@ -32,7 +33,7 @@ class Daemon : public QObject, public StatusCenterPaneObject
 {
     Q_OBJECT
 public:
-    explicit Daemon(QObject *parent = nullptr);
+    explicit Daemon(QObject *parent = T_QOBJECT_ROOT);
 
     QWidget* mainWidget();
     QString name();

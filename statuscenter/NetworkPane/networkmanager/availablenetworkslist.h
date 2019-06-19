@@ -30,6 +30,7 @@
 #include <QDBusArgument>
 #include <QDBusPendingCall>
 #include <QEventLoop>
+#include <debuginformationcollector.h>
 
 enum NmDeviceType {
     UnknownType = 0,
@@ -117,7 +118,7 @@ class AvailableNetworksList : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit AvailableNetworksList(QDBusObjectPath devicePath, QObject *parent = nullptr);
+    explicit AvailableNetworksList(QDBusObjectPath devicePath, QObject *parent = T_QOBJECT_ROOT);
 
     struct AccessPoint {
         NmApSecurityFlags WpaFlags, RsnFlags;

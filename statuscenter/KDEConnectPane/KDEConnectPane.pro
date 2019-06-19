@@ -12,6 +12,11 @@ CONFIG += plugin
 
 INCLUDEPATH += ../../shell/statuscenter/
 
+LIBS += -L$$OUT_PWD/../../theshell-lib/
+
+INCLUDEPATH += $$PWD/../../theshell-lib
+DEPENDPATH += $$PWD/../../theshell-lib
+
 blueprint {
     DEFINES += "BLUEPRINT"
 

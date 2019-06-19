@@ -21,13 +21,14 @@
 #define REDSHIFTENGINE_H
 
 #include <QObject>
+#include <debuginformationcollector.h>
 
 struct RedshiftEnginePrivate;
 class RedshiftEngine : public QObject
 {
         Q_OBJECT
     public:
-        explicit RedshiftEngine(QObject *parent = nullptr);
+        explicit RedshiftEngine(QObject *parent = T_QOBJECT_ROOT);
         ~RedshiftEngine();
 
         bool isEnabled();

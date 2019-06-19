@@ -23,6 +23,7 @@
 
 #include <QScroller>
 #include <application.h>
+#include <notificationsdbusadaptor.h>
 
 extern void EndSession(EndSessionWait::shutdownType type);
 extern float getDPIScaling();
@@ -703,8 +704,24 @@ void Menu::on_helpButton_clicked()
 
 void Menu::on_reportBugButton_clicked()
 {
-    QProcess::startDetached("xdg-open https://github.com/vicr123/theshell/issues");
-    this->close();
+    if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
+        this->close();
+
+        QSharedPointer<QFileDialog> dialog(new QFileDialog());
+        dialog->setAcceptMode(QFileDialog::AcceptSave);
+        dialog->setWindowTitle(tr("Save Debug Introspection File"));
+        if (dialog->exec() == QFileDialog::Accepted) {
+            QFile file(dialog->selectedFiles().first());
+            file.open(QFile::WriteOnly);
+            DebugInformationCollector::getDebugInformation(&file);
+            file.close();
+
+            NotificationsDBusAdaptor::Notify(tr("theShell"), 0, "theshell", tr("Debug Introspection Data collected"), tr("Debug data has been collected and saved to %1.").arg(dialog->selectedFiles().first()), QStringList(), QVariantMap(), -1);
+        }
+    } else {
+        QProcess::startDetached("xdg-open https://github.com/vicr123/theshell/issues");
+        this->close();
+    }
 }
 
 void Menu::launchAppByIndex(const QModelIndex &index)

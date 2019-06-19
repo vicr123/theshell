@@ -27,13 +27,14 @@
 #include <QListView>
 #include <QPainter>
 #include <QTimer>
+#include <debuginformationcollector.h>
 
 class KdeConnectDevicesModel : public QAbstractListModel
 {
         Q_OBJECT
 
     public:
-        explicit KdeConnectDevicesModel(QObject *parent = nullptr);
+        explicit KdeConnectDevicesModel(QObject *parent = T_QOBJECT_ROOT);
 
         // Basic functionality:
         int rowCount(const QModelIndex &parent = QModelIndex()) const override;

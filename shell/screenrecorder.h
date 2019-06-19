@@ -30,12 +30,13 @@
 #include <QFile>
 #include <QDir>
 #include <QDateTime>
+#include <debuginformationcollector.h>
 
 class ScreenRecorder : public QObject
 {
         Q_OBJECT
     public:
-        explicit ScreenRecorder(QObject *parent = nullptr);
+        explicit ScreenRecorder(QObject *parent = T_QOBJECT_ROOT);
 
         enum State {
             Idle,

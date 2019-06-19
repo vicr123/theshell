@@ -23,6 +23,7 @@
 #include <QAbstractListModel>
 #include <QStyledItemDelegate>
 #include <notificationspermissionengine.h>
+#include <debuginformationcollector.h>
 
 struct ApplicationInformation {
     QString name;
@@ -45,7 +46,7 @@ class ApplicationNotificationModel : public QAbstractListModel
         Q_OBJECT
 
     public:
-        explicit ApplicationNotificationModel(QObject *parent = nullptr);
+        explicit ApplicationNotificationModel(QObject *parent = T_QOBJECT_ROOT);
         ~ApplicationNotificationModel();
 
         // Basic functionality:

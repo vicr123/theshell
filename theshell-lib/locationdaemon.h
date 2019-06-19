@@ -31,6 +31,7 @@
 #include <QMutex>
 #include <QMutexLocker>
 #include <tpromise.h>
+#include "debuginformationcollector.h"
 
 struct Geolocation {
     double latitude;
@@ -55,7 +56,7 @@ class LocationDaemon : public QObject
 {
         Q_OBJECT
     public:
-        explicit LocationDaemon(QObject *parent = nullptr);
+        explicit LocationDaemon(QObject *parent = T_QOBJECT_ROOT);
 
     signals:
 

@@ -24,6 +24,7 @@
 #include <QVariant>
 #include <QMap>
 #include <QSharedPointer>
+#include "debuginformationcollector.h"
 
 typedef QMap<QString, QVariant> MetadataMap;
 
@@ -33,7 +34,7 @@ class MprisPlayer : public QObject
 {
         Q_OBJECT
     public:
-        explicit MprisPlayer(QString service, QObject *parent = nullptr);
+        explicit MprisPlayer(QString service, QObject *parent = T_QOBJECT_ROOT);
         ~MprisPlayer();
 
         enum PlayingStatus {

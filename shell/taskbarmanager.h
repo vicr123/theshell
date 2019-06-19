@@ -21,6 +21,7 @@
 #ifndef TASKBARMANAGER_H
 #define TASKBARMANAGER_H
 
+#include <debuginformationcollector.h>
 #include <QObject>
 #include <QMap>
 #include <QX11Info>
@@ -39,7 +40,7 @@ class TaskbarManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit TaskbarManager(QObject *parent = nullptr);
+    explicit TaskbarManager(QObject *parent = T_QOBJECT_ROOT);
 
     QList<WmWindow> Windows();
 signals:

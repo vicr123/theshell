@@ -23,12 +23,13 @@
 #include <QObject>
 #include <statuscenterpaneobject.h>
 #include <QDateTime>
+#include <debuginformationcollector.h>
 
 class AudioManager : public QObject, public StatusCenterPaneObject
 {
         Q_OBJECT
     public:
-        explicit AudioManager(QObject *parent = nullptr);
+        explicit AudioManager(QObject *parent = T_QOBJECT_ROOT);
         static AudioManager* instance();
 
         enum quietMode {

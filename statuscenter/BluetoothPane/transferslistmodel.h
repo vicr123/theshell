@@ -21,6 +21,7 @@
 #ifndef TRANSFERSLISTMODEL_H
 #define TRANSFERSLISTMODEL_H
 
+#include <debuginformationcollector.h>
 #include <QAbstractListModel>
 #include <BluezQt/ObexManager>
 #include <BluezQt/ObexSession>
@@ -53,7 +54,7 @@ class TransfersListModel : public QAbstractListModel
         Q_OBJECT
 
     public:
-        explicit TransfersListModel(BluezQt::ObexManager* mgr, QObject *parent = nullptr);
+        explicit TransfersListModel(BluezQt::ObexManager* mgr, QObject *parent = T_QOBJECT_ROOT);
 
         // Basic functionality:
         int rowCount(const QModelIndex &parent = QModelIndex()) const override;

@@ -22,12 +22,13 @@
 
 #include <QObject>
 #include <tpromise.h>
+#include <debuginformationcollector.h>
 
 class NotificationsDBusAdaptor : public QObject
 {
         Q_OBJECT
     public:
-        explicit NotificationsDBusAdaptor(QObject *parent = nullptr);
+        explicit NotificationsDBusAdaptor(QObject *parent = T_QOBJECT_ROOT);
 
         static NotificationsDBusAdaptor* instance();
     signals:

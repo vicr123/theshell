@@ -21,6 +21,7 @@
 #ifndef DEVICESLISTMODEL_H
 #define DEVICESLISTMODEL_H
 
+#include <debuginformationcollector.h>
 #include <QAbstractListModel>
 #include <BluezQt/Manager>
 #include <BluezQt/Device>
@@ -43,7 +44,7 @@ class DevicesListModel : public QAbstractListModel
         };
         Q_DECLARE_FLAGS(ShowDevices, ShowDevice)
 
-        explicit DevicesListModel(BluezQt::Manager* mgr, ShowDevices flags = ShowDevices(Paired | Connected), QObject *parent = nullptr);
+        explicit DevicesListModel(BluezQt::Manager* mgr, ShowDevices flags = ShowDevices(Paired | Connected), QObject *parent = T_QOBJECT_ROOT);
 
         // Basic functionality:
         int rowCount(const QModelIndex &parent = QModelIndex()) const override;

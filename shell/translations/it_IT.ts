@@ -1879,53 +1879,73 @@ Items that will be kept if you choose to keep files:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="79"/>
-        <location filename="../menu.cpp" line="81"/>
+        <location filename="../menu.cpp" line="80"/>
+        <location filename="../menu.cpp" line="82"/>
         <source>Hey, %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="328"/>
+        <location filename="../menu.cpp" line="329"/>
         <source>Power Off Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="340"/>
+        <location filename="../menu.cpp" line="341"/>
         <source>Reboot Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="352"/>
+        <location filename="../menu.cpp" line="353"/>
         <source>Log Out Anyway</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="593"/>
+        <location filename="../menu.cpp" line="594"/>
         <source>%1 on X11 display %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="595"/>
+        <location filename="../menu.cpp" line="596"/>
         <source>on %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="597"/>
+        <location filename="../menu.cpp" line="598"/>
         <source>%1 on VT #%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="599"/>
+        <location filename="../menu.cpp" line="600"/>
         <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menu.cpp" line="712"/>
+        <source>Save Debug Introspection File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menu.cpp" line="719"/>
+        <source>theShell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="719"/>
+        <source>Debug data has been collected and saved to %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="719"/>
+        <source>Debug Introspection Data collected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="736"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="757"/>
+        <location filename="../menu.cpp" line="774"/>
         <source>For &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>

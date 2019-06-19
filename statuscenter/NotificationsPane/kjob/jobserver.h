@@ -34,7 +34,7 @@ class JobServer : public QObject, public StatusCenterPaneObject
         Q_CLASSINFO("D-Bus Interface", "org.kde.JobViewServer")
 
     public:
-        explicit JobServer(NotificationsWidget* widget, QObject *parent = nullptr);
+        explicit JobServer(NotificationsWidget* widget, QObject *parent = T_QOBJECT_ROOT);
 
         QWidget* mainWidget();
         QString name();

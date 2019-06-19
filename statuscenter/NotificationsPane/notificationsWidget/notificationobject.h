@@ -26,6 +26,7 @@
 #include <QSoundEffect>
 #include "notificationpopup.h"
 #include <QDateTime>
+#include <debuginformationcollector.h>
 
 class NotificationPopup;
 
@@ -40,7 +41,7 @@ public:
         Undefined = 4
     };
 
-    explicit NotificationObject(QString app_name, QString app_icon, QString summary, QString body, QStringList actions, QVariantMap hints, int expire_timeout, QObject *parent = nullptr);
+    explicit NotificationObject(QString app_name, QString app_icon, QString summary, QString body, QStringList actions, QVariantMap hints, int expire_timeout, QObject *parent = T_QOBJECT_ROOT);
     static int currentId;
 
     uint getId();

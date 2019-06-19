@@ -41,7 +41,7 @@ class MprisEngine : public QObject
         void serviceOwnerChanged(QString serviceName, QString oldOwner, QString newOwner);
 
     private:
-        explicit MprisEngine(QObject *parent = nullptr);
+        explicit MprisEngine(QObject *parent = T_QOBJECT_ROOT);
         static MprisEnginePrivate* d;
 
         void registerPlayer(QString service);

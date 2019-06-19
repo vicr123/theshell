@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QDBusVariant>
+#include <debuginformationcollector.h>
 
 class NotificationsWidget;
 class JobViewWidget;
@@ -33,7 +34,7 @@ class JobDBus : public QObject
         Q_CLASSINFO("D-Bus Interface", "org.kde.JobViewV2")
 
     public:
-        explicit JobDBus(NotificationsWidget* widget, QString title, QString icon, QString path, int capabilities, QObject *parent = nullptr);
+        explicit JobDBus(NotificationsWidget* widget, QString title, QString icon, QString path, int capabilities, QObject *parent = T_QOBJECT_ROOT);
 
         QString title();
         QString description();
