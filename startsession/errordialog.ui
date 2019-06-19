@@ -76,7 +76,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Well, this is bad.</string>
+          <string notr="true">Well, this is bad.</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -86,7 +86,7 @@
        <item>
         <widget class="QLabel" name="errorLabel">
          <property name="text">
-          <string>theShell ran into an unrecoverable error.</string>
+          <string notr="true">theShell ran into an unrecoverable error.</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -159,7 +159,7 @@
                <item>
                 <widget class="QLabel" name="label">
                  <property name="text">
-                  <string>- Try resetting theShell. This will reset theShell back to its default state.</string>
+                  <string>· Try resetting theShell. This will reset theShell back to its default state.</string>
                  </property>
                  <property name="wordWrap">
                   <bool>true</bool>
@@ -182,14 +182,14 @@
              <item>
               <widget class="QLabel" name="label_5">
                <property name="text">
-                <string>- Try reinstalling or rebuilding theShell.</string>
+                <string>· Try reinstalling or rebuilding theShell.</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QLabel" name="label_6">
                <property name="text">
-                <string>- Try reinstalling any dependencies of theShell.</string>
+                <string>· Try reinstalling any dependencies of theShell.</string>
                </property>
               </widget>
              </item>

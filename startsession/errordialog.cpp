@@ -48,29 +48,22 @@ ErrorDialog::ErrorDialog(bool started, int errorCount, QString output, QWidget *
         ui->backtrace->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     }
 
-    ui->errorIcon->setPixmap(QIcon(":/icons/error.svg").pixmap(128 * theLibsGlobal::instance()->getDPIScaling(), 128 * theLibsGlobal::instance()->getDPIScaling()));
+    ui->errorIcon->setPixmap(QIcon(":/icons/error.svg").pixmap(SC_DPI(128), SC_DPI(128)));
     if (started) {
-        if (errorCount >= 3) {
-            ui->restartButton->setVisible(false);
-            ui->titleLabel->setText(tr("Unfortunately, theShell keeps running into errors."));
-            ui->repeatFrame->setVisible(true);
-            ui->errorLabel->setVisible(false);
-            //ui->errorLabel->setText(tr("theShell keeps running into errors."));
-        } else {
-            ui->repeatFrame->setVisible(false);
-        }
+        ui->titleLabel->setText(tr("Well, this is bad."));
+        ui->errorLabel->setText(tr("theShell ran into an unrecoverable error."));
+        ui->restartButton->setText(tr("Restart theShell"));
     } else {
-        if (errorCount >= 3) {
-            ui->restartButton->setVisible(false);
-            ui->titleLabel->setText(tr("theShell can't start"));
-            ui->repeatFrame->setVisible(true);
-            ui->errorLabel->setVisible(false);
-        } else {
-            ui->repeatFrame->setVisible(false);
-            ui->titleLabel->setText(tr("theShell failed to start"));
-            ui->errorLabel->setText(tr("theShell wasn't able to start properly."));
-            ui->restartButton->setText(tr("Try again"));
-        }
+        ui->titleLabel->setText(tr("theShell failed to start"));
+        ui->errorLabel->setText(tr("theShell wasn't able to start properly."));
+        ui->restartButton->setText(tr("Try again"));
+    }
+
+    if (errorCount >= 3) {
+        ui->repeatFrame->setVisible(true);
+        ui->errorLabel->setVisible(false);
+    } else {
+        ui->repeatFrame->setVisible(false);
     }
 
     ui->logoutButton->setProperty("type", "destructive");
@@ -121,6 +114,6 @@ void ErrorDialog::on_resetTSButton_clicked()
         QSettings("theSuite", "theShell").clear();
 
         ui->resetTSButton->setEnabled(false);
-        ui->resetTSButton->setText("Settings reset successfully");
+        ui->resetTSButton->setText(tr("Settings reset successfully"));
     }
 }

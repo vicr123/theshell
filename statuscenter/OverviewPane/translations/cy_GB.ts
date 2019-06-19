@@ -95,12 +95,12 @@
     </message>
     <message>
         <location filename="../overviewsettings.ui" line="74"/>
-        <source>Weather information is sourced from Yahoo. Your location will be sent to Yahoo if you enable this option for the purposes of querying weather data.</source>
+        <source>Weather information is sourced from MET Norway. Your location will be sent to MET Norway if you enable this option for the purposes of querying weather data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../overviewsettings.ui" line="84"/>
-        <source>Show weather for current location (coming soon)</source>
+        <source>Show weather for current location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

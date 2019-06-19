@@ -71,7 +71,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Weather information is sourced from Yahoo. Your location will be sent to Yahoo if you enable this option for the purposes of querying weather data.</string>
+        <string>Weather information is sourced from MET Norway. Your location will be sent to MET Norway if you enable this option for the purposes of querying weather data.</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -81,7 +81,7 @@
      <item row="0" column="0">
       <widget class="QCheckBox" name="weatherCheckBox">
        <property name="text">
-        <string>Show weather for current location (coming soon)</string>
+        <string>Show weather for current location</string>
        </property>
       </widget>
      </item>
