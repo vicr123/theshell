@@ -6,125 +6,125 @@
     <message>
         <location filename="../audiopane.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="95"/>
         <location filename="../audiopane.cpp" line="119"/>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Geluid</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="124"/>
         <location filename="../audiopane.ui" line="187"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Algemeen</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="129"/>
         <location filename="../audiopane.ui" line="435"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspelen</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="134"/>
         <location filename="../audiopane.ui" line="542"/>
         <source>Recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Opname</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="139"/>
         <location filename="../audiopane.ui" line="659"/>
         <source>Output Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspeelapparaten</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="144"/>
         <location filename="../audiopane.ui" line="766"/>
         <source>Input Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Invoerapparaten</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="149"/>
         <location filename="../audiopane.ui" line="883"/>
         <source>Advanced Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Geavanceerde configuratie</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="273"/>
         <source>BEHAVIOUR</source>
-        <translation type="unfinished"></translation>
+        <translation>GEDRAG</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="293"/>
         <source>Volume Overdrive</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume-overdrijven</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="300"/>
         <source>Volume Overdrive allows you to set your volume higher than 100%</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume-overdrijven laat je je volume hoger dan 100% maken</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="365"/>
         <source>SOUNDS</source>
-        <translation type="unfinished"></translation>
+        <translation>GELUIDEN</translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="96"/>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Log in</translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="98"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informatie</translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="99"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Vraag</translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="100"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Waarschuwing</translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="101"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="349"/>
         <source>You can change notification sounds in the Notifications pane</source>
-        <translation type="unfinished"></translation>
+        <translation>Je kunt meldingsgeluiden wijzigen in het meldingspaneel</translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="103"/>
         <source>Volume Change</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume wijziging</translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="97"/>
         <source>Logout</source>
-        <translation type="unfinished"></translation>
+        <translation>Log uit</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="342"/>
         <source>Sound Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Geluidsthema</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="605"/>
         <location filename="../audiopane.ui" line="829"/>
         <source>Coming soon. Stay tuned!</source>
-        <translation type="unfinished"></translation>
+        <translation>Komt binnekort. Blijf alert!</translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="102"/>
         <source>Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Schermopname</translation>
     </message>
 </context>
 <context>
@@ -132,12 +132,12 @@
     <message>
         <location filename="../sinkinputwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <location filename="../sinkinputwidget.cpp" line="47"/>
         <source>Playback Stream</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspeelstream</translation>
     </message>
 </context>
 <context>
@@ -145,27 +145,27 @@
     <message>
         <location filename="../sinkwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <location filename="../sinkwidget.ui" line="80"/>
         <source>Set Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Als standaard instellen</translation>
     </message>
     <message>
         <location filename="../sinkwidget.ui" line="105"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Dempen</translation>
     </message>
     <message>
         <location filename="../sinkwidget.ui" line="160"/>
         <source>Master</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoofd</translation>
     </message>
     <message>
         <location filename="../sinkwidget.cpp" line="71"/>
         <source>Speaker</source>
-        <translation type="unfinished"></translation>
+        <translation>Luidspreker</translation>
     </message>
 </context>
 <context>
@@ -173,67 +173,67 @@
     <message>
         <location filename="../maps.h" line="27"/>
         <source>Invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ongeldig</translation>
     </message>
     <message>
         <location filename="../maps.h" line="28"/>
         <source>Mono</source>
-        <translation type="unfinished"></translation>
+        <translation>Mono</translation>
     </message>
     <message>
         <location filename="../maps.h" line="29"/>
         <source>Front Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Linksvoor</translation>
     </message>
     <message>
         <location filename="../maps.h" line="30"/>
         <source>Front Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Voor</translation>
     </message>
     <message>
         <location filename="../maps.h" line="31"/>
         <source>Front Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechtsvoor</translation>
     </message>
     <message>
         <location filename="../maps.h" line="32"/>
         <source>Rear Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Linksachter</translation>
     </message>
     <message>
         <location filename="../maps.h" line="33"/>
         <source>Rear Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Achter</translation>
     </message>
     <message>
         <location filename="../maps.h" line="34"/>
         <source>Rear Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechtsachter</translation>
     </message>
     <message>
         <location filename="../maps.h" line="35"/>
         <source>Subwoofer</source>
-        <translation type="unfinished"></translation>
+        <translation>Subwoofer</translation>
     </message>
     <message>
         <location filename="../maps.h" line="36"/>
         <source>Forward Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Naar linksvoren</translation>
     </message>
     <message>
         <location filename="../maps.h" line="37"/>
         <source>Forward Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Naar rechts voren</translation>
     </message>
     <message>
         <location filename="../maps.h" line="38"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Links</translation>
     </message>
     <message>
         <location filename="../maps.h" line="39"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../maps.h" line="40"/>
