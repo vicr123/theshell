@@ -2,6 +2,106 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="br_FR" sourcelanguage="en_US">
 <context>
+    <name>DateTimePane</name>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="47"/>
+        <location filename="../DateTime/datetimepane.cpp" line="81"/>
+        <source>Time and Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="94"/>
+        <location filename="../DateTime/datetimepane.ui" line="182"/>
+        <source>Set automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="120"/>
+        <source>TIME AND DATE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="129"/>
+        <source>Change System Time and Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="132"/>
+        <source>Change the time and date for this device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="175"/>
+        <source>TIMEZONE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="214"/>
+        <source>Change System Timezone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="217"/>
+        <source>Change the timezone for this device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="254"/>
+        <source>Clock Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="279"/>
+        <source>12 hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="292"/>
+        <source>24 hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="327"/>
+        <source>DISPLAY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="404"/>
+        <source>Set Time and Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="452"/>
+        <source>DATE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="506"/>
+        <source>TIME</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="539"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="619"/>
+        <source>Set Time Zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="644"/>
+        <source>Where are you now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../DateTime/datetimepane.ui" line="670"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GesturePane</name>
     <message>
         <location filename="../Input/gesturepane.ui" line="40"/>

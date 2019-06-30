@@ -26,6 +26,7 @@
 #include <QIcon>
 #include <functional>
 #include <QVariant>
+#include <QMetaType>
 
 struct InformationalStatusCenterPaneObjectAttributes {
     QColor lightColor;
@@ -67,5 +68,6 @@ class StatusCenterPaneObject
         bool showing = false;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(StatusCenterPaneObject::StatusPaneTypes)
+Q_DECLARE_METATYPE(StatusCenterPaneObject*)
 
 #endif // STATUSCENTERPANEOBJECT_H

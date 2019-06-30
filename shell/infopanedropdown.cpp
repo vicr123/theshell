@@ -359,7 +359,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->HighContrastSwitch->setChecked(d->themeSettings->value("accessibility/highcontrast", false).toBool());
     ui->systemAnimationsAccessibilitySwitch->setChecked(d->themeSettings->value("accessibility/systemAnimations", true).toBool());
     ui->CapsNumLockBellSwitch->setChecked(d->themeSettings->value("accessibility/bellOnCapsNumLock", false).toBool());
-    ui->TwentyFourHourSwitch->setChecked(d->settings.value("time/use24hour", true).toBool());
     ui->BarOnBottom->setChecked(!d->settings.value("bar/onTop", true).toBool());
     ui->AutoShowBarSwitch->setChecked(d->settings.value("bar/autoshow", true).toBool());
     ui->batteryScreenOff->setValue(d->settings.value("power/batteryScreenOff", 15).toInt());
@@ -588,6 +587,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     });
 
     //Load plugins
+    qRegisterMetaType<StatusCenterPaneObject*>();
     if (!startSafe) {
         QList<QDir> searchDirs;
         QJsonArray errors;
@@ -682,7 +682,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                             }
 
                             pane->sendMessage = [=](QString message, QVariantList args) {
-                                this->pluginMessage(message, args, pane);
+                                QMetaObject::invokeMethod(this, "pluginMessage", Qt::QueuedConnection, Q_ARG(QString, message), Q_ARG(QVariantList, args), Q_ARG(StatusCenterPaneObject*, pane));
+                                //this->pluginMessage(message, args, pane);
                             };
                             pane->getProperty = [=](QString key) {
                                 return this->pluginProperty(key);
@@ -746,8 +747,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->settingsTabs->setCurrentIndex(ui->settingsTabs->count() - 1);
 
     QScroller::grabGesture(ui->settingsList, QScroller::LeftMouseButtonGesture);
-    QScroller::grabGesture(ui->timezoneCityList, QScroller::LeftMouseButtonGesture);
-    QScroller::grabGesture(ui->timezoneList, QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->appsGraph, QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->autostartAppList, QScroller::LeftMouseButtonGesture);
 
@@ -1203,8 +1202,6 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
         setupLocationSettingsPane();
     } else if (currentRow == ui->settingsTabs->indexOf(ui->UserSettings)) { //Users
         setupUsersSettingsPane();
-    } else if (currentRow == ui->settingsTabs->indexOf(ui->DateTimeSettings)) { //Date and Time
-        setupDateTimeSettingsPane();
     }
 }
 
@@ -1906,74 +1903,6 @@ void InfoPaneDropdown::on_userSettingsDeleteUserAndData_clicked()
     ui->userSettingsStackedWidget->setCurrentIndex(0);
 }
 
-void InfoPaneDropdown::setupDateTimeSettingsPane() {
-    launchDateTimeService();
-
-    QDateTime current = QDateTime::currentDateTime();
-    ui->dateTimeSetDate->setSelectedDate(current.date());
-    ui->dateTimeSetTime->setTime(current.time());
-
-    QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
-    bool isNTPEnabled = dateTimeInterface.property("NTP").toBool();
-    ui->DateTimeNTPSwitch->setChecked(isNTPEnabled);
-}
-
-void InfoPaneDropdown::launchDateTimeService() {
-    QDBusMessage getMessage = QDBusMessage::createMethodCall("org.freedesktop.DBus", "/", "org.freedesktop.DBus", "ListActivatableNames");
-    QDBusReply<QStringList> reply = QDBusConnection::systemBus().call(getMessage);
-    if (!reply.value().contains("org.freedesktop.timedate1")) {
-        qDebug() << "Can't set date and time";
-        return;
-    }
-
-    QDBusConnection::systemBus().interface()->startService("org.freedesktop.timedate1");
-}
-
-void InfoPaneDropdown::on_dateTimeSetDateTimeButton_clicked()
-{
-    QDateTime newTime;
-    newTime.setDate(ui->dateTimeSetDate->selectedDate());
-    newTime.setTime(ui->dateTimeSetTime->time());
-
-    qlonglong time = newTime.toMSecsSinceEpoch() * 1000;
-
-    launchDateTimeService();
-
-    QDBusMessage setMessage = QDBusMessage::createMethodCall("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", "SetTime");
-    QVariantList args;
-    args.append(time);
-    args.append(false);
-    args.append(true);
-    setMessage.setArguments(args);
-    QDBusConnection::systemBus().call(setMessage);
-
-    setupDateTimeSettingsPane();
-}
-
-void InfoPaneDropdown::on_DateTimeNTPSwitch_toggled(bool checked)
-{
-    if (checked) {
-        ui->dateTimeSetDate->setEnabled(false);
-        ui->dateTimeSetTime->setEnabled(false);
-        ui->dateTimeSetDateTimeButton->setEnabled(false);
-    } else {
-        ui->dateTimeSetDate->setEnabled(true);
-        ui->dateTimeSetTime->setEnabled(true);
-        ui->dateTimeSetDateTimeButton->setEnabled(true);
-    }
-
-    launchDateTimeService();
-
-    QDBusMessage setMessage = QDBusMessage::createMethodCall("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", "SetNTP");
-    QVariantList args;
-    args.append(checked);
-    args.append(true);
-    setMessage.setArguments(args);
-    QDBusConnection::systemBus().call(setMessage);
-
-    setupDateTimeSettingsPane();
-}
-
 void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
 {
     if (currentRow == -1) return;
@@ -2363,102 +2292,6 @@ void InfoPaneDropdown::on_grayColorThemeRadio_toggled(bool checked)
         updateAccentColourBox();
         resetStyle();
         changeDropDown(Settings, false);
-    }
-}
-
-void InfoPaneDropdown::on_SetSystemTimezoneButton_clicked()
-{
-    ui->TimezoneStackedWidget->setCurrentIndex(1);
-
-    launchDateTimeService();
-    QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
-    QString currentTimezone = dateTimeInterface.property("Timezone").toString();
-
-    d->timezoneData = QJsonObject();
-
-    ui->timezoneList->clear();
-    QFile tzInfo("/usr/share/zoneinfo/zone.tab");
-    tzInfo.open(QFile::ReadOnly);
-    while (!tzInfo.atEnd()) {
-        QString tzLine = tzInfo.readLine();
-        if (!tzLine.startsWith("#")) {
-            QStringList parts = tzLine.trimmed().split("\t", QString::SkipEmptyParts);
-            if (parts.length() >= 3) {
-                QString region = parts.at(2).left(parts.at(2).indexOf("/"));
-                QString city = parts.at(2).mid(parts.at(2).indexOf("/") + 1);
-
-                if (!d->timezoneData.contains(region)) {
-                    QListWidgetItem* i = new QListWidgetItem();
-                    i->setText(region);
-                    ui->timezoneList->addItem(i);
-                    d->timezoneData.insert(region, QJsonArray());
-                }
-
-                QJsonObject cityData;
-                cityData.insert("name", city);
-                cityData.insert("country", parts.at(0).toLower());
-                cityData.insert("descriptor", parts.at(2));
-                if (parts.at(2) == currentTimezone) {
-                    cityData.insert("selected", true);
-                } else {
-                    cityData.insert("selected", false);
-                }
-
-                QJsonArray a = d->timezoneData.value(region).toArray();
-                a.append(cityData);
-                d->timezoneData.insert(region, a);
-            }
-        }
-    }
-    tzInfo.close();
-
-    ui->setTimezoneButton->setEnabled(false);
-    ui->timezoneCityList->clear();
-}
-
-void InfoPaneDropdown::on_backTimezone_clicked()
-{
-    ui->TimezoneStackedWidget->setCurrentIndex(0);
-}
-
-void InfoPaneDropdown::on_setTimezoneButton_clicked()
-{
-    ui->TimezoneStackedWidget->setCurrentIndex(0);
-
-    //Set the timezone
-    LOWER_INFOPANE
-    launchDateTimeService();
-    QDBusInterface dateTimeInterface("org.freedesktop.timedate1", "/org/freedesktop/timedate1", "org.freedesktop.timedate1", QDBusConnection::systemBus());
-    QDBusPendingCallWatcher* w = new QDBusPendingCallWatcher(dateTimeInterface.asyncCall("SetTimezone", ui->timezoneCityList->currentItem()->data(Qt::UserRole), true));
-    connect(w, SIGNAL(finished(QDBusPendingCallWatcher*)), w, SLOT(deleteLater()));
-    connect(w, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(updateDSTNotification()));
-}
-
-void InfoPaneDropdown::on_timezoneList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
-{
-    ui->timezoneCityList->clear();
-    if (current != nullptr) {
-        QJsonArray a = d->timezoneData.value(current->text()).toArray();
-        for (QJsonValue v : a) {
-            QListWidgetItem* i = new QListWidgetItem();
-            QJsonObject cityData = v.toObject();
-            i->setText(cityData.value("name").toString().replace("_", " "));
-            i->setData(Qt::UserRole, cityData.value("descriptor").toString());
-            i->setIcon(QIcon::fromTheme("flag-" + cityData.value("country").toString(), QIcon::fromTheme("flag")));
-            ui->timezoneCityList->addItem(i);
-            if (cityData.value("selected").toBool()) {
-                i->setSelected(true);
-            }
-        }
-    }
-}
-
-void InfoPaneDropdown::on_timezoneCityList_currentRowChanged(int currentRow)
-{
-    if (currentRow == -1) {
-        ui->setTimezoneButton->setEnabled(false);
-    } else {
-        ui->setTimezoneButton->setEnabled(true);
     }
 }
 
@@ -3061,6 +2894,8 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
             ui->settingsList->setCurrentRow(row);
             on_settingsList_itemActivated(ui->settingsList->item(row));
         }
+    } else if (message == "hide") {
+        this->close();
     } else if (message == "register-chunk") {
         emit newChunk(args.first().value<QWidget*>());
     } else if (message == "register-snack") {

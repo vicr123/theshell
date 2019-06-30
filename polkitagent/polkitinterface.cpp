@@ -34,9 +34,9 @@ PolkitInterface::PolkitInterface(QObject *parent) : PolkitQt1::Agent::Listener(p
 
     //Create a new authentication window
     authWin = new Authenticate();
-    connect(authWin, SIGNAL(okClicked()), this, SLOT(windowAccepted()));
-    connect(authWin, SIGNAL(rejected()), this, SLOT(windowRejected()));
-    connect(authWin, SIGNAL(newUser(PolkitQt1::Identity)), this, SLOT(setUser(PolkitQt1::Identity)));
+    connect(authWin, &Authenticate::okClicked, this, &PolkitInterface::windowAccepted);
+    connect(authWin, &Authenticate::rejected, this, &PolkitInterface::windowRejected);
+    connect(authWin, &Authenticate::newUser, this, &PolkitInterface::setUser);
 }
 
 void PolkitInterface::windowAccepted() { //User clicked OK

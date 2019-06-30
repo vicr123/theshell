@@ -19,7 +19,7 @@ DEPENDPATH += $$PWD/../../theshell-lib
 
 unix {
     CONFIG += link_pkgconfig
-    PKGCONFIG += x11 xi xorg-libinput
+    PKGCONFIG += x11 xi xorg-libinput polkit-qt5-1
 }
 
 blueprint {
@@ -86,6 +86,8 @@ unix {
 }
 
 HEADERS += \
+    DateTime/datetimepane.h \
+    DateTime/timezonesmodel.h \
     Input/shortcutedit.h \
     Input/shortcutpane.h \
     plugin.h \
@@ -96,6 +98,8 @@ HEADERS += \
     Input/mousepanetester.h
 
 SOURCES += \
+    DateTime/datetimepane.cpp \
+    DateTime/timezonesmodel.cpp \
     Input/shortcutedit.cpp \
     Input/shortcutpane.cpp \
     plugin.cpp \
@@ -109,6 +113,7 @@ DISTFILES += \
     CoreSettings.json
 
 FORMS += \
+    DateTime/datetimepane.ui \
     Input/inputpane.ui \
     Input/keyboardpane.ui \
     Input/gesturepane.ui \

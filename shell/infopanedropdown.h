@@ -200,14 +200,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_userSettingsDeleteUserAndData_clicked();
 
-        void setupDateTimeSettingsPane();
-
-        void launchDateTimeService();
-
-        void on_dateTimeSetDateTimeButton_clicked();
-
-        void on_DateTimeNTPSwitch_toggled(bool checked);
-
         void on_localeList_currentRowChanged(int currentRow);
 
         void on_StatusBarSwitch_toggled(bool checked);
@@ -269,16 +261,6 @@ class InfoPaneDropdown : public QDialog
         void on_addAutostartApp_clicked();
 
         void on_grayColorThemeRadio_toggled(bool checked);
-
-        void on_SetSystemTimezoneButton_clicked();
-
-        void on_backTimezone_clicked();
-
-        void on_setTimezoneButton_clicked();
-
-        void on_timezoneList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
-
-        void on_timezoneCityList_currentRowChanged(int currentRow);
 
         void on_batteryScreenOff_valueChanged(int value);
 

@@ -139,8 +139,8 @@
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="721"/>
-        <location filename="../bluetoothmanagement.ui" line="804"/>
-        <location filename="../bluetoothmanagement.ui" line="1037"/>
+        <location filename="../bluetoothmanagement.ui" line="786"/>
+        <location filename="../bluetoothmanagement.ui" line="1049"/>
         <source>Device Name</source>
         <translation>Tên thiết bị</translation>
     </message>
@@ -151,110 +151,110 @@
         <translation>Gỡ ghép nối</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="774"/>
-        <source>Device Information</source>
-        <translation>Giới thiệu thiết bị</translation>
-    </message>
-    <message>
-        <location filename="../bluetoothmanagement.ui" line="811"/>
+        <location filename="../bluetoothmanagement.ui" line="793"/>
         <source>Device Address</source>
         <translation>Địa chỉ thiết bị</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="832"/>
-        <source>Device Actions</source>
-        <translation>Hoạt động thiết bị</translation>
+        <location filename="../bluetoothmanagement.ui" line="816"/>
+        <source>DEVICE INFORMATION</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="842"/>
+        <location filename="../bluetoothmanagement.ui" line="844"/>
+        <source>DEVICE ACTIONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../bluetoothmanagement.ui" line="854"/>
         <location filename="../bluetoothmanagement.cpp" line="238"/>
         <source>Connect to Device</source>
         <translation>Kết nối</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="845"/>
+        <location filename="../bluetoothmanagement.ui" line="857"/>
         <source>Establish a connection with this Bluetooth device</source>
         <translation>Thiết lập kết nối với thiết bị này</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="868"/>
+        <location filename="../bluetoothmanagement.ui" line="880"/>
         <source>Connect to the Internet</source>
         <translation>Kết nối với Internet</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="871"/>
+        <location filename="../bluetoothmanagement.ui" line="883"/>
         <source>Establish a connection with this device to access the internet</source>
         <translation>Thiết lập kết nối với thiết bị này để truy cập Internet</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="878"/>
+        <location filename="../bluetoothmanagement.ui" line="890"/>
         <source>Send Files</source>
         <translation>Gửi tệp</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="881"/>
+        <location filename="../bluetoothmanagement.ui" line="893"/>
         <source>Sends a file to this device</source>
         <translation>Gửi tệp đến thiết bị này</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="956"/>
-        <location filename="../bluetoothmanagement.ui" line="1176"/>
+        <location filename="../bluetoothmanagement.ui" line="968"/>
+        <location filename="../bluetoothmanagement.ui" line="1188"/>
         <source>Pair Device</source>
         <translation>Ghép nối với thiết bị</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="981"/>
+        <location filename="../bluetoothmanagement.ui" line="993"/>
         <source>Select a device to pair</source>
         <translation>Chọn thiết bị để ghép nối với</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1242"/>
-        <location filename="../bluetoothmanagement.ui" line="1403"/>
+        <location filename="../bluetoothmanagement.ui" line="1254"/>
+        <location filename="../bluetoothmanagement.ui" line="1415"/>
         <source>Complete Pairing</source>
         <translation>Đẻ xong ghép nối</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1254"/>
+        <location filename="../bluetoothmanagement.ui" line="1266"/>
         <source>Check this code matches</source>
         <translation>Kiểm tra mã này khớp</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1261"/>
+        <location filename="../bluetoothmanagement.ui" line="1273"/>
         <source>Then hit ENTER or RETURN.</source>
         <translation>Sau đó, bấm ENTER hoặc RETURN.</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1297"/>
+        <location filename="../bluetoothmanagement.ui" line="1309"/>
         <source>000000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1415"/>
+        <location filename="../bluetoothmanagement.ui" line="1427"/>
         <source>Enter Pairing Code</source>
         <translation>Nhập vào mã ghép nối</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1545"/>
+        <location filename="../bluetoothmanagement.ui" line="1557"/>
         <source>No Transfer</source>
         <translation>Không có việc chuyển tệp</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1593"/>
+        <location filename="../bluetoothmanagement.ui" line="1605"/>
         <source>No Transfer Selected</source>
         <translation>Chưa được chọn việc chuyển tệp</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1603"/>
+        <location filename="../bluetoothmanagement.ui" line="1615"/>
         <source>Select a transfer for more details</source>
         <translation>Chọn việc chuyển tệp để xem chi tiết hơn</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1725"/>
+        <location filename="../bluetoothmanagement.ui" line="1737"/>
         <source>Transferred</source>
         <translation>Chuyển thành công</translation>
     </message>
     <message>
-        <location filename="../bluetoothmanagement.ui" line="1732"/>
+        <location filename="../bluetoothmanagement.ui" line="1744"/>
         <source>File Size</source>
         <translation>Kích thước tệp</translation>
     </message>

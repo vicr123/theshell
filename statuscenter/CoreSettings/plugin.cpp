@@ -20,6 +20,7 @@
 
 #include "plugin.h"
 #include "Input/inputpane.h"
+#include "DateTime/datetimepane.h"
 
 Plugin::Plugin(QObject *parent) :
     QObject(parent)
@@ -29,6 +30,7 @@ Plugin::Plugin(QObject *parent) :
     translator = new QTranslator;
 
     panes.append(new InputPane());
+    panes.append(new DateTimePane());
 }
 
 QList<StatusCenterPaneObject*> Plugin::availablePanes() {

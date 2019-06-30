@@ -16,10 +16,12 @@ unix {
 
 blueprint {
     TARGET = ts-polkitagentb
+    SHARE_APP_NAME=theshell/ts-polkitagentb
 
     DEFINES += "BLUEPRINT"
 } else {
     TARGET = ts-polkitagent
+    SHARE_APP_NAME = theshell/ts-polkitagent
 }
 
 TEMPLATE = app
@@ -35,6 +37,8 @@ HEADERS  += \
 
 FORMS    += \
     authenticate.ui
+
+include(/usr/share/the-libs/pri/buildmaster.pri)
 
 unix {
     target.path = /usr/lib

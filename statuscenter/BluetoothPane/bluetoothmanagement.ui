@@ -764,21 +764,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_12">
-          <property name="font">
-           <font>
-            <pointsize>15</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Device Information</string>
-          </property>
-          <property name="margin">
-           <number>9</number>
-          </property>
-         </widget>
-        </item>
-        <item>
          <layout class="QGridLayout" name="gridLayout_4">
           <property name="leftMargin">
            <number>9</number>
@@ -795,17 +780,14 @@
           <property name="spacing">
            <number>6</number>
           </property>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="deviceNameEdit"/>
-          </item>
-          <item row="0" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="label_14">
             <property name="text">
              <string>Device Name</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="label_15">
             <property name="text">
              <string>Device Address</string>
@@ -813,23 +795,53 @@
            </widget>
           </item>
           <item row="1" column="1">
+           <widget class="QLineEdit" name="deviceNameEdit"/>
+          </item>
+          <item row="2" column="1">
            <widget class="QLabel" name="deviceAddress">
             <property name="text">
              <string notr="true"/>
             </property>
            </widget>
           </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_12">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>DEVICE INFORMATION</string>
+            </property>
+           </widget>
+          </item>
          </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_14">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>1</height>
+           </size>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_16">
           <property name="font">
            <font>
-            <pointsize>15</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
            </font>
           </property>
           <property name="text">
-           <string>Device Actions</string>
+           <string>DEVICE ACTIONS</string>
           </property>
           <property name="margin">
            <number>9</number>
@@ -1784,15 +1796,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>tCircularSpinner</class>
-   <extends>QWidget</extends>
-   <header location="global">tcircularspinner.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>tStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header location="global">tstackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>tCircularSpinner</class>
+   <extends>QWidget</extends>
+   <header location="global">tcircularspinner.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
