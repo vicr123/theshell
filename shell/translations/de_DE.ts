@@ -79,7 +79,7 @@
     <message>
         <location filename="../audiomanager.cpp" line="343"/>
         <source>Ignores all notifications not marked as critical and those set to bypass Quiet Mode. Normal sounds will still be played.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignoriert alle Benachrichtigungen, die nicht als kritisch gekennzeichnet wurden, und Benachrichtigungen, die den Ruhemodus umgehen. Normale Klänge werden weiterhin wiedergegeben.</translation>
     </message>
     <message>
         <location filename="../audiomanager.cpp" line="345"/>
@@ -417,7 +417,7 @@
         <location filename="../hotkeyhud.cpp" line="67"/>
         <location filename="../hotkeyhud.cpp" line="84"/>
         <source>Brightness</source>
-        <translation type="unfinished">Helligkeit</translation>
+        <translation>Helligkeit</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="90"/>
@@ -425,59 +425,59 @@
         <location filename="../hotkeyhud.cpp" line="107"/>
         <location filename="../hotkeyhud.cpp" line="117"/>
         <source>Volume</source>
-        <translation type="unfinished">Lautstärke</translation>
+        <translation>Lautstärke</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="90"/>
         <location filename="../hotkeyhud.cpp" line="107"/>
         <source>Quiet Mode is set to Mute.</source>
-        <translation type="unfinished">Ruhemodus ist auf stumm gestellt.</translation>
+        <translation>Ruhemodus ist jetzt stummgeschalten.</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="125"/>
         <source>Critical Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur Kritisches</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="129"/>
         <source>No Notifications</source>
-        <translation type="unfinished">Keine Benachrichtigungen</translation>
+        <translation>Keine Benachrichtigungen</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="133"/>
         <source>Mute</source>
-        <translation type="unfinished">Stumm</translation>
+        <translation>Stumm</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="137"/>
         <source>Sound</source>
-        <translation type="unfinished">Ton</translation>
+        <translation>Ton</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="144"/>
         <source>Keyboard Layout</source>
-        <translation type="unfinished">Tastaturlayout</translation>
+        <translation>Tastaturbelegung</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="144"/>
         <source>Keyboard Layout set to %1</source>
-        <translation type="unfinished">Tastaturlayout wurde auf %1 gesetzt</translation>
+        <translation>Tastaturbelegung wurde auf %1 gesetzt</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="159"/>
         <location filename="../hotkeyhud.cpp" line="174"/>
         <source>Keyboard Brightness</source>
-        <translation type="unfinished">Tastaturhelligkeit</translation>
+        <translation>Tastaturhelligkeit</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="182"/>
         <source>Eject</source>
-        <translation type="unfinished">Auswerfen</translation>
+        <translation>Auswerfen</translation>
     </message>
     <message>
         <location filename="../hotkeyhud.cpp" line="182"/>
         <source>Attempting to eject disc...</source>
-        <translation type="unfinished">Versuche, CD auszuwerfen...</translation>
+        <translation>Versuche, CD auszuwerfen...</translation>
     </message>
 </context>
 <context>
@@ -582,7 +582,7 @@
         <location filename="../infopanedropdown.ui" line="3602"/>
         <location filename="../infopanedropdown.cpp" line="2384"/>
         <source>Unavailable Panes</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht verfügbare Scheiben</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="748"/>
@@ -662,37 +662,37 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2416"/>
         <source>Suspend nor&amp;mally</source>
-        <translation type="unfinished"></translation>
+        <translation>Nor&amp;mal sperren</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2423"/>
         <source>This will save power, but stop everything that you&apos;re doing until you wake your device. Recommended for most users</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiermit wird Energie gespart, stoppt jedoch alles, was Sie bis jetzt getan haben, bis Sie das Gerät wieder aufwecken. Diese Option wird für die meisten Nutzer empfohlen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2450"/>
         <source>Hibernate instead</source>
-        <translation type="unfinished"></translation>
+        <translation>Stattdessen in den Ruhezustand versetzen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2457"/>
         <source>This will save a lot of power but will take a while to wake up again. Everything stops while your device is hibernating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiermit wird viel Energie gespart, wobei Ihr Gerät jedoch eine längere Zeit zum Aufwecken brauchen wird. Diese Option sorgt dafür, dass alle Programme bzw. Prozesse gestoppt werden, während Ihr Gerät im Ruhezustand ist.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3625"/>
         <source>There were errors loading the following items:</source>
-        <translation type="unfinished"></translation>
+        <translation>Es traten Fehler beim Laden folgender Elemente auf:</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3927"/>
         <source>DISTRIBUTION</source>
-        <translation type="unfinished"></translation>
+        <translation>DISTRIBUTION</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4034"/>
         <source>HARDWARE AND SOFTWARE</source>
-        <translation type="unfinished"></translation>
+        <translation>HARDWARE UND SOFTWARE</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="4127"/>
@@ -876,7 +876,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="123"/>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>Übersicht</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1774"/>
@@ -916,12 +916,12 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2063"/>
         <source>ON BATTERY</source>
-        <translation type="unfinished"></translation>
+        <translation>BATTERIEBETRIEBEN</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2205"/>
         <source>ON AC</source>
-        <translation type="unfinished"></translation>
+        <translation>STROMKABELBETRIEBEN</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2277"/>
@@ -956,22 +956,22 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2349"/>
         <source>PHYSICAL BUTTONS</source>
-        <translation type="unfinished"></translation>
+        <translation>PHYSISCHE TASTEN</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2394"/>
         <source>ON SUSPENSION</source>
-        <translation type="unfinished"></translation>
+        <translation>GESPERRT</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2433"/>
         <source>&amp;Just turn off the screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte den Bildschirm &amp;jetzt abschalten</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2440"/>
         <source>This will consume more power but continue to run any tasks you were doing. For example, music will continue playing. When you wake this device, it will wake immediately. Not recommended if you don&apos;t have a solid state drive as the drive will not be turned off while you&apos;re moving it around. Recommended for tablets and tablet PCs.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dies wird mehr Energie verbrauchen, aber die momentan laufenden Programme und Prozesse weiterhin laufen lassen. Zum Beispiel wird Musik weiterhin wiedergegeben. Zudem wird diese Option ein sofortiges Aufwecken ermöglichen. Diese Option wird nicht empfohlen, wenn das System nicht auf einem oder mehreren SSD-Laufwerken betrieben wird, da die weiterhin eingeschalteten Nicht-SSD-Laufwerke Schäden bei Bewegungen davontragen und das System unbenutzbar machen können.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2568"/>
@@ -1266,12 +1266,12 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
     <message>
         <location filename="../infopanedropdown.cpp" line="722"/>
         <source>No plugins were loaded because you&apos;ve started theShell in Safe Mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es wurden keine Plugins geladen, da Sie theShell im abgesicherten Modus gestartet haben.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="727"/>
         <source>Safe Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgesicherter Modus</translation>
     </message>
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="1101"/>
@@ -1459,7 +1459,7 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
     <message>
         <location filename="../infopanedropdown.cpp" line="2657"/>
         <source>Show Touch Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Touch-Tastatur anzeigen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2695"/>
@@ -1597,7 +1597,7 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
     <message>
         <location filename="../mainwindow.ui" line="1206"/>
         <source>Critical Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur Kritische</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="567"/>
@@ -1608,7 +1608,7 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
     <message>
         <location filename="../mainwindow.cpp" line="68"/>
         <source>Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Mediaplayer</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="402"/>
@@ -1840,7 +1840,7 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
     <message>
         <location filename="../menu.ui" line="1030"/>
         <source>Failed to start app</source>
-        <translation type="unfinished"></translation>
+        <translation>Start der App fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="80"/>
@@ -1886,22 +1886,22 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
     <message>
         <location filename="../menu.cpp" line="712"/>
         <source>Save Debug Introspection File</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug-Selbstprüfungsdatei speichern</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="719"/>
         <source>theShell</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="719"/>
         <source>Debug data has been collected and saved to %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Debugdaten wurden gesammelt und auf %1 gespeichert.</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="719"/>
         <source>Debug Introspection Data collected</source>
-        <translation type="unfinished"></translation>
+        <translation>Debugdaten gesammelt</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="736"/>
@@ -2170,7 +2170,7 @@ bereit, gespeichert zu werden = ready to be saved</translatorcomment>
     <message>
         <location filename="../rundialog.ui" line="132"/>
         <source>Enter a command to run</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie ein auszuführendes Kommando ein</translation>
     </message>
     <message>
         <location filename="../rundialog.ui" line="150"/>
@@ -2185,7 +2185,7 @@ bereit, gespeichert zu werden = ready to be saved</translatorcomment>
     <message>
         <location filename="../rundialog.cpp" line="148"/>
         <source>Can&apos;t find that command</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommando konnte nicht gefunden werden</translation>
     </message>
 </context>
 <context>
@@ -2495,12 +2495,12 @@ super schnell -&gt; superschnell: https://www.duden.de/rechtschreibung/superschn
     <message>
         <location filename="../main.cpp" line="266"/>
         <source>Start in Safe Mode?</source>
-        <translation type="unfinished"></translation>
+        <translation>In den abgesicherten Modus starten?</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="267"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie halten die Strg-Taste. Möchten Sie theShell im abgesicherten Modus starten?</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="291"/>
