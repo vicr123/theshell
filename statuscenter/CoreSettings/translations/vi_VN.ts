@@ -7,98 +7,98 @@
         <location filename="../DateTime/datetimepane.ui" line="47"/>
         <location filename="../DateTime/datetimepane.cpp" line="81"/>
         <source>Time and Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Ngày và giờ</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="94"/>
         <location filename="../DateTime/datetimepane.ui" line="182"/>
         <source>Set automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Đặt tự động</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="120"/>
         <source>TIME AND DATE</source>
-        <translation type="unfinished"></translation>
+        <translation>NGÀY VÀ GIỜ</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="129"/>
         <source>Change System Time and Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi ngày và giờ hệ thống</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="132"/>
         <source>Change the time and date for this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi ngày và giờ cho thiết bị này</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="175"/>
         <source>TIMEZONE</source>
-        <translation type="unfinished"></translation>
+        <translation>MÚI GIỜ</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="214"/>
         <source>Change System Timezone</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi múi giờ hệ thống</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="217"/>
         <source>Change the timezone for this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi múi giờ cho thiết bị này</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="254"/>
         <source>Clock Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Định dạng đồng hồ</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="279"/>
         <source>12 hour</source>
-        <translation type="unfinished"></translation>
+        <translation>12 giờ</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="292"/>
         <source>24 hour</source>
-        <translation type="unfinished"></translation>
+        <translation>24 giờ</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="327"/>
         <source>DISPLAY</source>
-        <translation type="unfinished"></translation>
+        <translation>GIAO DIỆN</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="404"/>
         <source>Set Time and Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Đặt Ngày và Giờ</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="452"/>
         <source>DATE</source>
-        <translation type="unfinished"></translation>
+        <translation>NGÀY</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="506"/>
         <source>TIME</source>
-        <translation type="unfinished"></translation>
+        <translation>GIỜ</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="539"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="619"/>
         <source>Set Time Zone</source>
-        <translation type="unfinished"></translation>
+        <translation>Đặt Múi Giờ</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="644"/>
         <source>Where are you now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn đang ở đâu bây giờ?</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="670"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Tìm kiếm</translation>
     </message>
 </context>
 <context>
@@ -160,7 +160,7 @@
     <message>
         <location filename="../Input/inputpane.ui" line="139"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Phím tắt</translation>
     </message>
     <message>
         <location filename="../Input/inputpane.ui" line="147"/>
@@ -358,23 +358,23 @@
     <message>
         <location filename="../Input/shortcutedit.cpp" line="70"/>
         <source>For Shortcut %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cho Phím Tắt %1</translation>
     </message>
     <message>
         <location filename="../Input/shortcutedit.cpp" line="71"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Đặt lại</translation>
     </message>
     <message>
         <location filename="../Input/shortcutedit.cpp" line="75"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa</translation>
     </message>
     <message>
         <location filename="../Input/shortcutedit.cpp" line="140"/>
         <location filename="../Input/shortcutedit.cpp" line="144"/>
         <source>Type Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Đánh P. Tắt</translation>
     </message>
 </context>
 <context>
@@ -387,192 +387,192 @@
     <message>
         <location filename="../Input/shortcutpane.ui" line="40"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Phím Tắt</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.ui" line="96"/>
         <source>These shortcuts work everywhere on the system. They&apos;ll be paused while you&apos;re editing a shortcut here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Phím tắt này sẽ hoạt động mọi nơi trên hệ thống này. Nó sẽ bị tạm dừng khi bạn chỉnh sửa một phím tắt đây.</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="62"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Hệ thống</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="63"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>Chạy</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="63"/>
         <source>Run a command</source>
-        <translation type="unfinished"></translation>
+        <translation>Chạy lệnh</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="64"/>
         <source>Suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>Ngủ</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="64"/>
         <source>Suspend the system</source>
-        <translation type="unfinished"></translation>
+        <translation>Để hệ thống vào chế độ ngủ</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="65"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Tắt nguồn</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="65"/>
         <source>Power off the system, or show power options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tắt hệ thống, hoặc hiển thị tùy chọn nguồn</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="66"/>
         <source>Power Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tùy chọn nguồn</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="66"/>
         <source>Show power options</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiển thị tùy chọn nguồn</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="67"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhổ đĩa</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="67"/>
         <source>Eject an optical disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhổ đĩa quang</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="69"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Màn hình</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="70"/>
         <source>Brightness Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Độ sáng lên</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="70"/>
         <source>Adjust the brightness of your screen up</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi độ sáng màn hình lên</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="71"/>
         <source>Brightness Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Độ sáng xuống</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="71"/>
         <source>Adjust the brightness of your screen down</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi độ sáng màn hình xuống</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="72"/>
         <source>Lock Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Khóa màn hình</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="72"/>
         <source>Lock your computer so no one else can access it</source>
-        <translation type="unfinished"></translation>
+        <translation>Khoá máy tính của bạn để không cho ai khác sử dụng</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="76"/>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Âm thanh</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="77"/>
         <source>Volume Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Âm lượng lên</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="77"/>
         <source>Increase the volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Đặt âm lượng lên</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="78"/>
         <source>Decrease the volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Đặt âm lượng xuống</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="78"/>
         <source>Volume Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Âm lượng xuống</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="79"/>
         <source>Toggle Quiet Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi chế độ im</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="79"/>
         <source>Switch between Quiet Mode options</source>
-        <translation type="unfinished"></translation>
+        <translation>Thay đổi tùy chọn chế độ im</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="81"/>
         <source>Keyboard</source>
-        <translation type="unfinished">Bàn phím</translation>
+        <translation>Bàn phím</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="82"/>
         <source>Next Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi sang bố trí tiếp</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="82"/>
         <source>Switch to the next keyboard layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi sang bố trí bàn phím tiếp</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="83"/>
         <source>Keyboard Brightness Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Độ sáng bàn phím lên</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="83"/>
         <source>Turn the keyboard brightness up</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi độ sáng bàn phím lên</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="84"/>
         <source>Keyboard Brightness Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Độ sáng bàn phím xuống</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="84"/>
         <source>Turn the keyboard brightness down</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi độ sáng bàn phím xuống</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="73"/>
         <source>Take Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Chụp màn hình</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="73"/>
         <source>Take a photo of your screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Chụp ảnh màn hình</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="74"/>
         <source>Take Screen Recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Thâu phim màn hình</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="74"/>
         <source>Record a video of your screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Thâu một phim màn hình</translation>
     </message>
 </context>
 </TS>
