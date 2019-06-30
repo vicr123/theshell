@@ -51,9 +51,11 @@
     <message numerus="yes">
         <location filename="../overview.cpp" line="414"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
-        <translation><numerusform>Op %1 zullen de Daglichttijdgegevens %2. De klok zal automatisch met %n uur %3 veranderen.</numerusform>
-        <numerusform>Op %1 zullen de Daglichttijdgegevens %2. De klok zal automatisch met %n uur %3 veranderen.</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Op %1 zullen de Daglichttijdgegevens %2. De klok zal automatisch met %n uur %3 veranderen.</numerusform>
+            <numerusform>Op %1 zullen de Daglichttijdgegevens %2. De klok zal automatisch met %n uur %3 veranderen.</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="../overview.cpp" line="417"/>
         <source>end</source>
@@ -272,15 +274,19 @@
     <message numerus="yes">
         <location filename="../Timers/timerpage.cpp" line="63"/>
         <source>Timer %n</source>
-        <translation><numerusform>Timer %n</numerusform>
-        <numerusform>Timer %n</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Timer %n</numerusform>
+            <numerusform>Timer %n</numerusform>
+        </translation>
+    </message>
     <message numerus="yes">
         <location filename="../Timers/timerpage.cpp" line="92"/>
         <source>%n timers elapsed</source>
-        <translation><numerusform>%n timer afgelopen</numerusform>
-        <numerusform>%n timers afgelopen</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n timer afgelopen</numerusform>
+            <numerusform>%n timers afgelopen</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="../Timers/timerpage.cpp" line="109"/>
         <source>Time&apos;s up!</source>
