@@ -42,7 +42,7 @@ theShell is available in Arch Linux in a custom package repository. Simply add t
 ```
 [theapps]
 SigLevel = Optional TrustAll
-Server = https://vicr123.github.io/repo/arch/$arch/
+Server = https://packages.vicr123.com/arch/$arch/
 ```
 To install theShell, perform system updates with `pacman -Syu` first, and then `pacman -S theshell`.
 theShell is also on the AUR under the name "[theshell](https://aur.archlinux.org/packages/theshell/)." This also pulls in all the required dependencies for theShell so it should work properly.
