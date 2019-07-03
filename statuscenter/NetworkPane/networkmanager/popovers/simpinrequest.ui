@@ -109,7 +109,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset theme="dialog-ok"/>
+            <iconset theme="dialog-ok">
+             <normaloff>.</normaloff>.</iconset>
            </property>
            <property name="flat">
             <bool>true</bool>
@@ -154,6 +155,9 @@
          </property>
          <item>
           <widget class="QLineEdit" name="pinField">
+           <property name="inputMethodHints">
+            <set>Qt::ImhDigitsOnly|Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+           </property>
            <property name="echoMode">
             <enum>QLineEdit::Password</enum>
            </property>
@@ -184,6 +188,9 @@
          </property>
          <item>
           <widget class="QLineEdit" name="newPinField">
+           <property name="inputMethodHints">
+            <set>Qt::ImhDigitsOnly|Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+           </property>
            <property name="echoMode">
             <enum>QLineEdit::Password</enum>
            </property>
@@ -194,6 +201,9 @@
          </item>
          <item>
           <widget class="QLineEdit" name="confirmNewPinField">
+           <property name="inputMethodHints">
+            <set>Qt::ImhDigitsOnly|Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+           </property>
            <property name="echoMode">
             <enum>QLineEdit::Password</enum>
            </property>

@@ -37,6 +37,7 @@ DeviceSettings::DeviceSettings(QDBusObjectPath device, QWidget *parent) :
     ui->setupUi(this);
     d = new DeviceSettingsPrivate();
 
+    ui->leftPane->setFixedWidth(SC_DPI(300));
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Lift);
 
     d->device.reset(new NetworkManager::Device(device.path()));

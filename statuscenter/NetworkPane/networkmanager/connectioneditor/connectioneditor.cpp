@@ -39,6 +39,7 @@ ConnectionEditor::ConnectionEditor(NetworkManager::Device::Ptr device, NetworkMa
     ui->setupUi(this);
     d = new ConnectionEditorPrivate();
 
+    ui->leftPane->setFixedWidth(SC_DPI(300));
     ui->unsavedSettingsWidget->setVisible(false);
     ui->discardSettingsButton->setProperty("type", "destructive");
     ui->removeButton->setProperty("type", "destructive");

@@ -383,6 +383,9 @@
                    <pointsize>30</pointsize>
                   </font>
                  </property>
+                 <property name="inputMethodHints">
+                  <set>Qt::ImhDigitsOnly|Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+                 </property>
                  <property name="frame">
                   <bool>false</bool>
                  </property>
@@ -669,6 +672,9 @@
                   <font>
                    <pointsize>30</pointsize>
                   </font>
+                 </property>
+                 <property name="inputMethodHints">
+                  <set>Qt::ImhDigitsOnly|Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
                  </property>
                  <property name="frame">
                   <bool>false</bool>
