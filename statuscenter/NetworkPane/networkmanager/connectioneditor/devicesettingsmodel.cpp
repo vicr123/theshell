@@ -26,6 +26,7 @@
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
 #include "connectioneditor.h"
+#include "panes/simpinpane.h"
 
 struct DeviceSettingsModelItem {
     enum ItemAction {
@@ -112,7 +113,10 @@ DeviceSettingsModel::DeviceSettingsModel(NetworkManager::Device::Ptr device, QOb
     switch (device->type()) {
         case NetworkManager::Device::Modem: {
             //Check if this is actually a cellular modem
-            d->items.append(QSharedPointer<DeviceSettingsModelItem>(new DeviceSettingsModelItem(tr("SIM PIN"), QIcon::fromTheme("sim-card"))));
+            d->items.append(QSharedPointer<DeviceSettingsModelItem>(new DeviceSettingsModelItem(tr("SIM PIN"), QIcon::fromTheme("sim-card"), [=] {
+                ModemManager::Modem::Ptr m(new ModemManager::Modem(d->device->udi()));
+                return new SimPinPane(m);
+            })));
             break;
         }
         default: ; //Do nothing here
@@ -189,6 +193,8 @@ void DeviceSettingsModel::activateItem(QModelIndex index) {
                     case NetworkManager::Device::Modem:
                         settings.reset(new NetworkManager::ConnectionSettings(NetworkManager::ConnectionSettings::Gsm));
                         break;
+                    case NetworkManager::Device::Wifi:
+                        settings.reset(new NetworkManager::ConnectionSettings(NetworkManager::ConnectionSettings::Wireless));
                 }
 
                 settings->setId(tr("New Connection"));

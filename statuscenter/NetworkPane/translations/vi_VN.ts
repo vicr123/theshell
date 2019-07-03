@@ -678,6 +678,107 @@
     </message>
 </context>
 <context>
+    <name>SimPinPane</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ACTIONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Require a SIM PIN every time this SIM card is used in a device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable SIM PIN checking on this SIM card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the SIM PIN for this SIM card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm the current SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>You have %n attempts remaining</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Incorrect SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The incorrect SIM PIN was given.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>That didn&apos;t work</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There was a problem trying to enable the SIM PIN.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There was a problem trying to disable the SIM PIN.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN Enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The SIM PIN has been enabled successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The SIM PIN has been disabled successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the new SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There was a problem trying to change the SIM PIN.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The SIM PIN has been changed successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SimPinRequest</name>
     <message>
         <source>Form</source>

@@ -106,7 +106,7 @@ bool DeviceSettings::eventFilter(QObject *watched, QEvent *event) {
         QSize size = ui->connectionsWidget->sizeHintForIndex(index);
         if (QApplication::layoutDirection() == Qt::RightToLeft
                 ? (e->pos().x() < size.height())
-                : (e->pos().x() > size.width() - size.height())) {
+                : (e->pos().x() > ui->connectionsWidget->width() - size.height())) {
             //We're positioned over the secondary item
             d->model->activateSecondary(index);
         } else {
