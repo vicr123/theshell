@@ -17,47 +17,41 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef CHUNKWIDGET_H
-#define CHUNKWIDGET_H
+#ifndef GSMSETTINGSPANE_H
+#define GSMSETTINGSPANE_H
 
 #include <QWidget>
-#include <QLabel>
+#include "settingpane.h"
 
 namespace Ui {
-    class ChunkWidget;
+    class GsmSettingsPane;
 }
 
-class DevicePanel;
-struct ChunkWidgetPrivate;
-class ChunkWidget : public QWidget
+struct GsmSettingsPanePrivate;
+class GsmSettingsPane : public SettingPane
 {
         Q_OBJECT
 
     public:
-        explicit ChunkWidget(QWidget *parent = nullptr);
-        ~ChunkWidget();
+        explicit GsmSettingsPane(NetworkManager::Connection::Ptr connection, QWidget *parent = nullptr);
+        ~GsmSettingsPane();
 
-        void setIcon(QIcon icon, bool isFlightMode = false);
-        void setText(QString text);
+    public slots:
+        void updateFields();
 
-        void setSupplementaryText(QString supplementaryText);
+    private slots:
+        void on_apnField_textChanged(const QString &arg1);
 
-        void watch(DevicePanel* device);
-        void endWatch();
+        void on_usernameField_textChanged(const QString &arg1);
 
-        QLabel* snackWidget();
+        void on_passwordField_textChanged(const QString &arg1);
 
-        void setVisible(bool visible);
-
-    signals:
-        void showNetworkPane();
+        void on_allowRoamingSwitch_toggled(bool checked);
 
     private:
-        Ui::ChunkWidget *ui;
-        ChunkWidgetPrivate* d;
+        Ui::GsmSettingsPane *ui;
 
-        void mousePressEvent(QMouseEvent* event);
-        void set();
+        GsmSettingsPanePrivate* d;
 };
 
-#endif // CHUNKWIDGET_H
+#endif // GSMSETTINGSPANE_H

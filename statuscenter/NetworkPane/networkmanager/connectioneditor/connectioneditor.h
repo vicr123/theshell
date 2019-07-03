@@ -17,47 +17,44 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef CHUNKWIDGET_H
-#define CHUNKWIDGET_H
+#ifndef CONNECTIONEDITOR_H
+#define CONNECTIONEDITOR_H
 
 #include <QWidget>
-#include <QLabel>
+#include <NetworkManagerQt/Device>
+#include <NetworkManagerQt/Connection>
 
 namespace Ui {
-    class ChunkWidget;
+    class ConnectionEditor;
 }
 
-class DevicePanel;
-struct ChunkWidgetPrivate;
-class ChunkWidget : public QWidget
+struct ConnectionEditorPrivate;
+class ConnectionEditor : public QWidget
 {
         Q_OBJECT
 
     public:
-        explicit ChunkWidget(QWidget *parent = nullptr);
-        ~ChunkWidget();
+        explicit ConnectionEditor(NetworkManager::Device::Ptr device, NetworkManager::Connection::Ptr connection, QWidget *parent = nullptr);
+        ~ConnectionEditor();
 
-        void setIcon(QIcon icon, bool isFlightMode = false);
-        void setText(QString text);
+    private slots:
+        void on_connectionNameLineEdit_textChanged(const QString &arg1);
 
-        void setSupplementaryText(QString supplementaryText);
+        void on_settingsList_currentRowChanged(int currentRow);
 
-        void watch(DevicePanel* device);
-        void endWatch();
+        void on_saveSettingsButton_clicked();
 
-        QLabel* snackWidget();
+        void on_discardSettingsButton_clicked();
 
-        void setVisible(bool visible);
+        void updateSettings();
 
-    signals:
-        void showNetworkPane();
+        void on_connectAutomaticallySwitch_toggled(bool checked);
+
+        void on_removeButton_clicked();
 
     private:
-        Ui::ChunkWidget *ui;
-        ChunkWidgetPrivate* d;
-
-        void mousePressEvent(QMouseEvent* event);
-        void set();
+        Ui::ConnectionEditor *ui;
+        ConnectionEditorPrivate* d;
 };
 
-#endif // CHUNKWIDGET_H
+#endif // CONNECTIONEDITOR_H

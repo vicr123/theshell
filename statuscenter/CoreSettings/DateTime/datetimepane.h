@@ -70,6 +70,8 @@ class DateTimePane : public tStackedWidget, public StatusCenterPaneObject
         DateTimePanePrivate* d;
         tPromise<void>* launchDateTimeService();
         tPromise<void>* checkPolkit(QString action);
+
+        void changeEvent(QEvent* event);
 };
 
 #endif // DATETIMEPANE_H

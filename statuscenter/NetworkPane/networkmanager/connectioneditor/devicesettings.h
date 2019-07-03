@@ -17,47 +17,41 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef CHUNKWIDGET_H
-#define CHUNKWIDGET_H
+#ifndef DEVICESETTINGS_H
+#define DEVICESETTINGS_H
 
 #include <QWidget>
-#include <QLabel>
+#include <QDBusObjectPath>
 
 namespace Ui {
-    class ChunkWidget;
+    class DeviceSettings;
 }
 
-class DevicePanel;
-struct ChunkWidgetPrivate;
-class ChunkWidget : public QWidget
+struct DeviceSettingsPrivate;
+class DeviceSettings : public QWidget
 {
         Q_OBJECT
 
     public:
-        explicit ChunkWidget(QWidget *parent = nullptr);
-        ~ChunkWidget();
+        explicit DeviceSettings(QDBusObjectPath device, QWidget *parent = nullptr);
+        ~DeviceSettings();
 
-        void setIcon(QIcon icon, bool isFlightMode = false);
-        void setText(QString text);
+    public slots:
+        void close();
 
-        void setSupplementaryText(QString supplementaryText);
+    private slots:
+        void on_backButton_clicked();
 
-        void watch(DevicePanel* device);
-        void endWatch();
-
-        QLabel* snackWidget();
-
-        void setVisible(bool visible);
+        void on_connectionsWidget_clicked(const QModelIndex &index);
 
     signals:
-        void showNetworkPane();
+        void done();
 
     private:
-        Ui::ChunkWidget *ui;
-        ChunkWidgetPrivate* d;
+        Ui::DeviceSettings *ui;
 
-        void mousePressEvent(QMouseEvent* event);
-        void set();
+        DeviceSettingsPrivate* d;
+        bool eventFilter(QObject* watched, QEvent* event);
 };
 
-#endif // CHUNKWIDGET_H
+#endif // DEVICESETTINGS_H

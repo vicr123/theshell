@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets dbus thelib
+QT       += core gui widgets dbus thelib ModemManagerQt NetworkManagerQt network
 
 TARGET = tsnm
 TEMPLATE = lib
@@ -81,6 +81,14 @@ unix {
 }
 
 HEADERS += \
+    networkmanager/connectioneditor/connectioneditor.h \
+    networkmanager/connectioneditor/devicesettings.h \
+    networkmanager/connectioneditor/devicesettingsmodel.h \
+    networkmanager/connectioneditor/panes/gsmsettingspane.h \
+    networkmanager/connectioneditor/panes/settingpane.h \
+    networkmanager/devicepanel.h \
+    networkmanager/enums.h \
+    networkmanager/popovers/simpinrequest.h \
     plugin.h \
     networkmanager/availablenetworkslist.h \
     networkmanager/networkwidget.h \
@@ -90,6 +98,13 @@ HEADERS += \
     networkmanager/editwidget.h
 
 SOURCES += \
+    networkmanager/connectioneditor/connectioneditor.cpp \
+    networkmanager/connectioneditor/devicesettings.cpp \
+    networkmanager/connectioneditor/devicesettingsmodel.cpp \
+    networkmanager/connectioneditor/panes/gsmsettingspane.cpp \
+    networkmanager/connectioneditor/panes/settingpane.cpp \
+    networkmanager/devicepanel.cpp \
+    networkmanager/popovers/simpinrequest.cpp \
     plugin.cpp \
     networkmanager/availablenetworkslist.cpp \
     networkmanager/networkwidget.cpp \
@@ -102,7 +117,15 @@ DISTFILES += \
     NetworkPane.json
 
 FORMS += \
+    networkmanager/connectioneditor/connectioneditor.ui \
+    networkmanager/connectioneditor/devicesettings.ui \
+    networkmanager/connectioneditor/panes/gsmsettingspane.ui \
+    networkmanager/devicepanel.ui \
     networkmanager/networkwidget.ui \
     networkmanager/chunkwidget.ui \
+    networkmanager/popovers/simpinrequest.ui \
     networkmanager/securityinformationwidget.ui \
     networkmanager/editwidget.ui
+
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += ModemManager libnm

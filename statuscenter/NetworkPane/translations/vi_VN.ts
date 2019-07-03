@@ -37,6 +37,65 @@
     </message>
 </context>
 <context>
+    <name>ConnectionEditor</name>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CONNECTION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ACTIONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation type="unfinished">Kết nối</translation>
+    </message>
+    <message>
+        <source>Connect to this network now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UNSAVED SETTINGS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Discard Changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect Automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove these settings from your device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Connection?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To use this connection again, you&apos;ll need to set it up again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DevicePanel</name>
     <message>
         <source>Wired Connection</source>
@@ -94,11 +153,216 @@
         <source>Unavailable</source>
         <translation>Không sẵn</translation>
     </message>
+    <message>
+        <source>Cellular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PUK required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN2 required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PUK2 required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initializing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enabling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Searching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cellular Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Provide SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Provide SIM PUK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Provide SIM PIN2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Provide SIM PUK2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To connect to this network, try switching on Cellular.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setup may be required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wired</source>
+        <translation type="unfinished">Kết dây</translation>
+    </message>
+    <message>
+        <source>A %1 is required to access the cellular network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PUK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PUK2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Roaming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emergency Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No SIM inserted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To connect to this network, try inserting a SIM card.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PUK Blocked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact your mobile operator and acquire a new SIM card.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WiFi Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeviceSettings</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Networking Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connect to a network?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a connection to connect or edit it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wired Connection</source>
+        <translation type="unfinished">Kết nối dây</translation>
+    </message>
+    <message>
+        <source>WiFi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bluetooth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cellular</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeviceSettingsModel</name>
+    <message>
+        <source>New Connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditWidget</name>
     <message>
         <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GsmSettingsPane</name>
+    <message>
+        <source>GSM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished">Mật khẩu</translation>
+    </message>
+    <message>
+        <source>APN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished">Tên người dùng</translation>
+    </message>
+    <message>
+        <source>NETWORK ACCESS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow Roaming</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -193,10 +457,6 @@
         <translation>Chưa kết nối</translation>
     </message>
     <message>
-        <source>Wired</source>
-        <translation>Kết dây</translation>
-    </message>
-    <message>
         <source>Login Required</source>
         <comment>Currently behind network Portal</comment>
         <translation>Yêu cầu đăng nhập</translation>
@@ -223,10 +483,6 @@
         <translation>Mạng</translation>
     </message>
     <message>
-        <source>icon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You are in flight mode. Network access may be limited.</source>
         <translation>Bạn đang trong chế độ máy bay. Truy cập mạng có thể bị giới hạn.</translation>
     </message>
@@ -236,6 +492,10 @@
     </message>
     <message>
         <source>Check that NetworkManager is running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cellular</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -415,6 +675,57 @@
     <message>
         <source>Enter the information to connect to a new network</source>
         <translation type="unfinished">Điền vào thông tin để kết nối với mạng mới</translation>
+    </message>
+</context>
+<context>
+    <name>SimPinRequest</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PUK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PIN2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM PUK2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Provide the &lt;b&gt;%1&lt;/b&gt; to unlock this SIM card.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>You have %n attempts remaining.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Additionally, provide a new &lt;b&gt;%1&lt;/b&gt; to set after the SIM is unlocked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;&lt;b&gt;Don&apos;t know what this is about?&lt;/b&gt; The SIM PIN has been entered incorrectly too many times, and the PUK is now required. Contact your network operator for the PUK.&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Don&apos;t guess the PUK.&lt;/b&gt; If you run out of attempts, this SIM card will be blocked forever, and you&apos;ll need to contact your network operator for a new SIM card.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm SIM PIN</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

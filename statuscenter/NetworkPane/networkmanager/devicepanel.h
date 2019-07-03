@@ -17,47 +17,52 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef CHUNKWIDGET_H
-#define CHUNKWIDGET_H
+#ifndef DEVICEPANEL_H
+#define DEVICEPANEL_H
 
 #include <QWidget>
-#include <QLabel>
+#include <QDBusObjectPath>
 
 namespace Ui {
-    class ChunkWidget;
+    class DevicePanel;
 }
 
-class DevicePanel;
-struct ChunkWidgetPrivate;
-class ChunkWidget : public QWidget
+struct DevicePanelPrivate;
+class DevicePanel : public QWidget
 {
-        Q_OBJECT
+    Q_OBJECT
 
     public:
-        explicit ChunkWidget(QWidget *parent = nullptr);
-        ~ChunkWidget();
+        explicit DevicePanel(QDBusObjectPath device, QWidget* popoverOnWidget, QWidget* parent = 0);
+        ~DevicePanel();
 
-        void setIcon(QIcon icon, bool isFlightMode = false);
-        void setText(QString text);
+        enum DevicePanelType {
+            Unknown,
+            Wired,
+            Wifi,
+            Bluetooth,
+            Cellular
+        };
 
-        void setSupplementaryText(QString supplementaryText);
+        DevicePanelType deviceType();
 
-        void watch(DevicePanel* device);
-        void endWatch();
+        QIcon chunkIcon();
+        QString chunkText();
 
-        QLabel* snackWidget();
-
-        void setVisible(bool visible);
+    public slots:
+        void updateInfo();
 
     signals:
-        void showNetworkPane();
+        void connectToWirelessDevice(QDBusObjectPath device);
+        void getInformationAboutDevice(QDBusObjectPath device);
+        void updated();
+
+    private slots:
+        void on_infoButton_clicked();
 
     private:
-        Ui::ChunkWidget *ui;
-        ChunkWidgetPrivate* d;
-
-        void mousePressEvent(QMouseEvent* event);
-        void set();
+        DevicePanelPrivate* d;
+        Ui::DevicePanel *ui;
 };
 
-#endif // CHUNKWIDGET_H
+#endif // DEVICEPANEL_H

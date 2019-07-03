@@ -54,6 +54,7 @@ class OverviewSettings : public QWidget, public StatusCenterPaneObject
         Ui::OverviewSettings *ui;
 
         QSettings settings;
+        void changeEvent(QEvent* event);
 };
 
 #endif // OVERVIEWSETTINGS_H

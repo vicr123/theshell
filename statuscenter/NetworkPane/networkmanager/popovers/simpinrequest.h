@@ -17,47 +17,37 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef CHUNKWIDGET_H
-#define CHUNKWIDGET_H
+#ifndef SIMPINREQUEST_H
+#define SIMPINREQUEST_H
 
 #include <QWidget>
-#include <QLabel>
 
 namespace Ui {
-    class ChunkWidget;
+    class SimPinRequest;
 }
 
-class DevicePanel;
-struct ChunkWidgetPrivate;
-class ChunkWidget : public QWidget
+struct SimPinRequestPrivate;
+class SimPinRequest : public QWidget
 {
         Q_OBJECT
 
     public:
-        explicit ChunkWidget(QWidget *parent = nullptr);
-        ~ChunkWidget();
-
-        void setIcon(QIcon icon, bool isFlightMode = false);
-        void setText(QString text);
-
-        void setSupplementaryText(QString supplementaryText);
-
-        void watch(DevicePanel* device);
-        void endWatch();
-
-        QLabel* snackWidget();
-
-        void setVisible(bool visible);
+        explicit SimPinRequest(QString modemPath, QWidget *parent = nullptr);
+        ~SimPinRequest();
 
     signals:
-        void showNetworkPane();
+        void done();
+
+    private slots:
+        void on_backButton_clicked();
+
+        void on_okButton_clicked();
 
     private:
-        Ui::ChunkWidget *ui;
-        ChunkWidgetPrivate* d;
+        Ui::SimPinRequest *ui;
+        SimPinRequestPrivate* d;
 
-        void mousePressEvent(QMouseEvent* event);
-        void set();
+        void checkSimLock();
 };
 
-#endif // CHUNKWIDGET_H
+#endif // SIMPINREQUEST_H

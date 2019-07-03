@@ -43,31 +43,6 @@ namespace Ui {
 class NetworkWidget;
 }
 
-class DevicePanel : public QWidget
-{
-    Q_OBJECT
-
-    public:
-        explicit DevicePanel(QDBusObjectPath device, QWidget* parent = 0);
-        ~DevicePanel();
-
-        int deviceType();
-
-    public slots:
-        void updateInfo();
-
-    signals:
-        void connectToWirelessDevice(QDBusObjectPath device);
-        void getInformationAboutDevice(QDBusObjectPath device);
-
-    private:
-        QDBusInterface* deviceInterface;
-        QDBusInterface* nmInterface = new QDBusInterface("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus());
-        QLabel *iconLabel, *connectionNameLabel, *connectionSubNameLabel;
-        QDBusObjectPath device;
-        QBoxLayout* buttonLayout;
-};
-
 struct NetworkWidgetPrivate;
 class NetworkWidget : public QWidget, public StatusCenterPaneObject
 {

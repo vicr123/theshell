@@ -84,3 +84,9 @@ void OverviewSettings::on_fahrenheitRadio_toggled(bool checked)
         settings.setValue("overview/weatherInCelsius", false);
     }
 }
+
+void OverviewSettings::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

@@ -227,3 +227,10 @@ void DateTimePane::on_searchTimezones_textChanged(const QString &arg1)
 {
     d->timezoneModel->search(arg1);
 }
+
+void DateTimePane::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}
+

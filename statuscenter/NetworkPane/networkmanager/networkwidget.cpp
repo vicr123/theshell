@@ -24,6 +24,7 @@
 #include <QFileDialog>
 #include <QDBusServiceWatcher>
 #include <QDBusConnectionInterface>
+#include "devicepanel.h"
 
 struct NetworkWidgetPrivate {
     QSettings settings;
@@ -32,12 +33,14 @@ struct NetworkWidgetPrivate {
     bool flightMode = false;
 
     int wifiSwitch = -1;
+    int cellularSwitch = -1;
 
     ChunkWidget* chunk;
-    QLabel* snack;
 
     QDBusServiceWatcher* nmWatcher;
     bool nmAvailable = false;
+
+    QMap<QString, DevicePanel*> devicesWidgets;
 };
 
 NetworkWidget::NetworkWidget(QWidget *parent) :
@@ -52,10 +55,9 @@ NetworkWidget::NetworkWidget(QWidget *parent) :
     connect(d->nmWatcher, &QDBusServiceWatcher::serviceUnregistered, this, &NetworkWidget::networkManagerGone);
 
     ui->flightModeWarning->setVisible(false);
-    ui->flightModeIcon->setPixmap(QIcon::fromTheme("flight-mode").pixmap(QSize(16, 16) * theLibsGlobal::getDPIScaling()));
+    ui->flightModeIcon->setPixmap(QIcon::fromTheme("flight-mode").pixmap(SC_DPI_T(QSize(16, 16), QSize)));
 
     d->chunk = new ChunkWidget();
-    d->snack = new QLabel();
     connect(d->chunk, &ChunkWidget::showNetworkPane, [=] {
         sendMessage("show", {});
     });
@@ -88,7 +90,7 @@ NetworkWidget::NetworkWidget(QWidget *parent) :
 
     QTimer::singleShot(0, [=] {
         sendMessage("register-chunk", {QVariant::fromValue(d->chunk)});
-        sendMessage("register-snack", {QVariant::fromValue(d->snack)});
+        sendMessage("register-snack", {QVariant::fromValue(d->chunk->snackWidget())});
 
         updateDevices();
         updateGlobals();
@@ -142,10 +144,14 @@ void NetworkWidget::message(QString name, QVariantList args) {
     } else if (name == "switch-registered") {
         if (args.at(1) == "wireless") {
             d->wifiSwitch = args.at(0).toUInt();
+        } else if (args.at(1) == "cellular") {
+            d->cellularSwitch = args.at(0).toUInt();
         }
     } else if (name == "switch-toggled") {
         if (args.at(0) == d->wifiSwitch) {
             d->nmInterface->setProperty("WirelessEnabled", args.at(1).toBool());
+        } else if (args.at(0) == d->cellularSwitch) {
+            d->nmInterface->setProperty("WwanEnabled", args.at(1).toBool());
         }
     }
 }
@@ -176,34 +182,52 @@ void NetworkWidget::flightModeChanged(bool flight) {
 }
 
 void NetworkWidget::updateDevices() {
-    QBoxLayout* layout = (QBoxLayout*) ui->devicesList->layout();
-    QLayoutItem* i = layout->takeAt(0);
-    while (i != nullptr) {
-        if (i->widget() != nullptr) {
-            i->widget()->deleteLater();
-        }
-        delete i;
-        i = layout->takeAt(0);
-    }
+    QBoxLayout* layout = ui->devicesLayout;
 
     if (!d->nmAvailable) return; //NetworkManager is not available; don't do anything
 
     bool haveWifi = false;
+    bool haveCellular = false;
 
+    //Remove stale devices
     QList<QDBusObjectPath> devices = d->nmInterface->property("AllDevices").value<QList<QDBusObjectPath>>();
-    for (QDBusObjectPath device : devices) {
-        DevicePanel* panel = new DevicePanel(device);
-        layout->addWidget(panel);
-        connect(panel, SIGNAL(connectToWirelessDevice(QDBusObjectPath)), this, SLOT(connectToWirelessDevice(QDBusObjectPath)));
-        connect(panel, SIGNAL(getInformationAboutDevice(QDBusObjectPath)), this, SLOT(getInformationAboutDevice(QDBusObjectPath)));
-
-        int type = panel->deviceType();
-        if (type == Wifi) {
-            haveWifi = true;
+    QStringList devicesToRemove;
+    for (QString device : d->devicesWidgets.keys()) {
+        QDBusObjectPath path(device);
+        if (!devices.contains(path)) {
+            devicesToRemove.append(device);
         }
     }
 
-    layout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    for (QString device : devicesToRemove) {
+        DevicePanel* panel = d->devicesWidgets.value(device);
+        layout->removeWidget(panel);
+        panel->deleteLater();
+    }
+
+    //Add new devices
+    for (QDBusObjectPath device : devices) {
+        DevicePanel* panel;
+        if (d->devicesWidgets.contains(device.path())) {
+            panel = d->devicesWidgets.value(device.path());
+        } else {
+            panel = new DevicePanel(device, this);
+            layout->addWidget(panel);
+            connect(panel, SIGNAL(connectToWirelessDevice(QDBusObjectPath)), this, SLOT(connectToWirelessDevice(QDBusObjectPath)));
+            connect(panel, SIGNAL(getInformationAboutDevice(QDBusObjectPath)), this, SLOT(getInformationAboutDevice(QDBusObjectPath)));
+            connect(panel, &DevicePanel::destroyed, this, [=] {
+                d->devicesWidgets.remove(device.path());
+            });
+            d->devicesWidgets.insert(device.path(), panel);
+        }
+
+        DevicePanel::DevicePanelType type = panel->deviceType();
+        if (type == DevicePanel::Wifi) {
+            haveWifi = true;
+        } else if (type == DevicePanel::Cellular) {
+            haveCellular = true;
+        }
+    }
 
     QTimer::singleShot(0, [=] {
         //In case this is run during the constructor
@@ -214,6 +238,15 @@ void NetworkWidget::updateDevices() {
             //Deregister the WiFi switch
             sendMessage("deregister-switch", {d->wifiSwitch});
             d->wifiSwitch = -1;
+        }
+
+        if (haveCellular && d->cellularSwitch == -1) {
+            //Register the WiFi switch
+            sendMessage("register-switch", {tr("Cellular"), d->nmInterface->property("WwanEnabled").toBool(), "cellular"});
+        } else if (!haveCellular && d->cellularSwitch != -1) {
+            //Deregister the WiFi switch
+            sendMessage("deregister-switch", {d->cellularSwitch});
+            d->cellularSwitch = -1;
         }
     });
 }
@@ -411,227 +444,6 @@ void NetworkWidget::getInformationAboutDevice(QDBusObjectPath device) {
     ui->InformationTable->addTopLevelItems(getInfoChildren(data));
 }
 
-DevicePanel::DevicePanel(QDBusObjectPath device, QWidget* parent) : QWidget(parent) {
-    deviceInterface = new QDBusInterface("org.freedesktop.NetworkManager", device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus());
-    this->device = device;
-    QDBusConnection::systemBus().connect(deviceInterface->service(), device.path(), "org.freedesktop.DBus.Properties", "PropertiesChanged", this, SLOT(updateInfo()));
-
-    QBoxLayout* infoLayout = new QBoxLayout(QBoxLayout::LeftToRight);
-
-    QPushButton* infoButton = new QPushButton();
-    infoButton->setIcon(QIcon::fromTheme("help-about"));
-    infoButton->setFlat(true);
-    connect(infoButton, &QPushButton::clicked, [=] {
-        emit getInformationAboutDevice(device);
-    });
-    infoLayout->addWidget(infoButton);
-
-    iconLabel = new QLabel();
-    infoLayout->addWidget(iconLabel);
-
-    QBoxLayout* textLayout = new QBoxLayout(QBoxLayout::TopToBottom);
-    infoLayout->addLayout(textLayout);
-
-    connectionNameLabel = new QLabel();
-    connectionNameLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    textLayout->addWidget(connectionNameLabel);
-
-    connectionSubNameLabel = new QLabel();
-    connectionSubNameLabel->setEnabled(false);
-    textLayout->addWidget(connectionSubNameLabel);
-
-    buttonLayout = new QBoxLayout(QBoxLayout::LeftToRight);
-    buttonLayout->setSpacing(0);
-    infoLayout->addLayout(buttonLayout);
-
-    this->setLayout(infoLayout);
-
-    updateInfo();
-}
-
-DevicePanel::~DevicePanel() {
-    deviceInterface->deleteLater();
-    nmInterface->deleteLater();
-}
-
-int DevicePanel::deviceType() {
-    return deviceInterface->property("DeviceType").toInt();
-}
-
-void DevicePanel::updateInfo() {
-    QLayoutItem* i = buttonLayout->takeAt(0);
-    while (i != nullptr) {
-        if (i->widget() != nullptr) {
-            i->widget()->deleteLater();
-        }
-        delete i;
-        i = buttonLayout->takeAt(0);
-    }
-
-    NmDeviceState state = (NmDeviceState) deviceInterface->property("State").toInt();
-
-    QIcon icon;
-
-    switch (deviceInterface->property("DeviceType").toInt()) {
-        case Ethernet: { //Ethernet
-            if (state == Disconnected || state == Failed || state == Unavailable) {
-                icon = QIcon::fromTheme("network-wired-unavailable");
-                connectionNameLabel->setText(tr("Wired Connection"));
-                connectionSubNameLabel->setText(tr("Disconnected"));
-
-                if (state == Unavailable) {
-                    QLabel* label = new QLabel();
-                    label->setText(tr("To connect to this network, try plugging a cable in."));
-                    buttonLayout->addWidget(label);
-                } else {
-                    QPushButton* networksButton = new QPushButton();
-                    networksButton->setText(tr("Connect"));
-                    networksButton->setIcon(QIcon::fromTheme("network-connect"));
-                    connect(networksButton, &QPushButton::clicked, [=] {
-                        nmInterface->call(QDBus::NoBlock, "ActivateConnection", QVariant::fromValue(QDBusObjectPath("/")), QVariant::fromValue(device), QVariant::fromValue(QDBusObjectPath("/")));
-                    });
-                    buttonLayout->addWidget(networksButton);
-                }
-            } else {
-                icon = QIcon::fromTheme("network-wired-activated");
-                connectionNameLabel->setText(tr("Wired Connection"));
-                connectionSubNameLabel->setText(tr("Connected"));
-
-                QPushButton* disconnectButton = new QPushButton();
-                disconnectButton->setText(tr("Disconnect"));
-                disconnectButton->setIcon(QIcon::fromTheme("network-disconnect"));
-                disconnectButton->setProperty("type", "destructive");
-                connect(disconnectButton, &QPushButton::clicked, [=] {
-                    QDBusInterface deviceInterface(nmInterface->service(), device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus());
-                    deviceInterface.call(QDBus::NoBlock, "Disconnect");
-                });
-                buttonLayout->addWidget(disconnectButton);
-            }
-            break;
-        }
-
-        case Wifi: {
-            QDBusInterface wirelessInterface(nmInterface->service(), device.path(), "org.freedesktop.NetworkManager.Device.Wireless", QDBusConnection::systemBus());
-            QDBusObjectPath activeNetwork = wirelessInterface.property("ActiveAccessPoint").value<QDBusObjectPath>();
-
-            if (state == Disconnected || state == Failed || state == Unavailable || activeNetwork.path() == "/" || activeNetwork.path() == "") {
-                icon = QIcon::fromTheme("network-wireless-disconnected");
-                connectionNameLabel->setText(tr("Wi-Fi"));
-
-                if (state == Unavailable) {
-                    connectionSubNameLabel->setText(tr("Disabled"));
-
-                    QLabel* label = new QLabel();
-                    label->setText(tr("To connect to a network, try switching on Wi-Fi."));
-                    buttonLayout->addWidget(label);
-
-                } else {
-                    connectionSubNameLabel->setText(tr("Disconnected"));
-                }
-            } else {
-                QDBusInterface activeNetworkInterface(nmInterface->service(), activeNetwork.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus());
-
-                int strength = activeNetworkInterface.property("Strength").toInt();
-                if (strength < 15) {
-                    icon = QIcon::fromTheme("network-wireless-connected-00");
-                } else if (strength < 35) {
-                    icon = QIcon::fromTheme("network-wireless-connected-25");
-                } else if (strength < 65) {
-                    icon = QIcon::fromTheme("network-wireless-connected-50");
-                } else if (strength < 85) {
-                    icon = QIcon::fromTheme("network-wireless-connected-75");
-                } else {
-                    icon = QIcon::fromTheme("network-wireless-connected-100");
-                }
-
-                connectionNameLabel->setText(activeNetworkInterface.property("Ssid").toString());
-
-                if (state == Activated) {
-                    connectionSubNameLabel->setText(tr("Connected"));
-                } else if (state == Prepare || state == Config || state == IpConfig || state == IpCheck || state == Secondaries) {
-                    connectionSubNameLabel->setText(tr("Connecting"));
-                } else if (state == NeedAuth) {
-                    connectionSubNameLabel->setText(tr("Requires Attention"));
-                } else if (state == Deactivating) {
-                    connectionSubNameLabel->setText(tr("Disconnecting"));
-                }
-
-                QPushButton* disconnectButton = new QPushButton();
-                disconnectButton->setText(tr("Disconnect"));
-                disconnectButton->setIcon(QIcon::fromTheme("network-disconnect"));
-                disconnectButton->setProperty("type", "destructive");
-                connect(disconnectButton, &QPushButton::clicked, [=] {
-                    QDBusInterface deviceInterface(nmInterface->service(), device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus());
-                    deviceInterface.call(QDBus::NoBlock, "Disconnect");
-                });
-                buttonLayout->addWidget(disconnectButton);
-            }
-
-            if (state != Unavailable) {
-                QPushButton* networksButton = new QPushButton();
-                networksButton->setText(tr("Choose Network"));
-                networksButton->setIcon(QIcon::fromTheme("go-next"));
-                connect(networksButton, &QPushButton::clicked, [=] {
-                    emit connectToWirelessDevice(device);
-                });
-                buttonLayout->addWidget(networksButton);
-            }
-            break;
-        }
-
-        case Bluetooth: {
-            QDBusInterface btInterface(nmInterface->service(), device.path(), "org.freedesktop.NetworkManager.Device.Bluetooth", QDBusConnection::systemBus());
-            icon = QIcon::fromTheme("network-bluetooth");
-            connectionNameLabel->setText(btInterface.property("Name").toString());
-
-
-            if (state == Disconnected || state == Failed) {
-                connectionSubNameLabel->setText(tr("Disconnected"));
-
-                QPushButton* networksButton = new QPushButton();
-                networksButton->setText(tr("Connect"));
-                networksButton->setIcon(QIcon::fromTheme("network-connect"));
-                connect(networksButton, &QPushButton::clicked, [=] {
-                    nmInterface->call("ActivateConnection", QVariant::fromValue(QDBusObjectPath("/")), QVariant::fromValue(device), QVariant::fromValue(QDBusObjectPath("/")));
-                });
-                buttonLayout->addWidget(networksButton);
-            } else if (state == Unavailable) {
-                connectionSubNameLabel->setText(tr("Unavailable"));
-            } else if (state == Prepare || state == Config || state == IpConfig || state == IpCheck || state == Secondaries) {
-                connectionSubNameLabel->setText(tr("Connecting"));
-
-                QPushButton* disconnectButton = new QPushButton();
-                disconnectButton->setText(tr("Disconnect"));
-                disconnectButton->setIcon(QIcon::fromTheme("network-disconnect"));
-                disconnectButton->setProperty("type", "destructive");
-                connect(disconnectButton, &QPushButton::clicked, [=] {
-                    QDBusInterface deviceInterface(nmInterface->service(), device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus());
-                    deviceInterface.call(QDBus::NoBlock, "Disconnect");
-                });
-                buttonLayout->addWidget(disconnectButton);
-            } else {
-                connectionSubNameLabel->setText(tr("Connected"));
-
-                QPushButton* disconnectButton = new QPushButton();
-                disconnectButton->setText(tr("Disconnect"));
-                disconnectButton->setIcon(QIcon::fromTheme("network-disconnect"));
-                disconnectButton->setProperty("type", "destructive");
-                connect(disconnectButton, &QPushButton::clicked, [=] {
-                    QDBusInterface deviceInterface(nmInterface->service(), device.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus());
-                    deviceInterface.call(QDBus::NoBlock, "Disconnect");
-                });
-                buttonLayout->addWidget(disconnectButton);
-            }
-            break;
-        }
-
-        default:
-            this->deleteLater();
-    }
-
-    iconLabel->setPixmap(icon.pixmap(32 * theLibsGlobal::getDPIScaling(), 32 * theLibsGlobal::getDPIScaling()));
-}
-
 void NetworkWidget::connectToWirelessDevice(QDBusObjectPath device) {
     ui->stackedWidget->setCurrentIndex(2);
     ui->AvailableNetworksList->setModel(new AvailableNetworksList(device));
@@ -640,18 +452,20 @@ void NetworkWidget::connectToWirelessDevice(QDBusObjectPath device) {
 void NetworkWidget::updateGlobals() {
     if (d->nmAvailable) {
         d->chunk->setVisible(true);
-        d->snack->setVisible(true);
 
-        QString text, supplementaryText;
-        QIcon icon;
+        QString supplementaryText;
         QVariant primaryConnectionVariant = d->nmInterface->property("PrimaryConnection");
         QDBusObjectPath primaryConnection = primaryConnectionVariant.value<QDBusObjectPath>();
-        NmDeviceType deviceType;
 
         if (!primaryConnectionVariant.isValid() || primaryConnection.path() == "/") {
-            text = tr("Disconnected");
-            icon = QIcon::fromTheme("network-wired-unavailable");
-            deviceType = Generic;
+            d->chunk->endWatch();
+            if (d->flightMode) {
+                d->chunk->setIcon(QIcon::fromTheme("flight-mode"), true);
+                d->chunk->setText(tr("Flight Mode"));
+            } else {
+                d->chunk->setText(tr("Disconnected"));
+                d->chunk->setIcon(QIcon::fromTheme("network-wired-unavailable"));
+            }
         } else {
             //Check connectivity
             uint connectivity = d->nmInterface->property("Connectivity").toUInt();
@@ -666,98 +480,23 @@ void NetworkWidget::updateGlobals() {
 
             if (devices.length() != 0) {
                 QDBusObjectPath firstDevice = devices.first();
-                QDBusInterface deviceInterface("org.freedesktop.NetworkManager", firstDevice.path(), "org.freedesktop.NetworkManager.Device", QDBusConnection::systemBus());
-                NmDeviceState state = (NmDeviceState) deviceInterface.property("State").toInt();
-                deviceType = (NmDeviceType) deviceInterface.property("DeviceType").toInt();
-
-                switch (deviceType) {
-                    case Ethernet:
-                        if (state == Disconnected || state == Failed || state == Unavailable) {
-                            text = tr("Disconnected");
-                            icon = QIcon::fromTheme("network-wired-unavailable");
-                        } else {
-                            text = tr("Wired");
-                            icon = QIcon::fromTheme("network-wired-activated");
-                        }
-                        break;
-                    case Wifi: {
-                        QDBusInterface wirelessInterface(d->nmInterface->service(), devices.first().path(), "org.freedesktop.NetworkManager.Device.Wireless", QDBusConnection::systemBus());
-                        QDBusObjectPath activeNetwork = wirelessInterface.property("ActiveAccessPoint").value<QDBusObjectPath>();
-
-                        if (state == Disconnected || state == Failed || activeNetwork.path() == "/" || activeNetwork.path() == "") {
-                            text = tr("Disconnected");
-                            icon = QIcon::fromTheme("network-wireless-disconnected");
-                        } else {
-                            QDBusInterface activeNetworkInterface(d->nmInterface->service(), activeNetwork.path(), "org.freedesktop.NetworkManager.AccessPoint", QDBusConnection::systemBus());
-
-                            QString iconName;
-                            QString backupIcon;
-                            int strength = activeNetworkInterface.property("Strength").toInt();
-                            if (strength < 15) {
-                                iconName = "network-wireless-%1-00";
-                            } else if (strength < 35) {
-                                iconName = "network-wireless-%1-25";
-                            } else if (strength < 65) {
-                                iconName = "network-wireless-%1-50";
-                            } else if (strength < 85) {
-                                iconName = "network-wireless-%1-75";
-                            } else {
-                                iconName = "network-wireless-%1-100";
-                            }
-
-                            if (connectivity == 2 || connectivity == 3) {
-                                iconName = iconName.arg("error");
-                                backupIcon = "network-wireless-error";
-                            } else {
-                                iconName = iconName.arg("connected");
-                            }
-
-                            text = activeNetworkInterface.property("Ssid").toString();
-                            icon = QIcon::fromTheme(iconName, QIcon::fromTheme(backupIcon));
-                        }
-                        break;
-                    }
-                    case Bluetooth: {
-                        QDBusInterface btInterface(d->nmInterface->service(), devices.first().path(), "org.freedesktop.NetworkManager.Device.Bluetooth", QDBusConnection::systemBus());
-
-                        if (state == Disconnected || state == Failed || state == Unavailable) {
-                            text = tr("Disconnected");
-                            icon = QIcon::fromTheme("network-bluetooth");
-                        } else {
-                            text = btInterface.property("Name").toString();
-                            icon = QIcon::fromTheme("network-bluetooth");
-                        }
-                        break;
-                    }
-                }
+                DevicePanel* panel = d->devicesWidgets.value(firstDevice.path());
+                d->chunk->watch(panel);
             }
         }
-
-        if (text == tr("Disconnected") && d->flightMode) {
-            icon = QIcon::fromTheme("flight-mode");
-            text = tr("Flight Mode");
-        }
-
-        QString finalText;
-        if (supplementaryText == "") {
-            finalText = text;
-        } else {
-            finalText = text + " · " + supplementaryText;
-        }
-
-        //emit updateBarDisplay(finalText, icon);
-        d->chunk->setIcon(icon);
-        d->chunk->setText(finalText);
-        d->snack->setPixmap(icon.pixmap(QSize(16, 16) * theLibsGlobal::getDPIScaling()));
+        d->chunk->setSupplementaryText(supplementaryText);
 
         if (d->wifiSwitch != -1) {
             //Update the state of the WiFi switch
             sendMessage("set-switch", {d->wifiSwitch, d->nmInterface->property("WirelessEnabled").toBool()});
         }
+        if (d->cellularSwitch != -1) {
+            //Update the state of the Cellular switch
+            sendMessage("set-switch", {d->cellularSwitch, d->nmInterface->property("WwanEnabled").toBool()});
+        }
     } else {
-        //Make snack and chunk invisible
+        //Make chunk invisible
         d->chunk->setVisible(false);
-        d->snack->setVisible(false);
     }
 }
 

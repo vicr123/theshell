@@ -22,10 +22,19 @@
 
 #include "networkmanager/networkwidget.h"
 
+#include <NetworkManagerQt/GenericTypes>
+#include <QMetaType>
+#include <QDBusMetaType>
+#include <generictypes.h>
+
 Plugin::Plugin(QObject *parent) :
     QObject(parent)
 {
     translator = new QTranslator;
+
+    //Register ModemManager stuff
+    registerModemManagerTypes();
+
 
     panes.append(new NetworkWidget());
 }

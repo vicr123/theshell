@@ -17,47 +17,10 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef CHUNKWIDGET_H
-#define CHUNKWIDGET_H
+#include "settingpane.h"
 
-#include <QWidget>
-#include <QLabel>
-
-namespace Ui {
-    class ChunkWidget;
-}
-
-class DevicePanel;
-struct ChunkWidgetPrivate;
-class ChunkWidget : public QWidget
+SettingPane::SettingPane(NetworkManager::Connection::Ptr connection, QWidget *parent) : QWidget(parent)
 {
-        Q_OBJECT
-
-    public:
-        explicit ChunkWidget(QWidget *parent = nullptr);
-        ~ChunkWidget();
-
-        void setIcon(QIcon icon, bool isFlightMode = false);
-        void setText(QString text);
-
-        void setSupplementaryText(QString supplementaryText);
-
-        void watch(DevicePanel* device);
-        void endWatch();
-
-        QLabel* snackWidget();
-
-        void setVisible(bool visible);
-
-    signals:
-        void showNetworkPane();
-
-    private:
-        Ui::ChunkWidget *ui;
-        ChunkWidgetPrivate* d;
-
-        void mousePressEvent(QMouseEvent* event);
-        void set();
-};
-
-#endif // CHUNKWIDGET_H
+    this->connection = connection;
+    connect(connection.data(), &NetworkManager::Connection::updated, this, &SettingPane::updateFields);
+}
