@@ -371,6 +371,19 @@ QString GlobalKeyboardEngine::keyName(KnownKeyNames name) {
     }
 }
 
+struct KeyCodeAndModifier {
+    KeyCode kc;
+    unsigned long modifier;
+
+    bool operator <(const KeyCodeAndModifier& other) const {
+        if (other.kc == this->kc) {
+            return other.modifier < this->modifier;
+        } else {
+            return other.kc < this->kc;
+        }
+    }
+};
+
 struct GlobalKeyboardKeyPrivate {
     QKeySequence key;
 
@@ -380,10 +393,10 @@ struct GlobalKeyboardKeyPrivate {
 
     bool grabbed = false;
 
-    static QMap<KeyCode, int> grabbedKeycodes;
+    static QMap<KeyCodeAndModifier, int> grabbedKeycodes;
 };
 
-QMap<KeyCode, int> GlobalKeyboardKeyPrivate::grabbedKeycodes;
+QMap<KeyCodeAndModifier, int> GlobalKeyboardKeyPrivate::grabbedKeycodes;
 
 GlobalKeyboardKey::GlobalKeyboardKey(QKeySequence key, QString section, QString name, QString description, QObject* parent) : QObject(parent) {
     d = new GlobalKeyboardKeyPrivate();
@@ -404,11 +417,16 @@ void GlobalKeyboardKey::grabKey() {
     if (d->grabbed) return;
     //Grab this key
     KeyCode kc = XKeysymToKeycode(QX11Info::display(), nativeKey(0));
-    if (d->grabbedKeycodes.contains(kc)) {
-        d->grabbedKeycodes.insert(kc, d->grabbedKeycodes.value(kc) + 1);
+    unsigned long mod = nativeModifiers(0);
+    const KeyCodeAndModifier kcm = {kc, mod};
+    if (d->grabbedKeycodes.contains(kcm)) {
+        d->grabbedKeycodes.insert(kcm, d->grabbedKeycodes.value(kcm) + 1);
     } else {
-        d->grabbedKeycodes.insert(kc, 1);
-        XGrabKey(QX11Info::display(), kc, nativeModifiers(0), QX11Info::appRootWindow(), true, GrabModeAsync, GrabModeAsync);
+        d->grabbedKeycodes.insert(kcm, 1);
+        int retval = XGrabKey(QX11Info::display(), kc, mod, QX11Info::appRootWindow(), true, GrabModeAsync, GrabModeAsync);
+        //if (retval != 1) {
+            qDebug() << "XGrabKey returned" << retval << "for" << d->description << "with keycode" << kc;
+        //}
     }
     d->grabbed = true;
 }
@@ -417,11 +435,13 @@ void GlobalKeyboardKey::ungrabKey() {
     if (!d->grabbed) return;
     //Ungrab this key
     KeyCode kc = XKeysymToKeycode(QX11Info::display(), nativeKey(0));
-    if (d->grabbedKeycodes.value(kc) == 1) {
+    unsigned long mod = nativeModifiers(0);
+    const KeyCodeAndModifier kcm = {kc, mod};
+    if (d->grabbedKeycodes.value(kcm) == 1) {
         XUngrabKey(QX11Info::display(), kc, nativeModifiers(0), QX11Info::appRootWindow());
-        d->grabbedKeycodes.remove(kc);
+        d->grabbedKeycodes.remove(kcm);
     } else {
-        d->grabbedKeycodes.insert(kc, d->grabbedKeycodes.value(kc) - 1);
+        d->grabbedKeycodes.insert(kcm, d->grabbedKeycodes.value(kcm) - 1);
     }
     d->grabbed = false;
 }
