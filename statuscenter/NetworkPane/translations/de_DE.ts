@@ -5,62 +5,62 @@
     <name>AvailableNetworksList</name>
     <message>
         <source>Saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Gespeichert</translation>
     </message>
     <message>
         <source>Secured with WPA2-PSK</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschützt mit WPA2-PSK</translation>
     </message>
     <message>
         <source>Secured with WPA-PSK</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschützt mit WPA-PSK</translation>
     </message>
     <message>
         <source>Secured with WPA Enterprise</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschützt mit WPA Enterprise</translation>
     </message>
     <message>
         <source>Secured with WPA2 Enterprise</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschützt mit WPA2 Enterprise</translation>
     </message>
     <message>
         <source>Secured with Dynamic WEP</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschützt mit dynamischen WEP</translation>
     </message>
     <message>
         <source>Secured with Static WEP</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschützt mit statischem WEP</translation>
     </message>
     <message>
         <source>Not Secured</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht Geschützt</translation>
     </message>
 </context>
 <context>
     <name>ConnectionEditor</name>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemeines</translation>
     </message>
     <message>
         <source>Connection Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verbindungsname</translation>
     </message>
     <message>
         <source>CONNECTION</source>
-        <translation type="unfinished"></translation>
+        <translation>VERBINDUNG</translation>
     </message>
     <message>
         <source>ACTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation>AKTIONEN</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbinden</translation>
     </message>
     <message>
         <source>Connect to this network now</source>
-        <translation type="unfinished"></translation>
+        <translation>Zu diesem Netzwerk jetzt verbinden</translation>
     </message>
     <message>
         <source>UNSAVED SETTINGS</source>
@@ -72,7 +72,7 @@
     </message>
     <message>
         <source>Save Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen speichern</translation>
     </message>
     <message>
         <source>Connect Automatically</source>
@@ -80,7 +80,7 @@
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernen</translation>
     </message>
     <message>
         <source>Remove these settings from your device</source>
