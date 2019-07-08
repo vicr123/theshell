@@ -59,14 +59,18 @@ class HotkeyHud : public QDialog
     public:
         ~HotkeyHud();
 
-        static void show(QIcon icon, QString control, int value);
-        static void show(QIcon icon, QString control, QString explanation, int timeout = 1500);
-        void close();
-
         void setGeometry(int x, int y, int w, int h);
         void setGeometry(QRect geometry);
 
         static void makeInstance();
+
+        static HotkeyHud* instance();
+
+    public slots:
+        static void show(QIcon icon, QString control, int value);
+        static void show(QIcon icon, QString control, QString explanation, int timeout = 1500);
+        static void show(QVariantMap options);
+        void close();
 
     private:
         explicit HotkeyHud(QWidget *parent = nullptr);

@@ -21,9 +21,9 @@
 #include "upowerdbus.h"
 #include "power_adaptor.h"
 
-#include "notificationsdbusadaptor.h"
 #include <tpromise.h>
 #include <tsystemsound.h>
+#include "hotkeyhud.h"
 
 extern void EndSession(EndSessionWait::shutdownType type);
 
@@ -31,8 +31,6 @@ UPowerDBus::UPowerDBus(QObject *parent) : QObject(parent)
 {
     new PowerAdaptor(this);
     QDBusConnection::sessionBus().registerObject("/org/thesuite/Power", "org.thesuite.Power", this);
-
-    connect(NotificationsDBusAdaptor::instance(), SIGNAL(ActionInvoked(uint,QString)), this, SLOT(ActionInvoked(uint,QString)));
 
     //Inhibit logind's handling of some power events
     QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Inhibit");
@@ -57,6 +55,10 @@ UPowerDBus::UPowerDBus(QObject *parent) : QObject(parent)
 
     QDBusConnection::systemBus().connect("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower", "DeviceAdded", this, SLOT(devicesChanged()));
     QDBusConnection::systemBus().connect("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower", "DeviceRemoved", this, SLOT(devicesChanged()));
+
+    //Set up the HUD
+    //connect(this, SIGNAL(showHotkeyHud(QVariantMap)), HotkeyHud::instance(), SLOT(show(QVariantMap)));
+    connect(this, &UPowerDBus::showHotkeyHud, HotkeyHud::instance(), QOverload<QVariantMap>::of(&HotkeyHud::show), Qt::QueuedConnection);
 
     devicesChanged();
 }
@@ -111,9 +113,9 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                     percentage = i.property("Percentage").toDouble();
                 } else {
                     //Calculate the percentage ourself, and round it to an integer.
-                    //Add 0.5 because C++ always rounds down.
-                    percentage = (int) (((energy - energyEmpty) / (energyFull - energyEmpty) * 100) + 0.5);
+                    percentage = qRound((energy - energyEmpty) / (energyFull - energyEmpty) * 100);
                 }
+
                 if (i.path().contains("battery")) {
                     //PC Battery
                     if (i.property("IsPresent").toBool()) {
@@ -129,23 +131,15 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                             state = " (" + tr("Charging");
 
                             if (!isCharging) {
-                                QString message;
-
-                                if (isPowerStretchOn) {
-                                    setPowerStretch(false);
-                                    message = tr("The power cable has been plugged in and the battery is now being charged. Power Stretch has been turned off.");
-                                } else {
-                                    message = tr("The power cable has been plugged in and the battery is now being charged.");
-                                }
-
-                                QVariantMap hints;
-                                hints.insert("category", "battery.charging");
-                                hints.insert("transient", true);
-                                hints.insert("sound-file", tSystemSound::soundLocation("power-plug"));
-
-                                if (settings.value("power/notifyConnectPower", true).toBool()) {
-                                    NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Charging"), message, QStringList(), hints, 10000);
-                                }
+                                emit showHotkeyHud({
+                                    {"icon", QIcon::fromTheme("battery-charging")},
+                                    {"control", tr("Battery")},
+                                    {"value", static_cast<int>(percentage)},
+                                    {"explanation", tr("Now Charging")},
+                                    {"highlightCol", QColor(0, 200, 0)},
+                                    {"timeout", 5000},
+                                    {"sound", "power-plug"}
+                                });
                             }
 
                             isCharging = true;
@@ -162,10 +156,6 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                                 hourBatteryWarning = false;
                                 halfHourBatteryWarning = false;
                                 tenMinuteBatteryWarning = false;
-
-                                NotificationsDBusAdaptor::CloseNotification(batteryLowNotificationNumber);
-
-                                batteryLowNotificationNumber = 0;
                             }
                             state += ")";
                             break;
@@ -173,13 +163,13 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                             //state = " (" + tr("Discharging");
                             state = " (";
                             if (isConnectedToPower && settings.value("power/notifyUnplugPower", true).toBool()) {
-                                QVariantMap hints;
-                                hints.insert("category", "battery.discharging");
-                                hints.insert("transient", true);
-
-                                NotificationsDBusAdaptor::Notify("theShell", (uint) 0, "", tr("Discharging"),
-                                                  tr("The power cable has been removed, and your PC is now running on battery power."),
-                                                  QStringList(), hints, 10000);
+                                emit showHotkeyHud({
+                                    {"icon", QIcon::fromTheme("battery-080")},
+                                    {"control", tr("Battery")},
+                                    {"value", static_cast<int>(percentage)},
+                                    {"explanation", tr("Using Battery Power")},
+                                    {"timeout", 5000}
+                                });
                             }
                             isConnectedToPower = false;
                             isCharging = false;
@@ -189,63 +179,42 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                                 state.append(/*" · " + */timeRemain.toString("h:mm"));
 
                                 if (timeToEmpty <= 600 && tenMinuteBatteryWarning == false) { //Ten minutes left! Critical!
-                                    QVariantMap hints;
-                                    hints.insert("urgency", 2);
-                                    hints.insert("category", "battery.critical");
-                                    hints.insert("sound-file", tSystemSound::soundLocation("battery-caution"));
-
-                                    QStringList actions;
-                                    if (!isPowerStretchOn) {
-                                        actions.append("power-stretch-on");
-                                        actions.append(tr("Turn on Power Stretch"));
-                                    }
-                                    NotificationsDBusAdaptor::Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Critically Low"),
-                                                      tr("You have about 10 minutes of battery remaining."
-                                                      " Either plug in your PC or save your work"
-                                                      " and power off the PC and change the battery."), actions, hints, 0)->then([=](uint id) {
-                                        batteryLowNotificationNumber = id;
+                                    emit showHotkeyHud({
+                                        {"icon", QIcon::fromTheme("battery-low")},
+                                        {"control", tr("Battery")},
+                                        {"value", static_cast<int>(percentage)},
+                                        {"explanation", tr("About 10 minutes remaining")},
+                                        {"highlightCol", QColor(200, 0, 0)},
+                                        {"timeout", 5000},
+                                        {"sound", "battery-caution"}
                                     });
 
                                     tenMinuteBatteryWarning = true;
                                     halfHourBatteryWarning = true;
                                     hourBatteryWarning = true;
                                 } else if (timeToEmpty <= 1800 && halfHourBatteryWarning == false) { //Half hour left! Low!
-                                    QVariantMap hints;
-                                    hints.insert("urgency", 2);
-                                    hints.insert("category", "battery.low");
-                                    hints.insert("sound-file", tSystemSound::soundLocation("battery-caution"));
-
-                                    QStringList actions;
-                                    if (!isPowerStretchOn) {
-                                        actions.append("power-stretch-on");
-                                        actions.append(tr("Turn on Power Stretch"));
-                                    }
-
-                                    NotificationsDBusAdaptor::Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Low"),
-                                                                     tr("You have about half an hour of battery remaining."
-                                                                     " You should plug in your PC now."), actions, hints, 10000)->then([=](uint id) {
-                                        batteryLowNotificationNumber = id;
+                                    emit showHotkeyHud({
+                                        {"icon", QIcon::fromTheme("battery-low")},
+                                        {"control", tr("Battery")},
+                                        {"value", static_cast<int>(percentage)},
+                                        {"explanation", tr("About 30 minutes remaining")},
+                                        {"highlightCol", QColor(200, 0, 0)},
+                                        {"timeout", 5000},
+                                        {"sound", "battery-caution"}
                                     });
 
 
                                     halfHourBatteryWarning = true;
                                     hourBatteryWarning = true;
                                 } else if (timeToEmpty <= 3600 && hourBatteryWarning == false) { //One hour left! Warning!
-                                    QVariantMap hints;
-                                    hints.insert("urgency", 2);
-                                    hints.insert("category", "battery.low");
-                                    hints.insert("sound-file", tSystemSound::soundLocation("battery-low"));
-
-                                    QStringList actions;
-                                    if (!isPowerStretchOn) {
-                                        actions.append("power-stretch-on");
-                                        actions.append(tr("Turn on Power Stretch"));
-                                    }
-
-                                    NotificationsDBusAdaptor::Notify("theShell", batteryLowNotificationNumber, "", tr("Battery Warning"),
-                                                                     tr("You have about an hour of battery remaining."
-                                                                      " You may want to plug in your PC now."), actions, hints, 10000)->then([=](uint id) {
-                                        batteryLowNotificationNumber = id;
+                                    emit showHotkeyHud({
+                                        {"icon", QIcon::fromTheme("battery-low")},
+                                        {"control", tr("Battery")},
+                                        {"value", static_cast<int>(percentage)},
+                                        {"explanation", tr("About 1 hour remaining")},
+                                        {"highlightCol", QColor(200, 0, 0)},
+                                        {"timeout", 5000},
+                                        {"sound", "battery-caution"}
                                     });
 
                                     hourBatteryWarning = true;
@@ -266,13 +235,14 @@ void UPowerDBus::DeviceChanged(QStringList allDevices) {
                         case 6: //Pending Discharge
                             state = " (" + tr("Full") + ")";
                             if (isCharging) {
-                                QVariantMap hints;
-                                hints.insert("category", "battery.charged");
-                                hints.insert("transient", true);
-
-                                NotificationsDBusAdaptor::Notify("theShell", (uint) 0, "", "Battery Charged",
-                                                  "The battery has been charged completely."
-                                                  , QStringList(), hints, 10000);
+                                emit showHotkeyHud({
+                                    {"icon", QIcon::fromTheme("battery-charging-100")},
+                                    {"control", tr("Battery")},
+                                    {"value", static_cast<int>(percentage)},
+                                    {"explanation", tr("Completely Charged")},
+                                    {"highlightCol", QColor(0, 200, 0)},
+                                    {"timeout", 5000}
+                                });
                             }
                             isCharging = false;
                             isConnectedToPower = true;
@@ -445,14 +415,6 @@ void UPowerDBus::setPowerStretch(bool on) {
         settings.setValue("powerstretch/on", on);
         emit powerStretchChanged(on);
         this->devicesChanged();
-    }
-}
-
-void UPowerDBus::ActionInvoked(uint id, QString action_key) {
-    if (id == batteryLowNotificationNumber) {
-        if (action_key == "power-stretch-on") {
-            setPowerStretch(true);
-        }
     }
 }
 

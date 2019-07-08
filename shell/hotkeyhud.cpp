@@ -26,6 +26,7 @@
 #include "audiomanager.h"
 #include <soundengine.h>
 #include "mainwindow.h"
+#include <tsystemsound.h>
 
 extern AudioManager* AudioMan;
 extern MainWindow* MainWin;
@@ -35,6 +36,8 @@ struct HotkeyHudPrivate {
     bool isShowing = false;
     int value;
     QTimer* timeout = nullptr;
+
+    QColor highlightCol;
 };
 
 HotkeyHudPrivate* HotkeyHud::d = new HotkeyHudPrivate();
@@ -208,18 +211,20 @@ void HotkeyHud::paintEvent(QPaintEvent *event) {
 
     QPalette pal = this->palette();
 
-    QColor highlightCol = pal.color(QPalette::Window);
-    int average = (highlightCol.red() + highlightCol.green() + highlightCol.blue()) / 3;
+    QColor highlightCol = d->highlightCol;
+    highlightCol.setAlpha(127);
+    //QColor backgroundCol = pal.color(QPalette::Window);
+    //int average = (backgroundCol.red() + backgroundCol.green() + backgroundCol.blue()) / 3;
     int value = d->value;
     while (value > 0) {
-        if (average < 127) { //Dark color
-            highlightCol = highlightCol.light(150);
+        /*if (average < 127) { //Dark color
+            highlightCol = highlightCol.lighter(150);
         } else {
-            highlightCol = highlightCol.dark(150);
-        }
+            highlightCol = highlightCol.darker(150);
+        }*/
         painter.setBrush(highlightCol);
         painter.setPen(Qt::transparent);
-        painter.drawRect(0, 0, ((float) value / (float) 100) * this->width(), this->height() - 1);
+        painter.drawRect(0, 0, qRound(value / 100.0 * this->width()), this->height() - 1);
         value -= 100;
     }
 
@@ -275,28 +280,61 @@ void HotkeyHud::show(int timeout) {
 }
 
 void HotkeyHud::show(QIcon icon, QString control, int value) {
-    makeInstance(); //Ensure instance exists
-
-    d->instance->ui->icon->setPixmap(icon.pixmap(32));
-    d->instance->ui->control->setText(control);
-    d->instance->ui->value->setText(QString::number(value) + "%");
-    d->instance->ui->explanation->setText("");
-    d->instance->ui->value->setVisible(true);
-    d->value = value;
-    d->instance->show();
-    d->instance->repaint();
+    HotkeyHud::show({
+        {"icon", icon},
+        {"control", control},
+        {"value", value}
+    });
 }
 
 void HotkeyHud::show(QIcon icon, QString control, QString explanation, int timeout) {
+    HotkeyHud::show({
+        {"icon", icon},
+        {"control", control},
+        {"explanation", explanation},
+        {"timeout", timeout}
+    });
+}
+
+void HotkeyHud::show(QVariantMap options) {
     makeInstance(); //Ensure instance exists
 
-    d->instance->ui->icon->setPixmap(icon.pixmap(32));
-    d->instance->ui->control->setText(control);
-    d->instance->ui->explanation->setText(explanation);
-    d->instance->ui->value->setVisible(false);
-    d->instance->ui->explanation->setVisible(true);
-    d->value = 0;
-    d->instance->show(timeout);
+    if (options.contains("icon")) {
+        d->instance->ui->icon->setPixmap(options.value("icon").value<QIcon>().pixmap(32));
+    }
+
+    if (options.contains("control")) {
+        d->instance->ui->control->setText(options.value("control").toString());
+    }
+
+    if (options.contains("value")) {
+        d->value = options.value("value").toInt();
+        d->instance->ui->value->setText(QString::number(d->value) + "%");
+        d->instance->ui->value->setVisible(true);
+    } else {
+        d->value = 0;
+        d->instance->ui->value->setVisible(false);
+    }
+
+    if (options.contains("highlightCol")) {
+        d->highlightCol = options.value("highlightCol").value<QColor>();
+    } else {
+        QColor col = d->instance->palette().color(QPalette::WindowText);
+        int average = (col.red() + col.green() + col.blue()) / 3;
+        if (average < 127) { //Dark color
+            col = col.lighter(150);
+        } else {
+            col = col.darker(150);
+        }
+        d->highlightCol = col;
+    }
+
+    if (options.contains("sound")) {
+        tSystemSound::play(options.value("sound").toString());
+    }
+
+    d->instance->ui->explanation->setText(options.value("explanation", "").toString());
+    d->instance->show(options.value("timeout", 1500).toInt());
     d->instance->repaint();
 }
 
@@ -317,4 +355,9 @@ void HotkeyHud::close() {
 
 void HotkeyHud::makeInstance() {
     if (d->instance == nullptr) d->instance = new HotkeyHud();
+}
+
+HotkeyHud* HotkeyHud::instance() {
+    makeInstance();
+    return d->instance;
 }

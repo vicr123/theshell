@@ -65,6 +65,7 @@ class UPowerDBus : public QObject
     signals:
         void updateDisplay(QString display);
         void batteryChanged(int batteryPercent);
+        void showHotkeyHud(QVariantMap parameters);
 
         Q_SCRIPTABLE void powerStretchChanged(bool powerStretch);
 
@@ -74,9 +75,6 @@ class UPowerDBus : public QObject
         void devicesChanged();
         void setPowerStretch(bool on);
         void queryIdleState();
-
-    private slots:
-        void ActionInvoked(uint id, QString action_key);
 
     private:
         bool hourBatteryWarning = false;
