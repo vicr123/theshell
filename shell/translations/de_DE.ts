@@ -2378,32 +2378,32 @@ super schnell -&gt; superschnell: https://www.duden.de/rechtschreibung/superschn
         <location filename="../upowerdbus.cpp" line="212"/>
         <location filename="../upowerdbus.cpp" line="240"/>
         <source>Battery</source>
-        <translation type="unfinished"></translation>
+        <translation>Akku</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="138"/>
         <source>Now Charging</source>
-        <translation type="unfinished"></translation>
+        <translation>Akku wird geladen</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="170"/>
         <source>Using Battery Power</source>
-        <translation type="unfinished"></translation>
+        <translation>Akkuleistung wird genutzt</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="186"/>
         <source>About 10 minutes remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Etwa 10 Minuten verbleiben</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="200"/>
         <source>About 30 minutes remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Etwa 30 Minuten verbleiben</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="214"/>
         <source>About 1 hour remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Etwa 1 Stunde verbleibt</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="232"/>
@@ -2420,7 +2420,7 @@ super schnell -&gt; superschnell: https://www.duden.de/rechtschreibung/superschn
     <message>
         <location filename="../upowerdbus.cpp" line="242"/>
         <source>Completely Charged</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständig aufgeladen</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="252"/>
