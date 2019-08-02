@@ -7,39 +7,39 @@
         <location filename="../btagent.cpp" line="54"/>
         <location filename="../btagent.cpp" line="94"/>
         <source>Key in this code</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gib diesen Code ein</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="77"/>
         <location filename="../btagent.cpp" line="123"/>
         <source>Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="77"/>
         <location filename="../btagent.cpp" line="123"/>
         <source>Pair Request</source>
-        <translation type="unfinished"></translation>
+        <translation>Pairing-Anfrage</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="78"/>
         <source>%1 wants to pair with your device.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 möchte sich mit deinem Gerät Pairen.</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="88"/>
         <source>Enter Pairing code</source>
-        <translation type="unfinished"></translation>
+        <translation>Gib den Pairing Code ein</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="102"/>
         <source>Check this code matches</source>
-        <translation type="unfinished"></translation>
+        <translation>Überprüfe ob der Code übereinstimmt</translation>
     </message>
     <message>
         <location filename="../btagent.cpp" line="124"/>
         <source>%1 wants to pair with your device. Check that the code &lt;b&gt;%2&lt;/b&gt; matches with the code shown on %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 möchte sich mit deinem Gerät pairen. Überprüfe ob der Code &lt;b&gt;%2&lt;/b&gt; mit dem Code der auf %1 gezeigt wird übereinstimmt.</translation>
     </message>
 </context>
 <context>
@@ -47,17 +47,17 @@
     <message>
         <location filename="../btobexagent.cpp" line="63"/>
         <source>Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth</translation>
     </message>
     <message>
         <location filename="../btobexagent.cpp" line="63"/>
         <source>Incoming File over Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingehende Datei über Bluetooth</translation>
     </message>
     <message>
         <location filename="../btobexagent.cpp" line="64"/>
         <source>%1 wants to send the file &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 möchte die Datei &lt;b&gt;%2&lt;/b&gt; senden.</translation>
     </message>
 </context>
 <context>
@@ -69,80 +69,80 @@
         <location filename="../bluetoothmanagement.cpp" line="83"/>
         <location filename="../bluetoothmanagement.cpp" line="122"/>
         <source>Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="93"/>
         <source>No Bluetooth Hardware Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Bluetooth-Hardware gefunden</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="103"/>
         <source>No Bluetooth hardware was found</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte keine Bluetooth-Hardware finden</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="201"/>
         <source>Bluetooth is not operational</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth funktioniert nicht</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="211"/>
         <source>Check that the system Bluetooth daemon is running</source>
-        <translation type="unfinished"></translation>
+        <translation>Überprüfe, dass der Bluetooth-Dienst läuft</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="335"/>
         <source>View Active File Transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktive Dateiübertragungen ansehen</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="358"/>
         <source>Pair New Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Neues Gerät Pairen</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="467"/>
         <location filename="../bluetoothmanagement.cpp" line="270"/>
         <source>Enable Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth aktivieren</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="474"/>
         <source>Visible to other devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Für andere Geräte sichtbar</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="483"/>
         <source>Bluetooth Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth-Adresse</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="548"/>
         <source>File Transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateiübertragungen</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="608"/>
         <source>No Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Gerät</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="654"/>
         <source>Select a device</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle ein Gerät</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="664"/>
         <source>To get started, select a device to manage</source>
-        <translation type="unfinished"></translation>
+        <translation>Um zu beginnen, wähle ein Gerät zum verwalten</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="721"/>
         <location filename="../bluetoothmanagement.ui" line="786"/>
         <location filename="../bluetoothmanagement.ui" line="1049"/>
         <source>Device Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerätename</translation>
     </message>
     <message>
         <location filename="../bluetoothmanagement.ui" line="737"/>
