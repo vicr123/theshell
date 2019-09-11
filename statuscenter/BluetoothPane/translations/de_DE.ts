@@ -349,9 +349,11 @@
     <message numerus="yes">
         <location filename="../chunkwidget.cpp" line="54"/>
         <source>%n devices</source>
-        <translation><numerusform>%n Gerät</numerusform>
-        <numerusform>%n Geräte</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n Gerät</numerusform>
+            <numerusform>%n Geräte</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>DevicesListModel</name>

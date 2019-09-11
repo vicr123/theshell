@@ -325,8 +325,8 @@
         <location filename="../endsessionwait.ui" line="855"/>
         <location filename="../endsessionwait.cpp" line="63"/>
         <location filename="../endsessionwait.cpp" line="87"/>
-        <location filename="../endsessionwait.cpp" line="484"/>
-        <location filename="../endsessionwait.cpp" line="862"/>
+        <location filename="../endsessionwait.cpp" line="485"/>
+        <location filename="../endsessionwait.cpp" line="863"/>
         <source>Power Off</source>
         <translation>Ausschalten</translation>
     </message>
@@ -338,13 +338,13 @@
     <message>
         <location filename="../endsessionwait.ui" line="430"/>
         <location filename="../endsessionwait.cpp" line="91"/>
-        <location filename="../endsessionwait.cpp" line="491"/>
+        <location filename="../endsessionwait.cpp" line="492"/>
         <source>Reboot</source>
         <translation>Neu starten</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="462"/>
-        <location filename="../endsessionwait.cpp" line="498"/>
+        <location filename="../endsessionwait.cpp" line="499"/>
         <source>Log Out</source>
         <translation>Abmelden</translation>
     </message>
@@ -406,7 +406,7 @@
     </message>
     <message>
         <location filename="../endsessionwait.cpp" line="99"/>
-        <location filename="../endsessionwait.cpp" line="791"/>
+        <location filename="../endsessionwait.cpp" line="792"/>
         <source>Dummy</source>
         <translation>Dummy</translation>
     </message>

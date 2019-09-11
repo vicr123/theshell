@@ -324,8 +324,8 @@
         <location filename="../endsessionwait.ui" line="855"/>
         <location filename="../endsessionwait.cpp" line="63"/>
         <location filename="../endsessionwait.cpp" line="87"/>
-        <location filename="../endsessionwait.cpp" line="484"/>
-        <location filename="../endsessionwait.cpp" line="862"/>
+        <location filename="../endsessionwait.cpp" line="485"/>
+        <location filename="../endsessionwait.cpp" line="863"/>
         <source>Power Off</source>
         <translation>Afsluiten</translation>
     </message>
@@ -337,13 +337,13 @@
     <message>
         <location filename="../endsessionwait.ui" line="430"/>
         <location filename="../endsessionwait.cpp" line="91"/>
-        <location filename="../endsessionwait.cpp" line="491"/>
+        <location filename="../endsessionwait.cpp" line="492"/>
         <source>Reboot</source>
         <translation>Overnieuw opstarten</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="462"/>
-        <location filename="../endsessionwait.cpp" line="498"/>
+        <location filename="../endsessionwait.cpp" line="499"/>
         <source>Log Out</source>
         <translation>Uitloggen</translation>
     </message>
@@ -405,7 +405,7 @@
     </message>
     <message>
         <location filename="../endsessionwait.cpp" line="99"/>
-        <location filename="../endsessionwait.cpp" line="791"/>
+        <location filename="../endsessionwait.cpp" line="792"/>
         <source>Dummy</source>
         <translation>Dummy</translation>
     </message>
@@ -1275,9 +1275,11 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="1101"/>
         <source>%n days</source>
-        <translation><numerusform>%n dag</numerusform>
-        <numerusform>%n dagen</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n dag</numerusform>
+            <numerusform>%n dagen</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1105"/>
         <source>System Uptime: %1</source>
@@ -1428,9 +1430,11 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <location filename="../infopanedropdown.cpp" line="2324"/>
         <location filename="../infopanedropdown.cpp" line="2334"/>
         <source>%n min(s)</source>
-        <translation><numerusform>%n minuut</numerusform>
-        <numerusform>%n minuten</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n minuut</numerusform>
+            <numerusform>%n minuten</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2530"/>
         <source>Log Out Now</source>

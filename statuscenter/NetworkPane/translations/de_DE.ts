@@ -111,7 +111,7 @@
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verbinden</translation>
     </message>
     <message>
         <source>Connected</source>
@@ -414,7 +414,7 @@
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verbinden</translation>
     </message>
     <message>
         <source>Information</source>
@@ -503,7 +503,7 @@
     <name>SavedNetworksList</name>
     <message>
         <source>Saved</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gespeichert</translation>
     </message>
 </context>
 <context>
@@ -689,7 +689,7 @@
     </message>
     <message>
         <source>ACTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">AKTIONEN</translation>
     </message>
     <message>
         <source>Enable SIM PIN</source>

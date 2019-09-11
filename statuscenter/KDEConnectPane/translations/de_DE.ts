@@ -323,9 +323,11 @@
     <message numerus="yes">
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="406"/>
         <source>Sending as %n messages</source>
-        <translation><numerusform>Sende als %n Nachricht</numerusform>
-        <numerusform>Sende als %n Nachrichten</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Sende als %n Nachricht</numerusform>
+            <numerusform>Sende als %n Nachrichten</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.cpp" line="426"/>
         <source>Your SMS has been sent to your device and is on its way!</source>
