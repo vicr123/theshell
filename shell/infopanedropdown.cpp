@@ -544,6 +544,36 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     });
     connect(tVirtualKeyboard::instance(), &tVirtualKeyboard::keyboardVisibleChanged, this, &InfoPaneDropdown::loadNewKeyboardLayoutMenu);
 
+    connect(GlobalKeyboardEngine::instance(), &GlobalKeyboardEngine::keyShortcutRegistered, this, [=](QString name, GlobalKeyboardKey* key) {
+        if (name ==  GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::NextKeyboardLayout)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                QString newKeyboardLayout = this->setNextKeyboardLayout();
+                HotkeyHud::show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout), 5000);
+            });
+        } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::QuietModeToggle)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                switch (AudioMan->QuietMode()) {
+                    case AudioManager::none:
+                        AudioMan->setQuietMode(AudioManager::critical);
+                        HotkeyHud::show(QIcon::fromTheme("quiet-mode-critical-only"), tr("Critical Only"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                        break;
+                    case AudioManager::critical:
+                        AudioMan->setQuietMode(AudioManager::notifications);
+                        HotkeyHud::show(QIcon::fromTheme("quiet-mode"), tr("No Notifications"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                        break;
+                    case AudioManager::notifications:
+                        AudioMan->setQuietMode(AudioManager::mute);
+                        HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Mute"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                        break;
+                    case AudioManager::mute:
+                        AudioMan->setQuietMode(AudioManager::none);
+                        HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Sound"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                        break;
+                }
+            });
+        }
+    });
+
     //Set up timer ringtones
     d->ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
 
@@ -2910,6 +2940,8 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
 QVariant InfoPaneDropdown::pluginProperty(QString key) {
     if (key == "current-quiet-mode-description") {
         return AudioMan->getCurrentQuietModeDescription();
+    } else if (key == "current-quiet-mode") {
+        return AudioMan->QuietMode();
     }
     return QVariant();
 }

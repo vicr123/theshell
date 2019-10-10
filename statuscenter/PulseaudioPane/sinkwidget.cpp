@@ -29,6 +29,7 @@
 #include <Context>
 #include <Sink>
 #include <Port>
+#include <hotkeyhud.h>
 
 struct SinkWidgetPrivate {
     PulseAudioQt::Sink* sink;
@@ -66,40 +67,7 @@ SinkWidget::SinkWidget(PulseAudioQt::Sink* sink, QWidget *parent) :
     connect(d->sink, &PulseAudioQt::Sink::channelsChanged, this, &SinkWidget::updateChannels);
     connect(d->sink, &PulseAudioQt::Sink::channelVolumesChanged, this, &SinkWidget::updateChannelVolumes);
     connect(d->sink, &PulseAudioQt::Sink::portsChanged, this, &SinkWidget::updatePorts);
-    connect(d->sink, &PulseAudioQt::Sink::activePortIndexChanged, this, [=] {
-        if (d->sink->isDefault()) {
-            PulseAudioQt::Port* port = d->sink->ports().at(d->sink->activePortIndex());
-            if (port->availability() == PulseAudioQt::Port::Unavailable) {
-                //Weird thing? Use a workaround here
-                QList<PulseAudioQt::Port*> availablePorts;
-                for (PulseAudioQt::Port* port : d->sink->ports()) {
-                    if (port->availability() != PulseAudioQt::Port::Unavailable) availablePorts.append(port);
-                }
-
-                if (availablePorts.count() == 1) {
-                    port = availablePorts.first();
-                } else {
-                    port = nullptr;
-                }
-            }
-
-            if (port != nullptr) {
-                QString newPort;
-                if (port->name().contains("headphones", Qt::CaseInsensitive)) {
-                    newPort = "headphones";
-                } else if (port->name().contains("speaker", Qt::CaseInsensitive)) {
-                    newPort = "speakers";
-                }
-
-                if (d->lastPort != newPort && d->lastPort != "") {
-                    //Show the HUD
-                    qDebug() << "Just switched to" << newPort;
-                }
-                d->lastPort = newPort;
-            }
-        }
-        SinkWidget::updatePorts();
-    });
+    connect(d->sink, &PulseAudioQt::Sink::activePortIndexChanged, this, &SinkWidget::updatePortIndex);
 
     ui->deviceName->setText(sink->description().toUpper());
     ui->muteButton->setChecked(sink->isMuted());
@@ -218,8 +186,66 @@ void SinkWidget::updatePorts()
     }
 }
 
+void SinkWidget::updatePortIndex()
+{
+    if (d->sink->isDefault()) {
+        PulseAudioQt::Port* port = d->sink->ports().at(d->sink->activePortIndex());
+        if (port->availability() == PulseAudioQt::Port::Unavailable) {
+            //Weird thing? Use a workaround here
+            QList<PulseAudioQt::Port*> availablePorts;
+            for (PulseAudioQt::Port* port : d->sink->ports()) {
+                if (port->availability() != PulseAudioQt::Port::Unavailable) availablePorts.append(port);
+            }
+
+            if (availablePorts.count() == 1) {
+                port = availablePorts.first();
+            } else {
+                port = nullptr;
+            }
+        }
+
+        if (port != nullptr) {
+            QString newPort;
+            if (port->name().contains("headphones", Qt::CaseInsensitive)) {
+                newPort = "headphones";
+            } else if (port->name().contains("speaker", Qt::CaseInsensitive)) {
+                newPort = "speakers";
+            }
+
+            if (d->lastPort != newPort && d->lastPort != "") {
+                //Show the HUD
+                d->lastPort = newPort;
+                updateVolumeAndShowHud(d->sink->volume());
+            }
+            d->lastPort = newPort;
+        }
+    }
+    SinkWidget::updatePorts();
+}
+
 void SinkWidget::defaultSinkChanged(QString defaultSinkName) {
     ui->defaultButton->setChecked(d->sinkName == defaultSinkName);
+}
+
+void SinkWidget::updateVolumeAndShowHud(qint64 volume)
+{
+    d->sink->setVolume(volume);
+
+    QIcon icon;
+    QString text;
+
+    if (d->lastPort == "speakers") {
+        icon = QIcon::fromTheme("audio-volume-high");
+        text = tr("Speakers");
+    } else if (d->lastPort == "headphones") {
+        icon = QIcon::fromTheme("audio-headphones");
+        text = tr("Headphones");
+    } else {
+        icon = QIcon::fromTheme("audio-volume-high");
+        text = tr("Volume");
+    }
+
+    HotkeyHud::show(icon, text, static_cast<int>(volume / static_cast<double>(PulseAudioQt::normalVolume()) * 100));
 }
 
 void SinkWidget::on_muteButton_toggled(bool checked)

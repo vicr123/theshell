@@ -76,7 +76,6 @@ SOURCES += main.cpp\
     systrayicons.cpp \
     nativeeventfilter.cpp \
     internationalisation.cpp \
-    hotkeyhud.cpp \
     dbusevents.cpp \
     fadebutton.cpp \
     rundialog.cpp \
@@ -114,7 +113,6 @@ HEADERS  += mainwindow.h \
     globalfilter.h \
     systrayicons.h \
     nativeeventfilter.h \
-    hotkeyhud.h \
     dbusevents.h \
     fadebutton.h \
     rundialog.h \
@@ -146,7 +144,6 @@ FORMS    += mainwindow.ui \
     infopanedropdown.ui \
     choosebackground.ui \
     segfaultdialog.ui \
-    hotkeyhud.ui \
     rundialog.ui \
     onboarding.ui \
     newmedia.ui \

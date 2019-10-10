@@ -42,10 +42,10 @@ public:
     explicit AudioManager(QObject *parent = 0);
 
     enum quietMode {
-        none,
-        critical,
-        notifications,
-        mute
+        none = 0,
+        critical = 1,
+        notifications = 2,
+        mute = 3
     };
 
     int MasterVolume();

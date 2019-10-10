@@ -49,6 +49,8 @@ class SinkWidget : public QWidget
     public slots:
         void defaultSinkChanged(QString defaultSinkName);
 
+        void updateVolumeAndShowHud(qint64 volume);
+
     private slots:
         void on_muteButton_toggled(bool checked);
 
@@ -67,6 +69,8 @@ class SinkWidget : public QWidget
         void updateChannelVolumes();
 
         void updatePorts();
+
+        void updatePortIndex();
 
     private:
         Ui::SinkWidget *ui;

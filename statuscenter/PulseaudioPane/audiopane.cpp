@@ -25,6 +25,9 @@
 
 #include <qsettingsformats.h>
 #include <tsystemsound.h>
+#include <hotkeyhud.h>
+#include <globalkeyboard/globalkeyboardengine.h>
+#include <soundengine.h>
 
 #include "sinkwidget.h"
 #include "sinkinputwidget.h"
@@ -100,6 +103,31 @@ AudioPane::AudioPane(QWidget *parent) :
     addSoundSetting(tr("Volume Change"), "audio-volume-change", "volfeedback");
 
     connectToPulse();
+
+    connect(GlobalKeyboardEngine::instance(), &GlobalKeyboardEngine::keyShortcutRegistered, this, [=](QString name, GlobalKeyboardKey* key) {
+        if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::VolumeUp) || name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::VolumeDown)) {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+                if (getProperty("current-quiet-mode").toInt() == 3) {
+                    HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
+                } else {
+                    //Get the default sink and find the widget for this sink
+                    PulseAudioQt::Sink* sink = PulseAudioQt::Context::instance()->server()->defaultSink();
+                    for (SinkWidget* widget : d->sinkWidgets) {
+                        if (widget->sink() == sink) {
+                            qint64 factor = PulseAudioQt::normalVolume();
+                            if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::VolumeDown)) factor *= -1;
+                            qint64 newVolume = sink->volume() + factor / 20;
+                            widget->updateVolumeAndShowHud(newVolume);
+
+                            //Play the audio change sound
+                            SoundEngine::play(SoundEngine::Volume);
+                            return;
+                        }
+                    }
+                }
+            });
+        }
+    });
 }
 
 AudioPane::~AudioPane()

@@ -32,6 +32,7 @@ SOURCES += \
     debuginformationcollector.cpp \
     globalkeyboard/globalkeyboardengine.cpp \
     globalkeyboard/shortcutinfodialog.cpp \
+    hotkeyhud.cpp \
     locationdaemon.cpp \
     mpris/mprisengine.cpp \
     mpris/mprisplayer.cpp \
@@ -52,7 +53,8 @@ HEADERS += \
         theshell-lib_global.h \ 
     application.h \
     qsettingsformats.h \
-    soundengine.h
+    soundengine.h \
+    hotkeyhud.h
 
 unix {
     target.path = /usr/lib
@@ -69,4 +71,5 @@ unix {
 }
 
 FORMS += \
-    globalkeyboard/shortcutinfodialog.ui
+    globalkeyboard/shortcutinfodialog.ui \
+    hotkeyhud.ui

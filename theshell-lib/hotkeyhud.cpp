@@ -21,15 +21,12 @@
 #include "hotkeyhud.h"
 #include "ui_hotkeyhud.h"
 
+#include <QDBusInterface>
 #include <math.h>
 #include <globalkeyboard/globalkeyboardengine.h>
-#include "audiomanager.h"
 #include <soundengine.h>
-#include "mainwindow.h"
 #include <tsystemsound.h>
-
-extern AudioManager* AudioMan;
-extern MainWindow* MainWin;
+#include <QX11Info>
 
 struct HotkeyHudPrivate {
     HotkeyHud* instance = nullptr;
@@ -85,66 +82,6 @@ HotkeyHud::HotkeyHud(QWidget *parent) :
                 connect(backlightAdj, SIGNAL(finished(int)), backlightAdj, SLOT(deleteLater()));
 
                 HotkeyHud::show(QIcon::fromTheme("video-display"), tr("Brightness"), (int) currentBrightness);
-            });
-        } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::VolumeUp)) {
-            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
-                //Increase volume
-                if (AudioMan->QuietMode() == AudioManager::mute) {
-                    HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
-                } else {
-                    int volume = AudioMan->MasterVolume();
-                    volume += 5;
-                    if (volume < 0) volume = 0;
-                    AudioMan->changeVolume(5);
-
-                    //Play the audio change sound
-                    SoundEngine::play(SoundEngine::Volume);
-
-                    HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
-                }
-            });
-        } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::VolumeDown)) {
-            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
-                //Decrease volume
-                if (AudioMan->QuietMode() == AudioManager::mute) {
-                    HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
-                } else {
-                    int volume = AudioMan->MasterVolume();
-                    volume -= 5;
-                    if (volume < 0) volume = 0;
-                    AudioMan->changeVolume(-5);
-
-                    //Play the audio change sound
-                    SoundEngine::play(SoundEngine::Volume);
-
-                    HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Volume"), volume);
-                }
-            });
-        } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::QuietModeToggle)) {
-            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
-                switch (AudioMan->QuietMode()) {
-                    case AudioManager::none:
-                        AudioMan->setQuietMode(AudioManager::critical);
-                        HotkeyHud::show(QIcon::fromTheme("quiet-mode-critical-only"), tr("Critical Only"), AudioMan->getCurrentQuietModeDescription(), 5000);
-                        break;
-                    case AudioManager::critical:
-                        AudioMan->setQuietMode(AudioManager::notifications);
-                        HotkeyHud::show(QIcon::fromTheme("quiet-mode"), tr("No Notifications"), AudioMan->getCurrentQuietModeDescription(), 5000);
-                        break;
-                    case AudioManager::notifications:
-                        AudioMan->setQuietMode(AudioManager::mute);
-                        HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Mute"), AudioMan->getCurrentQuietModeDescription(), 5000);
-                        break;
-                    case AudioManager::mute:
-                        AudioMan->setQuietMode(AudioManager::none);
-                        HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Sound"), AudioMan->getCurrentQuietModeDescription(), 5000);
-                        break;
-                }
-            });
-        } else if (name ==  GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::NextKeyboardLayout)) {
-            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
-                QString newKeyboardLayout = MainWin->getInfoPane()->setNextKeyboardLayout();
-                HotkeyHud::show(QIcon::fromTheme("input-keyboard"), tr("Keyboard Layout"), tr("Keyboard Layout set to %1").arg(newKeyboardLayout), 5000);
             });
         } else if (name ==  GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::KeyboardBrightnessUp)) {
             connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {

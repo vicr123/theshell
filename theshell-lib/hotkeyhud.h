@@ -28,7 +28,6 @@
 #include <QPainter>
 #include <QDesktopWidget>
 #include <QPaintEvent>
-#include <QX11Info>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -45,6 +44,8 @@
 #undef FocusOut
 #undef CursorShape
 #undef Unsorted
+
+class QX11Info;
 
 namespace Ui {
 class HotkeyHud;

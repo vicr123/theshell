@@ -411,75 +411,6 @@
     </message>
 </context>
 <context>
-    <name>HotkeyHud</name>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="70"/>
-        <location filename="../hotkeyhud.cpp" line="87"/>
-        <source>Brightness</source>
-        <translation type="unfinished">Helderheid</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="93"/>
-        <location filename="../hotkeyhud.cpp" line="103"/>
-        <location filename="../hotkeyhud.cpp" line="110"/>
-        <location filename="../hotkeyhud.cpp" line="120"/>
-        <source>Volume</source>
-        <translation type="unfinished">Volume</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="93"/>
-        <location filename="../hotkeyhud.cpp" line="110"/>
-        <source>Quiet Mode is set to Mute.</source>
-        <translation>Stille modus is ingesteld op Gedempt.</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="128"/>
-        <source>Critical Only</source>
-        <translation>Enkel Kritiek</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="132"/>
-        <source>No Notifications</source>
-        <translation type="unfinished">Geen Notificaties</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="136"/>
-        <source>Mute</source>
-        <translation>Gedempt</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="140"/>
-        <source>Sound</source>
-        <translation type="unfinished">Geluid</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="147"/>
-        <source>Keyboard Layout</source>
-        <translation>Toetsenbordindeling</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="147"/>
-        <source>Keyboard Layout set to %1</source>
-        <translation>Toetsenbordindeling ingesteld op %1</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="162"/>
-        <location filename="../hotkeyhud.cpp" line="177"/>
-        <source>Keyboard Brightness</source>
-        <translation type="unfinished">Toetsenbord Helderheid</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="185"/>
-        <source>Eject</source>
-        <translation type="unfinished">Uitwerpen</translation>
-    </message>
-    <message>
-        <location filename="../hotkeyhud.cpp" line="185"/>
-        <source>Attempting to eject disc...</source>
-        <translation type="unfinished">Aan het proberen de schijf uit te werpen...</translation>
-    </message>
-</context>
-<context>
     <name>InfoPaneDropdown</name>
     <message>
         <location filename="../infopanedropdown.ui" line="130"/>
@@ -505,7 +436,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="405"/>
-        <location filename="../infopanedropdown.cpp" line="1981"/>
+        <location filename="../infopanedropdown.cpp" line="2011"/>
         <source>Charge History</source>
         <translation>Oplaadgeschiedenis</translation>
     </message>
@@ -579,20 +510,20 @@
     <message>
         <location filename="../infopanedropdown.ui" line="739"/>
         <location filename="../infopanedropdown.ui" line="3602"/>
-        <location filename="../infopanedropdown.cpp" line="2384"/>
+        <location filename="../infopanedropdown.cpp" line="2414"/>
         <source>Unavailable Panes</source>
         <translation>Niet Beschikbare Ruiten</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="748"/>
         <location filename="../infopanedropdown.ui" line="3682"/>
-        <location filename="../infopanedropdown.cpp" line="2388"/>
+        <location filename="../infopanedropdown.cpp" line="2418"/>
         <source>Advanced</source>
         <translation>Geavanceerd</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="757"/>
-        <location filename="../infopanedropdown.cpp" line="2390"/>
+        <location filename="../infopanedropdown.cpp" line="2420"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
@@ -908,7 +839,8 @@
         <translation>Geef apps toegang tot uw fysieke locatie</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2644"/>
+        <location filename="../infopanedropdown.cpp" line="551"/>
+        <location filename="../infopanedropdown.cpp" line="2674"/>
         <source>Keyboard Layout</source>
         <translation>Toetsenbord Indeling</translation>
     </message>
@@ -999,8 +931,8 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2703"/>
-        <location filename="../infopanedropdown.cpp" line="2739"/>
-        <location filename="../infopanedropdown.cpp" line="2745"/>
+        <location filename="../infopanedropdown.cpp" line="2769"/>
+        <location filename="../infopanedropdown.cpp" line="2775"/>
         <source>Mouse Password</source>
         <translation>Muis Wachtwoord</translation>
     </message>
@@ -1021,7 +953,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2934"/>
-        <location filename="../infopanedropdown.cpp" line="1744"/>
+        <location filename="../infopanedropdown.cpp" line="1774"/>
         <source>Edit User</source>
         <translation>Verander gebruiker</translation>
     </message>
@@ -1038,15 +970,15 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2995"/>
         <location filename="../infopanedropdown.ui" line="3018"/>
-        <location filename="../infopanedropdown.cpp" line="1748"/>
-        <location filename="../infopanedropdown.cpp" line="1749"/>
+        <location filename="../infopanedropdown.cpp" line="1778"/>
+        <location filename="../infopanedropdown.cpp" line="1779"/>
         <source>(unchanged)</source>
         <translation>(niet veranderd)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3002"/>
-        <location filename="../infopanedropdown.cpp" line="1788"/>
-        <location filename="../infopanedropdown.cpp" line="1793"/>
+        <location filename="../infopanedropdown.cpp" line="1818"/>
+        <location filename="../infopanedropdown.cpp" line="1823"/>
         <source>Username</source>
         <translation>Gebruikersnaam</translation>
     </message>
@@ -1173,7 +1105,7 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3746"/>
-        <location filename="../infopanedropdown.cpp" line="1114"/>
+        <location filename="../infopanedropdown.cpp" line="1144"/>
         <source>Reset theShell</source>
         <translation>Herstel theShell</translation>
     </message>
@@ -1243,12 +1175,12 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>theShell %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1088"/>
+        <location filename="../infopanedropdown.cpp" line="1118"/>
         <source>Current Battery Percentage: %1</source>
         <translation>Batterij percentage: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1092"/>
+        <location filename="../infopanedropdown.cpp" line="1122"/>
         <source>theShell Uptime: %1</source>
         <translation>theShell Uptime: %1</translation>
     </message>
@@ -1263,17 +1195,42 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         <translation>Onbekend</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="722"/>
+        <location filename="../infopanedropdown.cpp" line="551"/>
+        <source>Keyboard Layout set to %1</source>
+        <translation type="unfinished">Toetsenbordindeling ingesteld op %1</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="558"/>
+        <source>Critical Only</source>
+        <translation type="unfinished">Alleen Kritiek</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="562"/>
+        <source>No Notifications</source>
+        <translation type="unfinished">Geen Notificaties</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="566"/>
+        <source>Mute</source>
+        <translation type="unfinished">Stil</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="570"/>
+        <source>Sound</source>
+        <translation type="unfinished">Geluid</translation>
+    </message>
+    <message>
+        <location filename="../infopanedropdown.cpp" line="752"/>
         <source>No plugins were loaded because you&apos;ve started theShell in Safe Mode.</source>
         <translation>Geen plugins zijn geladen aangezien u theShell in Veilige Modus hebt opgestart.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="727"/>
+        <location filename="../infopanedropdown.cpp" line="757"/>
         <source>Safe Mode</source>
         <translation>Veilige Modus</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="1101"/>
+        <location filename="../infopanedropdown.cpp" line="1131"/>
         <source>%n days</source>
         <translation>
             <numerusform>%n dag</numerusform>
@@ -1281,154 +1238,154 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1105"/>
+        <location filename="../infopanedropdown.cpp" line="1135"/>
         <source>System Uptime: %1</source>
         <translation>Systeem Uptime: %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1107"/>
+        <location filename="../infopanedropdown.cpp" line="1137"/>
         <source>Couldn&apos;t get system uptime</source>
         <translation>Kon systeem uptime niet ophalen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1115"/>
+        <location filename="../infopanedropdown.cpp" line="1145"/>
         <source>All settings will be reset to default, and you will be logged out. Are you sure you want to do this?</source>
         <translation>Alle instellingen zullen terug worden gezet, en u word uitgelogd. Weet u zeker dat u dit wilt doen?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1543"/>
+        <location filename="../infopanedropdown.cpp" line="1573"/>
         <source>Last updated %1</source>
         <translation>Laatst vernieuwd %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1581"/>
+        <location filename="../infopanedropdown.cpp" line="1611"/>
         <source>Log in to network</source>
         <translation>Log in bij Netwerk</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1587"/>
+        <location filename="../infopanedropdown.cpp" line="1617"/>
         <source>Network Login</source>
         <translation>Inloggen op Netwerk</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1588"/>
+        <location filename="../infopanedropdown.cpp" line="1618"/>
         <source>Your connection to the internet is blocked by a login page.</source>
         <translation>U vebinding met het internet is geblokkeerd door een inlogpagina.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1711"/>
+        <location filename="../infopanedropdown.cpp" line="1741"/>
         <source>Add New User</source>
         <translation>Voeg nieuwe gebruiker toe</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1723"/>
-        <location filename="../infopanedropdown.cpp" line="2695"/>
-        <location filename="../infopanedropdown.cpp" line="2715"/>
+        <location filename="../infopanedropdown.cpp" line="1753"/>
+        <location filename="../infopanedropdown.cpp" line="2725"/>
+        <location filename="../infopanedropdown.cpp" line="2745"/>
         <source>Unauthorized</source>
         <translation>Ongeauthorizeerd</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1723"/>
+        <location filename="../infopanedropdown.cpp" line="1753"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation>Polkit staat u niet toe gebruikers op dit systeem te beheren.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1735"/>
+        <location filename="../infopanedropdown.cpp" line="1765"/>
         <source>New User</source>
         <translation>Nieuwe gebruiker</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1738"/>
-        <location filename="../infopanedropdown.cpp" line="1739"/>
-        <location filename="../infopanedropdown.cpp" line="1754"/>
-        <location filename="../infopanedropdown.cpp" line="1755"/>
+        <location filename="../infopanedropdown.cpp" line="1768"/>
+        <location filename="../infopanedropdown.cpp" line="1769"/>
+        <location filename="../infopanedropdown.cpp" line="1784"/>
+        <location filename="../infopanedropdown.cpp" line="1785"/>
         <source>(none)</source>
         <translation>(geen)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1751"/>
-        <location filename="../infopanedropdown.cpp" line="1752"/>
+        <location filename="../infopanedropdown.cpp" line="1781"/>
+        <location filename="../infopanedropdown.cpp" line="1782"/>
         <source>(set at next login)</source>
         <translation>(stel in bij volgende login)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1783"/>
+        <location filename="../infopanedropdown.cpp" line="1813"/>
         <source>Password Check</source>
         <translation>Wachtwoord Check</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1783"/>
+        <location filename="../infopanedropdown.cpp" line="1813"/>
         <source>The passwords don&apos;t match.</source>
         <translation>De wachtwoorden kloppen niet.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1788"/>
+        <location filename="../infopanedropdown.cpp" line="1818"/>
         <source>The username must not contain spaces.</source>
         <translation>De gebruikersnaam mag geen spaties bevatten.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1793"/>
+        <location filename="../infopanedropdown.cpp" line="1823"/>
         <source>The username must not contain capital letters.</source>
         <translation>De gebruikersnaam mag geen hoofdletters bevatten.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1992"/>
+        <location filename="../infopanedropdown.cpp" line="2022"/>
         <source>Rate History</source>
         <translation>Waardeer geschiedenis</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2003"/>
+        <location filename="../infopanedropdown.cpp" line="2033"/>
         <source>Application Power Usage</source>
         <translation>Applicatie Stroomverbruik</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2104"/>
+        <location filename="../infopanedropdown.cpp" line="2134"/>
         <source>Oxygen</source>
         <translation>Oxygen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2105"/>
+        <location filename="../infopanedropdown.cpp" line="2135"/>
         <source>Breeze</source>
         <translation>Breeze</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2108"/>
+        <location filename="../infopanedropdown.cpp" line="2138"/>
         <source>Blue</source>
         <translation>Blauw</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2109"/>
+        <location filename="../infopanedropdown.cpp" line="2139"/>
         <source>Green</source>
         <translation>Groen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2110"/>
+        <location filename="../infopanedropdown.cpp" line="2140"/>
         <source>Orange</source>
         <translation>Oranje</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2111"/>
+        <location filename="../infopanedropdown.cpp" line="2141"/>
         <source>Pink</source>
         <translation>Roze</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2112"/>
+        <location filename="../infopanedropdown.cpp" line="2142"/>
         <source>Turquoise</source>
         <translation>Turqoise</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2302"/>
-        <location filename="../infopanedropdown.cpp" line="2312"/>
-        <location filename="../infopanedropdown.cpp" line="2322"/>
         <location filename="../infopanedropdown.cpp" line="2332"/>
+        <location filename="../infopanedropdown.cpp" line="2342"/>
+        <location filename="../infopanedropdown.cpp" line="2352"/>
+        <location filename="../infopanedropdown.cpp" line="2362"/>
         <source>Never</source>
         <translation>Nooit</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="2304"/>
-        <location filename="../infopanedropdown.cpp" line="2314"/>
-        <location filename="../infopanedropdown.cpp" line="2324"/>
         <location filename="../infopanedropdown.cpp" line="2334"/>
+        <location filename="../infopanedropdown.cpp" line="2344"/>
+        <location filename="../infopanedropdown.cpp" line="2354"/>
+        <location filename="../infopanedropdown.cpp" line="2364"/>
         <source>%n min(s)</source>
         <translation>
             <numerusform>%n minuut</numerusform>
@@ -1436,53 +1393,53 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
         </translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2530"/>
+        <location filename="../infopanedropdown.cpp" line="2560"/>
         <source>Log Out Now</source>
         <translation>Nu Uitloggen</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2533"/>
+        <location filename="../infopanedropdown.cpp" line="2563"/>
         <source>Logoff Required</source>
         <translation>Uitloggen Vereist</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2536"/>
+        <location filename="../infopanedropdown.cpp" line="2566"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation>Om de Compacte Bar te kunnen gebruiken, moet u eerst uitloggen en dan weer inloggen.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2538"/>
+        <location filename="../infopanedropdown.cpp" line="2568"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation>Om de Compacte Bar uit te kunnen schakelen, moet u eerst uitloggen en dan weer inloggen.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2657"/>
+        <location filename="../infopanedropdown.cpp" line="2687"/>
         <source>Show Touch Keyboard</source>
         <translation>Laat Touch Toetsenbord zien</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2695"/>
-        <location filename="../infopanedropdown.cpp" line="2715"/>
+        <location filename="../infopanedropdown.cpp" line="2725"/>
+        <location filename="../infopanedropdown.cpp" line="2745"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation>Polkit staat u niet toe om een muis wachtwoord in te stellen.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2710"/>
+        <location filename="../infopanedropdown.cpp" line="2740"/>
         <source>Remove Mouse Password?</source>
         <translation>Verwijder Muis Wachtwoord?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2710"/>
+        <location filename="../infopanedropdown.cpp" line="2740"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation>Wilt u het Muis Wachtwoord voor dit account verwijderen?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2740"/>
+        <location filename="../infopanedropdown.cpp" line="2770"/>
         <source>Mouse Password was removed successfully</source>
         <translation>Muis Wachtwoord is met succes verwijderd</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2746"/>
+        <location filename="../infopanedropdown.cpp" line="2776"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation>Muis Wachtwoord kon niet verwijderd worden</translation>
     </message>
