@@ -7,98 +7,98 @@
         <location filename="../DateTime/datetimepane.ui" line="47"/>
         <location filename="../DateTime/datetimepane.cpp" line="81"/>
         <source>Time and Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeit und Datum</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="94"/>
         <location filename="../DateTime/datetimepane.ui" line="182"/>
         <source>Set automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisch setzen</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="120"/>
         <source>TIME AND DATE</source>
-        <translation type="unfinished"></translation>
+        <translation>ZEIT UND DATUM</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="129"/>
         <source>Change System Time and Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeit und Datum ändern</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="132"/>
         <source>Change the time and date for this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeit und Datum für dieses Gerät ändern</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="175"/>
         <source>TIMEZONE</source>
-        <translation type="unfinished"></translation>
+        <translation>ZEITZONE</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="214"/>
         <source>Change System Timezone</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemzeitzone ändern</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="217"/>
         <source>Change the timezone for this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitzone für dieses Gerät ändern</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="254"/>
         <source>Clock Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Uhrenformat</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="279"/>
         <source>12 hour</source>
-        <translation type="unfinished"></translation>
+        <translation>12 Stunden</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="292"/>
         <source>24 hour</source>
-        <translation type="unfinished"></translation>
+        <translation>24 Stunden</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="327"/>
         <source>DISPLAY</source>
-        <translation type="unfinished"></translation>
+        <translation>ANZEIGE</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="404"/>
         <source>Set Time and Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeit und Datum einstellen</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="452"/>
         <source>DATE</source>
-        <translation type="unfinished"></translation>
+        <translation>DATUM</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="506"/>
         <source>TIME</source>
-        <translation type="unfinished"></translation>
+        <translation>ZEIT</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="539"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="619"/>
         <source>Set Time Zone</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitzone setzen</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="644"/>
         <source>Where are you now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wo befindest du dich gerade?</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="670"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche</translation>
     </message>
 </context>
 <context>

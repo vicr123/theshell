@@ -431,6 +431,7 @@ void EndSessionWait::performEndSession() {
     connect(a, &QPropertyAnimation::finished, [=]() {
         ui->poweringOff->setVisible(false);
     });
+    EndSessionNow();
 }
 
 void EndSessionWait::EndSessionNow() {

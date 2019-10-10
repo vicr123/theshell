@@ -325,8 +325,8 @@
         <location filename="../endsessionwait.ui" line="855"/>
         <location filename="../endsessionwait.cpp" line="63"/>
         <location filename="../endsessionwait.cpp" line="87"/>
-        <location filename="../endsessionwait.cpp" line="484"/>
-        <location filename="../endsessionwait.cpp" line="862"/>
+        <location filename="../endsessionwait.cpp" line="485"/>
+        <location filename="../endsessionwait.cpp" line="863"/>
         <source>Power Off</source>
         <translation>Ausschalten</translation>
     </message>
@@ -338,13 +338,13 @@
     <message>
         <location filename="../endsessionwait.ui" line="430"/>
         <location filename="../endsessionwait.cpp" line="91"/>
-        <location filename="../endsessionwait.cpp" line="491"/>
+        <location filename="../endsessionwait.cpp" line="492"/>
         <source>Reboot</source>
         <translation>Neu starten</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="462"/>
-        <location filename="../endsessionwait.cpp" line="498"/>
+        <location filename="../endsessionwait.cpp" line="499"/>
         <source>Log Out</source>
         <translation>Abmelden</translation>
     </message>
@@ -406,7 +406,7 @@
     </message>
     <message>
         <location filename="../endsessionwait.cpp" line="99"/>
-        <location filename="../endsessionwait.cpp" line="791"/>
+        <location filename="../endsessionwait.cpp" line="792"/>
         <source>Dummy</source>
         <translation>Dummy</translation>
     </message>
@@ -2388,32 +2388,32 @@ super schnell -&gt; superschnell: https://www.duden.de/rechtschreibung/superschn
         <location filename="../upowerdbus.cpp" line="212"/>
         <location filename="../upowerdbus.cpp" line="240"/>
         <source>Battery</source>
-        <translation type="unfinished"></translation>
+        <translation>Akku</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="138"/>
         <source>Now Charging</source>
-        <translation type="unfinished"></translation>
+        <translation>Akku wird geladen</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="170"/>
         <source>Using Battery Power</source>
-        <translation type="unfinished"></translation>
+        <translation>Akkuleistung wird genutzt</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="186"/>
         <source>About 10 minutes remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Etwa 10 Minuten verbleiben</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="200"/>
         <source>About 30 minutes remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Etwa 30 Minuten verbleiben</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="214"/>
         <source>About 1 hour remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Etwa 1 Stunde verbleibt</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="232"/>
@@ -2430,7 +2430,7 @@ super schnell -&gt; superschnell: https://www.duden.de/rechtschreibung/superschn
     <message>
         <location filename="../upowerdbus.cpp" line="242"/>
         <source>Completely Charged</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständig aufgeladen</translation>
     </message>
     <message>
         <location filename="../upowerdbus.cpp" line="252"/>

@@ -5,7 +5,7 @@
     <name>ApplicationNotificationModel</name>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Algemeen</translation>
     </message>
 </context>
 <context>
@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Algemeen</translation>
     </message>
     <message>
         <source>Show Contents</source>

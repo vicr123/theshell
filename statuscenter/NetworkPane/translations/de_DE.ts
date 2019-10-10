@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Connection Name</source>
-        <translation type="unfinished">Verbindungsname</translation>
+        <translation>Verbindungsname</translation>
     </message>
     <message>
         <source>CONNECTION</source>
@@ -64,11 +64,11 @@
     </message>
     <message>
         <source>UNSAVED SETTINGS</source>
-        <translation type="unfinished"></translation>
+        <translation>UNGESPEICHERTE EINSTELLUNGEN</translation>
     </message>
     <message>
         <source>Discard Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Änderungen verwerfen</translation>
     </message>
     <message>
         <source>Save Settings</source>

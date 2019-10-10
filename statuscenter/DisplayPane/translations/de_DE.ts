@@ -6,17 +6,17 @@
     <message>
         <location filename="../displayarrangementwidget.cpp" line="103"/>
         <source>Screen %1 connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeige %1 verbunden</translation>
     </message>
     <message>
         <location filename="../displayarrangementwidget.cpp" line="104"/>
         <source>To start using it, configure your screens.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um das zu nutzen musst du zuerst deine Anzeigen konfigurieren.</translation>
     </message>
     <message>
         <location filename="../displayarrangementwidget.cpp" line="105"/>
         <source>Configure Screens</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeigen konfigurieren</translation>
     </message>
 </context>
 <context>
@@ -24,27 +24,27 @@
     <message>
         <location filename="../displayconfigurationwidget.ui" line="79"/>
         <source>Set as Default monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Als Standardanzeige setzen</translation>
     </message>
     <message>
         <location filename="../displayconfigurationwidget.ui" line="108"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <location filename="../displayconfigurationwidget.ui" line="157"/>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Auflösung</translation>
     </message>
     <message>
         <location filename="../displayconfigurationwidget.ui" line="164"/>
         <source>Power</source>
-        <translation type="unfinished"></translation>
+        <translation>Strom</translation>
     </message>
     <message>
         <location filename="../displayconfigurationwidget.ui" line="188"/>
         <source>Refresh Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiederholungsrate</translation>
     </message>
 </context>
 <context>
@@ -53,97 +53,97 @@
         <location filename="../displaypane.ui" line="40"/>
         <location filename="../displaypane.cpp" line="116"/>
         <source>Display</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeige</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="135"/>
         <source>Screen Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeigenskalierung</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="145"/>
         <source>If apps and buttons look too small on your device, you can scale them up to improve usability.</source>
-        <translation type="unfinished"></translation>
+        <translation>Falls Apps und Knöpfe auf deinem Gerät zu klein aussehen, dann kannst du sie hochskalieren um die Sichtbarkeit zu verbessern.</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="161"/>
         <source>SCALING</source>
-        <translation type="unfinished"></translation>
+        <translation>SKALIERUNG</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="189"/>
         <source>&amp;100% (96 dpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;100% (96 dpi)</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="196"/>
         <source>1&amp;50% (144 dpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>1&amp;50% (144 dpi)</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="203"/>
         <source>&amp;200% (192 dpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;200% (192 dpi)</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="210"/>
         <source>&amp;300% (288 dpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;300% (288 dpi)</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="217"/>
         <source>DPI settings will be applied at next login.</source>
-        <translation type="unfinished"></translation>
+        <translation>DPI-Einstellungen werden bei der nächsten Anmeldung angewendet.</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="262"/>
         <source>If the start time is later than the end time, Redshift will be activated until the end time on the next day.</source>
-        <translation type="unfinished"></translation>
+        <translation>Falls die Startzeit nach der Endzeit liegt, wird Redshift bis zur Endzeit am nächsten tag aktiviert.</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="294"/>
         <source>Scheduled</source>
-        <translation type="unfinished"></translation>
+        <translation>Geplant</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="318"/>
         <source>End Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Endzeit</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="349"/>
         <source>We&apos;ll send your current location to https://sunrise-sunset.org/ to determine sunlight times if you enable this option.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wir senden deine aktuelle Position an https://sunrise-sunset.org/ um Sonnenzeiten zu erhalten wenn diese Option aktiviert ist.</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="377"/>
         <source>Use Sunlight Cycle</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonnenzyklus nutzen</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="403"/>
         <source>Redshift Intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Redshift-Stärke</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="416"/>
         <source>REDSHIFT</source>
-        <translation type="unfinished"></translation>
+        <translation>REDSHIFT</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="423"/>
         <source>Start Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Startzeit</translation>
     </message>
     <message>
         <location filename="../displaypane.ui" line="430"/>
         <source>Redshift blocks blue light so that you can sleep better at night.</source>
-        <translation type="unfinished"></translation>
+        <translation>Redshift blockiert blaues Licht, sodass du nachts besser schlafen kannst.</translation>
     </message>
     <message>
         <location filename="../displaypane.cpp" line="90"/>
         <source>Redshift</source>
-        <translation type="unfinished"></translation>
+        <translation>Redshift</translation>
     </message>
 </context>
 <context>
@@ -151,27 +151,27 @@
     <message>
         <location filename="../displaypositionwidget.ui" line="26"/>
         <source>SCREENS</source>
-        <translation type="unfinished"></translation>
+        <translation>ANZEIGEN</translation>
     </message>
     <message>
         <location filename="../displaypositionwidget.ui" line="33"/>
         <source>Select a screen to configure it, or drag it around to reposition it. To duplicate displays, drag them on top of each other and set them to have the same resolution.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle eine Anzeige um sie zu konfigurieren, oder bewege sie mit der Maus um sie zu verschieben. Um Anzeigen zu duplizieren, bewege die aufeinander und setze sie beide auf die selbe Auflösung.</translation>
     </message>
     <message>
         <location filename="../displaypositionwidget.ui" line="78"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Setzen</translation>
     </message>
     <message>
         <location filename="../displaypositionwidget.cpp" line="164"/>
         <source>No Powered Displays</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine angeschlossenen Anzeigen</translation>
     </message>
     <message>
         <location filename="../displaypositionwidget.cpp" line="164"/>
         <source>All available displays in your configuration are off. Are you sure you want to set this screen configuration?</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle verfügbaren Anzeigen in deiner Konfiguration sind aus. Bist du sicher, dass du diese Konfiguration nutzen willst?</translation>
     </message>
 </context>
 </TS>
