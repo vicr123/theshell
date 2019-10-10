@@ -22,60 +22,82 @@
 
 #include <QPointer>
 
-SinkInputWidget::SinkInputWidget(pa_context* ctx, QWidget *parent) :
+#include <Context>
+#include <SinkInput>
+
+struct SinkInputWidgetPrivate {
+    PulseAudioQt::SinkInput* input;
+    int lastIndex = 0;
+};
+
+SinkInputWidget::SinkInputWidget(PulseAudioQt::SinkInput* sinkInput, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SinkInputWidget)
 {
     ui->setupUi(this);
 
-    this->ctx = ctx;
-    ui->volumeSlider->setMaximum(PA_VOLUME_NORM);
-    ui->volumeSlider->setPageStep(PA_VOLUME_NORM / 20);
+    d = new SinkInputWidgetPrivate();
+
+    d->input = sinkInput;
+    ui->volumeSlider->setMaximum(PulseAudioQt::normalVolume());
+    ui->volumeSlider->setPageStep(PulseAudioQt::normalVolume() / 20);
+
+    connect(sinkInput, &PulseAudioQt::SinkInput::nameChanged, this, &SinkInputWidget::updateName);
+    connect(sinkInput, &PulseAudioQt::SinkInput::clientChanged, this, [=] {
+        connect(sinkInput->client(), &PulseAudioQt::Client::nameChanged, this, &SinkInputWidget::updateName);
+        updateName();
+    });
+    connect(sinkInput, &PulseAudioQt::SinkInput::mutedChanged, this, [=] {
+        ui->muteButton->setChecked(sinkInput->isMuted());
+    });
+    connect(sinkInput, &PulseAudioQt::SinkInput::hasVolumeChanged, this, [=] {
+        ui->volumeSlider->setVisible(sinkInput->hasVolume());
+    });
+    connect(sinkInput, &PulseAudioQt::SinkInput::isVolumeWritableChanged, this, [=] {
+        ui->volumeSlider->setEnabled(sinkInput->isVolumeWritable());
+    });
+    connect(sinkInput, &PulseAudioQt::SinkInput::volumeChanged, this, &SinkInputWidget::updateVolume);
+
+    ui->volumeSlider->setVisible(sinkInput->hasVolume());
+    ui->volumeSlider->setEnabled(sinkInput->isVolumeWritable());
+    ui->descriptionLabel->setText(sinkInput->name());
+    ui->muteButton->setChecked(sinkInput->isMuted());
+    updateName();
+    updateVolume();
 }
 
 SinkInputWidget::~SinkInputWidget()
 {
+    delete d;
     delete ui;
 }
 
-int SinkInputWidget::paIndex() {
-    return lastIndex;
-}
-
-void SinkInputWidget::updateInfo(pa_sink_input_info info) {
-    if (info.client == PA_INVALID_INDEX) {
-        ui->nameLabel->setText(tr("Playback Stream").toUpper());
-    } else {
-        pa_context_get_client_info(ctx, info.client, [](pa_context* ctx, const pa_client_info* info, int eol, void* userdata) {
-
-            QPointer<SinkInputWidget>* w = static_cast<QPointer<SinkInputWidget>*>(userdata);
-            if (info && !w->isNull()) {
-                w->data()->ui->nameLabel->setText(QString::fromLocal8Bit(info->name).toUpper());
-            } else if (eol) {
-                delete w;
-            }
-        }, new QPointer<SinkInputWidget>(this));
-    }
-    ui->descriptionLabel->setText(QString::fromLocal8Bit(info.name));
-    ui->muteButton->setChecked(info.mute);
-
-    if (!info.has_volume) {
-        ui->volumeSlider->setVisible(false);
-    } else {
-        ui->volumeSlider->setVisible(true);
-        ui->volumeSlider->setEnabled(info.volume_writable);
-
-        double avgVolume = 0;
-        for (int i = 0; i < info.volume.channels; i++) {
-            avgVolume += info.volume.values[i];
-        }
-        ui->volumeSlider->setValue(avgVolume / info.volume.channels);
-    }
-
-    lastIndex = info.index;
+PulseAudioQt::SinkInput* SinkInputWidget::sinkInput() {
+    return d->input;
 }
 
 void SinkInputWidget::on_muteButton_toggled(bool checked)
 {
-    emit updateMute(checked, lastIndex);
+    d->input->setMuted(checked);
+}
+
+void SinkInputWidget::updateName()
+{
+    if (d->input->client()) {
+        ui->nameLabel->setText(d->input->name());
+        ui->descriptionLabel->setText(d->input->client()->name());
+    } else {
+        ui->nameLabel->setText(tr("Playback").toUpper());
+        ui->descriptionLabel->setText(d->input->name());
+    }
+}
+
+void SinkInputWidget::updateVolume()
+{
+    ui->volumeSlider->setValue(d->input->volume());
+}
+
+void SinkInputWidget::on_volumeSlider_sliderMoved(int position)
+{
+    d->input->setVolume(position);
 }

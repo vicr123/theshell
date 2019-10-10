@@ -356,7 +356,7 @@ void DevicePanel::updateInfo() {
                             }
                             case MM_MODEM_STATE_FAILED_REASON_SIM_ERROR: {
                                 //See if the SIM is PUK blocked
-                                if (unlockRetries.value(MM_MODEM_LOCK_SIM_PUK) == 0 || unlockRetries.value(MM_MODEM_LOCK_SIM_PUK2) == 0) {
+                                if (unlockRetries.value(MM_MODEM_LOCK_SIM_PUK) == 0) {
                                     ui->connectionNameSubLabel->setText(tr("PUK Blocked"));
                                     d->chunkIcon = QIcon::fromTheme("sim-card-none");
                                     chunkText.append(tr("PUK Blocked"));
@@ -378,7 +378,7 @@ void DevicePanel::updateInfo() {
                     case MM_MODEM_STATE_LOCKED: {
                         //Find out why the device is locked
                         //See if the SIM is PUK blocked
-                        if (unlockRetries.value(MM_MODEM_LOCK_SIM_PUK) == 0 || unlockRetries.value(MM_MODEM_LOCK_SIM_PUK2) == 0) {
+                        if (unlockRetries.value(MM_MODEM_LOCK_SIM_PUK) == 0) {
                             //The SIM is PUK blocked
                             ui->connectionNameSubLabel->setText(tr("PUK Blocked"));
                             d->chunkIcon = QIcon::fromTheme("sim-card-none");

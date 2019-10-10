@@ -10,7 +10,7 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="95"/>
-        <location filename="../audiopane.cpp" line="119"/>
+        <location filename="../audiopane.cpp" line="116"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -71,27 +71,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="96"/>
+        <location filename="../audiopane.cpp" line="93"/>
         <source>Login</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="98"/>
+        <location filename="../audiopane.cpp" line="95"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="99"/>
+        <location filename="../audiopane.cpp" line="96"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="100"/>
+        <location filename="../audiopane.cpp" line="97"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="101"/>
+        <location filename="../audiopane.cpp" line="98"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -101,12 +101,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="103"/>
+        <location filename="../audiopane.cpp" line="100"/>
         <source>Volume Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="97"/>
+        <location filename="../audiopane.cpp" line="94"/>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -122,7 +122,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="102"/>
+        <location filename="../audiopane.cpp" line="99"/>
         <source>Screenshot</source>
         <translation type="unfinished"></translation>
     </message>
@@ -135,8 +135,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sinkinputwidget.cpp" line="47"/>
-        <source>Playback Stream</source>
+        <location filename="../sinkinputwidget.cpp" line="90"/>
+        <source>Playback</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -163,7 +163,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="71"/>
+        <location filename="../sinkwidget.cpp" line="99"/>
         <source>Speaker</source>
         <translation type="unfinished"></translation>
     </message>

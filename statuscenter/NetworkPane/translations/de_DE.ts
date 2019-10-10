@@ -94,6 +94,14 @@
         <source>To use this connection again, you&apos;ll need to set it up again.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Couldn&apos;t save settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NetworkManager replied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePanel</name>
@@ -111,7 +119,7 @@
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verbinden</translation>
     </message>
     <message>
         <source>Connected</source>
@@ -331,6 +339,10 @@
         <source>SIM PIN</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>NewSSID</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditWidget</name>
@@ -363,6 +375,10 @@
     </message>
     <message>
         <source>Allow Roaming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -414,7 +430,7 @@
     </message>
     <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verbinden</translation>
     </message>
     <message>
         <source>Information</source>
@@ -503,7 +519,7 @@
     <name>SavedNetworksList</name>
     <message>
         <source>Saved</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gespeichert</translation>
     </message>
 </context>
 <context>
@@ -689,7 +705,7 @@
     </message>
     <message>
         <source>ACTIONS</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">AKTIONEN</translation>
     </message>
     <message>
         <source>Enable SIM PIN</source>
@@ -828,6 +844,205 @@
     </message>
     <message>
         <source>Confirm SIM PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WifiSettingsPane</name>
+    <message>
+        <source>Wi-Fi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CONNECTION</source>
+        <translation type="unfinished">VERBINDUNG</translation>
+    </message>
+    <message>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ad-Hoc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> Bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MTU Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hidden Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Static WEP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dynamic WEP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WPA/WPA2 PSK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WPA/WPA2 Enterprise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SECURITY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Security Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TLS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LEAP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FAST</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TTLS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PEAP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EAP Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Private Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CA Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subject Match</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alternative Subject Matches</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Private Key Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phase 2 Authentication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anonymous Identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PAC file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anonymous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authenticated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic PAC Provisioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GTC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MSCHAPv2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PEAP version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MD5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto&amp;matic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version &amp;0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version &amp;1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

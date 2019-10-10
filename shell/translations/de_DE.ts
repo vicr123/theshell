@@ -1838,9 +1838,14 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
         <translation>Starten Sie eine neue Sitzung</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="1030"/>
+        <location filename="../menu.ui" line="1061"/>
         <source>Failed to start app</source>
         <translation>Start der App fehlgeschlagen</translation>
+    </message>
+    <message>
+        <location filename="../menu.ui" line="1096"/>
+        <source>Try starting the app again, and if problems persist, try reinstalling the app.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="80"/>
@@ -1904,12 +1909,17 @@ Wenn Sie auswählen, die Dateien zu behalten, werden folgende Objekte verbleiben
         <translation>Debugdaten gesammelt</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="736"/>
+        <location filename="../menu.cpp" line="732"/>
+        <source>%1 can&apos;t start.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="739"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation>Aktionen für &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="774"/>
+        <location filename="../menu.cpp" line="777"/>
         <source>For &quot;%1&quot;</source>
         <translation>Für &quot;%1&quot;</translation>
     </message>

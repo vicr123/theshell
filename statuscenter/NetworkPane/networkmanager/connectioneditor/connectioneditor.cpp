@@ -21,9 +21,12 @@
 #include "ui_connectioneditor.h"
 
 #include <QMessageBox>
+#include <QDebug>
+#include <ttoast.h>
 #include <NetworkManagerQt/Settings>
 
 #include "panes/gsmsettingspane.h"
+#include "panes/wifisettingspane.h"
 
 struct ConnectionEditorPrivate {
     NetworkManager::Device::Ptr device;
@@ -55,11 +58,14 @@ ConnectionEditor::ConnectionEditor(NetworkManager::Device::Ptr device, NetworkMa
             case NetworkManager::Setting::Gsm:
                 pane = new GsmSettingsPane(d->connection, this);
                 break;
+            case NetworkManager::Setting::Wireless:
+                pane = new WifiSettingsPane(d->connection, this);
+                break;
         }
 
         if (pane != nullptr) {
             connect(pane, &SettingPane::settingsChanged, this, [=] {
-                d->connection->updateUnsaved(d->connection->settings()->toMap());
+                updateNmSettings();
             });
 
             ui->settingsList->addItem(pane->windowTitle());
@@ -86,7 +92,7 @@ ConnectionEditor::~ConnectionEditor()
 void ConnectionEditor::on_connectionNameLineEdit_textChanged(const QString &arg1)
 {
     d->connection->settings()->setId(arg1);
-    d->connection->updateUnsaved(d->connection->settings()->toMap());
+    updateNmSettings();
 }
 
 void ConnectionEditor::updateSettings() {
@@ -102,7 +108,17 @@ void ConnectionEditor::on_settingsList_currentRowChanged(int currentRow)
 
 void ConnectionEditor::on_saveSettingsButton_clicked()
 {
-    d->connection->save();
+    QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(d->connection->update(currentSettings()));
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [=] {
+        if (watcher->reply().type() == QDBusMessage::ErrorMessage) {
+            tToast* toast = new tToast();
+            toast->setTitle(tr("Couldn't save settings"));
+            toast->setText(tr("NetworkManager replied: %1").arg(watcher->reply().errorName() + ": " + watcher->reply().errorMessage()));
+            toast->show(this);
+            connect(toast, &tToast::dismissed, toast, &tToast::deleteLater);
+        }
+        watcher->deleteLater();
+    });
 }
 
 void ConnectionEditor::on_discardSettingsButton_clicked()
@@ -113,7 +129,7 @@ void ConnectionEditor::on_discardSettingsButton_clicked()
 void ConnectionEditor::on_connectAutomaticallySwitch_toggled(bool checked)
 {
     d->connection->settings()->setAutoconnect(checked);
-    d->connection->updateUnsaved(d->connection->settings()->toMap());
+    updateNmSettings();
 }
 
 void ConnectionEditor::on_removeButton_clicked()
@@ -121,4 +137,22 @@ void ConnectionEditor::on_removeButton_clicked()
     if (QMessageBox::warning(this, tr("Remove Connection?"), tr("To use this connection again, you'll need to set it up again."), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
         d->connection->remove();
     }
+}
+
+void ConnectionEditor::updateNmSettings() {
+    d->connection->updateUnsaved(currentSettings());
+}
+
+NMVariantMapMap ConnectionEditor::currentSettings() {
+    NMVariantMapMap map = d->connection->settings()->toMap();
+
+    //NetworkManagerQt seems to not do this for some connections for whatever reason
+    for (NetworkManager::Setting::Ptr setting : d->connection->settings()->settings()) {
+        QVariantMap childMap = setting->toMap();
+        if (!childMap.isEmpty()) {
+            map.insert(setting->name(), childMap);
+        }
+    }
+
+    return map;
 }

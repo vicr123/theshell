@@ -23,6 +23,10 @@
 #include <QWidget>
 #include <pulse/introspect.h>
 
+namespace PulseAudioQt {
+    class Sink;
+}
+
 namespace Ui {
     class SinkWidget;
 }
@@ -33,17 +37,12 @@ class SinkWidget : public QWidget
         Q_OBJECT
 
     public:
-        explicit SinkWidget(QWidget *parent = nullptr);
+        explicit SinkWidget(PulseAudioQt::Sink* sink, QWidget *parent = nullptr);
         ~SinkWidget();
 
-        int paIndex();
+        PulseAudioQt::Sink* sink();
 
         void updateInfo(pa_sink_info info, QString defaultSinkName);
-
-    signals:
-        void updateMute(bool mute, int index);
-        void updateVolume(pa_cvolume volume, int index);
-        void setDefault(QString name);
 
     public slots:
         void defaultSinkChanged(QString defaultSinkName);
@@ -60,6 +59,10 @@ class SinkWidget : public QWidget
         void on_volumeSlider_valueChanged(int value);
 
         void on_defaultButton_toggled(bool checked);
+
+        void updateChannels();
+
+        void updateChannelVolumes();
 
     private:
         Ui::SinkWidget *ui;

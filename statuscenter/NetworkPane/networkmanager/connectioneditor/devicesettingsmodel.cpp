@@ -25,6 +25,7 @@
 
 #include <NetworkManagerQt/Manager>
 #include <NetworkManagerQt/Settings>
+#include <NetworkManagerQt/WirelessSetting>
 #include "connectioneditor.h"
 #include "panes/simpinpane.h"
 
@@ -188,19 +189,28 @@ void DeviceSettingsModel::activateItem(QModelIndex index) {
         switch (item->action) {
             case DeviceSettingsModelItem::NewConnection: {
                 //Create a new connection
+                NMVariantMapMap extraSettings;
                 QScopedPointer<NetworkManager::ConnectionSettings> settings;
                 switch (d->device->type()) {
                     case NetworkManager::Device::Modem:
                         settings.reset(new NetworkManager::ConnectionSettings(NetworkManager::ConnectionSettings::Gsm));
                         break;
-                    case NetworkManager::Device::Wifi:
+                    case NetworkManager::Device::Wifi: {
                         settings.reset(new NetworkManager::ConnectionSettings(NetworkManager::ConnectionSettings::Wireless));
+                        NetworkManager::WirelessSetting::Ptr wirelessSettings = settings->setting(NetworkManager::Setting::Wireless).staticCast<NetworkManager::WirelessSetting>();
+                        extraSettings.insert("802-11-wireless", {{"ssid", tr("NewSSID").toUtf8()}});
+                    }
                 }
 
                 settings->setId(tr("New Connection"));
                 settings->setUuid(NetworkManager::ConnectionSettings::createNewUuid());
+                NMVariantMapMap settingsMap = settings->toMap();
 
-                QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(NetworkManager::addConnectionUnsaved(settings->toMap()));
+                for (QString key : extraSettings.keys()) {
+                    settingsMap.insert(key, extraSettings.value(key));
+                }
+
+                QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(NetworkManager::addConnectionUnsaved(settingsMap));
                 connect(watcher, &QDBusPendingCallWatcher::finished, this, [=] {
                     QDBusMessage reply = watcher->reply();
                     QString error = reply.errorName();

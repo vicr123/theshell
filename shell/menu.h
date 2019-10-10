@@ -126,6 +126,8 @@ class Menu : public QDialog
 
         void on_availableUsersList_itemActivated(QListWidgetItem *item);
 
+        void on_backButton_clicked();
+
     private:
         Ui::Menu *ui;
 

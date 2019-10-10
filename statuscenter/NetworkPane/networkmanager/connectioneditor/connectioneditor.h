@@ -55,6 +55,9 @@ class ConnectionEditor : public QWidget
     private:
         Ui::ConnectionEditor *ui;
         ConnectionEditorPrivate* d;
+
+        NMVariantMapMap currentSettings();
+        void updateNmSettings();
 };
 
 #endif // CONNECTIONEDITOR_H

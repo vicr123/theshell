@@ -50,12 +50,6 @@ class AudioPane : public QWidget, public StatusCenterPaneObject
 
         void connectToPulse();
 
-        void updateSinkMute(bool mute, int index);
-        void updateSinkVolume(pa_cvolume, int index);
-        void setDefaultSink(QString sink);
-
-        void updateSinkInputMute(bool mute, int index);
-
         void on_volumeOverdrive_toggled(bool checked);
 
         void on_soundThemeComboBox_currentIndexChanged(int index);
@@ -69,19 +63,6 @@ class AudioPane : public QWidget, public StatusCenterPaneObject
         Ui::AudioPane *ui;
 
         AudioPanePrivate* d;
-
-        static void pulseaudio_subscribe_callback(pa_context* c, pa_subscription_event_type_t t, uint32_t idx, void* userdata);
-        static void pulseaudio_state_callback(pa_context *c, void *userdata);
-
-        static void updatePulseState(AudioPane* pane);
-
-        static void addSink(AudioPane* pane, pa_sink_info info);
-        static void updateSink(AudioPane* pane, int index);
-        static void removeSink(AudioPane* pane, int index);
-
-        static void addSinkInput(AudioPane* pane, pa_sink_input_info info);
-        static void updateSinkInput(AudioPane* pane, int index);
-        static void removeSinkInput(AudioPane* pane, int index);
 
         void changeEvent(QEvent* event);
 };

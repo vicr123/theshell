@@ -94,6 +94,14 @@
         <source>To use this connection again, you&apos;ll need to set it up again.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Couldn&apos;t save settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NetworkManager replied: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DevicePanel</name>
@@ -331,6 +339,10 @@
         <source>SIM PIN</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>NewSSID</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditWidget</name>
@@ -363,6 +375,10 @@
     </message>
     <message>
         <source>Allow Roaming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -827,6 +843,205 @@
     <message>
         <source>Confirm SIM PIN</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WifiSettingsPane</name>
+    <message>
+        <source>Wi-Fi</source>
+        <translation type="unfinished">Wi-Fi</translation>
+    </message>
+    <message>
+        <source>SSID</source>
+        <translation type="unfinished">SSID</translation>
+    </message>
+    <message>
+        <source>CONNECTION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ad-Hoc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> Bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MTU Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hidden Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Static WEP</source>
+        <translation type="unfinished">WEP tĩnh</translation>
+    </message>
+    <message>
+        <source>Dynamic WEP</source>
+        <translation type="unfinished">WEP Năng động</translation>
+    </message>
+    <message>
+        <source>WPA/WPA2 PSK</source>
+        <translation type="unfinished">WPA/WPA2 PSK</translation>
+    </message>
+    <message>
+        <source>WPA/WPA2 Enterprise</source>
+        <translation type="unfinished">WPA/WPA2 Doanh nghiệp</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SECURITY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Security Key</source>
+        <translation type="unfinished">Mật khẩu</translation>
+    </message>
+    <message>
+        <source>TLS</source>
+        <translation type="unfinished">TLS</translation>
+    </message>
+    <message>
+        <source>LEAP</source>
+        <translation type="unfinished">LEAP</translation>
+    </message>
+    <message>
+        <source>FAST</source>
+        <translation type="unfinished">FAST</translation>
+    </message>
+    <message>
+        <source>TTLS</source>
+        <translation type="unfinished">TTLS</translation>
+    </message>
+    <message>
+        <source>PEAP</source>
+        <translation type="unfinished">PEAP</translation>
+    </message>
+    <message>
+        <source>EAP Method</source>
+        <translation type="unfinished">Phương pháp EAP</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation type="unfinished">Máy chủ</translation>
+    </message>
+    <message>
+        <source>Private Key</source>
+        <translation type="unfinished">Khóa riêng tư</translation>
+    </message>
+    <message>
+        <source>CA Certificate</source>
+        <translation type="unfinished">Chứng chỉ CA</translation>
+    </message>
+    <message>
+        <source>User Certificate</source>
+        <translation type="unfinished">Chứng chỉ người dùng</translation>
+    </message>
+    <message>
+        <source>Subject Match</source>
+        <translation type="unfinished">Đối tượng phù hợp</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation type="unfinished">Danh tính</translation>
+    </message>
+    <message>
+        <source>Alternative Subject Matches</source>
+        <translation type="unfinished">Đối tượng phù hợp thay thế</translation>
+    </message>
+    <message>
+        <source>Private Key Password</source>
+        <translation type="unfinished">Mật khẩu khóa riêng tư</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">Chọn</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished">Tên người dùng</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished">Mật khẩu</translation>
+    </message>
+    <message>
+        <source>Phase 2 Authentication</source>
+        <translation type="unfinished">Xác thực giai đoạn thử 2</translation>
+    </message>
+    <message>
+        <source>Anonymous Identity</source>
+        <translation type="unfinished">Danh tính vô danh</translation>
+    </message>
+    <message>
+        <source>PAC file</source>
+        <translation type="unfinished">Tệp PAC</translation>
+    </message>
+    <message>
+        <source>Anonymous</source>
+        <translation type="unfinished">Vô danh</translation>
+    </message>
+    <message>
+        <source>Authenticated</source>
+        <translation type="unfinished">Xác thực</translation>
+    </message>
+    <message>
+        <source>Automatic PAC Provisioning</source>
+        <translation type="unfinished">Tự động dự liệu PAC</translation>
+    </message>
+    <message>
+        <source>GTC</source>
+        <translation type="unfinished">GTC</translation>
+    </message>
+    <message>
+        <source>MSCHAPv2</source>
+        <translation type="unfinished">MSCHAPv2</translation>
+    </message>
+    <message>
+        <source>PEAP version</source>
+        <translation type="unfinished">Phiên bản PEAP</translation>
+    </message>
+    <message>
+        <source>MD5</source>
+        <translation type="unfinished">MD5</translation>
+    </message>
+    <message>
+        <source>Auto&amp;matic</source>
+        <translation type="unfinished">Tự động</translation>
+    </message>
+    <message>
+        <source>Version &amp;0</source>
+        <translation type="unfinished">Phiên bản &amp;0</translation>
+    </message>
+    <message>
+        <source>Version &amp;1</source>
+        <translation type="unfinished">Phiên bản &amp;1</translation>
     </message>
 </context>
 </TS>

@@ -48,6 +48,8 @@ class GsmSettingsPane : public SettingPane
 
         void on_allowRoamingSwitch_toggled(bool checked);
 
+        void on_numberField_textChanged(const QString &arg1);
+
     private:
         Ui::GsmSettingsPane *ui;
 

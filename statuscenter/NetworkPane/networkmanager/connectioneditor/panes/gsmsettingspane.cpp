@@ -44,6 +44,7 @@ GsmSettingsPane::~GsmSettingsPane()
 void GsmSettingsPane::updateFields() {
     d->settings = connection->settings()->setting(NetworkManager::Setting::Gsm).staticCast<NetworkManager::GsmSetting>();
 
+    ui->numberField->setText(d->settings->number());
     ui->apnField->setText(d->settings->apn());
     ui->usernameField->setText(d->settings->username());
     ui->passwordField->setText(d->settings->password());
@@ -71,5 +72,11 @@ void GsmSettingsPane::on_passwordField_textChanged(const QString &arg1)
 void GsmSettingsPane::on_allowRoamingSwitch_toggled(bool checked)
 {
     d->settings->setHomeOnly(!checked);
+    settingsChanged();
+}
+
+void GsmSettingsPane::on_numberField_textChanged(const QString &arg1)
+{
+    d->settings->setNumber(arg1);
     settingsChanged();
 }

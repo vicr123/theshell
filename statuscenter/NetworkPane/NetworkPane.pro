@@ -87,6 +87,7 @@ HEADERS += \
     networkmanager/connectioneditor/panes/gsmsettingspane.h \
     networkmanager/connectioneditor/panes/settingpane.h \
     networkmanager/connectioneditor/panes/simpinpane.h \
+    networkmanager/connectioneditor/panes/wifisettingspane.h \
     networkmanager/devicepanel.h \
     networkmanager/enums.h \
     networkmanager/popovers/simpinrequest.h \
@@ -105,6 +106,7 @@ SOURCES += \
     networkmanager/connectioneditor/panes/gsmsettingspane.cpp \
     networkmanager/connectioneditor/panes/settingpane.cpp \
     networkmanager/connectioneditor/panes/simpinpane.cpp \
+    networkmanager/connectioneditor/panes/wifisettingspane.cpp \
     networkmanager/devicepanel.cpp \
     networkmanager/popovers/simpinrequest.cpp \
     plugin.cpp \
@@ -123,6 +125,7 @@ FORMS += \
     networkmanager/connectioneditor/devicesettings.ui \
     networkmanager/connectioneditor/panes/gsmsettingspane.ui \
     networkmanager/connectioneditor/panes/simpinpane.ui \
+    networkmanager/connectioneditor/panes/wifisettingspane.ui \
     networkmanager/devicepanel.ui \
     networkmanager/networkwidget.ui \
     networkmanager/chunkwidget.ui \

@@ -441,7 +441,7 @@ bool AppsListModel::launchApp(QModelIndex index) {
         connect(process, &QProcess::readyReadStandardOutput, [=] {
             process->readAllStandardOutput(); //Discard stdout
         });
-        return true;
+        return process->waitForStarted();
     }
 }
 

@@ -726,8 +726,11 @@ void Menu::on_reportBugButton_clicked()
 
 void Menu::launchAppByIndex(const QModelIndex &index)
 {
-    if (((AppsListModel*) ui->appsListView->model())->launchApp(index)) {
+    if (static_cast<AppsListModel*>(ui->appsListView->model())->launchApp(index)) {
         this->close();
+    } else {
+        ui->startupFailLabel->setText(tr("%1 can't start.").arg(index.data(Qt::DisplayRole).toString()));
+        ui->stackedWidget->setCurrentIndex(4);
     }
 }
 
@@ -918,4 +921,9 @@ QSize UsersListDelegate::sizeHint(const QStyleOptionViewItem &option, const QMod
     int iconHeight = 46 * getDPIScaling();
 
     return QSize(option.fontMetrics.width(index.data().toString()), qMax(fontHeight, iconHeight));
+}
+
+void Menu::on_backButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
 }

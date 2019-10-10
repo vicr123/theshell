@@ -10,7 +10,7 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="95"/>
-        <location filename="../audiopane.cpp" line="119"/>
+        <location filename="../audiopane.cpp" line="116"/>
         <source>Audio</source>
         <translation>Geluid</translation>
     </message>
@@ -71,27 +71,27 @@
         <translation>GELUIDEN</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="96"/>
+        <location filename="../audiopane.cpp" line="93"/>
         <source>Login</source>
         <translation>Log in</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="98"/>
+        <location filename="../audiopane.cpp" line="95"/>
         <source>Information</source>
         <translation>Informatie</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="99"/>
+        <location filename="../audiopane.cpp" line="96"/>
         <source>Question</source>
         <translation>Vraag</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="100"/>
+        <location filename="../audiopane.cpp" line="97"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="101"/>
+        <location filename="../audiopane.cpp" line="98"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
@@ -101,12 +101,12 @@
         <translation>Je kunt meldingsgeluiden wijzigen in het meldingspaneel</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="103"/>
+        <location filename="../audiopane.cpp" line="100"/>
         <source>Volume Change</source>
         <translation>Volume wijziging</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="97"/>
+        <location filename="../audiopane.cpp" line="94"/>
         <source>Logout</source>
         <translation>Log uit</translation>
     </message>
@@ -122,7 +122,7 @@
         <translation>Komt binnekort. Blijf alert!</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="102"/>
+        <location filename="../audiopane.cpp" line="99"/>
         <source>Screenshot</source>
         <translation>Schermopname</translation>
     </message>
@@ -135,9 +135,9 @@
         <translation>Formulier</translation>
     </message>
     <message>
-        <location filename="../sinkinputwidget.cpp" line="47"/>
-        <source>Playback Stream</source>
-        <translation>Afspeelstream</translation>
+        <location filename="../sinkinputwidget.cpp" line="90"/>
+        <source>Playback</source>
+        <translation type="unfinished">Afspelen</translation>
     </message>
 </context>
 <context>
@@ -163,7 +163,7 @@
         <translation>Hoofd</translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="71"/>
+        <location filename="../sinkwidget.cpp" line="99"/>
         <source>Speaker</source>
         <translation>Luidspreker</translation>
     </message>

@@ -17,45 +17,43 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef SINKINPUTWIDGET_H
-#define SINKINPUTWIDGET_H
+#ifndef WIFISETTINGSPANE_H
+#define WIFISETTINGSPANE_H
 
 #include <QWidget>
-#include <pulse/introspect.h>
+#include "settingpane.h"
 
 namespace Ui {
-    class SinkInputWidget;
+    class WifiSettingsPane;
 }
 
-namespace PulseAudioQt {
-    class SinkInput;
-}
-
-struct SinkInputWidgetPrivate;
-class SinkInputWidget : public QWidget
+struct WifiSettingsPanePrivate;
+class WifiSettingsPane : public SettingPane
 {
         Q_OBJECT
 
     public:
-        explicit SinkInputWidget(PulseAudioQt::SinkInput* sinkInput, QWidget *parent = nullptr);
-        ~SinkInputWidget();
-
-        PulseAudioQt::SinkInput* sinkInput();
+        explicit WifiSettingsPane(NetworkManager::Connection::Ptr connection, QWidget *parent = nullptr);
+        ~WifiSettingsPane();
 
     private slots:
+        void updateFields();
 
-        void on_muteButton_toggled(bool checked);
+        void on_ssidField_textEdited(const QString &arg1);
 
-        void updateName();
+        void on_modeComboBox_currentIndexChanged(int index);
 
-        void updateVolume();
+        void on_mtuBox_valueChanged(int arg1);
 
-        void on_volumeSlider_sliderMoved(int position);
+        void on_hiddenNetworkSwitch_toggled(bool checked);
+
+        void on_securityComboBox_currentIndexChanged(int index);
+
+        void on_EnterpriseAuthMethod_currentIndexChanged(int index);
 
     private:
-        Ui::SinkInputWidget *ui;
-
-        SinkInputWidgetPrivate* d;
+        Ui::WifiSettingsPane *ui;
+        WifiSettingsPanePrivate* d;
 };
 
-#endif // SINKINPUTWIDGET_H
+#endif // WIFISETTINGSPANE_H

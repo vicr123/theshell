@@ -1789,8 +1789,13 @@ Tập tin này có thể giữ lại:
         <translation>Bắt đầu phiên mới</translation>
     </message>
     <message>
-        <location filename="../menu.ui" line="1030"/>
+        <location filename="../menu.ui" line="1061"/>
         <source>Failed to start app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.ui" line="1096"/>
+        <source>Try starting the app again, and if problems persist, try reinstalling the app.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1901,12 +1906,17 @@ Tập tin này có thể giữ lại:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="736"/>
+        <location filename="../menu.cpp" line="732"/>
+        <source>%1 can&apos;t start.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menu.cpp" line="739"/>
         <source>Actions for &quot;%1&quot;</source>
         <translation>Hoạt động cho &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../menu.cpp" line="774"/>
+        <location filename="../menu.cpp" line="777"/>
         <source>For &quot;%1&quot;</source>
         <translation>Cho &quot;%1&quot;</translation>
     </message>
