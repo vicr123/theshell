@@ -148,22 +148,22 @@
         <translation>Formulier</translation>
     </message>
     <message>
-        <location filename="../sinkwidget.ui" line="80"/>
+        <location filename="../sinkwidget.ui" line="99"/>
         <source>Set Default</source>
         <translation>Als standaard instellen</translation>
     </message>
     <message>
-        <location filename="../sinkwidget.ui" line="105"/>
+        <location filename="../sinkwidget.ui" line="125"/>
         <source>Mute</source>
         <translation>Dempen</translation>
     </message>
     <message>
-        <location filename="../sinkwidget.ui" line="160"/>
+        <location filename="../sinkwidget.ui" line="181"/>
         <source>Master</source>
         <translation>Hoofd</translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="99"/>
+        <location filename="../sinkwidget.cpp" line="137"/>
         <source>Speaker</source>
         <translation>Luidspreker</translation>
     </message>

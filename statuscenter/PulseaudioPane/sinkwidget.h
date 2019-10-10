@@ -42,6 +42,8 @@ class SinkWidget : public QWidget
 
         PulseAudioQt::Sink* sink();
 
+        QString currentPort();
+
         void updateInfo(pa_sink_info info, QString defaultSinkName);
 
     public slots:
@@ -63,6 +65,8 @@ class SinkWidget : public QWidget
         void updateChannels();
 
         void updateChannelVolumes();
+
+        void updatePorts();
 
     private:
         Ui::SinkWidget *ui;

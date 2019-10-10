@@ -28,6 +28,7 @@
 #include <QMutex>
 #include <Context>
 #include <Sink>
+#include <Port>
 
 struct SinkWidgetPrivate {
     PulseAudioQt::Sink* sink;
@@ -39,6 +40,7 @@ struct SinkWidgetPrivate {
 
     QString sinkName;
     QMutex volumeChangeLocker;
+    QString lastPort;
 };
 
 SinkWidget::SinkWidget(PulseAudioQt::Sink* sink, QWidget *parent) :
@@ -56,19 +58,55 @@ SinkWidget::SinkWidget(PulseAudioQt::Sink* sink, QWidget *parent) :
     ui->allVolumesWidget->setFixedHeight(0);
 
     connect(d->sink, &PulseAudioQt::Sink::descriptionChanged, this, [=] {
-        ui->deviceName->setText(sink->description());
+        ui->deviceName->setText(sink->description().toUpper());
     });
     connect(d->sink, &PulseAudioQt::Sink::mutedChanged, this, [=] {
         ui->muteButton->setChecked(sink->isMuted());
     });
     connect(d->sink, &PulseAudioQt::Sink::channelsChanged, this, &SinkWidget::updateChannels);
     connect(d->sink, &PulseAudioQt::Sink::channelVolumesChanged, this, &SinkWidget::updateChannelVolumes);
+    connect(d->sink, &PulseAudioQt::Sink::portsChanged, this, &SinkWidget::updatePorts);
+    connect(d->sink, &PulseAudioQt::Sink::activePortIndexChanged, this, [=] {
+        if (d->sink->isDefault()) {
+            PulseAudioQt::Port* port = d->sink->ports().at(d->sink->activePortIndex());
+            if (port->availability() == PulseAudioQt::Port::Unavailable) {
+                //Weird thing? Use a workaround here
+                QList<PulseAudioQt::Port*> availablePorts;
+                for (PulseAudioQt::Port* port : d->sink->ports()) {
+                    if (port->availability() != PulseAudioQt::Port::Unavailable) availablePorts.append(port);
+                }
 
-    ui->deviceName->setText(sink->description());
+                if (availablePorts.count() == 1) {
+                    port = availablePorts.first();
+                } else {
+                    port = nullptr;
+                }
+            }
+
+            if (port != nullptr) {
+                QString newPort;
+                if (port->name().contains("headphones", Qt::CaseInsensitive)) {
+                    newPort = "headphones";
+                } else if (port->name().contains("speaker", Qt::CaseInsensitive)) {
+                    newPort = "speakers";
+                }
+
+                if (d->lastPort != newPort && d->lastPort != "") {
+                    //Show the HUD
+                    qDebug() << "Just switched to" << newPort;
+                }
+                d->lastPort = newPort;
+            }
+        }
+        SinkWidget::updatePorts();
+    });
+
+    ui->deviceName->setText(sink->description().toUpper());
     ui->muteButton->setChecked(sink->isMuted());
 
     updateChannels();
     updateChannelVolumes();
+    updatePorts();
 }
 
 SinkWidget::~SinkWidget()
@@ -143,6 +181,43 @@ void SinkWidget::updateChannelVolumes()
     }
 }
 
+void SinkWidget::updatePorts()
+{
+    QLayoutItem* item;
+    while ((item = ui->portsLayout->takeAt(0))) {
+        ui->portsLayout->removeItem(item);
+        item->widget()->deleteLater();
+    }
+
+    for (int i = 0; i < d->sink->ports().count(); i++) {
+        PulseAudioQt::Port* port = d->sink->ports().at(i);
+        int index = i;
+        QPushButton* button = new QPushButton(this);
+
+        QIcon icon;
+        if (port->name().contains("speaker", Qt::CaseInsensitive)) {
+            icon = QIcon::fromTheme("audio-speakers");
+        } else if (port->name().contains("headphones", Qt::CaseInsensitive)) {
+            icon = QIcon::fromTheme("audio-headphones");
+        } else {
+            icon = QIcon::fromTheme("audio-volume-high");
+        }
+
+        button->setIcon(icon);
+        button->setFlat(true);
+        button->setCheckable(true);
+        button->setAutoExclusive(true);
+        button->setEnabled(port->availability() != PulseAudioQt::Port::Unavailable);
+        button->setToolTip(port->description());
+        if (i == d->sink->activePortIndex()) button->setChecked(true);
+        connect(button, &QPushButton::clicked, this, [=] {
+            button->setChecked(true);
+            d->sink->setActivePortIndex(index);
+        });
+        ui->portsLayout->addWidget(button);
+    }
+}
+
 void SinkWidget::defaultSinkChanged(QString defaultSinkName) {
     ui->defaultButton->setChecked(d->sinkName == defaultSinkName);
 }
@@ -154,6 +229,11 @@ void SinkWidget::on_muteButton_toggled(bool checked)
 
 PulseAudioQt::Sink* SinkWidget::sink() {
     return d->sink;
+}
+
+QString SinkWidget::currentPort()
+{
+    return d->lastPort;
 }
 
 void SinkWidget::on_expandVolumesButton_clicked()

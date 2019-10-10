@@ -69,6 +69,25 @@
       </widget>
      </item>
      <item>
+      <layout class="QHBoxLayout" name="portsLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </item>
+     <item>
       <widget class="QPushButton" name="defaultButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -83,7 +102,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="dialog-ok"/>
+        <iconset theme="dialog-ok">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -108,7 +128,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="audio-volume-muted"/>
+        <iconset theme="audio-volume-muted">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -185,7 +206,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="go-down"/>
+        <iconset theme="go-down">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="flat">
         <bool>true</bool>
