@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="AnimatedStackedWidget" name="exitStackedWidget">
+    <widget class="tStackedWidget" name="exitStackedWidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -52,7 +52,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="AnimatedStackedWidget" name="stackedWidget">
+        <widget class="tStackedWidget" name="stackedWidget">
          <property name="autoFillBackground">
           <bool>true</bool>
          </property>
@@ -1072,9 +1072,9 @@ p, li { white-space: pre-wrap; }
  </widget>
  <customwidgets>
   <customwidget>
-   <class>AnimatedStackedWidget</class>
+   <class>tStackedWidget</class>
    <extends>QStackedWidget</extends>
-   <header>animatedstackedwidget.h</header>
+   <header location="global">tstackedwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

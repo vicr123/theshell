@@ -51,55 +51,13 @@ class UPowerDBus : public QObject
     public:
         explicit UPowerDBus(QObject *parent = 0);
 
-        bool hasBattery();
-        bool hasPCBattery();
-        int currentBattery();
-        QDBusObjectPath defaultBattery();
-        QDateTime batteryTimeRemaining();
-        bool charging();
-
-        Q_SCRIPTABLE bool powerStretch();
-
-        QStringList allDevices;
-
-    signals:
-        void updateDisplay(QString display);
-        void batteryChanged(int batteryPercent);
-        void showHotkeyHud(QVariantMap parameters);
-
-        Q_SCRIPTABLE void powerStretchChanged(bool powerStretch);
-
     public slots:
-        void DeviceChanged(QStringList allDevices);
-        void checkUpower();
-        void devicesChanged();
-        void setPowerStretch(bool on);
         void queryIdleState();
 
     private:
-        bool hourBatteryWarning = false;
-        bool halfHourBatteryWarning = false;
-        bool tenMinuteBatteryWarning = false;
-
-        bool isCharging = false;
-        bool isConnectedToPower = false;
-
-        bool isPowerStretchOn = false;
-
-        uint batteryLowNotificationNumber = 0;
-
-        bool hasBat;
-        bool hasPCBat;
-        int batLevel;
-
         QDBusUnixFileDescriptor powerInhibit;
 
-        QTimer* checkTimer;
         QSettings settings;
-
-        QDBusObjectPath batteryPath;
-
-        QDateTime timeRemain;
 
         bool isLidClosed = false;
 

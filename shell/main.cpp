@@ -62,7 +62,6 @@ QTranslator *qtTranslator, *tsTranslator;
 LocationServices* locationServices = NULL;
 QDBusServiceWatcher* dbusServiceWatcher = NULL;
 QDBusServiceWatcher* dbusServiceWatcherSystem = NULL;
-UPowerDBus* updbus = NULL;
 DBusSignals* dbusSignals = NULL;
 ScreenRecorder* screenRecorder = nullptr;
 bool startSafe = false;
@@ -381,7 +380,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    updbus = new UPowerDBus();
     MainWin = new MainWindow();
 
     new GlobalFilter(&a);

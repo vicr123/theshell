@@ -25,402 +25,32 @@
 #include <tsystemsound.h>
 #include "hotkeyhud.h"
 
+
 extern void EndSession(EndSessionWait::shutdownType type);
 
 UPowerDBus::UPowerDBus(QObject *parent) : QObject(parent)
 {
-    new PowerAdaptor(this);
-    QDBusConnection::sessionBus().registerObject("/org/thesuite/Power", "org.thesuite.Power", this);
-
-    //Inhibit logind's handling of some power events
-    QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Inhibit");
-    message.setArguments(QList<QVariant>() << "handle-power-key:handle-suspend-key:handle-lid-switch" << "theShell" << "theShell Handles Hardware Power Keys" << "block");
-    QDBusReply<QDBusUnixFileDescriptor> inhibitReply = QDBusConnection::systemBus().call(message);
-    powerInhibit = inhibitReply.value();
-
     //Disable DPMS timeouts
     DPMSSetTimeouts(QX11Info::display(), 0, 0, 0);
-
-    //Set up timer to check UPower properties
-    checkTimer = new QTimer(this);
-    checkTimer->setInterval(1000);
-    connect(checkTimer, SIGNAL(timeout()), this, SLOT(checkUpower()));
-    connect(checkTimer, SIGNAL(timeout()), this, SLOT(queryIdleState()));
-    connect(checkTimer, &QTimer::timeout, [=] {
-        this->DeviceChanged(this->allDevices);
-    });
-    checkTimer->start();
-
-    setPowerStretch(settings.value("powerstretch/on", false).toBool());
-
-    QDBusConnection::systemBus().connect("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower", "DeviceAdded", this, SLOT(devicesChanged()));
-    QDBusConnection::systemBus().connect("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower", "DeviceRemoved", this, SLOT(devicesChanged()));
-
-    //Set up the HUD
-    //connect(this, SIGNAL(showHotkeyHud(QVariantMap)), HotkeyHud::instance(), SLOT(show(QVariantMap)));
-    connect(this, &UPowerDBus::showHotkeyHud, HotkeyHud::instance(), QOverload<QVariantMap>::of(&HotkeyHud::show), Qt::QueuedConnection);
-
-    devicesChanged();
 }
 
-void UPowerDBus::devicesChanged() {
-    allDevices.clear();
-    QDBusInterface *i = new QDBusInterface("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower", QDBusConnection::systemBus(), this);
-    QDBusReply<QList<QDBusObjectPath>> reply = i->call("EnumerateDevices"); //Get all devices
-
-    if (reply.isValid()) { //Check if the reply is ok
-        for (QDBusObjectPath device : reply.value()) {
-            if (device.path().contains("battery") || device.path().contains("media_player") || device.path().contains("computer") || device.path().contains("phone")) { //This is a battery or media player or tablet computer
-                QDBusConnection::systemBus().connect("org.freedesktop.UPower", device.path(),
-                                                     "org.freedesktop.DBus.Properties", "PropertiesChanged", this,
-                                                                      SLOT(DeviceChanged()));
-
-                allDevices.append(device.path());
-            }
-
-            if (device.path().contains("battery")) {
-                batteryPath = device;
-            }
-        }
-        DeviceChanged(this->allDevices);
-    } else {
-        emit updateDisplay(tr("Can't get battery information."));
-    }
-}
-
-void UPowerDBus::DeviceChanged(QStringList allDevices) {
-    if (!isUpdatingDisplay) {
-        isUpdatingDisplay = true;
-
-        (new tPromise<QString>([=](QString& error) {
-            QStringList displayOutput;
-
-            bool powerStretchMessageNotPrinted = true;
-            hasPCBat = false;
-            for (QString devicePath : allDevices) {
-                QDBusInterface i("org.freedesktop.UPower", devicePath, "org.freedesktop.UPower.Device", QDBusConnection::systemBus());
-
-                //Get the percentage of battery remaining.
-                //We do the calculation ourselves because UPower can be inaccurate sometimes
-                double percentage;
-
-                //Check that the battery actually reports energy information
-                double energyFull = i.property("EnergyFull").toDouble();
-                double energy = i.property("Energy").toDouble();
-                double energyEmpty = i.property("EnergyEmpty").toDouble();
-                if (energyFull == 0 && energy == 0 && energyEmpty == 0) {
-                    //The battery does not report energy information, so get the percentage from UPower.
-                    percentage = i.property("Percentage").toDouble();
-                } else {
-                    //Calculate the percentage ourself, and round it to an integer.
-                    percentage = qRound((energy - energyEmpty) / (energyFull - energyEmpty) * 100);
-                }
-
-                if (i.path().contains("battery")) {
-                    //PC Battery
-                    if (i.property("IsPresent").toBool()) {
-                        hasPCBat = true;
-                        bool showRed = false;
-                        qulonglong timeToFull = i.property("TimeToFull").toULongLong();
-                        qulonglong timeToEmpty = i.property("TimeToEmpty").toULongLong();
-
-                        //Depending on the state, do different things.
-                        QString state;
-                        switch (i.property("State").toUInt()) {
-                        case 1: //Charging
-                            state = " (" + tr("Charging");
-
-                            if (!isCharging) {
-                                emit showHotkeyHud({
-                                    {"icon", QIcon::fromTheme("battery-charging")},
-                                    {"control", tr("Battery")},
-                                    {"value", static_cast<int>(percentage)},
-                                    {"explanation", tr("Now Charging")},
-                                    {"highlightCol", QColor(0, 200, 0)},
-                                    {"timeout", 5000},
-                                    {"sound", "power-plug"}
-                                });
-                            }
-
-                            isCharging = true;
-                            isConnectedToPower = true;
-
-                            if (timeToFull != 0) {
-                                timeRemain = QDateTime::fromTime_t(timeToFull).toUTC();
-                                state.append(" · " + timeRemain.toString("h:mm"));
-                            } else {
-                                timeRemain = QDateTime(QDate(0, 0, 0));
-                            }
-
-                            if (hourBatteryWarning) {
-                                hourBatteryWarning = false;
-                                halfHourBatteryWarning = false;
-                                tenMinuteBatteryWarning = false;
-                            }
-                            state += ")";
-                            break;
-                        case 2: //Discharging
-                            //state = " (" + tr("Discharging");
-                            state = " (";
-                            if (isConnectedToPower && settings.value("power/notifyUnplugPower", true).toBool()) {
-                                emit showHotkeyHud({
-                                    {"icon", QIcon::fromTheme("battery-080")},
-                                    {"control", tr("Battery")},
-                                    {"value", static_cast<int>(percentage)},
-                                    {"explanation", tr("Using Battery Power")},
-                                    {"timeout", 5000}
-                                });
-                            }
-                            isConnectedToPower = false;
-                            isCharging = false;
-
-                            if (timeToEmpty != 0) {
-                                timeRemain = QDateTime::fromTime_t(timeToEmpty).toUTC();
-                                state.append(/*" · " + */timeRemain.toString("h:mm"));
-
-                                if (timeToEmpty <= 600 && tenMinuteBatteryWarning == false) { //Ten minutes left! Critical!
-                                    emit showHotkeyHud({
-                                        {"icon", QIcon::fromTheme("battery-low")},
-                                        {"control", tr("Battery")},
-                                        {"value", static_cast<int>(percentage)},
-                                        {"explanation", tr("About 10 minutes remaining")},
-                                        {"highlightCol", QColor(200, 0, 0)},
-                                        {"timeout", 5000},
-                                        {"sound", "battery-caution"}
-                                    });
-
-                                    tenMinuteBatteryWarning = true;
-                                    halfHourBatteryWarning = true;
-                                    hourBatteryWarning = true;
-                                } else if (timeToEmpty <= 1800 && halfHourBatteryWarning == false) { //Half hour left! Low!
-                                    emit showHotkeyHud({
-                                        {"icon", QIcon::fromTheme("battery-low")},
-                                        {"control", tr("Battery")},
-                                        {"value", static_cast<int>(percentage)},
-                                        {"explanation", tr("About 30 minutes remaining")},
-                                        {"highlightCol", QColor(200, 0, 0)},
-                                        {"timeout", 5000},
-                                        {"sound", "battery-caution"}
-                                    });
-
-
-                                    halfHourBatteryWarning = true;
-                                    hourBatteryWarning = true;
-                                } else if (timeToEmpty <= 3600 && hourBatteryWarning == false) { //One hour left! Warning!
-                                    emit showHotkeyHud({
-                                        {"icon", QIcon::fromTheme("battery-low")},
-                                        {"control", tr("Battery")},
-                                        {"value", static_cast<int>(percentage)},
-                                        {"explanation", tr("About 1 hour remaining")},
-                                        {"highlightCol", QColor(200, 0, 0)},
-                                        {"timeout", 5000},
-                                        {"sound", "battery-caution"}
-                                    });
-
-                                    hourBatteryWarning = true;
-                                }
-
-                                if (halfHourBatteryWarning || tenMinuteBatteryWarning) {
-                                    showRed = true;
-                                }
-                            } else {
-                                timeRemain = QDateTime(QDate(0, 0, 0));
-                            }
-                            state += ")";
-                            break;
-                        case 3: //Empty
-                            state = " (" + tr("Empty") + ")";
-                            break;
-                        case 4: //Charged
-                        case 6: //Pending Discharge
-                            state = " (" + tr("Full") + ")";
-                            if (isCharging) {
-                                emit showHotkeyHud({
-                                    {"icon", QIcon::fromTheme("battery-charging-100")},
-                                    {"control", tr("Battery")},
-                                    {"value", static_cast<int>(percentage)},
-                                    {"explanation", tr("Completely Charged")},
-                                    {"highlightCol", QColor(0, 200, 0)},
-                                    {"timeout", 5000}
-                                });
-                            }
-                            isCharging = false;
-                            isConnectedToPower = true;
-                            timeRemain = QDateTime(QDate(0, 0, 0));
-                            break;
-                        case 5: //Pending Charge
-                            state = " (" + tr("Not Charging") + ")";
-                            break;
-                        }
-
-                        if (showRed) {
-                            displayOutput.append("<span style=\"background-color: red; color: black;\">" + tr("%1% PC Battery%2").arg(QString::number(percentage), state) + "</span>");
-                        } else {
-                            displayOutput.append(tr("%1% PC Battery%2").arg(QString::number(percentage), state));
-                        }
-
-                        if (isPowerStretchOn && powerStretchMessageNotPrinted) {
-                            powerStretchMessageNotPrinted = true;
-                            displayOutput.append("<span style=\"background-color: orange; color: black;\">" + tr("Power Stretch on") + "</span>");
-                        }
-
-                        batLevel = percentage;
-                    } else {
-                        displayOutput.append(tr("No Battery Inserted"));
-                    }
-                } else if (i.path().contains("media_player") || i.path().contains("computer") || i.path().contains("phone")) {
-                    //This is an external media player (or tablet)
-                    //Get the model of this media player
-                    QString model = i.property("Model").toString();
-
-                    if (i.property("Serial").toString().length() == 40 && i.property("Vendor").toString().contains("Apple") && QFile("/usr/bin/idevice_id").exists()) { //This is probably an iOS device
-                        //Get the name of the iOS device
-                        QProcess iosName;
-                        iosName.start("idevice_id " + i.property("Serial").toString());
-                        iosName.waitForFinished();
-
-                        QString name(iosName.readAll());
-                        name = name.trimmed();
-
-                        if (name != "" && !name.startsWith("ERROR:")) {
-                            model = name;
-                        }
-                    }
-                    if (i.property("State").toUInt() == 0) {
-                        if (QFile("/usr/bin/thefile").exists()) {
-                            displayOutput.append(tr("Pair %1 using theFile to see battery status.").arg(model));
-                        } else {
-                            displayOutput.append(tr("%1 battery unavailable. Device trusted?").arg(model));
-                        }
-                    } else {
-                        QString batteryText;
-                        batteryText.append(tr("%1% battery on %2").arg(QString::number(percentage), model));
-                        switch (i.property("State").toUInt()) {
-                            case 1:
-                                batteryText.append(" (" + tr("Charging") + ")");
-                                break;
-                            case 2:
-                                batteryText.append(" (" + tr("Discharging") + ")");
-                                break;
-                            case 3:
-                                batteryText.append(" (" + tr("Empty") + ")");
-                                break;
-                            case 4:
-                            case 6:
-                                batteryText.append(" (" + tr("Full") + ")");
-                                break;
-                            case 5:
-                                batteryText.append(" (" + tr("Not Charging") + ")");
-                                break;
-                        }
-                        displayOutput.append(batteryText);
-                    }
-                }
-            }
-
-            //If KDE Connect is running, check the battery status of connected devices.
-            if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.kde.kdeconnect")) {
-                //Get connected devices
-                QDBusMessage devicesMessage = QDBusMessage::createMethodCall("org.kde.kdeconnect", "/modules/kdeconnect", "org.kde.kdeconnect.daemon", "devices");
-                devicesMessage.setArguments(QVariantList() << true);
-
-                QDBusReply<QStringList> connectedDevices = QDBusConnection::sessionBus().call(devicesMessage);
-                if (connectedDevices.isValid()) {
-                    for (QString device : connectedDevices.value()) {
-                        QDBusInterface interface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device");
-                        QString name = interface.property("name").toString();
-                        QDBusInterface batteryInterface("org.kde.kdeconnect", "/modules/kdeconnect/devices/" + device, "org.kde.kdeconnect.device.battery");
-                        if (batteryInterface.isValid()) {
-                            QDBusReply<int> currentCharge = batteryInterface.call("charge");
-                            QDBusReply<bool> charging = batteryInterface.call("isCharging");
-
-                            if (currentCharge.isValid()) {
-                                if (currentCharge != -1) {
-                                    QString batteryText;
-                                    if (charging) {
-                                        if (currentCharge == 100) {
-                                            batteryText = tr("%1% battery on %2 (Full)").arg(QString::number(currentCharge), name);
-                                        } else {
-                                            batteryText = tr("%1% battery on %2 (Charging)").arg(QString::number(currentCharge), name);
-                                        }
-                                    } else {
-                                        batteryText = tr("%1% battery on %2 (Discharging)").arg(QString::number(currentCharge), name);
-                                    }
-                                    displayOutput.append(batteryText);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return displayOutput.join(" · ");
-        }))->then([=](QString message) {
-            emit updateDisplay(message);
-            if (message == "") {
-                hasBat = false;
-            } else {
-                hasBat = true;
-            }
-            isUpdatingDisplay = false;
-        });
-    }
-}
-
-bool UPowerDBus::hasBattery() {
-    return hasBat;
-}
-
-int UPowerDBus::currentBattery() {
-    return batLevel;
-}
-
-void UPowerDBus::checkUpower() {
-    QDBusInterface *i = new QDBusInterface("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower", QDBusConnection::systemBus(), this);
-    if (i->property("LidIsClosed").toBool()) { //Is the lid closed?
-        if (!this->isLidClosed) { //Has the value changed?
-            this->isLidClosed = true;
-            if (QApplication::screens().count() == 1) { //How many monitors do we have?
-                //If we only have one montior, suspend the PC.
-                EndSession(EndSessionWait::suspend);
-            }
-        }
-    } else {
-        if (this->isLidClosed) {
-            this->isLidClosed = false;
-        }
-    }
-    delete i;
-}
-
-QDBusObjectPath UPowerDBus::defaultBattery() {
-    return batteryPath;
-}
-
-QDateTime UPowerDBus::batteryTimeRemaining() {
-    return timeRemain;
-}
-
-bool UPowerDBus::charging() {
-    return isCharging;
-}
-
-bool UPowerDBus::powerStretch() {
-    return isPowerStretchOn;
-}
-
-void UPowerDBus::setPowerStretch(bool on) {
-    if (isPowerStretchOn != on) {
-        isPowerStretchOn = on;
-        settings.setValue("powerstretch/on", on);
-        emit powerStretchChanged(on);
-        this->devicesChanged();
-    }
-}
-
-bool UPowerDBus::hasPCBattery() {
-    return hasPCBat;
-}
+//void UPowerDBus::checkUpower() {
+//    QDBusInterface *i = new QDBusInterface("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.UPower", QDBusConnection::systemBus(), this);
+//    if (i->property("LidIsClosed").toBool()) { //Is the lid closed?
+//        if (!this->isLidClosed) { //Has the value changed?
+//            this->isLidClosed = true;
+//            if (QApplication::screens().count() == 1) { //How many monitors do we have?
+//                //If we only have one montior, suspend the PC.
+//                EndSession(EndSessionWait::suspend);
+//            }
+//        }
+//    } else {
+//        if (this->isLidClosed) {
+//            this->isLidClosed = false;
+//        }
+//    }
+//    delete i;
+//}
 
 void UPowerDBus::queryIdleState() {
     XScreenSaverInfo *info = new XScreenSaverInfo;
@@ -437,7 +67,7 @@ void UPowerDBus::queryIdleState() {
     BOOL isDpmsOn;
     DPMSInfo(QX11Info::display(), &mode, &isDpmsOn);
 
-    if (charging()) {
+/*    if (charging()) {
         int idleTime = settings.value("power/powerScreenOff", 15).toInt();
         if (info->idle > idleTime * 60000 && !idleScreen && idleTime != 121) {
             //Don't turn the screen back on if it's already off
@@ -451,7 +81,7 @@ void UPowerDBus::queryIdleState() {
             idleSuspend = true;
             EndSession(EndSessionWait::suspend);
         }
-    } else {
+    } else */{
         int idleTime = settings.value("power/batteryScreenOff", 15).toInt();
         if (info->idle > idleTime * 60000 && !idleScreen && idleTime != 121) {
             //Don't turn the screen back on if it's already off

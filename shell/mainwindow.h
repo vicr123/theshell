@@ -110,8 +110,6 @@ private slots:
 
     void on_date_clicked();
 
-    void on_batteryLabel_clicked();
-
     void on_volumeFrame_MouseEnter();
 
     void on_volumeFrame_MouseExit();
@@ -161,10 +159,6 @@ private slots:
     void on_date_dragging(int , int );
 
     void on_date_mouseReleased();
-
-    void on_batteryLabel_dragging(int , int );
-
-    void on_batteryLabel_mouseReleased();
 
     void on_actionNone_triggered();
 

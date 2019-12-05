@@ -143,6 +143,8 @@ Onboarding::Onboarding(QWidget *parent) :
     ui->welcomeLabel->setText(tr("Welcome to theShell %1!").arg(TS_VERSION));
     ui->tsLogo_2->setPixmap(QIcon::fromTheme("theshell").pixmap(256, 256));
     ui->iconLabel->setPixmap(QIcon(":/icons/icon.svg").pixmap(32 * getDPIScaling(), 32 * getDPIScaling()));
+    ui->exitStackedWidget->setCurrentAnimation(tStackedWidget::Lift);
+    ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
 
     QTimer* timer = new QTimer(this);
     timer->setInterval(3000);

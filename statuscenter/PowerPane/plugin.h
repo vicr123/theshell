@@ -18,37 +18,30 @@
  *
  * *************************************/
 
-#ifndef ANIMATEDSTACKEDWIDGET_H
-#define ANIMATEDSTACKEDWIDGET_H
+#ifndef PLUGIN_H
+#define PLUGIN_H
 
-#include <QStackedWidget>
-#include <tpropertyanimation.h>
-#include <QSequentialAnimationGroup>
-#include <QParallelAnimationGroup>
-#include <QGraphicsOpacityEffect>
-#include <QSettings>
-#include <QWindow>
-#include <QDebug>
+#include <QTranslator>
+#include <statuscenterpane.h>
 #include <QApplication>
-#include "upowerdbus.h"
+#include <QDBusUnixFileDescriptor>
 
-class AnimatedStackedWidget : public QStackedWidget
+class Plugin : public QObject, public StatusCenterPane
 {
-    Q_OBJECT
-public:
-    explicit AnimatedStackedWidget(QWidget *parent = 0);
+        Q_OBJECT
+        Q_PLUGIN_METADATA(IID STATUS_CENTER_PANE_IID FILE "PowerPane.json")
+        Q_INTERFACES(StatusCenterPane)
 
-signals:
-    void switchingFrame(int switchTo);
+    public:
+        explicit Plugin(QObject *parent = 0);
 
-public slots:
-    void setCurrentIndex(int index, bool doAnimation = true);
-    void setCurrentWidget(QWidget* w, bool doAnimation = true);
+        QList<StatusCenterPaneObject*> availablePanes();
+        void loadLanguage(QString language);
+    private:
+        QList<StatusCenterPaneObject*> panes;
 
-private:
-    void doSetCurrentIndex(int index);
-    bool doingNewAnimation = false;
-    QSettings settings;
+        QTranslator* translator;
+        QDBusUnixFileDescriptor logindInhibitor;
 };
 
-#endif // ANIMATEDSTACKEDWIDGET_H
+#endif // PLUGIN_H

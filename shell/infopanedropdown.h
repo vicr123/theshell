@@ -90,9 +90,7 @@ class InfoPaneDropdown : public QDialog
         enum dropdownType {
             None = -2,
             Settings = -1,
-            Clock = 0,
-            Battery = 1 //,
-            //Print = 5
+            Clock = 0
         };
 
         enum networkAvailability {
@@ -110,7 +108,6 @@ class InfoPaneDropdown : public QDialog
     signals:
         void closeNotification(int id);
         void timerEnabledChanged(bool timerEnabled);
-        void batteryStretchChanged(bool isOn);
         void flightModeChanged(bool flight);
         void updateStrutsSignal();
         void updateBarSignal();
@@ -129,8 +126,6 @@ class InfoPaneDropdown : public QDialog
         void on_pushButton_6_clicked();
 
         void on_clockLabel_clicked();
-
-        void on_batteryLabel_clicked();
 
         void on_pushButton_7_clicked();
 
@@ -152,8 +147,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_barDesktopsSwitch_toggled(bool checked);
 
-        void updateSysInfo();
-
         void on_endSessionConfirmFullScreen_toggled(bool checked);
 
         void on_endSessionConfirmInMenu_toggled(bool checked);
@@ -167,12 +160,6 @@ class InfoPaneDropdown : public QDialog
         void on_themeButtonColor_currentIndexChanged(int index);
 
         void on_systemFont_currentFontChanged(const QFont &f);
-
-        void updateBatteryChart();
-
-        void on_batteryChartUpdateButton_clicked();
-
-        void on_batteryChartShowProjected_toggled(bool checked);
 
         void on_upArrow_clicked();
 
@@ -205,14 +192,6 @@ class InfoPaneDropdown : public QDialog
         void on_StatusBarSwitch_toggled(bool checked);
 
         void on_SuspendLockScreen_toggled(bool checked);
-
-        void on_BatteryChargeScrollBar_valueChanged(int value);
-
-        void on_chargeGraphButton_clicked();
-
-        void on_rateGraphButton_clicked();
-
-        void on_appsGraphButton_clicked();
 
         void on_LargeTextSwitch_toggled(bool checked);
 

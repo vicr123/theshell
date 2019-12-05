@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui dbus multimedia xml network positioning svg charts concurrent
+QT       += core gui dbus multimedia xml network positioning svg charts concurrent tdesktopenvironment
 CONFIG   += c++14
 LIBS     += -lcrypt -L$$OUT_PWD/../theshell-lib/
 
@@ -80,7 +80,6 @@ SOURCES += main.cpp\
     fadebutton.cpp \
     rundialog.cpp \
     mousescrollwidget.cpp \
-    animatedstackedwidget.cpp \
     onboarding.cpp \
     newmedia.cpp \
     bthandsfree.cpp \
@@ -117,7 +116,6 @@ HEADERS  += mainwindow.h \
     fadebutton.h \
     rundialog.h \
     mousescrollwidget.h \
-    animatedstackedwidget.h \
     onboarding.h \
     newmedia.h \
     bthandsfree.h \

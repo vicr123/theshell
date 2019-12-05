@@ -16,6 +16,7 @@ blueprint {
 TEMPLATE = lib
 
 DEFINES += THESHELLLIB_LIBRARY
+DBUS_ADAPTORS += org.thesuite.Power.xml
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -38,6 +39,7 @@ SOURCES += \
     mpris/mprisplayer.cpp \
         notificationspermissionengine.cpp \
     application.cpp \
+    powerdaemon.cpp \
     qsettingsformats.cpp \
     soundengine.cpp
 
@@ -50,6 +52,7 @@ HEADERS += \
         mpris/mprisengine.h \
         mpris/mprisplayer.h \
         notificationspermissionengine.h \
+        powerdaemon.h \
         theshell-lib_global.h \ 
     application.h \
     qsettingsformats.h \

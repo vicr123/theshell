@@ -25,7 +25,6 @@
 #include <QScroller>
 #include <tvirtualkeyboard.h>
 #include <notificationsdbusadaptor.h>
-#include "animatedstackedwidget.h"
 #include "upowerdbus.h"
 #include "endsessionwait.h"
 #include "audiomanager.h"
@@ -39,6 +38,7 @@
 #include <globalkeyboard/globalkeyboardengine.h>
 #include "location/locationservices.h"
 #include <locationdaemon.h>
+#include <powerdaemon.h>
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
@@ -50,7 +50,6 @@ extern QTranslator *qtTranslator, *tsTranslator;
 extern float getDPIScaling();
 extern QDBusServiceWatcher* dbusServiceWatcher;
 extern QDBusServiceWatcher* dbusServiceWatcherSystem;
-extern UPowerDBus* updbus;
 extern DBusSignals* dbusSignals;
 extern LocationServices* locationServices;
 extern bool startSafe;
@@ -107,11 +106,6 @@ class InfoPaneDropdownPrivate {
 
         QMediaPlayer* ringtone;
 
-        QChart* batteryChart;
-        QDateTimeAxis* xAxis;
-        bool chartScrolling = false;
-        int startValue;
-
         QMap<uint, Switch*> pluginSwitches;
         uint numberOfSwitches = 0;
 
@@ -164,9 +158,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     timer->setInterval(1000);
     timer->start();
 
-    connect(updbus, &UPowerDBus::powerStretchChanged, [=](bool isOn) {
+    connect(PowerDaemon::instance(), &PowerDaemon::powerStretchChanged, [=](bool isOn) {
         ui->PowerStretchSwitch->setChecked(isOn);
-        emit batteryStretchChanged(isOn);
         doNetworkCheck();
 
         if (isOn) {
@@ -177,10 +170,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             d->slice2.resume();
         }
     });
-    ui->PowerStretchSwitch->setChecked(updbus->powerStretch());
-    emit batteryStretchChanged(updbus->powerStretch());
+    ui->PowerStretchSwitch->setChecked(PowerDaemon::instance()->powerStretch());
 
-    ui->BatteryChargeScrollBar->setVisible(false);
     ui->resetButton->setProperty("type", "destructive");
     ui->userSettingsDeleteUser->setProperty("type", "destructive");
     ui->userSettingsDeleteUserAndData->setProperty("type", "destructive");
@@ -189,6 +180,8 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->partFrame->installEventFilter(this);
     ui->pageStack->setCurrentAnimation(tStackedWidget::SlideHorizontal);
     ui->settingsTabs->setCurrentAnimation(tStackedWidget::Lift);
+    ui->settingsListStack->setCurrentAnimation(tStackedWidget::SlideHorizontal);
+    ui->startupStack->setCurrentAnimation(tStackedWidget::SlideHorizontal);
     ui->settingsList->setItemDelegate(new InfoPaneSettingsListDelegate());
 
     //Set up shortcuts
@@ -226,17 +219,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     }
     ui->PowerStretchSwitch->setPalette(powerStretchPalette);
     ui->FlightSwitch->setPalette(flightModePalette);
-
-    //Set up battery chart
-    d->batteryChart = new QChart();
-    d->batteryChart->setBackgroundVisible(false);
-    d->batteryChart->legend()->hide();
-
-    QChartView* batteryChartView = new QChartView(d->batteryChart);
-    batteryChartView->setRenderHint(QPainter::Antialiasing);
-    ((QBoxLayout*) ui->batteryGraph->layout())->insertWidget(1, batteryChartView);
-
-    updateBatteryChart();
 
     if (!QFile("/usr/bin/scallop").exists()) {
         ui->resetDeviceButton->setVisible(false);
@@ -777,7 +759,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->settingsTabs->setCurrentIndex(ui->settingsTabs->count() - 1);
 
     QScroller::grabGesture(ui->settingsList, QScroller::LeftMouseButtonGesture);
-    QScroller::grabGesture(ui->appsGraph, QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->autostartAppList, QScroller::LeftMouseButtonGesture);
 
     connect(tVirtualKeyboard::instance(), &tVirtualKeyboard::keyboardVisibleChanged, [=](bool visible) {
@@ -981,15 +962,6 @@ void InfoPaneDropdown::changeDropDown(dropdownType changeTo, bool doAnimation) {
                 setHeaderColour(QColor(0, 50, 0));
             }
             break;
-        case Battery:
-            changeDropDown(ui->statusFrame, ui->batteryLabel, doAnimation);
-            updateBatteryChart();
-            if (ui->lightColorThemeRadio->isChecked()) {
-                setHeaderColour(QColor(200, 150, 0));
-            } else {
-                setHeaderColour(QColor(100, 50, 0));
-            }
-            break;
         case Settings:
             changeDropDown(ui->settingsFrame, nullptr, doAnimation);
             if (ui->lightColorThemeRadio->isChecked()) {
@@ -1020,13 +992,6 @@ void InfoPaneDropdown::changeDropDown(QWidget *changeTo, ClickableLabel* label, 
             setHeaderColour(QColor(0, 150, 0));
         } else {
             setHeaderColour(QColor(0, 50, 0));
-        }
-    } else if (changeTo == ui->statusFrame) {
-        updateBatteryChart();
-        if (ui->lightColorThemeRadio->isChecked()) {
-            setHeaderColour(QColor(200, 150, 0));
-        } else {
-            setHeaderColour(QColor(100, 50, 0));
         }
     } else if (changeTo == ui->settingsFrame) {
         if (ui->lightColorThemeRadio->isChecked()) {
@@ -1093,11 +1058,6 @@ void InfoPaneDropdown::on_clockLabel_clicked()
     changeDropDown(Clock);
 }
 
-void InfoPaneDropdown::on_batteryLabel_clicked()
-{
-    changeDropDown(Battery);
-}
-
 void InfoPaneDropdown::on_pushButton_7_clicked()
 {
     changeDropDown(Settings);
@@ -1112,31 +1072,6 @@ void InfoPaneDropdown::setGeometry(int x, int y, int w, int h) { //Use wmctrl co
 
 void InfoPaneDropdown::setGeometry(QRect geometry) {
     this->setGeometry(geometry.x(), geometry.y(), geometry.width(), geometry.height());
-}
-
-void InfoPaneDropdown::updateSysInfo() {
-    ui->currentBattery->setText(tr("Current Battery Percentage: %1").arg(QString::number(updbus->currentBattery()).append("%")));
-
-    QTime uptime(0, 0);
-    uptime = uptime.addMSecs(d->startTime.elapsed());
-    ui->theshellUptime->setText(tr("theShell Uptime: %1").arg(uptime.toString("hh:mm:ss")));
-
-    struct sysinfo* info = new struct sysinfo;
-    if (sysinfo(info) == 0) {
-        QTime sysUptime(0, 0);
-        sysUptime = sysUptime.addSecs(info->uptime);
-        QString uptimeString;
-        if (info->uptime > 86400) {
-            int days = info->uptime / 86400;
-            uptimeString = tr("%n days", NULL, days) + " " + sysUptime.toString("hh:mm:ss");
-        } else {
-            uptimeString = sysUptime.toString("hh:mm:ss");
-        }
-        ui->systemUptime->setText(tr("System Uptime: %1").arg(uptimeString));
-    } else {
-        ui->systemUptime->setText(tr("Couldn't get system uptime"));
-    }
-    delete info;
 }
 
 void InfoPaneDropdown::on_resetButton_clicked()
@@ -1291,17 +1226,10 @@ void InfoPaneDropdown::on_endSessionConfirmInMenu_toggled(bool checked)
 
 void InfoPaneDropdown::on_pageStack_switchingFrame(int switchTo)
 {
-    QWidget* switchingWidget = ui->pageStack->widget(switchTo);
-    ui->clockLabel->setShowDisabled(true);
-    ui->batteryLabel->setShowDisabled(true);
-    //ui->printLabel->setShowDisabled(true);
-
-    if (switchingWidget == d->overviewFrame) {
+    if (ui->pageStack->currentWidget() == d->overviewFrame) {
         ui->clockLabel->setShowDisabled(false);
-    } else if (switchingWidget == ui->statusFrame) {
-        ui->batteryLabel->setShowDisabled(false);
-    /*} else if (switchingWidget == ui->printFrame) {
-        ui->printLabel->setShowDisabled(false);*/
+    } else {
+        ui->clockLabel->setShowDisabled(true);
     }
 }
 
@@ -1339,246 +1267,235 @@ void InfoPaneDropdown::on_systemFont_currentFontChanged(const QFont &f)
     //ui->systemFont->setFont(QFont(d->themeSettings->value("font/defaultFamily", defaultFont).toString(), d->themeSettings->value("font/defaultSize", 10).toInt()));
 }
 
-void InfoPaneDropdown::on_batteryChartUpdateButton_clicked()
-{
-    updateBatteryChart();
-}
+////DBus Battery Info Structure
+//struct BatteryInfo {
+//    uint time, state;
+//    double value;
+//};
+//Q_DECLARE_METATYPE(BatteryInfo)
 
-//DBus Battery Info Structure
-struct BatteryInfo {
-    uint time, state;
-    double value;
-};
-Q_DECLARE_METATYPE(BatteryInfo)
+//const QDBusArgument &operator<<(QDBusArgument &argument, const BatteryInfo &info) {
+//    argument.beginStructure();
+//    argument << info.time << info.value << info.state;
+//    argument.endStructure();
+//    return argument;
+//}
 
-const QDBusArgument &operator<<(QDBusArgument &argument, const BatteryInfo &info) {
-    argument.beginStructure();
-    argument << info.time << info.value << info.state;
-    argument.endStructure();
-    return argument;
-}
+//const QDBusArgument &operator>>(const QDBusArgument &argument, BatteryInfo &info) {
+//    argument.beginStructure();
+//    argument >> info.time >> info.value >> info.state;
+//    argument.endStructure();
+//    return argument;
+//}
 
-const QDBusArgument &operator>>(const QDBusArgument &argument, BatteryInfo &info) {
-    argument.beginStructure();
-    argument >> info.time >> info.value >> info.state;
-    argument.endStructure();
-    return argument;
-}
+////DBus WakeupsInfo Structure
+//struct WakeupsInfo {
+//    bool process = false;
+//    uint pid;
+//    double wakeups;
+//    QString path, description;
+//};
+//Q_DECLARE_METATYPE(WakeupsInfo)
 
-//DBus WakeupsInfo Structure
-struct WakeupsInfo {
-    bool process = false;
-    uint pid;
-    double wakeups;
-    QString path, description;
-};
-Q_DECLARE_METATYPE(WakeupsInfo)
+//const QDBusArgument &operator<<(QDBusArgument &argument, const WakeupsInfo &info) {
+//    argument.beginStructure();
+//    argument << info.process << info.pid << info.wakeups << info.path << info.description;
+//    argument.endStructure();
+//    return argument;
+//}
 
-const QDBusArgument &operator<<(QDBusArgument &argument, const WakeupsInfo &info) {
-    argument.beginStructure();
-    argument << info.process << info.pid << info.wakeups << info.path << info.description;
-    argument.endStructure();
-    return argument;
-}
+//const QDBusArgument &operator>>(const QDBusArgument &argument, WakeupsInfo &info) {
+//    argument.beginStructure();
+//    argument >> info.process >> info.pid >> info.wakeups >> info.path >> info.description;
+//    argument.endStructure();
+//    return argument;
+//}
 
-const QDBusArgument &operator>>(const QDBusArgument &argument, WakeupsInfo &info) {
-    argument.beginStructure();
-    argument >> info.process >> info.pid >> info.wakeups >> info.path >> info.description;
-    argument.endStructure();
-    return argument;
-}
+//void InfoPaneDropdown::updateBatteryChart() {
+//    if (ui->appsGraphButton->isChecked()) {
+//        QDBusMessage dataMessage = QDBusMessage::createMethodCall("org.freedesktop.UPower", "/org/freedesktop/UPower/Wakeups", "org.freedesktop.UPower.Wakeups", "GetData");
 
-void InfoPaneDropdown::updateBatteryChart() {
-    if (ui->appsGraphButton->isChecked()) {
-        QDBusMessage dataMessage = QDBusMessage::createMethodCall("org.freedesktop.UPower", "/org/freedesktop/UPower/Wakeups", "org.freedesktop.UPower.Wakeups", "GetData");
+//        QDBusReply<QDBusArgument> dataMessageArgument = QDBusConnection::systemBus().call(dataMessage);
+//        QList<WakeupsInfo> wakeups;
 
-        QDBusReply<QDBusArgument> dataMessageArgument = QDBusConnection::systemBus().call(dataMessage);
-        QList<WakeupsInfo> wakeups;
+//        if (dataMessageArgument.isValid()) {
+//            QDBusArgument arrayArgument = dataMessageArgument.value();
+//            arrayArgument.beginArray();
+//            while (!arrayArgument.atEnd()) {
+//                WakeupsInfo info;
+//                arrayArgument >> info;
 
-        if (dataMessageArgument.isValid()) {
-            QDBusArgument arrayArgument = dataMessageArgument.value();
-            arrayArgument.beginArray();
-            while (!arrayArgument.atEnd()) {
-                WakeupsInfo info;
-                arrayArgument >> info;
+//                if (info.process) {
+//                    int min = 0, max = wakeups.count();
+//                    int insertIndex;
 
-                if (info.process) {
-                    int min = 0, max = wakeups.count();
-                    int insertIndex;
+//                    while (max != min) {
+//                        insertIndex = ((max - min) / 2) + min;
+//                        if (wakeups.at(insertIndex).wakeups == info.wakeups) { //Goes here
+//                            break;
+//                        } else if (wakeups.at(insertIndex).wakeups < info.wakeups) { //Needs to go on left hand side
+//                            max = insertIndex - 1;
+//                        } else if (wakeups.at(insertIndex).wakeups > info.wakeups) { //Needs to go on right hand side
+//                            min = insertIndex + 1;
+//                        }
+//                    }
 
-                    while (max != min) {
-                        insertIndex = ((max - min) / 2) + min;
-                        if (wakeups.at(insertIndex).wakeups == info.wakeups) { //Goes here
-                            break;
-                        } else if (wakeups.at(insertIndex).wakeups < info.wakeups) { //Needs to go on left hand side
-                            max = insertIndex - 1;
-                        } else if (wakeups.at(insertIndex).wakeups > info.wakeups) { //Needs to go on right hand side
-                            min = insertIndex + 1;
-                        }
-                    }
+//                    wakeups.insert(insertIndex, info);
+//                }
+//            }
+//            arrayArgument.endArray();
 
-                    wakeups.insert(insertIndex, info);
-                }
-            }
-            arrayArgument.endArray();
+//            ui->appsGraph->clear();
+//            for (WakeupsInfo wakeup : wakeups) {
+//                QListWidgetItem* item = new QListWidgetItem;
+//                item->setText("[" + QString::number(wakeup.pid) + "] " + wakeup.path + " (" + wakeup.description + ")");
+//                ui->appsGraph->insertItem(0, item);
+//            }
+//        }
 
-            ui->appsGraph->clear();
-            for (WakeupsInfo wakeup : wakeups) {
-                QListWidgetItem* item = new QListWidgetItem;
-                item->setText("[" + QString::number(wakeup.pid) + "] " + wakeup.path + " (" + wakeup.description + ")");
-                ui->appsGraph->insertItem(0, item);
-            }
-        }
+//    } else {
+//        for (QAbstractAxis* axis : d->batteryChart->axes()) {
+//            d->batteryChart->removeAxis(axis);
+//            axis->deleteLater();
+//        }
 
-    } else {
-        for (QAbstractAxis* axis : d->batteryChart->axes()) {
-            d->batteryChart->removeAxis(axis);
-            axis->deleteLater();
-        }
+//        QDBusMessage historyMessage = QDBusMessage::createMethodCall("org.freedesktop.UPower", updbus->defaultBattery().path(), "org.freedesktop.UPower.Device", "GetHistory");
+//        QVariantList historyMessageArguments;
 
-        QDBusMessage historyMessage = QDBusMessage::createMethodCall("org.freedesktop.UPower", updbus->defaultBattery().path(), "org.freedesktop.UPower.Device", "GetHistory");
-        QVariantList historyMessageArguments;
+//        if (ui->chargeGraphButton->isChecked()) {
+//            historyMessageArguments.append("charge");
+//        } else {
+//            historyMessageArguments.append("rate");
+//        }
 
-        if (ui->chargeGraphButton->isChecked()) {
-            historyMessageArguments.append("charge");
-        } else {
-            historyMessageArguments.append("rate");
-        }
+//        historyMessageArguments.append((uint) 0); //Get surplus data so we can plot some data off the left of the graph
+//        historyMessageArguments.append((uint) 10000);
+//        historyMessage.setArguments(historyMessageArguments);
 
-        historyMessageArguments.append((uint) 0); //Get surplus data so we can plot some data off the left of the graph
-        historyMessageArguments.append((uint) 10000);
-        historyMessage.setArguments(historyMessageArguments);
+//        QDBusReply<QDBusArgument> historyArgument = QDBusConnection::systemBus().call(historyMessage);
 
-        QDBusReply<QDBusArgument> historyArgument = QDBusConnection::systemBus().call(historyMessage);
+//        QLineSeries* batteryChartData = new QLineSeries;
+//        QPen dataPen;
+//        dataPen.setColor(this->palette().color(QPalette::Highlight));
+//        dataPen.setWidth(2 * getDPIScaling());
+//        batteryChartData->setPen(dataPen);
 
-        QLineSeries* batteryChartData = new QLineSeries;
-        QPen dataPen;
-        dataPen.setColor(this->palette().color(QPalette::Highlight));
-        dataPen.setWidth(2 * getDPIScaling());
-        batteryChartData->setPen(dataPen);
+//        QLineSeries* batteryChartTimeRemainingData = new QLineSeries;
+//        //batteryChartTimeRemainingData->setColor(this->palette().color(QPalette::Disabled, QPalette::WindowText));
+//        batteryChartTimeRemainingData->setBrush(QBrush(this->palette().color(QPalette::Disabled, QPalette::WindowText)));
 
-        QLineSeries* batteryChartTimeRemainingData = new QLineSeries;
-        //batteryChartTimeRemainingData->setColor(this->palette().color(QPalette::Disabled, QPalette::WindowText));
-        batteryChartTimeRemainingData->setBrush(QBrush(this->palette().color(QPalette::Disabled, QPalette::WindowText)));
+//        QPen remainingTimePen;
+//        remainingTimePen.setColor(this->palette().color(QPalette::Disabled, QPalette::Highlight));
+//        remainingTimePen.setDashPattern(QVector<qreal>() << 3 << 3);
+//        remainingTimePen.setDashOffset(3);
+//        remainingTimePen.setWidth(2 * getDPIScaling());
+//        batteryChartTimeRemainingData->setPen(remainingTimePen);
 
-        QPen remainingTimePen;
-        remainingTimePen.setColor(this->palette().color(QPalette::Disabled, QPalette::Highlight));
-        remainingTimePen.setDashPattern(QVector<qreal>() << 3 << 3);
-        remainingTimePen.setDashOffset(3);
-        remainingTimePen.setWidth(2 * getDPIScaling());
-        batteryChartTimeRemainingData->setPen(remainingTimePen);
+//        QDateTime remainingTime = updbus->batteryTimeRemaining();
 
-        QDateTime remainingTime = updbus->batteryTimeRemaining();
+//        int firstDateTime = QDateTime::currentSecsSinceEpoch() / 60;
+//        qint64 msecsSinceFull = -1;
+//        uint lastState = -1;
+//        bool takeNextSinceLastFull = false;
+//        if (historyArgument.isValid()) {
+//            const QDBusArgument arrayArgument = historyArgument.value();
+//            arrayArgument.beginArray();
+//            while (!arrayArgument.atEnd()) {
+//                BatteryInfo info;
+//                arrayArgument >> info;
 
-        int firstDateTime = QDateTime::currentSecsSinceEpoch() / 60;
-        qint64 msecsSinceFull = -1;
-        uint lastState = -1;
-        bool takeNextSinceLastFull = false;
-        if (historyArgument.isValid()) {
-            const QDBusArgument arrayArgument = historyArgument.value();
-            arrayArgument.beginArray();
-            while (!arrayArgument.atEnd()) {
-                BatteryInfo info;
-                arrayArgument >> info;
+//                qint64 msecs = info.time;
+//                msecs = msecs * 1000;
 
-                qint64 msecs = info.time;
-                msecs = msecs * 1000;
+//                if (info.value >= 90 && info.state == 2 && lastState == 1 && msecsSinceFull < msecs) {
+//                    takeNextSinceLastFull = true;
+//                } else if (takeNextSinceLastFull) {
+//                    takeNextSinceLastFull = false;
+//                    msecsSinceFull = msecs;
+//                }
+//                lastState = info.state;
 
-                if (info.value >= 90 && info.state == 2 && lastState == 1 && msecsSinceFull < msecs) {
-                    takeNextSinceLastFull = true;
-                } else if (takeNextSinceLastFull) {
-                    takeNextSinceLastFull = false;
-                    msecsSinceFull = msecs;
-                }
-                lastState = info.state;
+//                if (info.value != 0 && info.state != 0) {
+//                    batteryChartData->append(msecs, info.value);
+//                    if (firstDateTime > info.time / 60) {
+//                        firstDateTime = info.time / 60;
+//                    }
+//                }
+//            }
+//            arrayArgument.endArray();
+//            batteryChartData->append(QDateTime::currentMSecsSinceEpoch(), batteryChartData->at(batteryChartData->count() - 1).y());
 
-                if (info.value != 0 && info.state != 0) {
-                    batteryChartData->append(msecs, info.value);
-                    if (firstDateTime > info.time / 60) {
-                        firstDateTime = info.time / 60;
-                    }
-                }
-            }
-            arrayArgument.endArray();
-            batteryChartData->append(QDateTime::currentMSecsSinceEpoch(), batteryChartData->at(batteryChartData->count() - 1).y());
+//            if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked() && ui->chargeGraphButton->isChecked()) {
+//                QDateTime lastDateTime = QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x());
+//                batteryChartTimeRemainingData->append(batteryChartData->at(batteryChartData->count() - 1));
+//                QDateTime endDateTime = lastDateTime.addMSecs(remainingTime.toMSecsSinceEpoch());
+//                if (updbus->charging()) {
+//                    batteryChartTimeRemainingData->append(endDateTime.toMSecsSinceEpoch(), 100);
+//                } else {
+//                    batteryChartTimeRemainingData->append(endDateTime.toMSecsSinceEpoch(), 0);
+//                }
+//            }
+//        }
 
-            if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked() && ui->chargeGraphButton->isChecked()) {
-                QDateTime lastDateTime = QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x());
-                batteryChartTimeRemainingData->append(batteryChartData->at(batteryChartData->count() - 1));
-                QDateTime endDateTime = lastDateTime.addMSecs(remainingTime.toMSecsSinceEpoch());
-                if (updbus->charging()) {
-                    batteryChartTimeRemainingData->append(endDateTime.toMSecsSinceEpoch(), 100);
-                } else {
-                    batteryChartTimeRemainingData->append(endDateTime.toMSecsSinceEpoch(), 0);
-                }
-            }
-        }
+//        d->batteryChart->removeAllSeries();
+//        d->batteryChart->addSeries(batteryChartData);
+//        d->batteryChart->addSeries(batteryChartTimeRemainingData);
 
-        d->batteryChart->removeAllSeries();
-        d->batteryChart->addSeries(batteryChartData);
-        d->batteryChart->addSeries(batteryChartTimeRemainingData);
+//        d->xAxis = new QDateTimeAxis;
+//        if (ui->chargeGraphButton->isChecked()) {
+//            if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked()) {
+//                d->xAxis->setMax(QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x()).addMSecs(remainingTime.toMSecsSinceEpoch()));
+//            } else {
+//                d->xAxis->setMax(QDateTime::currentDateTime());
+//            }
 
-        d->xAxis = new QDateTimeAxis;
-        if (ui->chargeGraphButton->isChecked()) {
-            if (remainingTime.isValid() && ui->batteryChartShowProjected->isChecked()) {
-                d->xAxis->setMax(QDateTime::fromMSecsSinceEpoch(batteryChartData->at(batteryChartData->count() - 1).x()).addMSecs(remainingTime.toMSecsSinceEpoch()));
-            } else {
-                d->xAxis->setMax(QDateTime::currentDateTime());
-            }
+//            QDateTime oneDay = d->xAxis->max().addDays(-1);
+//            if (msecsSinceFull == -1 || msecsSinceFull < oneDay.toMSecsSinceEpoch()) {
+//                d->xAxis->setMin(oneDay);
+//            } else {
+//                d->xAxis->setMin(QDateTime::fromMSecsSinceEpoch(msecsSinceFull));
+//            }
+//        } else {
+//            d->xAxis->setMax(QDateTime::currentDateTime());
+//            d->xAxis->setMin(d->xAxis->max().addSecs(-43200)); //Half a day
+//        }
+//        d->batteryChart->addAxis(d->xAxis, Qt::AlignBottom);
+//        d->xAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
+//        d->xAxis->setFormat("hh:mm");
+//        d->xAxis->setTickCount(9);
+//        batteryChartData->attachAxis(d->xAxis);
+//        batteryChartTimeRemainingData->attachAxis(d->xAxis);
 
-            QDateTime oneDay = d->xAxis->max().addDays(-1);
-            if (msecsSinceFull == -1 || msecsSinceFull < oneDay.toMSecsSinceEpoch()) {
-                d->xAxis->setMin(oneDay);
-            } else {
-                d->xAxis->setMin(QDateTime::fromMSecsSinceEpoch(msecsSinceFull));
-            }
-        } else {
-            d->xAxis->setMax(QDateTime::currentDateTime());
-            d->xAxis->setMin(d->xAxis->max().addSecs(-43200)); //Half a day
-        }
-        d->batteryChart->addAxis(d->xAxis, Qt::AlignBottom);
-        d->xAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
-        d->xAxis->setFormat("hh:mm");
-        d->xAxis->setTickCount(9);
-        batteryChartData->attachAxis(d->xAxis);
-        batteryChartTimeRemainingData->attachAxis(d->xAxis);
+//        /*connect(xAxis, &QDateTimeAxis::rangeChanged, [=](QDateTime min, QDateTime max) {
+//            ui->BatteryChargeScrollBar->setMaximum(max.toMSecsSinceEpoch() - min.toMSecsSinceEpoch());
+//        });*/
 
-        /*connect(xAxis, &QDateTimeAxis::rangeChanged, [=](QDateTime min, QDateTime max) {
-            ui->BatteryChargeScrollBar->setMaximum(max.toMSecsSinceEpoch() - min.toMSecsSinceEpoch());
-        });*/
+//        d->chartScrolling = true;
+//        int currentSecsSinceEpoch = QDateTime::currentSecsSinceEpoch();
+//        ui->BatteryChargeScrollBar->setMinimum(0);
+//        ui->BatteryChargeScrollBar->setMaximum(currentSecsSinceEpoch / 60 - firstDateTime);
+//        ui->BatteryChargeScrollBar->setValue(currentSecsSinceEpoch / 60 - firstDateTime);
+//        d->startValue = currentSecsSinceEpoch / 60 - firstDateTime;
+//        d->chartScrolling = false;
 
-        d->chartScrolling = true;
-        int currentSecsSinceEpoch = QDateTime::currentSecsSinceEpoch();
-        ui->BatteryChargeScrollBar->setMinimum(0);
-        ui->BatteryChargeScrollBar->setMaximum(currentSecsSinceEpoch / 60 - firstDateTime);
-        ui->BatteryChargeScrollBar->setValue(currentSecsSinceEpoch / 60 - firstDateTime);
-        d->startValue = currentSecsSinceEpoch / 60 - firstDateTime;
-        d->chartScrolling = false;
+//        QValueAxis* yAxis = new QValueAxis;
+//        if (ui->chargeGraphButton->isChecked()) {
+//            yAxis->setLabelFormat("%i%%");
+//            yAxis->setMax(100);
+//        } else {
+//            yAxis->setLabelFormat("%i W");
+//            yAxis->setMax(40);
+//        }
 
-        QValueAxis* yAxis = new QValueAxis;
-        if (ui->chargeGraphButton->isChecked()) {
-            yAxis->setLabelFormat("%i%%");
-            yAxis->setMax(100);
-        } else {
-            yAxis->setLabelFormat("%i W");
-            yAxis->setMax(40);
-        }
+//        yAxis->setMin(0);
+//        yAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
+//        d->batteryChart->addAxis(yAxis, Qt::AlignLeft);
+//        batteryChartData->attachAxis(yAxis);
+//        batteryChartTimeRemainingData->attachAxis(yAxis);
 
-        yAxis->setMin(0);
-        yAxis->setLabelsColor(this->palette().color(QPalette::WindowText));
-        d->batteryChart->addAxis(yAxis, Qt::AlignLeft);
-        batteryChartData->attachAxis(yAxis);
-        batteryChartTimeRemainingData->attachAxis(yAxis);
-
-        ui->batteryChartLastUpdate->setText(tr("Last updated %1").arg(QDateTime::currentDateTime().toString("hh:mm:ss")));
-    }
-}
-
-void InfoPaneDropdown::on_batteryChartShowProjected_toggled(bool checked)
-{
-    Q_UNUSED(checked)
-    updateBatteryChart();
-}
+//        ui->batteryChartLastUpdate->setText(tr("Last updated %1").arg(QDateTime::currentDateTime().toString("hh:mm:ss")));
+//    }
+//}
 
 void InfoPaneDropdown::on_upArrow_clicked()
 {
@@ -1587,12 +1504,11 @@ void InfoPaneDropdown::on_upArrow_clicked()
 
 void InfoPaneDropdown::on_PowerStretchSwitch_toggled(bool checked)
 {
-    updbus->setPowerStretch(checked);
-    emit batteryStretchChanged(checked);
+    PowerDaemon::instance()->setPowerStretch(checked);
 }
 
 void InfoPaneDropdown::doNetworkCheck() {
-    if (updbus->powerStretch()) {
+    if (PowerDaemon::instance()->powerStretch()) {
         //Always set networkOk to ok because we don't update when power stretch is on
         d->networkOk = Ok;
     } else {
@@ -1990,49 +1906,6 @@ void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
 void InfoPaneDropdown::on_SuspendLockScreen_toggled(bool checked)
 {
     d->settings.setValue("lockScreen/showOnSuspend", checked);
-}
-
-void InfoPaneDropdown::on_BatteryChargeScrollBar_valueChanged(int value)
-{
-    if (!d->chartScrolling) {
-        d->chartScrolling = true;
-        d->batteryChart->scroll(value - d->startValue, 0);
-        d->startValue = value;
-        d->chartScrolling = false;
-    }
-}
-
-void InfoPaneDropdown::on_chargeGraphButton_clicked()
-{
-    ui->chargeGraphButton->setChecked(true);
-    ui->rateGraphButton->setChecked(false);
-    ui->appsGraphButton->setChecked(false);
-    ui->batteryGraphStack->setCurrentIndex(0);
-    ui->batteryChartHeader->setText(tr("Charge History"));
-    ui->batteryChartShowProjected->setVisible(true);
-    updateBatteryChart();
-}
-
-void InfoPaneDropdown::on_rateGraphButton_clicked()
-{
-    ui->chargeGraphButton->setChecked(false);
-    ui->rateGraphButton->setChecked(true);
-    ui->appsGraphButton->setChecked(false);
-    ui->batteryGraphStack->setCurrentIndex(0);
-    ui->batteryChartHeader->setText(tr("Rate History"));
-    ui->batteryChartShowProjected->setVisible(false);
-    updateBatteryChart();
-}
-
-void InfoPaneDropdown::on_appsGraphButton_clicked()
-{
-    ui->chargeGraphButton->setChecked(false);
-    ui->rateGraphButton->setChecked(false);
-    ui->appsGraphButton->setChecked(true);
-    ui->batteryGraphStack->setCurrentIndex(1);
-    ui->batteryChartHeader->setText(tr("Application Power Usage"));
-    ui->batteryChartShowProjected->setVisible(false);
-    updateBatteryChart();
 }
 
 void InfoPaneDropdown::on_LargeTextSwitch_toggled(bool checked)

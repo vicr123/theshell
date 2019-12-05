@@ -124,13 +124,6 @@
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="ClickableLabel" name="batteryLabel">
-             <property name="text">
-              <string>System Status</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </item>
          <item>
@@ -274,250 +267,8 @@
    <item>
     <widget class="tStackedWidget" name="pageStack">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="statusFrame">
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_11">
-         <property name="font">
-          <font>
-           <pointsize>15</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>System Status</string>
-         </property>
-         <property name="margin">
-          <number>9</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Line" name="line_41">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>1</height>
-          </size>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_51">
-         <property name="spacing">
-          <number>6</number>
-         </property>
-         <property name="leftMargin">
-          <number>9</number>
-         </property>
-         <property name="topMargin">
-          <number>9</number>
-         </property>
-         <property name="rightMargin">
-          <number>9</number>
-         </property>
-         <property name="bottomMargin">
-          <number>9</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="currentBattery">
-           <property name="text">
-            <string notr="true">Current Battery Power:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="theshellUptime">
-           <property name="text">
-            <string notr="true">theShell Uptime:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="systemUptime">
-           <property name="text">
-            <string notr="true">System Uptime: </string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="Line" name="line_42">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="batteryChartArea">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_21">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_33">
-            <item>
-             <widget class="QLabel" name="batteryChartHeader">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>15</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Charge History</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="batteryChartShowProjected">
-              <property name="text">
-               <string>Show projected charge</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_42">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="chargeGraphButton">
-                <property name="text">
-                 <string>Charge</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="rateGraphButton">
-                <property name="text">
-                 <string>Rate</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="appsGraphButton">
-                <property name="text">
-                 <string>Apps</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QLabel" name="batteryChartLastUpdate">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string notr="true">Last updated 11:30:42</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="batteryChartUpdateButton">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset theme="view-refresh">
-                <normaloff>.</normaloff>.</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QStackedWidget" name="batteryGraphStack">
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
-            <widget class="QWidget" name="batteryGraph">
-             <layout class="QVBoxLayout" name="verticalLayout_29">
-              <item>
-               <widget class="QScrollBar" name="BatteryChargeScrollBar">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="batteryApps">
-             <layout class="QVBoxLayout" name="verticalLayout_30">
-              <item>
-               <widget class="QListWidget" name="appsGraph"/>
-              </item>
-             </layout>
-            </widget>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="settingsFrame">
       <property name="autoFillBackground">
        <bool>true</bool>
@@ -581,7 +332,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="AnimatedStackedWidget" name="settingsListStack">
+              <widget class="tStackedWidget" name="settingsListStack">
                <property name="currentIndex">
                 <number>0</number>
                </property>
@@ -840,7 +591,7 @@
                </widget>
               </item>
               <item>
-               <widget class="AnimatedStackedWidget" name="startupStack">
+               <widget class="tStackedWidget" name="startupStack">
                 <property name="autoFillBackground">
                  <bool>true</bool>
                 </property>
@@ -2751,7 +2502,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="AnimatedStackedWidget" name="userSettingsStackedWidget">
+               <widget class="tStackedWidget" name="userSettingsStackedWidget">
                 <property name="autoFillBackground">
                  <bool>true</bool>
                 </property>
@@ -4286,12 +4037,6 @@ Items that will be kept if you choose to keep files:
    <slots>
     <signal>clicked()</signal>
    </slots>
-  </customwidget>
-  <customwidget>
-   <class>AnimatedStackedWidget</class>
-   <extends>QStackedWidget</extends>
-   <header>animatedstackedwidget.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>Switch</class>

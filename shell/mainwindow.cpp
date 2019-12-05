@@ -29,6 +29,7 @@
 
 #include "menu.h"
 #include "infopanedropdown.h"
+#include "powerdaemon.h"
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
@@ -39,7 +40,6 @@ extern AudioManager* AudioMan;
 extern NativeEventFilter* NativeFilter;
 extern float getDPIScaling();
 extern LocationServices* locationServices;
-extern UPowerDBus* updbus;
 extern ScreenRecorder* screenRecorder;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -134,15 +134,22 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), taskbarManager, SLOT(ReloadWindows()));
     timer->start();
 
-    infoPane = new InfoPaneDropdown(this->winId());
-    connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
-    connect(infoPane, &InfoPaneDropdown::batteryStretchChanged, [=](bool isOn) {
+    connect(PowerDaemon::instance(), &PowerDaemon::powerStretchChanged, this, [=](bool isOn) {
         if (isOn) {
             timer->setInterval(1000);
         } else {
             timer->setInterval(100);
         }
     });
+    if (PowerDaemon::instance()->powerStretch()) {
+        timer->setInterval(1000);
+    } else {
+        timer->setInterval(100);
+    }
+
+
+    infoPane = new InfoPaneDropdown(this->winId());
+    connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
     connect(infoPane, SIGNAL(updateStrutsSignal()), this, SLOT(updateStruts()));
     connect(infoPane, SIGNAL(updateBarSignal()), this, SLOT(reloadBar()));
     connect(infoPane, &InfoPaneDropdown::flightModeChanged, [=](bool flight) {
@@ -219,73 +226,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->keyboardButton->setVisible(false);
 
     connect(ui->openMenuCompact, SIGNAL(customContextMenuRequested(QPoint)), ui->openMenu, SIGNAL(customContextMenuRequested(QPoint)));
-
-    connect(updbus, &UPowerDBus::updateDisplay, [=](QString display) {
-        if (updbus->hasBattery()) {
-            if (updbus->hasPCBattery()) {
-                ui->batteryIcon->setVisible(true);
-            } else {
-                ui->batteryIcon->setVisible(false);
-            }
-            ui->batteryFrame->setVisible(true);
-            ui->batteryLabel->setText(display);
-
-            QString iconName;
-            if (updbus->charging()) {
-                if (updbus->currentBattery() < 10) {
-                    iconName = "battery-charging-empty";
-                } else if (updbus->currentBattery() < 30) {
-                    iconName = "battery-charging-020";
-                } else if (updbus->currentBattery() < 50) {
-                    iconName = "battery-charging-040";
-                } else if (updbus->currentBattery() < 70) {
-                    iconName = "battery-charging-060";
-                } else if (updbus->currentBattery() < 90) {
-                    iconName = "battery-charging-080";
-                } else {
-                    iconName = "battery-charging-100";
-                }
-            } else if (updbus->powerStretch()) {
-                if (updbus->currentBattery() < 10) {
-                    iconName = "battery-stretch-empty";
-                } else if (updbus->currentBattery() < 30) {
-                    iconName = "battery-stretch-020";
-                } else if (updbus->currentBattery() < 50) {
-                    iconName = "battery-stretch-040";
-                } else if (updbus->currentBattery() < 70) {
-                    iconName = "battery-stretch-060";
-                } else if (updbus->currentBattery() < 90) {
-                    iconName = "battery-stretch-080";
-                } else {
-                    iconName = "battery-stretch-100";
-                }
-            } else {
-                if (updbus->currentBattery() < 10) {
-                    iconName = "battery-empty";
-                } else if (updbus->currentBattery() < 30) {
-                    iconName = "battery-020";
-                } else if (updbus->currentBattery() < 50) {
-                    iconName = "battery-040";
-                } else if (updbus->currentBattery() < 70) {
-                    iconName = "battery-060";
-                } else if (updbus->currentBattery() < 90) {
-                    iconName = "battery-080";
-                } else {
-                    iconName = "battery-100";
-                }
-            }
-
-            ui->StatusBarBattery->setVisible(true);
-            ui->StatusBarBattery->setPixmap(QIcon::fromTheme(iconName).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-            ui->batteryIcon->setPixmap(QIcon::fromTheme(iconName).pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-        } else {
-            ui->batteryFrame->setVisible(false);
-            ui->StatusBarBattery->setVisible(false);
-        }
-    });
-    QTimer::singleShot(0, [=] {
-        updbus->DeviceChanged(updbus->allDevices);
-    });
 
     seperatorWidget = new QWidget();
     seperatorWidget->setParent(this);
@@ -1417,11 +1357,6 @@ void MainWindow::on_date_clicked()
     infoPane->show(InfoPaneDropdown::Clock);
 }
 
-void MainWindow::on_batteryLabel_clicked()
-{
-    infoPane->show(InfoPaneDropdown::Battery);
-}
-
 void MainWindow::on_volumeFrame_MouseEnter()
 {
     if (AudioMan->QuietMode() != AudioManager::mute) {
@@ -1729,17 +1664,6 @@ void MainWindow::on_date_dragging(int x, int y)
 }
 
 void MainWindow::on_date_mouseReleased()
-{
-    infoPane->completeDragDown();
-}
-
-void MainWindow::on_batteryLabel_dragging(int x, int y)
-{
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    infoPane->dragDown(InfoPaneDropdown::Battery, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
-}
-
-void MainWindow::on_batteryLabel_mouseReleased()
 {
     infoPane->completeDragDown();
 }
