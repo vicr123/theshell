@@ -95,7 +95,12 @@ HEADERS += \
     Input/keyboardpane.h \
     Input/gesturepane.h \
     Input/mousepane.h \
-    Input/mousepanetester.h
+    Input/mousepanetester.h \
+    theme/colourspane.h \
+    theme/iconpane.h \
+    theme/themepane.h \
+    theme/widgetstylepane.h \
+    theme/widgetstylepreview.h
 
 SOURCES += \
     DateTime/datetimepane.cpp \
@@ -107,7 +112,12 @@ SOURCES += \
     Input/keyboardpane.cpp \
     Input/gesturepane.cpp \
     Input/mousepane.cpp \
-    Input/mousepanetester.cpp
+    Input/mousepanetester.cpp \
+    theme/colourspane.cpp \
+    theme/iconpane.cpp \
+    theme/themepane.cpp \
+    theme/widgetstylepane.cpp \
+    theme/widgetstylepreview.cpp
 
 DISTFILES += \
     CoreSettings.json
@@ -118,7 +128,12 @@ FORMS += \
     Input/keyboardpane.ui \
     Input/gesturepane.ui \
     Input/mousepane.ui \
-    Input/shortcutpane.ui
+    Input/shortcutpane.ui \
+    theme/colourspane.ui \
+    theme/iconpane.ui \
+    theme/themepane.ui \
+    theme/widgetstylepane.ui \
+    theme/widgetstylepreview.ui
 
 RESOURCES += \
     coresettings_resources.qrc

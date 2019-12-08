@@ -51,7 +51,7 @@
     <name>DisplayPane</name>
     <message>
         <location filename="../displaypane.ui" line="40"/>
-        <location filename="../displaypane.cpp" line="116"/>
+        <location filename="../displaypane.cpp" line="124"/>
         <source>Display</source>
         <translation>Anzeige</translation>
     </message>
@@ -91,57 +91,52 @@
         <translation>&amp;300% (288 dpi)</translation>
     </message>
     <message>
-        <location filename="../displaypane.ui" line="217"/>
-        <source>DPI settings will be applied at next login.</source>
-        <translation>DPI-Einstellungen werden bei der nächsten Anmeldung angewendet.</translation>
-    </message>
-    <message>
-        <location filename="../displaypane.ui" line="262"/>
+        <location filename="../displaypane.ui" line="252"/>
         <source>If the start time is later than the end time, Redshift will be activated until the end time on the next day.</source>
         <translation>Falls die Startzeit nach der Endzeit liegt, wird Redshift bis zur Endzeit am nächsten tag aktiviert.</translation>
     </message>
     <message>
-        <location filename="../displaypane.ui" line="294"/>
+        <location filename="../displaypane.ui" line="284"/>
         <source>Scheduled</source>
         <translation>Geplant</translation>
     </message>
     <message>
-        <location filename="../displaypane.ui" line="318"/>
+        <location filename="../displaypane.ui" line="308"/>
         <source>End Time</source>
         <translation>Endzeit</translation>
     </message>
     <message>
-        <location filename="../displaypane.ui" line="349"/>
+        <location filename="../displaypane.ui" line="339"/>
         <source>We&apos;ll send your current location to https://sunrise-sunset.org/ to determine sunlight times if you enable this option.</source>
         <translation>Wir senden deine aktuelle Position an https://sunrise-sunset.org/ um Sonnenzeiten zu erhalten wenn diese Option aktiviert ist.</translation>
     </message>
     <message>
-        <location filename="../displaypane.ui" line="377"/>
+        <location filename="../displaypane.ui" line="367"/>
         <source>Use Sunlight Cycle</source>
         <translation>Sonnenzyklus nutzen</translation>
     </message>
     <message>
-        <location filename="../displaypane.ui" line="403"/>
+        <location filename="../displaypane.ui" line="393"/>
         <source>Redshift Intensity</source>
         <translation>Redshift-Stärke</translation>
     </message>
     <message>
-        <location filename="../displaypane.ui" line="416"/>
+        <location filename="../displaypane.ui" line="406"/>
         <source>REDSHIFT</source>
         <translation>REDSHIFT</translation>
     </message>
     <message>
-        <location filename="../displaypane.ui" line="423"/>
+        <location filename="../displaypane.ui" line="413"/>
         <source>Start Time</source>
         <translation>Startzeit</translation>
     </message>
     <message>
-        <location filename="../displaypane.ui" line="430"/>
+        <location filename="../displaypane.ui" line="420"/>
         <source>Redshift blocks blue light so that you can sleep better at night.</source>
         <translation>Redshift blockiert blaues Licht, sodass du nachts besser schlafen kannst.</translation>
     </message>
     <message>
-        <location filename="../displaypane.cpp" line="90"/>
+        <location filename="../displaypane.cpp" line="98"/>
         <source>Redshift</source>
         <translation>Redshift</translation>
     </message>

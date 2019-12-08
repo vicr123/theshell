@@ -41,7 +41,7 @@
 #include "upowerdbus.h"
 #include "infopanedropdown.h"
 #include "systrayicons.h"
-#include "fadebutton.h"
+#include "taskbarbutton.h"
 #include "FlowLayout/flowlayout.h"
 #include "tutorialwindow.h"
 #include "audiomanager.h"
@@ -82,6 +82,9 @@ namespace Ui {
 class MainWindow;
 }
 
+struct MainWindowPrivate;
+class DesktopWmWindow;
+typedef QPointer<DesktopWmWindow> DesktopWmWindowPtr;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -142,8 +145,6 @@ private slots:
 
     void setMprisCurrentApp(QAction* action);
 
-    void ActivateWindow();
-
     void reloadScreens();
 
     void on_desktopNext_clicked();
@@ -166,10 +167,6 @@ private slots:
 
     void on_actionMute_triggered();
 
-    void updateWindow(WmWindow window);
-
-    void deleteWindow(WmWindow window);
-
     void on_stopRecordingButton_clicked();
 
     void on_MainWindow_customContextMenuRequested(const QPoint &pos);
@@ -191,16 +188,20 @@ private slots:
     void on_mprisForward_clicked();
     void on_mprisBack_clicked();
     void on_mprisPause_clicked();
+
+    void addWindow(DesktopWmWindowPtr window);
+
+    void calculateAndMoveBar();
+
     signals:
     void reloadBackgrounds();
 
 private:
     Ui::MainWindow *ui;
-    //QList<WmWindow> windowList;
+    MainWindowPrivate* d;
     Menu* gatewayMenu;
-    TaskbarManager* taskbarManager;
 
-    QMap<Window, FadeButton*> buttonWindowMap;
+    QMap<Window, TaskbarButton*> buttonWindowMap;
 
     QSettings settings;
 
@@ -213,7 +214,6 @@ private:
     bool borderBlinkOn = true;
     bool warningAnimCreated = false;
     int warningWidth = 0;
-    bool forceWindowMove = false;
 
     MprisPlayerPtr currentPlayer;
     QObject* mprisContextObject = nullptr;
@@ -222,6 +222,7 @@ private:
     void paintEvent(QPaintEvent *event);
     bool eventFilter(QObject *watched, QEvent *event);
     void enterEvent(QEvent* event);
+    void leaveEvent(QEvent* event);
     void changeEvent(QEvent* event);
     void resizeEvent(QResizeEvent* event);
     bool event(QEvent* event);
@@ -232,16 +233,13 @@ private:
     QPoint lastTouchScreenPoint;
     int currentTouch = -1;
 
-    tVariantAnimation* barAnim;
-
     int statusBarPercentage = -2;
     QTimer* statusBarProgressTimer;
     int statusBarNormalY;
 
     QWidget* seperatorWidget;
 
-    QGraphicsOpacityEffect* statusBarOpacityEffect;
-    bool statusBarVisible = false;
+    void initTaskbar();
 };
 
 #endif // MAINWINDOW_H

@@ -211,16 +211,6 @@
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QLabel" name="label_52">
-              <property name="text">
-               <string>DPI settings will be applied at next login.</string>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>

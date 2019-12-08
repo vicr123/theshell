@@ -60,6 +60,7 @@ DBUS_ADAPTORS += power dsig
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+    taskbarbutton.cpp \
     window.cpp \
     menu.cpp \
     endsessionwait.cpp \
@@ -77,7 +78,6 @@ SOURCES += main.cpp\
     nativeeventfilter.cpp \
     internationalisation.cpp \
     dbusevents.cpp \
-    fadebutton.cpp \
     rundialog.cpp \
     mousescrollwidget.cpp \
     onboarding.cpp \
@@ -97,6 +97,7 @@ SOURCES += main.cpp\
     notificationsdbusadaptor.cpp
 
 HEADERS  += mainwindow.h \
+    taskbarbutton.h \
     window.h \
     menu.h \
     endsessionwait.h \
@@ -113,7 +114,6 @@ HEADERS  += mainwindow.h \
     systrayicons.h \
     nativeeventfilter.h \
     dbusevents.h \
-    fadebutton.h \
     rundialog.h \
     mousescrollwidget.h \
     onboarding.h \

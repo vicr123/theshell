@@ -21,6 +21,7 @@
 #include "plugin.h"
 #include "Input/inputpane.h"
 #include "DateTime/datetimepane.h"
+#include "theme/themepane.h"
 
 Plugin::Plugin(QObject *parent) :
     QObject(parent)
@@ -29,6 +30,7 @@ Plugin::Plugin(QObject *parent) :
 
     translator = new QTranslator;
 
+//    panes.append(new ThemePane());
     panes.append(new InputPane());
     panes.append(new DateTimePane());
 }

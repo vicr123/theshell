@@ -198,6 +198,10 @@ void Menu::show() {
     TutorialWin->showScreen(TutorialWindow::GatewaySearch);
 
     this->activateWindow();
+
+    unsigned long skipTaskbar = 1;
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_THESHELL_SKIP_TASKBAR", False),
+                     XA_CARDINAL, 32, PropModeReplace, reinterpret_cast<unsigned char*>(&skipTaskbar), 1); //Skip the taskbar
 }
 
 void Menu::showPartial(int pixels) {

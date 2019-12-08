@@ -153,11 +153,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     d->MainWindowId = MainWindowId;
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateSysInfo()));
-    timer->setInterval(1000);
-    timer->start();
-
     connect(PowerDaemon::instance(), &PowerDaemon::powerStretchChanged, [=](bool isOn) {
         ui->PowerStretchSwitch->setChecked(isOn);
         doNetworkCheck();
@@ -183,6 +178,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->settingsListStack->setCurrentAnimation(tStackedWidget::SlideHorizontal);
     ui->startupStack->setCurrentAnimation(tStackedWidget::SlideHorizontal);
     ui->settingsList->setItemDelegate(new InfoPaneSettingsListDelegate());
+    ui->restartRequiredWidget->setVisible(false);
 
     //Set up shortcuts
     QShortcut* leftShortcut = new QShortcut(Qt::Key_Left, this);
@@ -315,17 +311,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     } else {
         ui->endSessionConfirmFullScreen->setChecked(false);
         ui->endSessionConfirmInMenu->setChecked(true);
-    }
-
-    QString themeType = d->themeSettings->value("color/type", "dark").toString();
-    if (themeType == "light") {
-        ui->lightColorThemeRadio->setChecked(true);
-    } else if (themeType == "dark") {
-        ui->darkColorThemeRadio->setChecked(true);
-    } else if (themeType == "gray") {
-        ui->grayColorThemeRadio->setChecked(true);
-    } else if (themeType == "decorative") {
-        ui->decorativeColorThemeRadio->setChecked(true);
     }
 
     //Populate the language box
@@ -905,6 +890,10 @@ void InfoPaneDropdown::show(dropdownType showWith) {
 
         QDialog::show();
         this->setFixedWidth(screenGeometry.width());
+
+        unsigned long skipTaskbar = 1;
+        XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_THESHELL_SKIP_TASKBAR", False),
+                         XA_CARDINAL, 32, PropModeReplace, reinterpret_cast<unsigned char*>(&skipTaskbar), 1); //Skip the taskbar
 
         if (tVirtualKeyboard::instance()->keyboardVisible()) {
             this->setFixedHeight(screenGeometry.height() - tVirtualKeyboard::instance()->height());
@@ -2807,6 +2796,8 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         loadNewKeyboardLayoutMenu();
     } else if (message == "set-keyboard-layout") {
         setKeyboardLayout(args.first().toString());
+    } else if (message == "show-restart-required") {
+        ui->restartRequiredWidget->setVisible(true);
     }
 }
 
@@ -2881,4 +2872,9 @@ void InfoPaneSettingsListDelegate::paint(QPainter *painter, const QStyleOptionVi
 
         painter->drawPixmap(iconRect, QIcon::fromTheme("arrow-right").pixmap(iconRect.size()));
     }
+}
+
+void InfoPaneDropdown::on_logOutButton_clicked()
+{
+
 }

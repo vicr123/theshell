@@ -51,18 +51,26 @@ DisplayPane::DisplayPane(QWidget *parent) :
 
     int dpi = d->settings.value("screen/dpi", 96).toInt();
     switch (dpi) {
-        case 96:
+        case 96: {
+            QSignalBlocker blocker(ui->dpi100);
             ui->dpi100->setChecked(true);
             break;
-        case 144:
+        }
+        case 144: {
+            QSignalBlocker blocker(ui->dpi150);
             ui->dpi150->setChecked(true);
             break;
-        case 192:
+        }
+        case 192: {
+            QSignalBlocker blocker(ui->dpi200);
             ui->dpi200->setChecked(true);
             break;
-        case 288:
+        }
+        case 288: {
+            QSignalBlocker blocker(ui->dpi300);
             ui->dpi300->setChecked(true);
             break;
+        }
     }
 
     QString redshiftStart = d->settings.value("display/redshiftStart", "").toString();
@@ -140,6 +148,7 @@ void DisplayPane::on_dpi100_toggled(bool checked)
 {
     if (checked) {
         d->settings.setValue("screen/dpi", 96);
+        sendMessage("show-restart-required", {});
     }
 }
 
@@ -147,6 +156,7 @@ void DisplayPane::on_dpi150_toggled(bool checked)
 {
     if (checked) {
         d->settings.setValue("screen/dpi", 144);
+        sendMessage("show-restart-required", {});
     }
 }
 
@@ -154,6 +164,7 @@ void DisplayPane::on_dpi200_toggled(bool checked)
 {
     if (checked) {
         d->settings.setValue("screen/dpi", 192);
+        sendMessage("show-restart-required", {});
     }
 }
 
@@ -161,6 +172,7 @@ void DisplayPane::on_dpi300_toggled(bool checked)
 {
     if (checked) {
         d->settings.setValue("screen/dpi", 288);
+        sendMessage("show-restart-required", {});
     }
 }
 

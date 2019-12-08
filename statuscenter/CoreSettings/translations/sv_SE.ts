@@ -2,6 +2,64 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="se_NO" sourcelanguage="en_US">
 <context>
+    <name>ColoursPane</name>
+    <message>
+        <location filename="../theme/colourspane.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/colourspane.ui" line="71"/>
+        <source>Select Colour Scheme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/colourspane.cpp" line="42"/>
+        <source>Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/colourspane.cpp" line="53"/>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/colourspane.cpp" line="64"/>
+        <source>Black</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/colourspane.cpp" line="75"/>
+        <source>Gray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/colourspane.cpp" line="88"/>
+        <source>Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/colourspane.cpp" line="89"/>
+        <source>Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/colourspane.cpp" line="90"/>
+        <source>Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/colourspane.cpp" line="91"/>
+        <source>Pink</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/colourspane.cpp" line="92"/>
+        <source>Turquoise</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DateTimePane</name>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="47"/>
@@ -86,17 +144,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DateTime/datetimepane.ui" line="619"/>
+        <location filename="../DateTime/datetimepane.ui" line="620"/>
         <source>Set Time Zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DateTime/datetimepane.ui" line="644"/>
+        <location filename="../DateTime/datetimepane.ui" line="645"/>
         <source>Where are you now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DateTime/datetimepane.ui" line="670"/>
+        <location filename="../DateTime/datetimepane.ui" line="671"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -141,6 +199,19 @@
     <message>
         <location filename="../Input/gesturepane.ui" line="293"/>
         <source>SWIPE TO OPEN GATEWAY</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>IconPane</name>
+    <message>
+        <location filename="../theme/iconpane.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/iconpane.ui" line="71"/>
+        <source>Select Icon Theme</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -572,6 +643,171 @@
     <message>
         <location filename="../Input/shortcutpane.cpp" line="74"/>
         <source>Record a video of your screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ThemePane</name>
+    <message>
+        <location filename="../theme/themepane.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.ui" line="40"/>
+        <location filename="../theme/themepane.cpp" line="60"/>
+        <source>Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.ui" line="119"/>
+        <source>COLOURS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.ui" line="126"/>
+        <source>Colours apply to all Qt 5 apps running under theShell.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.ui" line="135"/>
+        <source>Change System Colours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.ui" line="168"/>
+        <source>WIDGETS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.ui" line="175"/>
+        <source>The widget style defines the overall theme of an app.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.ui" line="184"/>
+        <source>Change Qt Widget Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.ui" line="214"/>
+        <source>ICONS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.ui" line="221"/>
+        <source>Icons will apply to all Qt 5 apps running under theShell.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.ui" line="230"/>
+        <source>Change Icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="96"/>
+        <source>Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="98"/>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="100"/>
+        <source>Black</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="102"/>
+        <source>Gray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="104"/>
+        <source>Decorative</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="108"/>
+        <source>blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="109"/>
+        <source>green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="110"/>
+        <source>orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="111"/>
+        <source>pink</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="112"/>
+        <source>turquoise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/themepane.cpp" line="117"/>
+        <source>%1 theme - %2 accents</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WidgetStylePane</name>
+    <message>
+        <location filename="../theme/widgetstylepane.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/widgetstylepane.ui" line="71"/>
+        <source>Select Widget Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WidgetStylePreview</name>
+    <message>
+        <location filename="../theme/widgetstylepreview.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/widgetstylepreview.ui" line="86"/>
+        <source>Example Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/widgetstylepreview.ui" line="132"/>
+        <source>EXAMPLE WIDGETS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/widgetstylepreview.ui" line="139"/>
+        <source>Example Button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/widgetstylepreview.ui" line="146"/>
+        <source>Example Text Box</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/widgetstylepreview.ui" line="180"/>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../theme/widgetstylepreview.ui" line="190"/>
+        <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

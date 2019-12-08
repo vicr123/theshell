@@ -39,23 +39,23 @@
 class TaskbarManager : public QObject
 {
     Q_OBJECT
-public:
-    explicit TaskbarManager(QObject *parent = T_QOBJECT_ROOT);
+    public:
+        explicit TaskbarManager(QObject *parent = T_QOBJECT_ROOT);
 
-    QList<WmWindow> Windows();
-signals:
-    void windowsChanged();
-    void updateWindow(WmWindow changedWindow);
-    void deleteWindow(WmWindow closedWindow);
+        QList<WmWindow> Windows();
+    signals:
+        void windowsChanged();
+        void updateWindow(WmWindow changedWindow);
+        void deleteWindow(WmWindow closedWindow);
 
-public slots:
-    void ReloadWindows();
+    public slots:
+        void ReloadWindows();
 
-private slots:
-    bool updateInternalWindow(Window window);
+    private slots:
+        bool updateInternalWindow(Window window);
 
-private:
-    QMap<Window, WmWindow> knownWindows;
+    private:
+        QMap<Window, WmWindow> knownWindows;
 
     QSettings settings;
 };

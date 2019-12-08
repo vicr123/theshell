@@ -45,6 +45,10 @@ TutorialWindow::TutorialWindow(bool doSettings, QWidget *parent) :
         unsigned long desktop = 0xFFFFFFFF;
         qDebug() << XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
                          XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+
+        unsigned long skipTaskbar = 1;
+        XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_THESHELL_SKIP_TASKBAR", False),
+                         XA_CARDINAL, 32, PropModeReplace, reinterpret_cast<unsigned char*>(&skipTaskbar), 1); //Skip the taskbar
     }
 
     this->showFullScreen();

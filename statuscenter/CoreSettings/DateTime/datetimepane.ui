@@ -539,7 +539,8 @@
          <string>OK</string>
         </property>
         <property name="icon">
-         <iconset theme="dialog-ok"/>
+         <iconset theme="dialog-ok">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>

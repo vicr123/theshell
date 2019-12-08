@@ -1,6 +1,6 @@
 /****************************************
  *
- *   theShell - Desktop Environment
+ *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
  *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -17,47 +17,36 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-
-#ifndef FADEBUTTON_H
-#define FADEBUTTON_H
+#ifndef WIDGETSTYLEPREVIEW_H
+#define WIDGETSTYLEPREVIEW_H
 
 #include <QWidget>
-#include <QPushButton>
-#include <QPainter>
-#include <QPaintEvent>
-#include <QLinearGradient>
-#include <tvariantanimation.h>
 
-class FadeButton : public QPushButton
+namespace Ui {
+    class WidgetStylePreview;
+}
+
+class WidgetStylePreview : public QWidget
 {
-    Q_OBJECT
-public:
-    explicit FadeButton(QWidget *parent = 0);
+        Q_OBJECT
 
-    bool fade();
-    void setFade(bool fade);
+    public:
+        explicit WidgetStylePreview(QString styleName, QWidget *parent = nullptr);
+        ~WidgetStylePreview();
 
-    void setFullText(QString fullText);
-    void setText(QString text);
+    private slots:
+        void on_selectButton_clicked();
 
-    void animateIn();
-    void animateOut();
-signals:
+        void on_previewButton_toggled(bool checked);
 
-public slots:
+    signals:
+        void done();
 
-private:
-    bool f = false;
-    QString txt;
+    private:
+        Ui::WidgetStylePreview *ui;
 
-    QRect oldTextRect, textRect;
-    QString oldText = "", currentText = "";
-    bool animating = false;
-    void paintEvent(QPaintEvent* event);
-
-    bool hovering = false;
-    void enterEvent(QEvent* event);
-    void leaveEvent(QEvent* event);
+        void iterateChildren(QStyle* style, QWidget* w);
+        QString styleName;
 };
 
-#endif // FADEBUTTON_H
+#endif // WIDGETSTYLEPREVIEW_H
