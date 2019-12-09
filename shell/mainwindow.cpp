@@ -858,7 +858,7 @@ void MainWindow::calculateAndMoveBar()
     QRect endGeom;
     if (shouldHide) {
         //Figure out how much of the Bar should protrude
-        int hideHeight = 0;
+        int hideHeight = 1;
         if (haveStatusBar) hideHeight = ui->StatusBarFrame->height() + 1;
 
         if (onTop) {
@@ -1023,18 +1023,14 @@ void MainWindow::updateStruts() {
     } else {
         struts[0] = 0;
         struts[1] = 0;
-        if (QTouchDevice::devices().count() > 0) {
-            struts[2] = screenGeometry.top() + 1;
-        } else {
-            struts[2] = 0;
-        }
+        struts[2] = screenGeometry.top() + 1;
         struts[3] = 0;
         struts[4] = 0;
         struts[5] = 0;
         struts[6] = 0;
         struts[7] = 0;
-        struts[8] = 0;
-        struts[9] = 0;
+        struts[8] = screenGeometry.left();
+        struts[9] = screenGeometry.right();
         struts[10] = 0;
         struts[11] = 0;
     }

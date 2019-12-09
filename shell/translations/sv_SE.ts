@@ -1513,43 +1513,43 @@ Saker som kommer sparas ifall du väljer att spara filer
         <translation>Bearbetar Skärminspelning...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1160"/>
+        <location filename="../mainwindow.cpp" line="1156"/>
         <source>For Bar</source>
         <translation>För Baren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1162"/>
+        <location filename="../mainwindow.cpp" line="1158"/>
         <source>Move to bottom</source>
         <translation>Flytta till botten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1167"/>
+        <location filename="../mainwindow.cpp" line="1163"/>
         <source>Move to top</source>
         <translation>Flytta till toppen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1173"/>
+        <location filename="../mainwindow.cpp" line="1169"/>
         <source>Gateway and Bar Settings</source>
         <translation>Dörr och Barinställningar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1178"/>
+        <location filename="../mainwindow.cpp" line="1174"/>
         <source>For System</source>
         <translation>För System</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1179"/>
+        <location filename="../mainwindow.cpp" line="1175"/>
         <source>Open Status Center</source>
         <translation>Öppna Statuscentret</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1182"/>
+        <location filename="../mainwindow.cpp" line="1178"/>
         <source>Open System Settings</source>
         <translation>Öppna Systeminställningar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1191"/>
+        <location filename="../mainwindow.cpp" line="1187"/>
         <source>Open Gateway</source>
         <translation>Öppna Dörren</translation>
     </message>
