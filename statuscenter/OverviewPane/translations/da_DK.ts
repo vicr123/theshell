@@ -4,83 +4,88 @@
 <context>
     <name>Overview</name>
     <message>
-        <location filename="../overview.ui" line="350"/>
+        <location filename="../overview.ui" line="150"/>
+        <source>a</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../overview.ui" line="375"/>
         <source>Weather data sourced from MET Norway. Location data sourced from GeoNames.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.ui" line="405"/>
+        <location filename="../overview.ui" line="430"/>
         <source>Timers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.ui" line="431"/>
+        <location filename="../overview.ui" line="456"/>
         <source>Stopwatch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.ui" line="454"/>
+        <location filename="../overview.ui" line="479"/>
         <source>Reminders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="100"/>
+        <location filename="../overview.cpp" line="99"/>
         <source>Hi %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="102"/>
+        <location filename="../overview.cpp" line="101"/>
         <source>Good morning, %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="104"/>
+        <location filename="../overview.cpp" line="103"/>
         <source>Good afternoon, %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="106"/>
+        <location filename="../overview.cpp" line="105"/>
         <source>Good evening, %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="172"/>
+        <location filename="../overview.cpp" line="175"/>
         <source>Overview</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../overview.cpp" line="414"/>
+        <location filename="../overview.cpp" line="417"/>
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="417"/>
+        <location filename="../overview.cpp" line="420"/>
         <source>end</source>
         <comment>Context: &quot;Daylight Savings Time will end.&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="417"/>
+        <location filename="../overview.cpp" line="420"/>
         <source>begin</source>
         <comment>Context: &quot;Daylight Savings Time will begin.&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="419"/>
+        <location filename="../overview.cpp" line="422"/>
         <source>backwards</source>
         <comment>Context: &quot;The clock will automatically adjust backwards&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="419"/>
+        <location filename="../overview.cpp" line="422"/>
         <source>forwards</source>
         <comment>Context: &quot;The clock will automatically adjust forwards&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../overview.cpp" line="589"/>
+        <location filename="../overview.cpp" line="592"/>
         <source>In %1, it&apos;s %2, with %3. Expect a high temperature of %4 and a low temperature of %5.</source>
         <translation type="unfinished"></translation>
     </message>

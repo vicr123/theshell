@@ -46,9 +46,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-105</y>
+          <y>0</y>
           <width>446</width>
-          <height>702</height>
+          <height>704</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -117,16 +117,41 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="time">
-             <property name="font">
-              <font>
-               <pointsize>40</pointsize>
-              </font>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <property name="spacing">
+              <number>0</number>
              </property>
-             <property name="text">
-              <string notr="true">16:20:00</string>
-             </property>
-            </widget>
+             <item>
+              <widget class="QLabel" name="time">
+               <property name="font">
+                <font>
+                 <pointsize>40</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string notr="true">16:20:00</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="timeAmPm">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>40</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>a</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QLabel" name="date">

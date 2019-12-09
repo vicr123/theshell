@@ -50,6 +50,8 @@
 #include "weatherengine.h"
 #include <locationdaemon.h>
 
+#include <TimeDate/desktoptimedate.h>
+
 float getDPIScaling() {
     float currentDPI = QApplication::desktop()->logicalDpiX();
     return currentDPI / (float) 96;
@@ -92,9 +94,6 @@ Overview::Overview(QWidget *parent) :
     QTimer* timer = new QTimer();
     timer->setInterval(1000);
     connect(timer, &QTimer::timeout, [=] {
-        ui->date->setText(QLocale().toString(QDateTime::currentDateTime(), "ddd dd MMM yyyy"));
-        ui->time->setText(QDateTime::currentDateTime().toString("hh:mm:ss"));
-
         QTime now = QTime::currentTime();
         if (now.hour() < 6) {
             ui->greetingLabel->setText(tr("Hi %1!").arg(fullname));
@@ -107,6 +106,10 @@ Overview::Overview(QWidget *parent) :
         }
     });
     timer->start();
+
+    DesktopTimeDate::makeTimeLabel(ui->date, DesktopTimeDate::StandardDate);
+    DesktopTimeDate::makeTimeLabel(ui->time, DesktopTimeDate::Time);
+    DesktopTimeDate::makeTimeLabel(ui->timeAmPm, DesktopTimeDate::AmPm);
 
     animationTimer = new QTimer();
     animationTimer->setInterval(50);

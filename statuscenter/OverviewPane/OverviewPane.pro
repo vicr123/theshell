@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets dbus thelib positioning network multimedia xml
+QT       += core gui widgets dbus thelib positioning network multimedia xml tdesktopenvironment
 
 TARGET = tsoverview
 TEMPLATE = lib

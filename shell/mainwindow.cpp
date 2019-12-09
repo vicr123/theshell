@@ -32,6 +32,7 @@
 #include "powerdaemon.h"
 
 #include <Wm/desktopwm.h>
+#include <TimeDate/desktoptimedate.h>
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
@@ -140,8 +141,16 @@ MainWindow::MainWindow(QWidget *parent) :
     //Create the update event timer and start it
     QTimer *timer = new QTimer(this);
     timer->setInterval(100);
-    connect(timer, SIGNAL(timeout()), this, SLOT(doUpdate()));
+    connect(timer, &QTimer::timeout, this, &MainWindow::doUpdate);
     timer->start();
+
+    this->doUpdate();
+
+    //Prepare the time labels
+    DesktopTimeDate::makeTimeLabel(ui->time, DesktopTimeDate::Time);
+    DesktopTimeDate::makeTimeLabel(ui->ampmLabel, DesktopTimeDate::AmPm);
+    DesktopTimeDate::makeTimeLabel(ui->StatusBarClock, DesktopTimeDate::Time);
+    DesktopTimeDate::makeTimeLabel(ui->StatusBarClockAmPm, DesktopTimeDate::AmPm);
 
     connect(PowerDaemon::instance(), &PowerDaemon::powerStretchChanged, this, [=](bool isOn) {
         if (isOn) {
@@ -301,6 +310,8 @@ MainWindow::MainWindow(QWidget *parent) :
             d->statusBarOpacityEffect->setEnabled(true);
             d->statusBarOpacityEffect->setOpacity(value.toReal());
         }
+
+        ui->StatusBarFrame->setVisible(!qFuzzyIsNull(d->statusBarOpacityEffect->opacity()));
     });
 
     connect(locationServices, &LocationServices::locationUsingChanged, [=](bool location) {
@@ -461,44 +472,14 @@ void MainWindow::on_openMenu_clicked()
 }
 
 void MainWindow::doUpdate() {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-
-    if (settings.value("bar/onTop", true).toBool()) {
-        ((QBoxLayout*) ui->centralWidget->layout())->setDirection(QBoxLayout::TopToBottom);
-    } else {
-        ((QBoxLayout*) ui->centralWidget->layout())->setDirection(QBoxLayout::BottomToTop);
-    }
+    static_cast<QBoxLayout*>(ui->centralWidget->layout())->setDirection(settings.value("bar/onTop", true).toBool() ? QBoxLayout::TopToBottom : QBoxLayout::BottomToTop);
 
     //Update date and time
     if (settings.value("bar/compact", false).toBool()) {
         ui->date->setText(QLocale().toString(QDateTime::currentDateTime().date(), QLocale::ShortFormat /*"dd/mm/yy"*/));
     } else {
-        ui->date->setText(QLocale().toString(QDateTime::currentDateTime(), "ddd dd MMM yyyy"));
+        ui->date->setText(DesktopTimeDate::timeString(DesktopTimeDate::StandardDate));
     }
-
-    if (settings.value("time/use24hour", true).toBool()) {
-        ui->time->setText(QDateTime::currentDateTime().time().toString("HH:mm:ss"));
-        ui->ampmLabel->setVisible(false);
-    } else {
-        QTime now = QDateTime::currentDateTime().time();
-        if (QDateTime::currentDateTime().time().hour() < 12) {
-            ui->ampmLabel->setText(QLocale().amText());
-        } else {
-            ui->ampmLabel->setText(QLocale().pmText());
-            now = now.addSecs(-43200);
-        }
-
-        if (now.hour() == 0) now = now.addSecs(43200);
-
-        ui->time->setText(now.toString("hh:mm:ss"));
-        ui->ampmLabel->setVisible(true);
-    }
-
-    QString statusBarText = ui->time->text();
-    if (!settings.value("time/use24hour", true).toBool()) {
-        statusBarText.append(" " + ui->ampmLabel->text());
-    }
-    ui->StatusBarClock->setText(statusBarText);
 }
 
 void MainWindow::setMprisCurrentApp(QAction* app) {
@@ -825,11 +806,10 @@ void MainWindow::calculateAndMoveBar()
     bool onTop = settings.value("bar/onTop", true).toBool();
     bool haveStatusBar = settings.value("bar/statusBar", false).toBool();
 
-    ui->StatusBarFrame->setVisible(haveStatusBar);
+    ui->StatusBarFrame->setVisible(haveStatusBar && !qFuzzyIsNull(d->statusBarOpacityEffect->opacity()));
 
     bool shouldHide;
     if (d->hasMouse) {
-        qDebug() << "shouldHide false";
         shouldHide = false;
     } else {
         //Get a QRect representing the windows on this desktop
@@ -840,7 +820,6 @@ void MainWindow::calculateAndMoveBar()
 
                 //Ensure this window draws on this screen
                 if (windowGeometry.intersects(screenGeometry)) {
-                    qDebug() << "Considering" << window->title();
                     rect = rect.united(window->geometry());
                 }
             }
@@ -848,8 +827,6 @@ void MainWindow::calculateAndMoveBar()
 
         if (onTop) {
             shouldHide = (rect.top() < screenGeometry.y() + this->sizeHint().height());
-            qDebug() << "shouldHide" << shouldHide;
-            qDebug() << "rect" << rect;
         } else {
             shouldHide = (rect.bottom() > screenGeometry.bottom() - this->sizeHint().height());
         }
@@ -892,7 +869,6 @@ void MainWindow::calculateAndMoveBar()
 
     if (d->barAnim->endValue() == endGeom) return; //Nothing more needs to be done
 
-    qDebug() << "endGeom changed" << endGeom;
     if (d->barAnim->state() == tVariantAnimation::Running) d->barAnim->stop();
     d->barAnim->setStartValue(this->geometry());
     d->barAnim->setEndValue(endGeom);
