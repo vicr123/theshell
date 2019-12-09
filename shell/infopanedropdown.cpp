@@ -39,6 +39,7 @@
 #include "location/locationservices.h"
 #include <locationdaemon.h>
 #include <powerdaemon.h>
+#include <quietmodedaemon.h>
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
@@ -519,22 +520,22 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             });
         } else if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::QuietModeToggle)) {
             connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
-                switch (AudioMan->QuietMode()) {
-                    case AudioManager::none:
-                        AudioMan->setQuietMode(AudioManager::critical);
-                        HotkeyHud::show(QIcon::fromTheme("quiet-mode-critical-only"), tr("Critical Only"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                switch (QuietModeDaemon::getQuietMode()) {
+                    case QuietModeDaemon::None:
+                        QuietModeDaemon::setQuietMode(QuietModeDaemon::Critical);
+                        HotkeyHud::show(QIcon::fromTheme("quiet-mode-critical-only"), tr("Critical Only"), QuietModeDaemon::getCurrentQuietModeDescription(), 5000);
                         break;
-                    case AudioManager::critical:
-                        AudioMan->setQuietMode(AudioManager::notifications);
-                        HotkeyHud::show(QIcon::fromTheme("quiet-mode"), tr("No Notifications"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                    case QuietModeDaemon::Critical:
+                        QuietModeDaemon::setQuietMode(QuietModeDaemon::Notifications);
+                        HotkeyHud::show(QIcon::fromTheme("quiet-mode"), tr("No Notifications"), QuietModeDaemon::getCurrentQuietModeDescription(), 5000);
                         break;
-                    case AudioManager::notifications:
-                        AudioMan->setQuietMode(AudioManager::mute);
-                        HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Mute"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                    case QuietModeDaemon::Notifications:
+                        QuietModeDaemon::setQuietMode(QuietModeDaemon::Mute);
+                        HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Mute"), QuietModeDaemon::getCurrentQuietModeDescription(), 5000);
                         break;
-                    case AudioManager::mute:
-                        AudioMan->setQuietMode(AudioManager::none);
-                        HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Sound"), AudioMan->getCurrentQuietModeDescription(), 5000);
+                    case QuietModeDaemon::Mute:
+                        QuietModeDaemon::setQuietMode(QuietModeDaemon::None);
+                        HotkeyHud::show(QIcon::fromTheme("audio-volume-high"), tr("Sound"), QuietModeDaemon::getCurrentQuietModeDescription(), 5000);
                         break;
                 }
             });
@@ -543,10 +544,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     //Set up timer ringtones
     d->ringtone = new QMediaPlayer(this, QMediaPlayer::LowLatency);
-
-    connect(AudioMan, &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
-        d->broadcastMessage("quiet-mode-changed", {(int) mode});
-    });
 
     d->slice1.setStartValue((float) (this->width() - 250 * getDPIScaling()));
     d->slice1.setEndValue((float) (this->width() - 300 * getDPIScaling()));
@@ -2767,8 +2764,6 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
         emit statusBarProgressFinished(args.first().toString(), args.at(1).toString());
     } else if (message == "jobUpdate") {
         emit statusBarProgress(args.first().toString(), args.at(1).toString(), args.at(2).toUInt());
-    } else if (message == "set-quiet-mode") {
-        AudioMan->setQuietMode((AudioManager::quietMode) args.first().toInt());
     } else if (message == "show") {
         if (caller->type() == StatusCenterPaneObject::Informational) {
             this->show(None);
@@ -2802,11 +2797,6 @@ void InfoPaneDropdown::pluginMessage(QString message, QVariantList args, StatusC
 }
 
 QVariant InfoPaneDropdown::pluginProperty(QString key) {
-    if (key == "current-quiet-mode-description") {
-        return AudioMan->getCurrentQuietModeDescription();
-    } else if (key == "current-quiet-mode") {
-        return AudioMan->QuietMode();
-    }
     return QVariant();
 }
 

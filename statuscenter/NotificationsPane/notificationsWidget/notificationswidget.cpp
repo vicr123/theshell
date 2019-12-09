@@ -25,6 +25,7 @@
 #include <QDBusConnectionInterface>
 #include "kjob/jobviewwidget.h"
 #include <mpris/mprisengine.h>
+#include <quietmodedaemon.h>
 
 NotificationsWidget::NotificationsWidget(QWidget *parent) :
     QWidget(parent),
@@ -45,7 +46,7 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
         addMediaPlayer(player);
     });
 
-    connect(AudioManager::instance(), &AudioManager::QuietModeChanged, [=](AudioManager::quietMode mode) {
+    connect(QuietModeDaemon::instance(), &QuietModeDaemon::QuietModeChanged, [=](QuietModeDaemon::QuietMode newMode) {
         ui->quietModeSound->setChecked(false);
         ui->quietModeCriticalOnly->setChecked(false);
         ui->quietModeNotification->setChecked(false);
@@ -54,16 +55,16 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
         ui->quietModeTurnOffAt->setEnabled(true);
         ui->quietModeTurnOffIn->setEnabled(true);
 
-        if (mode == AudioManager::none) {
+        if (newMode == QuietModeDaemon::None) {
             ui->quietModeSound->setChecked(true);
 
             ui->quietModeForeverButton->setEnabled(false);
             ui->quietModeTurnOffAt->setEnabled(false);
             ui->quietModeTurnOffIn->setEnabled(false);
             ui->quietModeForeverButton->setChecked(true);
-        } else if (mode == AudioManager::notifications) {
+        } else if (newMode == QuietModeDaemon::Notifications) {
             ui->quietModeNotification->setChecked(true);
-        } else if (mode == AudioManager::critical) {
+        } else if (newMode == QuietModeDaemon::Critical) {
             ui->quietModeCriticalOnly->setChecked(true);
         } else {
             ui->quietModeMute->setChecked(true);
@@ -248,25 +249,25 @@ void NotificationsWidget::changeEvent(QEvent *event) {
 
 void NotificationsWidget::on_quietModeSound_clicked()
 {
-    AudioManager::instance()->setQuietMode(AudioManager::none);
+    QuietModeDaemon::setQuietMode(QuietModeDaemon::None);
     ui->quietModeSound->setChecked(true);
 }
 
 void NotificationsWidget::on_quietModeNotification_clicked()
 {
-    AudioManager::instance()->setQuietMode(AudioManager::notifications);
+    QuietModeDaemon::setQuietMode(QuietModeDaemon::Notifications);
     ui->quietModeNotification->setChecked(true);
 }
 
 void NotificationsWidget::on_quietModeMute_clicked()
 {
-    AudioManager::instance()->setQuietMode(AudioManager::mute);
+    QuietModeDaemon::setQuietMode(QuietModeDaemon::Mute);
     ui->quietModeMute->setChecked(true);
 }
 
 void NotificationsWidget::on_quietModeCriticalOnly_clicked()
 {
-    AudioManager::instance()->setQuietMode(AudioManager::critical);
+    QuietModeDaemon::setQuietMode(QuietModeDaemon::Critical);
     ui->quietModeCriticalOnly->setChecked(true);
 }
 
@@ -295,7 +296,7 @@ void NotificationsWidget::on_quietModeForeverButton_toggled(bool checked)
     if (checked) {
         ui->quietModeTurnOffAtTimer->setVisible(false);
         ui->quietModeTurnOffInTimer->setVisible(false);
-        AudioManager::instance()->setQuietModeResetTime(QDateTime::fromString(""));
+        QuietModeDaemon::setQuietModeResetTime(QDateTime::fromString(""));
     }
 }
 
@@ -306,7 +307,7 @@ void NotificationsWidget::on_quietModeTurnOffIn_toggled(bool checked)
         ui->quietModeTurnOffInTimer->setVisible(true);
 
         QDateTime oneHour = QDateTime::currentDateTime().addSecs(3600);
-        AudioManager::instance()->setQuietModeResetTime(oneHour);
+        QuietModeDaemon::setQuietModeResetTime(oneHour);
         ui->quietModeTurnOffInTimer->setTime(QTime(1, 0));
     }
 }
@@ -318,18 +319,18 @@ void NotificationsWidget::on_quietModeTurnOffAt_toggled(bool checked)
         ui->quietModeTurnOffInTimer->setVisible(false);
 
         QDateTime oneHour = QDateTime::currentDateTime().addSecs(3600);
-        AudioManager::instance()->setQuietModeResetTime(oneHour);
+        QuietModeDaemon::setQuietModeResetTime(oneHour);
         ui->quietModeTurnOffAtTimer->setDateTime(oneHour);
     }
 }
 
 void NotificationsWidget::on_quietModeTurnOffAtTimer_editingFinished()
 {
-    AudioManager::instance()->setQuietModeResetTime(ui->quietModeTurnOffAtTimer->dateTime());
+    QuietModeDaemon::setQuietModeResetTime(ui->quietModeTurnOffAtTimer->dateTime());
 }
 
 void NotificationsWidget::on_quietModeTurnOffInTimer_editingFinished()
 {
     QDateTime timeout = QDateTime::currentDateTime().addMSecs(ui->quietModeTurnOffInTimer->time().msecsSinceStartOfDay());
-    AudioManager::instance()->setQuietModeResetTime(timeout);
+    QuietModeDaemon::setQuietModeResetTime(timeout);
 }

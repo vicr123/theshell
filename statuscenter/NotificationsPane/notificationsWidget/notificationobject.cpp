@@ -22,6 +22,7 @@
 #include "notificationspermissionengine.h"
 
 #include "soundengine.h"
+#include <quietmodedaemon.h>
 
 int NotificationObject::currentId = 0;
 
@@ -168,7 +169,7 @@ void NotificationObject::post() {
 
     //Play sounds if requested
     qreal soundVolume = settings.value("notifications/volume", 1).toDouble();
-    if (!hints.value("suppress-sound", false).toBool() && !(AudioManager::instance()->QuietMode() == AudioManager::notifications || AudioManager::instance()->QuietMode() == AudioManager::mute) && permissions.playSound()) {
+    if (!hints.value("suppress-sound", false).toBool() && !(QuietModeDaemon::getQuietMode() == QuietModeDaemon::Notifications || QuietModeDaemon::getQuietMode() == QuietModeDaemon::Mute) && permissions.playSound()) {
         if (settings.value("notifications/attenuate", true).toBool()) {
             AudioManager::instance()->attenuateStreams();
         }

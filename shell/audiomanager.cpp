@@ -21,6 +21,7 @@
 #include "audiomanager.h"
 
 #include <qmath.h>
+#include <quietmodedaemon.h>
 
 AudioManager::AudioManager(QObject *parent) : QObject(parent)
 {
@@ -45,7 +46,7 @@ AudioManager::AudioManager(QObject *parent) : QObject(parent)
 }
 
 void AudioManager::changeVolume(int volume) {
-    if (currentQuietMode != mute) {
+    if (QuietModeDaemon::getQuietMode() != QuietModeDaemon::Mute) {
         pa_volume_t avgVol = pa_cvolume_avg(&defaultSinkVolume);
         int onePercent = (PA_VOLUME_NORM - PA_VOLUME_MUTED) / 100;
         pa_volume_t newVol = avgVol + (onePercent * volume);
@@ -78,7 +79,7 @@ void AudioManager::changeVolume(int volume) {
 }
 
 void AudioManager::setMasterVolume(int volume) {
-    if (currentQuietMode != mute) {
+    if (QuietModeDaemon::getQuietMode() != QuietModeDaemon::Mute) {
         if (pulseAvailable) {
             pa_volume_t setVol = PA_VOLUME_MUTED + (((float) volume / 100) * (float) PA_VOLUME_NORM);
             pa_cvolume newVol = defaultSinkVolume;
@@ -315,35 +316,3 @@ void AudioManager::pulseGetClients(pa_context *c, const pa_client_info *i, int e
     }
 }
 
-void AudioManager::setQuietMode(quietMode mode) {
-    if (mode != currentQuietMode) {
-        quietMode oldQuietMode = this->currentQuietMode;
-        if (mode == mute) {
-            pa_context_set_sink_mute_by_index(pulseContext, defaultSinkIndex, 1, NULL, NULL);
-        }
-
-        this->currentQuietMode = mode;
-        emit QuietModeChanged(mode);
-
-        if (oldQuietMode == mute) {
-            pa_context_set_sink_mute_by_index(pulseContext, defaultSinkIndex, 0, NULL, NULL);
-        }
-    }
-}
-
-AudioManager::quietMode AudioManager::QuietMode() {
-    return this->currentQuietMode;
-}
-
-QString AudioManager::getCurrentQuietModeDescription() {
-    switch (this->currentQuietMode) {
-        case none:
-            return tr("Allows all sounds from all apps, and notifications from all apps.");
-        case critical:
-            return tr("Ignores all notifications not marked as critical and those set to bypass Quiet Mode. Normal sounds will still be played.");
-        case notifications:
-            return tr("Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won't play sounds.");
-        case mute:
-            return tr("Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.");
-    }
-}

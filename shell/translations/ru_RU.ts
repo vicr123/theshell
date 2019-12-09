@@ -70,29 +70,6 @@
     </message>
 </context>
 <context>
-    <name>AudioManager</name>
-    <message>
-        <location filename="../audiomanager.cpp" line="341"/>
-        <source>Allows all sounds from all apps, and notifications from all apps.</source>
-        <translation>Включает все звуки и уведомления от всех приложений.</translation>
-    </message>
-    <message>
-        <location filename="../audiomanager.cpp" line="343"/>
-        <source>Ignores all notifications not marked as critical and those set to bypass Quiet Mode. Normal sounds will still be played.</source>
-        <translation>Уведомления, не отмеченные как важные, и не имеющие разрешения на обход Тихого режима будут пропущены. Остальные звуки останутся неизменными.</translation>
-    </message>
-    <message>
-        <location filename="../audiomanager.cpp" line="345"/>
-        <source>Ignores any notifications from all apps, except those set to bypass Quiet Mode. Normal sounds will still be played, and timers and reminders will still notify you, however, they won&apos;t play sounds.</source>
-        <translation>Уведомления приходят только от тех приложений, которым разрешено игнорировать Тихий режим. Звуки не отключаются. Таймеры и напоминания не будут издавать звуки, но работать не прекращают.</translation>
-    </message>
-    <message>
-        <location filename="../audiomanager.cpp" line="347"/>
-        <source>Completely turns off all sounds and notifications from all apps, including those set to bypass Quiet Mode. Not even timers or reminders will notify you.</source>
-        <translation>Полностью отключает все звуки. Абсолютная тишина.</translation>
-    </message>
-</context>
-<context>
     <name>BTHandsfree</name>
     <message>
         <location filename="../bthandsfree.cpp" line="89"/>
@@ -575,7 +552,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="499"/>
         <location filename="../infopanedropdown.ui" line="3536"/>
-        <location filename="../infopanedropdown.cpp" line="2280"/>
+        <location filename="../infopanedropdown.cpp" line="2277"/>
         <source>Advanced</source>
         <translation>Дополнительно</translation>
     </message>
@@ -654,14 +631,14 @@
     <message>
         <location filename="../infopanedropdown.ui" line="436"/>
         <location filename="../infopanedropdown.ui" line="1580"/>
-        <location filename="../infopanedropdown.cpp" line="139"/>
+        <location filename="../infopanedropdown.cpp" line="140"/>
         <source>Location</source>
         <translation>Местоположение</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="490"/>
         <location filename="../infopanedropdown.ui" line="3456"/>
-        <location filename="../infopanedropdown.cpp" line="2276"/>
+        <location filename="../infopanedropdown.cpp" line="2273"/>
         <source>Unavailable Panes</source>
         <translation>Недоступные панели</translation>
     </message>
@@ -875,8 +852,8 @@
         <translation>Разрешить приожениям доступ к вашему местоположению</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="518"/>
-        <location filename="../infopanedropdown.cpp" line="2536"/>
+        <location filename="../infopanedropdown.cpp" line="519"/>
+        <location filename="../infopanedropdown.cpp" line="2533"/>
         <source>Keyboard Layout</source>
         <translation>Раскладка клавиатуры</translation>
     </message>
@@ -927,8 +904,8 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2557"/>
-        <location filename="../infopanedropdown.cpp" line="2631"/>
-        <location filename="../infopanedropdown.cpp" line="2637"/>
+        <location filename="../infopanedropdown.cpp" line="2628"/>
+        <location filename="../infopanedropdown.cpp" line="2634"/>
         <source>Mouse Password</source>
         <translation>Пароль мышью</translation>
     </message>
@@ -949,7 +926,7 @@
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2788"/>
-        <location filename="../infopanedropdown.cpp" line="1679"/>
+        <location filename="../infopanedropdown.cpp" line="1676"/>
         <source>Edit User</source>
         <translation>Редактировать пользователя</translation>
     </message>
@@ -966,15 +943,15 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2849"/>
         <location filename="../infopanedropdown.ui" line="2872"/>
-        <location filename="../infopanedropdown.cpp" line="1683"/>
-        <location filename="../infopanedropdown.cpp" line="1684"/>
+        <location filename="../infopanedropdown.cpp" line="1680"/>
+        <location filename="../infopanedropdown.cpp" line="1681"/>
         <source>(unchanged)</source>
         <translation>(неизменно)</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2856"/>
-        <location filename="../infopanedropdown.cpp" line="1723"/>
-        <location filename="../infopanedropdown.cpp" line="1728"/>
+        <location filename="../infopanedropdown.cpp" line="1720"/>
+        <location filename="../infopanedropdown.cpp" line="1725"/>
         <source>Username</source>
         <translation>Имя пользователя</translation>
     </message>
@@ -1113,7 +1090,7 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3600"/>
-        <location filename="../infopanedropdown.cpp" line="1068"/>
+        <location filename="../infopanedropdown.cpp" line="1065"/>
         <source>Reset theShell</source>
         <translation>Перезапустить theShell</translation>
     </message>
@@ -1133,195 +1110,195 @@ Items that will be kept if you choose to keep files:
         <translation>Среда рабочего стола</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2000"/>
+        <location filename="../infopanedropdown.cpp" line="1997"/>
         <source>Blue</source>
         <translation>Синий</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2001"/>
+        <location filename="../infopanedropdown.cpp" line="1998"/>
         <source>Green</source>
         <translation>Зелёный</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2002"/>
+        <location filename="../infopanedropdown.cpp" line="1999"/>
         <source>Orange</source>
         <translation>Оранжевый</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2003"/>
+        <location filename="../infopanedropdown.cpp" line="2000"/>
         <source>Pink</source>
         <translation>Розовый</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2004"/>
+        <location filename="../infopanedropdown.cpp" line="2001"/>
         <source>Turquoise</source>
         <translation>Бирюзовый</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="508"/>
-        <location filename="../infopanedropdown.cpp" line="2282"/>
+        <location filename="../infopanedropdown.cpp" line="2279"/>
         <source>About</source>
         <translation>Подробнее</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="461"/>
+        <location filename="../infopanedropdown.cpp" line="462"/>
         <source>theShell %1 - Blueprint</source>
         <translation>theShell %1 - Чертёж</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="462"/>
+        <location filename="../infopanedropdown.cpp" line="463"/>
         <source>You compiled theShell on %1</source>
         <translation>Вы скомпилировали theShell %1</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="464"/>
+        <location filename="../infopanedropdown.cpp" line="465"/>
         <source>theShell %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="152"/>
+        <location filename="../infopanedropdown.cpp" line="153"/>
         <source>Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
         <translation>Права © Victor Tran %1. Выпущено на условиях GNU General Public License, версии 3 или позднее.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="454"/>
+        <location filename="../infopanedropdown.cpp" line="455"/>
         <source>Unknown</source>
         <translation>Неизвестный</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="518"/>
+        <location filename="../infopanedropdown.cpp" line="519"/>
         <source>Keyboard Layout set to %1</source>
         <translation type="unfinished">Установлена %1 раскладка клавиатуры</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="525"/>
+        <location filename="../infopanedropdown.cpp" line="526"/>
         <source>Critical Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="529"/>
+        <location filename="../infopanedropdown.cpp" line="530"/>
         <source>No Notifications</source>
         <translation type="unfinished">Нет уведомлений</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="533"/>
+        <location filename="../infopanedropdown.cpp" line="534"/>
         <source>Mute</source>
         <translation type="unfinished">Заглушить</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="537"/>
+        <location filename="../infopanedropdown.cpp" line="538"/>
         <source>Sound</source>
         <translation type="unfinished">Звук</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="719"/>
+        <location filename="../infopanedropdown.cpp" line="716"/>
         <source>No plugins were loaded because you&apos;ve started theShell in Safe Mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="724"/>
+        <location filename="../infopanedropdown.cpp" line="721"/>
         <source>Safe Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1069"/>
+        <location filename="../infopanedropdown.cpp" line="1066"/>
         <source>All settings will be reset to default, and you will be logged out. Are you sure you want to do this?</source>
         <translation>Все настройки будут сброшены к стандартным и вам придётся выйти из сеанса. Всё верно?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1516"/>
+        <location filename="../infopanedropdown.cpp" line="1513"/>
         <source>Log in to network</source>
         <translation>Войти в сеть</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1522"/>
+        <location filename="../infopanedropdown.cpp" line="1519"/>
         <source>Network Login</source>
         <translation>Вход в сеть</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1523"/>
+        <location filename="../infopanedropdown.cpp" line="1520"/>
         <source>Your connection to the internet is blocked by a login page.</source>
         <translation>Ваше соединение с интернетом блокируется страницей входа.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1646"/>
+        <location filename="../infopanedropdown.cpp" line="1643"/>
         <source>Add New User</source>
         <translation>Добавить нового пользователя</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1658"/>
-        <location filename="../infopanedropdown.cpp" line="2587"/>
-        <location filename="../infopanedropdown.cpp" line="2607"/>
+        <location filename="../infopanedropdown.cpp" line="1655"/>
+        <location filename="../infopanedropdown.cpp" line="2584"/>
+        <location filename="../infopanedropdown.cpp" line="2604"/>
         <source>Unauthorized</source>
         <translation>Неавторихован</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1658"/>
+        <location filename="../infopanedropdown.cpp" line="1655"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation>Polkit не разрешает вам менять настройки пользователей в системе.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1670"/>
+        <location filename="../infopanedropdown.cpp" line="1667"/>
         <source>New User</source>
         <translation>Новый пользователь</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1673"/>
-        <location filename="../infopanedropdown.cpp" line="1674"/>
-        <location filename="../infopanedropdown.cpp" line="1689"/>
-        <location filename="../infopanedropdown.cpp" line="1690"/>
+        <location filename="../infopanedropdown.cpp" line="1670"/>
+        <location filename="../infopanedropdown.cpp" line="1671"/>
+        <location filename="../infopanedropdown.cpp" line="1686"/>
+        <location filename="../infopanedropdown.cpp" line="1687"/>
         <source>(none)</source>
         <translation>(пусто)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1686"/>
-        <location filename="../infopanedropdown.cpp" line="1687"/>
+        <location filename="../infopanedropdown.cpp" line="1683"/>
+        <location filename="../infopanedropdown.cpp" line="1684"/>
         <source>(set at next login)</source>
         <translation>(установится при следующем входе)</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1718"/>
+        <location filename="../infopanedropdown.cpp" line="1715"/>
         <source>Password Check</source>
         <translation>Проверка пароля</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1718"/>
+        <location filename="../infopanedropdown.cpp" line="1715"/>
         <source>The passwords don&apos;t match.</source>
         <translation>Пароли не совпадают.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1723"/>
+        <location filename="../infopanedropdown.cpp" line="1720"/>
         <source>The username must not contain spaces.</source>
         <translation>Имя пользователя не должно сожержать пробелов.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1728"/>
+        <location filename="../infopanedropdown.cpp" line="1725"/>
         <source>The username must not contain capital letters.</source>
         <translation>Имя пользователя не должно сожержать заглавных букв.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1996"/>
+        <location filename="../infopanedropdown.cpp" line="1993"/>
         <source>Oxygen</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="1997"/>
+        <location filename="../infopanedropdown.cpp" line="1994"/>
         <source>Breeze</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2194"/>
-        <location filename="../infopanedropdown.cpp" line="2204"/>
-        <location filename="../infopanedropdown.cpp" line="2214"/>
-        <location filename="../infopanedropdown.cpp" line="2224"/>
+        <location filename="../infopanedropdown.cpp" line="2191"/>
+        <location filename="../infopanedropdown.cpp" line="2201"/>
+        <location filename="../infopanedropdown.cpp" line="2211"/>
+        <location filename="../infopanedropdown.cpp" line="2221"/>
         <source>Never</source>
         <translation>Никогда</translation>
     </message>
     <message numerus="yes">
-        <location filename="../infopanedropdown.cpp" line="2196"/>
-        <location filename="../infopanedropdown.cpp" line="2206"/>
-        <location filename="../infopanedropdown.cpp" line="2216"/>
-        <location filename="../infopanedropdown.cpp" line="2226"/>
+        <location filename="../infopanedropdown.cpp" line="2193"/>
+        <location filename="../infopanedropdown.cpp" line="2203"/>
+        <location filename="../infopanedropdown.cpp" line="2213"/>
+        <location filename="../infopanedropdown.cpp" line="2223"/>
         <source>%n min(s)</source>
         <translation>
             <numerusform>%n минута</numerusform>
@@ -1331,53 +1308,53 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="606"/>
-        <location filename="../infopanedropdown.cpp" line="2422"/>
+        <location filename="../infopanedropdown.cpp" line="2419"/>
         <source>Log Out Now</source>
         <translation>Выйти сейчас</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2425"/>
+        <location filename="../infopanedropdown.cpp" line="2422"/>
         <source>Logoff Required</source>
         <translation>Требуется выход</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2428"/>
+        <location filename="../infopanedropdown.cpp" line="2425"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation>Чтобы переключиться на сжатую версию Панели, вам нужно выйти из сессии и войти обратно.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2430"/>
+        <location filename="../infopanedropdown.cpp" line="2427"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
         <translation>Чтобы переключиться на полную версию Панели, вам нужно выйти из сессии и войти обратно.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2549"/>
+        <location filename="../infopanedropdown.cpp" line="2546"/>
         <source>Show Touch Keyboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2587"/>
-        <location filename="../infopanedropdown.cpp" line="2607"/>
+        <location filename="../infopanedropdown.cpp" line="2584"/>
+        <location filename="../infopanedropdown.cpp" line="2604"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
         <translation>Polkit не позволяет вам установить пароль мышью.</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2602"/>
+        <location filename="../infopanedropdown.cpp" line="2599"/>
         <source>Remove Mouse Password?</source>
         <translation>Удалить пароль мышью?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2602"/>
+        <location filename="../infopanedropdown.cpp" line="2599"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
         <translation>Вы хотите удалить пароль мышью у этого аккаунта?</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2632"/>
+        <location filename="../infopanedropdown.cpp" line="2629"/>
         <source>Mouse Password was removed successfully</source>
         <translation>Пароль мышью был успешно удалён</translation>
     </message>
     <message>
-        <location filename="../infopanedropdown.cpp" line="2638"/>
+        <location filename="../infopanedropdown.cpp" line="2635"/>
         <source>Mouse Password couldn&apos;t be removed</source>
         <translation>Пароль мышью не удалось удалить</translation>
     </message>
@@ -1496,63 +1473,63 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="518"/>
-        <location filename="../mainwindow.cpp" line="328"/>
+        <location filename="../mainwindow.cpp" line="329"/>
         <source>Quiet Mode</source>
         <translation>Тихий режим</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="84"/>
+        <location filename="../mainwindow.cpp" line="85"/>
         <source>Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="376"/>
+        <location filename="../mainwindow.cpp" line="371"/>
         <source>Recording Screen</source>
         <translation>Записываем экран</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="382"/>
+        <location filename="../mainwindow.cpp" line="377"/>
         <source>Processing Screen Recording...</source>
         <translation>Обрабатываем запись экрана...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1132"/>
+        <location filename="../mainwindow.cpp" line="1127"/>
         <source>For Bar</source>
         <translation>Для Панели</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1134"/>
+        <location filename="../mainwindow.cpp" line="1129"/>
         <source>Move to bottom</source>
         <translation>Переместить вниз</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1139"/>
+        <location filename="../mainwindow.cpp" line="1134"/>
         <source>Move to top</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1145"/>
+        <location filename="../mainwindow.cpp" line="1140"/>
         <source>Gateway and Bar Settings</source>
         <translation>Настройки Врат и Панели</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1150"/>
+        <location filename="../mainwindow.cpp" line="1145"/>
         <source>For System</source>
         <translation>Для системы</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1151"/>
+        <location filename="../mainwindow.cpp" line="1146"/>
         <source>Open Status Center</source>
         <translation>Открыть статусный центр</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1154"/>
+        <location filename="../mainwindow.cpp" line="1149"/>
         <source>Open System Settings</source>
         <translation>Открыть параметры системы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1163"/>
+        <location filename="../mainwindow.cpp" line="1158"/>
         <source>Open Gateway</source>
         <translation>Открыть Врата</translation>
     </message>

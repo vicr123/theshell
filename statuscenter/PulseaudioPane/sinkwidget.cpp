@@ -30,6 +30,7 @@
 #include <Sink>
 #include <Port>
 #include <hotkeyhud.h>
+#include <quietmodedaemon.h>
 
 struct SinkWidgetPrivate {
     PulseAudioQt::Sink* sink;
@@ -42,6 +43,8 @@ struct SinkWidgetPrivate {
     QString sinkName;
     QMutex volumeChangeLocker;
     QString lastPort;
+
+    bool wasMutedBeforeQuietMode = false;
 };
 
 SinkWidget::SinkWidget(PulseAudioQt::Sink* sink, QWidget *parent) :
@@ -68,6 +71,24 @@ SinkWidget::SinkWidget(PulseAudioQt::Sink* sink, QWidget *parent) :
     connect(d->sink, &PulseAudioQt::Sink::channelVolumesChanged, this, &SinkWidget::updateChannelVolumes);
     connect(d->sink, &PulseAudioQt::Sink::portsChanged, this, &SinkWidget::updatePorts);
     connect(d->sink, &PulseAudioQt::Sink::activePortIndexChanged, this, &SinkWidget::updatePortIndex);
+
+    connect(QuietModeDaemon::instance(), &QuietModeDaemon::QuietModeChanged, this, [=](QuietModeDaemon::QuietMode newMode, QuietModeDaemon::QuietMode oldMode) {
+        if (oldMode == QuietModeDaemon::Mute) {
+            d->sink->setMuted(d->wasMutedBeforeQuietMode);
+            this->setEnabled(true);
+        }
+        if (newMode == QuietModeDaemon::Mute) {
+            d->wasMutedBeforeQuietMode = d->sink->isMuted();
+            d->sink->setMuted(true);
+            this->setEnabled(false);
+        }
+    });
+
+    if (QuietModeDaemon::getQuietMode() == QuietModeDaemon::Mute) {
+        d->wasMutedBeforeQuietMode = d->sink->isMuted();
+        d->sink->setMuted(true);
+        this->setEnabled(false);
+    }
 
     ui->deviceName->setText(sink->description().toUpper());
     ui->muteButton->setChecked(sink->isMuted());

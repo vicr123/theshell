@@ -10,7 +10,7 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="95"/>
-        <location filename="../audiopane.cpp" line="144"/>
+        <location filename="../audiopane.cpp" line="151"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -40,13 +40,13 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="144"/>
-        <location filename="../audiopane.ui" line="766"/>
+        <location filename="../audiopane.ui" line="866"/>
         <source>Input Devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="149"/>
-        <location filename="../audiopane.ui" line="883"/>
+        <location filename="../audiopane.ui" line="983"/>
         <source>Advanced Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -71,37 +71,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="96"/>
-        <source>Login</source>
+        <location filename="../audiopane.ui" line="756"/>
+        <source>QUIET MODE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.ui" line="788"/>
+        <source>Turn off Quiet Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="98"/>
-        <source>Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../audiopane.cpp" line="99"/>
-        <source>Question</source>
+        <source>Login</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="100"/>
-        <source>Warning</source>
+        <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="101"/>
+        <source>Question</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.cpp" line="102"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../audiopane.cpp" line="103"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="111"/>
+        <location filename="../audiopane.cpp" line="113"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="111"/>
+        <location filename="../audiopane.cpp" line="113"/>
         <source>Quiet Mode is set to Mute.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -111,12 +121,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="103"/>
+        <location filename="../audiopane.cpp" line="105"/>
         <source>Volume Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="97"/>
+        <location filename="../audiopane.cpp" line="99"/>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -127,12 +137,12 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="605"/>
-        <location filename="../audiopane.ui" line="829"/>
+        <location filename="../audiopane.ui" line="929"/>
         <source>Coming soon. Stay tuned!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="102"/>
+        <location filename="../audiopane.cpp" line="104"/>
         <source>Screenshot</source>
         <translation type="unfinished"></translation>
     </message>
@@ -173,22 +183,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="105"/>
+        <location filename="../sinkwidget.cpp" line="126"/>
         <source>Speaker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="239"/>
+        <location filename="../sinkwidget.cpp" line="260"/>
         <source>Speakers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="242"/>
+        <location filename="../sinkwidget.cpp" line="263"/>
         <source>Headphones</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="245"/>
+        <location filename="../sinkwidget.cpp" line="266"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>

@@ -56,6 +56,8 @@ class AudioPane : public QWidget, public StatusCenterPaneObject
 
         void addSoundSetting(QString name, QString soundName, QString soundPermission);
 
+        void on_turnOffQuietModeOutputDevicesButton_clicked();
+
     signals:
         void defaultSinkChanged(QString defaultSink);
 

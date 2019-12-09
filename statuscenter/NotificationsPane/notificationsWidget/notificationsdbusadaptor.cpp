@@ -24,6 +24,7 @@
 #include "audiomanager.h"
 
 #include "notificationspermissionengine.h"
+#include <quietmodedaemon.h>
 
 NotificationsDBusAdaptor::NotificationsDBusAdaptor(QObject *parent, ApplicationNotificationModel* appModel)
     : QDBusAbstractAdaptor(parent)
@@ -89,7 +90,7 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
         }
 
         bool postNotification = true;
-        if (AudioManager::instance()->QuietMode() == AudioManager::notifications && !permissions.bypassesQuietMode()) {
+        if (QuietModeDaemon::getQuietMode() == QuietModeDaemon::Notifications && !permissions.bypassesQuietMode()) {
             QStringList allowedCategories;
             allowedCategories.append("battery.low");
             allowedCategories.append("battery.critical");
@@ -98,12 +99,12 @@ uint NotificationsDBusAdaptor::Notify(const QString &app_name, uint replaces_id,
                 postNotification = false;
                 emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
             }
-        } else if (AudioManager::instance()->QuietMode() == AudioManager::critical && !permissions.bypassesQuietMode()) {
+        } else if (QuietModeDaemon::getQuietMode() == QuietModeDaemon::Critical && !permissions.bypassesQuietMode()) {
             if (hints.value("urgency", 1).toInt() != 2) {
                 postNotification = false;
                 emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
             }
-        } else if (AudioManager::instance()->QuietMode() == AudioManager::mute) {
+        } else if (QuietModeDaemon::getQuietMode() == QuietModeDaemon::Mute) {
             postNotification = false;
             emit NotificationClosed(notification->getId(), NotificationObject::Undefined);
         }

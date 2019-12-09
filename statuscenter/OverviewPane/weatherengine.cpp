@@ -209,14 +209,14 @@ bool WeatherEngine::updateWeather() {
 
 
     QNetworkAccessManager mgr;
-    QNetworkRequest request(QUrl(QString("https://api.met.no/weatherapi/locationforecastlts/1.3/?lat=%1&lon=%2&msl=%3").arg(d->latitude).arg(d->longitude).arg(d->altitude)));
-    request.setHeader(QNetworkRequest::UserAgentHeader, "theShell/8.1");
+    QNetworkRequest request(QUrl(QString("https://api.met.no/weatherapi/locationforecast/1.9/?lat=%1&lon=%2&msl=%3").arg(d->latitude).arg(d->longitude).arg(d->altitude)));
+    request.setHeader(QNetworkRequest::UserAgentHeader, "theShell/8.1 (https://vicr123.com)");
     QNetworkReply* reply = mgr.get(request);
     connect(reply, &QNetworkReply::finished, loop.data(), &QEventLoop::quit);
     loop->exec();
 
     int httpStatusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    if (httpStatusCode != 200) {
+    if (httpStatusCode < 200 || httpStatusCode > 299) {
         reply->deleteLater();
         return false;
     }

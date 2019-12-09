@@ -41,6 +41,7 @@ SOURCES += \
     application.cpp \
     powerdaemon.cpp \
     qsettingsformats.cpp \
+    quietmodedaemon.cpp \
     soundengine.cpp
 
 HEADERS += \
@@ -53,6 +54,7 @@ HEADERS += \
         mpris/mprisplayer.h \
         notificationspermissionengine.h \
         powerdaemon.h \
+        quietmodedaemon.h \
         theshell-lib_global.h \ 
     application.h \
     qsettingsformats.h \

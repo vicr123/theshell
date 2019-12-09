@@ -21,19 +21,12 @@
 
 #include <QVariant>
 #include <QTimer>
+#include <soundengine.h>
 
 AudioManager* AudioManager::i = nullptr;
 
 AudioManager::AudioManager(QObject *parent) : QObject(parent)
 {
-    quietModeWatcher = new QTimer();
-    quietModeWatcher->setInterval(1000);
-    connect(quietModeWatcher, &QTimer::timeout, [=] {
-        if (QDateTime::currentDateTime() > quietModeOff) {
-            setQuietMode(none);
-            quietModeWatcher->stop();
-        }
-    });
 }
 
 QWidget* AudioManager::mainWidget() {
@@ -54,14 +47,7 @@ int AudioManager::position() {
 }
 
 void AudioManager::message(QString name, QVariantList args) {
-    if (name == "quiet-mode-changed") {
-        currentMode = (quietMode) args.first().toInt();
-        emit QuietModeChanged(currentMode);
-    }
-}
 
-AudioManager::quietMode AudioManager::QuietMode() {
-    return currentMode;
 }
 
 AudioManager* AudioManager::instance() {
@@ -77,17 +63,4 @@ void AudioManager::attenuateStreams() {
 
 void AudioManager::restoreStreams() {
     sendMessage("attenuate", {false});
-}
-
-void AudioManager::setQuietMode(quietMode mode) {
-    sendMessage("set-quiet-mode", {mode});
-}
-
-void AudioManager::setQuietModeResetTime(QDateTime time) {
-    if (time.isValid()) {
-        quietModeOff = time;
-        quietModeWatcher->start();
-    } else {
-        quietModeWatcher->stop();
-    }
 }

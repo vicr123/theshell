@@ -387,7 +387,7 @@ int main(int argc, char *argv[])
     qDBusRegisterMetaType<QList<QVariantMap>>();
     qDBusRegisterMetaType<QMap<QString, QVariantMap>>();
 
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     MainWin->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::WindowDoesNotAcceptFocus);
     MainWin->setGeometry(screenGeometry.x() - 1, screenGeometry.y(), screenGeometry.width() + 1, MainWin->height());

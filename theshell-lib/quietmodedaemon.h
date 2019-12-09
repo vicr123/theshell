@@ -17,33 +17,36 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef AUDIOMANAGER_H
-#define AUDIOMANAGER_H
+#ifndef QUIETMODEDAEMON_H
+#define QUIETMODEDAEMON_H
 
 #include <QObject>
-#include <statuscenterpaneobject.h>
-#include <QDateTime>
-#include <debuginformationcollector.h>
 
-class AudioManager : public QObject, public StatusCenterPaneObject
+struct QuietModeDaemonPrivate;
+class QuietModeDaemon : public QObject
 {
         Q_OBJECT
     public:
-        explicit AudioManager(QObject *parent = T_QOBJECT_ROOT);
-        static AudioManager* instance();
+        enum QuietMode {
+            None = 0,
+            Critical = 1,
+            Notifications = 2,
+            Mute = 3
+        };
 
-        QWidget* mainWidget();
-        QString name();
-        StatusPaneTypes type();
-        int position();
-        void message(QString name, QVariantList args = QVariantList());
+        static QuietModeDaemon* instance();
 
-    public slots:
-        void attenuateStreams();
-        void restoreStreams();
+        static QuietMode getQuietMode();
+        static void setQuietMode(QuietMode quietMode);
+        static void setQuietModeResetTime(QDateTime time);
+        static QString getCurrentQuietModeDescription();
+
+    signals:
+        void QuietModeChanged(QuietMode newMode, QuietMode oldMode);
 
     private:
-        static AudioManager* i;
+        explicit QuietModeDaemon(QObject *parent = nullptr);
+        static QuietModeDaemonPrivate* d;
 };
 
-#endif // AUDIOMANAGER_H
+#endif // QUIETMODEDAEMON_H

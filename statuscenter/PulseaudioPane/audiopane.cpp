@@ -37,6 +37,8 @@
 #include <Sink>
 #include <SinkInput>
 
+#include <quietmodedaemon.h>
+
 struct AudioPanePrivate {
     bool pulseAvailable = false;
 
@@ -128,6 +130,11 @@ AudioPane::AudioPane(QWidget *parent) :
             });
         }
     });
+
+    connect(QuietModeDaemon::instance(), &QuietModeDaemon::QuietModeChanged, this, [=](QuietModeDaemon::QuietMode newMode) {
+        ui->quietModeMuteWarningOutput->setVisible(newMode == QuietModeDaemon::Mute);
+    });
+    ui->quietModeMuteWarningOutput->setVisible(QuietModeDaemon::getQuietMode() == QuietModeDaemon::Mute);
 }
 
 AudioPane::~AudioPane()
@@ -246,4 +253,9 @@ void AudioPane::on_soundThemeComboBox_currentIndexChanged(int index)
 {
     QSettings platformSettings("theSuite", "ts-qtplatform");
     platformSettings.setValue("sound/theme", ui->soundThemeComboBox->itemText(index));
+}
+
+void AudioPane::on_turnOffQuietModeOutputDevicesButton_clicked()
+{
+    QuietModeDaemon::setQuietMode(QuietModeDaemon::None);
 }
