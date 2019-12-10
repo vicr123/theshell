@@ -1489,43 +1489,43 @@ Tập tin này có thể giữ lại:
         <translation>Đang xử lý phim màn hình...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1127"/>
+        <location filename="../mainwindow.cpp" line="1131"/>
         <source>For Bar</source>
         <translation>Cho thanh</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1129"/>
+        <location filename="../mainwindow.cpp" line="1133"/>
         <source>Move to bottom</source>
         <translation>Chuyển xuống</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1134"/>
+        <location filename="../mainwindow.cpp" line="1138"/>
         <source>Move to top</source>
         <translation>Chuyển lên</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1140"/>
+        <location filename="../mainwindow.cpp" line="1144"/>
         <source>Gateway and Bar Settings</source>
         <translation>Cài đặt cửa và thanh</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1145"/>
+        <location filename="../mainwindow.cpp" line="1149"/>
         <source>For System</source>
         <translation>Cho máy</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1146"/>
+        <location filename="../mainwindow.cpp" line="1150"/>
         <source>Open Status Center</source>
         <translation>Mở trạng thái</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1149"/>
+        <location filename="../mainwindow.cpp" line="1153"/>
         <source>Open System Settings</source>
         <translation>Mở cài đặt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1158"/>
+        <location filename="../mainwindow.cpp" line="1162"/>
         <source>Open Gateway</source>
         <translation>Mở Cửa</translation>
     </message>

@@ -843,8 +843,10 @@ void MainWindow::calculateAndMoveBar()
 
         if (haveStatusBar) {
             //Show the status bar
-            d->statusBarOpacityAnimation->setDirection(tVariantAnimation::Forward);
-            d->statusBarOpacityAnimation->start();
+            if (d->statusBarOpacityAnimation->currentTime() != 500) {
+                d->statusBarOpacityAnimation->setDirection(tVariantAnimation::Forward);
+                d->statusBarOpacityAnimation->start();
+            }
         }
     } else {
         if (onTop) {
@@ -857,8 +859,10 @@ void MainWindow::calculateAndMoveBar()
 
         if (haveStatusBar) {
             //Hide the status bar
-            d->statusBarOpacityAnimation->setDirection(tVariantAnimation::Backward);
-            d->statusBarOpacityAnimation->start();
+            if (d->statusBarOpacityAnimation->currentTime() != 0) {
+                d->statusBarOpacityAnimation->setDirection(tVariantAnimation::Backward);
+                d->statusBarOpacityAnimation->start();
+            }
         }
     }
 

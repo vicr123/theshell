@@ -69,7 +69,7 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
         } else {
             ui->quietModeMute->setChecked(true);
         }
-        ui->quietModeDescription->setText(getProperty("current-quiet-mode-description").toString());
+        ui->quietModeDescription->setText(QuietModeDaemon::getCurrentQuietModeDescription());
     });
     ui->quietModeForeverButton->setChecked(true);
     ui->quietModeForeverButton->setEnabled(false);
@@ -88,7 +88,7 @@ NotificationsWidget::NotificationsWidget(QWidget *parent) :
     snack->setText("0");
 
     QTimer::singleShot(0, [=] {
-        ui->quietModeDescription->setText(getProperty("current-quiet-mode-description").toString());
+        ui->quietModeDescription->setText(QuietModeDaemon::getCurrentQuietModeDescription());
 
         sendMessage("register-chunk", {QVariant::fromValue(chunk)});
         sendMessage("register-snack", {QVariant::fromValue(snack)});

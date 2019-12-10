@@ -23,7 +23,10 @@
 #include <QPointer>
 
 #include <Context>
+#include <Sink>
 #include <SinkInput>
+#include <tpopover.h>
+#include "deviceselection.h"
 
 struct SinkInputWidgetPrivate {
     PulseAudioQt::SinkInput* input;
@@ -39,8 +42,8 @@ SinkInputWidget::SinkInputWidget(PulseAudioQt::SinkInput* sinkInput, QWidget *pa
     d = new SinkInputWidgetPrivate();
 
     d->input = sinkInput;
-    ui->volumeSlider->setMaximum(PulseAudioQt::normalVolume());
-    ui->volumeSlider->setPageStep(PulseAudioQt::normalVolume() / 20);
+    ui->volumeSlider->setMaximum(static_cast<int>(PulseAudioQt::normalVolume()));
+    ui->volumeSlider->setPageStep(static_cast<int>(PulseAudioQt::normalVolume() / 20));
 
     connect(sinkInput, &PulseAudioQt::SinkInput::nameChanged, this, &SinkInputWidget::updateName);
     connect(sinkInput, &PulseAudioQt::SinkInput::clientChanged, this, [=] {
@@ -56,12 +59,24 @@ SinkInputWidget::SinkInputWidget(PulseAudioQt::SinkInput* sinkInput, QWidget *pa
     connect(sinkInput, &PulseAudioQt::SinkInput::isVolumeWritableChanged, this, [=] {
         ui->volumeSlider->setEnabled(sinkInput->isVolumeWritable());
     });
+    connect(sinkInput, &PulseAudioQt::SinkInput::deviceIndexChanged, this, [=] {
+        for (PulseAudioQt::Sink* sink : PulseAudioQt::Context::instance()->sinks()) {
+            if (sink->index() == sinkInput->deviceIndex()) {
+                ui->sinkSelectionButton->setText(sink->description());
+            }
+        }
+    });
     connect(sinkInput, &PulseAudioQt::SinkInput::volumeChanged, this, &SinkInputWidget::updateVolume);
 
     ui->volumeSlider->setVisible(sinkInput->hasVolume());
     ui->volumeSlider->setEnabled(sinkInput->isVolumeWritable());
     ui->descriptionLabel->setText(sinkInput->name());
     ui->muteButton->setChecked(sinkInput->isMuted());
+    for (PulseAudioQt::Sink* sink : PulseAudioQt::Context::instance()->sinks()) {
+        if (sink->index() == sinkInput->deviceIndex()) {
+            ui->sinkSelectionButton->setText(sink->description());
+        }
+    }
     updateName();
     updateVolume();
 }
@@ -94,10 +109,25 @@ void SinkInputWidget::updateName()
 
 void SinkInputWidget::updateVolume()
 {
-    ui->volumeSlider->setValue(d->input->volume());
+    ui->volumeSlider->setValue(static_cast<int>(d->input->volume()));
 }
 
 void SinkInputWidget::on_volumeSlider_sliderMoved(int position)
 {
     d->input->setVolume(position);
+}
+
+void SinkInputWidget::on_sinkSelectionButton_clicked()
+{
+    DeviceSelection* selection = new DeviceSelection(DeviceSelection::Sink);
+    tPopover* popover = new tPopover(selection);
+    popover->setPopoverWidth(SC_DPI(400));
+    connect(selection, &DeviceSelection::rejected, popover, &tPopover::dismiss);
+    connect(selection, &DeviceSelection::accepted, this, [=](quint32 index) {
+        d->input->setDeviceIndex(index);
+        popover->dismiss();
+    });
+    connect(popover, &tPopover::dismissed, selection, &DeviceSelection::deleteLater);
+    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+    popover->show(this->window());
 }

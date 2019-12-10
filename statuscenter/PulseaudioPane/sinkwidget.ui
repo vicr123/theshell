@@ -102,7 +102,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="dialog-ok">
+        <iconset theme="default">
          <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="checkable">

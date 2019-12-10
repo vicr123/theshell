@@ -148,6 +148,26 @@
     </message>
 </context>
 <context>
+    <name>DeviceSelection</name>
+    <message>
+        <location filename="../deviceselection.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formular</translation>
+    </message>
+    <message>
+        <location filename="../deviceselection.ui" line="71"/>
+        <location filename="../deviceselection.cpp" line="35"/>
+        <source>Select Output Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceselection.ui" line="96"/>
+        <location filename="../deviceselection.cpp" line="36"/>
+        <source>Which device do you want this sound source to be played on?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SinkInputWidget</name>
     <message>
         <location filename="../sinkinputwidget.ui" line="14"/>
@@ -155,7 +175,7 @@
         <translation>Formular</translation>
     </message>
     <message>
-        <location filename="../sinkinputwidget.cpp" line="90"/>
+        <location filename="../sinkinputwidget.cpp" line="105"/>
         <source>Playback</source>
         <translation type="unfinished">Wiedergabe</translation>
     </message>

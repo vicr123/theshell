@@ -17,47 +17,39 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef SINKINPUTWIDGET_H
-#define SINKINPUTWIDGET_H
+#ifndef SINKSELECTION_H
+#define SINKSELECTION_H
 
 #include <QWidget>
-#include <pulse/introspect.h>
+#include <QListWidgetItem>
 
 namespace Ui {
-    class SinkInputWidget;
+    class DeviceSelection;
 }
 
-namespace PulseAudioQt {
-    class SinkInput;
-}
-
-struct SinkInputWidgetPrivate;
-class SinkInputWidget : public QWidget
+class DeviceSelection : public QWidget
 {
         Q_OBJECT
 
     public:
-        explicit SinkInputWidget(PulseAudioQt::SinkInput* sinkInput, QWidget *parent = nullptr);
-        ~SinkInputWidget();
+        enum DeviceType {
+            Sink
+        };
 
-        PulseAudioQt::SinkInput* sinkInput();
+        explicit DeviceSelection(DeviceType type, QWidget *parent = nullptr);
+        ~DeviceSelection();
+
+    signals:
+        void rejected();
+        void accepted(quint32 deviceIndex);
 
     private slots:
+        void on_backButton_clicked();
 
-        void on_muteButton_toggled(bool checked);
-
-        void updateName();
-
-        void updateVolume();
-
-        void on_volumeSlider_sliderMoved(int position);
-
-        void on_sinkSelectionButton_clicked();
+        void on_deviceList_itemActivated(QListWidgetItem *item);
 
     private:
-        Ui::SinkInputWidget *ui;
-
-        SinkInputWidgetPrivate* d;
+        Ui::DeviceSelection *ui;
 };
 
-#endif // SINKINPUTWIDGET_H
+#endif // SINKSELECTION_H

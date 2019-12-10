@@ -84,6 +84,7 @@ unix {
 }
 
 HEADERS += \
+    deviceselection.h \
     plugin.h \
     audiopane.h \
     sinkwidget.h \
@@ -91,6 +92,7 @@ HEADERS += \
     maps.h
 
 SOURCES += \
+    deviceselection.cpp \
     plugin.cpp \
     audiopane.cpp \
     sinkwidget.cpp \
@@ -101,6 +103,7 @@ DISTFILES += \
 
 FORMS += \
     audiopane.ui \
+    deviceselection.ui \
     sinkwidget.ui \
     sinkinputwidget.ui
 

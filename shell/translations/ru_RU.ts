@@ -1493,43 +1493,43 @@ Items that will be kept if you choose to keep files:
         <translation>Обрабатываем запись экрана...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1127"/>
+        <location filename="../mainwindow.cpp" line="1131"/>
         <source>For Bar</source>
         <translation>Для Панели</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1129"/>
+        <location filename="../mainwindow.cpp" line="1133"/>
         <source>Move to bottom</source>
         <translation>Переместить вниз</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1134"/>
+        <location filename="../mainwindow.cpp" line="1138"/>
         <source>Move to top</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1140"/>
+        <location filename="../mainwindow.cpp" line="1144"/>
         <source>Gateway and Bar Settings</source>
         <translation>Настройки Врат и Панели</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1145"/>
+        <location filename="../mainwindow.cpp" line="1149"/>
         <source>For System</source>
         <translation>Для системы</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1146"/>
+        <location filename="../mainwindow.cpp" line="1150"/>
         <source>Open Status Center</source>
         <translation>Открыть статусный центр</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1149"/>
+        <location filename="../mainwindow.cpp" line="1153"/>
         <source>Open System Settings</source>
         <translation>Открыть параметры системы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1158"/>
+        <location filename="../mainwindow.cpp" line="1162"/>
         <source>Open Gateway</source>
         <translation>Открыть Врата</translation>
     </message>

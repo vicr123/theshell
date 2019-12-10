@@ -62,7 +62,7 @@ AudioPane::AudioPane(QWidget *parent) :
     this->settingAttributes.menuWidget = ui->LeftPaneWidget;
     this->settingAttributes.providesLeftPane = true;
 
-    ui->LeftPaneWidget->setFixedWidth(250 * theLibsGlobal::getDPIScaling());
+    ui->LeftPaneWidget->setFixedWidth(SC_DPI(250));
 
     ui->audioStack->setCurrentAnimation(tStackedWidget::Lift);
 
@@ -109,7 +109,7 @@ AudioPane::AudioPane(QWidget *parent) :
     connect(GlobalKeyboardEngine::instance(), &GlobalKeyboardEngine::keyShortcutRegistered, this, [=](QString name, GlobalKeyboardKey* key) {
         if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::VolumeUp) || name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::VolumeDown)) {
             connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
-                if (getProperty("current-quiet-mode").toInt() == 3) {
+                if (QuietModeDaemon::getQuietMode() == QuietModeDaemon::Mute) {
                     HotkeyHud::show(QIcon::fromTheme("audio-volume-muted"), tr("Volume"), tr("Quiet Mode is set to Mute."));
                 } else {
                     //Get the default sink and find the widget for this sink
