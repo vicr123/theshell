@@ -91,6 +91,7 @@ HEADERS += \
     sinkwidget.h \
     sinkinputwidget.h \
     maps.h \
+    sourceoutputwidget.h \
     sourcewidget.h
 
 SOURCES += \
@@ -100,6 +101,7 @@ SOURCES += \
     audiopane.cpp \
     sinkwidget.cpp \
     sinkinputwidget.cpp \
+    sourceoutputwidget.cpp \
     sourcewidget.cpp
 
 DISTFILES += \
@@ -111,6 +113,7 @@ FORMS += \
     deviceselection.ui \
     sinkwidget.ui \
     sinkinputwidget.ui \
+    sourceoutputwidget.ui \
     sourcewidget.ui
 
 unix: CONFIG += link_pkgconfig

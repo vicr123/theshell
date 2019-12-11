@@ -33,12 +33,14 @@
 #include "sinkinputwidget.h"
 #include "cardwidget.h"
 #include "sourcewidget.h"
+#include "sourceoutputwidget.h"
 
 #include <Context>
 #include <Server>
 #include <Sink>
 #include <SinkInput>
 #include <Source>
+#include <SourceOutput>
 #include <Card>
 
 #include <quietmodedaemon.h>
@@ -51,7 +53,11 @@ struct AudioPanePrivate {
     QList<SinkWidget*> sinkWidgets;
     QList<SinkInputWidget*> sinkInputWidgets;
     QList<SourceWidget*> sourceWidgets;
+    QList<SourceOutputWidget*> sourceOutputWidgets;
     QList<CardWidget*> cardWidgets;
+
+    QLabel* snack;
+    SourceOutputWidget::ListeningState oldListeningState = SourceOutputWidget::NotListening;
 
     QSettings settings;
     int currentSoundSettingRow = 0;
@@ -141,6 +147,12 @@ AudioPane::AudioPane(QWidget *parent) :
         ui->quietModeMuteWarningOutput->setVisible(newMode == QuietModeDaemon::Mute);
     });
     ui->quietModeMuteWarningOutput->setVisible(QuietModeDaemon::getQuietMode() == QuietModeDaemon::Mute);
+
+    d->snack = new QLabel();
+    d->snack->setVisible(false);
+    QTimer::singleShot(0, [=] {
+        sendMessage("register-snack", {QVariant::fromValue(d->snack)});
+    });
 }
 
 AudioPane::~AudioPane()
@@ -270,6 +282,26 @@ void AudioPane::connectToPulse() {
             }
         }
     });
+    connect(PulseAudioQt::Context::instance(), &PulseAudioQt::Context::sourceOutputAdded, this, [=](PulseAudioQt::SourceOutput* sourceOutput) {
+        //Add a new source
+        SourceOutputWidget* w = new SourceOutputWidget(sourceOutput);
+        connect(w, &SourceOutputWidget::listeningStateChanged, this, &AudioPane::listeningStateChanged);
+        d->sourceOutputWidgets.append(w);
+        ui->sourceOutputsLayout->addWidget(w);
+        this->listeningStateChanged();
+    });
+    connect(PulseAudioQt::Context::instance(), &PulseAudioQt::Context::sourceOutputRemoved, this, [=](PulseAudioQt::SourceOutput* sourceOutput) {
+        //Remove a source
+        for (SourceOutputWidget* w : d->sourceOutputWidgets) {
+            if (w->sourceOutput() == sourceOutput) {
+                d->sourceOutputWidgets.removeAll(w);
+                ui->sourceOutputsLayout->removeWidget(w);
+                w->deleteLater();
+                this->listeningStateChanged();
+                return;
+            }
+        }
+    });
 
     if (PulseAudioQt::Context::instance() == nullptr) {
         d->pulseAvailable = false;
@@ -298,4 +330,30 @@ void AudioPane::on_soundThemeComboBox_currentIndexChanged(int index)
 void AudioPane::on_turnOffQuietModeOutputDevicesButton_clicked()
 {
     QuietModeDaemon::setQuietMode(QuietModeDaemon::None);
+}
+
+void AudioPane::listeningStateChanged()
+{
+    SourceOutputWidget::ListeningState listeningState = SourceOutputWidget::NotListening;
+    for (SourceOutputWidget* w : d->sourceOutputWidgets) {
+        listeningState = qMax(w->listeningState(), listeningState);
+    }
+
+    if (d->oldListeningState != listeningState) {
+        d->oldListeningState = listeningState;
+        switch (listeningState) {
+            case SourceOutputWidget::NotListening:
+                d->snack->setVisible(false);
+                break;
+            case SourceOutputWidget::BlockedFromListening:
+                d->snack->setPixmap(QIcon::fromTheme("mic-off").pixmap(SC_DPI_T(QSize(16, 16), QSize)));
+                d->snack->setVisible(true);
+                break;
+            case SourceOutputWidget::Listening:
+                d->snack->setPixmap(QIcon::fromTheme("mic-on").pixmap(SC_DPI_T(QSize(16, 16), QSize)));
+                d->snack->setVisible(true);
+                break;
+
+        }
+    }
 }

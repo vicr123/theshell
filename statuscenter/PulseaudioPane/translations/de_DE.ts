@@ -10,7 +10,7 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="95"/>
-        <location filename="../audiopane.cpp" line="157"/>
+        <location filename="../audiopane.cpp" line="169"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
@@ -34,19 +34,19 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="139"/>
-        <location filename="../audiopane.ui" line="659"/>
+        <location filename="../audiopane.ui" line="649"/>
         <source>Output Devices</source>
         <translation>Ausgabegeräte</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="144"/>
-        <location filename="../audiopane.ui" line="866"/>
+        <location filename="../audiopane.ui" line="856"/>
         <source>Input Devices</source>
         <translation>Eingabegeräte</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="149"/>
-        <location filename="../audiopane.ui" line="973"/>
+        <location filename="../audiopane.ui" line="963"/>
         <source>Advanced Configuration</source>
         <translation>Erweiterte Konfiguration</translation>
     </message>
@@ -71,47 +71,47 @@
         <translation>TÖNE</translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="756"/>
+        <location filename="../audiopane.ui" line="746"/>
         <source>QUIET MODE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="788"/>
+        <location filename="../audiopane.ui" line="778"/>
         <source>Turn off Quiet Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="104"/>
+        <location filename="../audiopane.cpp" line="110"/>
         <source>Login</source>
         <translation>Anmeldung</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="106"/>
+        <location filename="../audiopane.cpp" line="112"/>
         <source>Information</source>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="107"/>
+        <location filename="../audiopane.cpp" line="113"/>
         <source>Question</source>
         <translation>Frage</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="108"/>
+        <location filename="../audiopane.cpp" line="114"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="109"/>
+        <location filename="../audiopane.cpp" line="115"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="119"/>
+        <location filename="../audiopane.cpp" line="125"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="119"/>
+        <location filename="../audiopane.cpp" line="125"/>
         <source>Quiet Mode is set to Mute.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -121,12 +121,12 @@
         <translation>Du kannst Benachrichtigungstöne im Notifikationsfeld einstellen</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="111"/>
+        <location filename="../audiopane.cpp" line="117"/>
         <source>Volume Change</source>
         <translation>Lautstärkeänderung</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="105"/>
+        <location filename="../audiopane.cpp" line="111"/>
         <source>Logout</source>
         <translation>Abmeldung</translation>
     </message>
@@ -136,12 +136,7 @@
         <translation>Sound Design</translation>
     </message>
     <message>
-        <location filename="../audiopane.ui" line="605"/>
-        <source>Coming soon. Stay tuned!</source>
-        <translation>Bald verfügbar!</translation>
-    </message>
-    <message>
-        <location filename="../audiopane.cpp" line="110"/>
+        <location filename="../audiopane.cpp" line="116"/>
         <source>Screenshot</source>
         <translation>Bildschirmfoto</translation>
     </message>
@@ -168,14 +163,24 @@
     </message>
     <message>
         <location filename="../deviceselection.ui" line="71"/>
-        <location filename="../deviceselection.cpp" line="35"/>
+        <location filename="../deviceselection.cpp" line="36"/>
         <source>Select Output Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../deviceselection.ui" line="96"/>
-        <location filename="../deviceselection.cpp" line="36"/>
+        <location filename="../deviceselection.cpp" line="37"/>
         <source>Which device do you want this sound source to be played on?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceselection.cpp" line="43"/>
+        <source>Select Input Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../deviceselection.cpp" line="44"/>
+        <source>Which device do you want this app to listen to?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -233,6 +238,19 @@
         <location filename="../sinkwidget.cpp" line="260"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SourceOutputWidget</name>
+    <message>
+        <location filename="../sourceoutputwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formular</translation>
+    </message>
+    <message>
+        <location filename="../sourceoutputwidget.cpp" line="106"/>
+        <source>Playback</source>
+        <translation type="unfinished">Wiedergabe</translation>
     </message>
 </context>
 <context>

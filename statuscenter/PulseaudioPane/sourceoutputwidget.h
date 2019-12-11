@@ -17,40 +17,51 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef SINKSELECTION_H
-#define SINKSELECTION_H
+#ifndef SOURCEOUTPUTWIDGET_H
+#define SOURCEOUTPUTWIDGET_H
 
 #include <QWidget>
-#include <QListWidgetItem>
 
-namespace Ui {
-    class DeviceSelection;
+namespace PulseAudioQt {
+    class SourceOutput;
 }
 
-class DeviceSelection : public QWidget
+namespace Ui {
+    class SourceOutputWidget;
+}
+
+struct SourceOutputWidgetPrivate;
+class SourceOutputWidget : public QWidget
 {
         Q_OBJECT
 
     public:
-        enum DeviceType {
-            Sink,
-            Source
+        explicit SourceOutputWidget(PulseAudioQt::SourceOutput* sourceOutput, QWidget *parent = nullptr);
+        ~SourceOutputWidget();
+
+        enum ListeningState {
+            NotListening = 0,
+            BlockedFromListening = 1,
+            Listening = 2
         };
 
-        explicit DeviceSelection(DeviceType type, QWidget *parent = nullptr);
-        ~DeviceSelection();
+        PulseAudioQt::SourceOutput* sourceOutput();
+
+        ListeningState listeningState();
 
     signals:
-        void rejected();
-        void accepted(quint32 deviceIndex);
+        void listeningStateChanged();
 
     private slots:
-        void on_backButton_clicked();
+        void updateName();
 
-        void on_deviceList_itemActivated(QListWidgetItem *item);
+        void on_sourceSelectionButton_clicked();
+
+        void on_muteButton_toggled(bool checked);
 
     private:
-        Ui::DeviceSelection *ui;
+        Ui::SourceOutputWidget *ui;
+        SourceOutputWidgetPrivate* d;
 };
 
-#endif // SINKSELECTION_H
+#endif // SOURCEOUTPUTWIDGET_H

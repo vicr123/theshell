@@ -22,6 +22,7 @@
 
 #include <Context>
 #include <Sink>
+#include <Source>
 
 DeviceSelection::DeviceSelection(DeviceSelection::DeviceType type, QWidget *parent) :
     QWidget(parent),
@@ -36,6 +37,13 @@ DeviceSelection::DeviceSelection(DeviceSelection::DeviceType type, QWidget *pare
             ui->descriptionLabel->setText(tr("Which device do you want this sound source to be played on?"));
             for (PulseAudioQt::Sink* sink : PulseAudioQt::Context::instance()->sinks()) {
                 devices.append(sink);
+            }
+            break;
+        case Source:
+            ui->titleLabel->setText(tr("Select Input Device"));
+            ui->descriptionLabel->setText(tr("Which device do you want this app to listen to?"));
+            for (PulseAudioQt::Source* source : PulseAudioQt::Context::instance()->sources()) {
+                devices.append(source);
             }
             break;
     }

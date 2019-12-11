@@ -58,6 +58,8 @@ class AudioPane : public QWidget, public StatusCenterPaneObject
 
         void on_turnOffQuietModeOutputDevicesButton_clicked();
 
+        void listeningStateChanged();
+
     signals:
         void defaultSinkChanged(QString defaultSink);
 
