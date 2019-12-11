@@ -75,7 +75,14 @@ MprisPlayer::~MprisPlayer() {
 }
 
 void MprisPlayer::registerDbusProperty(QDBusInterface* interface, QString localProperty, QString remoteProperty) {
-    QVariant propertyValue = interface->property(qPrintable(remoteProperty));
+    QDBusMessage message = QDBusMessage::createMethodCall(interface->service(), interface->path(), "org.freedesktop.DBus.Properties", "Get");
+    message.setArguments({
+                             interface->interface(),
+                             remoteProperty
+                         });
+    QDBusMessage reply = interface->connection().call(message);
+//    QVariant propertyValue = interface->property(qPrintable(remoteProperty));
+    QVariant propertyValue = reply.arguments().first().value<QDBusVariant>().variant();
     d->properties.insert(localProperty, propertyValue);
     d->propertyMappings.insert(interface->interface() + "." + remoteProperty, localProperty);
 }

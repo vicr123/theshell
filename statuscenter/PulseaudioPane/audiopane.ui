@@ -157,7 +157,7 @@
    <item>
     <widget class="tStackedWidget" name="audioStack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="page_6">
       <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -896,8 +896,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>173</width>
-            <height>37</height>
+            <width>399</width>
+            <height>380</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="_3">
@@ -922,16 +922,6 @@
               <number>0</number>
              </property>
             </layout>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Coming soon. Stay tuned!</string>
-             </property>
-             <property name="margin">
-              <number>9</number>
-             </property>
-            </widget>
            </item>
            <item>
             <spacer name="verticalSpacer_4">
@@ -1013,8 +1003,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>86</width>
-            <height>16</height>
+            <width>399</width>
+            <height>380</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="_4">
@@ -1033,6 +1023,13 @@
            <property name="bottomMargin">
             <number>0</number>
            </property>
+           <item>
+            <layout class="QVBoxLayout" name="cardWidgetsLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+            </layout>
+           </item>
            <item>
             <spacer name="verticalSpacer_5">
              <property name="orientation">

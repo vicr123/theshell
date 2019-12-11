@@ -10,7 +10,7 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="95"/>
-        <location filename="../audiopane.cpp" line="151"/>
+        <location filename="../audiopane.cpp" line="157"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
@@ -46,7 +46,7 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="149"/>
-        <location filename="../audiopane.ui" line="983"/>
+        <location filename="../audiopane.ui" line="973"/>
         <source>Advanced Configuration</source>
         <translation>Erweiterte Konfiguration</translation>
     </message>
@@ -81,37 +81,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="98"/>
+        <location filename="../audiopane.cpp" line="104"/>
         <source>Login</source>
         <translation>Anmeldung</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="100"/>
+        <location filename="../audiopane.cpp" line="106"/>
         <source>Information</source>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="101"/>
+        <location filename="../audiopane.cpp" line="107"/>
         <source>Question</source>
         <translation>Frage</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="102"/>
+        <location filename="../audiopane.cpp" line="108"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="103"/>
+        <location filename="../audiopane.cpp" line="109"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="113"/>
+        <location filename="../audiopane.cpp" line="119"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="113"/>
+        <location filename="../audiopane.cpp" line="119"/>
         <source>Quiet Mode is set to Mute.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -121,12 +121,12 @@
         <translation>Du kannst Benachrichtigungstöne im Notifikationsfeld einstellen</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="105"/>
+        <location filename="../audiopane.cpp" line="111"/>
         <source>Volume Change</source>
         <translation>Lautstärkeänderung</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="99"/>
+        <location filename="../audiopane.cpp" line="105"/>
         <source>Logout</source>
         <translation>Abmeldung</translation>
     </message>
@@ -137,14 +137,26 @@
     </message>
     <message>
         <location filename="../audiopane.ui" line="605"/>
-        <location filename="../audiopane.ui" line="929"/>
         <source>Coming soon. Stay tuned!</source>
         <translation>Bald verfügbar!</translation>
     </message>
     <message>
-        <location filename="../audiopane.cpp" line="104"/>
+        <location filename="../audiopane.cpp" line="110"/>
         <source>Screenshot</source>
         <translation>Bildschirmfoto</translation>
+    </message>
+</context>
+<context>
+    <name>CardWidget</name>
+    <message>
+        <location filename="../cardwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formular</translation>
+    </message>
+    <message>
+        <location filename="../cardwidget.ui" line="52"/>
+        <source>Profile</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -203,22 +215,40 @@
         <translation>Master</translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="126"/>
+        <location filename="../sinkwidget.cpp" line="120"/>
         <source>Speaker</source>
         <translation>Lautsprecher</translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="260"/>
+        <location filename="../sinkwidget.cpp" line="254"/>
         <source>Speakers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="263"/>
+        <location filename="../sinkwidget.cpp" line="257"/>
         <source>Headphones</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sinkwidget.cpp" line="266"/>
+        <location filename="../sinkwidget.cpp" line="260"/>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SourceWidget</name>
+    <message>
+        <location filename="../sourcewidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formular</translation>
+    </message>
+    <message>
+        <location filename="../sourcewidget.ui" line="90"/>
+        <source>Mute</source>
+        <translation type="unfinished">Stummschalten</translation>
+    </message>
+    <message>
+        <location filename="../sourcewidget.ui" line="129"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>

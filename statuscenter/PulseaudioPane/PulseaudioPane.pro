@@ -84,28 +84,34 @@ unix {
 }
 
 HEADERS += \
+    cardwidget.h \
     deviceselection.h \
     plugin.h \
     audiopane.h \
     sinkwidget.h \
     sinkinputwidget.h \
-    maps.h
+    maps.h \
+    sourcewidget.h
 
 SOURCES += \
+    cardwidget.cpp \
     deviceselection.cpp \
     plugin.cpp \
     audiopane.cpp \
     sinkwidget.cpp \
-    sinkinputwidget.cpp
+    sinkinputwidget.cpp \
+    sourcewidget.cpp
 
 DISTFILES += \
     PulseaudioPane.json
 
 FORMS += \
     audiopane.ui \
+    cardwidget.ui \
     deviceselection.ui \
     sinkwidget.ui \
-    sinkinputwidget.ui
+    sinkinputwidget.ui \
+    sourcewidget.ui
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += libpulse libpulse-mainloop-glib

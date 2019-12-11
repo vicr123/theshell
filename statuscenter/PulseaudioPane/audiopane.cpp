@@ -31,11 +31,15 @@
 
 #include "sinkwidget.h"
 #include "sinkinputwidget.h"
+#include "cardwidget.h"
+#include "sourcewidget.h"
 
 #include <Context>
 #include <Server>
 #include <Sink>
 #include <SinkInput>
+#include <Source>
+#include <Card>
 
 #include <quietmodedaemon.h>
 
@@ -46,6 +50,8 @@ struct AudioPanePrivate {
 
     QList<SinkWidget*> sinkWidgets;
     QList<SinkInputWidget*> sinkInputWidgets;
+    QList<SourceWidget*> sourceWidgets;
+    QList<CardWidget*> cardWidgets;
 
     QSettings settings;
     int currentSoundSettingRow = 0;
@@ -225,6 +231,40 @@ void AudioPane::connectToPulse() {
             if (w->sinkInput() == sinkInput) {
                 d->sinkInputWidgets.removeAll(w);
                 ui->sinkInputsLayout->removeWidget(w);
+                w->deleteLater();
+                return;
+            }
+        }
+    });
+//    connect(PulseAudioQt::Context::instance(), &PulseAudioQt::Context::cardAdded, this, [=](PulseAudioQt::Card* card) {
+//        //Add a card
+//        CardWidget* w = new CardWidget(card);
+//        d->cardWidgets.append(w);
+//        ui->cardWidgetsLayout->addWidget(w);
+//    });
+//    connect(PulseAudioQt::Context::instance(), &PulseAudioQt::Context::cardRemoved, this, [=](PulseAudioQt::Card* card) {
+//        //Remove a card
+//        for (CardWidget* w : d->cardWidgets) {
+//            if (w->card() == card) {
+//                d->cardWidgets.removeAll(w);
+//                ui->cardWidgetsLayout->removeWidget(w);
+//                w->deleteLater();
+//                return;
+//            }
+//        }
+//    });
+    connect(PulseAudioQt::Context::instance(), &PulseAudioQt::Context::sourceAdded, this, [=](PulseAudioQt::Source* source) {
+        //Add a new source
+        SourceWidget* w = new SourceWidget(source);
+        d->sourceWidgets.append(w);
+        ui->sourcesLayout->addWidget(w);
+    });
+    connect(PulseAudioQt::Context::instance(), &PulseAudioQt::Context::sourceRemoved, this, [=](PulseAudioQt::Source* source) {
+        //Remove a source
+        for (SourceWidget* w : d->sourceWidgets) {
+            if (w->source() == source) {
+                d->sourceWidgets.removeAll(w);
+                ui->sourcesLayout->removeWidget(w);
                 w->deleteLater();
                 return;
             }

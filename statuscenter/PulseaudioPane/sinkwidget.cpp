@@ -67,6 +67,9 @@ SinkWidget::SinkWidget(PulseAudioQt::Sink* sink, QWidget *parent) :
     connect(d->sink, &PulseAudioQt::Sink::mutedChanged, this, [=] {
         ui->muteButton->setChecked(sink->isMuted());
     });
+    connect(d->sink, &PulseAudioQt::Sink::defaultChanged, this, [=] {
+        ui->defaultButton->setChecked(sink->isDefault());
+    });
     connect(d->sink, &PulseAudioQt::Sink::channelsChanged, this, &SinkWidget::updateChannels);
     connect(d->sink, &PulseAudioQt::Sink::channelVolumesChanged, this, &SinkWidget::updateChannelVolumes);
     connect(d->sink, &PulseAudioQt::Sink::portsChanged, this, &SinkWidget::updatePorts);
@@ -92,6 +95,7 @@ SinkWidget::SinkWidget(PulseAudioQt::Sink* sink, QWidget *parent) :
 
     ui->deviceName->setText(sink->description().toUpper());
     ui->muteButton->setChecked(sink->isMuted());
+    ui->defaultButton->setChecked(sink->isDefault());
 
     updateChannels();
     updateChannelVolumes();
@@ -102,16 +106,6 @@ SinkWidget::~SinkWidget()
 {
     delete d;
     delete ui;
-}
-
-void SinkWidget::updateInfo(pa_sink_info info, QString defaultSinkName) {
-    ui->deviceName->setText(QString::fromLocal8Bit(info.description).toUpper());
-    ui->muteButton->setChecked(info.mute);
-
-    d->lastIndex = info.index;
-    d->sinkName = QString::fromLocal8Bit(info.name);
-
-    defaultSinkChanged(defaultSinkName);
 }
 
 void SinkWidget::updateChannels() {

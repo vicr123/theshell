@@ -17,62 +17,36 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef SINKWIDGET_H
-#define SINKWIDGET_H
+#ifndef CARDWIDGET_H
+#define CARDWIDGET_H
 
 #include <QWidget>
 
 namespace PulseAudioQt {
-    class Sink;
+    class Card;
 }
 
 namespace Ui {
-    class SinkWidget;
+    class CardWidget;
 }
 
-struct SinkWidgetPrivate;
-class SinkWidget : public QWidget
+struct CardWidgetPrivate;
+class CardWidget : public QWidget
 {
         Q_OBJECT
 
     public:
-        explicit SinkWidget(PulseAudioQt::Sink* sink, QWidget *parent = nullptr);
-        ~SinkWidget();
+        explicit CardWidget(PulseAudioQt::Card* card, QWidget *parent = nullptr);
+        ~CardWidget();
 
-        PulseAudioQt::Sink* sink();
-
-        QString currentPort();
-
-    public slots:
-        void defaultSinkChanged(QString defaultSinkName);
-
-        void updateVolumeAndShowHud(qint64 volume);
+        PulseAudioQt::Card* card();
 
     private slots:
-        void on_muteButton_toggled(bool checked);
-
-        void on_expandVolumesButton_clicked();
-
-        void on_volumeSlider_sliderPressed();
-
-        void on_volumeSlider_sliderReleased();
-
-        void on_volumeSlider_valueChanged(int value);
-
-        void on_defaultButton_toggled(bool checked);
-
-        void updateChannels();
-
-        void updateChannelVolumes();
-
-        void updatePorts();
-
-        void updatePortIndex();
+        void on_profileButton_clicked();
 
     private:
-        Ui::SinkWidget *ui;
-
-        SinkWidgetPrivate* d;
+        Ui::CardWidget *ui;
+        CardWidgetPrivate* d;
 };
 
-#endif // SINKWIDGET_H
+#endif // CARDWIDGET_H
