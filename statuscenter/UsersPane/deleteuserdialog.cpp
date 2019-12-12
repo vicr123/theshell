@@ -78,7 +78,7 @@ void DeleteUserDialog::on_deleteButton_clicked()
             ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
 
             tToast* toast = new tToast();
-            toast->setTitle("Couldn't delete user");
+            toast->setTitle(tr("Couldn't delete user"));
             toast->setText(err);
             connect(toast, &tToast::dismissed, toast, &tToast::deleteLater);
             toast->show(this);

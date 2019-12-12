@@ -87,6 +87,7 @@ unix {
 
 HEADERS += \
     adduserdialog.h \
+    changepassworddialog.h \
     deleteuserdialog.h \
     plugin.h \
     user.h \
@@ -95,6 +96,7 @@ HEADERS += \
 
 SOURCES += \
     adduserdialog.cpp \
+    changepassworddialog.cpp \
     deleteuserdialog.cpp \
     plugin.cpp \
     user.cpp \
@@ -106,5 +108,6 @@ DISTFILES += \
 
 FORMS += \
     adduserdialog.ui \
+    changepassworddialog.ui \
     deleteuserdialog.ui \
     userspane.ui

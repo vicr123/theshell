@@ -841,6 +841,23 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>fullNameLineEdit</tabstop>
+  <tabstop>usernameLineEdit</tabstop>
+  <tabstop>administratorButton</tabstop>
+  <tabstop>standardUserButton</tabstop>
+  <tabstop>passwordLineEdit</tabstop>
+  <tabstop>confirmPasswordLineEdit</tabstop>
+  <tabstop>passwordHintLineEdit</tabstop>
+  <tabstop>usePasswordButton</tabstop>
+  <tabstop>askForPasswordButton</tabstop>
+  <tabstop>noPasswordButton</tabstop>
+  <tabstop>performAddUserButton</tabstop>
+  <tabstop>nextButton</tabstop>
+  <tabstop>backButton_3</tabstop>
+  <tabstop>backButton</tabstop>
+  <tabstop>backButton_2</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

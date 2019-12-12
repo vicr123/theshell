@@ -27,6 +27,7 @@
 #include <ttoast.h>
 #include "adduserdialog.h"
 #include "deleteuserdialog.h"
+#include "changepassworddialog.h"
 
 struct UsersPanePrivate {
     UserPtr currentUser;
@@ -172,6 +173,20 @@ void UsersPane::on_deleteUserButton_clicked()
         popover->setPopoverWidth(SC_DPI(600));
         popover->setDismissable(false);
         connect(d, &DeleteUserDialog::done, popover, &tPopover::dismiss);
+        connect(popover, &tPopover::dismissed, d, &AddUserDialog::deleteLater);
+        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+        popover->show(this->window());
+    });
+}
+
+void UsersPane::on_changePasswordButton_clicked()
+{
+    this->checkPolkit(d->currentUser->isCurrentUser())->then([=] {
+        ChangePasswordDialog* d = new ChangePasswordDialog(this->d->currentUser);
+        tPopover* popover = new tPopover(d);
+        popover->setPopoverWidth(SC_DPI(600));
+        popover->setDismissable(false);
+        connect(d, &ChangePasswordDialog::done, popover, &tPopover::dismiss);
         connect(popover, &tPopover::dismissed, d, &AddUserDialog::deleteLater);
         connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
         popover->show(this->window());

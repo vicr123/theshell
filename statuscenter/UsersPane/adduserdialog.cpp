@@ -96,6 +96,7 @@ void AddUserDialog::on_usePasswordButton_clicked()
 
     if (ui->passwordLineEdit->text() != ui->confirmPasswordLineEdit->text()) {
         tErrorFlash::flashError(ui->confirmPasswordLineEdit);
+        return;
     }
 
     d->passwordMode = User::SetPassword;
@@ -161,7 +162,7 @@ void AddUserDialog::on_performAddUserButton_clicked()
                 ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
 
                 tToast* toast = new tToast();
-                toast->setTitle("Couldn't create user");
+                toast->setTitle(tr("Couldn't create user"));
                 toast->setText(error);
                 connect(toast, &tToast::dismissed, toast, &tToast::deleteLater);
                 toast->show(this);

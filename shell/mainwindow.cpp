@@ -1269,14 +1269,18 @@ void MainWindow::initTaskbar()
     });
     connect(DesktopWm::instance(), &DesktopWm::desktopCountChanged, this, [=] {
         QStringList desktops = DesktopWm::desktops();
-        ui->desktopsFrame->setVisible(desktops.count() != 1);
-        ui->desktopName->setText(desktops.at(static_cast<int>(DesktopWm::currentDesktop())));
+        ui->desktopsFrame->setVisible(desktops.count() > 1);
+        if (ui->desktopsFrame->isVisible()) {
+            ui->desktopName->setText(desktops.at(static_cast<int>(DesktopWm::currentDesktop())));
+        }
     });
     connect(DesktopWm::instance(), &DesktopWm::windowAdded, this, &MainWindow::addWindow);
 
     QStringList desktops = DesktopWm::desktops();
-    ui->desktopsFrame->setVisible(desktops.count() != 1);
-    ui->desktopName->setText(desktops.at(static_cast<int>(DesktopWm::currentDesktop())));
+    ui->desktopsFrame->setVisible(desktops.count() > 1);
+    if (ui->desktopsFrame->isVisible()) {
+        ui->desktopName->setText(desktops.at(static_cast<int>(DesktopWm::currentDesktop())));
+    }
 
     for (DesktopWmWindowPtr window : DesktopWm::openWindows()) {
         addWindow(window);
