@@ -22,6 +22,7 @@
 #include "ui_notificationpopup.h"
 
 #include "notificationobject.h"
+#include <QScreen>
 
 NotificationPopup* NotificationPopup::currentlyShowingPopup = NULL;
 QList<NotificationPopup*> NotificationPopup::pendingPopups = QList<NotificationPopup*>();
@@ -91,7 +92,7 @@ void NotificationPopup::show() {
         pendingPopups.append(this);
     } else {
         currentlyShowingPopup = this;
-        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        QRect screenGeometry = QApplication::screens().first()->geometry();
         this->move(screenGeometry.topLeft().x(), screenGeometry.top() - this->height());
         this->setFixedWidth(screenGeometry.width());
 
@@ -155,7 +156,7 @@ void NotificationPopup::show() {
 void NotificationPopup::close() {
     dismisser->stop();
 
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     tPropertyAnimation* anim = new tPropertyAnimation(this, "geometry");
     anim->setStartValue(this->geometry());

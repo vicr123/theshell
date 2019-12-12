@@ -27,6 +27,7 @@
 #include <soundengine.h>
 #include <tsystemsound.h>
 #include <QX11Info>
+#include <QScreen>
 
 struct HotkeyHudPrivate {
     HotkeyHud* instance = nullptr;
@@ -186,7 +187,7 @@ void HotkeyHud::show(int timeout) {
     d->instance->QDialog::show();
 
     if (!d->isShowing) {
-        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        QRect screenGeometry = QApplication::screens().first()->geometry();
         d->instance->setGeometry(screenGeometry.x(), screenGeometry.y() - d->instance->height(), screenGeometry.width(), d->instance->height());
 
         tPropertyAnimation *anim = new tPropertyAnimation(d->instance, "geometry");
@@ -276,7 +277,7 @@ void HotkeyHud::show(QVariantMap options) {
 }
 
 void HotkeyHud::close() {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
     anim->setStartValue(this->geometry());

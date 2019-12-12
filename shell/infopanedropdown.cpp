@@ -41,6 +41,8 @@
 #include <powerdaemon.h>
 #include <quietmodedaemon.h>
 
+#include <Wm/desktopwm.h>
+
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
 extern void EndSession(EndSessionWait::shutdownType type);
@@ -744,7 +746,7 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     QScroller::grabGesture(ui->autostartAppList, QScroller::LeftMouseButtonGesture);
 
     connect(tVirtualKeyboard::instance(), &tVirtualKeyboard::keyboardVisibleChanged, [=](bool visible) {
-        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        QRect screenGeometry = QApplication::screens().first()->geometry();
         if (visible) {
             this->setFixedHeight(screenGeometry.height() - tVirtualKeyboard::instance()->height());
         } else {
@@ -868,7 +870,7 @@ void InfoPaneDropdown::show(dropdownType showWith) {
     }
 
     if (!this->isVisible()) {
-        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        QRect screenGeometry = QApplication::screens().first()->geometry();
 
         if (d->settings.value("bar/onTop", true).toBool()) {
             this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height(), screenGeometry.width(), screenGeometry.height() + 1);
@@ -876,21 +878,9 @@ void InfoPaneDropdown::show(dropdownType showWith) {
             this->setGeometry(screenGeometry.x(), screenGeometry.bottom(), screenGeometry.width(), screenGeometry.height() + 1);
         }
 
-        Atom DesktopWindowTypeAtom;
-        DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
-        XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
-                         XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
-
-        unsigned long desktop = 0xFFFFFFFF;
-        XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
-                         XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
-
         QDialog::show();
         this->setFixedWidth(screenGeometry.width());
-
-        unsigned long skipTaskbar = 1;
-        XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_THESHELL_SKIP_TASKBAR", False),
-                         XA_CARDINAL, 32, PropModeReplace, reinterpret_cast<unsigned char*>(&skipTaskbar), 1); //Skip the taskbar
+        DesktopWm::setSystemWindow(this);
 
         if (tVirtualKeyboard::instance()->keyboardVisible()) {
             this->setFixedHeight(screenGeometry.height() - tVirtualKeyboard::instance()->height());
@@ -914,7 +904,7 @@ void InfoPaneDropdown::showNoAnimation() {
 }
 
 void InfoPaneDropdown::close() {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
     tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
     a->setStartValue(this->geometry());
 
@@ -1082,7 +1072,7 @@ void InfoPaneDropdown::mousePressEvent(QMouseEvent *event) {
 
 void InfoPaneDropdown::mouseMoveEvent(QMouseEvent *event) {
     if (d->draggingInfoPane) {
-        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        QRect screenGeometry = QApplication::screens().first()->geometry();
 
         if (event->globalY() < d->mouseClickPoint) {
             d->mouseMovedUp = true;
@@ -1114,7 +1104,7 @@ void InfoPaneDropdown::mouseMoveEvent(QMouseEvent *event) {
 
 void InfoPaneDropdown::mouseReleaseEvent(QMouseEvent *event) {
     if (d->draggingInfoPane) {
-        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        QRect screenGeometry = QApplication::screens().first()->geometry();
         if (d->initialPoint - 5 > d->mouseClickPoint && d->initialPoint + 5 < d->mouseClickPoint) {
             tPropertyAnimation* a = new tPropertyAnimation(this, "geometry");
             a->setStartValue(this->geometry());
@@ -1569,7 +1559,7 @@ void InfoPaneDropdown::doNetworkCheck() {
 
 void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
     changeDropDown(showWith, false);
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     if (d->settings.value("bar/onTop", true).toBool()) {
         this->setGeometry(screenGeometry.x(), screenGeometry.y() - screenGeometry.height() + y, screenGeometry.width(), screenGeometry.height() + 1);
@@ -1577,16 +1567,8 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
         this->setGeometry(screenGeometry.x(), screenGeometry.top() + y + screenGeometry.y(), screenGeometry.width(), screenGeometry.height() + 1);
     }
 
-    Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
-                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
-
-    unsigned long desktop = 0xFFFFFFFF;
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
-                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
-
     QDialog::show();
+    DesktopWm::setSystemWindow(this);
 
     this->setFixedWidth(screenGeometry.width());
 
@@ -1601,7 +1583,7 @@ void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
 }
 
 void InfoPaneDropdown::completeDragDown() {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     if (d->previousDrags.isEmpty() || (QCursor::pos().y() - screenGeometry.top() < d->previousDrags.last() && d->settings.value("bar/onTop", true).toBool()) ||
             (QCursor::pos().y() - screenGeometry.top() > d->previousDrags.last() && !d->settings.value("bar/onTop", true).toBool())) {

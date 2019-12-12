@@ -440,7 +440,7 @@ void MainWindow::pullDownGesture() {
     if (lockHide) {
         on_date_clicked();
     } else {
-        QRect screenGeometry = QApplication::desktop()->screenGeometry();
+        QRect screenGeometry = QApplication::screens().first()->geometry();
         d->barAnim->setStartValue(this->geometry());
         d->barAnim->setEndValue(QRect(screenGeometry.x(), screenGeometry.y(), screenGeometry.width() + 1, this->height()));
         d->barAnim->start();
@@ -944,7 +944,7 @@ void MainWindow::openMenu() {
 
 void MainWindow::on_time_dragging(int x, int y)
 {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
     infoPane->dragDown(InfoPaneDropdown::Clock, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
 }
 
@@ -955,7 +955,7 @@ void MainWindow::on_time_mouseReleased()
 
 void MainWindow::on_date_dragging(int x, int y)
 {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
     infoPane->dragDown(InfoPaneDropdown::Clock, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
 }
 
@@ -966,7 +966,7 @@ void MainWindow::on_date_mouseReleased()
 
 void MainWindow::updateStruts() {
     long* struts = (long*) malloc(sizeof(long) * 12);
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
     if (settings.value("bar/statusBar", false).toBool()) {
         struts[0] = 0;
         struts[1] = 0;
@@ -1202,7 +1202,7 @@ void MainWindow::on_actionCriticalOnly_triggered()
 }
 
 bool MainWindow::event(QEvent* event) {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
     if (event->type() == QEvent::TouchBegin) {
         QTouchEvent* e = (QTouchEvent*) event;
         QPoint p = e->touchPoints().first().pos().toPoint();

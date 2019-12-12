@@ -34,18 +34,18 @@
         <translation>Bạn muốn xác thực thành người dùng nào?</translation>
     </message>
     <message>
-        <location filename="../authenticate.cpp" line="56"/>
+        <location filename="../authenticate.cpp" line="58"/>
         <source>Incorrect Password</source>
         <translation>Mật khẩu sai</translation>
     </message>
     <message>
-        <location filename="../authenticate.cpp" line="57"/>
+        <location filename="../authenticate.cpp" line="59"/>
         <source>The password you entered was incorrect. Please enter your password again.</source>
         <translation>Mật khẩu bạn đã nhập là sai. Vui lòng nhập mật khẩu lại.</translation>
     </message>
     <message>
-        <location filename="../authenticate.cpp" line="130"/>
-        <location filename="../authenticate.cpp" line="140"/>
+        <location filename="../authenticate.cpp" line="126"/>
+        <location filename="../authenticate.cpp" line="136"/>
         <source>Authenticating as %1</source>
         <translation>Xác thực thành %1</translation>
     </message>

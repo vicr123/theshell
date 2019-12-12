@@ -21,6 +21,8 @@
 #include "newmedia.h"
 #include "ui_newmedia.h"
 
+#include <QScreen>
+
 NewMedia::NewMedia(QString description, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NewMedia)
@@ -63,7 +65,7 @@ void NewMedia::show() {
 
     QDialog::show();
 
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
     this->setGeometry(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->height());
 
     tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
@@ -90,7 +92,7 @@ void NewMedia::show() {
 }
 
 void NewMedia::close() {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
     anim->setStartValue(this->geometry());

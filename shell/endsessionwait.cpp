@@ -21,6 +21,7 @@
 #include "endsessionwait.h"
 #include "ui_endsessionwait.h"
 
+#include <QScreen>
 #include <soundengine.h>
 
 extern float getDPIScaling();
@@ -129,7 +130,7 @@ void EndSessionWait::close() {
 }
 
 void EndSessionWait::showFullScreen() {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     ui->powerType->setFixedHeight(0);
     ui->closingAppsMessage->setFixedHeight(0);

@@ -24,6 +24,7 @@
 #include <QScroller>
 #include <application.h>
 #include <notificationsdbusadaptor.h>
+#include <Wm/desktopwm.h>
 
 extern void EndSession(EndSessionWait::shutdownType type);
 extern float getDPIScaling();
@@ -39,7 +40,7 @@ Menu::Menu(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
     int thisWidth = settings.value("gateway/width", this->width() * getDPIScaling()).toInt();
     if (thisWidth < 100 * getDPIScaling()) {
         thisWidth = 100 * getDPIScaling();
@@ -138,8 +139,7 @@ Menu::~Menu()
 }
 
 void Menu::prepareForShow() {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    QRect availableGeometry = QApplication::desktop()->availableGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     int left;
     if (QApplication::isRightToLeft()) {
@@ -148,19 +148,6 @@ void Menu::prepareForShow() {
         left = MainWin->x() - this->width();
     }
 
-    /*if (settings.value("bar/onTop", true).toBool()) {
-        this->setGeometry(left, MainWin->y() + MainWin->height(), this->width(), availableGeometry.height() - (MainWin->height() + (MainWin->y() - availableGeometry.y())));
-    } else {
-        int height;
-
-        if (availableGeometry.bottom() < screenGeometry.height() - MainWin->height()) {
-            height = availableGeometry.height();
-        } else {
-            height = MainWin->y() - screenGeometry.top();
-        }
-        this->setGeometry(left, availableGeometry.y() , this->width(), height);
-    }*/
-
     this->setGeometry(left, screenGeometry.y() , this->width(), screenGeometry.height());
 
     ui->stackedWidget->setCurrentIndex(0, false);
@@ -168,16 +155,14 @@ void Menu::prepareForShow() {
     on_lineEdit_textEdited("");
     ui->appsListView->scrollToTop();
 
-    unsigned long desktop = 0xFFFFFFFF;
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
-                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+    DesktopWm::setSystemWindow(this);
 }
 
 void Menu::show() {
     QDialog::show();
     doCheckForClose = true;
 
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     tPropertyAnimation* animation = new tPropertyAnimation(this, "geometry");
     animation->setStartValue(this->geometry());
@@ -198,14 +183,10 @@ void Menu::show() {
     TutorialWin->showScreen(TutorialWindow::GatewaySearch);
 
     this->activateWindow();
-
-    unsigned long skipTaskbar = 1;
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_THESHELL_SKIP_TASKBAR", False),
-                     XA_CARDINAL, 32, PropModeReplace, reinterpret_cast<unsigned char*>(&skipTaskbar), 1); //Skip the taskbar
 }
 
 void Menu::showPartial(int pixels) {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     QDialog::show();
 
@@ -233,7 +214,7 @@ void Menu::changeEvent(QEvent *event) {
 }
 
 void Menu::close() {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     tPropertyAnimation* animation = new tPropertyAnimation(this, "geometry");
     animation->setStartValue(this->geometry());
@@ -638,7 +619,7 @@ void Menu::mousePressEvent(QMouseEvent *event) {
 }
 
 void Menu::mouseMoveEvent(QMouseEvent *event) {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
     if (resizing) {
         int width;
         if (QApplication::isRightToLeft()) {

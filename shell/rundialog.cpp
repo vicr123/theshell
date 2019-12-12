@@ -22,6 +22,7 @@
 #include "ui_rundialog.h"
 
 #include <tpropertyanimation.h>
+#include <QScreen>
 
 RunDialog::RunDialog(QWidget *parent) :
     QDialog(parent),
@@ -79,7 +80,7 @@ void RunDialog::show() {
 
     QDialog::show();
 
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
     this->setGeometry(screenGeometry.x(), screenGeometry.y() - this->height(), screenGeometry.width(), this->sizeHint().height());
 
     tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
@@ -108,7 +109,7 @@ void RunDialog::show() {
 }
 
 void RunDialog::close() {
-    QRect screenGeometry = QApplication::desktop()->screenGeometry();
+    QRect screenGeometry = QApplication::screens().first()->geometry();
 
     tPropertyAnimation *anim = new tPropertyAnimation(this, "geometry");
     anim->setStartValue(this->geometry());

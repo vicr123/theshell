@@ -252,7 +252,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray &eventType, void *mes
 
                         xXITouchOwnershipEvent* dEvent = reinterpret_cast<xXITouchOwnershipEvent*>(event);
                         if (d->firstTouchPoints.contains(dEvent->touchid)) {
-                            QRect screenGeometry = QApplication::desktop()->screenGeometry();
+                            QRect screenGeometry = QApplication::screens().first()->geometry();
                             QPointF point = d->firstTouchPoints.value(dEvent->touchid);
                             if (point.x() >= screenGeometry.x() && point.x() < screenGeometry.x() + 20 && !MainWin->getMenu()->isVisible() && d->settings.value("gestures/swipeGateway", true).toBool()) {
                                 //Open the Gateway

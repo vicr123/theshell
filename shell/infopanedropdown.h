@@ -41,11 +41,6 @@
 #include <QFontComboBox>
 #include <QCheckBox>
 #include <QLayout>
-#include <QtCharts/QChartView>
-#include <QtCharts/QChart>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QValueAxis>
-#include <QtCharts/QDateTimeAxis>
 #include <QScrollBar>
 #include <sys/sysinfo.h>
 #include <QSysInfo>
@@ -67,8 +62,6 @@
 #include "switch.h"
 
 class UPowerDBus;
-
-using namespace QtCharts;
 
 class InfoPaneDropdownPrivate;
 

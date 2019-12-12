@@ -34,18 +34,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../authenticate.cpp" line="56"/>
+        <location filename="../authenticate.cpp" line="58"/>
         <source>Incorrect Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../authenticate.cpp" line="57"/>
+        <location filename="../authenticate.cpp" line="59"/>
         <source>The password you entered was incorrect. Please enter your password again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../authenticate.cpp" line="130"/>
-        <location filename="../authenticate.cpp" line="140"/>
+        <location filename="../authenticate.cpp" line="126"/>
+        <location filename="../authenticate.cpp" line="136"/>
         <source>Authenticating as %1</source>
         <translation type="unfinished"></translation>
     </message>

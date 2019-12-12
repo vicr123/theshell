@@ -21,6 +21,8 @@
 #include "authenticate.h"
 #include "ui_authenticate.h"
 
+#include <QScreen>
+
 Authenticate::Authenticate(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Authenticate)
@@ -32,11 +34,11 @@ Authenticate::Authenticate(QWidget *parent) :
 
     connect(tVirtualKeyboard::instance(), &tVirtualKeyboard::keyboardVisibleChanged, [=](bool visible) {
         if (visible) {
-            QRect desktopRect = QApplication::desktop()->screenGeometry();
+            QRect desktopRect = QApplication::screens().first()->geometry();
             desktopRect.setHeight(desktopRect.height() - tVirtualKeyboard::instance()->height());
             this->setGeometry(desktopRect);
         } else {
-            QRect desktopRect = QApplication::desktop()->screenGeometry();
+            QRect desktopRect = QApplication::screens().first()->geometry();
             this->setGeometry(desktopRect);
         }
     });
@@ -68,12 +70,6 @@ void Authenticate::showFullScreen(bool showError) {
     a->start();
     connect(a, SIGNAL(finished()), a, SLOT(deleteLater()));
 
-    //QDialog::showFullScreen();
-    /*Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_NORMAL", False);
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
-                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type*/
-
     unsigned long desktop = 0xFFFFFFFF;
     XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
                      XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
@@ -86,7 +82,7 @@ void Authenticate::showFullScreen(bool showError) {
 
     ui->keyboardButton->setVisible(tVirtualKeyboard::instance()->isKeyboardRunning());
 
-    QRect desktopRect = QApplication::desktop()->screenGeometry();
+    QRect desktopRect = QApplication::screens().first()->geometry();
     desktopRect.setHeight(desktopRect.height() - tVirtualKeyboard::instance()->height());
 
     ui->lineEdit->setFocus();
