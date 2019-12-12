@@ -2079,64 +2079,6 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
     </message>
 </context>
 <context>
-    <name>SegfaultDialog</name>
-    <message>
-        <location filename="../segfaultdialog.ui" line="26"/>
-        <source>theShell Error</source>
-        <translation>theShell Error</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="44"/>
-        <source>Well, this is bad.</source>
-        <translation>Nou, dit is slecht.</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="51"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;theShell seems to have done something it shouldn&apos;t have. Because theShell has crashed, you&apos;ll need to log out and then log back in to fix it.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save all open work and then click &amp;quot;Log Out&amp;quot; to log out. If you don&apos;t save your work, it will be lost. All other apps will be forcibly closed once you click &amp;quot;Log Out.&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;theShell lijkt iets te hebben gedaan dat het niet hoorde te doen. Omdat theShell is gecrasht, moet u uitloggen en weer inloggen om het te fixen.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Sla al het open werk op en klik dan op &amp;quot;Log uit&amp;quot; om uit te loggen. Als u uw werk niet opslaan zal het verloren gaat. Alle andere apps zullen geforceerd afgesloten worden wanneer u klikt op &amp;quot;Log uit&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="79"/>
-        <source>Does this keep happening?</source>
-        <translation>Zal dit blijven gebeuren?</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="86"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Try resetting theShell. This will reset all of your settings.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Try reinstalling (or rebuilding) theShell.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Probeer theShell overnieuw in te stellen. Dit zal al uw instellingen verwijderen.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Probeer theShell overnieuw te installeren (of overnieuw te bouwen).&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="119"/>
-        <source>Generate Backtrace</source>
-        <translation>Genereer Backtrace</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="143"/>
-        <source>Reset theShell and Log Out</source>
-        <translation>Stel theShell overnieuw in en Log Uit</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="154"/>
-        <source>Log Out</source>
-        <translation>Log uit</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="31"/>
-        <source>To debug, attach a debugger to PID %1</source>
-        <translation>Om te debuggeren, voeg een debugger toe aan PID %1</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="60"/>
-        <source>Reset theShell?</source>
-        <translation>Stel theShell overnieuw in?</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="60"/>
-        <source>You&apos;re about to reset theShell. Are you sure?</source>
-        <translation>U gaat zometeen theShell overnieuw instellen. Weet u dit zeker?</translation>
-    </message>
-</context>
-<context>
     <name>SysTrayIcons</name>
     <message>
         <location filename="../systrayicons.cpp" line="43"/>
@@ -2206,32 +2148,32 @@ Items die bewaard zullen worden als u ervoor kiest om bestanden te bewaren:
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="265"/>
+        <location filename="../main.cpp" line="241"/>
         <source>Start in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="266"/>
+        <location filename="../main.cpp" line="242"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="290"/>
+        <location filename="../main.cpp" line="266"/>
         <source>theShell already running</source>
         <translation>theShell is al actief</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="291"/>
+        <location filename="../main.cpp" line="267"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell lijkt al actief te zijn. Wilt u het alsnog starten?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="332"/>
+        <location filename="../main.cpp" line="308"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Vensterbeheerder kon niet starten</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="333"/>
+        <location filename="../main.cpp" line="309"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

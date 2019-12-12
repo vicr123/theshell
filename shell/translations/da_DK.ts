@@ -31,7 +31,7 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="142"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Log Ud</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="144"/>
@@ -788,7 +788,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2149"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Log Ud</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2158"/>
@@ -2081,64 +2081,6 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
     </message>
 </context>
 <context>
-    <name>SegfaultDialog</name>
-    <message>
-        <location filename="../segfaultdialog.ui" line="26"/>
-        <source>theShell Error</source>
-        <translation>theShell Fejl</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="44"/>
-        <source>Well, this is bad.</source>
-        <translation>Nå, dette er slemt.</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="51"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;theShell seems to have done something it shouldn&apos;t have. Because theShell has crashed, you&apos;ll need to log out and then log back in to fix it.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save all open work and then click &amp;quot;Log Out&amp;quot; to log out. If you don&apos;t save your work, it will be lost. All other apps will be forcibly closed once you click &amp;quot;Log Out.&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Det sér ud til at theShell har gjordt noget at den ikke skulle. Fordi at theShell er gået ned må du nød til at logge ud og ind igen for at fikse det. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gem alt åben arbejde og tryk på &amp;quot;Log ud&amp;quot; for at logge ud. Hvis du ikke gemmer dit arbejdte vil det gå tabt. Alle applikationer vil blive lukket med tvang når du trykker på &amp;quot;Log ud.&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; </translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="79"/>
-        <source>Does this keep happening?</source>
-        <translation>Sker dette gentagende?</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="86"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Try resetting theShell. This will reset all of your settings.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Try reinstalling (or rebuilding) theShell.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Prøv at nustille theShell, dette vil nulstille alle dine indstillinger.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Prøv at geninstallere eller genkompilere theShell.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt; </translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="119"/>
-        <source>Generate Backtrace</source>
-        <translation>Generér Backtrace</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="143"/>
-        <source>Reset theShell and Log Out</source>
-        <translation>Nulstil theShell og Log ud</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="154"/>
-        <source>Log Out</source>
-        <translation>Log ud</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="31"/>
-        <source>To debug, attach a debugger to PID %1</source>
-        <translation>For at afluse, fastgør en afluser til PID %1</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="60"/>
-        <source>Reset theShell?</source>
-        <translation>Nulstil theShell?</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="60"/>
-        <source>You&apos;re about to reset theShell. Are you sure?</source>
-        <translation>Du er ved at nulstille theShell, er du sikker?</translation>
-    </message>
-</context>
-<context>
     <name>SysTrayIcons</name>
     <message>
         <location filename="../systrayicons.cpp" line="43"/>
@@ -2208,32 +2150,32 @@ At ændre denne indstilling kræver at du logger ud og ind.</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="265"/>
+        <location filename="../main.cpp" line="241"/>
         <source>Start in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="266"/>
+        <location filename="../main.cpp" line="242"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="290"/>
+        <location filename="../main.cpp" line="266"/>
         <source>theShell already running</source>
         <translation>theShell kører allerede</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="291"/>
+        <location filename="../main.cpp" line="267"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell ser ud til stadig at køre. Vil du starthe theShell alligevel?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="332"/>
+        <location filename="../main.cpp" line="308"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Vindues Håndtering kunne ikke starte</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="333"/>
+        <location filename="../main.cpp" line="309"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

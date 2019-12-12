@@ -2081,64 +2081,6 @@ If you say yeah, we&apos;re gonna keep the following from them:
     </message>
 </context>
 <context>
-    <name>SegfaultDialog</name>
-    <message>
-        <location filename="../segfaultdialog.ui" line="26"/>
-        <source>theShell Error</source>
-        <translation>awh no</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="44"/>
-        <source>Well, this is bad.</source>
-        <translation>Awh jesus we&apos;ve made a mistake</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="51"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;theShell seems to have done something it shouldn&apos;t have. Because theShell has crashed, you&apos;ll need to log out and then log back in to fix it.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save all open work and then click &amp;quot;Log Out&amp;quot; to log out. If you don&apos;t save your work, it will be lost. All other apps will be forcibly closed once you click &amp;quot;Log Out.&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Christ I&apos;m honestly really sorry about that one mate. Tell ya what, just log out and log back in, we can have a barbie later to make it up.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save all open work and then click &amp;quot;Log Out&amp;quot; to log out. If you don&apos;t save your work, it will be lost. All other apps will be forcibly closed once you click &amp;quot;Log Out.&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="79"/>
-        <source>Does this keep happening?</source>
-        <translation>Alright y&apos;know if you&apos;re just having a bad day and it KEEPS happenin</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="86"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Try resetting theShell. This will reset all of your settings.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Try reinstalling (or rebuilding) theShell.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Just try resetting the whole thing I mean I know it&apos;s a bit sad but it&apos;ll make your day better.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Y&apos;know what if that doesn&apos;t work just rebuild the entire thing I don&apos;t really know mate.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="119"/>
-        <source>Generate Backtrace</source>
-        <translation>Generate the outback</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="143"/>
-        <source>Reset theShell and Log Out</source>
-        <translation>yeah can we just start over</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="154"/>
-        <source>Log Out</source>
-        <translation>send me home</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="31"/>
-        <source>To debug, attach a debugger to PID %1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="60"/>
-        <source>Reset theShell?</source>
-        <translation>Reset the entire thing?</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="60"/>
-        <source>You&apos;re about to reset theShell. Are you sure?</source>
-        <translation>Far out mate, you&apos;re about to reset it all. Are you sure?</translation>
-    </message>
-</context>
-<context>
     <name>SysTrayIcons</name>
     <message>
         <location filename="../systrayicons.cpp" line="43"/>
@@ -2208,32 +2150,32 @@ If you say yeah, we&apos;re gonna keep the following from them:
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="265"/>
+        <location filename="../main.cpp" line="241"/>
         <source>Start in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="266"/>
+        <location filename="../main.cpp" line="242"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="290"/>
+        <location filename="../main.cpp" line="266"/>
         <source>theShell already running</source>
         <translation>theShell&apos;s already running, silly</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="291"/>
+        <location filename="../main.cpp" line="267"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell&apos;s already running which is alright but are you sure you wanna start a new one?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="332"/>
+        <location filename="../main.cpp" line="308"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Couldn&apos;t start the manager of windows</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="333"/>
+        <location filename="../main.cpp" line="309"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

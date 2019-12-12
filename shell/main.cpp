@@ -22,7 +22,6 @@
 
 #include "mainwindow.h"
 #include "background.h"
-#include "segfaultdialog.h"
 #include "globalfilter.h"
 #include "dbusevents.h"
 #include "onboarding.h"
@@ -68,25 +67,6 @@ bool startSafe = false;
 
 #define ONBOARDING_VERSION 6
 
-void raise_signal(QString message) {
-    //Clean up required stuff
-
-    //Delete the Native Event Filter so that keyboard bindings are cleared
-    if (NativeFilter != NULL) {
-        NativeFilter->deleteLater();
-        NativeFilter = NULL;
-    }
-
-    SegfaultDialog* dialog;
-    dialog = new SegfaultDialog(message);
-    if (MainWin != NULL) {
-        MainWin->close();
-        MainWin->deleteLater();
-    }
-    dialog->exec();
-    raise(SIGKILL);
-}
-
 QString getCallLocation(long pc) {
     QProcess p;
     p.start("addr2line -s -e \"" + QApplication::applicationFilePath() + "\" 0x" + QString::number(pc, 16));
@@ -95,6 +75,8 @@ QString getCallLocation(long pc) {
 }
 
 void export_backtrace(QString header) {
+    std::cerr << "FATAL: " << header.toStdString() << "\n";
+
     unw_cursor_t cur;
     unw_context_t ctx;
 
@@ -106,7 +88,6 @@ void export_backtrace(QString header) {
     QFile f(QDir::homePath() + "/.tsbacktrace");
     f.open(QFile::WriteOnly);
     f.write(header.toUtf8());
-
 
     while (unw_step(&cur) > 0) {
         unw_word_t offset;
@@ -158,7 +139,8 @@ void QtHandler(QtMsgType type, const QMessageLogContext &context, const QString 
         break;
     case QtFatalMsg:
         std::cerr << msg.toStdString() + "\n";
-        raise_signal(msg);
+        export_backtrace(msg);
+        raise(SIGABRT);
     }
 }
 
@@ -195,13 +177,7 @@ int main(int argc, char *argv[])
     QLocale defaultLocale(localeName);
     QLocale::setDefault(defaultLocale);
 
-    if (defaultLocale.language() == QLocale::Arabic || defaultLocale.language() == QLocale::Hebrew) {
-        //Reverse the layout direction
-        a.setLayoutDirection(Qt::RightToLeft);
-    } else {
-        //Set normal layout direction
-        a.setLayoutDirection(Qt::LeftToRight);
-    }
+    a.setLayoutDirection(defaultLocale.textDirection());
 
     qtTranslator = new QTranslator;
     qtTranslator->load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));

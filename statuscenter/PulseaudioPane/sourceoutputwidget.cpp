@@ -103,7 +103,7 @@ void SourceOutputWidget::updateName()
         ui->nameLabel->setText(d->output->name());
         ui->descriptionLabel->setText(d->output->client()->name());
     } else {
-        ui->nameLabel->setText(tr("Playback").toUpper());
+        ui->nameLabel->setText(tr("Recording").toUpper());
         ui->descriptionLabel->setText(d->output->name());
     }
 }

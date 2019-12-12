@@ -1,6 +1,6 @@
 /****************************************
  *
- *   theShell - Desktop Environment
+ *   INSERT-PROJECT-NAME-HERE - INSERT-GENERIC-NAME-HERE
  *   Copyright (C) 2019 Victor Tran
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -17,37 +17,33 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
+#ifndef USERSMODEL_H
+#define USERSMODEL_H
 
-#ifndef SEGFAULTDIALOG_H
-#define SEGFAULTDIALOG_H
+#include <QAbstractListModel>
+#include <QDBusObjectPath>
 
-#include <QDialog>
-#include <execinfo.h>
-#include <QMessageBox>
-#include <QSettings>
-#include <QPushButton>
-
-namespace Ui {
-class SegfaultDialog;
-}
-
-class SegfaultDialog : public QDialog
+struct UsersModelPrivate;
+class UsersModel : public QAbstractListModel
 {
-    Q_OBJECT
+        Q_OBJECT
 
-public:
-    explicit SegfaultDialog(QString signal, QWidget *parent = 0);
-    ~SegfaultDialog();
+    public:
+        explicit UsersModel(QObject *parent = nullptr);
+        ~UsersModel() override;
 
-private slots:
-    void on_pushButton_clicked();
+        // Basic functionality:
+        int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
-    void on_pushButton_2_clicked();
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    void on_pushButton_3_clicked();
+    private slots:
+        void userAdded(QDBusObjectPath path);
+        void userRemoved(QDBusObjectPath path);
 
-private:
-    Ui::SegfaultDialog *ui;
+    private:
+        UsersModelPrivate* d;
+
 };
 
-#endif // SEGFAULTDIALOG_H
+#endif // USERSMODEL_H

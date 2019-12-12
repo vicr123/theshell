@@ -2079,64 +2079,6 @@ Saker som kommer sparas ifall du väljer att spara filer
     </message>
 </context>
 <context>
-    <name>SegfaultDialog</name>
-    <message>
-        <location filename="../segfaultdialog.ui" line="26"/>
-        <source>theShell Error</source>
-        <translation>theShell Error</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="44"/>
-        <source>Well, this is bad.</source>
-        <translation>Nåväl, det här är dåligt.</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="51"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;theShell seems to have done something it shouldn&apos;t have. Because theShell has crashed, you&apos;ll need to log out and then log back in to fix it.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save all open work and then click &amp;quot;Log Out&amp;quot; to log out. If you don&apos;t save your work, it will be lost. All other apps will be forcibly closed once you click &amp;quot;Log Out.&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;theShell verkar ha gjort någonting det inte borde ha gjort. Eftersom theShell kraschade måste du logga ut och sedan logga in för att fixa det.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Spara allt öppet arbete och sedan klicka &amp;quot;Logga ut&amp;quot; för att logga ut. Om du inte spara ditt arbete så förloras det. Alla andra appar stängs när du klickar &amp;quot;Logga ut.&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="79"/>
-        <source>Does this keep happening?</source>
-        <translation>Fortsätter detta att hända?</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="86"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Try resetting theShell. This will reset all of your settings.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Try reinstalling (or rebuilding) theShell.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Försök att nollställa theShell. Detta kommer att nollställa alla dina inställningar.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Försök att ominstallera (eller omkompilera) theShell.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="119"/>
-        <source>Generate Backtrace</source>
-        <translation>Generera Backtrace</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="143"/>
-        <source>Reset theShell and Log Out</source>
-        <translation>Nollställ theShell och Logga Ut</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="154"/>
-        <source>Log Out</source>
-        <translation>Logga Ut</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="31"/>
-        <source>To debug, attach a debugger to PID %1</source>
-        <translation>För att felsöka, binda en debugger till PID %1</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="60"/>
-        <source>Reset theShell?</source>
-        <translation>Nollställ theShell?</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="60"/>
-        <source>You&apos;re about to reset theShell. Are you sure?</source>
-        <translation>Du är på väg att nollställa theShell. Är du säker?</translation>
-    </message>
-</context>
-<context>
     <name>SysTrayIcons</name>
     <message>
         <location filename="../systrayicons.cpp" line="43"/>
@@ -2206,32 +2148,32 @@ Saker som kommer sparas ifall du väljer att spara filer
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="265"/>
+        <location filename="../main.cpp" line="241"/>
         <source>Start in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="266"/>
+        <location filename="../main.cpp" line="242"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="290"/>
+        <location filename="../main.cpp" line="266"/>
         <source>theShell already running</source>
         <translation>theShell körs redan</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="291"/>
+        <location filename="../main.cpp" line="267"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell verkar redan köras. Vill du starta theShell ändå?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="332"/>
+        <location filename="../main.cpp" line="308"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Fönsterhanterare kunde inte starta</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="333"/>
+        <location filename="../main.cpp" line="309"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

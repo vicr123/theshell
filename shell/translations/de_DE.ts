@@ -2086,67 +2086,6 @@ bereit, gespeichert zu werden = ready to be saved</translatorcomment>
     </message>
 </context>
 <context>
-    <name>SegfaultDialog</name>
-    <message>
-        <location filename="../segfaultdialog.ui" line="26"/>
-        <source>theShell Error</source>
-        <translation>theShell-Fehler</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="44"/>
-        <source>Well, this is bad.</source>
-        <translation>Nun, das ist schlecht.</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="51"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;theShell seems to have done something it shouldn&apos;t have. Because theShell has crashed, you&apos;ll need to log out and then log back in to fix it.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Save all open work and then click &amp;quot;Log Out&amp;quot; to log out. If you don&apos;t save your work, it will be lost. All other apps will be forcibly closed once you click &amp;quot;Log Out.&amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;theShell scheint etwas getan zu haben, was es nicht sollte. Da theShell abgestürzt ist, müssen Sie sich erneut anmelden, um das Problem zu beheben.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Speichern Sie alle offene Arbeit und klicken dann &amp;quot;Abmelden&amp;quot;. Wenn Sie nicht Ihre Arbeit speichern, wird sie verloren gehen. Alle anderen Apps werden zwangsweise geschlossen, sobald Sie auf &amp;quot;Abmelden&amp;quot; klicken.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="79"/>
-        <source>Does this keep happening?</source>
-        <translatorcomment>wiederholt = repeatedly
-(passiert) weiterhin = still (happening)</translatorcomment>
-        <translation>Passiert das wiederholt?</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="86"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Try resetting theShell. This will reset all of your settings.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Try reinstalling (or rebuilding) theShell.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Versuchen Sie, theShell zurückzusetzen. Dies wird alle Ihre Einstellungen zurücksetzen.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Versuchen Sie, theShell erneut zu installieren (oder neu zu erstellen).&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="119"/>
-        <source>Generate Backtrace</source>
-        <translation>Backtrace generieren</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="143"/>
-        <source>Reset theShell and Log Out</source>
-        <translation>theShell zurücksetzen und abmelden</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.ui" line="154"/>
-        <source>Log Out</source>
-        <translation>Abmelden</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="31"/>
-        <source>To debug, attach a debugger to PID %1</source>
-        <translatorcomment>The verb is &quot;anhängen an&quot;, so in this sentence it is &quot;Hängen [...] an [...] an&quot;</translatorcomment>
-        <translation>Hängen Sie zum Debuggen einen Debugger an die PID %1 an</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="60"/>
-        <source>Reset theShell?</source>
-        <translation>theShell zurücksetzen?</translation>
-    </message>
-    <message>
-        <location filename="../segfaultdialog.cpp" line="60"/>
-        <source>You&apos;re about to reset theShell. Are you sure?</source>
-        <translation>Sie sind dabei, theShell zurückzusetzen. Sind Sie sicher?</translation>
-    </message>
-</context>
-<context>
     <name>SysTrayIcons</name>
     <message>
         <location filename="../systrayicons.cpp" line="43"/>
@@ -2220,32 +2159,32 @@ super schnell -&gt; superschnell: https://www.duden.de/rechtschreibung/superschn
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="265"/>
+        <location filename="../main.cpp" line="241"/>
         <source>Start in Safe Mode?</source>
         <translation>In den abgesicherten Modus starten?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="266"/>
+        <location filename="../main.cpp" line="242"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation>Sie halten die Strg-Taste. Möchten Sie theShell im abgesicherten Modus starten?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="290"/>
+        <location filename="../main.cpp" line="266"/>
         <source>theShell already running</source>
         <translation>theShell läuft bereits</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="291"/>
+        <location filename="../main.cpp" line="267"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell scheint bereits zu laufen. Möchten Sie theShell trotzdem starten?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="332"/>
+        <location filename="../main.cpp" line="308"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Fensterverwaltung konnte nicht gestartet werden</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="333"/>
+        <location filename="../main.cpp" line="309"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

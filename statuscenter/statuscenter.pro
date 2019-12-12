@@ -17,4 +17,5 @@ SUBDIRS += \
     PowerPane \
     PulseaudioPane \
     CoreSettings \
-    DisplayPane
+    DisplayPane \
+    UsersPane

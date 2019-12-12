@@ -72,7 +72,6 @@ SOURCES += main.cpp\
     choosebackground.cpp \
     switch.cpp \
     FlowLayout/flowlayout.cpp \
-    segfaultdialog.cpp \
     globalfilter.cpp \
     systrayicons.cpp \
     nativeeventfilter.cpp \
@@ -109,7 +108,6 @@ HEADERS  += mainwindow.h \
     choosebackground.h \
     switch.h \
     FlowLayout/flowlayout.h \
-    segfaultdialog.h \
     globalfilter.h \
     systrayicons.h \
     nativeeventfilter.h \
@@ -141,7 +139,6 @@ FORMS    += mainwindow.ui \
     background.ui \
     infopanedropdown.ui \
     choosebackground.ui \
-    segfaultdialog.ui \
     rundialog.ui \
     onboarding.ui \
     newmedia.ui \

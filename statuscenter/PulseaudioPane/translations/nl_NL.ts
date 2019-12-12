@@ -249,8 +249,8 @@
     </message>
     <message>
         <location filename="../sourceoutputwidget.cpp" line="106"/>
-        <source>Playback</source>
-        <translation type="unfinished">Afspelen</translation>
+        <source>Recording</source>
+        <translation type="unfinished">Opname</translation>
     </message>
 </context>
 <context>
