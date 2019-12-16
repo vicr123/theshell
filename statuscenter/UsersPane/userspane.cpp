@@ -28,6 +28,8 @@
 #include "adduserdialog.h"
 #include "deleteuserdialog.h"
 #include "changepassworddialog.h"
+#include "changerealnamedialog.h"
+#include "usertypedialog.h"
 
 struct UsersPanePrivate {
     UserPtr currentUser;
@@ -173,7 +175,7 @@ void UsersPane::on_deleteUserButton_clicked()
         popover->setPopoverWidth(SC_DPI(600));
         popover->setDismissable(false);
         connect(d, &DeleteUserDialog::done, popover, &tPopover::dismiss);
-        connect(popover, &tPopover::dismissed, d, &AddUserDialog::deleteLater);
+        connect(popover, &tPopover::dismissed, d, &DeleteUserDialog::deleteLater);
         connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
         popover->show(this->window());
     });
@@ -187,7 +189,35 @@ void UsersPane::on_changePasswordButton_clicked()
         popover->setPopoverWidth(SC_DPI(600));
         popover->setDismissable(false);
         connect(d, &ChangePasswordDialog::done, popover, &tPopover::dismiss);
-        connect(popover, &tPopover::dismissed, d, &AddUserDialog::deleteLater);
+        connect(popover, &tPopover::dismissed, d, &ChangePasswordDialog::deleteLater);
+        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+        popover->show(this->window());
+    });
+}
+
+void UsersPane::on_changeUserTypeButton_clicked()
+{
+    this->checkPolkit(d->currentUser->isCurrentUser())->then([=] {
+        UserTypeDialog* d = new UserTypeDialog(this->d->currentUser);
+        tPopover* popover = new tPopover(d);
+        popover->setPopoverWidth(SC_DPI(600));
+        popover->setDismissable(false);
+        connect(d, &UserTypeDialog::done, popover, &tPopover::dismiss);
+        connect(popover, &tPopover::dismissed, d, &UserTypeDialog::deleteLater);
+        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+        popover->show(this->window());
+    });
+}
+
+void UsersPane::on_changeRealNameButton_clicked()
+{
+    this->checkPolkit(d->currentUser->isCurrentUser())->then([=] {
+        ChangeRealNameDialog* d = new ChangeRealNameDialog(this->d->currentUser);
+        tPopover* popover = new tPopover(d);
+        popover->setPopoverWidth(SC_DPI(600));
+        popover->setDismissable(false);
+        connect(d, &ChangeRealNameDialog::done, popover, &tPopover::dismiss);
+        connect(popover, &tPopover::dismissed, d, &ChangeRealNameDialog::deleteLater);
         connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
         popover->show(this->window());
     });

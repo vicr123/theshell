@@ -267,6 +267,39 @@
     </message>
 </context>
 <context>
+    <name>ChangeRealNameDialog</name>
+    <message>
+        <location filename="../changerealnamedialog.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../changerealnamedialog.ui" line="93"/>
+        <source>Change Real Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../changerealnamedialog.ui" line="118"/>
+        <source>Your Real Name appears on the login screen, on the Gateway and in any other location where we need to differentiate between users.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../changerealnamedialog.ui" line="164"/>
+        <source>Real Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../changerealnamedialog.ui" line="173"/>
+        <source>Set Real Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../changerealnamedialog.cpp" line="70"/>
+        <source>Couldn&apos;t set real name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DeleteUserDialog</name>
     <message>
         <location filename="../deleteuserdialog.ui" line="14"/>
@@ -330,6 +363,54 @@
     </message>
 </context>
 <context>
+    <name>UserTypeDialog</name>
+    <message>
+        <location filename="../usertypedialog.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../usertypedialog.ui" line="93"/>
+        <source>Change User Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../usertypedialog.ui" line="150"/>
+        <source>ADMINISTRATOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../usertypedialog.ui" line="157"/>
+        <source>Say something cool about what an administrator can do</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../usertypedialog.ui" line="167"/>
+        <source>Administrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../usertypedialog.ui" line="198"/>
+        <source>STANDARD USER</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../usertypedialog.ui" line="205"/>
+        <source>Say something cool about what a stanard user can do</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../usertypedialog.ui" line="215"/>
+        <source>Standard User</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../usertypedialog.cpp" line="87"/>
+        <source>Couldn&apos;t set user type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UsersPane</name>
     <message>
         <location filename="../userspane.ui" line="14"/>
@@ -338,7 +419,7 @@
     </message>
     <message>
         <location filename="../userspane.ui" line="89"/>
-        <location filename="../userspane.cpp" line="81"/>
+        <location filename="../userspane.cpp" line="83"/>
         <source>Users</source>
         <translation type="unfinished"></translation>
     </message>
@@ -398,47 +479,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="107"/>
+        <location filename="../userspane.cpp" line="109"/>
         <source>Username: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="110"/>
+        <location filename="../userspane.cpp" line="112"/>
         <source>Unlock User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="111"/>
+        <location filename="../userspane.cpp" line="113"/>
         <source>Allow this user to log in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="113"/>
+        <location filename="../userspane.cpp" line="115"/>
         <source>Lock User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="114"/>
+        <location filename="../userspane.cpp" line="116"/>
         <source>Stop this user from logging in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="159"/>
+        <location filename="../userspane.cpp" line="161"/>
         <source>Unauthorized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="160"/>
+        <location filename="../userspane.cpp" line="162"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.ui" line="324"/>
+        <location filename="../userspane.ui" line="327"/>
         <source>Delete User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.ui" line="327"/>
+        <location filename="../userspane.ui" line="330"/>
         <source>Remove this user (and possibly all associated files) from the system</source>
         <translation type="unfinished"></translation>
     </message>

@@ -17,51 +17,40 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef USERSPANE_H
-#define USERSPANE_H
+#ifndef USERTYPEDIALOG_H
+#define USERTYPEDIALOG_H
 
 #include <QWidget>
-#include <tpromise.h>
-#include <statuscenterpaneobject.h>
+#include "user.h"
 
 namespace Ui {
-    class UsersPane;
+    class UserTypeDialog;
 }
 
-struct UsersPanePrivate;
-class UsersPane : public QWidget, public StatusCenterPaneObject
+struct UserTypeDialogPrivate;
+class UserTypeDialog : public QWidget
 {
         Q_OBJECT
 
     public:
-        explicit UsersPane(QWidget *parent = nullptr);
-        ~UsersPane();
-
-        QWidget*mainWidget();
-        QString name();
-        StatusPaneTypes type();
-        int position();
-        void message(QString name, QVariantList args);
+        explicit UserTypeDialog(UserPtr user, QWidget *parent = nullptr);
+        ~UserTypeDialog();
 
     private slots:
-        void on_mainMenuButton_clicked();
+        void on_backButton_clicked();
 
-        void on_addButton_clicked();
+        void on_standardUserButton_clicked();
 
-        void on_deleteUserButton_clicked();
+        void on_administratorButton_clicked();
 
-        void on_changePasswordButton_clicked();
-
-        void on_changeUserTypeButton_clicked();
-
-        void on_changeRealNameButton_clicked();
+    signals:
+        void done();
 
     private:
-        Ui::UsersPane *ui;
-        UsersPanePrivate* d;
+        Ui::UserTypeDialog *ui;
+        UserTypeDialogPrivate* d;
 
-        tPromise<void>* checkPolkit(bool isOwnUser);
-        void currentUserChanged();
+        void setUserType(User::UserType type);
 };
 
-#endif // USERSPANE_H
+#endif // USERTYPEDIALOG_H

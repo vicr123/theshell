@@ -17,51 +17,36 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * *************************************/
-#ifndef USERSPANE_H
-#define USERSPANE_H
+#ifndef CHANGEREALNAMEDIALOG_H
+#define CHANGEREALNAMEDIALOG_H
 
 #include <QWidget>
-#include <tpromise.h>
-#include <statuscenterpaneobject.h>
+#include "user.h"
 
 namespace Ui {
-    class UsersPane;
+    class ChangeRealNameDialog;
 }
 
-struct UsersPanePrivate;
-class UsersPane : public QWidget, public StatusCenterPaneObject
+struct ChangeRealNameDialogPrivate;
+class ChangeRealNameDialog : public QWidget
 {
         Q_OBJECT
 
     public:
-        explicit UsersPane(QWidget *parent = nullptr);
-        ~UsersPane();
-
-        QWidget*mainWidget();
-        QString name();
-        StatusPaneTypes type();
-        int position();
-        void message(QString name, QVariantList args);
+        explicit ChangeRealNameDialog(UserPtr user, QWidget *parent = nullptr);
+        ~ChangeRealNameDialog();
 
     private slots:
-        void on_mainMenuButton_clicked();
+        void on_backButton_clicked();
 
-        void on_addButton_clicked();
+        void on_setPasswordButton_clicked();
 
-        void on_deleteUserButton_clicked();
-
-        void on_changePasswordButton_clicked();
-
-        void on_changeUserTypeButton_clicked();
-
-        void on_changeRealNameButton_clicked();
+    signals:
+        void done();
 
     private:
-        Ui::UsersPane *ui;
-        UsersPanePrivate* d;
-
-        tPromise<void>* checkPolkit(bool isOwnUser);
-        void currentUserChanged();
+        Ui::ChangeRealNameDialog *ui;
+        ChangeRealNameDialogPrivate* d;
 };
 
-#endif // USERSPANE_H
+#endif // CHANGEREALNAMEDIALOG_H

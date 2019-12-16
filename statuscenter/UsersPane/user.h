@@ -39,12 +39,18 @@ class User : public QObject
             NoPassword = 2
         };
 
+        enum UserType {
+            StandardUser = 0,
+            Administrator = 1
+        };
+
         QDBusObjectPath path();
 
         bool isCurrentUser();
         bool isLocked();
         QString displayName();
         QString userName();
+        UserType userType();
 
     signals:
         void dataUpdated();
@@ -52,6 +58,8 @@ class User : public QObject
     public slots:
         tPromise<void>* setPassword(QString password, QString hint);
         tPromise<void>* setPasswordMode(PasswordMode mode);
+        tPromise<void>* setUserType(UserType type);
+        tPromise<void>* setRealName(QString realName);
         tPromise<void>* deleteUser(bool removeFiles);
 
     private slots:

@@ -29,6 +29,7 @@ struct UserPrivate {
     QString realName;
     QString userName;
     QString displayName;
+    User::UserType userType;
 
     bool locked;
 };
@@ -73,6 +74,11 @@ QString User::userName()
     return d->userName;
 }
 
+User::UserType User::userType()
+{
+    return d->userType;
+}
+
 tPromise<void>* User::setPassword(QString password, QString hint)
 {
     return new tPromise<void>([=](std::function<void()> res, std::function<void(QString)> rej) {
@@ -110,8 +116,37 @@ tPromise<void>* User::setPasswordMode(User::PasswordMode mode)
     });
 }
 
+tPromise<void>*User::setUserType(User::UserType type)
+{
+    return new tPromise<void>([=](std::function<void()> res, std::function<void(QString)> rej) {
+        QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(d->interface->asyncCall("SetAccountType", static_cast<int>(type)));
+        connect(watcher, &QDBusPendingCallWatcher::finished, this, [=] {
+            if (watcher->isError()) {
+                rej(watcher->error().message());
+            } else {
+                res();
+            }
+        });
+    });
+}
+
+tPromise<void>*User::setRealName(QString realName)
+{
+    return new tPromise<void>([=](std::function<void()> res, std::function<void(QString)> rej) {
+        QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(d->interface->asyncCall("SetRealName", realName));
+        connect(watcher, &QDBusPendingCallWatcher::finished, this, [=] {
+            if (watcher->isError()) {
+                rej(watcher->error().message());
+            } else {
+                res();
+            }
+        });
+    });
+}
+
 tPromise<void>*User::deleteUser(bool removeFiles)
-{    return new tPromise<void>([=](std::function<void()> res, std::function<void(QString)> rej) {
+{
+    return new tPromise<void>([=](std::function<void()> res, std::function<void(QString)> rej) {
         QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "DeleteUser");
         message.setArguments({
             static_cast<qint64>(d->uid),
@@ -141,6 +176,7 @@ void User::update()
     d->realName = d->interface->property("RealName").toString();
     d->userName = d->interface->property("UserName").toString();
     d->locked = d->interface->property("Locked").toBool();
+    d->userType = static_cast<UserType>(d->interface->property("AccountType").toInt());
 
     QString displayName = d->realName;
     if (displayName.isEmpty()) displayName = d->userName;

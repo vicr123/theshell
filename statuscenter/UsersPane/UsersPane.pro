@@ -88,20 +88,24 @@ unix {
 HEADERS += \
     adduserdialog.h \
     changepassworddialog.h \
+    changerealnamedialog.h \
     deleteuserdialog.h \
     plugin.h \
     user.h \
     usersmodel.h \
-    userspane.h
+    userspane.h \
+    usertypedialog.h
 
 SOURCES += \
     adduserdialog.cpp \
     changepassworddialog.cpp \
+    changerealnamedialog.cpp \
     deleteuserdialog.cpp \
     plugin.cpp \
     user.cpp \
     usersmodel.cpp \
-    userspane.cpp
+    userspane.cpp \
+    usertypedialog.cpp
 
 DISTFILES += \
     UsersPane.json
@@ -109,5 +113,7 @@ DISTFILES += \
 FORMS += \
     adduserdialog.ui \
     changepassworddialog.ui \
+    changerealnamedialog.ui \
     deleteuserdialog.ui \
-    userspane.ui
+    userspane.ui \
+    usertypedialog.ui
