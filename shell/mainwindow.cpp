@@ -305,11 +305,11 @@ MainWindow::MainWindow(QWidget *parent) :
     d->statusBarOpacityAnimation->setDuration(500);
     d->statusBarOpacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
     connect(d->statusBarOpacityAnimation, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+        d->statusBarOpacityEffect->setOpacity(value.toReal());
         if (qFuzzyCompare(value.toReal(), 1)) {
             d->statusBarOpacityEffect->setEnabled(false);
         } else {
             d->statusBarOpacityEffect->setEnabled(true);
-            d->statusBarOpacityEffect->setOpacity(value.toReal());
         }
 
         ui->StatusBarFrame->setVisible(!qFuzzyIsNull(d->statusBarOpacityEffect->opacity()));

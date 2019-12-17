@@ -20,6 +20,7 @@
 #include "powerchunk.h"
 #include "ui_powerchunk.h"
 
+#include <QTimer>
 #include <QIcon>
 #include <the-libs_global.h>
 #include <UPower/desktopupower.h>
@@ -27,6 +28,8 @@
 struct PowerChunkPrivate {
     DesktopUPower* daemon;
     QLabel* snackWidget;
+
+    bool ready = false;
 };
 
 PowerChunk::PowerChunk(DesktopUPower*daemon, QWidget *parent) :
@@ -42,6 +45,11 @@ PowerChunk::PowerChunk(DesktopUPower*daemon, QWidget *parent) :
 
     connect(d->daemon, &DesktopUPower::overallStateChanged, this, &PowerChunk::updateChunk);
     this->updateChunk();
+
+    QTimer::singleShot(0, this, [=] {
+        d->ready = true;
+        this->updateChunk();
+    });
 }
 
 PowerChunk::~PowerChunk()
@@ -57,6 +65,8 @@ QWidget*PowerChunk::snackWidget()
 
 void PowerChunk::updateChunk()
 {
+    if (!d->ready) return;
+
     this->setVisible(d->daemon->shouldShowOverallState());
     QPixmap px = d->daemon->overallStateIcon().pixmap(SC_DPI_T(QSize(16, 16), QSize));
 
