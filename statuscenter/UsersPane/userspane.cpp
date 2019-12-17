@@ -30,6 +30,7 @@
 #include "changepassworddialog.h"
 #include "changerealnamedialog.h"
 #include "usertypedialog.h"
+#include "lockuserdialog.h"
 
 struct UsersPanePrivate {
     UserPtr currentUser;
@@ -218,6 +219,20 @@ void UsersPane::on_changeRealNameButton_clicked()
         popover->setDismissable(false);
         connect(d, &ChangeRealNameDialog::done, popover, &tPopover::dismiss);
         connect(popover, &tPopover::dismissed, d, &ChangeRealNameDialog::deleteLater);
+        connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+        popover->show(this->window());
+    });
+}
+
+void UsersPane::on_lockUserButton_clicked()
+{
+    this->checkPolkit(false)->then([=] {
+        LockUserDialog* d = new LockUserDialog(this->d->currentUser);
+        tPopover* popover = new tPopover(d);
+        popover->setPopoverWidth(SC_DPI(600));
+        popover->setDismissable(false);
+        connect(d, &LockUserDialog::done, popover, &tPopover::dismiss);
+        connect(popover, &tPopover::dismissed, d, &LockUserDialog::deleteLater);
         connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
         popover->show(this->window());
     });

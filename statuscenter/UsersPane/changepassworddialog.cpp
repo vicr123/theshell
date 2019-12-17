@@ -36,6 +36,7 @@ ChangePasswordDialog::ChangePasswordDialog(UserPtr user, QWidget *parent) :
     d->user = user;
 
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
+    ui->lockedAccountWarning->setVisible(user->isLocked());
 }
 
 ChangePasswordDialog::~ChangePasswordDialog()

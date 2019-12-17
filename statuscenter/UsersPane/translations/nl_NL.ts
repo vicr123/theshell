@@ -200,68 +200,78 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="118"/>
+        <location filename="../changepassworddialog.ui" line="135"/>
         <source>Set a password to protect this account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="158"/>
+        <location filename="../changepassworddialog.ui" line="278"/>
+        <source>WARNING</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../changepassworddialog.ui" line="285"/>
+        <source>This account is locked. Changing the password will unlock it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../changepassworddialog.ui" line="330"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="172"/>
+        <location filename="../changepassworddialog.ui" line="344"/>
         <source>Confirm Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="189"/>
+        <location filename="../changepassworddialog.ui" line="361"/>
         <source>Password Hint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="196"/>
+        <location filename="../changepassworddialog.ui" line="368"/>
         <source>If you forget your password, this will appear to help you remember.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="208"/>
+        <location filename="../changepassworddialog.ui" line="380"/>
         <source>Use this password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="215"/>
+        <location filename="../changepassworddialog.ui" line="387"/>
         <source>Alternatively, choose one of the following options:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="225"/>
+        <location filename="../changepassworddialog.ui" line="397"/>
         <source>Ask for a password on the next login</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="228"/>
+        <location filename="../changepassworddialog.ui" line="400"/>
         <source>The first time the user logs in, we&apos;ll ask them for a password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="235"/>
+        <location filename="../changepassworddialog.ui" line="407"/>
         <source>Don&apos;t set a password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.ui" line="238"/>
+        <location filename="../changepassworddialog.ui" line="410"/>
         <source>Anyone will be able to log into this account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.cpp" line="70"/>
+        <location filename="../changepassworddialog.cpp" line="71"/>
         <source>Couldn&apos;t set password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../changepassworddialog.cpp" line="94"/>
-        <location filename="../changepassworddialog.cpp" line="113"/>
+        <location filename="../changepassworddialog.cpp" line="95"/>
+        <location filename="../changepassworddialog.cpp" line="114"/>
         <source>Couldn&apos;t set password policy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -363,6 +373,56 @@
     </message>
 </context>
 <context>
+    <name>LockUserDialog</name>
+    <message>
+        <location filename="../lockuserdialog.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../lockuserdialog.ui" line="93"/>
+        <location filename="../lockuserdialog.ui" line="131"/>
+        <source>Lock Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../lockuserdialog.ui" line="118"/>
+        <source>After locking this account, you won&apos;t be able to log in as this account.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../lockuserdialog.ui" line="234"/>
+        <source>After unlocking this account, you&apos;ll be able to log in as this account.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../lockuserdialog.ui" line="134"/>
+        <source>Prevent this user from logging in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../lockuserdialog.ui" line="209"/>
+        <location filename="../lockuserdialog.ui" line="247"/>
+        <source>Unlock Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../lockuserdialog.ui" line="250"/>
+        <source>Allow this user to log in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../lockuserdialog.cpp" line="68"/>
+        <source>Couldn&apos;t unlock user</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../lockuserdialog.cpp" line="71"/>
+        <source>Couldn&apos;t lock user</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UserTypeDialog</name>
     <message>
         <location filename="../usertypedialog.ui" line="14"/>
@@ -419,7 +479,7 @@
     </message>
     <message>
         <location filename="../userspane.ui" line="89"/>
-        <location filename="../userspane.cpp" line="83"/>
+        <location filename="../userspane.cpp" line="84"/>
         <source>Users</source>
         <translation type="unfinished"></translation>
     </message>
@@ -479,47 +539,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="109"/>
+        <location filename="../userspane.cpp" line="110"/>
         <source>Username: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="112"/>
+        <location filename="../userspane.cpp" line="113"/>
         <source>Unlock User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="113"/>
+        <location filename="../userspane.cpp" line="114"/>
         <source>Allow this user to log in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="115"/>
+        <location filename="../userspane.cpp" line="116"/>
         <source>Lock User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="116"/>
+        <location filename="../userspane.cpp" line="117"/>
         <source>Stop this user from logging in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="161"/>
+        <location filename="../userspane.cpp" line="162"/>
         <source>Unauthorized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.cpp" line="162"/>
+        <location filename="../userspane.cpp" line="163"/>
         <source>Polkit does not allow you to manage users on the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.ui" line="327"/>
+        <location filename="../userspane.ui" line="324"/>
         <source>Delete User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../userspane.ui" line="330"/>
+        <location filename="../userspane.ui" line="327"/>
         <source>Remove this user (and possibly all associated files) from the system</source>
         <translation type="unfinished"></translation>
     </message>

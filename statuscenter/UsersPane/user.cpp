@@ -144,6 +144,20 @@ tPromise<void>*User::setRealName(QString realName)
     });
 }
 
+tPromise<void>*User::setLocked(bool locked)
+{
+    return new tPromise<void>([=](std::function<void()> res, std::function<void(QString)> rej) {
+        QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(d->interface->asyncCall("SetLocked", locked));
+        connect(watcher, &QDBusPendingCallWatcher::finished, this, [=] {
+            if (watcher->isError()) {
+                rej(watcher->error().message());
+            } else {
+                res();
+            }
+        });
+    });
+}
+
 tPromise<void>*User::deleteUser(bool removeFiles)
 {
     return new tPromise<void>([=](std::function<void()> res, std::function<void(QString)> rej) {

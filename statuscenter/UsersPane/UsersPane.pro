@@ -90,6 +90,7 @@ HEADERS += \
     changepassworddialog.h \
     changerealnamedialog.h \
     deleteuserdialog.h \
+    lockuserdialog.h \
     plugin.h \
     user.h \
     usersmodel.h \
@@ -101,6 +102,7 @@ SOURCES += \
     changepassworddialog.cpp \
     changerealnamedialog.cpp \
     deleteuserdialog.cpp \
+    lockuserdialog.cpp \
     plugin.cpp \
     user.cpp \
     usersmodel.cpp \
@@ -115,5 +117,6 @@ FORMS += \
     changepassworddialog.ui \
     changerealnamedialog.ui \
     deleteuserdialog.ui \
+    lockuserdialog.ui \
     userspane.ui \
     usertypedialog.ui

@@ -60,6 +60,7 @@ class User : public QObject
         tPromise<void>* setPasswordMode(PasswordMode mode);
         tPromise<void>* setUserType(UserType type);
         tPromise<void>* setRealName(QString realName);
+        tPromise<void>* setLocked(bool locked);
         tPromise<void>* deleteUser(bool removeFiles);
 
     private slots:
