@@ -54,8 +54,6 @@ class AddUserDialog : public QWidget
 
         void on_noPasswordButton_clicked();
 
-        void on_commandLinkButton_4_clicked();
-
         void on_performAddUserButton_clicked();
 
         void on_administratorButton_clicked();
