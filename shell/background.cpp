@@ -23,388 +23,238 @@
 
 #include "mainwindow.h"
 
+#include <Background/backgroundcontroller.h>
+#include <Background/backgroundselectionmodel.h>
+#include <Wm/desktopwm.h>
 #include <X11/Xlib.h>
 
 extern float getDPIScaling();
 
 extern Background* firstBackground;
 
+struct BackgroundPrivate {
+    static BackgroundController* bg;
+
+    QSettings settings;
+
+    bool retrieving = false;
+    bool retrieveAgain = false;
+    BackgroundController::BackgroundData background;
+
+    bool isChangeBackgroundVisible = false;
+    bool communityBackgroundSettingsShown = true;
+
+    MainWindow* mw;
+};
+
+BackgroundController* BackgroundPrivate::bg = nullptr;
+
 Background::Background(MainWindow* mainwindow, bool imageGetter, QRect screenGeometry, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Background)
 {
     ui->setupUi(this);
-    this->mainwindow = mainwindow;
-    this->imageGetter = imageGetter;
+    d = new BackgroundPrivate();
 
-    this->screenGeometry = screenGeometry;
-    screenGeometry.moveTo(0, 0);
+    if (!d->bg) {
+        d->bg = new BackgroundController(BackgroundController::Desktop);
+    }
+    connect(d->bg, &BackgroundController::currentBackgroundChanged, this, [=](BackgroundController::BackgroundType type) {
+        if (type == BackgroundController::Desktop) this->changeBackground();
+        this->showCommunityBackgroundSettings(d->bg->currentBackgroundName(BackgroundController::Desktop) == "community" || d->bg->currentBackgroundName(BackgroundController::LockScreen) == "community");
+    });
+    connect(d->bg, &BackgroundController::shouldShowCommunityLabelsChanged, this, [=] {
+        if (d->bg->currentBackgroundName(BackgroundController::Desktop) == "community") this->changeBackground();
+    });
+    connect(d->bg, &BackgroundController::stretchTypeChanged, this, [=](BackgroundController::StretchType stretchType) {
+        switch (stretchType) {
+            case BackgroundController::StretchFit:
+                ui->stretchFitButton->setChecked(true);
+                break;
+            case BackgroundController::ZoomCrop:
+                ui->zoomCropButton->setChecked(true);
+                break;
+            case BackgroundController::Center:
+                ui->centerButton->setChecked(true);
+                break;
+            case BackgroundController::Tile:
+                ui->tileButton->setChecked(true);
+                break;
+            case BackgroundController::ZoomFit:
+                ui->zoomFitButton->setChecked(true);
+                break;
+        }
 
-    background = QPixmap(screenGeometry.size());
-    background.fill(Qt::black);
+        this->changeBackground();
+    });
+
+    this->showCommunityBackgroundSettings(d->bg->currentBackgroundName(BackgroundController::Desktop) == "community" || d->bg->currentBackgroundName(BackgroundController::LockScreen) == "community");
+    switch (d->bg->stretchType()) {
+        case BackgroundController::StretchFit:
+            ui->stretchFitButton->setChecked(true);
+            break;
+        case BackgroundController::ZoomCrop:
+            ui->zoomCropButton->setChecked(true);
+            break;
+        case BackgroundController::Center:
+            ui->centerButton->setChecked(true);
+            break;
+        case BackgroundController::Tile:
+            ui->tileButton->setChecked(true);
+            break;
+        case BackgroundController::ZoomFit:
+            ui->zoomFitButton->setChecked(true);
+            break;
+    }
+
+    ui->showImageInformationBox->setChecked(d->bg->shouldShowCommunityLabels());
+
+    d->mw = mainwindow;
+
+    ui->stackedWidget->setCurrentWidget(ui->backgroundPage);
+    ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
+    ui->backgroundPage->installEventFilter(this);
+
+    ui->backgroundSelectionWidget->setFixedHeight(0);
+    ui->backgroundList->setModel(new BackgroundSelectionModel());
+    ui->backgroundList->setItemDelegate(new BackgroundSelectionDelegate());
+    ui->backgroundList->setIconSize(SC_DPI_T(QSize(213, 120), QSize));
+    ui->backgroundList->setFixedHeight(SC_DPI(120));
 
     changeBackground();
-    set = true;
 }
 
 Background::~Background()
 {
+    delete d;
     delete ui;
 }
 
 void Background::changeBackground() {
-    QString backPath = settings.value("desktop/background", "inbuilt:triangles").toString();
-
-    if (backPath.startsWith("inbuilt:")) { //Inbuilt background
-        QSvgRenderer renderer(QString(":/backgrounds/" + backPath.split(":").at(1)));
-        QPainter painter(&background);
-        renderer.render(&painter, background.rect());
-    } else if (backPath.startsWith("community")) {
-        QDir::home().mkpath(".theshell/backgrounds");
-        bool metadataExists = QFile(QDir::homePath() + "/.theshell/backgrounds.conf").exists();
-        if (metadataExists) {
-            if (imageGetter) {
-                setNewBackgroundTimer();
-            }
-            loadCommunityBackgroundMetadata();
-        } else {
-            getNewCommunityBackground();
-        }
+    if (d->retrieving) {
+        d->retrieveAgain = true;
         return;
-    } else {
-        QPixmap image;
-        image.load(backPath);
-        QPainter painter(&background);
-
-        //Clear background
-        painter.setBrush(QColor(0, 0, 0));
-        painter.setPen(Qt::transparent);
-        painter.drawRect(0, 0, background.width(), background.height());
-
-        //Draw background
-        switch (settings.value("desktop/stretchStyle", 0).toInt()) {
-            case 0: //Stretch
-                painter.drawPixmap(0, 0, background.width(), background.height(), image);
-                break;
-            case 1: { //Zoom and Crop
-                QRect rect;
-                rect.setSize(image.size().scaled(background.width(), background.height(), Qt::KeepAspectRatioByExpanding));
-                rect.moveLeft(background.width() / 2 - rect.width() / 2);
-                rect.moveTop(background.height() / 2 - rect.height() / 2);
-                painter.drawPixmap(rect, image);
-                break;
-            }
-            case 2: { //Center
-                QRect rect;
-                rect.setSize(image.size());
-                rect.moveLeft(background.width() / 2 - rect.width() / 2);
-                rect.moveTop(background.height() / 2 - rect.height() / 2);
-                painter.drawPixmap(rect, image);
-                break;
-            }
-            case 3: //Tile
-                painter.drawTiledPixmap(0, 0, background.width(), background.height(), image);
-                break;
-            case 4: { //Zoom and Fit
-                QRect rect;
-                rect.setSize(image.size().scaled(background.width(), background.height(), Qt::KeepAspectRatio));
-                rect.moveLeft(background.width() / 2 - rect.width() / 2);
-                rect.moveTop(background.height() / 2 - rect.height() / 2);
-                painter.drawPixmap(rect, image);
-                break;
-            }
-        }
-        //background = background.scaled(screenGeometry.size());
     }
 
-    this->update();
-}
+    d->retrieving = true;
+    ui->stackedWidget->setCurrentWidget(ui->loadingBackgroundPage);
 
-void Background::getNewCommunityBackground() {
-    if (!imageGetter) return;
+    d->bg->getCurrentBackground(this->size())->then([=](BackgroundController::BackgroundData data) {
+        d->background = data;
 
-    QNetworkRequest req(QUrl("https://vicr123.github.io/theshell/backgrounds/backgrounds.json"));
-    req.setHeader(QNetworkRequest::UserAgentHeader, QString("theShell/") + TS_VERSION);
-    req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-    QNetworkReply* listOfBackgrounds = manager.get(req);
-    connect(listOfBackgrounds, &QNetworkReply::finished, [=] {
-        QByteArray data = listOfBackgrounds->readAll();
-        QJsonDocument doc = QJsonDocument::fromJson(data);
-        if (!doc.isArray()) {
-            //error error
-            if (QFile(QDir::homePath() + "/.theshell/background.conf").exists()) {
-                //We have a valid image we can use
-                //Try getting a new image tomorrow
-                QDateTime oldFetchedValue = settings.value("desktop/fetched").toDateTime();
-                oldFetchedValue = oldFetchedValue.addDays(1);
-                settings.setValue("desktop/fetched", oldFetchedValue);
-                setNewBackgroundTimer();
-                loadCommunityBackgroundMetadata();
-            } else {
-                //ui->label->setText(tr("Couldn't get community backgrounds!"));
-            }
-        } else {
-            QJsonArray arr = doc.array();
-            arr.removeFirst();
+        if (d->background.extendedInfoAvailable) {
+            QPainter painter(&data.px);
 
-            QStringList downloadImages;
-            qsrand(QDateTime::currentMSecsSinceEpoch());
+            if (d->settings.value("desktop/showLabels", true).toBool()) {
+                QLinearGradient darkener;
+                darkener.setColorAt(0, QColor::fromRgb(0, 0, 0, 0));
+                darkener.setColorAt(1, QColor::fromRgb(0, 0, 0, 200));
 
-            for (int i = 0; i < 10; i++) {
-                int index = qrand() % arr.count();
-                QString url = arr.at(index).toString();
-                downloadImages.append(url);
-                arr.removeAt(index);
+                if (d->settings.value("bar/onTop", true).toBool()) {
+                    darkener.setStart(0, 0);
+                    darkener.setFinalStop(0, data.px.height());
+                } else {
+                    darkener.setStart(0, data.px.height());
+                    darkener.setFinalStop(0, 0);
+                }
+                painter.setBrush(darkener);
+                painter.drawRect(0, 0, data.px.width(), data.px.height());
 
-                if (arr.count() == 0) {
-                    i = 10;
+                painter.setPen(Qt::white);
+                int currentX = SC_DPI(30);
+                int baselineY;
+
+                if (d->settings.value("bar/onTop", true).toBool()) {
+                    baselineY = data.px.height() - SC_DPI(30);
+                } else {
+                    baselineY = SC_DPI(30) + QFontMetrics(QFont(this->font().family(), 20)).ascent();
+                }
+
+                if (!data.name.isEmpty()) {
+                    painter.setFont(QFont(this->font().family(), 20));
+                    int width = painter.fontMetrics().horizontalAdvance(data.name);
+                    painter.drawText(currentX, baselineY, data.name);
+
+                    currentX += width + SC_DPI(9);
+                }
+
+
+                if (!data.location.isEmpty()) {
+                    painter.setFont(QFont(this->font().family(), 10));
+                    QIcon locationIcon = QIcon::fromTheme("gps");
+                    int height = painter.fontMetrics().height();
+                    int width = painter.fontMetrics().horizontalAdvance(data.location) + height;
+
+                    painter.drawPixmap(currentX, baselineY - height, locationIcon.pixmap(SC_DPI_T(QSize(16, 16), QSize)));
+                    painter.drawText(currentX + height + SC_DPI(6), baselineY - painter.fontMetrics().descent(), data.location);
+
+                    currentX += width + SC_DPI(20);
+                }
+
+                if (!data.author.isEmpty()) {
+                    painter.setFont(QFont(this->font().family(), 10));
+                    QString author = tr("by %1").arg(data.author);
+                    int width = painter.fontMetrics().horizontalAdvance(author);
+                    painter.drawText(data.px.width() - width - SC_DPI(30), baselineY, author);
                 }
             }
-
-            //Keep track of time when these images were retrieved
-            settings.setValue("desktop/fetched", QDateTime::currentDateTimeUtc());
-
-            //Delete list of known images
-            QFile(QDir::homePath() + "/.theshell/backgrounds.conf").remove();
-            QDir(QDir::homePath() + "/.theshell/backgrounds/").removeRecursively();
-            QDir::home().mkpath(".theshell/backgrounds/");
-
-            numberDone = 0;
-            for (QString url : downloadImages) {
-                QNetworkRequest req((QUrl("https://vicr123.github.io" + url)));
-                req.setHeader(QNetworkRequest::UserAgentHeader, QString("theShell/") + TS_VERSION);
-                req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-                QNetworkReply* metadata = manager.get(req);
-                connect(metadata, &QNetworkReply::finished, [=] {
-                    QByteArray data = metadata->readAll();
-                    QJsonDocument doc = QJsonDocument::fromJson(data);
-                    if (doc.isObject()) {
-                        QJsonObject obj = doc.object();
-
-                        QString fileName = obj.value("filename").toString();
-                        QString dirName = fileName.left(fileName.indexOf("."));
-
-                        QDir::home().mkpath(".theshell/backgrounds/" + dirName);
-                        QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + dirName + "/metadata.json");
-                        metadataFile.open(QFile::WriteOnly);
-                        metadataFile.write(data);
-                        metadataFile.close();
-
-                        QFile backgroundListConf(QDir::homePath() + "/.theshell/backgrounds.conf");
-                        backgroundListConf.open(QFile::Append);
-                        backgroundListConf.write(dirName.append("\n").toUtf8());
-                        backgroundListConf.close();
-                    }
-                    metadata->deleteLater();
-                    numberDone++;
-
-                    if (numberDone == downloadImages.count()) {
-                        numberDone = 0;
-                        setNewBackgroundTimer();
-
-                        //Load up a new background from the cache
-                        loadCommunityBackgroundMetadata();
-                    }
-                });
-            }
         }
-        listOfBackgrounds->deleteLater();
+
+        QTimer::singleShot(1000, this, [=] {
+            d->background = data;
+            this->update();
+
+            d->retrieving = false;
+            if (d->retrieveAgain) {
+                d->retrieveAgain = false;
+                this->changeBackground();
+            } else {
+                ui->stackedWidget->setCurrentWidget(ui->backgroundPage);
+            }
+        });
+    })->error([=](QString error) {
+        d->retrieving = false;
+        if (d->retrieveAgain) {
+            d->retrieveAgain = false;
+            this->changeBackground();
+        } else {
+            ui->stackedWidget->setCurrentWidget(ui->backgroundErrorPage);
+        }
     });
 }
 
-void Background::loadCommunityBackgroundMetadata() {
-    if (!imageGetter) return;
-
-    QFile backgroundListConf(QDir::homePath() + "/.theshell/backgrounds.conf");
-    backgroundListConf.open(QFile::ReadOnly);
-    QStringList allBackgrounds = QString(backgroundListConf.readAll()).split("\n");
-    backgroundListConf.close();
-
-    allBackgrounds.removeAll("");
-
-    qsrand(QDateTime::currentMSecsSinceEpoch());
-    QString background = allBackgrounds.at(qrand() % allBackgrounds.count());
-
-    if (QFile(QDir::homePath() + "/.theshell/backgrounds/" + background + "/" + background + ".jpeg").exists()) {
-        QTimer::singleShot(0, this, [=] {
-            emit setAllBackgrounds(background);
-            setCommunityBackground(background);
-        });
+void Background::toggleChangeBackground()
+{
+    d->isChangeBackgroundVisible = !d->isChangeBackgroundVisible;
+    tVariantAnimation* anim = new tVariantAnimation();
+    anim->setStartValue(ui->backgroundSelectionWidget->height());
+    if (d->isChangeBackgroundVisible) {
+        anim->setEndValue(ui->backgroundSelectionWidget->sizeHint().height());
+        d->mw->forceHide();
     } else {
-        QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + background + "/metadata.json");
-        metadataFile.open(QFile::ReadOnly);
-        QJsonDocument doc = QJsonDocument::fromJson(metadataFile.readAll());
-        metadataFile.close();
-
-        if (doc.isObject()) {
-            QString fileName = doc.object().value("filename").toString();
-            QString dirName = fileName.left(fileName.indexOf("."));
-
-            QNetworkRequest req(QUrl(QString("https://vicr123.github.io/theshell/backgrounds/%1/%2").arg(dirName, fileName)));
-            req.setHeader(QNetworkRequest::UserAgentHeader, QString("theShell/") + TS_VERSION);
-            req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-            QNetworkReply* image = manager.get(req);
-            connect(image, &QNetworkReply::finished, [=] {
-                if (image->error() == QNetworkReply::NoError) {
-                    QByteArray data = image->readAll();
-                    QFile imageFile(QDir::homePath() + "/.theshell/backgrounds/" + background + "/" + background + ".jpeg");
-                    imageFile.open(QFile::WriteOnly);
-                    imageFile.write(data);
-                    imageFile.close();
-                    image->deleteLater();
-
-                    if (set) {
-                        emit reloadBackground();
-                    } else {
-                        //ui->stackedWidget->setCurrentIndex(0);
-                        setCommunityBackground(background);
-                        if (imageGetter) {
-                            emit setAllBackgrounds(background);
-                        }
-                    }
-                } else {
-                    //Error retrieving image
-                    //Try another image
-                    loadCommunityBackgroundMetadata();
-                    image->deleteLater();
-                }
-            });
-        } else {
-            //Error reading metadata file
-            //Clear and start again
-            getNewCommunityBackground();
-        }
+        anim->setEndValue(0);
+        d->mw->unforceHide();
     }
+    anim->setDuration(500);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+    connect(anim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+        ui->backgroundSelectionWidget->setFixedHeight(value.toInt());
+    });
+    connect(anim, &tVariantAnimation::finished, this, [=] {
+        if (d->isChangeBackgroundVisible) {
+            ui->backgroundSelectionWidget->setFixedHeight(QWIDGETSIZE_MAX);
+        }
+    });
+    anim->start();
+
+    DesktopWm::setShowDesktop(d->isChangeBackgroundVisible);
 }
 
-void Background::setCommunityBackground(QString bg) {
-    QFile metadataFile(QDir::homePath() + "/.theshell/backgrounds/" + bg + "/metadata.json");
-    QFile imageFile(QDir::homePath() + "/.theshell/backgrounds/" + bg + "/" + bg + ".jpeg");
-    if (!metadataFile.exists()) {
-        getNewCommunityBackground();
-        return;
-    }
-    if (!imageFile.exists()) {
-        loadCommunityBackgroundMetadata();
-        return;
-    }
-
-    metadataFile.open(QFile::ReadOnly);
-    QJsonDocument doc = QJsonDocument::fromJson(metadataFile.readAll());
-    if (doc.isObject()) {
-        QJsonObject metadata = doc.object();
-        QPixmap image;
-        image.load(imageFile.fileName());
-
-        QPainter painter(&this->background);
-
-        //Clear background
-        painter.setBrush(QColor(0, 0, 0));
-        painter.setPen(Qt::transparent);
-        painter.drawRect(0, 0, background.width(), background.height());
-
-        //Draw background
-        switch (settings.value("desktop/stretchStyle", 0).toInt()) {
-            case 0: //Stretch
-                painter.drawPixmap(0, 0, background.width(), background.height(), image);
-                break;
-            case 1: { //Zoom and Crop
-                QRect rect;
-                rect.setSize(image.size().scaled(background.width(), background.height(), Qt::KeepAspectRatioByExpanding));
-                rect.moveLeft(background.width() / 2 - rect.width() / 2);
-                rect.moveTop(background.height() / 2 - rect.height() / 2);
-                painter.drawPixmap(rect, image);
-                break;
-            }
-            case 2: { //Center
-                QRect rect;
-                rect.setSize(image.size());
-                rect.moveLeft(background.width() / 2 - rect.width() / 2);
-                rect.moveTop(background.height() / 2 - rect.height() / 2);
-                painter.drawPixmap(rect, image);
-                break;
-            }
-            case 3: //Tile
-                painter.drawTiledPixmap(0, 0, background.width(), background.height(), image);
-                break;
-            case 4: { //Zoom and Fit
-                QRect rect;
-                rect.setSize(image.size().scaled(background.width(), background.height(), Qt::KeepAspectRatio));
-                rect.moveLeft(background.width() / 2 - rect.width() / 2);
-                rect.moveTop(background.height() / 2 - rect.height() / 2);
-                painter.drawPixmap(rect, image);
-                break;
-            }
-        }
-        //painter.drawImage(0, 0, image.scaled(background.width(), background.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-
-        if (settings.value("desktop/showLabels", true).toBool()) {
-            QLinearGradient darkener;
-            darkener.setColorAt(0, QColor::fromRgb(0, 0, 0, 0));
-            darkener.setColorAt(1, QColor::fromRgb(0, 0, 0, 200));
-
-            if (settings.value("bar/onTop", true).toBool()) {
-                darkener.setStart(0, 0);
-                darkener.setFinalStop(0, background.height());
-            } else {
-                darkener.setStart(0, background.height());
-                darkener.setFinalStop(0, 0);
-            }
-            painter.setBrush(darkener);
-            painter.drawRect(0, 0, background.width(), background.height());
-
-            painter.setPen(Qt::white);
-            int currentX = 30 * getDPIScaling();
-            int baselineY;
-
-            if (settings.value("bar/onTop", true).toBool()) {
-                baselineY = background.height() - 30 * getDPIScaling();
-            } else {
-                baselineY = 30 * getDPIScaling() + QFontMetrics(QFont(this->font().family(), 20)).ascent();
-            }
-
-            if (metadata.contains("name")) {
-                painter.setFont(QFont(this->font().family(), 20));
-                QString name = metadata.value("name").toString();
-                int width = painter.fontMetrics().width(name);
-                painter.drawText(currentX, baselineY, name);
-
-                currentX += width + 9 * getDPIScaling();
-            }
-
-
-            if (metadata.contains("location")) {
-                painter.setFont(QFont(this->font().family(), 10));
-                QIcon locationIcon = QIcon::fromTheme("gps");
-                QString location = metadata.value("location").toString();
-                int height = painter.fontMetrics().height();
-                int width = painter.fontMetrics().width(location) + height;
-
-                painter.drawPixmap(currentX, baselineY - height, locationIcon.pixmap(16 * getDPIScaling(), 16 * getDPIScaling()));
-                painter.drawText(currentX + height + 6 * getDPIScaling(), baselineY - painter.fontMetrics().descent(), location);
-
-                currentX += width + 20 * getDPIScaling();
-            }
-
-            if (metadata.contains("author")) {
-                painter.setFont(QFont(this->font().family(), 10));
-                QString author = tr("by %1").arg(metadata.value("author").toString());
-                int width = painter.fontMetrics().width(author);
-                painter.drawText(background.width() - width - 30 * getDPIScaling(), baselineY, author);
-            }
-        }
-
-        painter.end();
-        this->update();
-        currentBackground = bg;
-
-        if (imageGetter) {
-            settings.setValue("desktop/changed", QDateTime::currentDateTimeUtc());
-            setTimer();
-        }
-    } else {
-        getNewCommunityBackground();
-    }
+void Background::showCommunityBackgroundSettings(bool shown)
+{
+    if (shown == d->communityBackgroundSettingsShown) return;
+    d->communityBackgroundSettingsShown = shown;
+    ui->communityBackgroundSettings->setVisible(shown);
 }
 
 void Background::show() {
@@ -415,76 +265,42 @@ void Background::show() {
     QDialog::show();
 }
 
-void Background::setTimer() {
-    if (!imageGetter) return;
-
-    if (timer != nullptr) timer->deleteLater();
-    QDateTime fetchedTime = settings.value("desktop/changed").toDateTime();
-    int waitTime = settings.value("desktop/waitTime", 30).toInt();
-    QDateTime tickTime = fetchedTime.addSecs(waitTime * 60);
-
-    if (tickTime < QDateTime::currentDateTimeUtc()) {
-        //Get the next image now
-        loadCommunityBackgroundMetadata();
-    } else {
-        timer = new QTimer();
-        if (tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch() > INT_MAX) {
-            timer->setInterval(INT_MAX);
-            connect(timer, SIGNAL(timeout()), this, SLOT(setTimer()));
-        } else {
-            timer->setInterval(tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch());
-            connect(timer, SIGNAL(timeout()), this, SLOT(loadCommunityBackgroundMetadata()));
-        }
-        timer->setSingleShot(true);
-        timer->start();
-    }
-}
-
-void Background::setNewBackgroundTimer() {
-    if (!imageGetter) return;
-
-    if (newBackgroundTimer != nullptr) newBackgroundTimer->deleteLater();
-    QDateTime fetchedTime = settings.value("desktop/fetched").toDateTime();
-    QDateTime tickTime = fetchedTime.addDays(7);
-    //QDateTime tickTime = fetchedTime.addSecs(120);
-
-    if (tickTime < QDateTime::currentDateTimeUtc()) {
-        //Get the next image now
-        getNewCommunityBackground();
-    } else {
-        newBackgroundTimer = new QTimer();
-        if (tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch() > INT_MAX) {
-            newBackgroundTimer->setInterval(INT_MAX);
-            connect(newBackgroundTimer, SIGNAL(timeout()), this, SLOT(setNewBackgroundTimer()));
-        } else {
-            newBackgroundTimer->setInterval(tickTime.toMSecsSinceEpoch() - QDateTime::currentMSecsSinceEpoch());
-            connect(newBackgroundTimer, SIGNAL(timeout()), this, SLOT(getNewCommunityBackground()));
-        }
-        newBackgroundTimer->setSingleShot(true);
-        newBackgroundTimer->start();
-    }
-}
-
 void Background::on_actionOpen_Status_Center_triggered()
 {
-    mainwindow->getInfoPane()->show(InfoPaneDropdown::Clock);
+    d->mw->getInfoPane()->show(InfoPaneDropdown::Clock);
 }
 
 void Background::on_actionOpen_theShell_Settings_triggered()
 {
-    mainwindow->getInfoPane()->show(InfoPaneDropdown::Settings);
+    d->mw->getInfoPane()->show(InfoPaneDropdown::Settings);
 }
 
 void Background::on_actionChange_Background_triggered()
 {
-    ChooseBackground *background = new ChooseBackground(currentBackground);
-    connect(background, SIGNAL(reloadBackgrounds()), mainwindow, SIGNAL(reloadBackgrounds()));
-    connect(background, SIGNAL(reloadTimer()), firstBackground, SLOT(setTimer()));
-    background->show();
+    this->toggleChangeBackground();
 }
 
 void Background::reject() {
 
+}
+
+bool Background::eventFilter(QObject*watched, QEvent*event)
+{
+    if (watched == ui->backgroundPage) {
+        if (event->type() == QEvent::Paint) {
+            QPainter p(ui->backgroundPage);
+            if (d->retrieving) {
+                p.setPen(Qt::transparent);
+                p.setBrush(Qt::black);
+                p.drawRect(0, 0, this->width(), this->height());
+            } else {
+                p.drawPixmap(0, -ui->backgroundSelectionWidget->height(), d->background.px);
+            }
+        } else if (event->type() == QEvent::MouseButtonPress) {
+            if (d->isChangeBackgroundVisible) toggleChangeBackground();
+        }
+    }
+    return false;
 }
 
 void Background::on_Background_customContextMenuRequested(const QPoint &pos)
@@ -500,6 +316,70 @@ void Background::on_Background_customContextMenuRequested(const QPoint &pos)
 }
 
 void Background::paintEvent(QPaintEvent *event) {
-    QPainter p(this);
-    p.drawPixmap(0, 0, this->background);
+}
+
+void Background::resizeEvent(QResizeEvent*event)
+{
+    this->changeBackground();
+}
+
+void Background::on_tryReloadBackgroundButton_clicked()
+{
+    this->changeBackground();
+}
+
+void Background::on_backgroundList_clicked(const QModelIndex &index)
+{
+    QString background = index.data(Qt::UserRole).toString();
+    if (background == "custom") {
+        //Ask the user to select a background
+        background = QFileDialog::getOpenFileName(this, tr("Select Background"), "", "Images (*.png *.jpg *.jpeg *.bmp *.gif)");
+        if (background.isEmpty()) return;
+    }
+    d->bg->setBackground(background, BackgroundController::Desktop);
+}
+
+void Background::on_backButton_clicked()
+{
+    this->toggleChangeBackground();
+}
+
+void Background::on_showImageInformationBox_toggled(bool checked)
+{
+    d->bg->setShouldShowCommunityLabels(checked);
+}
+
+void Background::on_stretchFitButton_toggled(bool checked)
+{
+    if (checked) {
+        d->bg->setStretchType(BackgroundController::StretchFit);
+    }
+}
+
+void Background::on_zoomCropButton_toggled(bool checked)
+{
+    if (checked) {
+        d->bg->setStretchType(BackgroundController::ZoomCrop);
+    }
+}
+
+void Background::on_centerButton_toggled(bool checked)
+{
+    if (checked) {
+        d->bg->setStretchType(BackgroundController::Center);
+    }
+}
+
+void Background::on_tileButton_toggled(bool checked)
+{
+    if (checked) {
+        d->bg->setStretchType(BackgroundController::Tile);
+    }
+}
+
+void Background::on_zoomFitButton_toggled(bool checked)
+{
+    if (checked) {
+        d->bg->setStretchType(BackgroundController::ZoomFit);
+    }
 }

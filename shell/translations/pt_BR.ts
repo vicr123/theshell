@@ -85,34 +85,114 @@
 <context>
     <name>Background</name>
     <message>
-        <location filename="../background.ui" line="29"/>
+        <location filename="../background.ui" line="176"/>
+        <source>Sorry, there was a problem displaying the background.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="198"/>
+        <source>Try Again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="379"/>
+        <source>Background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="427"/>
+        <source>IMAGE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="434"/>
+        <source>Select an image to display on your background and lock screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="522"/>
+        <source>COMMUNITY BACKGROUNDS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="529"/>
+        <source>Images from the theShell community will be cycled through every so often.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="536"/>
+        <source>Show image information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="584"/>
+        <source>STRETCH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="591"/>
+        <source>Select how you&apos;d like the background image to be sized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="603"/>
+        <source>Stretch To Fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="629"/>
+        <source>Zoom and Crop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="655"/>
+        <source>Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="681"/>
+        <source>Tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="707"/>
+        <source>Zoom To Fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../background.ui" line="756"/>
         <source>Change Background</source>
         <translation>Mudar Imagem de Fundo</translation>
     </message>
     <message>
-        <location filename="../background.ui" line="47"/>
+        <location filename="../background.ui" line="774"/>
         <source>Open System Settings</source>
         <translation>Abrir Configurações do Sistema</translation>
     </message>
     <message>
-        <location filename="../background.ui" line="38"/>
+        <location filename="../background.ui" line="765"/>
         <source>Open Status Center</source>
         <translation>Abrir Centro de Status</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="391"/>
+        <location filename="../background.cpp" line="196"/>
         <source>by %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="493"/>
+        <location filename="../background.cpp" line="309"/>
         <source>For desktop</source>
         <translation>Para área de trabalho</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="495"/>
+        <location filename="../background.cpp" line="311"/>
         <source>For system</source>
         <translation>Para sistema</translation>
+    </message>
+    <message>
+        <location filename="../background.cpp" line="336"/>
+        <source>Select Background</source>
+        <translation type="unfinished">Escolher Imagem de Fundo</translation>
     </message>
 </context>
 <context>
@@ -1469,63 +1549,63 @@ Items that will be kept if you choose to keep files:
     </message>
     <message>
         <location filename="../mainwindow.ui" line="518"/>
-        <location filename="../mainwindow.cpp" line="329"/>
+        <location filename="../mainwindow.cpp" line="330"/>
         <source>Quiet Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="85"/>
+        <location filename="../mainwindow.cpp" line="86"/>
         <source>Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="371"/>
+        <location filename="../mainwindow.cpp" line="372"/>
         <source>Recording Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="377"/>
+        <location filename="../mainwindow.cpp" line="378"/>
         <source>Processing Screen Recording...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1131"/>
+        <location filename="../mainwindow.cpp" line="1138"/>
         <source>For Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1133"/>
+        <location filename="../mainwindow.cpp" line="1140"/>
         <source>Move to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1138"/>
+        <location filename="../mainwindow.cpp" line="1145"/>
         <source>Move to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1144"/>
+        <location filename="../mainwindow.cpp" line="1151"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1149"/>
+        <location filename="../mainwindow.cpp" line="1156"/>
         <source>For System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1150"/>
+        <location filename="../mainwindow.cpp" line="1157"/>
         <source>Open Status Center</source>
         <translation type="unfinished">Abrir Centro de Status</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1153"/>
+        <location filename="../mainwindow.cpp" line="1160"/>
         <source>Open System Settings</source>
         <translation type="unfinished">Abrir Configurações do Sistema</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1162"/>
+        <location filename="../mainwindow.cpp" line="1169"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>

@@ -42,6 +42,7 @@ namespace Ui {
 class Background;
 }
 
+struct BackgroundPrivate;
 class Background : public QDialog
 {
     Q_OBJECT
@@ -53,11 +54,11 @@ class Background : public QDialog
         void show();
 
     public slots:
-        void setCommunityBackground(QString background);
-
-        void getNewCommunityBackground();
-
         void changeBackground();
+
+        void toggleChangeBackground();
+
+        void showCommunityBackgroundSettings(bool shown);
 
     signals:
         void setAllBackgrounds(QString background);
@@ -73,29 +74,33 @@ class Background : public QDialog
 
         void on_Background_customContextMenuRequested(const QPoint &pos);
 
-        void loadCommunityBackgroundMetadata();
+        void on_tryReloadBackgroundButton_clicked();
 
-        void setTimer();
+        void on_backgroundList_clicked(const QModelIndex &index);
 
-        void setNewBackgroundTimer();
+        void on_backButton_clicked();
+
+        void on_showImageInformationBox_toggled(bool checked);
+
+        void on_stretchFitButton_toggled(bool checked);
+
+        void on_zoomCropButton_toggled(bool checked);
+
+        void on_centerButton_toggled(bool checked);
+
+        void on_tileButton_toggled(bool checked);
+
+        void on_zoomFitButton_toggled(bool checked);
 
     private:
         Ui::Background *ui;
+        BackgroundPrivate* d;
 
         void reject();
-        bool imageGetter;
-        bool set = false;
-        QSettings settings;
-        int numberDone;
-        QString currentBackground;
-        QRect screenGeometry;
 
-        MainWindow* mainwindow;
-        QNetworkAccessManager manager;
-        QPixmap background;
-        QTimer* timer = nullptr, *newBackgroundTimer = nullptr;
-
+        bool eventFilter(QObject* watched, QEvent* event);
         void paintEvent(QPaintEvent* event);
+        void resizeEvent(QResizeEvent* event);
 };
 
 #endif // BACKGROUND_H

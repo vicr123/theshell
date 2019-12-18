@@ -108,6 +108,9 @@ public slots:
 
     void reloadBar();
 
+    void forceHide();
+    void unforceHide();
+
 private slots:
     void on_time_clicked();
 

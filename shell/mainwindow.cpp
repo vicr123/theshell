@@ -51,6 +51,7 @@ struct MainWindowPrivate {
     bool hasMouse = false;
 
     bool isHidden = false;
+    int forceHidden = 0;
 
     QGraphicsOpacityEffect* statusBarOpacityEffect;
     tVariantAnimation* statusBarOpacityAnimation;
@@ -827,11 +828,17 @@ void MainWindow::calculateAndMoveBar()
         }
     }
 
+    //Override if we need to fully hide the bar
+    if (d->forceHidden > 0) shouldHide = true;
+
     QRect endGeom;
     if (shouldHide) {
         //Figure out how much of the Bar should protrude
         int hideHeight = 1;
         if (haveStatusBar) hideHeight = ui->StatusBarFrame->height() + 1;
+
+        //Override if we need to fully hide the bar
+        if (d->forceHidden > 0) hideHeight = 0;
 
         if (onTop) {
             //Hide the bar on top
@@ -1189,6 +1196,19 @@ void MainWindow::reloadBar() {
         FlowLayout* flow = new FlowLayout(ui->windowList, -1, 0, 0);
         ui->windowList->setLayout(flow);
     }
+}
+
+void MainWindow::forceHide()
+{
+    d->forceHidden++;
+    calculateAndMoveBar();
+}
+
+void MainWindow::unforceHide()
+{
+    d->forceHidden--;
+    if (d->forceHidden < 0) d->forceHidden = 0;
+    calculateAndMoveBar();
 }
 
 void MainWindow::on_openStatusCenterButton_clicked()

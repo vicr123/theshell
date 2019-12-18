@@ -162,5 +162,5 @@ void GlobalFilter::reloadBackgrounds() {
 }
 
 void GlobalFilter::newCommunityImage() {
-    firstBackground->getNewCommunityBackground();
+
 }
