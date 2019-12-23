@@ -469,15 +469,6 @@
                    </item>
                    <item>
                     <property name="text">
-                     <string>Language</string>
-                    </property>
-                    <property name="icon">
-                     <iconset theme="preferences-system-locale">
-                      <normaloff>.</normaloff>.</iconset>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
                      <string>Accessibility</string>
                     </property>
                     <property name="icon">
@@ -606,7 +597,8 @@
                            <string>Log Out Now</string>
                           </property>
                           <property name="icon">
-                           <iconset theme="system-log-out"/>
+                           <iconset theme="system-log-out">
+                            <normaloff>.</normaloff>.</iconset>
                           </property>
                          </widget>
                         </item>
@@ -646,7 +638,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>11</number>
+             <number>10</number>
             </property>
             <widget class="QWidget" name="StartupSettings">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -3210,64 +3202,6 @@ Items that will be kept if you choose to keep files:
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="page_9">
-             <layout class="QVBoxLayout" name="verticalLayout_37">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="displayLabel_11">
-                <property name="font">
-                 <font>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Language</string>
-                </property>
-                <property name="margin">
-                 <number>9</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line_25">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QListWidget" name="localeList">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_68">
-                <property name="text">
-                 <string>Changing this setting requires you to log in and then log out.</string>
-                </property>
-                <property name="margin">
-                 <number>9</number>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
             <widget class="QWidget" name="page_12">
              <layout class="QVBoxLayout" name="verticalLayout_49">
               <property name="spacing">
@@ -4128,6 +4062,11 @@ Items that will be kept if you choose to keep files:
  </widget>
  <customwidgets>
   <customwidget>
+   <class>tSwitch</class>
+   <extends>QPushButton</extends>
+   <header location="global">tswitch.h</header>
+  </customwidget>
+  <customwidget>
    <class>tStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header location="global">tstackedwidget.h</header>
@@ -4154,11 +4093,6 @@ Items that will be kept if you choose to keep files:
    <slots>
     <signal>exit()</signal>
    </slots>
-  </customwidget>
-  <customwidget>
-   <class>tSwitch</class>
-   <extends>QPushButton</extends>
-   <header location="global">tswitch.h</header>
   </customwidget>
  </customwidgets>
  <resources>

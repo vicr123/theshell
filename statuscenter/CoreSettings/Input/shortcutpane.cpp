@@ -139,3 +139,9 @@ void ShortcutPane::addShortcut(ShortcutDescriptor shortcut) {
 
     d->currentRow++;
 }
+
+void ShortcutPane::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}

@@ -74,3 +74,4 @@ void InputPane::changeEvent(QEvent *event) {
         ui->retranslateUi(this);
     }
 }
+

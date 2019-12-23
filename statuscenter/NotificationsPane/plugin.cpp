@@ -25,11 +25,14 @@
 
 #include "audiomanager.h"
 #include "settings/settingspane.h"
+#include <locale/localemanager.h>
 
 Plugin::Plugin(QObject *parent) :
     QObject(parent)
 {
     translator = new QTranslator;
+    this->loadLanguage();
+    connect(LocaleManager::instance(), &LocaleManager::localeChanged, this, &Plugin::loadLanguage);
 
     SettingsPane* settings = new SettingsPane;
 
@@ -54,7 +57,7 @@ QList<StatusCenterPaneObject*> Plugin::availablePanes() {
     return panes;
 }
 
-void Plugin::loadLanguage(QString language) {
-    translator->load(language, QString(SHAREDIR) + "translations");
+void Plugin::loadLanguage() {
+    translator->load(LocaleManager::currentLocale().first(), "", "", QString(SHAREDIR) + "translations");
     QApplication::instance()->installTranslator(translator);
 }

@@ -44,7 +44,6 @@ PowerChunk::PowerChunk(DesktopUPower*daemon, QWidget *parent) :
     d->snackWidget = new QLabel();
 
     connect(d->daemon, &DesktopUPower::overallStateChanged, this, &PowerChunk::updateChunk);
-    this->updateChunk();
 
     QTimer::singleShot(0, this, [=] {
         d->ready = true;

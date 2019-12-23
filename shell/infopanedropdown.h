@@ -180,8 +180,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_userSettingsDeleteUserAndData_clicked();
 
-        void on_localeList_currentRowChanged(int currentRow);
-
         void on_StatusBarSwitch_toggled(bool checked);
 
         void on_SuspendLockScreen_toggled(bool checked);

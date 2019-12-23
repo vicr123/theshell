@@ -29,7 +29,6 @@ class StatusCenterPane {
         virtual ~StatusCenterPane() {}
 
         virtual QList<StatusCenterPaneObject*> availablePanes() = 0;
-        virtual void loadLanguage(QString language) = 0;
 };
 
 #define STATUS_CENTER_PANE_IID "org.thesuite.theshell.statuscenterpane"

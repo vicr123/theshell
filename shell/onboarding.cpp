@@ -127,7 +127,6 @@
     ""
 
 extern NativeEventFilter* NativeFilter;
-extern QTranslator *qtTranslator, *tsTranslator;
 extern float getDPIScaling();
 
 Onboarding::Onboarding(QWidget *parent) :
@@ -247,30 +246,7 @@ void Onboarding::on_changeLanguageButton_clicked()
 
 void Onboarding::on_localeList_currentRowChanged(int currentRow)
 {
-    if (currentRow == -1) return;
-    settings.setValue("locale/language", ui->localeList->item(currentRow)->data(Qt::UserRole).toString());
-
-    QString localeName = settings.value("locale/language", "en_US").toString();
-    qputenv("LANG", localeName.toUtf8());
-
-    QLocale defaultLocale(localeName);
-    QLocale::setDefault(defaultLocale);
-
-    if (defaultLocale.language() == QLocale::Arabic || defaultLocale.language() == QLocale::Hebrew) {
-        //Reverse the layout direction
-        QApplication::setLayoutDirection(Qt::RightToLeft);
-    } else {
-        //Set normal layout direction
-        QApplication::setLayoutDirection(Qt::LeftToRight);
-    }
-
-    qtTranslator->load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    QApplication::installTranslator(qtTranslator);
-
-    qDebug() << QLocale().name();
-
-    tsTranslator->load(QLocale().name(), QString(SHAREDIR) + "translations");
-    QApplication::installTranslator(tsTranslator);
+    //TODO: Refactor
 }
 
 void Onboarding::on_enableStatusBarButton_clicked()

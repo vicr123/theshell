@@ -60,11 +60,6 @@ PowerPane::PowerPane(QWidget *parent) :
         }
     });
 
-    d->chunk = new PowerChunk(d->daemon);
-    connect(d->chunk, &PowerChunk::activated, this, [=] {
-        sendMessage("show", {});
-    });
-
     this->informationalAttributes.lightColor = QColor(200, 150, 0);
     this->informationalAttributes.darkColor = QColor(100, 50, 0);
 
@@ -74,6 +69,11 @@ PowerPane::PowerPane(QWidget *parent) :
     });
 
     QTimer::singleShot(0, [=] {
+        d->chunk = new PowerChunk(d->daemon);
+        connect(d->chunk, &PowerChunk::activated, this, [=] {
+            sendMessage("show", {});
+        });
+
         sendMessage("register-chunk", {QVariant::fromValue(d->chunk)});
         sendMessage("register-snack", {QVariant::fromValue(d->chunk->snackWidget())});
     });

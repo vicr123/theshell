@@ -51,13 +51,13 @@
 #include <cxxabi.h>
 #include <QFile>
 #include <QDBusMetaType>
+#include <locale/localemanager.h>
 
 MainWindow* MainWin = NULL;
 NativeEventFilter* NativeFilter = NULL;
 DbusEvents* DBusEvents = NULL;
 TutorialWindow* TutorialWin = NULL;
 AudioManager* AudioMan = NULL;
-QTranslator *qtTranslator, *tsTranslator;
 LocationServices* locationServices = NULL;
 QDBusServiceWatcher* dbusServiceWatcher = NULL;
 QDBusServiceWatcher* dbusServiceWatcherSystem = NULL;
@@ -174,33 +174,12 @@ int main(int argc, char *argv[])
     qDBusRegisterMetaType<QMap<QString, QVariant>>();
     qDBusRegisterMetaType<QStringList>();
 
-    QLocale defaultLocale(localeName);
-    QLocale::setDefault(defaultLocale);
-
-    a.setLayoutDirection(defaultLocale.textDirection());
-
-    qtTranslator = new QTranslator;
-    qtTranslator->load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    a.installTranslator(qtTranslator);
-
-    qDebug() << QLocale().name();
-
-    tsTranslator = new QTranslator;
-    if (defaultLocale.name() == "C") {
-        tsTranslator->load(localeName, QString(SHAREDIR) + "translations");
-    } else {
-        tsTranslator->load(defaultLocale.name(), QString(SHAREDIR) + "translations");
-    }
-    a.installTranslator(tsTranslator);
+    LocaleManager::initialize();
 
     dbusServiceWatcher = new QDBusServiceWatcher();
     dbusServiceWatcher->setConnection(QDBusConnection::sessionBus());
     dbusServiceWatcherSystem = new QDBusServiceWatcher();
     dbusServiceWatcherSystem->setConnection(QDBusConnection::systemBus());
-
-    /*QTranslator tsVnTranslator;
-    tsTranslator.load(QLocale("vi_VN").name(), "/home/victor/Documents/theOSPack/theShell/translations/");
-    a.installTranslator(&tsVnTranslator);*/
 
     bool autoStart = true;
     bool startOnboarding = false;

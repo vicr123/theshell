@@ -42,6 +42,7 @@
 #include <quietmodedaemon.h>
 
 #include <Wm/desktopwm.h>
+#include <locale/localemanager.h>
 
 extern void playSound(QUrl, bool = false);
 extern QIcon getIconFromTheme(QString name, QColor textColor);
@@ -49,7 +50,6 @@ extern void EndSession(EndSessionWait::shutdownType type);
 extern QString calculateSize(quint64 size);
 extern AudioManager* AudioMan;
 extern NativeEventFilter* NativeFilter;
-extern QTranslator *qtTranslator, *tsTranslator;
 extern float getDPIScaling();
 extern QDBusServiceWatcher* dbusServiceWatcher;
 extern QDBusServiceWatcher* dbusServiceWatcherSystem;
@@ -315,9 +315,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
         ui->endSessionConfirmFullScreen->setChecked(false);
         ui->endSessionConfirmInMenu->setChecked(true);
     }
-
-    //Populate the language box
-    Internationalisation::fillLanguageBox(ui->localeList);
 
     ui->lockScreenBackground->setText(d->lockScreenSettings->value("background", "/usr/share/tsscreenlock/triangles.svg").toString());
     ui->TextSwitch->setChecked(d->settings.value("bar/showText", true).toBool());
@@ -619,7 +616,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
                     StatusCenterPane* p = qobject_cast<StatusCenterPane*>(plugin);
                     if (p) {
                         qDebug() << "Loading" << metadata.value("name").toString();
-                        p->loadLanguage(QLocale().name());
                         for (StatusCenterPaneObject* pane : p->availablePanes()) {
                             if (pane->position() == -1000 && pane->type().testFlag(StatusCenterPaneObject::Informational)) {
                                 if (!loadedPanes.contains("Overview")) {
@@ -1815,50 +1811,6 @@ void InfoPaneDropdown::on_userSettingsDeleteUserAndData_clicked()
 
     setupUsersSettingsPane();
     ui->userSettingsStackedWidget->setCurrentIndex(0);
-}
-
-void InfoPaneDropdown::on_localeList_currentRowChanged(int currentRow)
-{
-    if (currentRow == -1) return;
-    //Show the splash screen (if available)
-    emit dbusSignals->ShowSplash();
-
-    d->settings.setValue("locale/language", ui->localeList->item(currentRow)->data(Qt::UserRole).toString());
-
-    QString localeName = d->settings.value("locale/language", "en_US").toString();
-    qputenv("LANGUAGE", localeName.toUtf8());
-
-    QLocale defaultLocale(localeName);
-    QLocale::setDefault(defaultLocale);
-
-    if (defaultLocale.language() == QLocale::Arabic || defaultLocale.language() == QLocale::Hebrew) {
-        //Reverse the layout direction
-        QApplication::setLayoutDirection(Qt::RightToLeft);
-    } else {
-        //Set normal layout direction
-        QApplication::setLayoutDirection(Qt::LeftToRight);
-    }
-
-    qtTranslator->load("qt_" + defaultLocale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    QApplication::installTranslator(qtTranslator);
-
-    if (defaultLocale.name() == "C") {
-        tsTranslator->load(localeName, QString(SHAREDIR) + "translations");
-    } else {
-        tsTranslator->load(defaultLocale.name(), QString(SHAREDIR) + "translations");
-    }
-    QApplication::installTranslator(tsTranslator);
-
-    //Tell all plugins to update translator
-    for (StatusCenterPane* plugin : d->loadedPlugins) {
-        plugin->loadLanguage(defaultLocale.name());
-    }
-
-    //Process all events
-    QApplication::processEvents();
-
-    //Hide the splash screen since the language change is complete
-    emit dbusSignals->HideSplash();
 }
 
 void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)

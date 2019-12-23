@@ -31,6 +31,6 @@ QList<StatusCenterPaneObject*> Plugin::availablePanes() {
     return panes;
 }
 
-void Plugin::loadLanguage(QString language) {
+void Plugin::loadLanguage() {
 
 }

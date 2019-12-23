@@ -34,6 +34,10 @@ SOURCES += \
     globalkeyboard/globalkeyboardengine.cpp \
     globalkeyboard/shortcutinfodialog.cpp \
     hotkeyhud.cpp \
+    locale/currentlocalesmodel.cpp \
+    locale/localegroupmodel.cpp \
+    locale/localemanager.cpp \
+    locale/localemodel.cpp \
     locationdaemon.cpp \
     mpris/mprisengine.cpp \
     mpris/mprisplayer.cpp \
@@ -49,6 +53,10 @@ HEADERS += \
         globalkeyboard/globalkeyboardengine.h \
         globalkeyboard/keyboardtables.h \
         globalkeyboard/shortcutinfodialog.h \
+        locale/currentlocalesmodel.h \
+        locale/localegroupmodel.h \
+        locale/localemanager.h \
+        locale/localemodel.h \
         locationdaemon.h \
         mpris/mprisengine.h \
         mpris/mprisplayer.h \

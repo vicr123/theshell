@@ -2,12 +2,15 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="id_ID" sourcelanguage="en_US">
 <context>
-    <name>ColoursPane</name>
+    <name>AddLocaleDialog</name>
     <message>
-        <location filename="../theme/colourspane.ui" line="14"/>
-        <source>Form</source>
+        <location filename="../Locale/addlocaledialog.ui" line="93"/>
+        <source>Add Language</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>ColoursPane</name>
     <message>
         <location filename="../theme/colourspane.ui" line="71"/>
         <source>Select Colour Scheme</source>
@@ -205,11 +208,6 @@
 <context>
     <name>IconPane</name>
     <message>
-        <location filename="../theme/iconpane.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../theme/iconpane.ui" line="71"/>
         <source>Select Icon Theme</source>
         <translation type="unfinished"></translation>
@@ -308,6 +306,45 @@
     </message>
     <message>
         <location filename="../Input/keyboardpane.cpp" line="175"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LocalePane</name>
+    <message>
+        <location filename="../Locale/localepane.ui" line="86"/>
+        <source>LANGUAGE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Locale/localepane.ui" line="93"/>
+        <source>Prioritise the languages that you&apos;d like to use for the system. If an app isn&apos;t available in the system language, we&apos;ll use the first available language in the list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Locale/localepane.ui" line="40"/>
+        <location filename="../Locale/localepane.cpp" line="61"/>
+        <source>Language and Region</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Locale/localepane.cpp" line="103"/>
+        <source>For this language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Locale/localepane.cpp" line="104"/>
+        <source>Move Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Locale/localepane.cpp" line="107"/>
+        <source>Move Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Locale/localepane.cpp" line="111"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -649,11 +686,6 @@
 <context>
     <name>ThemePane</name>
     <message>
-        <location filename="../theme/themepane.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../theme/themepane.ui" line="40"/>
         <location filename="../theme/themepane.cpp" line="60"/>
         <source>Theme</source>
@@ -763,11 +795,6 @@
 <context>
     <name>WidgetStylePane</name>
     <message>
-        <location filename="../theme/widgetstylepane.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../theme/widgetstylepane.ui" line="71"/>
         <source>Select Widget Style</source>
         <translation type="unfinished"></translation>
@@ -775,11 +802,6 @@
 </context>
 <context>
     <name>WidgetStylePreview</name>
-    <message>
-        <location filename="../theme/widgetstylepreview.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../theme/widgetstylepreview.ui" line="86"/>
         <source>Example Window</source>

@@ -42,6 +42,8 @@ class ShortcutPane : public QWidget
 
         void addSection(QString title);
         void addShortcut(ShortcutDescriptor shortcut);
+
+        void changeEvent(QEvent* event);
 };
 
 #endif // SHORTCUTPANE_H

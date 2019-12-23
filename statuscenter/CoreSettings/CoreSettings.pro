@@ -29,6 +29,7 @@ blueprint {
 } else {
     DEFINES += "SHAREDIR=\\\"/usr/share/theshell/coresettings/\\\""
 }
+SHARE_APP_NAME = theshell/coresettings
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -41,48 +42,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-TRANSLATIONS += translations/vi_VN.ts \
-    translations/da_DK.ts \
-    translations/es_ES.ts \
-    translations/lt_LT.ts \
-    translations/nl_NL.ts \
-    translations/pl_PL.ts \
-    translations/pt_BR.ts \
-    translations/ru_RU.ts \
-    translations/sv_SE.ts \
-    translations/en_AU.ts \
-    translations/en_US.ts \
-    translations/en_GB.ts \
-    translations/en_NZ.ts \
-    translations/de_DE.ts \
-    translations/id_ID.ts \
-    translations/au_AU.ts \
-    translations/it_IT.ts \
-    translations/nb_NO.ts \
-    translations/no_NO.ts \
-    translations/ro_RO.ts \
-    translations/cy_GB.ts \
-    translations/fr_FR.ts
-
-qtPrepareTool(LUPDATE, lupdate)
-genlang.commands = "$$LUPDATE -no-obsolete -source-language en_US $$_PRO_FILE_"
-
-qtPrepareTool(LRELEASE, lrelease)
-rellang.commands = "$$LRELEASE -removeidentical $$_PRO_FILE_"
-QMAKE_EXTRA_TARGETS = genlang rellang
-PRE_TARGETDEPS = genlang rellang
-
 unix {
-    translations.files = translations/*.qm
+    # Include the-libs build tools
+    include(/usr/share/the-libs/pri/buildmaster.pri)
 
     blueprint {
         target.path = /usr/lib/theshellb/panes/
-        translations.path = /usr/share/theshellb/coresettings/translations
     } else {
         target.path = /usr/lib/theshell/panes/
-        translations.path = /usr/share/theshell/coresettings/translations
     }
-    INSTALLS += target translations
+    INSTALLS += target
 }
 
 HEADERS += \
@@ -90,6 +59,8 @@ HEADERS += \
     DateTime/timezonesmodel.h \
     Input/shortcutedit.h \
     Input/shortcutpane.h \
+    Locale/addlocaledialog.h \
+    Locale/localepane.h \
     plugin.h \
     Input/inputpane.h \
     Input/keyboardpane.h \
@@ -107,6 +78,8 @@ SOURCES += \
     DateTime/timezonesmodel.cpp \
     Input/shortcutedit.cpp \
     Input/shortcutpane.cpp \
+    Locale/addlocaledialog.cpp \
+    Locale/localepane.cpp \
     plugin.cpp \
     Input/inputpane.cpp \
     Input/keyboardpane.cpp \
@@ -129,6 +102,8 @@ FORMS += \
     Input/gesturepane.ui \
     Input/mousepane.ui \
     Input/shortcutpane.ui \
+    Locale/addlocaledialog.ui \
+    Locale/localepane.ui \
     theme/colourspane.ui \
     theme/iconpane.ui \
     theme/themepane.ui \
