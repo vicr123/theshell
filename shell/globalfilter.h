@@ -34,15 +34,6 @@ class GlobalFilter : public QObject
 public:
     explicit GlobalFilter(QApplication *application, QObject *parent = 0);
 
-signals:
-    void removeBackgrounds();
-    void changeBackgrounds();
-
-public slots:
-    void reloadScreens();
-    void reloadBackgrounds();
-    void newCommunityImage();
-
 private:
     bool eventFilter(QObject *object, QEvent *event);
 

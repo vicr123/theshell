@@ -32,15 +32,9 @@ extern void EndSession(EndSessionWait::shutdownType type);
 extern MainWindow* MainWin;
 extern DbusEvents* DBusEvents;
 
-Background* firstBackground;
 GlobalFilter::GlobalFilter(QApplication *application, QObject *parent) : QObject(parent)
 {
    application->installEventFilter(this);
-
-   connect(QApplication::desktop(), SIGNAL(screenCountChanged(int)), this, SLOT(reloadScreens()));
-   connect(QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(reloadScreens()));
-   connect(QApplication::desktop(), SIGNAL(primaryScreenChanged()), this, SLOT(reloadScreens()));
-   connect(MainWin, SIGNAL(reloadBackgrounds()), this, SLOT(reloadBackgrounds()));
 
    connect(GlobalKeyboardEngine::instance(), &GlobalKeyboardEngine::keyShortcutRegistered, this, [=](QString name, GlobalKeyboardKey* key) {
        if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::TakeScreenshot)) {
@@ -121,8 +115,6 @@ GlobalFilter::GlobalFilter(QApplication *application, QObject *parent) : QObject
            });
        }
    });
-
-   reloadScreens();
 }
 
 bool GlobalFilter::eventFilter(QObject *object, QEvent *event) {
@@ -134,33 +126,4 @@ bool GlobalFilter::eventFilter(QObject *object, QEvent *event) {
         }
     }
     return false;
-}
-
-void GlobalFilter::reloadScreens() {
-    QThread::msleep(500); //Wait for KScreen to apply screen changes
-    emit removeBackgrounds();
-    for (int i = 0; i < QApplication::desktop()->screenCount(); i++) {
-        Background* w = new Background(MainWin, i == 0 ? true : false, QApplication::desktop()->screenGeometry(i));
-        w->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint);
-        w->setAttribute(Qt::WA_ShowWithoutActivating, true);
-        w->show();
-        w->setGeometry(QApplication::desktop()->screenGeometry(i));
-        w->showFullScreen();
-        connect(this, SIGNAL(removeBackgrounds()), w, SLOT(deleteLater()));
-        connect(this, SIGNAL(changeBackgrounds()), w, SLOT(changeBackground()));
-        if (i == 0) {
-            firstBackground = w;
-            connect(w, SIGNAL(reloadBackground()), this, SLOT(reloadBackgrounds()));
-        } else {
-            connect(firstBackground, SIGNAL(setAllBackgrounds(QString)), w, SLOT(setCommunityBackground(QString)));
-        }
-    }
-}
-
-void GlobalFilter::reloadBackgrounds() {
-    emit changeBackgrounds();
-}
-
-void GlobalFilter::newCommunityImage() {
-
 }

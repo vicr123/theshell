@@ -99,6 +99,8 @@ public:
     Menu* getMenu();
     void show();
 
+    static MainWindow* instance();
+
 public slots:
     void openMenu();
 
@@ -195,9 +197,6 @@ private slots:
     void addWindow(DesktopWmWindowPtr window);
 
     void calculateAndMoveBar();
-
-    signals:
-    void reloadBackgrounds();
 
 private:
     Ui::MainWindow *ui;

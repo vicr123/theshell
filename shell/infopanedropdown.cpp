@@ -158,7 +158,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
 
     connect(PowerDaemon::instance(), &PowerDaemon::powerStretchChanged, [=](bool isOn) {
         ui->PowerStretchSwitch->setChecked(isOn);
-        doNetworkCheck();
 
         if (isOn) {
             d->slice1.pause();
@@ -171,9 +170,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
     ui->PowerStretchSwitch->setChecked(PowerDaemon::instance()->powerStretch());
 
     ui->resetButton->setProperty("type", "destructive");
-    ui->userSettingsDeleteUser->setProperty("type", "destructive");
-    ui->userSettingsDeleteUserAndData->setProperty("type", "destructive");
-    ui->userSettingsDeleteUserOnly->setProperty("type", "destructive");
     ui->resetDeviceButton->setProperty("type", "destructive");
     ui->partFrame->installEventFilter(this);
     ui->pageStack->setCurrentAnimation(tStackedWidget::SlideHorizontal);
@@ -370,17 +366,6 @@ InfoPaneDropdown::InfoPaneDropdown(WId MainWindowId, QWidget *parent) :
             ui->powerSuspendHibernate->setChecked(true);
             break;
     }
-
-    d->eventTimer = new QTimer(this);
-    d->eventTimer->setInterval(1000);
-    connect(d->eventTimer, SIGNAL(timeout()), this, SLOT(processTimer()));
-    d->eventTimer->start();
-
-    d->networkCheckTimer = new QTimer(this);
-    d->networkCheckTimer->setInterval(60000);
-    connect(d->networkCheckTimer, SIGNAL(timeout()), this, SLOT(doNetworkCheck()));
-    d->networkCheckTimer->start();
-    doNetworkCheck();
 
     QObjectList allObjects;
     allObjects.append(this);
@@ -775,91 +760,6 @@ InfoPaneNotOnTopLocker::~InfoPaneNotOnTopLocker() {
     infoPane->showNoAnimation();
 }
 
-void InfoPaneDropdown::processTimer() {
-
-    /*{
-        cups_dest_t *destinations;
-        int destinationCount = cupsGetDests(&destinations);
-
-        for (int i = 0; i < destinationCount; i++) {
-            cups_dest_t currentDestination = destinations[i];
-
-            if (!printersFrames.keys().contains(currentDestination.name)) {
-                QFrame* frame = new QFrame();
-                QHBoxLayout* layout = new QHBoxLayout();
-                layout->setMargin(0);
-                frame->setLayout(layout);
-
-                QFrame* statFrame = new QFrame();
-                QHBoxLayout* statLayout = new QHBoxLayout();
-                statLayout->setMargin(0);
-                statFrame->setLayout(statLayout);
-                layout->addWidget(statFrame);
-
-                QLabel* iconLabel = new QLabel();
-                QPixmap icon = QIcon::fromTheme("printer").pixmap(22 * getDPIScaling(), 22 * getDPIScaling());
-                if (currentDestination.is_default) {
-                    QPainter *p = new QPainter();
-                    p->begin(&icon);
-                    p->drawPixmap(10 * getDPIScaling(), 10 * getDPIScaling(), 12 * getDPIScaling(), 12 * getDPIScaling(), QIcon::fromTheme("emblem-checked").pixmap(12 * getDPIScaling(), 12 * getDPIScaling()));
-                    p->end();
-                }
-                iconLabel->setPixmap(icon);
-                statLayout->addWidget(iconLabel);
-
-                QLabel* nameLabel = new QLabel();
-                nameLabel->setText(currentDestination.name);
-                QFont font = nameLabel->font();
-                font.setBold(true);
-                nameLabel->setFont(font);
-                statLayout->addWidget(nameLabel);
-
-                QLabel* statLabel = new QLabel();
-                statLabel->setText(tr("Idle"));
-                statLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-                statLayout->addWidget(statLabel);
-
-                /*QPushButton* button = new QPushButton();
-                button->setIcon(QIcon::fromTheme("window-close"));
-                connect(button, &QPushButton::clicked, [=]() {
-                    emit closeNotification(id);
-                });
-                layout->addWidget(button);
-
-                ui->printersList->layout()->addWidget(frame);
-                printersFrames.insert(currentDestination.name, frame);
-                printersStatFrames.insert(currentDestination.name, frame);
-                printersStats.insert(currentDestination.name, statLabel);
-            }
-
-            QString state = "";
-            QString stateReasons = "";
-            for (int i = 0; i < currentDestination.num_options; i++) {
-                cups_option_t currentOption = currentDestination.options[i];
-
-                if (strncmp(currentOption.name, "printer-state", strlen(currentOption.name)) == 0) {
-                    if (strncmp(currentOption.value, "3", 1) == 0) {
-                        state = tr("Idle");
-                        printersStatFrames.value(currentDestination.name)->setEnabled(true);
-                    } else if (strncmp(currentOption.value, "4", 1) == 0) {
-                        state = tr("Printing");
-                        printersStatFrames.value(currentDestination.name)->setEnabled(true);
-                    } else if (strncmp(currentOption.value, "5", 1) == 0) {
-                        state = tr("Stopped");
-                        printersStatFrames.value(currentDestination.name)->setEnabled(false);
-                    }
-                } else if (strncmp(currentOption.name, "printer-state-reasons", strlen(currentOption.name)) == 0) {
-                    stateReasons = QString::fromUtf8(currentOption.value, strlen(currentOption.value));
-                }
-            }
-            printersStats.value(currentDestination.name)->setText(state + " / " + stateReasons);
-
-        }
-
-        cupsFreeDests(destinationCount, destinations);
-    }*/
-}
-
 void InfoPaneDropdown::show(dropdownType showWith) {
     if (showWith != None) {
         changeDropDown(showWith, false);
@@ -1137,8 +1037,6 @@ void InfoPaneDropdown::on_settingsList_currentRowChanged(int currentRow)
     //Set up settings
     if (currentRow == ui->settingsTabs->indexOf(ui->LocationSettings)) { //Location
         setupLocationSettingsPane();
-    } else if (currentRow == ui->settingsTabs->indexOf(ui->UserSettings)) { //Users
-        setupUsersSettingsPane();
     }
 }
 
@@ -1479,80 +1377,6 @@ void InfoPaneDropdown::on_PowerStretchSwitch_toggled(bool checked)
     PowerDaemon::instance()->setPowerStretch(checked);
 }
 
-void InfoPaneDropdown::doNetworkCheck() {
-    if (PowerDaemon::instance()->powerStretch()) {
-        //Always set networkOk to ok because we don't update when power stretch is on
-        d->networkOk = Ok;
-    } else {
-        //Do some network checks to see if network is working
-
-        QDBusInterface i("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", "org.freedesktop.NetworkManager", QDBusConnection::systemBus(), this);
-        int connectivity = i.property("Connectivity").toUInt();
-        if (connectivity == 2) {
-            if (d->networkOk != BehindPortal) {
-                //Notify user that they are behind a portal.
-                //Wait 10 seconds for startup or for connection notification
-
-                QTimer::singleShot(10000, [=] {
-                    QStringList actions;
-                    actions.append("login");
-                    actions.append(tr("Log in to network"));
-
-                    QVariantMap hints;
-                    hints.insert("category", "network.connected");
-                    hints.insert("transient", true);
-
-                    NotificationsDBusAdaptor::Notify("theShell", 0, "", tr("Network Login"),
-                                               tr("Your connection to the internet is blocked by a login page."),
-                                               actions, hints, 30000)->then([=](uint notificationId) {
-                        connect(NotificationsDBusAdaptor::instance(), &NotificationsDBusAdaptor::ActionInvoked, [=](uint id, QString key) {
-                            if (notificationId == id && key == "login") {
-                                QProcess::startDetached("xdg-open http://nmcheck.gnome.org/");
-                            }
-                        });
-                    });
-                });
-            }
-
-            d->networkOk = BehindPortal;
-
-            //Reload the connectivity status
-            i.asyncCall("CheckConnectivity");
-            return;
-        } else if (connectivity == 3) {
-            d->networkOk = Unspecified;
-
-            //Reload the connectivity status
-            i.asyncCall("CheckConnectivity");
-            return;
-        } else {
-            d->networkOk = Ok;
-        }
-
-        if (d->mgr.networkAccessible() == QNetworkAccessManager::NotAccessible) {
-            d->networkOk = Unspecified;
-
-            //Reload the connectivity status
-            i.asyncCall("CheckConnectivity");
-            return;
-        }
-
-        //For some reason this crashes theShell so let's not do this (for now)
-        /*connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply* reply) {
-            if (reply->error() != QNetworkReply::NoError) {
-                networkOk = false;
-            } else {
-                networkOk = true;
-            }
-            manager->deleteLater();
-        });
-        manager->get(QNetworkRequest(QUrl("http://vicr123.github.io/")));*/
-
-        //Reload the connectivity status
-        i.asyncCall("CheckConnectivity");
-    }
-}
-
 void InfoPaneDropdown::dragDown(dropdownType showWith, int y) {
     changeDropDown(showWith, false);
     QRect screenGeometry = QApplication::screens().first()->geometry();
@@ -1594,223 +1418,6 @@ void InfoPaneDropdown::completeDragDown() {
         a->start();
     }
     d->previousDrags.clear();
-}
-
-void InfoPaneDropdown::setupUsersSettingsPane() {
-    ui->availableUsersWidget->clear();
-
-    QDBusMessage getUsersMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "ListCachedUsers");
-    QDBusReply<QList<QDBusObjectPath>> allUsers = QDBusConnection::systemBus().call(getUsersMessage);
-    if (allUsers.isValid()) {
-        for (QDBusObjectPath obj : allUsers.value()) {
-            QDBusInterface interface("org.freedesktop.Accounts", obj.path(), "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
-
-            QListWidgetItem* item = new QListWidgetItem();
-            QString name = interface.property("RealName").toString();
-            if (name == "") {
-                name = interface.property("UserName").toString();
-            }
-            item->setText(name);
-            item->setIcon(QIcon::fromTheme("user"));
-            item->setData(Qt::UserRole, obj.path());
-            ui->availableUsersWidget->addItem(item);
-        }
-
-        QListWidgetItem* item = new QListWidgetItem();
-        item->setIcon(QIcon::fromTheme("list-add"));
-        item->setText(tr("Add New User"));
-        item->setData(Qt::UserRole, "new");
-        ui->availableUsersWidget->addItem(item);
-    }
-}
-
-void InfoPaneDropdown::on_userSettingsNextButton_clicked()
-{
-    if (ui->availableUsersWidget->selectedItems().count() != 0) {
-        //Check Polkit authorization
-        PolkitQt1::Authority::Result r = PolkitQt1::Authority::instance()->checkAuthorizationSync("org.freedesktop.accounts.user-administration", PolkitQt1::UnixProcessSubject(QApplication::applicationPid()), PolkitQt1::Authority::None);
-        if (r == PolkitQt1::Authority::No) {
-            QMessageBox::warning(this, tr("Unauthorized"), tr("Polkit does not allow you to manage users on the system."), QMessageBox::Ok, QMessageBox::Ok);
-            return;
-        } else if (r == PolkitQt1::Authority::Challenge) {
-            LOWER_INFOPANE
-            PolkitQt1::Authority::Result r = PolkitQt1::Authority::instance()->checkAuthorizationSync("org.freedesktop.accounts.user-administration", PolkitQt1::UnixProcessSubject(QApplication::applicationPid()), PolkitQt1::Authority::AllowUserInteraction);
-            if (r != PolkitQt1::Authority::Yes) {
-                return;
-            }
-        }
-
-        d->editingUserPath = ui->availableUsersWidget->selectedItems().first()->data(Qt::UserRole).toString();
-        if (d->editingUserPath == "new") {
-            ui->userSettingsEditUserLabel->setText(tr("New User"));
-            ui->userSettingsFullName->setText("");
-            ui->userSettingsUserName->setText("");
-            ui->userSettingsPassword->setPlaceholderText(tr("(none)"));
-            ui->userSettingsPasswordCheck->setPlaceholderText(tr("(none)"));
-            ui->userSettingsDeleteUser->setVisible(false);
-            ui->userSettingsStandardAccount->setChecked(true);
-            ui->userSettingsAdminAccount->setChecked(false);
-        } else {
-            ui->userSettingsEditUserLabel->setText(tr("Edit User"));
-            QDBusInterface interface("org.freedesktop.Accounts", d->editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
-            int passwordMode = interface.property("PasswordMode").toInt();
-            if (passwordMode == 0) {
-                ui->userSettingsPassword->setPlaceholderText(tr("(unchanged)"));
-                ui->userSettingsPasswordCheck->setPlaceholderText(tr("(unchanged)"));
-            } else if (passwordMode == 1) {
-                ui->userSettingsPassword->setPlaceholderText(tr("(set at next login)"));
-                ui->userSettingsPasswordCheck->setPlaceholderText(tr("(set at next login)"));
-            } else {
-                ui->userSettingsPassword->setPlaceholderText(tr("(none)"));
-                ui->userSettingsPasswordCheck->setPlaceholderText(tr("(none)"));
-            }
-            if (interface.property("AccountType").toInt() == 0) {
-                ui->userSettingsStandardAccount->setChecked(true);
-                ui->userSettingsAdminAccount->setChecked(false);
-            } else {
-                ui->userSettingsStandardAccount->setChecked(false);
-                ui->userSettingsAdminAccount->setChecked(true);
-            }
-            ui->userSettingsFullName->setText(interface.property("RealName").toString());
-            ui->userSettingsUserName->setText(interface.property("UserName").toString());
-            ui->userSettingsPasswordHint->setText(interface.property("PasswordHint").toString());
-            ui->userSettingsDeleteUser->setVisible(true);
-        }
-        ui->userSettingsPassword->setText("");
-        ui->userSettingsPasswordCheck->setText("");
-        ui->userSettingsStackedWidget->setCurrentIndex(1);
-    }
-}
-
-void InfoPaneDropdown::on_userSettingsCancelButton_clicked()
-{
-    ui->userSettingsStackedWidget->setCurrentIndex(0);
-}
-
-void InfoPaneDropdown::on_userSettingsApplyButton_clicked()
-{
-    if (ui->userSettingsPasswordCheck->text() != ui->userSettingsPassword->text()) {
-        QMessageBox::warning(this, tr("Password Check"), tr("The passwords don't match."), QMessageBox::Ok, QMessageBox::Ok);
-        return;
-    }
-
-    if (ui->userSettingsUserName->text().contains(" ")) {
-        QMessageBox::warning(this, tr("Username"), tr("The username must not contain spaces."), QMessageBox::Ok, QMessageBox::Ok);
-        return;
-    }
-
-    if (ui->userSettingsUserName->text().toLower() != ui->userSettingsUserName->text()) {
-        QMessageBox::warning(this, tr("Username"), tr("The username must not contain capital letters."), QMessageBox::Ok, QMessageBox::Ok);
-        return;
-    }
-
-    if (d->editingUserPath == "new") {
-        QDBusMessage createMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "CreateUser");
-        QVariantList args;
-        args.append(ui->userSettingsUserName->text());
-        args.append(ui->userSettingsFullName->text());
-        args.append(0);
-        createMessage.setArguments(args);
-
-        QDBusReply<QDBusObjectPath> newUser = QDBusConnection::systemBus().call(createMessage);
-        if (newUser.error().isValid()) {
-            tToast* toast = new tToast();
-            toast->setTitle("Couldn't create user");
-            toast->setText(newUser.error().message());
-            connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
-            toast->show(this);
-            return;
-        } else {
-            d->editingUserPath = newUser.value().path();
-        }
-    }
-
-    QDBusInterface interface("org.freedesktop.Accounts", d->editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
-    QDBusMessage setUserNameMessage = interface.call("SetUserName", ui->userSettingsUserName->text());
-    if (setUserNameMessage.errorMessage() != "") {
-        tToast* toast = new tToast();
-        toast->setTitle("Couldn't create user");
-        toast->setText(setUserNameMessage.errorMessage());
-        connect(toast, SIGNAL(dismissed()), toast, SLOT(deleteLater()));
-        toast->show(this);
-        return;
-    }
-    interface.call("SetRealName", ui->userSettingsFullName->text());
-
-    if (ui->userSettingsAdminAccount->isChecked()) {
-        interface.call("SetAccountType", 1);
-    } else {
-        interface.call("SetAccountType", 0);
-    }
-
-    if (ui->userSettingsPassword->text() != "") {
-        interface.call("SetPasswordMode", 0);
-
-        //Crypt password
-        QByteArray characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz./";
-        QByteArray salt("$6$");
-        for (int i = 0; i < 16; i++) {
-            salt.append(characters.at((qrand() % characters.count())));
-        }
-        QString cryptedPassword = QString::fromLatin1(crypt(ui->userSettingsPassword->text().toUtf8(), salt.constData()));
-
-        interface.call("SetPassword", cryptedPassword, ui->userSettingsPasswordHint->text());
-    } else {
-        if (d->editingUserPath == "new") {
-            interface.call("SetPasswordMode", 2);
-            interface.call("SetPasswordHint", ui->userSettingsPasswordHint->text());
-        }
-    }
-
-    setupUsersSettingsPane();
-    ui->userSettingsStackedWidget->setCurrentIndex(0);
-}
-
-void InfoPaneDropdown::on_userSettingsFullName_textEdited(const QString &arg1)
-{
-    ui->userSettingsUserName->setText(arg1.toLower().split(" ").first());
-}
-
-void InfoPaneDropdown::on_userSettingsDeleteUser_clicked()
-{
-    ui->userSettingsStackedWidget->setCurrentIndex(2);
-}
-
-void InfoPaneDropdown::on_userSettingsCancelDeleteUser_clicked()
-{
-    ui->userSettingsStackedWidget->setCurrentIndex(1);
-}
-
-void InfoPaneDropdown::on_userSettingsDeleteUserOnly_clicked()
-{
-    QDBusInterface interface("org.freedesktop.Accounts", d->editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
-    qlonglong uid = interface.property("Uid").toLongLong();
-
-    QDBusMessage deleteMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "DeleteUser");
-    QVariantList args;
-    args.append(uid);
-    args.append(false);
-    deleteMessage.setArguments(args);
-    QDBusConnection::systemBus().call(deleteMessage);
-
-    setupUsersSettingsPane();
-    ui->userSettingsStackedWidget->setCurrentIndex(0);
-}
-
-void InfoPaneDropdown::on_userSettingsDeleteUserAndData_clicked()
-{
-    QDBusInterface interface("org.freedesktop.Accounts", d->editingUserPath, "org.freedesktop.Accounts.User", QDBusConnection::systemBus());
-    qlonglong uid = interface.property("Uid").toLongLong();
-
-    QDBusMessage deleteMessage = QDBusMessage::createMethodCall("org.freedesktop.Accounts", "/org/freedesktop/Accounts", "org.freedesktop.Accounts", "DeleteUser");
-    QVariantList args;
-    args.append(uid);
-    args.append(true);
-    deleteMessage.setArguments(args);
-    QDBusConnection::systemBus().call(deleteMessage);
-
-    setupUsersSettingsPane();
-    ui->userSettingsStackedWidget->setCurrentIndex(0);
 }
 
 void InfoPaneDropdown::on_StatusBarSwitch_toggled(bool checked)
@@ -1941,22 +1548,6 @@ void InfoPaneDropdown::updateAccentColourBox() {
 void InfoPaneDropdown::on_AutoShowBarSwitch_toggled(bool checked)
 {
     d->settings.setValue("bar/autoshow", checked);
-}
-
-void InfoPaneDropdown::on_userSettingsAdminAccount_toggled(bool checked)
-{
-    if (checked) {
-        ui->userSettingsStandardAccount->setChecked(false);
-        ui->userSettingsAdminAccount->setChecked(true);
-    }
-}
-
-void InfoPaneDropdown::on_userSettingsStandardAccount_toggled(bool checked)
-{
-    if (checked) {
-        ui->userSettingsStandardAccount->setChecked(true);
-        ui->userSettingsAdminAccount->setChecked(false);
-    }
 }
 
 void InfoPaneDropdown::updateAutostart() {

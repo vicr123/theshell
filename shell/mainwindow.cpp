@@ -30,6 +30,7 @@
 #include "menu.h"
 #include "infopanedropdown.h"
 #include "powerdaemon.h"
+#include "background.h"
 
 #include <Wm/desktopwm.h>
 #include <TimeDate/desktoptimedate.h>
@@ -56,7 +57,11 @@ struct MainWindowPrivate {
     QGraphicsOpacityEffect* statusBarOpacityEffect;
     tVariantAnimation* statusBarOpacityAnimation;
     bool statusBarVisible = false;
+
+    static MainWindow* instance;
 };
+
+MainWindow* MainWindowPrivate::instance = nullptr;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -64,6 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     d = new MainWindowPrivate();
+    d->instance = this;
 
     this->setAttribute(Qt::WA_AcceptTouchEvents, true);
     ui->StatusBarFrame->setAttribute(Qt::WA_AcceptTouchEvents, true);
@@ -407,6 +413,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     initTaskbar();
     calculateAndMoveBar();
+
+    //Prepare the background
+    Background::reconfigureBackgrounds();
 
     //ui->infoScrollArea->setFixedHeight(ui->InfoScrollWidget->height());
 
@@ -919,6 +928,11 @@ void MainWindow::show() {
 
     //Show Gateway tutorial
     TutorialWin->showScreen(TutorialWindow::Gateway);
+}
+
+MainWindow*MainWindow::instance()
+{
+    return MainWindowPrivate::instance;
 }
 
 void MainWindow::on_desktopNext_clicked()

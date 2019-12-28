@@ -122,8 +122,6 @@ class InfoPaneDropdown : public QDialog
 
         void on_pushButton_7_clicked();
 
-        void processTimer();
-
         void on_resetButton_clicked();
 
         void on_settingsList_currentRowChanged(int currentRow);
@@ -158,27 +156,7 @@ class InfoPaneDropdown : public QDialog
 
         void on_PowerStretchSwitch_toggled(bool checked);
 
-        void doNetworkCheck();
-
-        void setupUsersSettingsPane();
-
         void setupLocationSettingsPane();
-
-        void on_userSettingsNextButton_clicked();
-
-        void on_userSettingsCancelButton_clicked();
-
-        void on_userSettingsApplyButton_clicked();
-
-        void on_userSettingsFullName_textEdited(const QString &arg1);
-
-        void on_userSettingsDeleteUser_clicked();
-
-        void on_userSettingsCancelDeleteUser_clicked();
-
-        void on_userSettingsDeleteUserOnly_clicked();
-
-        void on_userSettingsDeleteUserAndData_clicked();
 
         void on_StatusBarSwitch_toggled(bool checked);
 
@@ -209,10 +187,6 @@ class InfoPaneDropdown : public QDialog
         void updateAccentColourBox();
 
         void on_AutoShowBarSwitch_toggled(bool checked);
-
-        void on_userSettingsStandardAccount_toggled(bool checked);
-
-        void on_userSettingsAdminAccount_toggled(bool checked);
 
         void updateAutostart();
 

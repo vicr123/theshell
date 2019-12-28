@@ -36,7 +36,6 @@
 #include "choosebackground.h"
 
 class ChooseBackground;
-class MainWindow;
 
 namespace Ui {
 class Background;
@@ -48,10 +47,12 @@ class Background : public QDialog
     Q_OBJECT
 
     public:
-        explicit Background(MainWindow* mainwindow, bool imageGetter, QRect screenGeometry, QWidget *parent = 0);
+        explicit Background();
         ~Background();
 
         void show();
+
+        static void reconfigureBackgrounds();
 
     public slots:
         void changeBackground();
@@ -101,6 +102,8 @@ class Background : public QDialog
         bool eventFilter(QObject* watched, QEvent* event);
         void paintEvent(QPaintEvent* event);
         void resizeEvent(QResizeEvent* event);
+
+        void resizeToScreen(int screen);
 };
 
 #endif // BACKGROUND_H

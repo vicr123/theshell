@@ -30,11 +30,12 @@
 
 extern float getDPIScaling();
 
-extern Background* firstBackground;
-
 struct BackgroundPrivate {
     static BackgroundController* bg;
+    static QList<Background*> backgrounds;
 
+    QScreen* oldScreen = nullptr;
+    QMetaObject::Connection screenGeometryChangedConnection;
     QSettings settings;
 
     bool retrieving = false;
@@ -43,14 +44,13 @@ struct BackgroundPrivate {
 
     bool isChangeBackgroundVisible = false;
     bool communityBackgroundSettingsShown = true;
-
-    MainWindow* mw;
 };
 
 BackgroundController* BackgroundPrivate::bg = nullptr;
+QList<Background*> BackgroundPrivate::backgrounds = QList<Background*>();
 
-Background::Background(MainWindow* mainwindow, bool imageGetter, QRect screenGeometry, QWidget *parent) :
-    QDialog(parent),
+Background::Background() :
+    QDialog(nullptr),
     ui(new Ui::Background)
 {
     ui->setupUi(this);
@@ -58,7 +58,12 @@ Background::Background(MainWindow* mainwindow, bool imageGetter, QRect screenGeo
 
     if (!d->bg) {
         d->bg = new BackgroundController(BackgroundController::Desktop);
+
+        connect(qApp, &QApplication::screenAdded, &Background::reconfigureBackgrounds);
+        connect(qApp, &QApplication::screenRemoved, &Background::reconfigureBackgrounds);
+//        connect(qApp, &QApplication::primaryScreenChanged, &Background::reconfigureBackgrounds);
     }
+
     connect(d->bg, &BackgroundController::currentBackgroundChanged, this, [=](BackgroundController::BackgroundType type) {
         if (type == BackgroundController::Desktop) this->changeBackground();
         this->showCommunityBackgroundSettings(d->bg->currentBackgroundName(BackgroundController::Desktop) == "community" || d->bg->currentBackgroundName(BackgroundController::LockScreen) == "community");
@@ -109,8 +114,6 @@ Background::Background(MainWindow* mainwindow, bool imageGetter, QRect screenGeo
 
     ui->showImageInformationBox->setChecked(d->bg->shouldShowCommunityLabels());
 
-    d->mw = mainwindow;
-
     ui->stackedWidget->setCurrentWidget(ui->backgroundPage);
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
     ui->backgroundPage->installEventFilter(this);
@@ -120,6 +123,9 @@ Background::Background(MainWindow* mainwindow, bool imageGetter, QRect screenGeo
     ui->backgroundList->setItemDelegate(new BackgroundSelectionDelegate());
     ui->backgroundList->setIconSize(SC_DPI_T(QSize(213, 120), QSize));
     ui->backgroundList->setFixedHeight(SC_DPI(120));
+
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint);
+    this->setAttribute(Qt::WA_ShowWithoutActivating, true);
 
     changeBackground();
 }
@@ -230,10 +236,10 @@ void Background::toggleChangeBackground()
     anim->setStartValue(ui->backgroundSelectionWidget->height());
     if (d->isChangeBackgroundVisible) {
         anim->setEndValue(ui->backgroundSelectionWidget->sizeHint().height());
-        d->mw->forceHide();
+        MainWindow::instance()->forceHide();
     } else {
         anim->setEndValue(0);
-        d->mw->unforceHide();
+        MainWindow::instance()->unforceHide();
     }
     anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::OutCubic);
@@ -267,12 +273,12 @@ void Background::show() {
 
 void Background::on_actionOpen_Status_Center_triggered()
 {
-    d->mw->getInfoPane()->show(InfoPaneDropdown::Clock);
+    MainWindow::instance()->getInfoPane()->show(InfoPaneDropdown::Clock);
 }
 
 void Background::on_actionOpen_theShell_Settings_triggered()
 {
-    d->mw->getInfoPane()->show(InfoPaneDropdown::Settings);
+    MainWindow::instance()->getInfoPane()->show(InfoPaneDropdown::Settings);
 }
 
 void Background::on_actionChange_Background_triggered()
@@ -321,6 +327,46 @@ void Background::paintEvent(QPaintEvent *event) {
 void Background::resizeEvent(QResizeEvent*event)
 {
     this->changeBackground();
+}
+
+void Background::resizeToScreen(int screen)
+{
+    QScreen* s = QApplication::screens().at(screen);
+    if (s != d->oldScreen) {
+        if (s != nullptr) disconnect(d->screenGeometryChangedConnection);
+
+        connect(s, &QScreen::geometryChanged, this, [=] {
+            this->setGeometry(s->geometry());
+        });
+        this->setGeometry(s->geometry());
+        this->show();
+
+        d->oldScreen = s;
+    }
+}
+
+void Background::reconfigureBackgrounds()
+{
+    if (BackgroundPrivate::backgrounds.count() > QApplication::screens().count()) {
+        //Remove backgrounds until the correct number of backgrounds have been created
+        int difference = BackgroundPrivate::backgrounds.count() - QApplication::screens().count();
+        for (int i = 0; i < difference; i++) {
+            BackgroundPrivate::backgrounds.takeLast()->deleteLater();
+        }
+    }
+
+    if (BackgroundPrivate::backgrounds.count() < QApplication::screens().count()) {
+        //Add new backgrounds until the correct number of backgrounds have been created
+        int difference = QApplication::screens().count() - BackgroundPrivate::backgrounds.count();
+        for (int i = 0; i < difference; i++) {
+            Background* w = new Background();
+            BackgroundPrivate::backgrounds.append(w);
+        }
+    }
+
+    for (int i = 0; i < QApplication::screens().count(); i++) {
+        BackgroundPrivate::backgrounds.at(i)->resizeToScreen(i);
+    }
 }
 
 void Background::on_tryReloadBackgroundButton_clicked()
