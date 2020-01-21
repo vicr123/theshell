@@ -6,7 +6,7 @@
     <message>
         <location filename="../displayarrangementwidget.cpp" line="103"/>
         <source>Screen %1 connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Scherm %1 verbonden</translation>
     </message>
     <message>
         <location filename="../displayarrangementwidget.cpp" line="104"/>
