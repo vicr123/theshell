@@ -144,22 +144,22 @@
     <message>
         <location filename="../DateTime/datetimepane.ui" line="539"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="620"/>
         <source>Set Time Zone</source>
-        <translation type="unfinished"></translation>
+        <translation>タイムゾーンを設定</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="645"/>
         <source>Where are you now?</source>
-        <translation type="unfinished"></translation>
+        <translation>今どこにいますか？</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="671"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
 </context>
 <context>
@@ -167,42 +167,42 @@
     <message>
         <location filename="../Input/gesturepane.ui" line="40"/>
         <source>Gestures</source>
-        <translation type="unfinished"></translation>
+        <translation>ジェスチャー</translation>
     </message>
     <message>
         <location filename="../Input/gesturepane.ui" line="63"/>
         <source>These gestures work on touch screens.</source>
-        <translation type="unfinished"></translation>
+        <translation>ジェスチャーはタッチスクリーンで動作します。</translation>
     </message>
     <message>
         <location filename="../Input/gesturepane.ui" line="143"/>
         <source>Touch Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>タッチモード</translation>
     </message>
     <message>
         <location filename="../Input/gesturepane.ui" line="150"/>
         <source>Optimise theShell for touch screen input by making buttons bigger. &lt;b&gt;Requires a theShell restart&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>タッチ画面に最適化する（ボタンを大きくします。）&lt;b&gt;theShellを再起動する必要があります&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../Input/gesturepane.ui" line="166"/>
         <source>TOUCH MODE</source>
-        <translation type="unfinished"></translation>
+        <translation>タッチモード</translation>
     </message>
     <message>
         <location filename="../Input/gesturepane.ui" line="244"/>
         <source>Swipe to open Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>スワイプしてゲートウェイを開く</translation>
     </message>
     <message>
         <location filename="../Input/gesturepane.ui" line="277"/>
         <source>Swipe from the left side of the screen to open the Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>画面の左からスワイプしてゲートウェイを開く</translation>
     </message>
     <message>
         <location filename="../Input/gesturepane.ui" line="293"/>
         <source>SWIPE TO OPEN GATEWAY</source>
-        <translation type="unfinished"></translation>
+        <translation>スワイプしてゲートウェイを開く</translation>
     </message>
 </context>
 <context>
@@ -210,7 +210,7 @@
     <message>
         <location filename="../theme/iconpane.ui" line="71"/>
         <source>Select Icon Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>アイコンテーマを選択</translation>
     </message>
 </context>
 <context>
@@ -219,27 +219,27 @@
         <location filename="../Input/inputpane.ui" line="95"/>
         <location filename="../Input/inputpane.cpp" line="52"/>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>入力</translation>
     </message>
     <message>
         <location filename="../Input/inputpane.ui" line="130"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボード</translation>
     </message>
     <message>
         <location filename="../Input/inputpane.ui" line="139"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>ショートカット</translation>
     </message>
     <message>
         <location filename="../Input/inputpane.ui" line="147"/>
         <source>Mouse and Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation>マウスとタッチパット</translation>
     </message>
     <message>
         <location filename="../Input/inputpane.ui" line="156"/>
         <source>Gestures</source>
-        <translation type="unfinished"></translation>
+        <translation>ジェスチャー</translation>
     </message>
 </context>
 <context>
@@ -247,67 +247,67 @@
     <message>
         <location filename="../Input/keyboardpane.ui" line="62"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボード</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.ui" line="141"/>
         <source>LAYOUTS</source>
-        <translation type="unfinished"></translation>
+        <translation>レイアウト</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.ui" line="148"/>
         <source>Select the keyboard layouts you wish to use. You can switch between layouts using the keyboard button on the Bar, or by using the keyboard combination SUPER+ENTER.</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードレイアウトを選択してください。バーのボタンやキーボードショートカット（SUPER + ENTER）でレイアウト間を切り替えることができます。</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.ui" line="219"/>
         <source>TEST SETTINGS</source>
-        <translation type="unfinished"></translation>
+        <translation>テストの設定</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.ui" line="226"/>
         <source>Type something here to check your keyboard layout.</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードをチェックするために何か入力してください。</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.ui" line="233"/>
         <source>Type here</source>
-        <translation type="unfinished"></translation>
+        <translation>ここに入力</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.ui" line="279"/>
         <source>Use Super Key to open Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲートウェイを開くためにSuperキーを使用してください</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.ui" line="305"/>
         <source>SYSTEM SHORTCUTS</source>
-        <translation type="unfinished"></translation>
+        <translation>システムショートカット</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.ui" line="312"/>
         <source>If you&apos;d like to use the Super Key for a different app, turn this off so theShell won&apos;t take control of it. &lt;b&gt;Requires a theShell restart&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>もしほかのアプリにSuperキーを使用したい場合、ここをオフにしてコントロールを切ってください。&lt;b&gt;theShellを再起動する必要があります。&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.ui" line="383"/>
         <source>Add Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードショートカットを追加</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.cpp" line="106"/>
         <source>New Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいレイアウト</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.cpp" line="174"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 による</translation>
     </message>
     <message>
         <location filename="../Input/keyboardpane.cpp" line="175"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
 </context>
 <context>
@@ -316,37 +316,37 @@
         <location filename="../Locale/localepane.ui" line="40"/>
         <location filename="../Locale/localepane.cpp" line="61"/>
         <source>Language and Region</source>
-        <translation type="unfinished"></translation>
+        <translation>言語と地域</translation>
     </message>
     <message>
         <location filename="../Locale/localepane.ui" line="86"/>
         <source>LANGUAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>言語</translation>
     </message>
     <message>
         <location filename="../Locale/localepane.ui" line="93"/>
         <source>Prioritise the languages that you&apos;d like to use for the system. If an app isn&apos;t available in the system language, we&apos;ll use the first available language in the list.</source>
-        <translation type="unfinished"></translation>
+        <translation>システムに使用する言語に優先順位を付けます。 システム言語でアプリを使用できない場合、リストで最初に使用可能な言語を使用します。</translation>
     </message>
     <message>
         <location filename="../Locale/localepane.cpp" line="103"/>
         <source>For this language</source>
-        <translation type="unfinished"></translation>
+        <translation>この言語用</translation>
     </message>
     <message>
         <location filename="../Locale/localepane.cpp" line="104"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>上へ</translation>
     </message>
     <message>
         <location filename="../Locale/localepane.cpp" line="107"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>下へ</translation>
     </message>
     <message>
         <location filename="../Locale/localepane.cpp" line="111"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
 </context>
 <context>
@@ -354,88 +354,88 @@
     <message>
         <location filename="../Input/mousepane.ui" line="45"/>
         <source>Mouse and Touchpad</source>
-        <translation type="unfinished"></translation>
+        <translation>マウスとタッチパット</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="136"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="149"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>右</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="178"/>
         <location filename="../Input/mousepane.cpp" line="309"/>
         <source>Primary Button</source>
-        <translation type="unfinished"></translation>
+        <translation>最初のボタン</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="191"/>
         <source>CLICKING</source>
-        <translation type="unfinished"></translation>
+        <translation>クリックしています</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="198"/>
         <source>Tap to click</source>
-        <translation type="unfinished"></translation>
+        <translation>タップしてクリック</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="244"/>
         <source>Pointer Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>ポインタの速度</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="270"/>
         <source>MOVEMENT</source>
-        <translation type="unfinished"></translation>
+        <translation>移動</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="309"/>
         <source>Natural Mouse Scrolling</source>
-        <translation type="unfinished"></translation>
+        <translation>自然なスクロール</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="323"/>
         <source>Natural Touchpad Scrolling</source>
-        <translation type="unfinished"></translation>
+        <translation>自然なタッチパッドのスクロール</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="356"/>
         <source>SCROLLING</source>
-        <translation type="unfinished"></translation>
+        <translation>スクロール</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="363"/>
         <source>Natural Scrolling moves content in the direction of your finger instead of the scrollbar</source>
-        <translation type="unfinished"></translation>
+        <translation>自然なスクロールは、スクロールバーではなく指の方向にコンテンツを移動します</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="436"/>
         <source>Test Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>設定をテスト</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="459"/>
         <source>Test your settings here. You can try clicking, double clicking and scrolling.</source>
-        <translation type="unfinished"></translation>
+        <translation>ここで設定をテストします。 クリック、ダブルクリック、スクロールしてみてください。</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.ui" line="485"/>
         <source>Click me!</source>
-        <translation type="unfinished"></translation>
+        <translation>クリック！</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.cpp" line="312"/>
         <source>Middle Button</source>
-        <translation type="unfinished"></translation>
+        <translation>中ボタン</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.cpp" line="315"/>
         <source>Secondary Button</source>
-        <translation type="unfinished"></translation>
+        <translation>第二ボタン</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.cpp" line="318"/>
@@ -443,22 +443,22 @@
         <location filename="../Input/mousepane.cpp" line="324"/>
         <location filename="../Input/mousepane.cpp" line="327"/>
         <source>Button %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ボタン %1</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.cpp" line="330"/>
         <source>Button</source>
-        <translation type="unfinished"></translation>
+        <translation>ボタン</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.cpp" line="335"/>
         <source>%1 Single Click</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 シングルクリック</translation>
     </message>
     <message>
         <location filename="../Input/mousepane.cpp" line="337"/>
         <source>%1 Double Click</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ダブルクリック</translation>
     </message>
 </context>
 <context>
@@ -466,23 +466,23 @@
     <message>
         <location filename="../Input/shortcutedit.cpp" line="70"/>
         <source>For Shortcut %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ショートカット %1</translation>
     </message>
     <message>
         <location filename="../Input/shortcutedit.cpp" line="71"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>リセット</translation>
     </message>
     <message>
         <location filename="../Input/shortcutedit.cpp" line="75"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>クリア</translation>
     </message>
     <message>
         <location filename="../Input/shortcutedit.cpp" line="140"/>
         <location filename="../Input/shortcutedit.cpp" line="144"/>
         <source>Type Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>ショートカットタイプ</translation>
     </message>
 </context>
 <context>
@@ -490,42 +490,42 @@
     <message>
         <location filename="../Input/shortcutpane.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.ui" line="40"/>
         <source>Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>ショートカット</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.ui" line="96"/>
         <source>These shortcuts work everywhere on the system. They&apos;ll be paused while you&apos;re editing a shortcut here.</source>
-        <translation type="unfinished"></translation>
+        <translation>これらのショートカットは、システム上のどこでも機能します。ここでショートカットを編集している間、一時停止されます。</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="62"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>システム</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="63"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>実行</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="63"/>
         <source>Run a command</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンドを実行</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="64"/>
         <source>Suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>サスペンド</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="64"/>
         <source>Suspend the system</source>
-        <translation type="unfinished"></translation>
+        <translation>システムをサスペンド</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="65"/>
