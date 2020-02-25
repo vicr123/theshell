@@ -530,7 +530,7 @@
     <message>
         <location filename="../Input/shortcutpane.cpp" line="65"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>シャットダウン</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="65"/>
