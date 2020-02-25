@@ -289,10 +289,6 @@
         <source>Contact your mobile operator and acquire a new SIM card.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>WiFi Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>DeviceSettings</name>

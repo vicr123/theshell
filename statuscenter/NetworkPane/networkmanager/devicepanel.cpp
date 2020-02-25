@@ -200,20 +200,20 @@ void DevicePanel::updateInfo() {
                 });
                 ui->buttonLayout->addWidget(networksButton);
 
-                QPushButton* settingsButton = new QPushButton();
-                settingsButton->setText(tr("WiFi Settings"));
-                settingsButton->setIcon(QIcon::fromTheme("configure"));
-                connect(settingsButton, &QPushButton::clicked, [=] {
-                    DeviceSettings* devSettings = new DeviceSettings(d->device);
-                    tPopover* popover = new tPopover(devSettings);
-                    popover->setDismissable(false);
-                    popover->setPopoverWidth(SC_DPI(-100));
-                    connect(devSettings, &DeviceSettings::done, popover, &tPopover::dismiss);
-                    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
-                    connect(popover, &tPopover::dismissed, devSettings, &DeviceSettings::deleteLater);
-                    popover->show(d->popoverOn);
-                });
-                ui->buttonLayout->addWidget(settingsButton);
+//                QPushButton* settingsButton = new QPushButton();
+//                settingsButton->setText(tr("WiFi Settings"));
+//                settingsButton->setIcon(QIcon::fromTheme("configure"));
+//                connect(settingsButton, &QPushButton::clicked, [=] {
+//                    DeviceSettings* devSettings = new DeviceSettings(d->device);
+//                    tPopover* popover = new tPopover(devSettings);
+//                    popover->setDismissable(false);
+//                    popover->setPopoverWidth(SC_DPI(-100));
+//                    connect(devSettings, &DeviceSettings::done, popover, &tPopover::dismiss);
+//                    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+//                    connect(popover, &tPopover::dismissed, devSettings, &DeviceSettings::deleteLater);
+//                    popover->show(d->popoverOn);
+//                });
+//                ui->buttonLayout->addWidget(settingsButton);
             }
             break;
         }

@@ -34,6 +34,7 @@ struct NetworkWidgetPrivate {
 
     int wifiSwitch = -1;
     int cellularSwitch = -1;
+    bool switchesUpdating = false;
 
     ChunkWidget* chunk;
 
@@ -229,26 +230,30 @@ void NetworkWidget::updateDevices() {
         }
     }
 
-    QTimer::singleShot(0, [=] {
-        //In case this is run during the constructor
-        if (haveWifi && d->wifiSwitch == -1) {
-            //Register the WiFi switch
-            sendMessage("register-switch", {tr("Wi-Fi"), d->nmInterface->property("WirelessEnabled").toBool(), "wireless"});
-        } else if (!haveWifi && d->wifiSwitch != -1) {
-            //Deregister the WiFi switch
-            sendMessage("deregister-switch", {d->wifiSwitch});
-            d->wifiSwitch = -1;
-        }
+    if (!d->switchesUpdating) {
+        d->switchesUpdating = true;
+        QTimer::singleShot(0, [=] {
+            //In case this is run during the constructor
+            if (haveWifi && d->wifiSwitch == -1) {
+                //Register the WiFi switch
+                sendMessage("register-switch", {tr("Wi-Fi"), d->nmInterface->property("WirelessEnabled").toBool(), "wireless"});
+            } else if (!haveWifi && d->wifiSwitch != -1) {
+                //Deregister the WiFi switch
+                sendMessage("deregister-switch", {d->wifiSwitch});
+                d->wifiSwitch = -1;
+            }
 
-        if (haveCellular && d->cellularSwitch == -1) {
-            //Register the WiFi switch
-            sendMessage("register-switch", {tr("Cellular"), d->nmInterface->property("WwanEnabled").toBool(), "cellular"});
-        } else if (!haveCellular && d->cellularSwitch != -1) {
-            //Deregister the WiFi switch
-            sendMessage("deregister-switch", {d->cellularSwitch});
-            d->cellularSwitch = -1;
-        }
-    });
+            if (haveCellular && d->cellularSwitch == -1) {
+                //Register the WiFi switch
+                sendMessage("register-switch", {tr("Cellular"), d->nmInterface->property("WwanEnabled").toBool(), "cellular"});
+            } else if (!haveCellular && d->cellularSwitch != -1) {
+                //Deregister the WiFi switch
+                sendMessage("deregister-switch", {d->cellularSwitch});
+                d->cellularSwitch = -1;
+            }
+            d->switchesUpdating = false;
+        });
+    }
 }
 
 void NetworkWidget::on_networksBackButton_clicked()

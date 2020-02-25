@@ -1981,6 +1981,19 @@
     </message>
 </context>
 <context>
+    <name>TaskbarButton</name>
+    <message>
+        <location filename="../taskbarbutton.cpp" line="169"/>
+        <source>For %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../taskbarbutton.cpp" line="170"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TutorialWindow</name>
     <message>
         <location filename="../tutorialwindow.ui" line="82"/>
