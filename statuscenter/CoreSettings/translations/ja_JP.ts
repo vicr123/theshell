@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US" language="ja_JP">
 <context>
     <name>AddLocaleDialog</name>
     <message>
         <location filename="../Locale/addlocaledialog.ui" line="93"/>
         <source>Add Language</source>
-        <translation type="unfinished"></translation>
+        <translation>全ての言語</translation>
     </message>
 </context>
 <context>
@@ -14,52 +14,52 @@
     <message>
         <location filename="../theme/colourspane.ui" line="71"/>
         <source>Select Colour Scheme</source>
-        <translation type="unfinished"></translation>
+        <translation>カラースキームを選択</translation>
     </message>
     <message>
         <location filename="../theme/colourspane.cpp" line="42"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>ライト</translation>
     </message>
     <message>
         <location filename="../theme/colourspane.cpp" line="53"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>ダーク</translation>
     </message>
     <message>
         <location filename="../theme/colourspane.cpp" line="64"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>黒</translation>
     </message>
     <message>
         <location filename="../theme/colourspane.cpp" line="75"/>
         <source>Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>グレー</translation>
     </message>
     <message>
         <location filename="../theme/colourspane.cpp" line="88"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>青</translation>
     </message>
     <message>
         <location filename="../theme/colourspane.cpp" line="89"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>緑</translation>
     </message>
     <message>
         <location filename="../theme/colourspane.cpp" line="90"/>
         <source>Orange</source>
-        <translation type="unfinished"></translation>
+        <translation>オレンジ</translation>
     </message>
     <message>
         <location filename="../theme/colourspane.cpp" line="91"/>
         <source>Pink</source>
-        <translation type="unfinished"></translation>
+        <translation>ピンク</translation>
     </message>
     <message>
         <location filename="../theme/colourspane.cpp" line="92"/>
         <source>Turquoise</source>
-        <translation type="unfinished"></translation>
+        <translation>ターコイズブルー</translation>
     </message>
 </context>
 <context>
@@ -68,78 +68,78 @@
         <location filename="../DateTime/datetimepane.ui" line="47"/>
         <location filename="../DateTime/datetimepane.cpp" line="81"/>
         <source>Time and Date</source>
-        <translation type="unfinished"></translation>
+        <translation>時間と日付</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="94"/>
         <location filename="../DateTime/datetimepane.ui" line="182"/>
         <source>Set automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>自動で設定</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="120"/>
         <source>TIME AND DATE</source>
-        <translation type="unfinished"></translation>
+        <translation>時間と日付</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="129"/>
         <source>Change System Time and Date</source>
-        <translation type="unfinished"></translation>
+        <translation>システムの時間と日付を変更する</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="132"/>
         <source>Change the time and date for this device</source>
-        <translation type="unfinished"></translation>
+        <translation>このデバイス用にシステムの時間と日付を変更する</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="175"/>
         <source>TIMEZONE</source>
-        <translation type="unfinished"></translation>
+        <translation>タイムゾーン</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="214"/>
         <source>Change System Timezone</source>
-        <translation type="unfinished"></translation>
+        <translation>システムのタイムゾーンを変更する</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="217"/>
         <source>Change the timezone for this device</source>
-        <translation type="unfinished"></translation>
+        <translation>このデバイス用にシステムのタイムゾーンを変更する</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="254"/>
         <source>Clock Format</source>
-        <translation type="unfinished"></translation>
+        <translation>時計の形式</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="279"/>
         <source>12 hour</source>
-        <translation type="unfinished"></translation>
+        <translation>12時間</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="292"/>
         <source>24 hour</source>
-        <translation type="unfinished"></translation>
+        <translation>24時間</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="327"/>
         <source>DISPLAY</source>
-        <translation type="unfinished"></translation>
+        <translation>ディスプレイ</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="404"/>
         <source>Set Time and Date</source>
-        <translation type="unfinished"></translation>
+        <translation>時間と日付を設定</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="452"/>
         <source>DATE</source>
-        <translation type="unfinished"></translation>
+        <translation>日付</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="506"/>
         <source>TIME</source>
-        <translation type="unfinished"></translation>
+        <translation>時間</translation>
     </message>
     <message>
         <location filename="../DateTime/datetimepane.ui" line="539"/>
