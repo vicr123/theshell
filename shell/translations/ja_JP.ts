@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US" language="ja_JP">
 <context>
     <name>AppsListModel</name>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="70"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーション</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="128"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>シャットダウン</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="130"/>
