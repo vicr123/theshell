@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US" language="ja_JP">
 <context>
     <name>AppsListModel</name>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="70"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーション</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="128"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>シャットダウン</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="130"/>
         <source>Power off this device</source>
-        <translation type="unfinished"></translation>
+        <translation>シャットダウンする</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="135"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>再起動</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="137"/>
         <source>Reboot this device</source>
-        <translation type="unfinished"></translation>
+        <translation>再起動する</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="142"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>ログアウト</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="144"/>
         <source>End your session</source>
-        <translation type="unfinished"></translation>
+        <translation>セッションを終了</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="153"/>
         <source>Run Command</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンドを実行</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="163"/>
         <source>Open webpage</source>
-        <translation type="unfinished"></translation>
+        <translation>ウェブページを開く</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="171"/>
         <source>Open Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>フォルダを開く</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="181"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを開く</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="207"/>
         <source>System settings</source>
-        <translation type="unfinished"></translation>
+        <translation>システムの設定</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="209"/>
         <source>System Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
 </context>
 <context>
@@ -74,12 +74,12 @@
     <message>
         <location filename="../bthandsfree.cpp" line="89"/>
         <source>In call</source>
-        <translation type="unfinished"></translation>
+        <translation>通話中</translation>
     </message>
     <message>
         <location filename="../bthandsfree.cpp" line="93"/>
         <source>Dialling...</source>
-        <translation type="unfinished"></translation>
+        <translation>発信中...</translation>
     </message>
 </context>
 <context>
@@ -87,92 +87,92 @@
     <message>
         <location filename="../background.ui" line="176"/>
         <source>Sorry, there was a problem displaying the background.</source>
-        <translation type="unfinished"></translation>
+        <translation>壁紙の表示中に問題が発生しました。</translation>
     </message>
     <message>
         <location filename="../background.ui" line="198"/>
         <source>Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>もう一度試してください</translation>
     </message>
     <message>
         <location filename="../background.ui" line="379"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>背景</translation>
     </message>
     <message>
         <location filename="../background.ui" line="427"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">IMAGE</translation>
     </message>
     <message>
         <location filename="../background.ui" line="434"/>
         <source>Select an image to display on your background and lock screen</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップとロック画面の背景に設定する画像を選択してください</translation>
     </message>
     <message>
         <location filename="../background.ui" line="522"/>
         <source>COMMUNITY BACKGROUNDS</source>
-        <translation type="unfinished"></translation>
+        <translation>コミュニティによる壁紙</translation>
     </message>
     <message>
         <location filename="../background.ui" line="529"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell コミュニティによる画像は頻繁に更新されます。</translation>
     </message>
     <message>
         <location filename="../background.ui" line="536"/>
         <source>Show image information</source>
-        <translation type="unfinished"></translation>
+        <translation>画像の詳細を表示する</translation>
     </message>
     <message>
         <location filename="../background.ui" line="584"/>
         <source>STRETCH</source>
-        <translation type="unfinished"></translation>
+        <translation>伸ばす</translation>
     </message>
     <message>
         <location filename="../background.ui" line="591"/>
         <source>Select how you&apos;d like the background image to be sized</source>
-        <translation type="unfinished"></translation>
+        <translation>壁紙の調整方法を選択してください</translation>
     </message>
     <message>
         <location filename="../background.ui" line="603"/>
         <source>Stretch To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>引き伸ばす</translation>
     </message>
     <message>
         <location filename="../background.ui" line="629"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>拡大</translation>
     </message>
     <message>
         <location filename="../background.ui" line="655"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>中央</translation>
     </message>
     <message>
         <location filename="../background.ui" line="681"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>タイル</translation>
     </message>
     <message>
         <location filename="../background.ui" line="707"/>
         <source>Zoom To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>画面に合わせて拡大</translation>
     </message>
     <message>
         <location filename="../background.ui" line="756"/>
         <source>Change Background</source>
-        <translation type="unfinished"></translation>
+        <translation>壁紙を変更</translation>
     </message>
     <message>
         <location filename="../background.ui" line="765"/>
         <source>Open Status Center</source>
-        <translation type="unfinished"></translation>
+        <translation>ステータスセンターを開く</translation>
     </message>
     <message>
         <location filename="../background.ui" line="774"/>
         <source>Open System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>設定を開く</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="202"/>
@@ -182,17 +182,17 @@
     <message>
         <location filename="../background.cpp" line="315"/>
         <source>For desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップ用</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="317"/>
         <source>For system</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップ用</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="382"/>
         <source>Select Background</source>
-        <translation type="unfinished"></translation>
+        <translation>壁紙を選択</translation>
     </message>
 </context>
 <context>
@@ -200,32 +200,32 @@
     <message>
         <location filename="../choosebackground.ui" line="14"/>
         <source>Choose Background</source>
-        <translation type="unfinished"></translation>
+        <translation>壁紙を選択</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="44"/>
         <source>Inbuilt</source>
-        <translation type="unfinished"></translation>
+        <translation>プリインストール</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="57"/>
         <source>Community</source>
-        <translation type="unfinished"></translation>
+        <translation>コミュニティ</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="70"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>カスタム</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="184"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell コミュニティによる画像は頻繁に更新されます。</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="194"/>
         <source>Show Image information</source>
-        <translation type="unfinished"></translation>
+        <translation>画像の詳細を表示</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="203"/>
@@ -235,12 +235,12 @@
     <message>
         <location filename="../choosebackground.ui" line="226"/>
         <source>minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>分</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="279"/>
         <source>Current Background</source>
-        <translation type="unfinished"></translation>
+        <translation>現在の壁紙</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="325"/>
@@ -250,27 +250,27 @@
     <message>
         <location filename="../choosebackground.ui" line="332"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>ライセンス</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="339"/>
         <source>More Information</source>
-        <translation type="unfinished"></translation>
+        <translation>もっと詳しく</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="350"/>
         <source>by</source>
-        <translation type="unfinished"></translation>
+        <translation>による</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="379"/>
         <source>Select a file to display as your desktop background</source>
-        <translation type="unfinished"></translation>
+        <translation>壁紙に設定するファイルを選んでください</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="391"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>参照...</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="453"/>
@@ -280,22 +280,22 @@
     <message>
         <location filename="../choosebackground.ui" line="461"/>
         <source>Stretch to Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>引き伸ばす</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="466"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>拡大</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="471"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>中央</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="476"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>タイル</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="481"/>
@@ -315,7 +315,7 @@
     <message>
         <location filename="../choosebackground.cpp" line="170"/>
         <source>Select Background</source>
-        <translation type="unfinished"></translation>
+        <translation>壁紙を選択</translation>
     </message>
 </context>
 <context>
@@ -345,7 +345,7 @@
     <message>
         <location filename="../dbusevents.cpp" line="164"/>
         <source>iOS Device</source>
-        <translation type="unfinished"></translation>
+        <translation>iOSのデバイス</translation>
     </message>
 </context>
 <context>
@@ -359,7 +359,7 @@
         <location filename="../endsessionwait.ui" line="180"/>
         <location filename="../endsessionwait.ui" line="770"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="206"/>
@@ -384,7 +384,7 @@
         <location filename="../endsessionwait.cpp" line="486"/>
         <location filename="../endsessionwait.cpp" line="864"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>シャットダウン</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="395"/>
@@ -396,13 +396,13 @@
         <location filename="../endsessionwait.cpp" line="92"/>
         <location filename="../endsessionwait.cpp" line="493"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>再起動</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="462"/>
         <location filename="../endsessionwait.cpp" line="500"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>ログアウト</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="494"/>
@@ -443,7 +443,7 @@
     <message>
         <location filename="../endsessionwait.ui" line="694"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>完了</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="865"/>
@@ -816,17 +816,17 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2114"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>シャットダウン</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2123"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>再起動</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2132"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>ログアウト</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2141"/>
@@ -901,7 +901,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2445"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>背景</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2452"/>
@@ -1414,7 +1414,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="1174"/>
         <source>Open System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>設定を開く</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1183"/>
@@ -1489,7 +1489,7 @@
     <message>
         <location filename="../menu.ui" line="516"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>シャットダウン</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="529"/>
@@ -1499,7 +1499,7 @@
     <message>
         <location filename="../menu.ui" line="540"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>再起動</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="553"/>
@@ -1509,7 +1509,7 @@
     <message>
         <location filename="../menu.ui" line="560"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>ログアウト</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="573"/>
@@ -1874,12 +1874,12 @@
     <message>
         <location filename="../onboarding.ui" line="909"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>ログアウト</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="923"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>シャットダウン</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="1045"/>

@@ -535,152 +535,152 @@
     <message>
         <location filename="../Input/shortcutpane.cpp" line="65"/>
         <source>Power off the system, or show power options</source>
-        <translation type="unfinished"></translation>
+        <translation>システムの電源を切る、または電源オプションを表示する</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="66"/>
         <source>Power Options</source>
-        <translation type="unfinished"></translation>
+        <translation>電源オプション</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="66"/>
         <source>Show power options</source>
-        <translation type="unfinished"></translation>
+        <translation>パワーオプションを表示する</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="67"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>取り出す</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="67"/>
         <source>Eject an optical disc</source>
-        <translation type="unfinished"></translation>
+        <translation>ディスクを取り外す</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="69"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>スクリーン</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="70"/>
         <source>Brightness Up</source>
-        <translation type="unfinished"></translation>
+        <translation>明るさを上げる</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="70"/>
         <source>Adjust the brightness of your screen up</source>
-        <translation type="unfinished"></translation>
+        <translation>画面の明るさを調整します</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="71"/>
         <source>Brightness Down</source>
-        <translation type="unfinished"></translation>
+        <translation>明るさを下げる</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="71"/>
         <source>Adjust the brightness of your screen down</source>
-        <translation type="unfinished"></translation>
+        <translation>画面の明るさを下げる</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="72"/>
         <source>Lock Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>スクリーンをロックする</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="72"/>
         <source>Lock your computer so no one else can access it</source>
-        <translation type="unfinished"></translation>
+        <translation>他のユーザーがアクセスできないようにコンピューターをロックします</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="73"/>
         <source>Take Screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>スクリーンショットを撮る</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="73"/>
         <source>Take a photo of your screen</source>
-        <translation type="unfinished"></translation>
+        <translation>画面の写真を撮ります</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="74"/>
         <source>Take Screen Recording</source>
-        <translation type="unfinished"></translation>
+        <translation>画面の記録を取る</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="74"/>
         <source>Record a video of your screen</source>
-        <translation type="unfinished"></translation>
+        <translation>画面のビデオを録画する</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="76"/>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>オーディオ</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="77"/>
         <source>Volume Up</source>
-        <translation type="unfinished"></translation>
+        <translation>音量を上げる</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="77"/>
         <source>Increase the volume</source>
-        <translation type="unfinished"></translation>
+        <translation>音量を上げる</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="78"/>
         <source>Volume Down</source>
-        <translation type="unfinished"></translation>
+        <translation>音量を下げる</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="78"/>
         <source>Decrease the volume</source>
-        <translation type="unfinished"></translation>
+        <translation>音量を下げる</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="79"/>
         <source>Toggle Quiet Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>ミュートの切り替え</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="79"/>
         <source>Switch between Quiet Mode options</source>
-        <translation type="unfinished"></translation>
+        <translation>ミュートのオプションを切り替える</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="81"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボード</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="82"/>
         <source>Next Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>次のレイアウト</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="82"/>
         <source>Switch to the next keyboard layout</source>
-        <translation type="unfinished"></translation>
+        <translation>次のキーボードレイアウトに切り替える</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="83"/>
         <source>Keyboard Brightness Up</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードの明るさを上げる</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="83"/>
         <source>Turn the keyboard brightness up</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードの明るさを上げる</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="84"/>
         <source>Keyboard Brightness Down</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードの明るさを下げる</translation>
     </message>
     <message>
         <location filename="../Input/shortcutpane.cpp" line="84"/>
         <source>Turn the keyboard brightness down</source>
-        <translation type="unfinished"></translation>
+        <translation>キーボードの明るさを下げます</translation>
     </message>
 </context>
 <context>
@@ -689,107 +689,107 @@
         <location filename="../theme/themepane.ui" line="40"/>
         <location filename="../theme/themepane.cpp" line="60"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>テーマ</translation>
     </message>
     <message>
         <location filename="../theme/themepane.ui" line="119"/>
         <source>COLOURS</source>
-        <translation type="unfinished"></translation>
+        <translation>色</translation>
     </message>
     <message>
         <location filename="../theme/themepane.ui" line="126"/>
         <source>Colours apply to all Qt 5 apps running under theShell.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShellの下で実行されるすべてのQt 5アプリに色が適用されます。</translation>
     </message>
     <message>
         <location filename="../theme/themepane.ui" line="135"/>
         <source>Change System Colours</source>
-        <translation type="unfinished"></translation>
+        <translation>システムの色を変更する</translation>
     </message>
     <message>
         <location filename="../theme/themepane.ui" line="168"/>
         <source>WIDGETS</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィジェット</translation>
     </message>
     <message>
         <location filename="../theme/themepane.ui" line="175"/>
         <source>The widget style defines the overall theme of an app.</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィジェットスタイルは、アプリの全体的なテーマです。</translation>
     </message>
     <message>
         <location filename="../theme/themepane.ui" line="184"/>
         <source>Change Qt Widget Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt ウィジェットのスタイルを変更する</translation>
     </message>
     <message>
         <location filename="../theme/themepane.ui" line="214"/>
         <source>ICONS</source>
-        <translation type="unfinished"></translation>
+        <translation>アイコン</translation>
     </message>
     <message>
         <location filename="../theme/themepane.ui" line="221"/>
         <source>Icons will apply to all Qt 5 apps running under theShell.</source>
-        <translation type="unfinished"></translation>
+        <translation>アイコンは、theShellの下で実行されているすべてのQt 5アプリに適用されます。</translation>
     </message>
     <message>
         <location filename="../theme/themepane.ui" line="230"/>
         <source>Change Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>アイコンを変更する</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="96"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>ライト</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="98"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>ダーク</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="100"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>ブラック</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="102"/>
         <source>Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>グレー</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="104"/>
         <source>Decorative</source>
-        <translation type="unfinished"></translation>
+        <translation>飾り</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="108"/>
         <source>blue</source>
-        <translation type="unfinished"></translation>
+        <translation>青</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="109"/>
         <source>green</source>
-        <translation type="unfinished"></translation>
+        <translation>緑</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="110"/>
         <source>orange</source>
-        <translation type="unfinished"></translation>
+        <translation>オレンジ</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="111"/>
         <source>pink</source>
-        <translation type="unfinished"></translation>
+        <translation>ピンク</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="112"/>
         <source>turquoise</source>
-        <translation type="unfinished"></translation>
+        <translation>ターコイズブルー</translation>
     </message>
     <message>
         <location filename="../theme/themepane.cpp" line="117"/>
         <source>%1 theme - %2 accents</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 テーマ %2 アクセント</translation>
     </message>
 </context>
 <context>
@@ -797,7 +797,7 @@
     <message>
         <location filename="../theme/widgetstylepane.ui" line="71"/>
         <source>Select Widget Style</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィジェットスタイルを選択してください</translation>
     </message>
 </context>
 <context>
@@ -805,32 +805,32 @@
     <message>
         <location filename="../theme/widgetstylepreview.ui" line="86"/>
         <source>Example Window</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウ例</translation>
     </message>
     <message>
         <location filename="../theme/widgetstylepreview.ui" line="132"/>
         <source>EXAMPLE WIDGETS</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィジェット例</translation>
     </message>
     <message>
         <location filename="../theme/widgetstylepreview.ui" line="139"/>
         <source>Example Button</source>
-        <translation type="unfinished"></translation>
+        <translation>ボタン例</translation>
     </message>
     <message>
         <location filename="../theme/widgetstylepreview.ui" line="146"/>
         <source>Example Text Box</source>
-        <translation type="unfinished"></translation>
+        <translation>テキストボックス例</translation>
     </message>
     <message>
         <location filename="../theme/widgetstylepreview.ui" line="180"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>プレビュー</translation>
     </message>
     <message>
         <location filename="../theme/widgetstylepreview.ui" line="190"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>選択</translation>
     </message>
 </context>
 </TS>
