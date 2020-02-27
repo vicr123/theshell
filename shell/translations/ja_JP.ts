@@ -127,7 +127,7 @@
     <message>
         <location filename="../background.ui" line="584"/>
         <source>STRETCH</source>
-        <translation type="unfinished">STRETCH</translation>
+        <translation>伸ばす</translation>
     </message>
     <message>
         <location filename="../background.ui" line="591"/>
@@ -167,7 +167,7 @@
     <message>
         <location filename="../background.ui" line="765"/>
         <source>Open Status Center</source>
-        <translation type="unfinished"></translation>
+        <translation>ステータスセンターを開く</translation>
     </message>
     <message>
         <location filename="../background.ui" line="774"/>
@@ -182,12 +182,12 @@
     <message>
         <location filename="../background.cpp" line="315"/>
         <source>For desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップ用</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="317"/>
         <source>For system</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップ用</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="382"/>
@@ -345,7 +345,7 @@
     <message>
         <location filename="../dbusevents.cpp" line="164"/>
         <source>iOS Device</source>
-        <translation type="unfinished"></translation>
+        <translation>iOSのデバイス</translation>
     </message>
 </context>
 <context>
@@ -359,7 +359,7 @@
         <location filename="../endsessionwait.ui" line="180"/>
         <location filename="../endsessionwait.ui" line="770"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="206"/>
@@ -443,7 +443,7 @@
     <message>
         <location filename="../endsessionwait.ui" line="694"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>完了</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="865"/>
