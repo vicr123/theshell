@@ -19,6 +19,7 @@
  * *************************************/
 
 #include "taskbarbutton.h"
+#include <QMenu>
 #include <Wm/desktopwm.h>
 
 extern float getDPIScaling();
@@ -39,8 +40,7 @@ struct TaskbarButtonPrivate {
     bool shouldBeVisible = true;
 };
 
-TaskbarButton::TaskbarButton(DesktopWmWindowPtr window) : QPushButton(nullptr)
-{
+TaskbarButton::TaskbarButton(DesktopWmWindowPtr window) : QPushButton(nullptr) {
     d = new TaskbarButtonPrivate();
     d->window = window;
 
@@ -48,23 +48,23 @@ TaskbarButton::TaskbarButton(DesktopWmWindowPtr window) : QPushButton(nullptr)
     this->setFixedWidth(0);
     this->setMouseTracking(true);
 
-    connect(DesktopWm::instance(), &DesktopWm::activeWindowChanged, this, [=] {
+    connect(DesktopWm::instance(), &DesktopWm::activeWindowChanged, this, [ = ] {
         d->isActive = DesktopWm::activeWindow() == d->window;
         this->update();
     });
-    connect(window, &DesktopWmWindow::titleChanged, this, [=] {
+    connect(window, &DesktopWmWindow::titleChanged, this, [ = ] {
         this->setText(window->title());
     });
-    connect(window, &DesktopWmWindow::iconChanged, this, [=] {
+    connect(window, &DesktopWmWindow::iconChanged, this, [ = ] {
         this->setIcon(window->icon());
     });
-    connect(window, &DesktopWmWindow::windowStateChanged, this, [=] {
+    connect(window, &DesktopWmWindow::windowStateChanged, this, [ = ] {
         d->isWindowMinimized = d->window->isMinimized();
         d->shouldBeVisible = d->window->shouldShowInTaskbar();
         this->update();
         this->adjustSize();
     });
-    connect(window, &DesktopWmWindow::destroyed, this, [=] {
+    connect(window, &DesktopWmWindow::destroyed, this, [ = ] {
         d->pendingDelete = true;
         this->animateOut();
     });
@@ -75,7 +75,7 @@ TaskbarButton::TaskbarButton(DesktopWmWindowPtr window) : QPushButton(nullptr)
     this->setText(window->title());
     this->setIcon(window->icon());
 
-    connect(this, &TaskbarButton::clicked, this, [=] {
+    connect(this, &TaskbarButton::clicked, this, [ = ] {
         if (!d->isActive) {
             d->window->activate();
         }
@@ -88,26 +88,25 @@ void TaskbarButton::animateOut() {
     anim->setEndValue(0);
     anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::InCubic);
-    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(anim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
         this->setFixedWidth(value.toInt());
     });
     connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
-    connect(anim, &tVariantAnimation::finished, this, [=] {
+    connect(anim, &tVariantAnimation::finished, this, [ = ] {
         if (d->pendingDelete) this->deleteLater();
     });
     connect(this, &TaskbarButton::destroyed, anim, &tVariantAnimation::deleteLater);
     anim->start();
 }
 
-QSize TaskbarButton::sizeHint() const
-{
+QSize TaskbarButton::sizeHint() const {
     int width = d->textRect.width() + SC_DPI(18);
     if (!this->icon().isNull()) width += this->iconSize().width() + SC_DPI(6);
 
     return QSize(width, this->fontMetrics().height() + SC_DPI(18));
 }
 
-void TaskbarButton::paintEvent(QPaintEvent *event) {
+void TaskbarButton::paintEvent(QPaintEvent* event) {
     QPalette pal = this->palette();
     QPainter painter(this);
     QBrush brush = QBrush(pal.color(QPalette::Button));
@@ -165,6 +164,16 @@ void TaskbarButton::paintEvent(QPaintEvent *event) {
     }
 }
 
+void TaskbarButton::contextMenuEvent(QContextMenuEvent* event) {
+    QMenu* menu = new QMenu();
+    menu->addSection(tr("For %1").arg(this->fontMetrics().elidedText(d->window->title(), Qt::ElideRight, SC_DPI(300))));
+    menu->addAction(QIcon::fromTheme("window-close"), tr("Close"), [ = ] {
+        d->window->close();
+    });
+    connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
+    menu->popup(event->globalPos());
+}
+
 void TaskbarButton::setText(QString text) {
     QRect textRect;
     textRect.setHeight(fontMetrics().height());
@@ -184,7 +193,7 @@ void TaskbarButton::setText(QString text) {
     oldAnim->setEndValue(d->oldTextRect.translated(0, -d->oldTextRect.bottom()));
     oldAnim->setDuration(500);
     oldAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(oldAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(oldAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
         d->oldTextRect = value.toRect();
         this->update();
     });
@@ -196,7 +205,7 @@ void TaskbarButton::setText(QString text) {
     newAnim->setEndValue(textRect);
     newAnim->setDuration(500);
     newAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(newAnim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(newAnim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
         d->textRect = value.toRect();
         this->update();
     });
@@ -206,14 +215,12 @@ void TaskbarButton::setText(QString text) {
     this->adjustSize();
 }
 
-void TaskbarButton::setIcon(QIcon icon)
-{
+void TaskbarButton::setIcon(QIcon icon) {
     QPushButton::setIcon(icon);
     this->adjustSize();
 }
 
-void TaskbarButton::adjustSize()
-{
+void TaskbarButton::adjustSize() {
     int width;
     if (d->shouldBeVisible) {
         width = this->sizeHint().width();
@@ -233,7 +240,7 @@ void TaskbarButton::adjustSize()
         anim->setEndValue(qMin(this->sizeHint().width(), SC_DPI(250)));
         anim->setDuration(500);
         anim->setEasingCurve(QEasingCurve::OutCubic);
-        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        connect(anim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
             this->setFixedWidth(value.toInt());
         });
         connect(anim, &tVariantAnimation::finished, anim, &tVariantAnimation::deleteLater);
@@ -246,6 +253,6 @@ void TaskbarButton::enterEvent(QEvent* event) {
     d->hovering = true;
 }
 
-void TaskbarButton::leaveEvent(QEvent *event) {
+void TaskbarButton::leaveEvent(QEvent* event) {
     d->hovering = false;
 }

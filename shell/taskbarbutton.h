@@ -31,9 +31,8 @@
 struct TaskbarButtonPrivate;
 class DesktopWmWindow;
 typedef QPointer<DesktopWmWindow> DesktopWmWindowPtr;
-class TaskbarButton : public QPushButton
-{
-    Q_OBJECT
+class TaskbarButton : public QPushButton {
+        Q_OBJECT
     public:
         explicit TaskbarButton(DesktopWmWindowPtr window);
 
@@ -52,6 +51,7 @@ class TaskbarButton : public QPushButton
     private:
         TaskbarButtonPrivate* d;
         void paintEvent(QPaintEvent* event);
+        void contextMenuEvent(QContextMenuEvent* event);
 
         void enterEvent(QEvent* event);
         void leaveEvent(QEvent* event);
