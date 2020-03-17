@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="ja_JP">
+<TS version="2.1" language="ja_JP" sourcelanguage="en_US">
 <context>
     <name>AppsListModel</name>
     <message>
@@ -305,7 +305,7 @@
     <message>
         <location filename="../choosebackground.ui" line="506"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">完了</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="93"/>
@@ -896,7 +896,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2423"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">参照...</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2445"/>
@@ -1288,7 +1288,7 @@
         <location filename="../mainwindow.ui" line="152"/>
         <location filename="../mainwindow.cpp" line="1171"/>
         <source>Open Status Center</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ステータスセンターを開く</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="316"/>
@@ -1909,7 +1909,7 @@
     <message>
         <location filename="../rundialog.ui" line="50"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">キャンセル</translation>
     </message>
     <message>
         <location filename="../rundialog.ui" line="81"/>

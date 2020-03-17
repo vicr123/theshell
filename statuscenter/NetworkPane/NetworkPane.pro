@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets dbus thelib ModemManagerQt NetworkManagerQt network
+QT       += core gui widgets dbus thelib network
 
 TARGET = tsnm
 TEMPLATE = lib
@@ -23,6 +23,21 @@ blueprint {
     DEFINES += "SHAREDIR=\\\"/usr/share/theshellb/tsnm/\\\""
 } else {
     DEFINES += "SHAREDIR=\\\"/usr/share/theshell/tsnm/\\\""
+}
+
+#For some reason they got rid of QMake support, so we'll have to hack this in for now
+qtHaveModule(ModemManagerQt) {
+    QT += ModemManagerQt
+} else {
+    INCLUDEPATH += /usr/include/KF5/ModemManagerQt/
+    LIBS += -lKF5ModemManagerQt
+}
+
+qtHaveModule(NetworkManagerQt) {
+    QT += NetworkManagerQt
+} else {
+    INCLUDEPATH += /usr/include/KF5/NetworkManagerQt/
+    LIBS += -lKF5NetworkManagerQt
 }
 
 # The following define makes your compiler emit warnings if you use
