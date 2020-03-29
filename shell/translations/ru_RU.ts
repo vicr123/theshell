@@ -61,12 +61,12 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="207"/>
         <source>System settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки системы</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="209"/>
         <source>System Configuration</source>
-        <translation>Системные настройки</translation>
+        <translation>Параметры системы</translation>
     </message>
 </context>
 <context>
@@ -87,12 +87,12 @@
     <message>
         <location filename="../background.ui" line="176"/>
         <source>Sorry, there was a problem displaying the background.</source>
-        <translation type="unfinished"></translation>
+        <translation>Возникла проблема в отображении фона.</translation>
     </message>
     <message>
         <location filename="../background.ui" line="198"/>
         <source>Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Повторить попытку</translation>
     </message>
     <message>
         <location filename="../background.ui" line="379"/>
@@ -102,17 +102,17 @@
     <message>
         <location filename="../background.ui" line="427"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>ИЗОБРАЖЕНИЕ</translation>
     </message>
     <message>
         <location filename="../background.ui" line="434"/>
         <source>Select an image to display on your background and lock screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите изображение для фона и экрана блокировки</translation>
     </message>
     <message>
         <location filename="../background.ui" line="522"/>
         <source>COMMUNITY BACKGROUNDS</source>
-        <translation type="unfinished"></translation>
+        <translation>Фоны от сообщества</translation>
     </message>
     <message>
         <location filename="../background.ui" line="529"/>
@@ -122,22 +122,22 @@
     <message>
         <location filename="../background.ui" line="536"/>
         <source>Show image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать информацию о изображении</translation>
     </message>
     <message>
         <location filename="../background.ui" line="584"/>
         <source>STRETCH</source>
-        <translation type="unfinished"></translation>
+        <translation>Растянуть</translation>
     </message>
     <message>
         <location filename="../background.ui" line="591"/>
         <source>Select how you&apos;d like the background image to be sized</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите, как вы хотите расположить фоновое изображение</translation>
     </message>
     <message>
         <location filename="../background.ui" line="603"/>
         <source>Stretch To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Растянуть до размера экрана</translation>
     </message>
     <message>
         <location filename="../background.ui" line="629"/>
@@ -157,7 +157,7 @@
     <message>
         <location filename="../background.ui" line="707"/>
         <source>Zoom To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Увеличить до размера экрана</translation>
     </message>
     <message>
         <location filename="../background.ui" line="756"/>
@@ -494,12 +494,12 @@
     <message>
         <location filename="../infopanedropdown.ui" line="556"/>
         <source>SETTINGS NOT APPLIED</source>
-        <translation type="unfinished"></translation>
+        <translation>НАСТРОЙКИ НЕ ПРИНЯТЫ</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="563"/>
         <source>Some settings you just changed may require you to log out and then log back in before they are applied completely.</source>
-        <translation type="unfinished"></translation>
+        <translation>Некоторые из изменённых настроек вступят в силу только после выхода и входа в систему.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="728"/>
@@ -514,22 +514,22 @@
     <message>
         <location filename="../infopanedropdown.ui" line="1900"/>
         <source>ON BATTERY</source>
-        <translation type="unfinished"></translation>
+        <translation>ОТ БАТАРЕИ</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2042"/>
         <source>ON AC</source>
-        <translation type="unfinished"></translation>
+        <translation>ОТ СЕТИ</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2186"/>
         <source>PHYSICAL BUTTONS</source>
-        <translation type="unfinished"></translation>
+        <translation>ФИЗИЧЕСКИЕ КНОПКИ</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2231"/>
         <source>ON SUSPENSION</source>
-        <translation type="unfinished"></translation>
+        <translation>В РЕЖИМЕ СНА</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2784"/>
@@ -539,12 +539,12 @@
     <message>
         <location filename="../infopanedropdown.ui" line="3086"/>
         <source>DISTRIBUTION</source>
-        <translation type="unfinished"></translation>
+        <translation>ДИСТРИБУТИВ</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3193"/>
         <source>HARDWARE AND SOFTWARE</source>
-        <translation type="unfinished"></translation>
+        <translation>СИСТЕМА И ПРОГРАММЫ</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3286"/>
@@ -955,17 +955,17 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2277"/>
         <source>This will consume more power but continue to run any tasks you were doing. For example, music will continue playing. When you wake this device, it will wake immediately. Not recommended if you don&apos;t have a solid state drive as the drive will not be turned off while you&apos;re moving it around. Recommended for tablets and tablet PCs.</source>
-        <translation type="unfinished"></translation>
+        <translation>Будет потреблять больше энергии, но продолжит исполнять задачи пользователя. Например, музыка продолжит играть. Мгновенное пробждение устройства. Не рекомендуется, если у вас стандартный жёсткий диск, потому что диски продолжат работу, пока вы перемещаете устройство. Рекомендуется для планшетов.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2287"/>
         <source>Hibernate instead</source>
-        <translation type="unfinished"></translation>
+        <translation>Вместо этого, гибернация</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2294"/>
         <source>This will save a lot of power but will take a while to wake up again. Everything stops while your device is hibernating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Позволит сэкономить энергию, но пробуждение займёт некоторое время. Задачи приостанавливаются при гибернации.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2503"/>
@@ -1125,12 +1125,12 @@
     <message>
         <location filename="../infopanedropdown.cpp" line="503"/>
         <source>Keyboard Layout set to %1</source>
-        <translation type="unfinished">Установлена %1 раскладка клавиатуры</translation>
+        <translation>Установлена раскладка клавиатуры %1</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="510"/>
         <source>Critical Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Только важные</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="514"/>
@@ -1150,12 +1150,12 @@
     <message>
         <location filename="../infopanedropdown.cpp" line="699"/>
         <source>No plugins were loaded because you&apos;ve started theShell in Safe Mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не было загружено ни одного плагина, так как theShell запущен в безопасном режиме.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="704"/>
         <source>Safe Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Безопасный режим</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="952"/>
@@ -1222,7 +1222,7 @@
     <message>
         <location filename="../infopanedropdown.cpp" line="2071"/>
         <source>Show Touch Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать экранную клавиатуру</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2109"/>
@@ -1361,7 +1361,7 @@
     <message>
         <location filename="../mainwindow.ui" line="1170"/>
         <source>Critical Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Только важные</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="518"/>
@@ -1372,7 +1372,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="92"/>
         <source>Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Проигрыватель</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="378"/>
@@ -1543,12 +1543,12 @@
     <message>
         <location filename="../menu.ui" line="1061"/>
         <source>Failed to start app</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при запуске приложения</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="1096"/>
         <source>Try starting the app again, and if problems persist, try reinstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запустите приложение еще раз, если проблема не исчезла, попробуйте переустановить приложение.</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="606"/>
@@ -1640,27 +1640,27 @@
     <message>
         <location filename="../menu.cpp" line="697"/>
         <source>Save Debug Introspection File</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить логи</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="704"/>
         <source>theShell</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="704"/>
         <source>Debug data has been collected and saved to %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные для дебага были сохранены в %1.</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="704"/>
         <source>Debug Introspection Data collected</source>
-        <translation type="unfinished"></translation>
+        <translation>Данные дебага были собраны</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="717"/>
         <source>%1 can&apos;t start.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 не запускается.</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="724"/>
@@ -1924,7 +1924,7 @@
     <message>
         <location filename="../rundialog.ui" line="132"/>
         <source>Enter a command to run</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите команду для запуска</translation>
     </message>
     <message>
         <location filename="../rundialog.ui" line="150"/>
@@ -1939,7 +1939,7 @@
     <message>
         <location filename="../rundialog.cpp" line="149"/>
         <source>Can&apos;t find that command</source>
-        <translation type="unfinished"></translation>
+        <translation>Команда не найдена</translation>
     </message>
 </context>
 <context>
@@ -1988,12 +1988,12 @@
     <message>
         <location filename="../taskbarbutton.cpp" line="169"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Для %1</translation>
     </message>
     <message>
         <location filename="../taskbarbutton.cpp" line="170"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
 </context>
 <context>
@@ -2058,12 +2058,12 @@
     <message>
         <location filename="../main.cpp" line="220"/>
         <source>Start in Safe Mode?</source>
-        <translation type="unfinished"></translation>
+        <translation>Запустить в безопасном режиме?</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="221"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы удерживаете клавишу CTRL. Вы желаете запустить theShell в безопасном режиме?</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="245"/>
