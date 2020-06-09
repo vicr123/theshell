@@ -5,16 +5,16 @@
     <name>ApplicationNotificationModel</name>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemein</translation>
     </message>
 </context>
 <context>
     <name>JobServer</name>
     <message numerus="yes">
         <source>%n jobs running</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Auftrag läuft</numerusform>
+            <numerusform>%n Aufträge laufen</numerusform>
         </translation>
     </message>
 </context>
@@ -22,20 +22,20 @@
     <name>JobViewWidget</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rahmen</translation>
     </message>
 </context>
 <context>
     <name>NotificationAppGroup</name>
     <message>
         <source>Collapse Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen zuklappen</translation>
     </message>
     <message numerus="yes">
         <source>+%n notifications collapsed</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>+%n zugeklappte Benachrichtigung</numerusform>
+            <numerusform>+%n zugeklappte Benachrichtigungen</numerusform>
         </translation>
     </message>
 </context>
@@ -50,75 +50,75 @@
     </message>
     <message numerus="yes">
         <source>%n hr</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Std.</numerusform>
+            <numerusform>%n Std.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n min</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Min.</numerusform>
+            <numerusform>%n Min.</numerusform>
         </translation>
     </message>
     <message>
         <source>just now</source>
-        <translation type="unfinished"></translation>
+        <translation>gerade eben</translation>
     </message>
 </context>
 <context>
     <name>NotificationPopup</name>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwerfen</translation>
     </message>
     <message>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstecken</translation>
     </message>
 </context>
 <context>
     <name>NotificationsWidget</name>
     <message>
         <source>No notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Benachrichtigungen</translation>
     </message>
     <message>
         <source>There&apos;s nothing to see at the moment. Don&apos;t worry, we&apos;ll be sure to tell you as soon as something pops up.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hier gibt es momentan nichts zu sehen. Sorgen Sie sich jedoch nicht, wir werden Sie benachrichtigen, sobald etwas passiert.</translation>
     </message>
     <message>
         <source>Clear All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles löschen</translation>
     </message>
     <message>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen</translation>
     </message>
     <message>
         <source>Quiet Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruhemodus</translation>
     </message>
     <message>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Ton</translation>
     </message>
     <message>
         <source>Critical Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Kritisches</translation>
     </message>
     <message>
         <source>No Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Benachrichtigungen</translation>
     </message>
     <message>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Stummschalten</translation>
     </message>
     <message>
         <source>Fore&amp;ver</source>
-        <translation type="unfinished"></translation>
+        <translation>Für im&amp;mer</translation>
     </message>
     <message>
         <source>Turn off in</source>
@@ -144,35 +144,35 @@
     <name>SettingsPane</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemein</translation>
     </message>
     <message>
         <source>Show Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhalt anzeigen</translation>
     </message>
     <message>
         <source>Hide Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhalt ausblenden</translation>
     </message>
     <message>
         <source>Don&apos;t Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht anzeigen</translation>
     </message>
     <message>
         <source>On lock screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Am Sperrbildschirm</translation>
     </message>
     <message>
         <source>DISPLAY</source>
-        <translation type="unfinished"></translation>
+        <translation>ANZEIGE</translation>
     </message>
     <message>
         <source>Emphasise sending app</source>
