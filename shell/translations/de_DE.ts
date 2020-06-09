@@ -87,77 +87,77 @@
     <message>
         <location filename="../background.ui" line="176"/>
         <source>Sorry, there was a problem displaying the background.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gab ein Problem, Ihren Hintergrund anzuzeigen. Wir bitten um Entschuldigung.</translation>
     </message>
     <message>
         <location filename="../background.ui" line="198"/>
         <source>Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Erneut versuchen</translation>
     </message>
     <message>
         <location filename="../background.ui" line="379"/>
         <source>Background</source>
-        <translation type="unfinished">Hintergrund</translation>
+        <translation>Hintergrund</translation>
     </message>
     <message>
         <location filename="../background.ui" line="427"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>BILD</translation>
     </message>
     <message>
         <location filename="../background.ui" line="434"/>
         <source>Select an image to display on your background and lock screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie ein Bild aus, welches Sie als Hintergrund ihres Desktops und Ihres Sperrbildschirms festlegen möchten</translation>
     </message>
     <message>
         <location filename="../background.ui" line="522"/>
         <source>COMMUNITY BACKGROUNDS</source>
-        <translation type="unfinished"></translation>
+        <translation>COMMUNITY-HINTERGRUNDBILDER</translation>
     </message>
     <message>
         <location filename="../background.ui" line="529"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished">Bilder aus der theShell-Community werden von Zeit zu Zeit gewechselt.</translation>
+        <translation>Bilder aus der theShell-Community werden von Zeit zu Zeit gewechselt.</translation>
     </message>
     <message>
         <location filename="../background.ui" line="536"/>
         <source>Show image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild-Informationen anzeigen</translation>
     </message>
     <message>
         <location filename="../background.ui" line="584"/>
         <source>STRETCH</source>
-        <translation type="unfinished"></translation>
+        <translation>STRECKEN</translation>
     </message>
     <message>
         <location filename="../background.ui" line="591"/>
         <source>Select how you&apos;d like the background image to be sized</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie aus, welche Skalierung ihr Hintergrundbild haben soll</translation>
     </message>
     <message>
         <location filename="../background.ui" line="603"/>
         <source>Stretch To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf Bildschirmauflösung genau strecken</translation>
     </message>
     <message>
         <location filename="../background.ui" line="629"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished">Zoomen und zuschneiden</translation>
+        <translation>Vergrößert und zugeschnitten</translation>
     </message>
     <message>
         <location filename="../background.ui" line="655"/>
         <source>Center</source>
-        <translation type="unfinished">Mitte</translation>
+        <translation>Mitte</translation>
     </message>
     <message>
         <location filename="../background.ui" line="681"/>
         <source>Tile</source>
-        <translation type="unfinished">Kacheln</translation>
+        <translation>Kacheln</translation>
     </message>
     <message>
         <location filename="../background.ui" line="707"/>
         <source>Zoom To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Vergrößert</translation>
     </message>
     <message>
         <location filename="../background.ui" line="756"/>
@@ -192,7 +192,7 @@
     <message>
         <location filename="../background.cpp" line="382"/>
         <source>Select Background</source>
-        <translation type="unfinished">Hintergrund auswählen</translation>
+        <translation>Hintergrund auswählen</translation>
     </message>
 </context>
 <context>
@@ -545,12 +545,12 @@
     <message>
         <location filename="../infopanedropdown.ui" line="556"/>
         <source>SETTINGS NOT APPLIED</source>
-        <translation type="unfinished"></translation>
+        <translation>EINSTELLUNGEN NICHT ANGEWENDET</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="563"/>
         <source>Some settings you just changed may require you to log out and then log back in before they are applied completely.</source>
-        <translation type="unfinished"></translation>
+        <translation>Manche von Ihnen festgelegten Einstellungen könnten erst bei der nächsten Anmeldung vollständig in Kraft treten.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="728"/>
@@ -1100,27 +1100,27 @@
     <message>
         <location filename="../infopanedropdown.cpp" line="503"/>
         <source>Keyboard Layout set to %1</source>
-        <translation type="unfinished">Tastaturbelegung wurde auf %1 gesetzt</translation>
+        <translation>Tastaturbelegung wurde auf %1 gesetzt</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="510"/>
         <source>Critical Only</source>
-        <translation type="unfinished">Nur Kritische</translation>
+        <translation>Kritisches</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="514"/>
         <source>No Notifications</source>
-        <translation type="unfinished">Keine Benachrichtigungen</translation>
+        <translation>Keine Benachrichtigungen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="518"/>
         <source>Mute</source>
-        <translation type="unfinished">Stumm</translation>
+        <translation>Stumm</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="522"/>
         <source>Sound</source>
-        <translation type="unfinished">Ton</translation>
+        <translation>Ton</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="699"/>
@@ -1592,7 +1592,7 @@
     <message>
         <location filename="../menu.ui" line="1096"/>
         <source>Try starting the app again, and if problems persist, try reinstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>Versuchen Sie, die Anwendung erneut zu öffnen. Sollte das Problem trotzdem weiterhin bestehen, könnte eine Neuinstallation der Anwendung das Problem beheben.</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="81"/>
@@ -1658,7 +1658,7 @@
     <message>
         <location filename="../menu.cpp" line="717"/>
         <source>%1 can&apos;t start.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 kann nicht gestartet werden.</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="724"/>
@@ -1992,12 +1992,12 @@ bereit, gespeichert zu werden = ready to be saved</translatorcomment>
     <message>
         <location filename="../taskbarbutton.cpp" line="169"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Für 1%</translation>
     </message>
     <message>
         <location filename="../taskbarbutton.cpp" line="170"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
