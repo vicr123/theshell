@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US">
+<TS version="2.1" sourcelanguage="en_US" language="zh_CN">
 <context>
     <name>AppsListModel</name>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="70"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>应用程序</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="128"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>关机</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="130"/>
         <source>Power off this device</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭此设备</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="135"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>重启</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="137"/>
         <source>Reboot this device</source>
-        <translation type="unfinished"></translation>
+        <translation>重启此设备</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="142"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>注销</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="144"/>
         <source>End your session</source>
-        <translation type="unfinished"></translation>
+        <translation>结束当前会话</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="153"/>
         <source>Run Command</source>
-        <translation type="unfinished"></translation>
+        <translation>运行指令</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="163"/>
         <source>Open webpage</source>
-        <translation type="unfinished"></translation>
+        <translation>打开网页</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="171"/>
         <source>Open Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>打开文件夹</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="181"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>打开文件</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="207"/>
         <source>System settings</source>
-        <translation type="unfinished"></translation>
+        <translation>系统设置</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="209"/>
         <source>System Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>系统设置</translation>
     </message>
 </context>
 <context>
@@ -74,12 +74,12 @@
     <message>
         <location filename="../bthandsfree.cpp" line="89"/>
         <source>In call</source>
-        <translation type="unfinished"></translation>
+        <translation>通话中</translation>
     </message>
     <message>
         <location filename="../bthandsfree.cpp" line="93"/>
         <source>Dialling...</source>
-        <translation type="unfinished"></translation>
+        <translation>拨号中...</translation>
     </message>
 </context>
 <context>
@@ -87,72 +87,72 @@
     <message>
         <location filename="../background.ui" line="176"/>
         <source>Sorry, there was a problem displaying the background.</source>
-        <translation type="unfinished"></translation>
+        <translation>抱歉， 后台壁纸显示错误。</translation>
     </message>
     <message>
         <location filename="../background.ui" line="198"/>
         <source>Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>请重试</translation>
     </message>
     <message>
         <location filename="../background.ui" line="379"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>背景</translation>
     </message>
     <message>
         <location filename="../background.ui" line="427"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>图片</translation>
     </message>
     <message>
         <location filename="../background.ui" line="434"/>
         <source>Select an image to display on your background and lock screen</source>
-        <translation type="unfinished"></translation>
+        <translation>选择一个图片用来当作桌面壁纸与锁屏壁纸</translation>
     </message>
     <message>
         <location filename="../background.ui" line="522"/>
         <source>COMMUNITY BACKGROUNDS</source>
-        <translation type="unfinished"></translation>
+        <translation>社区背景</translation>
     </message>
     <message>
         <location filename="../background.ui" line="529"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>图片来自本系统的社区会定时更新。</translation>
     </message>
     <message>
         <location filename="../background.ui" line="536"/>
         <source>Show image information</source>
-        <translation type="unfinished"></translation>
+        <translation>显示图片信息</translation>
     </message>
     <message>
         <location filename="../background.ui" line="584"/>
         <source>STRETCH</source>
-        <translation type="unfinished"></translation>
+        <translation>拉抻</translation>
     </message>
     <message>
         <location filename="../background.ui" line="591"/>
         <source>Select how you&apos;d like the background image to be sized</source>
-        <translation type="unfinished"></translation>
+        <translation>选择你想要更换大小的背景</translation>
     </message>
     <message>
         <location filename="../background.ui" line="603"/>
         <source>Stretch To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>拉抻到屏幕</translation>
     </message>
     <message>
         <location filename="../background.ui" line="629"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>放大和裁剪</translation>
     </message>
     <message>
         <location filename="../background.ui" line="655"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>居中</translation>
     </message>
     <message>
         <location filename="../background.ui" line="681"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>叠加</translation>
     </message>
     <message>
         <location filename="../background.ui" line="707"/>
