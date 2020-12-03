@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en_US" language="zh_CN">
+<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
 <context>
     <name>AppsListModel</name>
     <message>
@@ -175,22 +175,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="202"/>
+        <location filename="../background.cpp" line="200"/>
         <source>by %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="315"/>
+        <location filename="../background.cpp" line="306"/>
         <source>For desktop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="317"/>
+        <location filename="../background.cpp" line="308"/>
         <source>For system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="382"/>
+        <location filename="../background.cpp" line="368"/>
         <source>Select Background</source>
         <translation type="unfinished"></translation>
     </message>
@@ -220,7 +220,7 @@
     <message>
         <location filename="../choosebackground.ui" line="184"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">图片来自本系统的社区会定时更新。</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="194"/>
@@ -285,17 +285,17 @@
     <message>
         <location filename="../choosebackground.ui" line="466"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">放大和裁剪</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="471"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">居中</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="476"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">叠加</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="481"/>
@@ -384,7 +384,7 @@
         <location filename="../endsessionwait.cpp" line="486"/>
         <location filename="../endsessionwait.cpp" line="864"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关机</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="395"/>
@@ -396,13 +396,13 @@
         <location filename="../endsessionwait.cpp" line="92"/>
         <location filename="../endsessionwait.cpp" line="493"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重启</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="462"/>
         <location filename="../endsessionwait.cpp" line="500"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">注销</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="494"/>
@@ -816,17 +816,17 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2114"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关机</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2123"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重启</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2132"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">注销</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2141"/>
@@ -901,7 +901,7 @@
     <message>
         <location filename="../infopanedropdown.ui" line="2445"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">背景</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2452"/>
@@ -1286,7 +1286,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1171"/>
+        <location filename="../mainwindow.cpp" line="1136"/>
         <source>Open Status Center</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1302,7 +1302,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="518"/>
-        <location filename="../mainwindow.cpp" line="336"/>
+        <location filename="../mainwindow.cpp" line="335"/>
         <source>Quiet Mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1372,52 +1372,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="92"/>
+        <location filename="../mainwindow.cpp" line="91"/>
         <source>Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="378"/>
+        <location filename="../mainwindow.cpp" line="377"/>
         <source>Recording Screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="384"/>
+        <location filename="../mainwindow.cpp" line="383"/>
         <source>Processing Screen Recording...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1152"/>
+        <location filename="../mainwindow.cpp" line="1117"/>
         <source>For Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1154"/>
+        <location filename="../mainwindow.cpp" line="1119"/>
         <source>Move to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1159"/>
+        <location filename="../mainwindow.cpp" line="1124"/>
         <source>Move to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1165"/>
+        <location filename="../mainwindow.cpp" line="1130"/>
         <source>Gateway and Bar Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1170"/>
+        <location filename="../mainwindow.cpp" line="1135"/>
         <source>For System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1174"/>
+        <location filename="../mainwindow.cpp" line="1139"/>
         <source>Open System Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1183"/>
+        <location filename="../mainwindow.cpp" line="1147"/>
         <source>Open Gateway</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1489,7 +1489,7 @@
     <message>
         <location filename="../menu.ui" line="516"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关机</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="529"/>
@@ -1499,7 +1499,7 @@
     <message>
         <location filename="../menu.ui" line="540"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重启</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="553"/>
@@ -1509,7 +1509,7 @@
     <message>
         <location filename="../menu.ui" line="560"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">注销</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="573"/>
@@ -1874,12 +1874,12 @@
     <message>
         <location filename="../onboarding.ui" line="909"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">注销</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="923"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关机</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="1045"/>
@@ -2050,32 +2050,32 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="220"/>
+        <location filename="../main.cpp" line="219"/>
         <source>Start in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="221"/>
+        <location filename="../main.cpp" line="220"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="245"/>
+        <location filename="../main.cpp" line="244"/>
         <source>theShell already running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="246"/>
+        <location filename="../main.cpp" line="245"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="287"/>
+        <location filename="../main.cpp" line="286"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="288"/>
+        <location filename="../main.cpp" line="287"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

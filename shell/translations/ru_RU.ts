@@ -175,22 +175,22 @@
         <translation>Открыть статусный центр</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="202"/>
+        <location filename="../background.cpp" line="200"/>
         <source>by %1</source>
         <translation>Автор: %1</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="315"/>
+        <location filename="../background.cpp" line="306"/>
         <source>For desktop</source>
         <translation>Для рабочего стола</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="317"/>
+        <location filename="../background.cpp" line="308"/>
         <source>For system</source>
         <translation>Для системы</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="382"/>
+        <location filename="../background.cpp" line="368"/>
         <source>Select Background</source>
         <translation type="unfinished">Выберите фон</translation>
     </message>
@@ -1365,63 +1365,63 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="518"/>
-        <location filename="../mainwindow.cpp" line="336"/>
+        <location filename="../mainwindow.cpp" line="335"/>
         <source>Quiet Mode</source>
         <translation>Тихий режим</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="92"/>
+        <location filename="../mainwindow.cpp" line="91"/>
         <source>Media Player</source>
         <translation>Проигрыватель</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="378"/>
+        <location filename="../mainwindow.cpp" line="377"/>
         <source>Recording Screen</source>
         <translation>Записываем экран</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="384"/>
+        <location filename="../mainwindow.cpp" line="383"/>
         <source>Processing Screen Recording...</source>
         <translation>Обрабатываем запись экрана...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1152"/>
+        <location filename="../mainwindow.cpp" line="1117"/>
         <source>For Bar</source>
         <translation>Для Панели</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1154"/>
+        <location filename="../mainwindow.cpp" line="1119"/>
         <source>Move to bottom</source>
         <translation>Переместить вниз</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1159"/>
+        <location filename="../mainwindow.cpp" line="1124"/>
         <source>Move to top</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1165"/>
+        <location filename="../mainwindow.cpp" line="1130"/>
         <source>Gateway and Bar Settings</source>
         <translation>Настройки Врат и Панели</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1170"/>
+        <location filename="../mainwindow.cpp" line="1135"/>
         <source>For System</source>
         <translation>Для системы</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1171"/>
+        <location filename="../mainwindow.cpp" line="1136"/>
         <source>Open Status Center</source>
         <translation>Открыть статусный центр</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1174"/>
+        <location filename="../mainwindow.cpp" line="1139"/>
         <source>Open System Settings</source>
         <translation>Открыть параметры системы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1183"/>
+        <location filename="../mainwindow.cpp" line="1147"/>
         <source>Open Gateway</source>
         <translation>Открыть Врата</translation>
     </message>
@@ -2056,32 +2056,32 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="220"/>
+        <location filename="../main.cpp" line="219"/>
         <source>Start in Safe Mode?</source>
         <translation>Запустить в безопасном режиме?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="221"/>
+        <location filename="../main.cpp" line="220"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation>Вы удерживаете клавишу CTRL. Вы желаете запустить theShell в безопасном режиме?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="245"/>
+        <location filename="../main.cpp" line="244"/>
         <source>theShell already running</source>
         <translation>theShell уже работает</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="246"/>
+        <location filename="../main.cpp" line="245"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>Похоже, что theShell уже работает. Всё же попытаться запустить theShell?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="287"/>
+        <location filename="../main.cpp" line="286"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Менеджер окон не может запуститься</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="288"/>
+        <location filename="../main.cpp" line="287"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

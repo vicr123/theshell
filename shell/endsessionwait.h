@@ -38,6 +38,8 @@
 #undef FocusOut
 #undef CursorShape
 #undef Unsorted
+//#undef False
+//#undef True
 
 #include <QDialog>
 #include <QProcess>
@@ -72,86 +74,85 @@
 
 
 namespace Ui {
-class EndSessionWait;
+    class EndSessionWait;
 }
 
-class EndSessionWait : public QDialog
-{
-    Q_OBJECT
+class EndSessionWait : public QDialog {
+        Q_OBJECT
 
-public:
-    enum shutdownType {
-        powerOff,
-        reboot,
-        logout,
+    public:
+        enum shutdownType {
+            powerOff,
+            reboot,
+            logout,
 
-        slideOff, //For tablet mode
+            slideOff, //For tablet mode
 
-        //These should not be shown.
-        suspend,
-        hibernate,
-        ask,
-        screenOff,
-        dummy //FOR TESTING
-    };
+            //These should not be shown.
+            suspend,
+            hibernate,
+            ask,
+            screenOff,
+            dummy //FOR TESTING
+        };
 
-    explicit EndSessionWait(shutdownType type, QWidget *parent = 0);
-    ~EndSessionWait();
+        explicit EndSessionWait(shutdownType type, QWidget* parent = 0);
+        ~EndSessionWait();
 
-    void showFullScreen();
-    void reject();
+        void showFullScreen();
+        void reject();
 
-private slots:
-    void on_killAllButton_clicked();
+    private slots:
+        void on_killAllButton_clicked();
 
-    void on_cancelButton_clicked();
+        void on_cancelButton_clicked();
 
-    void EndSessionNow();
-    void on_CancelAsk_clicked();
+        void EndSessionNow();
+        void on_CancelAsk_clicked();
 
-    void on_PowerOff_clicked();
+        void on_PowerOff_clicked();
 
-    void on_Reboot_clicked();
+        void on_Reboot_clicked();
 
-    void on_LogOut_clicked();
+        void on_LogOut_clicked();
 
-    void on_Suspend_clicked();
+        void on_Suspend_clicked();
 
-    void on_terminateApp_clicked();
+        void on_terminateApp_clicked();
 
-    void on_exitTerminate_clicked();
+        void on_exitTerminate_clicked();
 
-    void reloadAppList();
+        void reloadAppList();
 
-    void on_pushButton_5_clicked();
+        void on_pushButton_5_clicked();
 
-    void on_pushButton_4_clicked();
+        void on_pushButton_4_clicked();
 
-    void on_listWidget_currentRowChanged(int currentRow);
+        void on_listWidget_currentRowChanged(int currentRow);
 
-    void on_DummyExit_clicked();
+        void on_DummyExit_clicked();
 
-public slots:
-    void close();
+    public slots:
+        void close();
 
-private:
-    Ui::EndSessionWait *ui;
+    private:
+        Ui::EndSessionWait* ui;
 
-    void performEndSession();
-    shutdownType type;
-    bool alreadyShowing = false;
+        void performEndSession();
+        shutdownType type;
+        bool alreadyShowing = false;
 
-    QVariantAnimation* powerOffTimer;
+        QVariantAnimation* powerOffTimer;
 
-    TaskbarManager* tbManager;
-    bool performEndSessionWhenAllAppsClosed = false;
-    QTimer* tbTimer;
+        TaskbarManager* tbManager;
+        bool performEndSessionWhenAllAppsClosed = false;
+        QTimer* tbTimer;
 
-    int pressLocation;
+        int pressLocation;
 
-    void paintEvent(QPaintEvent* event);
-    void mousePressEvent(QMouseEvent* event);
-    bool eventFilter(QObject *obj, QEvent *eve);
+        void paintEvent(QPaintEvent* event);
+        void mousePressEvent(QMouseEvent* event);
+        bool eventFilter(QObject* obj, QEvent* eve);
 };
 
 #endif // ENDSESSIONWAIT_H

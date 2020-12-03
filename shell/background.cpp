@@ -51,8 +51,7 @@ QList<Background*> BackgroundPrivate::backgrounds = QList<Background*>();
 
 Background::Background() :
     QDialog(nullptr),
-    ui(new Ui::Background)
-{
+    ui(new Ui::Background) {
     ui->setupUi(this);
     d = new BackgroundPrivate();
 
@@ -64,14 +63,14 @@ Background::Background() :
 //        connect(qApp, &QApplication::primaryScreenChanged, &Background::reconfigureBackgrounds);
     }
 
-    connect(d->bg, &BackgroundController::currentBackgroundChanged, this, [=](BackgroundController::BackgroundType type) {
+    connect(d->bg, &BackgroundController::currentBackgroundChanged, this, [ = ](BackgroundController::BackgroundType type) {
         if (type == BackgroundController::Desktop) this->changeBackground();
         this->showCommunityBackgroundSettings(d->bg->currentBackgroundName(BackgroundController::Desktop) == "community" || d->bg->currentBackgroundName(BackgroundController::LockScreen) == "community");
     });
-    connect(d->bg, &BackgroundController::shouldShowCommunityLabelsChanged, this, [=] {
+    connect(d->bg, &BackgroundController::shouldShowCommunityLabelsChanged, this, [ = ] {
         if (d->bg->currentBackgroundName(BackgroundController::Desktop) == "community") this->changeBackground();
     });
-    connect(d->bg, &BackgroundController::stretchTypeChanged, this, [=](BackgroundController::StretchType stretchType) {
+    connect(d->bg, &BackgroundController::stretchTypeChanged, this, [ = ](BackgroundController::StretchType stretchType) {
         switch (stretchType) {
             case BackgroundController::StretchFit:
                 ui->stretchFitButton->setChecked(true);
@@ -130,8 +129,7 @@ Background::Background() :
     changeBackground();
 }
 
-Background::~Background()
-{
+Background::~Background() {
     delete d;
     delete ui;
 }
@@ -145,7 +143,7 @@ void Background::changeBackground() {
     d->retrieving = true;
     ui->stackedWidget->setCurrentWidget(ui->loadingBackgroundPage);
 
-    d->bg->getCurrentBackground(this->size())->then([=](BackgroundController::BackgroundData data) {
+    d->bg->getCurrentBackground(this->size())->then([ = ](BackgroundController::BackgroundData data) {
         d->background = data;
 
         if (d->background.extendedInfoAvailable) {
@@ -206,7 +204,7 @@ void Background::changeBackground() {
             }
         }
 
-        QTimer::singleShot(1000, this, [=] {
+        QTimer::singleShot(1000, this, [ = ] {
             d->background = data;
             this->update();
 
@@ -218,7 +216,7 @@ void Background::changeBackground() {
                 ui->stackedWidget->setCurrentWidget(ui->backgroundPage);
             }
         });
-    })->error([=](QString error) {
+    })->error([ = ](QString error) {
         d->retrieving = false;
         if (d->retrieveAgain) {
             d->retrieveAgain = false;
@@ -229,8 +227,7 @@ void Background::changeBackground() {
     });
 }
 
-void Background::toggleChangeBackground()
-{
+void Background::toggleChangeBackground() {
     d->isChangeBackgroundVisible = !d->isChangeBackgroundVisible;
     tVariantAnimation* anim = new tVariantAnimation();
     anim->setStartValue(ui->backgroundSelectionWidget->height());
@@ -243,10 +240,10 @@ void Background::toggleChangeBackground()
     }
     anim->setDuration(500);
     anim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(anim, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(anim, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
         ui->backgroundSelectionWidget->setFixedHeight(value.toInt());
     });
-    connect(anim, &tVariantAnimation::finished, this, [=] {
+    connect(anim, &tVariantAnimation::finished, this, [ = ] {
         if (d->isChangeBackgroundVisible) {
             ui->backgroundSelectionWidget->setFixedHeight(QWIDGETSIZE_MAX);
         }
@@ -256,8 +253,7 @@ void Background::toggleChangeBackground()
     DesktopWm::setShowDesktop(d->isChangeBackgroundVisible);
 }
 
-void Background::showCommunityBackgroundSettings(bool shown)
-{
+void Background::showCommunityBackgroundSettings(bool shown) {
     if (shown == d->communityBackgroundSettingsShown) return;
     d->communityBackgroundSettingsShown = shown;
     ui->communityBackgroundSettings->setVisible(shown);
@@ -265,24 +261,21 @@ void Background::showCommunityBackgroundSettings(bool shown)
 
 void Background::show() {
     Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DESKTOP", False);
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
-                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1);
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DESKTOP", false);
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", false),
+        XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1);
     QDialog::show();
 }
 
-void Background::on_actionOpen_Status_Center_triggered()
-{
+void Background::on_actionOpen_Status_Center_triggered() {
     MainWindow::instance()->getInfoPane()->show(InfoPaneDropdown::Clock);
 }
 
-void Background::on_actionOpen_theShell_Settings_triggered()
-{
+void Background::on_actionOpen_theShell_Settings_triggered() {
     MainWindow::instance()->getInfoPane()->show(InfoPaneDropdown::Settings);
 }
 
-void Background::on_actionChange_Background_triggered()
-{
+void Background::on_actionChange_Background_triggered() {
     this->toggleChangeBackground();
 }
 
@@ -290,8 +283,7 @@ void Background::reject() {
 
 }
 
-bool Background::eventFilter(QObject*watched, QEvent*event)
-{
+bool Background::eventFilter(QObject* watched, QEvent* event) {
     if (watched == ui->backgroundPage) {
         if (event->type() == QEvent::Paint) {
             QPainter p(ui->backgroundPage);
@@ -309,9 +301,8 @@ bool Background::eventFilter(QObject*watched, QEvent*event)
     return false;
 }
 
-void Background::on_Background_customContextMenuRequested(const QPoint &pos)
-{
-    QMenu *menu = new QMenu(this);
+void Background::on_Background_customContextMenuRequested(const QPoint& pos) {
+    QMenu* menu = new QMenu(this);
     menu->addSection(tr("For desktop"));
     menu->addAction(ui->actionChange_Background);
     menu->addSection(tr("For system"));
@@ -321,21 +312,19 @@ void Background::on_Background_customContextMenuRequested(const QPoint &pos)
     menu->exec(this->mapToGlobal(pos));
 }
 
-void Background::paintEvent(QPaintEvent *event) {
+void Background::paintEvent(QPaintEvent* event) {
 }
 
-void Background::resizeEvent(QResizeEvent*event)
-{
+void Background::resizeEvent(QResizeEvent* event) {
     this->changeBackground();
 }
 
-void Background::resizeToScreen(int screen)
-{
+void Background::resizeToScreen(int screen) {
     QScreen* s = QApplication::screens().at(screen);
     if (s != d->oldScreen) {
         if (s != nullptr) disconnect(d->screenGeometryChangedConnection);
 
-        connect(s, &QScreen::geometryChanged, this, [=] {
+        connect(s, &QScreen::geometryChanged, this, [ = ] {
             this->setGeometry(s->geometry());
         });
         this->setGeometry(s->geometry());
@@ -345,8 +334,7 @@ void Background::resizeToScreen(int screen)
     }
 }
 
-void Background::reconfigureBackgrounds()
-{
+void Background::reconfigureBackgrounds() {
     if (BackgroundPrivate::backgrounds.count() > QApplication::screens().count()) {
         //Remove backgrounds until the correct number of backgrounds have been created
         int difference = BackgroundPrivate::backgrounds.count() - QApplication::screens().count();
@@ -369,13 +357,11 @@ void Background::reconfigureBackgrounds()
     }
 }
 
-void Background::on_tryReloadBackgroundButton_clicked()
-{
+void Background::on_tryReloadBackgroundButton_clicked() {
     this->changeBackground();
 }
 
-void Background::on_backgroundList_clicked(const QModelIndex &index)
-{
+void Background::on_backgroundList_clicked(const QModelIndex& index) {
     QString background = index.data(Qt::UserRole).toString();
     if (background == "custom") {
         //Ask the user to select a background
@@ -385,46 +371,39 @@ void Background::on_backgroundList_clicked(const QModelIndex &index)
     d->bg->setBackground(background, BackgroundController::Desktop);
 }
 
-void Background::on_backButton_clicked()
-{
+void Background::on_backButton_clicked() {
     this->toggleChangeBackground();
 }
 
-void Background::on_showImageInformationBox_toggled(bool checked)
-{
+void Background::on_showImageInformationBox_toggled(bool checked) {
     d->bg->setShouldShowCommunityLabels(checked);
 }
 
-void Background::on_stretchFitButton_toggled(bool checked)
-{
+void Background::on_stretchFitButton_toggled(bool checked) {
     if (checked) {
         d->bg->setStretchType(BackgroundController::StretchFit);
     }
 }
 
-void Background::on_zoomCropButton_toggled(bool checked)
-{
+void Background::on_zoomCropButton_toggled(bool checked) {
     if (checked) {
         d->bg->setStretchType(BackgroundController::ZoomCrop);
     }
 }
 
-void Background::on_centerButton_toggled(bool checked)
-{
+void Background::on_centerButton_toggled(bool checked) {
     if (checked) {
         d->bg->setStretchType(BackgroundController::Center);
     }
 }
 
-void Background::on_tileButton_toggled(bool checked)
-{
+void Background::on_tileButton_toggled(bool checked) {
     if (checked) {
         d->bg->setStretchType(BackgroundController::Tile);
     }
 }
 
-void Background::on_zoomFitButton_toggled(bool checked)
-{
+void Background::on_zoomFitButton_toggled(bool checked) {
     if (checked) {
         d->bg->setStretchType(BackgroundController::ZoomFit);
     }

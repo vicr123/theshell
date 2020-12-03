@@ -34,6 +34,10 @@
 #include <QFontInfo>
 #include <QMimeType>
 #include <QMimeDatabase>
+
+#undef True
+#undef False
+
 #include <QtConcurrent>
 #include <QPainter>
 #include <QListView>
@@ -41,16 +45,15 @@
 #include "nativeeventfilter.h"
 
 struct AppsListModelPrivate;
-class AppsListModel : public QAbstractListModel
-{
-    Q_OBJECT
+class AppsListModel : public QAbstractListModel {
+        Q_OBJECT
 
     public:
-        AppsListModel(QObject *parent = 0);
+        AppsListModel(QObject* parent = 0);
         ~AppsListModel();
 
-        int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
         void updateData();
         bool launchApp(QModelIndex index);
@@ -69,14 +72,13 @@ class AppsListModel : public QAbstractListModel
         AppsListModelPrivate* d;
 };
 
-class AppsDelegate : public QStyledItemDelegate
-{
-    Q_OBJECT
+class AppsDelegate : public QStyledItemDelegate {
+        Q_OBJECT
 
     public:
-        AppsDelegate(QWidget *parent = 0, bool drawArrows = true);
-        void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-        QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+        AppsDelegate(QWidget* parent = 0, bool drawArrows = true);
+        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
     private:
         bool drawArrows;

@@ -175,22 +175,22 @@
         <translation>Öppna Statuscentret</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="202"/>
+        <location filename="../background.cpp" line="200"/>
         <source>by %1</source>
         <translation>av %1</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="315"/>
+        <location filename="../background.cpp" line="306"/>
         <source>For desktop</source>
         <translation>För skrivbord</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="317"/>
+        <location filename="../background.cpp" line="308"/>
         <source>For system</source>
         <translation>För system</translation>
     </message>
     <message>
-        <location filename="../background.cpp" line="382"/>
+        <location filename="../background.cpp" line="368"/>
         <source>Select Background</source>
         <translation type="unfinished">Välj Bakgrund</translation>
     </message>
@@ -1362,63 +1362,63 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="518"/>
-        <location filename="../mainwindow.cpp" line="336"/>
+        <location filename="../mainwindow.cpp" line="335"/>
         <source>Quiet Mode</source>
         <translation>Tysta Läget</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="92"/>
+        <location filename="../mainwindow.cpp" line="91"/>
         <source>Media Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="378"/>
+        <location filename="../mainwindow.cpp" line="377"/>
         <source>Recording Screen</source>
         <translation>Spelar in skärm</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="384"/>
+        <location filename="../mainwindow.cpp" line="383"/>
         <source>Processing Screen Recording...</source>
         <translation>Bearbetar Skärminspelning...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1152"/>
+        <location filename="../mainwindow.cpp" line="1117"/>
         <source>For Bar</source>
         <translation>För Baren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1154"/>
+        <location filename="../mainwindow.cpp" line="1119"/>
         <source>Move to bottom</source>
         <translation>Flytta till botten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1159"/>
+        <location filename="../mainwindow.cpp" line="1124"/>
         <source>Move to top</source>
         <translation>Flytta till toppen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1165"/>
+        <location filename="../mainwindow.cpp" line="1130"/>
         <source>Gateway and Bar Settings</source>
         <translation>Dörr och Barinställningar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1170"/>
+        <location filename="../mainwindow.cpp" line="1135"/>
         <source>For System</source>
         <translation>För System</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
-        <location filename="../mainwindow.cpp" line="1171"/>
+        <location filename="../mainwindow.cpp" line="1136"/>
         <source>Open Status Center</source>
         <translation>Öppna Statuscentret</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1174"/>
+        <location filename="../mainwindow.cpp" line="1139"/>
         <source>Open System Settings</source>
         <translation>Öppna Systeminställningar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1183"/>
+        <location filename="../mainwindow.cpp" line="1147"/>
         <source>Open Gateway</source>
         <translation>Öppna Dörren</translation>
     </message>
@@ -2053,32 +2053,32 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../main.cpp" line="220"/>
+        <location filename="../main.cpp" line="219"/>
         <source>Start in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="221"/>
+        <location filename="../main.cpp" line="220"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="245"/>
+        <location filename="../main.cpp" line="244"/>
         <source>theShell already running</source>
         <translation>theShell körs redan</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="246"/>
+        <location filename="../main.cpp" line="245"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
         <translation>theShell verkar redan köras. Vill du starta theShell ändå?</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="287"/>
+        <location filename="../main.cpp" line="286"/>
         <source>Window Manager couldn&apos;t start</source>
         <translation>Fönsterhanterare kunde inte starta</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="288"/>
+        <location filename="../main.cpp" line="287"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>

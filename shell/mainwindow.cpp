@@ -63,10 +63,9 @@ struct MainWindowPrivate {
 
 MainWindow* MainWindowPrivate::instance = nullptr;
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
+    ui(new Ui::MainWindow) {
     ui->setupUi(this);
     d = new MainWindowPrivate();
     d->instance = this;
@@ -91,24 +90,24 @@ MainWindow::MainWindow(QWidget *parent) :
     QMenu* mprisSelectionMenu = new QMenu();
     mprisSelectionMenu->addSection(tr("Media Player"));
     ui->mprisSelection->setMenu(mprisSelectionMenu);
-    connect(mprisSelectionMenu, &QMenu::aboutToShow, [=]() {
+    connect(mprisSelectionMenu, &QMenu::aboutToShow, [ = ]() {
         lockMovement("MPRIS");
     });
-    connect(mprisSelectionMenu, &QMenu::aboutToHide, [=]() {
+    connect(mprisSelectionMenu, &QMenu::aboutToHide, [ = ]() {
         unlockMovement("MPRIS");
     });
 
     //Prepare MPRIS
     setMprisCurrentApp(nullptr);
-    auto addMprisPlayer = [=](QString service, MprisPlayerPtr player) {
+    auto addMprisPlayer = [ = ](QString service, MprisPlayerPtr player) {
         Q_UNUSED(service)
         QAction* action = mprisSelectionMenu->addAction(player->identity());
         action->setData(QVariant::fromValue(player));
         action->setCheckable(true);
-        connect(action, &QAction::triggered, this, [=] {
+        connect(action, &QAction::triggered, this, [ = ] {
             setMprisCurrentApp(action);
         });
-        connect(player.data(), &MprisPlayer::identityChanged, action, [=] {
+        connect(player.data(), &MprisPlayer::identityChanged, action, [ = ] {
             action->setText(player->identity());
         });
         connect(player.data(), &MprisPlayer::gone, action, &QAction::deleteLater);
@@ -138,7 +137,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //Create the gateway and set required flags
     gatewayMenu = new Menu(this);
     gatewayMenu->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    connect(gatewayMenu, &Menu::menuClosing, [=]() {
+    connect(gatewayMenu, &Menu::menuClosing, [ = ]() {
         unlockMovement("Gateway closing");
     });
 
@@ -147,7 +146,7 @@ MainWindow::MainWindow(QWidget *parent) :
     reloadBar();
 
     //Create the update event timer and start it
-    QTimer *timer = new QTimer(this);
+    QTimer* timer = new QTimer(this);
     timer->setInterval(100);
     connect(timer, &QTimer::timeout, this, &MainWindow::doUpdate);
     timer->start();
@@ -160,7 +159,7 @@ MainWindow::MainWindow(QWidget *parent) :
     DesktopTimeDate::makeTimeLabel(ui->StatusBarClock, DesktopTimeDate::Time);
     DesktopTimeDate::makeTimeLabel(ui->StatusBarClockAmPm, DesktopTimeDate::AmPm);
 
-    connect(PowerDaemon::instance(), &PowerDaemon::powerStretchChanged, this, [=](bool isOn) {
+    connect(PowerDaemon::instance(), &PowerDaemon::powerStretchChanged, this, [ = ](bool isOn) {
         if (isOn) {
             timer->setInterval(1000);
         } else {
@@ -178,28 +177,28 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(infoPane, SIGNAL(timerEnabledChanged(bool)), this, SLOT(setTimerEnabled(bool)));
     connect(infoPane, SIGNAL(updateStrutsSignal()), this, SLOT(updateStruts()));
     connect(infoPane, SIGNAL(updateBarSignal()), this, SLOT(reloadBar()));
-    connect(infoPane, &InfoPaneDropdown::flightModeChanged, [=](bool flight) {
+    connect(infoPane, &InfoPaneDropdown::flightModeChanged, [ = ](bool flight) {
         ui->StatusBarFlight->setVisible(flight);
     });
-    connect(infoPane, &InfoPaneDropdown::keyboardLayoutChanged, [=](QString code) {
+    connect(infoPane, &InfoPaneDropdown::keyboardLayoutChanged, [ = ](QString code) {
         ui->keyboardButton->setText(code);
     });
-    connect(infoPane, &InfoPaneDropdown::newKeyboardLayoutMenuAvailable, [=](QMenu* menu) {
+    connect(infoPane, &InfoPaneDropdown::newKeyboardLayoutMenuAvailable, [ = ](QMenu * menu) {
         if (menu == nullptr) {
             ui->keyboardButton->setVisible(false);
         } else {
             ui->keyboardButton->setVisible(true);
             ui->keyboardButton->setMenu(menu);
 
-            connect(menu, &QMenu::aboutToShow, [=] {
+            connect(menu, &QMenu::aboutToShow, [ = ] {
                 lockMovement("Keyboard Layout");
             });
-            connect(menu, &QMenu::aboutToHide, [=] {
+            connect(menu, &QMenu::aboutToHide, [ = ] {
                 unlockMovement("Keyboard Layout");
             });
         }
     });
-    connect(infoPane, &InfoPaneDropdown::statusBarProgress, [=](QString title, QString description, int progress) {
+    connect(infoPane, &InfoPaneDropdown::statusBarProgress, [ = ](QString title, QString description, int progress) {
         this->statusBarPercentage = progress;
         if (ui->StatusBarProgressTitle->text() != title || ui->StatusBarProgressDescription->text() != description || !statusBarProgressTimer->isActive()) {
             ui->StatusBarProgressTitle->setText(title);
@@ -220,7 +219,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->StatusBarFrame->update();
         ui->StatusBarProgressFrame->update();
     });
-    connect(infoPane, &InfoPaneDropdown::statusBarProgressFinished, [=](QString title, QString description) {
+    connect(infoPane, &InfoPaneDropdown::statusBarProgressFinished, [ = ](QString title, QString description) {
         this->statusBarPercentage = -2;
         //ui->StatusBarProgressTitle->setText(title);
         //ui->StatusBarProgressDescription->setText(description);
@@ -233,7 +232,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->StatusBarFrame->update();
         ui->StatusBarProgressFrame->update();
     });
-    connect(infoPane, &InfoPaneDropdown::newChunk, [=](QWidget* chunk) {
+    connect(infoPane, &InfoPaneDropdown::newChunk, [ = ](QWidget * chunk) {
         ui->chunksLayout->addWidget(chunk);
 
         QFrame* line = new QFrame();
@@ -241,12 +240,12 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->chunksLayout->addWidget(line);
 
         ChunkWatcher* watcher = new ChunkWatcher(chunk);
-        connect(watcher, &ChunkWatcher::visibilityChanged, [=](bool isVisible) {
+        connect(watcher, &ChunkWatcher::visibilityChanged, [ = ](bool isVisible) {
             line->setVisible(isVisible);
         });
         line->setVisible(chunk->isVisible());
     });
-    connect(infoPane, &InfoPaneDropdown::newSnack, [=](QWidget* snack) {
+    connect(infoPane, &InfoPaneDropdown::newSnack, [ = ](QWidget * snack) {
         ui->StatusBarSnacks->addWidget(snack);
     });
     ui->keyboardButton->setVisible(false);
@@ -311,7 +310,7 @@ MainWindow::MainWindow(QWidget *parent) :
     d->statusBarOpacityAnimation->setEndValue(1.0);
     d->statusBarOpacityAnimation->setDuration(500);
     d->statusBarOpacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
-    connect(d->statusBarOpacityAnimation, &tVariantAnimation::valueChanged, this, [=](QVariant value) {
+    connect(d->statusBarOpacityAnimation, &tVariantAnimation::valueChanged, this, [ = ](QVariant value) {
         d->statusBarOpacityEffect->setOpacity(value.toReal());
         if (qFuzzyCompare(value.toReal(), 1)) {
             d->statusBarOpacityEffect->setEnabled(false);
@@ -322,7 +321,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->StatusBarFrame->setVisible(!qFuzzyIsNull(d->statusBarOpacityEffect->opacity()));
     });
 
-    connect(locationServices, &LocationServices::locationUsingChanged, [=](bool location) {
+    connect(locationServices, &LocationServices::locationUsingChanged, [ = ](bool location) {
         ui->StatusBarLocation->setVisible(location);
         ui->LocationIndication->setVisible(location);
     });
@@ -338,15 +337,15 @@ MainWindow::MainWindow(QWidget *parent) :
     quietModeMenu->addAction(ui->actionCriticalOnly);
     quietModeMenu->addAction(ui->actionNotifications);
     quietModeMenu->addAction(ui->actionMute);
-    connect(quietModeMenu, &QMenu::aboutToShow, [=] {
+    connect(quietModeMenu, &QMenu::aboutToShow, [ = ] {
         lockMovement("Quiet Mode");
     });
-    connect(quietModeMenu, &QMenu::aboutToHide, [=] {
+    connect(quietModeMenu, &QMenu::aboutToHide, [ = ] {
         unlockMovement("Quiet Mode");
     });
     ui->volumeButton->setMenu(quietModeMenu);
 
-    connect(QuietModeDaemon::instance(), &QuietModeDaemon::QuietModeChanged, [=](QuietModeDaemon::QuietMode newMode) {
+    connect(QuietModeDaemon::instance(), &QuietModeDaemon::QuietModeChanged, [ = ](QuietModeDaemon::QuietMode newMode) {
         switch (newMode) {
             case QuietModeDaemon::None:
                 ui->volumeButton->setIcon(QIcon::fromTheme("audio-volume-high"));
@@ -369,7 +368,7 @@ MainWindow::MainWindow(QWidget *parent) :
                 break;
         }
     });
-    connect(screenRecorder, &ScreenRecorder::stateChanged, [=](ScreenRecorder::State state) {
+    connect(screenRecorder, &ScreenRecorder::stateChanged, [ = ](ScreenRecorder::State state) {
         if (state == ScreenRecorder::Recording) {
             ui->StatusBarRecording->setVisible(true);
             ui->screenRecordingFrame->setVisible(true);
@@ -395,7 +394,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     statusBarProgressTimer = new QTimer();
     statusBarProgressTimer->setInterval(5000);
-    connect(statusBarProgressTimer, &QTimer::timeout, [=] {
+    connect(statusBarProgressTimer, &QTimer::timeout, [ = ] {
         this->showStatusBarProgress(!ui->StatusBarProgressFrame->isVisible());
         if (statusBarPercentage == -2) statusBarProgressTimer->stop();
     });
@@ -403,9 +402,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QScroller::grabGesture(ui->infoScrollArea->viewport(), QScroller::LeftMouseButtonGesture);
 
-    connect(GlobalKeyboardEngine::instance(), &GlobalKeyboardEngine::keyShortcutRegistered, this, [=](QString name, GlobalKeyboardKey* key) {
+    connect(GlobalKeyboardEngine::instance(), &GlobalKeyboardEngine::keyShortcutRegistered, this, [ = ](QString name, GlobalKeyboardKey * key) {
         if (name == GlobalKeyboardEngine::keyName(GlobalKeyboardEngine::OpenGateway)) {
-            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [=] {
+            connect(key, &GlobalKeyboardKey::shortcutActivated, this, [ = ] {
                 this->openMenu();
             });
         }
@@ -419,15 +418,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //ui->infoScrollArea->setFixedHeight(ui->InfoScrollWidget->height());
 
-    #ifdef BLUEPRINT
-        //Apply Blueprint branding
-        ui->openMenu->setIcon(QIcon(":/icons/icon-bp.svg"));
-        ui->openMenuCompact->setIcon(QIcon(":/icons/icon-bp.svg"));
-    #endif
+#ifdef BLUEPRINT
+    //Apply Blueprint branding
+    ui->openMenu->setIcon(QIcon(":/icons/icon-bp.svg"));
+    ui->openMenuCompact->setIcon(QIcon(":/icons/icon-bp.svg"));
+#endif
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete d;
     delete ui;
 }
@@ -438,10 +436,10 @@ void MainWindow::remakeBar() {
     d->barAnim = new tVariantAnimation();
     d->barAnim->setDuration(500);
     d->barAnim->setEasingCurve(QEasingCurve::OutCubic);
-    connect(d->barAnim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(d->barAnim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
         this->setGeometry(value.toRect());
     });
-    connect(d->barAnim, &tVariantAnimation::destroyed, [=] {
+    connect(d->barAnim, &tVariantAnimation::destroyed, [ = ] {
         remakeBar();
     });
 }
@@ -459,7 +457,7 @@ void MainWindow::pullDownGesture() {
         QTimer* timer = new QTimer();
         timer->setSingleShot(true);
         timer->setInterval(3000);
-        connect(timer, &QTimer::timeout, [=]() {
+        connect(timer, &QTimer::timeout, [ = ]() {
             unlockMovement("Pull Down");
             timer->deleteLater();
         });
@@ -467,12 +465,11 @@ void MainWindow::pullDownGesture() {
     }
 }
 
-void MainWindow::closeEvent(QCloseEvent *event) {
+void MainWindow::closeEvent(QCloseEvent* event) {
     event->accept();
 }
 
-void MainWindow::on_openMenu_clicked()
-{
+void MainWindow::on_openMenu_clicked() {
     openMenu();
 }
 
@@ -505,7 +502,7 @@ void MainWindow::setMprisCurrentApp(QAction* app) {
 
         //Connect signals
         currentPlayer = app->data().value<MprisPlayerPtr>();
-        auto setMetadataFunction = [=] {
+        auto setMetadataFunction = [ = ] {
             QString statusString;
             QString title = currentPlayer->metadata().value("xesam:title").toString();
             if (title == "") {
@@ -532,7 +529,7 @@ void MainWindow::setMprisCurrentApp(QAction* app) {
             ui->StatusBarMprisIcon->setPixmap(QIcon::fromTheme("media-playback-pause").pixmap(SC_DPI(16), SC_DPI(16)));
         }
         connect(currentPlayer.data(), &MprisPlayer::metadataChanged, mprisContextObject, setMetadataFunction);
-        connect(currentPlayer.data(), &MprisPlayer::playbackStatusChanged, mprisContextObject, [=] {
+        connect(currentPlayer.data(), &MprisPlayer::playbackStatusChanged, mprisContextObject, [ = ] {
             if (currentPlayer->playbackStatus() == MprisPlayer::Playing) {
                 ui->mprisPause->setIcon(QIcon::fromTheme("media-playback-pause"));
                 ui->StatusBarMprisIcon->setPixmap(QIcon::fromTheme("media-playback-start").pixmap(SC_DPI(16), SC_DPI(16)));
@@ -541,7 +538,7 @@ void MainWindow::setMprisCurrentApp(QAction* app) {
                 ui->StatusBarMprisIcon->setPixmap(QIcon::fromTheme("media-playback-pause").pixmap(SC_DPI(16), SC_DPI(16)));
             }
         });
-        connect(currentPlayer.data(), &MprisPlayer::gone, mprisContextObject, [=] {
+        connect(currentPlayer.data(), &MprisPlayer::gone, mprisContextObject, [ = ] {
             QList<QAction*> actions = ui->mprisSelection->menu()->actions();
             actions.removeFirst(); //Remove the section heading
             actions.removeAll(app); //Remove the current player
@@ -567,16 +564,15 @@ void MainWindow::unlockMovement(QString reason) {
     qDebug() << "Unlocking movement @" << lockHideCount << reason;
 }
 
-void MainWindow::on_time_clicked()
-{
+void MainWindow::on_time_clicked() {
     infoPane->show(InfoPaneDropdown::Clock);
 }
 
 void MainWindow::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
     QMainWindow::setGeometry(x, y, w, h);
     QProcess::execute("wmctrl -r " + this->windowTitle() + " -e 0," +
-                      QString::number(x) + "," + QString::number(y) + "," +
-                      QString::number(w) + "," + QString::number(this->sizeHint().height()));
+        QString::number(x) + "," + QString::number(y) + "," +
+        QString::number(w) + "," + QString::number(this->sizeHint().height()));
     this->setFixedSize(w, this->sizeHint().height());
     ui->infoScrollArea->setFixedWidth(w - this->centralWidget()->layout()->margin());
 
@@ -595,19 +591,17 @@ void MainWindow::setGeometry(QRect geometry) {
     this->setGeometry(geometry.x(), geometry.y(), geometry.width(), geometry.height());
 }
 
-void MainWindow::on_date_clicked()
-{
+void MainWindow::on_date_clicked() {
     infoPane->show(InfoPaneDropdown::Clock);
 }
 
-void MainWindow::on_volumeFrame_MouseEnter()
-{
+void MainWindow::on_volumeFrame_MouseEnter() {
     if (QuietModeDaemon::getQuietMode() != QuietModeDaemon::Mute) {
         ui->volumeSlider->setVisible(true);
 
         //Animate the volume frame
         tVariantAnimation* anim = new tVariantAnimation;
-        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        connect(anim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
             ui->volumeSlider->setFixedWidth(value.toInt());
         });
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -623,15 +617,14 @@ void MainWindow::on_volumeFrame_MouseEnter()
     }
 }
 
-void MainWindow::on_volumeFrame_MouseExit()
-{
+void MainWindow::on_volumeFrame_MouseExit() {
     if (QuietModeDaemon::getQuietMode() != QuietModeDaemon::Mute) {
         //Animate the volume frame
         tVariantAnimation* anim = new tVariantAnimation;
-        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+        connect(anim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
             ui->volumeSlider->setFixedWidth(value.toInt());
         });
-        connect(anim, &tVariantAnimation::finished, [=]() {
+        connect(anim, &tVariantAnimation::finished, [ = ]() {
             ui->volumeSlider->setVisible(false);
             anim->deleteLater();
         });
@@ -643,22 +636,19 @@ void MainWindow::on_volumeFrame_MouseExit()
     }
 }
 
-void MainWindow::on_volumeSlider_sliderMoved(int position)
-{
+void MainWindow::on_volumeSlider_sliderMoved(int position) {
     AudioMan->setMasterVolume(position);
 }
 
-void MainWindow::on_volumeSlider_valueChanged(int value)
-{
+void MainWindow::on_volumeSlider_valueChanged(int value) {
     on_volumeSlider_sliderMoved(value);
 }
 
-void MainWindow::on_brightnessFrame_MouseEnter()
-{
+void MainWindow::on_brightnessFrame_MouseEnter() {
     //Animate the brightness frame
     ui->brightnessSlider->setVisible(true);
     tVariantAnimation* anim = new tVariantAnimation;
-    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(anim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
         ui->brightnessSlider->setFixedWidth(value.toInt());
     });
     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -678,14 +668,13 @@ void MainWindow::on_brightnessFrame_MouseEnter()
     ui->brightnessSlider->setValue((int) output);
 }
 
-void MainWindow::on_brightnessFrame_MouseExit()
-{
+void MainWindow::on_brightnessFrame_MouseExit() {
 
     tVariantAnimation* anim = new tVariantAnimation;
-    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(anim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
         ui->brightnessSlider->setFixedWidth(value.toInt());
     });
-    connect(anim, &tVariantAnimation::finished, [=]() {
+    connect(anim, &tVariantAnimation::finished, [ = ]() {
         ui->brightnessSlider->setVisible(false);
         anim->deleteLater();
     });
@@ -696,25 +685,22 @@ void MainWindow::on_brightnessFrame_MouseExit()
     anim->start();
 }
 
-void MainWindow::on_brightnessSlider_sliderMoved(int position)
-{
+void MainWindow::on_brightnessSlider_sliderMoved(int position) {
     QProcess* backlight = new QProcess(this);
     backlight->start("xbacklight -set " + QString::number(position));
     connect(backlight, SIGNAL(finished(int)), backlight, SLOT(deleteLater()));
 }
 
-void MainWindow::on_brightnessSlider_valueChanged(int value)
-{
+void MainWindow::on_brightnessSlider_valueChanged(int value) {
     on_brightnessSlider_sliderMoved(value);
 }
 
-void MainWindow::on_volumeSlider_sliderReleased()
-{
+void MainWindow::on_volumeSlider_sliderReleased() {
     //Play the audio change sound
     SoundEngine::play(SoundEngine::Volume);
 }
 
-void MainWindow::paintEvent(QPaintEvent *event) {
+void MainWindow::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     if (painter.isActive()) {
         if (this->attentionDemandingWindows > 0) {
@@ -727,7 +713,7 @@ void MainWindow::paintEvent(QPaintEvent *event) {
                 anim->setDuration(1000);
                 anim->setForceAnimation(true);
                 connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-                connect(anim, &tVariantAnimation::valueChanged, [=](QVariant var) {
+                connect(anim, &tVariantAnimation::valueChanged, [ = ](QVariant var) {
                     this->warningWidth = var.toInt();
                     this->repaint();
                 });
@@ -778,23 +764,19 @@ void MainWindow::setTimerEnabled(bool enable) {
     ui->timerIcon->setShowDisabled(!enable);
 }
 
-void MainWindow::on_timerIcon_clicked()
-{
+void MainWindow::on_timerIcon_clicked() {
     infoPane->show(InfoPaneDropdown::Clock);
 }
 
-void MainWindow::on_timer_clicked()
-{
+void MainWindow::on_timer_clicked() {
     infoPane->show(InfoPaneDropdown::Clock);
 }
 
-void MainWindow::on_mprisPause_clicked()
-{
+void MainWindow::on_mprisPause_clicked() {
     currentPlayer->playPause();
 }
 
-void MainWindow::addWindow(DesktopWmWindowPtr window)
-{
+void MainWindow::addWindow(DesktopWmWindowPtr window) {
     TaskbarButton* button = new TaskbarButton(window);
 
     //Add the button to the layout
@@ -804,8 +786,7 @@ void MainWindow::addWindow(DesktopWmWindowPtr window)
     calculateAndMoveBar();
 }
 
-void MainWindow::calculateAndMoveBar()
-{
+void MainWindow::calculateAndMoveBar() {
     QRect screenGeometry = QApplication::screens().first()->geometry();
 
     bool onTop = settings.value("bar/onTop", true).toBool();
@@ -891,18 +872,15 @@ void MainWindow::calculateAndMoveBar()
     d->isHidden = shouldHide;
 }
 
-void MainWindow::on_mprisBack_clicked()
-{
+void MainWindow::on_mprisBack_clicked() {
     currentPlayer->previous();
 }
 
-void MainWindow::on_mprisForward_clicked()
-{
+void MainWindow::on_mprisForward_clicked() {
     currentPlayer->next();
 }
 
-void MainWindow::on_mprisSongName_clicked()
-{
+void MainWindow::on_mprisSongName_clicked() {
     currentPlayer->raise();
 }
 
@@ -914,13 +892,13 @@ void MainWindow::reloadScreens() {
 
 void MainWindow::show() {
     Atom DesktopWindowTypeAtom;
-    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", False);
-    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", False),
-                     XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
+    DesktopWindowTypeAtom = XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE_DOCK", false);
+    int retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_WINDOW_TYPE", false),
+            XA_ATOM, 32, PropModeReplace, (unsigned char*) &DesktopWindowTypeAtom, 1); //Change Window Type
 
     unsigned long desktop = 0xFFFFFFFF;
-    retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
-                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+    retval = XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", false),
+            XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
     QMainWindow::show();
 
@@ -930,13 +908,11 @@ void MainWindow::show() {
     TutorialWin->showScreen(TutorialWindow::Gateway);
 }
 
-MainWindow*MainWindow::instance()
-{
+MainWindow* MainWindow::instance() {
     return MainWindowPrivate::instance;
 }
 
-void MainWindow::on_desktopNext_clicked()
-{
+void MainWindow::on_desktopNext_clicked() {
     uint switchToDesktop = DesktopWm::currentDesktop() + 1;
     if (switchToDesktop == static_cast<uint>(DesktopWm::desktops().count())) {
         switchToDesktop = 0;
@@ -944,8 +920,7 @@ void MainWindow::on_desktopNext_clicked()
     DesktopWm::setCurrentDesktop(switchToDesktop);
 }
 
-void MainWindow::on_desktopBack_clicked()
-{
+void MainWindow::on_desktopBack_clicked() {
     uint numOfDesktops = static_cast<uint>(DesktopWm::desktops().count());
     uint switchToDesktop = DesktopWm::currentDesktop() - 1;
     if (switchToDesktop == UINT_MAX) {
@@ -963,25 +938,21 @@ void MainWindow::openMenu() {
     gatewayMenu->setFocus();
 }
 
-void MainWindow::on_time_dragging(int x, int y)
-{
+void MainWindow::on_time_dragging(int x, int y) {
     QRect screenGeometry = QApplication::screens().first()->geometry();
     infoPane->dragDown(InfoPaneDropdown::Clock, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
 }
 
-void MainWindow::on_time_mouseReleased()
-{
+void MainWindow::on_time_mouseReleased() {
     infoPane->completeDragDown();
 }
 
-void MainWindow::on_date_dragging(int x, int y)
-{
+void MainWindow::on_date_dragging(int x, int y) {
     QRect screenGeometry = QApplication::screens().first()->geometry();
     infoPane->dragDown(InfoPaneDropdown::Clock, ui->time->mapToGlobal(QPoint(x, y)).y() - screenGeometry.top());
 }
 
-void MainWindow::on_date_mouseReleased()
-{
+void MainWindow::on_date_mouseReleased() {
     infoPane->completeDragDown();
 }
 
@@ -1030,8 +1001,8 @@ void MainWindow::updateStruts() {
         struts[10] = 0;
         struts[11] = 0;
     }
-    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_STRUT_PARTIAL", False),
-                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) struts, 12);
+    XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_STRUT_PARTIAL", false),
+        XA_CARDINAL, 32, PropModeReplace, (unsigned char*) struts, 12);
 
     free(struts);
 
@@ -1046,22 +1017,19 @@ void MainWindow::updateStruts() {
     }
 }
 
-void MainWindow::on_actionNone_triggered()
-{
+void MainWindow::on_actionNone_triggered() {
     QuietModeDaemon::setQuietMode(QuietModeDaemon::None);
 }
 
-void MainWindow::on_actionNotifications_triggered()
-{
+void MainWindow::on_actionNotifications_triggered() {
     QuietModeDaemon::setQuietMode(QuietModeDaemon::Notifications);
 }
 
-void MainWindow::on_actionMute_triggered()
-{
+void MainWindow::on_actionMute_triggered() {
     QuietModeDaemon::setQuietMode(QuietModeDaemon::Mute);
 }
 
-bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
+bool MainWindow::eventFilter(QObject* watched, QEvent* event) {
     if (watched == ui->StatusBarFrame || watched == ui->StatusBarHoverFrame || watched == ui->StatusBarProgressFrame) {
         if (event->type() == QEvent::MouseButtonPress) {
             gatewayMenu->close();
@@ -1095,7 +1063,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event) {
     return false;
 }
 
-void MainWindow::enterEvent(QEvent *event) {
+void MainWindow::enterEvent(QEvent* event) {
     if (settings.value("bar/autoshow").toBool()) {
         d->hasMouse = true;
     } else {
@@ -1111,8 +1079,7 @@ void MainWindow::enterEvent(QEvent *event) {
     calculateAndMoveBar();
 }
 
-void MainWindow::leaveEvent(QEvent*event)
-{
+void MainWindow::leaveEvent(QEvent* event) {
     if (!settings.value("bar/autoshow").toBool()) {
         tPropertyAnimation* anim = new tPropertyAnimation(ui->StatusBarHoverFrame, "geometry");
         anim->setStartValue(ui->StatusBarHoverFrame->geometry());
@@ -1123,7 +1090,7 @@ void MainWindow::leaveEvent(QEvent*event)
         }
         anim->setDuration(250);
         anim->setEasingCurve(QEasingCurve::OutCubic);
-        connect(anim, &tPropertyAnimation::finished, [=] {
+        connect(anim, &tPropertyAnimation::finished, [ = ] {
             ui->StatusBarHoverFrame->setVisible(false);
         });
         connect(anim, &tPropertyAnimation::finished, anim, &tPropertyAnimation::deleteLater);
@@ -1134,51 +1101,48 @@ void MainWindow::leaveEvent(QEvent*event)
     calculateAndMoveBar();
 }
 
-void MainWindow::changeEvent(QEvent *event) {
+void MainWindow::changeEvent(QEvent* event) {
     if (event->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
     }
     QMainWindow::changeEvent(event);
 }
 
-void MainWindow::on_stopRecordingButton_clicked()
-{
+void MainWindow::on_stopRecordingButton_clicked() {
     screenRecorder->stop();
 }
 
-void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
-{
+void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint& pos) {
     QMenu* menu = new QMenu();
     menu->addSection(tr("For Bar"));
     if (settings.value("bar/onTop").toBool()) {
-        menu->addAction(QIcon::fromTheme("go-down"), tr("Move to bottom"), [=] {
+        menu->addAction(QIcon::fromTheme("go-down"), tr("Move to bottom"), [ = ] {
             settings.setValue("bar/onTop", false);
             infoPane->updateStruts();
         });
     } else {
-        menu->addAction(QIcon::fromTheme("go-up"), tr("Move to top"), [=] {
+        menu->addAction(QIcon::fromTheme("go-up"), tr("Move to top"), [ = ] {
             settings.setValue("bar/onTop", true);
             infoPane->updateStruts();
         });
     }
 
-    menu->addAction(QIcon::fromTheme("configure"), tr("Gateway and Bar Settings"), [=] {
+    menu->addAction(QIcon::fromTheme("configure"), tr("Gateway and Bar Settings"), [ = ] {
         getInfoPane()->show(InfoPaneDropdown::Settings);
         getInfoPane()->changeSettingsPane(1);
     });
 
     menu->addSection(tr("For System"));
-    menu->addAction(QIcon::fromTheme("dialog-information"), tr("Open Status Center"), [=] {
+    menu->addAction(QIcon::fromTheme("dialog-information"), tr("Open Status Center"), [ = ] {
         getInfoPane()->show(InfoPaneDropdown::Clock);
     });
-    menu->addAction(QIcon::fromTheme("configure"), tr("Open System Settings"), [=] {
+    menu->addAction(QIcon::fromTheme("configure"), tr("Open System Settings"), [ = ] {
         getInfoPane()->show(InfoPaneDropdown::Settings);
     });
     menu->exec(this->mapToGlobal(pos));
 }
 
-void MainWindow::on_openMenu_customContextMenuRequested(const QPoint &pos)
-{
+void MainWindow::on_openMenu_customContextMenuRequested(const QPoint& pos) {
     QMenu* menu = new QMenu();
     menu->addAction(ui->openMenu->icon(), tr("Open Gateway"), this, SLOT(openMenu()));
     menu->exec(ui->openMenu->mapToGlobal(pos));
@@ -1212,26 +1176,22 @@ void MainWindow::reloadBar() {
     }
 }
 
-void MainWindow::forceHide()
-{
+void MainWindow::forceHide() {
     d->forceHidden++;
     calculateAndMoveBar();
 }
 
-void MainWindow::unforceHide()
-{
+void MainWindow::unforceHide() {
     d->forceHidden--;
     if (d->forceHidden < 0) d->forceHidden = 0;
     calculateAndMoveBar();
 }
 
-void MainWindow::on_openStatusCenterButton_clicked()
-{
+void MainWindow::on_openStatusCenterButton_clicked() {
     getInfoPane()->show(InfoPaneDropdown::Clock);
 }
 
-void MainWindow::on_actionCriticalOnly_triggered()
-{
+void MainWindow::on_actionCriticalOnly_triggered() {
     QuietModeDaemon::setQuietMode(QuietModeDaemon::Critical);
 }
 
@@ -1281,7 +1241,7 @@ bool MainWindow::event(QEvent* event) {
         QTouchEvent* e = (QTouchEvent*) event;
         if (currentTouch == 0) {
             currentTouch = -1;
-            QTimer::singleShot(1000, [=] {
+            QTimer::singleShot(1000, [ = ] {
                 unlockMovement("Touch Bar");
             });
         } else if (currentTouch == 1) {
@@ -1296,12 +1256,11 @@ bool MainWindow::event(QEvent* event) {
     return QMainWindow::event(event);
 }
 
-void MainWindow::initTaskbar()
-{
-    connect(DesktopWm::instance(), &DesktopWm::currentDesktopChanged, this, [=] {
+void MainWindow::initTaskbar() {
+    connect(DesktopWm::instance(), &DesktopWm::currentDesktopChanged, this, [ = ] {
         ui->desktopName->setText(DesktopWm::desktops().at(static_cast<int>(DesktopWm::currentDesktop())));
     });
-    connect(DesktopWm::instance(), &DesktopWm::desktopCountChanged, this, [=] {
+    connect(DesktopWm::instance(), &DesktopWm::desktopCountChanged, this, [ = ] {
         QStringList desktops = DesktopWm::desktops();
         ui->desktopsFrame->setVisible(desktops.count() > 1);
         if (ui->desktopsFrame->isVisible()) {
@@ -1335,7 +1294,7 @@ void MainWindow::showStatusBarProgress(bool show) {
             anim->setEndValue(QRect(0, ui->StatusBarFrame->y(), ui->StatusBarFrame->width(), ui->StatusBarFrame->height()));
             anim->setDuration(250);
             anim->setEasingCurve(QEasingCurve::OutCubic);
-            connect(anim, &tPropertyAnimation::valueChanged, [=](QVariant value) {
+            connect(anim, &tPropertyAnimation::valueChanged, [ = ](QVariant value) {
                 if (settings.value("bar/onTop", true).toBool()) {
                     ui->StatusBarFrame->move(0, value.toRect().bottom());
                 } else {
@@ -1356,14 +1315,14 @@ void MainWindow::showStatusBarProgress(bool show) {
             }
             anim->setDuration(250);
             anim->setEasingCurve(QEasingCurve::OutCubic);
-            connect(anim, &tPropertyAnimation::valueChanged, [=](QVariant value) {
+            connect(anim, &tPropertyAnimation::valueChanged, [ = ](QVariant value) {
                 if (settings.value("bar/onTop", true).toBool()) {
                     ui->StatusBarFrame->move(0, value.toRect().bottom());
                 } else {
                     ui->StatusBarFrame->move(0, value.toRect().top() - ui->StatusBarFrame->height());
                 }
             });
-            connect(anim, &tPropertyAnimation::finished, [=] {
+            connect(anim, &tPropertyAnimation::finished, [ = ] {
                 ui->StatusBarProgressFrame->setVisible(false);
             });
             connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));

@@ -129,24 +129,23 @@ void catch_signal(int sig) {
     raise(sig);
 }
 
-void QtHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+void QtHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg) {
     switch (type) {
-    case QtDebugMsg:
-    case QtInfoMsg:
-    case QtWarningMsg:
-    case QtCriticalMsg:
-        std::cerr << msg.toStdString() + "\n";
-        break;
-    case QtFatalMsg:
-        std::cerr << msg.toStdString() + "\n";
-        export_backtrace(msg);
-        raise(SIGABRT);
+        case QtDebugMsg:
+        case QtInfoMsg:
+        case QtWarningMsg:
+        case QtCriticalMsg:
+            std::cerr << msg.toStdString() + "\n";
+            break;
+        case QtFatalMsg:
+            std::cerr << msg.toStdString() + "\n";
+            export_backtrace(msg);
+            raise(SIGABRT);
     }
 }
 
 #include <globalkeyboard/globalkeyboardengine.h>
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     signal(SIGSEGV, *catch_signal); //Catch SIGSEGV
     signal(SIGBUS, *catch_signal); //Catch SIGBUS
     signal(SIGABRT, *catch_signal); //Catch SIGABRT
@@ -235,7 +234,7 @@ int main(int argc, char *argv[])
             }
         } else {
             if (QMessageBox::warning(nullptr, messageTitle, messageBody,
-                                 QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes) {
+                    QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes) {
                 startSafe = true;
             }
         }
@@ -244,7 +243,7 @@ int main(int argc, char *argv[])
     if (QDBusConnection::sessionBus().interface()->registeredServiceNames().value().contains("org.thesuite.theshell")) {
         QString messageTitle = a.translate("main", "theShell already running");
         QString messageBody = a.translate("main", "theShell seems to already be running. "
-                                                  "Do you wish to start theShell anyway?");
+                "Do you wish to start theShell anyway?");
         if (sessionStarter) {
             QFile out;
             out.open(stdout, QFile::WriteOnly);
@@ -260,7 +259,7 @@ int main(int argc, char *argv[])
             }
         } else {
             if (QMessageBox::warning(nullptr, messageTitle, messageBody,
-                                 QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
+                    QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
                 return 0;
             }
         }
@@ -286,8 +285,8 @@ int main(int argc, char *argv[])
 
             QString messageTitle = a.translate("main", "Window Manager couldn't start");
             QString messageBody = a.translate("main", "The window manager \"%1\" could not start. \n\n"
-                                                      "Enter the name or path of a window manager to attempt to start a different window"
-                                                      "manager, or hit 'Cancel' to start theShell without a window manager.").arg(windowManager);
+                    "Enter the name or path of a window manager to attempt to start a different window"
+                    "manager, or hit 'Cancel' to start theShell without a window manager.").arg(windowManager);
             if (sessionStarter) {
                 QFile out;
                 out.open(stdout, QFile::WriteOnly);
@@ -435,7 +434,7 @@ void EndSession(EndSessionWait::shutdownType type) {
                     QEventLoop* l = new QEventLoop;
                     screenshotWindow* s = new screenshotWindow(false);
                     s->show();
-                    QObject::connect(s, &screenshotWindow::readyForScreenOff, [=] {
+                    QObject::connect(s, &screenshotWindow::readyForScreenOff, [ = ] {
                         DPMSForceLevel(QX11Info::display(), DPMSModeOff);
                         l->quit();
                     });
@@ -471,8 +470,8 @@ void sendMessageToRootWindow(const char* message, Window window, long data0, lon
 
     event.xclient.type = ClientMessage;
     event.xclient.serial = 0;
-    event.xclient.send_event = True;
-    event.xclient.message_type = XInternAtom(QX11Info::display(), message, False);
+    event.xclient.send_event = true;
+    event.xclient.message_type = XInternAtom(QX11Info::display(), message, false);
     event.xclient.window = window;
     event.xclient.format = 32;
     event.xclient.data.l[0] = data0;
@@ -481,7 +480,7 @@ void sendMessageToRootWindow(const char* message, Window window, long data0, lon
     event.xclient.data.l[3] = data3;
     event.xclient.data.l[4] = data4;
 
-    XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
+    XSendEvent(QX11Info::display(), DefaultRootWindow(QX11Info::display()), false, SubstructureRedirectMask | SubstructureNotifyMask, &event);
 }
 
 float getDPIScaling() {
