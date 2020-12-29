@@ -1,6 +1,9 @@
 # theShell
 Desktop Environment written using the Qt toolkit
 
+## WARNING
+theShell is discontinued, and will probably never be revived. Bugs will no longer be fixed. Try theDesk if you want a maintained desktop similar to theShell.
+
 ## Screenshots
 ![Screenshot 1](https://raw.githubusercontent.com/vicr123/theshell/master/shell/images/desktop.png)
 
