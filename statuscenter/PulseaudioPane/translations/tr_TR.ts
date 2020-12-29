@@ -6,94 +6,94 @@
     <message>
         <location filename="../audiopane.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="95"/>
         <location filename="../audiopane.cpp" line="169"/>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Ses</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="124"/>
         <location filename="../audiopane.ui" line="187"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="129"/>
         <location filename="../audiopane.ui" line="435"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri çalma</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="134"/>
         <location filename="../audiopane.ui" line="542"/>
         <source>Recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Kayıt</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="139"/>
         <location filename="../audiopane.ui" line="649"/>
         <source>Output Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıktı cihazları</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="144"/>
         <location filename="../audiopane.ui" line="856"/>
         <source>Input Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Giriş cihazları</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="149"/>
         <location filename="../audiopane.ui" line="963"/>
         <source>Advanced Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelişmiş yapılanırma</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="273"/>
         <source>BEHAVIOUR</source>
-        <translation type="unfinished"></translation>
+        <translation>DAVRANIŞ</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="293"/>
         <source>Volume Overdrive</source>
-        <translation type="unfinished"></translation>
+        <translation>Hacim Aşırı Hız</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="300"/>
         <source>Volume Overdrive allows you to set your volume higher than 100%</source>
-        <translation type="unfinished"></translation>
+        <translation>Hacim Aşırı Hız, ses düzeyinizi %100&apos;ün üzerinde ayarlamanızı sağlar</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="342"/>
         <source>Sound Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Ses Teması</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="349"/>
         <source>You can change notification sounds in the Notifications pane</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildirimler bölmesinde bildirim seslerini değiştirebilirsiniz</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="365"/>
         <source>SOUNDS</source>
-        <translation type="unfinished"></translation>
+        <translation>SESLER</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="746"/>
         <source>QUIET MODE</source>
-        <translation type="unfinished"></translation>
+        <translation>SESSİZ MOD</translation>
     </message>
     <message>
         <location filename="../audiopane.ui" line="778"/>
         <source>Turn off Quiet Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Sessiz modu kapatın</translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="110"/>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Oturum</translation>
     </message>
     <message>
         <location filename="../audiopane.cpp" line="111"/>
