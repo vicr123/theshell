@@ -133,7 +133,7 @@
     <message>
         <location filename="../notificationsWidget/notificationswidget.ui" line="254"/>
         <source>Turn off in</source>
-        <translation type="unfinished"></translation>
+        <translation>Saat kapat</translation>
     </message>
     <message>
         <location filename="../notificationsWidget/notificationswidget.ui" line="277"/>
@@ -143,7 +143,7 @@
     <message>
         <location filename="../notificationsWidget/notificationswidget.ui" line="288"/>
         <source>Turn off at</source>
-        <translation type="unfinished"></translation>
+        <translation>Saat&apos;de kapat</translation>
     </message>
     <message>
         <location filename="../notificationsWidget/notificationswidget.ui" line="389"/>
@@ -271,7 +271,7 @@
     <message>
         <location filename="../settings/settingspane.ui" line="521"/>
         <source>Unplugged</source>
-        <translation type="unfinished"></translation>
+        <translation>Bağlantısı kesildi</translation>
     </message>
     <message>
         <location filename="../settings/settingspane.ui" line="658"/>
