@@ -402,12 +402,12 @@
         <location filename="../lockuserdialog.ui" line="209"/>
         <location filename="../lockuserdialog.ui" line="247"/>
         <source>Unlock Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Hesabın Kilidini Aç</translation>
     </message>
     <message>
         <location filename="../lockuserdialog.ui" line="234"/>
         <source>After unlocking this account, you&apos;ll be able to log in as this account.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu hesabın kilidini açtıktan sonra, bu hesapla giriş yapabileceksiniz.</translation>
     </message>
     <message>
         <location filename="../lockuserdialog.ui" line="250"/>
@@ -417,12 +417,12 @@
     <message>
         <location filename="../lockuserdialog.cpp" line="68"/>
         <source>Couldn&apos;t unlock user</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcının kilidi açılamadı</translation>
     </message>
     <message>
         <location filename="../lockuserdialog.cpp" line="71"/>
         <source>Couldn&apos;t lock user</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı kilitlenemedi</translation>
     </message>
 </context>
 <context>
@@ -430,32 +430,32 @@
     <message>
         <location filename="../usertypedialog.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../usertypedialog.ui" line="93"/>
         <source>Change User Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı Türünü Değiştirin</translation>
     </message>
     <message>
         <location filename="../usertypedialog.ui" line="150"/>
         <source>ADMINISTRATOR</source>
-        <translation type="unfinished"></translation>
+        <translation>YÖNETİCİ</translation>
     </message>
     <message>
         <location filename="../usertypedialog.ui" line="157"/>
         <source>Say something cool about what an administrator can do</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir yöneticinin yapabilecekleri hakkında güzel bir şeyler söyleyin</translation>
     </message>
     <message>
         <location filename="../usertypedialog.ui" line="167"/>
         <source>Administrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Yönetici</translation>
     </message>
     <message>
         <location filename="../usertypedialog.ui" line="198"/>
         <source>STANDARD USER</source>
-        <translation type="unfinished"></translation>
+        <translation>STANDART KULLANICI</translation>
     </message>
     <message>
         <location filename="../usertypedialog.ui" line="205"/>
