@@ -1707,58 +1707,58 @@
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="196"/>
         <source>Your Mouse Password needs to contain at least 5 events.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Parolanızın en az 5 etkinlik içermesi gerekir.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="208"/>
         <source>Unfortunately that wasn&apos;t correct. Please try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maalesef bu doğru değildi. Lütfen tekrar deneyin.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="214"/>
         <source>Set Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Şifresini Ayarlayın</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="222"/>
         <source>Unauthorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Yetkisiz</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="222"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Polkit, mouse parolası belirlemenize izin vermez.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="240"/>
         <location filename="../locktypes/mousepassword.cpp" line="254"/>
         <source>Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Şifresi</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="240"/>
         <source>Mouse Password couldn&apos;t be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Parolası kaydedilemedi.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="255"/>
         <source>Mouse Password was set successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Parolası başarıyla belirlendi</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.h" line="74"/>
         <source>To get started, use the mouse to input a sequence of button events now.</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlamak için, şimdi bir dizi düğme etkinliği girmek için mouse&apos;yi kullanın.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.h" line="75"/>
         <source>Now, confirm the Mouse Password you chose by entering it again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Şimdi, tekrar girerek seçtiğiniz Mouse Parolasını onaylayın.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.h" line="76"/>
         <source>Your Mouse Password is ready to be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Parolanız kaydedilmeye hazır.</translation>
     </message>
 </context>
 <context>
@@ -1766,28 +1766,28 @@
     <message>
         <location filename="../newmedia.ui" line="25"/>
         <source>New Media Inserted</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Medya Eklendi</translation>
     </message>
     <message>
         <location filename="../newmedia.ui" line="32"/>
         <source>What would you like to do?</source>
-        <translation type="unfinished"></translation>
+        <translation>Şimdi ne yapmak istersin?</translation>
     </message>
     <message>
         <location filename="../newmedia.ui" line="54"/>
         <source>Open In theFile</source>
-        <translation type="unfinished"></translation>
+        <translation>theFile&apos;de Aç</translation>
     </message>
     <message>
         <location filename="../newmedia.ui" line="74"/>
         <location filename="../newmedia.ui" line="144"/>
         <source>Do Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiçbir şey yapma</translation>
     </message>
     <message>
         <location filename="../newmedia.ui" line="124"/>
         <source>Alternatively, remove the media now. (It&apos;s already ejected!)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif olarak, medyayı şimdi çıkarın. (Zaten çıkarıldı!)</translation>
     </message>
 </context>
 <context>
@@ -1795,114 +1795,114 @@
     <message>
         <location filename="../onboarding.ui" line="87"/>
         <source>Select Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Dil Seçin</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="310"/>
         <source>What&apos;s New?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne var ne yok?</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="374"/>
         <source>Compact Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompakt Çubuk</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="414"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompakt Çubuk, dikey alandan tasarruf etmek için tüm öğeleri tek bir sırada düzenleyen geleneksel çubuğun daha küçük bir versiyonudur.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="472"/>
         <source>Use the Compact Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompakt Çubuğu kullanın</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="479"/>
         <source>Don&apos;t use the Compact Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompakt Çubuğu kullanmayın</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="535"/>
         <source>Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum çubuğu</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="575"/>
         <source>The Status Bar is a smaller version of the bar that is always visible and shows system status icons.</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum Çubuğu, her zaman görünür olan ve sistem durumu simgelerini gösteren, çubuğun daha küçük bir sürümüdür.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="624"/>
         <source>The Status Bar will appear once the bar moves far enough out of the way.</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum Çubuğu, çubuk yoldan yeterince uzaklaştığında görünecektir.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="656"/>
         <source>Use the Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum Çubuğunu Kullan</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="663"/>
         <source>Don&apos;t use the Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum Çubuğunu kullanmayın</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="742"/>
         <source>Thank you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çok teşekkür ederim.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="759"/>
         <source>You&apos;re ready to start using theShell.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell kullanmaya başlamaya hazırsınız.</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="829"/>
         <source>Cancel Setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurulumu İptal Et</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="860"/>
         <source>You haven&apos;t finished setting up theShell. What would you like to do?</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell kurulumunu bitirmediniz. Ne yapmak istersin?</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="902"/>
         <source>Return to theShell Setup</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell Kurulumuna Dön</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="909"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkış Yap</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="923"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="1045"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri</translation>
     </message>
     <message>
         <location filename="../onboarding.ui" line="1056"/>
         <location filename="../onboarding.cpp" line="197"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="142"/>
         <location filename="../onboarding.cpp" line="309"/>
         <source>Welcome to theShell %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell %1&apos;e hoş geldiniz!</translation>
     </message>
     <message>
         <location filename="../onboarding.cpp" line="213"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlat</translation>
     </message>
 </context>
 <context>
@@ -1910,33 +1910,33 @@
     <message>
         <location filename="../rundialog.ui" line="50"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <location filename="../rundialog.ui" line="81"/>
         <location filename="../rundialog.ui" line="97"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalıştırmak</translation>
     </message>
     <message>
         <location filename="../rundialog.ui" line="132"/>
         <source>Enter a command to run</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalıştırmak için bir komut girin</translation>
     </message>
     <message>
         <location filename="../rundialog.ui" line="150"/>
         <source>Enter Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Komutu Girin</translation>
     </message>
     <message>
         <location filename="../rundialog.cpp" line="62"/>
         <source>Couldn&apos;t run that command.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu komut çalıştırılamadı.</translation>
     </message>
     <message>
         <location filename="../rundialog.cpp" line="149"/>
         <source>Can&apos;t find that command</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu komutu bulamıyorum</translation>
     </message>
 </context>
 <context>
@@ -1947,27 +1947,27 @@
         <location filename="../screenrecorder.cpp" line="109"/>
         <location filename="../screenrecorder.cpp" line="121"/>
         <source>Screen Recorder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekran kaydedicisi</translation>
     </message>
     <message>
         <location filename="../screenrecorder.cpp" line="49"/>
         <source>To record your screen, you&apos;ll need to install ffmpeg</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekranınızı kaydetmek için ffmpeg yüklemeniz gerekecek</translation>
     </message>
     <message>
         <location filename="../screenrecorder.cpp" line="74"/>
         <source>Couldn&apos;t start screen recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekran kaydı başlatılamadı</translation>
     </message>
     <message>
         <location filename="../screenrecorder.cpp" line="109"/>
         <source>Screen Recording saved in Recordings folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Kayıtlar klasörüne kaydedilen Ekran Kaydı</translation>
     </message>
     <message>
         <location filename="../screenrecorder.cpp" line="121"/>
         <source>Screen Recording failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekran Kaydı başarısız oldu</translation>
     </message>
 </context>
 <context>
@@ -1977,7 +1977,7 @@
         <location filename="../systrayicons.cpp" line="50"/>
         <location filename="../systrayicons.cpp" line="67"/>
         <source>System Tray Unavailable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem Tepsisi Kullanılamıyor.</translation>
     </message>
 </context>
 <context>
@@ -1985,12 +1985,12 @@
     <message>
         <location filename="../taskbarbutton.cpp" line="169"/>
         <source>For %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 için</translation>
     </message>
     <message>
         <location filename="../taskbarbutton.cpp" line="170"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapat</translation>
     </message>
 </context>
 <context>
@@ -1998,54 +1998,56 @@
     <message>
         <location filename="../tutorialwindow.ui" line="82"/>
         <source>Ready to begin?</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlamaya hazır mısın?</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="89"/>
         <source>The gateway is the portal to everything on your PC. To open it, click the theShell icon, or hit the Super key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ağ geçidi, bilgisayarınızdaki her şeye açılan portaldır. Açmak için theShell simgesine tıklayın veya Süper tuşuna basın.</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="146"/>
         <source>Where&apos;d the bar go!?</source>
-        <translation type="unfinished"></translation>
+        <translation>Çubuğu nereye gitti!?</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="153"/>
         <source>The bar moves off the screen to make way for other windows. Move your mouse to the top of the screen to get to the bar.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çubuk, diğer pencerelere yol açmak için ekrandan dışarı çıkar. Çubuğa gitmek için farenizi ekranın üst kısmına getirin.</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="207"/>
         <source>Do stuff super speedy!</source>
-        <translation type="unfinished"></translation>
+        <translation>Süper hızlı şeyler yapın!</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="214"/>
         <source>Just open the gateway and type what you want. You don&apos;t even need to click on the search box!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece ağ geçidini açın ve istediğinizi yazın. Arama kutusuna tıklamanıza bile gerek yok!</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="224"/>
         <source>- Open apps by typing in the name of the app
 - Get information about playing media by typing in &quot;current song&quot; (or something like that)
 - Open websites by typing in the address</source>
-        <translation type="unfinished"></translation>
+        <translation>- Uygulama adını yazarak uygulamaları açın
+- &quot;Geçerli şarkı&quot; (ya da buna benzer bir şey) yazarak medya oynatma hakkında bilgi alın
+- Adres yazarak web siteleri açın</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="299"/>
         <source>Missed a notification?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir bildirimi kaçırdınız mı?</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="306"/>
         <source>Check what you missed on the bar. Click &quot;1 Notification&quot; on the bar.</source>
-        <translation type="unfinished"></translation>
+        <translation>Barda neler kaçırdığına bir bak. Çubukta &quot;1 Bildirim&quot; e tıklayın.</translation>
     </message>
     <message>
         <location filename="../tutorialwindow.ui" line="318"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>PEKİ</translation>
     </message>
 </context>
 <context>
@@ -2053,34 +2055,36 @@
     <message>
         <location filename="../main.cpp" line="219"/>
         <source>Start in Safe Mode?</source>
-        <translation type="unfinished"></translation>
+        <translation>Güvenli Modda başlasın mı?</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="220"/>
         <source>You&apos;re holding the CTRL key. Do you want to start theShell in Safe Mode?</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL tuşunu tutuyorsunuz. theShell Güvenli Modda başlatmak istiyor musun?</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="244"/>
         <source>theShell already running</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell zaten çalışıyor</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="245"/>
         <source>theShell seems to already be running. Do you wish to start theShell anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell zaten çalışıyor gibi görünüyor. Yine de theShell başlatmak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="286"/>
         <source>Window Manager couldn&apos;t start</source>
-        <translation type="unfinished"></translation>
+        <translation>Pencere Yöneticisi başlayamadı</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="287"/>
         <source>The window manager &quot;%1&quot; could not start. 
 
 Enter the name or path of a window manager to attempt to start a different windowmanager, or hit &apos;Cancel&apos; to start theShell without a window manager.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pencere yöneticisi &quot;%1&quot; başlayamadı.
+
+Farklı bir pencere yöneticisi başlatmayı denemek için bir pencere yöneticisinin adını ya da yolunu girin ya da theShell bir pencere yöneticisi olmadan başlatmak için &apos;İptal&apos;e basın.</translation>
     </message>
 </context>
 <context>
@@ -2089,52 +2093,52 @@ Enter the name or path of a window manager to attempt to start a different windo
         <location filename="../screenshotwindow.ui" line="46"/>
         <location filename="../screenshotwindow.cpp" line="392"/>
         <source>Select a region using the mouse.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouseyi kullanarak bir bölge seçin.</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="80"/>
         <source>Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Kırp</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="106"/>
         <source>Redact</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazıya dökmek</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="129"/>
         <source>Highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Vurgulamak</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="162"/>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurtulmak</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="179"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyala</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="196"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydet</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.ui" line="223"/>
         <source>Reset Modificiations</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişiklikleri Sıfırla</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.cpp" line="398"/>
         <source>Redact a region using the mouse.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouseyi kullanarak bir bölgeyi yeniden düzenleyin.</translation>
     </message>
     <message>
         <location filename="../screenshotwindow.cpp" line="404"/>
         <source>Highlight part of the image using the mouse.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouseyi kullanarak görüntünün bir bölümünü vurgulayın.</translation>
     </message>
 </context>
 </TS>
