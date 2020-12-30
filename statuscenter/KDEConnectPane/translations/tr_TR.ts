@@ -222,7 +222,7 @@
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1113"/>
         <source>Send to</source>
-        <translation type="unfinished"></translation>
+        <translation>Gönderildi</translation>
     </message>
     <message>
         <location filename="../kdeconnect/kdeconnectwidget.ui" line="1123"/>
