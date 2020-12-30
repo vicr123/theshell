@@ -6,67 +6,67 @@
     <message>
         <location filename="../apps/appslistmodel.cpp" line="70"/>
         <source>Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="128"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="130"/>
         <source>Power off this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu cihazı kapatın</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="135"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeniden başlat</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="137"/>
         <source>Reboot this device</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu cihazı yeniden başlatın</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="142"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkış Yap</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="144"/>
         <source>End your session</source>
-        <translation type="unfinished"></translation>
+        <translation>Seansınızı sonlandırın</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="153"/>
         <source>Run Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Komutu Çalıştır</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="163"/>
         <source>Open webpage</source>
-        <translation type="unfinished"></translation>
+        <translation>Web sayfasını aç</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="171"/>
         <source>Open Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Klasörü Aç</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="181"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Aç</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="207"/>
         <source>System settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem ayarları</translation>
     </message>
     <message>
         <location filename="../apps/appslistmodel.cpp" line="209"/>
         <source>System Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem yapılandırması</translation>
     </message>
 </context>
 <context>
@@ -74,12 +74,12 @@
     <message>
         <location filename="../bthandsfree.cpp" line="89"/>
         <source>In call</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüşmede</translation>
     </message>
     <message>
         <location filename="../bthandsfree.cpp" line="93"/>
         <source>Dialling...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aranıyor…</translation>
     </message>
 </context>
 <context>
@@ -87,112 +87,112 @@
     <message>
         <location filename="../background.ui" line="176"/>
         <source>Sorry, there was a problem displaying the background.</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzgünüz, arka planı görüntülerken bir sorun oluştu.</translation>
     </message>
     <message>
         <location filename="../background.ui" line="198"/>
         <source>Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekrar deneyin</translation>
     </message>
     <message>
         <location filename="../background.ui" line="379"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka fon</translation>
     </message>
     <message>
         <location filename="../background.ui" line="427"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>Resim</translation>
     </message>
     <message>
         <location filename="../background.ui" line="434"/>
         <source>Select an image to display on your background and lock screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka planınızda ve kilit ekranınızda görüntülenecek bir resim seçin</translation>
     </message>
     <message>
         <location filename="../background.ui" line="522"/>
         <source>COMMUNITY BACKGROUNDS</source>
-        <translation type="unfinished"></translation>
+        <translation>TOPLULUK ARKA PLANLARI</translation>
     </message>
     <message>
         <location filename="../background.ui" line="529"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell topluluğundan gelen görseller, arada bir yeniden gözden geçirilecektir.</translation>
     </message>
     <message>
         <location filename="../background.ui" line="536"/>
         <source>Show image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntü bilgilerini göster</translation>
     </message>
     <message>
         <location filename="../background.ui" line="584"/>
         <source>STRETCH</source>
-        <translation type="unfinished"></translation>
+        <translation>UZATMAK</translation>
     </message>
     <message>
         <location filename="../background.ui" line="591"/>
         <source>Select how you&apos;d like the background image to be sized</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka plan resminin nasıl boyutlandırılmasını istediğinizi seçin</translation>
     </message>
     <message>
         <location filename="../background.ui" line="603"/>
         <source>Stretch To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sığacak şekilde uzatmak</translation>
     </message>
     <message>
         <location filename="../background.ui" line="629"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakınlaştır ve Kırp</translation>
     </message>
     <message>
         <location filename="../background.ui" line="655"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez</translation>
     </message>
     <message>
         <location filename="../background.ui" line="681"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Fayans</translation>
     </message>
     <message>
         <location filename="../background.ui" line="707"/>
         <source>Zoom To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sığdırmak İçin Yakınlaştır</translation>
     </message>
     <message>
         <location filename="../background.ui" line="756"/>
         <source>Change Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka Planı Değiştir</translation>
     </message>
     <message>
         <location filename="../background.ui" line="765"/>
         <source>Open Status Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum Merkezini Aç</translation>
     </message>
     <message>
         <location filename="../background.ui" line="774"/>
         <source>Open System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem Ayarlarını Aç</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="200"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 tarafından</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="306"/>
         <source>For desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Masaüstü için</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="308"/>
         <source>For system</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem için</translation>
     </message>
     <message>
         <location filename="../background.cpp" line="368"/>
         <source>Select Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkaplan seç</translation>
     </message>
 </context>
 <context>
@@ -200,122 +200,122 @@
     <message>
         <location filename="../choosebackground.ui" line="14"/>
         <source>Choose Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkaplan seç</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="44"/>
         <source>Inbuilt</source>
-        <translation type="unfinished"></translation>
+        <translation>Dahili</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="57"/>
         <source>Community</source>
-        <translation type="unfinished"></translation>
+        <translation>Topluluk</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="70"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="184"/>
         <source>Images from the theShell community will be cycled through every so often.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell topluluğundan gelen görseller, arada bir yeniden gözden geçirilecektir.</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="194"/>
         <source>Show Image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntü Bilgilerini göster</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="203"/>
         <source>Change image after</source>
-        <translation type="unfinished"></translation>
+        <translation>saat sonra resmi değiştir</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="226"/>
         <source>minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>dakika</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="279"/>
         <source>Current Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Arka Plan</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="325"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>MetinEtiketi</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="332"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisans</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="339"/>
         <source>More Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Daha fazla bilgi</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="350"/>
         <source>by</source>
-        <translation type="unfinished"></translation>
+        <translation>tarafından</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="379"/>
         <source>Select a file to display as your desktop background</source>
-        <translation type="unfinished"></translation>
+        <translation>Masaüstü arka planınız olarak görüntülenecek bir dosya seçin</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="391"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Araştır...</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="453"/>
         <source>Image Sizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Resim Boyutlandırma</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="461"/>
         <source>Stretch to Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sığacak şekilde uzatmak</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="466"/>
         <source>Zoom and Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakınlaştır ve Kırp</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="471"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="476"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Fayans</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="481"/>
         <source>Zoom and Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakınlaştır ve Sığdır</translation>
     </message>
     <message>
         <location filename="../choosebackground.ui" line="506"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitti</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="93"/>
         <source>by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 tarafından</translation>
     </message>
     <message>
         <location filename="../choosebackground.cpp" line="170"/>
         <source>Select Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkaplan seç</translation>
     </message>
 </context>
 <context>
@@ -323,29 +323,29 @@
     <message>
         <location filename="../dbusevents.cpp" line="100"/>
         <source>Perform Action...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eylemi Gerçekleştir…</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="105"/>
         <location filename="../dbusevents.cpp" line="171"/>
         <source>%1 Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Bağlandı</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="105"/>
         <location filename="../dbusevents.cpp" line="171"/>
         <source>%1 has been connected to this PC.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bu bilgisayara bağlandı.</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="128"/>
         <source>%1 was just connected. What do you want to do?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 yeni bağlandı. Ne yapmak istiyorsun?</translation>
     </message>
     <message>
         <location filename="../dbusevents.cpp" line="164"/>
         <source>iOS Device</source>
-        <translation type="unfinished"></translation>
+        <translation>iOS Cihaz</translation>
     </message>
 </context>
 <context>
@@ -353,28 +353,28 @@
     <message>
         <location filename="../endsessionwait.ui" line="146"/>
         <source>Waiting for apps to close...</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulamaların kapanması bekleniyor…</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="180"/>
         <location filename="../endsessionwait.ui" line="770"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="206"/>
         <source>End Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Şimdi Bitir</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="300"/>
         <source>End Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Oturum sonu</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="310"/>
         <source>You&apos;re about to power off your PC. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kişisel Bilgisayarınızı kapatmak üzeresiniz. Emin misin?</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="347"/>
@@ -384,87 +384,87 @@
         <location filename="../endsessionwait.cpp" line="486"/>
         <location filename="../endsessionwait.cpp" line="864"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="395"/>
         <source>If you don&apos;t do anything, we&apos;ll power off for you in 30 seconds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiçbir şey yapmazsan, 30 saniye içinde kapatırım.</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="430"/>
         <location filename="../endsessionwait.cpp" line="92"/>
         <location filename="../endsessionwait.cpp" line="493"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeniden başlat</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="462"/>
         <location filename="../endsessionwait.cpp" line="500"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkış Yap</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="494"/>
         <source>Suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>Askıya al</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="526"/>
         <source>Fake Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sahte Çıkış</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="593"/>
         <location filename="../endsessionwait.ui" line="756"/>
         <source>Terminate App</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulamayı Sonlandır</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="603"/>
         <source>Select the app that you want to terminate</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonlandırmak istediğiniz uygulamayı seçin</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="626"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Terminating an app will allow the app to clean up and then exit. If that doesn&apos;t work, you can kill the app, however, killing an app won&apos;t let it finish what it&apos;s doing. &lt;span style=&quot; font-weight:600;&quot;&gt;If you kill an app, you&apos;ll lose all unsaved work in that app.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bir uygulamanın sonlandırılması, uygulamanın temizlenmesine ve ardından çıkmasına olanak tanır. Bu işe yaramazsa, uygulamayı kapatabilirsin, ancak bir uygulamayı öldürmek, yaptığı şeyi bitirmesine izin vermez.&lt;span style=&quot;font-weight:600;&quot;&gt;Bir uygulamayı öldürürsen, o uygulamadaki tüm kaydedilmemiş çalışmaları kaybedersin.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="663"/>
         <source>Terminate</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonlandır</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="680"/>
         <source>Kill</source>
-        <translation type="unfinished"></translation>
+        <translation>Öldürmek</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="694"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitti</translation>
     </message>
     <message>
         <location filename="../endsessionwait.ui" line="865"/>
         <source>All apps will be closed and your device will turn off completely.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm uygulamalar kapatılacak ve cihazınız tamamen kapanacaktır.</translation>
     </message>
     <message>
         <location filename="../endsessionwait.cpp" line="59"/>
         <source>If you don&apos;t do anything, we&apos;ll power off for you in %1 seconds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiçbir şey yapmazsan, %1 saniye içinde kapatırım.</translation>
     </message>
     <message>
         <location filename="../endsessionwait.cpp" line="96"/>
         <source>Log out</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkış yap</translation>
     </message>
     <message>
         <location filename="../endsessionwait.cpp" line="100"/>
         <location filename="../endsessionwait.cpp" line="793"/>
         <source>Dummy</source>
-        <translation type="unfinished"></translation>
+        <translation>Sahte</translation>
     </message>
 </context>
 <context>
@@ -472,710 +472,710 @@
     <message>
         <location filename="../infopanedropdown.ui" line="123"/>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel Bakış</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="170"/>
         <location filename="../infopanedropdown.ui" line="367"/>
         <source>System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem Ayarları</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="192"/>
         <source>Flight Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Uçuş modu</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="222"/>
         <source>Power Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation>Güç Uzatma</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="409"/>
         <location filename="../infopanedropdown.ui" line="659"/>
         <source>Startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlamak</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="418"/>
         <location filename="../infopanedropdown.ui" line="962"/>
         <source>Gateway and Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Ağ Geçidi ve Bar</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="427"/>
         <location filename="../infopanedropdown.ui" line="1229"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="436"/>
         <location filename="../infopanedropdown.ui" line="1563"/>
         <location filename="../infopanedropdown.cpp" line="142"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Mekân</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="445"/>
         <location filename="../infopanedropdown.ui" line="1831"/>
         <source>Power</source>
-        <translation type="unfinished"></translation>
+        <translation>Güç</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="454"/>
         <location filename="../infopanedropdown.ui" line="2365"/>
         <source>Lock Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilit Ekranı</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="463"/>
         <location filename="../infopanedropdown.ui" line="2601"/>
         <source>Accessibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Ulaşılabilirlik</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="472"/>
         <location filename="../infopanedropdown.ui" line="2761"/>
         <location filename="../infopanedropdown.cpp" line="1798"/>
         <source>Unavailable Panes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanılamayan Bölmeler</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="481"/>
         <location filename="../infopanedropdown.ui" line="2841"/>
         <location filename="../infopanedropdown.cpp" line="1802"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>İleri</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="490"/>
         <location filename="../infopanedropdown.cpp" line="1804"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Hakkında</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="556"/>
         <source>SETTINGS NOT APPLIED</source>
-        <translation type="unfinished"></translation>
+        <translation>UYGULANMAYAN AYARLAR</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="563"/>
         <source>Some settings you just changed may require you to log out and then log back in before they are applied completely.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni değiştirdiğiniz bazı ayarlar, tamamen uygulanmadan önce oturumu kapatıp tekrar oturum açmanızı gerektirebilir.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="588"/>
         <location filename="../infopanedropdown.cpp" line="1944"/>
         <source>Log Out Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Şimdi Oturumu Kapat</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="728"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="739"/>
         <source>New App</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Uygulama</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="755"/>
         <source>Autostart with</source>
-        <translation type="unfinished"></translation>
+        <translation>ile otomatik başlatma</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="784"/>
         <source>Which app do you want to automatically start with theShell?</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell ile hangi uygulamayı otomatik olarak başlatmak istiyorsunuz?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="796"/>
         <location filename="../infopanedropdown.ui" line="860"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="820"/>
         <location filename="../infopanedropdown.ui" line="848"/>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Komut</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="884"/>
         <source>Add App</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama Ekle</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="897"/>
         <source>Enter details of the app to autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Otomatik başlatmak için uygulamanın ayrıntılarını girin</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="907"/>
         <source>Application Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama Adı</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="927"/>
         <source>Only autostart this app in theShell</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu uygulamayı yalnızca theShell&apos;de otomatik olarak başlatın</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1002"/>
         <source>When this is checked, hovering over the Status Bar will automatically expand the bar. Otherwise, clicking on the Status Bar will expand the bar.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu işaretlendiğinde, Durum Çubuğunun üzerine gelmek çubuğu otomatik olarak genişletecektir. Aksi takdirde, Durum Çubuğuna tıklamak çubuğu genişletecektir.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1012"/>
         <source>End Session Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Oturum Sonlandırma Onayı</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1019"/>
         <source>The Compact Bar is a smaller version of the traditional bar which arranges all the elements in one row to save vertical space.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompakt Çubuk, dikey alandan tasarruf etmek için tüm öğeleri tek bir sırada düzenleyen geleneksel çubuğun daha küçük bir versiyonudur.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1056"/>
         <source>Automatically show bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Çubuğu otomatik olarak göster</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1091"/>
         <source>Within &amp;Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ağ Geçidi İçinde</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1098"/>
         <source>Fu&amp;ll Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta&amp;m ekran</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1121"/>
         <source>Show Bar on bottom of screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Çubuğu ekranın altında göster</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1138"/>
         <source>Use Compact Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompakt Çubuğu Kullan</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1152"/>
         <source>The Status Bar is a shown when a window is maximised.</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum Çubuğu, bir pencere büyütüldüğünde gösterilir.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1162"/>
         <source>Use Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum Çubuğunu Kullan</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1169"/>
         <source>Show text on window buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Pencere düğmelerindeki metni göster</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1183"/>
         <source>Show windows from other desktops</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer masaüstlerinden pencereleri göster</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1269"/>
         <source>Accent Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Vurgu Rengi</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1310"/>
         <source>&amp;Light</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aydınlık</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1317"/>
         <source>Dar&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation>Kar&amp;anlık</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1324"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Siyah</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1331"/>
         <source>&amp;Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gri</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1338"/>
         <source>Decorati&amp;ve</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekorati&amp;f</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1351"/>
         <source>Color Scheme</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk Uyumu</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1390"/>
         <source>System Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem Yazı Tipi</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1420"/>
         <source>Icon Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Simge Teması</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1427"/>
         <source>Use for GTK</source>
-        <translation type="unfinished"></translation>
+        <translation>GTK için kullanın</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1438"/>
         <source>Widget Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Widget Teması</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1497"/>
         <source>GTK3 Font</source>
-        <translation type="unfinished"></translation>
+        <translation>GTK3 Yazı Tipi</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1504"/>
         <source>GTK3 Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>GTK3 Teması</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1611"/>
         <source>Permission Required</source>
-        <translation type="unfinished"></translation>
+        <translation>İzin Gerekli</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1621"/>
         <source>To manage location settings in theShell, you&apos;ll need to give us permission to be a geoclue agent.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell&apos;deki konum ayarlarını yönetmek için bize geoclue ajanı olma izni vermeniz gerekir.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1646"/>
         <source>Allow theShell to be a geoclue agent</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell bir geoclue ajan olmasına izin ver</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1672"/>
         <source>Have your administrator password ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Yönetici şifrenizi hazır bulundurun</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1698"/>
         <source>If you wish to manually configure theShell as a geoclue agent, you&apos;ll need to edit /etc/geoclue/geoclue.conf and append &quot;theshell&quot; to the end of the whitelist setting.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell&apos;i bir geoclue aracı olarak manuel olarak yapılandırmak isterseniz, /etc/geoclue/geoclue.conf&apos;u düzenlemeniz ve beyaz liste ayarının sonuna &quot;theShell&quot; eklemeniz gerekir.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1760"/>
         <source>Allow apps to access your physical location</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulamaların fiziksel konumunuza erişmesine izin verin</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1900"/>
         <source>ON BATTERY</source>
-        <translation type="unfinished"></translation>
+        <translation>PİLDE</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1907"/>
         <location filename="../infopanedropdown.ui" line="2029"/>
         <source>Turn off screen after</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;den sonra ekranı kapat</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="1914"/>
         <location filename="../infopanedropdown.ui" line="1983"/>
         <source>Suspend after</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonra askıya al</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2042"/>
         <source>ON AC</source>
-        <translation type="unfinished"></translation>
+        <translation>AC ÜZERİNDE</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2049"/>
         <source>Drag the slider to the right to turn off power management</source>
-        <translation type="unfinished"></translation>
+        <translation>Güç yönetimini kapatmak için kaydırıcıyı sağa doğru sürükleyin</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2088"/>
         <source>Power Button</source>
-        <translation type="unfinished"></translation>
+        <translation>Güç düğmesi</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2105"/>
         <source>Ask me what to do</source>
-        <translation type="unfinished"></translation>
+        <translation>Bana ne yapacağımı sor</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2114"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2123"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeniden başlat</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2132"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkış Yap</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2141"/>
         <source>Suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>Askıya al</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2150"/>
         <source>Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilit</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2159"/>
         <source>Turn Off Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekranı Kapat</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2168"/>
         <source>Hibernate</source>
-        <translation type="unfinished"></translation>
+        <translation>Hazırda beklet</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2186"/>
         <source>PHYSICAL BUTTONS</source>
-        <translation type="unfinished"></translation>
+        <translation>FİZİKSEL DÜĞMELER</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2231"/>
         <source>ON SUSPENSION</source>
-        <translation type="unfinished"></translation>
+        <translation>SÜSPANSİYON ÜZERİNE</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2253"/>
         <source>Suspend nor&amp;mally</source>
-        <translation type="unfinished"></translation>
+        <translation>Nor&amp;malde askıya al</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2260"/>
         <source>This will save power, but stop everything that you&apos;re doing until you wake your device. Recommended for most users</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu, güç tasarrufu sağlayacaktır, ancak cihazınızı uyandırana kadar yaptığınız her şeyi durdurun. Çoğu kullanıcı için önerilir</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2270"/>
         <source>&amp;Just turn off the screen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Yalnızca ekranı kapat</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2277"/>
         <source>This will consume more power but continue to run any tasks you were doing. For example, music will continue playing. When you wake this device, it will wake immediately. Not recommended if you don&apos;t have a solid state drive as the drive will not be turned off while you&apos;re moving it around. Recommended for tablets and tablet PCs.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu, daha fazla güç tüketecek, ancak yaptığınız herhangi bir görevi yerine getirmeye devam edecektir. Örneğin, müzik çalmaya devam edecek. Bu cihazı uyandırdığınızda hemen uyanacaktır. Katı hal sürücünüz yoksa, sürücü hareket ettirilirken kapatılmayacağı için önerilmez. Tabletler ve tablet PC&apos;ler için önerilir.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2287"/>
         <source>Hibernate instead</source>
-        <translation type="unfinished"></translation>
+        <translation>Bunun yerine hazırda beklet</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2294"/>
         <source>This will save a lot of power but will take a while to wake up again. Everything stops while your device is hibernating.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu, çok fazla güç tasarrufu sağlayacak ancak yeniden uyanmak için biraz zaman alacaktır. Cihazınız hazırda bekletme modundayken her şey durur.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2405"/>
         <source>SuspendLockScreenSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>KilitEkranıAnahtarınıAskıyaAl</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2423"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Araştır...</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2445"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka fon</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2452"/>
         <source>Lock screen after returning from suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>Askıya alma durumundan döndükten sonra ekranı kilitle</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2459"/>
         <source>To change your password, go to User settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Şifrenizi değiştirmek için Kullanıcı ayarlarına gidin</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2503"/>
         <source>Set Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurmak</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2514"/>
         <source>Remove Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Parolasını Kaldır</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2540"/>
         <location filename="../infopanedropdown.cpp" line="2153"/>
         <location filename="../infopanedropdown.cpp" line="2159"/>
         <source>Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Şifresi</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2547"/>
         <source>A mouse password trades security for convenience on the lock screen by substituting your password with a sequence of mouse buttons. &lt;b&gt;This can only be used on the lock screen, not while logging in.&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir mouse parolası, parolanızı bir dizi fare düğmesi ile değiştirerek kolaylık sağlamak için kilit ekranında güvenliği değiştirir. &lt;b&gt;Bu yalnızca kilit ekranında kullanılabilir, oturum açarken kullanılamaz.&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2641"/>
         <source>Large Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Büyük Metin</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2648"/>
         <source>High Contrast</source>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek kontrast</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2655"/>
         <source>System Animations</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem Animasyonları</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2675"/>
         <source>LargeTextSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>BüyükMetinAnahtarı</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2685"/>
         <source>Tone on Caps Lock and Num Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Caps Lock ve Num Lock üzerinde ton</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2692"/>
         <source>HighContrastSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>YüksekKontrastAnahtarı</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2702"/>
         <source>SystemAnimationsAccessibilitySwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>SistemAnimasyonlarErişilebilirlikAnahtarı</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2715"/>
         <source>CapsNumLockBellSwitch</source>
-        <translation type="unfinished"></translation>
+        <translation>BüyükHarfNumarasıKilidiDellAnahtarı</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2784"/>
         <source>There were errors loading the following items:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aşağıdaki öğeler yüklenirken hatalar oluştu:</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2881"/>
         <source>Window Manager Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Pencere Yöneticisi Komutu</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2894"/>
         <source>Reset Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Cihazı sıfırla</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2905"/>
         <location filename="../infopanedropdown.cpp" line="951"/>
         <source>Reset theShell</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell Sıfırla</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2916"/>
         <source>The items under here can do some bad things. Make sure you know what you&apos;re doing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Buradaki öğeler bazı kötü şeyler yapabilir. Ne yaptığını bildiğinden emin ol.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="2986"/>
         <source>System Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem bilgisi</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3036"/>
         <source>Support</source>
-        <translation type="unfinished"></translation>
+        <translation>Destek</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3053"/>
         <source>You&apos;re using</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıyorsun</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3086"/>
         <source>DISTRIBUTION</source>
-        <translation type="unfinished"></translation>
+        <translation>DAĞITIM</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3125"/>
         <source>Available Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanılabilir Hafıza</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3139"/>
         <source>Processor</source>
-        <translation type="unfinished"></translation>
+        <translation>İşlemci</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3146"/>
         <source>Available Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Takas</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3173"/>
         <source>Qt Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt Sürümü</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3193"/>
         <source>HARDWARE AND SOFTWARE</source>
-        <translation type="unfinished"></translation>
+        <translation>DONANIM VE YAZILIM</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3207"/>
         <source>Kernel Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Çekirdek sürümü</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3267"/>
         <source>Desktop Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>Masaüstü Ortamı</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3286"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation>İnternet sitesi</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3297"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Hatası</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.ui" line="3308"/>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaynaklar</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="155"/>
         <source>Copyright © Victor Tran %1. Licensed under the terms of the GNU General Public License, version 3 or later.</source>
-        <translation type="unfinished"></translation>
+        <translation>Telif hakkı © Victor Tran %1. GNU Genel Kamu Lisansı, sürüm 3 veya üzeri koşulları kapsamında lisanslanmıştır.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="439"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="446"/>
         <source>theShell %1 - Blueprint</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell %1 - Blueprint</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="447"/>
         <source>You compiled theShell on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell %1 üzerinde derlediniz</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="449"/>
         <source>theShell %1</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell %1</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="503"/>
         <location filename="../infopanedropdown.cpp" line="2058"/>
         <source>Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Klavye düzeni</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="503"/>
         <source>Keyboard Layout set to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Klavye Düzeni %1 olarak ayarlandı</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="510"/>
         <source>Critical Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Yalnızca Kritik</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="514"/>
         <source>No Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildirim Yok</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="518"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Sessiz</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="522"/>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Ses</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="699"/>
         <source>No plugins were loaded because you&apos;ve started theShell in Safe Mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell Güvenli Modda başlattığınız için hiçbir eklenti yüklenmedi.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="704"/>
         <source>Safe Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Güvenli mod</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="952"/>
         <source>All settings will be reset to default, and you will be logged out. Are you sure you want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm ayarlar varsayılana sıfırlanacak ve oturumunuz kapatılacaktır. Bunu yapmak istediğine emin misin?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1534"/>
         <source>Oxygen</source>
-        <translation type="unfinished"></translation>
+        <translation>Oksijen</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1535"/>
         <source>Breeze</source>
-        <translation type="unfinished"></translation>
+        <translation>Esinti</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1538"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Mavi</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1539"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1540"/>
         <source>Orange</source>
-        <translation type="unfinished"></translation>
+        <translation>Turuncu</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1541"/>
         <source>Pink</source>
-        <translation type="unfinished"></translation>
+        <translation>Pembe</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1542"/>
         <source>Turquoise</source>
-        <translation type="unfinished"></translation>
+        <translation>Turkuaz</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1716"/>
@@ -1183,7 +1183,7 @@
         <location filename="../infopanedropdown.cpp" line="1736"/>
         <location filename="../infopanedropdown.cpp" line="1746"/>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Asla</translation>
     </message>
     <message numerus="yes">
         <location filename="../infopanedropdown.cpp" line="1718"/>
@@ -1191,61 +1191,62 @@
         <location filename="../infopanedropdown.cpp" line="1738"/>
         <location filename="../infopanedropdown.cpp" line="1748"/>
         <source>%n min(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n dak</numerusform>
+            <numerusform>%n dak</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1947"/>
         <source>Logoff Required</source>
-        <translation type="unfinished"></translation>
+        <translation>Oturumu kapatmak son derece gereklidir</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1950"/>
         <source>In order to enable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompakt Çubuğu etkinleştirmek için, oturumu kapatmanız ve ardından tekrar oturum açmanız gerekecektir.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="1952"/>
         <source>In order to disable the Compact Bar, you&apos;ll need to log out and then log back on.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompakt Çubuğu devre dışı bırakmak için, oturumu kapatmanız ve ardından tekrar oturum açmanız gerekir.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2071"/>
         <source>Show Touch Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokunmatik Klavyeyi Göster</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2109"/>
         <location filename="../infopanedropdown.cpp" line="2129"/>
         <source>Unauthorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Yetkisiz</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2109"/>
         <location filename="../infopanedropdown.cpp" line="2129"/>
         <source>Polkit does not allow you to set up a mouse password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Polkit, fare parolası belirlemenize izin vermez.</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2124"/>
         <source>Remove Mouse Password?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Şifresi Kaldırılsın mı?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2124"/>
         <source>Do you want to remove the Mouse Password for this account?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu hesabın Mouse Parolasını kaldırmak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2154"/>
         <source>Mouse Password was removed successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Parolası başarıyla kaldırıldı</translation>
     </message>
     <message>
         <location filename="../infopanedropdown.cpp" line="2160"/>
         <source>Mouse Password couldn&apos;t be removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Şifre kaldırılamadı</translation>
     </message>
 </context>
 <context>
@@ -1253,27 +1254,27 @@
     <message>
         <location filename="../location/locationrequestdialog.ui" line="69"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Mekân</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.ui" line="111"/>
         <source>Deny</source>
-        <translation type="unfinished"></translation>
+        <translation>Reddetmek</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.ui" line="122"/>
         <source>Allow</source>
-        <translation type="unfinished"></translation>
+        <translation>İzin vermek</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.ui" line="135"/>
         <source>Location access can be revoked at any time under Location in System Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Konum erişimi, Sistem Ayarlarında Konum altında herhangi bir zamanda iptal edilebilir.</translation>
     </message>
     <message>
         <location filename="../location/locationrequestdialog.cpp" line="47"/>
         <source>Allow &lt;b&gt;%1&lt;/b&gt; to use your physical location?</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;’in fiziksel konumunuzu kullanmasına izin verilsin mi?</translation>
     </message>
 </context>
 <context>
@@ -1282,144 +1283,144 @@
         <location filename="../mainwindow.ui" line="123"/>
         <location filename="../mainwindow.ui" line="829"/>
         <source>Open the Gateway to your PC</source>
-        <translation type="unfinished"></translation>
+        <translation>Ağ Geçidini PC&apos;nize açın</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="152"/>
         <location filename="../mainwindow.cpp" line="1136"/>
         <source>Open Status Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum Merkezini Aç</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="316"/>
         <source>Screen Brightness</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekran parlaklığı</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="446"/>
         <source>Stop Screen Recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekran Kaydını Durdur</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="518"/>
         <location filename="../mainwindow.cpp" line="335"/>
         <source>Quiet Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Sessiz mod</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="631"/>
         <source>Select Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Media Player&apos;ı seçin</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="653"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="676"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Duraklat</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="699"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="732"/>
         <source>Keyboard Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Klavye düzeni</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="793"/>
         <source>Your location is currently being used</source>
-        <translation type="unfinished"></translation>
+        <translation>Konumunuz şu anda kullanılıyor</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="879"/>
         <source>Previous Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki Masaüstü</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="903"/>
         <source>Next Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki Masaüstü</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1078"/>
         <source>Click to show bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Çubuğu göstermek için tıklayın</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1143"/>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Ses</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1152"/>
         <source>No Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildirim Yok</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1161"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Sessiz</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1170"/>
         <source>Critical Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Yalnızca Kritik</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="91"/>
         <source>Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Medya oynatıcı</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="377"/>
         <source>Recording Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kayıt Ekranı</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="383"/>
         <source>Processing Screen Recording...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekran Kaydı İşleniyor…</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1117"/>
         <source>For Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Bar için</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1119"/>
         <source>Move to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>En alta git</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1124"/>
         <source>Move to top</source>
-        <translation type="unfinished"></translation>
+        <translation>Üste git</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1130"/>
         <source>Gateway and Bar Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ağ Geçidi ve Çubuk Ayarları</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1135"/>
         <source>For System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem için</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1139"/>
         <source>Open System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem Ayarlarını Aç</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1147"/>
         <source>Open Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>Ağ Geçidini Aç</translation>
     </message>
 </context>
 <context>
@@ -1427,246 +1428,246 @@
     <message>
         <location filename="../menu.ui" line="96"/>
         <source>Install theShell OS</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell OS yükleyin</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="149"/>
         <source>Open theShell OS Installer</source>
-        <translation type="unfinished"></translation>
+        <translation>Shell OS Installer&apos;ı açın</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="160"/>
         <source>Give theShell OS a permanant place on your PC. Install theOS on your hard drive, either replacing another operating system or next to another operating system.</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell OS PC&apos;nizde kalıcı bir yer verin. theOS&apos;u başka bir işletim sistemini değiştirerek veya başka bir işletim sisteminin yanında sabit diskinize yükleyin.</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="198"/>
         <source>Gateway</source>
-        <translation type="unfinished"></translation>
+        <translation>Ağ geçidi</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="250"/>
         <source>Start typing to search, run a command, or open a web address</source>
-        <translation type="unfinished"></translation>
+        <translation>Aramaya başlamak, bir komut çalıştırmak ya da bir web adresini açmak için yazmaya başlayın</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="307"/>
         <source>File Bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Hatası</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="324"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardım</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="341"/>
         <location filename="../menu.ui" line="417"/>
         <location filename="../menu.ui" line="774"/>
         <source>End Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Oturumu Sonlandır</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="448"/>
         <source>You&apos;re about to power off your PC. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kişisel Bilgisayarınızı kapatmak üzeresiniz. Emin misin?</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="479"/>
         <source>Exit theShell</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell çıkın</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="492"/>
         <source>Exits theShell, leaving everything else open</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell çıkar, diğer her şeyi açık bırakır</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="499"/>
         <source>Fake Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sahte Çıkış</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="516"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="529"/>
         <source>Turns off your computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilgisayarınızı kapatır</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="540"/>
         <source>Reboot</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeniden başlat</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="553"/>
         <source>Turns off your computer and turns it back on again</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilgisayarınızı kapatır ve tekrar açar</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="560"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkış Yap</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="573"/>
         <source>Ends your session and keeps the computer on for other people to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Oturumunuzu sonlandırır ve bilgisayarı başkalarının kullanması için açık tutar</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="583"/>
         <source>Suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>Askıya al</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="596"/>
         <source>Puts your computer in a low power state so that it opens up quickly</source>
-        <translation type="unfinished"></translation>
+        <translation>Hızlı bir şekilde açılması için bilgisayarınızı düşük güç durumuna getirir</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="606"/>
         <source>Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilit</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="619"/>
         <source>Locks your workspace with your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalışma alanınızı şifrenizle kilitler</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="626"/>
         <source>Turn Off Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekranı Kapat</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="639"/>
         <source>Turns off the screen, but keeps everything else running in the background</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekranı kapatır, ancak diğer her şeyin arka planda çalışmasını sağlar</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="655"/>
         <location filename="../menu.ui" line="927"/>
         <source>Switch Users</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı Değiştir</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="668"/>
         <source>Switches to the logon screen and keeps your session in the background</source>
-        <translation type="unfinished"></translation>
+        <translation>Oturum açma ekranına geçer ve oturumunuzu arka planda tutar</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="678"/>
         <source>Hibernate</source>
-        <translation type="unfinished"></translation>
+        <translation>Hazırda beklet</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="694"/>
         <source>Powers off your computer, but when powered back on, restores the session.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilgisayarınızı kapatır, ancak yeniden açıldığında oturumu geri yükler.</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="799"/>
         <source>Before you end your session, here are some things you might want to know</source>
-        <translation type="unfinished"></translation>
+        <translation>Seansınızı sonlandırmadan önce bilmek isteyebileceğiniz bazı şeyler aşağıda verilmiştir</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="952"/>
         <source>Who are you switching to?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kime geçiyorsun?</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="993"/>
         <source>Start a new session</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni bir oturum başlatın</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="1061"/>
         <source>Failed to start app</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama başlatılamadı</translation>
     </message>
     <message>
         <location filename="../menu.ui" line="1096"/>
         <source>Try starting the app again, and if problems persist, try reinstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulamayı yeniden başlatmayı deneyin ve sorunlar devam ederse uygulamayı yeniden yüklemeyi deneyin.</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="81"/>
         <location filename="../menu.cpp" line="83"/>
         <source>Hey, %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hey, %1!</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="314"/>
         <source>Power Off Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Yine de Kapat</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="326"/>
         <source>Reboot Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Yine de Yeniden Başlat</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="338"/>
         <source>Log Out Anyway</source>
-        <translation type="unfinished"></translation>
+        <translation>Yine de Oturumu Kapat</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="579"/>
         <source>%1 on X11 display %2</source>
-        <translation type="unfinished"></translation>
+        <translation>X11 ekranında %1 %2</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="581"/>
         <source>on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1&apos;de</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="583"/>
         <source>%1 on VT #%2</source>
-        <translation type="unfinished"></translation>
+        <translation>VT #%2 üzerinde %1</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="585"/>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Oturum</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="697"/>
         <source>Save Debug Introspection File</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata Ayıklama Introspection Dosyasını Kaydet</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="704"/>
         <source>theShell</source>
-        <translation type="unfinished"></translation>
+        <translation>theShell</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="704"/>
         <source>Debug Introspection Data collected</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplanan Introspection Verilerinde Hata Ayıklama</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="704"/>
         <source>Debug data has been collected and saved to %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata ayıklama verileri toplandı ve %1&apos;e kaydedildi.</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="717"/>
         <source>%1 can&apos;t start.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 başlatılamaz.</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="724"/>
         <source>Actions for &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; ile ilgili işlemler</translation>
     </message>
     <message>
         <location filename="../menu.cpp" line="762"/>
         <source>For &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; için</translation>
     </message>
 </context>
 <context>
@@ -1674,34 +1675,34 @@
     <message>
         <location filename="../locktypes/mousepassword.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="70"/>
         <source>Set up Mouse Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse Şifresini Ayarlayın</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="112"/>
         <source>A Mouse Password trades security for convenience when unlocking your computer from the lock screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir Mouse Parolası, bilgisayarınızın kilidini kilit ekranından açtığınızda, güvenliği kolaylaştırır.</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="149"/>
         <location filename="../locktypes/mousepassword.cpp" line="148"/>
         <source>Go for it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hadi, çok iyi yap sana!</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="193"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfırla</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.ui" line="203"/>
         <location filename="../locktypes/mousepassword.cpp" line="248"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki</translation>
     </message>
     <message>
         <location filename="../locktypes/mousepassword.cpp" line="196"/>
