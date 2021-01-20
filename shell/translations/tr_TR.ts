@@ -1193,7 +1193,6 @@
         <source>%n min(s)</source>
         <translation>
             <numerusform>%n dak</numerusform>
-            <numerusform>%n dak</numerusform>
         </translation>
     </message>
     <message>
