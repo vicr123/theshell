@@ -58,7 +58,6 @@
         <source>On %1, Daylight Savings Time will %2. The clock will automatically adjust %3 by %n hour(s).</source>
         <translation>
             <numerusform>%2 tarihinde Yaz Saati %2 olacak. Saat otomatik olarak %3&apos;ü %n daha saat olarak ayarlayacaktır.</numerusform>
-            <numerusform>%2 tarihinde Yaz Saati %2 olacak. Saat otomatik olarak %3&apos;ü %n daha saat olarak ayarlayacaktır.</numerusform>
         </translation>
     </message>
     <message>
@@ -288,7 +287,6 @@
         <location filename="../Timers/timerpage.cpp" line="92"/>
         <source>%n timers elapsed</source>
         <translation>
-            <numerusform>%n zamanlayıcı geçti</numerusform>
             <numerusform>%n zamanlayıcı geçti</numerusform>
         </translation>
     </message>
