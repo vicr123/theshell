@@ -351,7 +351,6 @@
         <source>%n devices</source>
         <translation>
             <numerusform>%n cihaz</numerusform>
-            <numerusform>%n cihaz</numerusform>
         </translation>
     </message>
 </context>
