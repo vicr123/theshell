@@ -325,7 +325,6 @@
         <source>Sending as %n messages</source>
         <translation>
             <numerusform>%n mesaj olarak gönderiliyor</numerusform>
-            <numerusform>%n mesaj olarak gönderiliyor</numerusform>
         </translation>
     </message>
     <message>
