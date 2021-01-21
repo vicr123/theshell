@@ -1052,7 +1052,6 @@
         <source>You have %n attempts remaining</source>
         <translation>
             <numerusform>%n deneme hakkınız kaldı</numerusform>
-            <numerusform>%n deneme hakkınız kaldı</numerusform>
         </translation>
     </message>
 </context>
@@ -1121,7 +1120,6 @@
         <location filename="../networkmanager/popovers/simpinrequest.cpp" line="187"/>
         <source>You have %n attempts remaining.</source>
         <translation>
-            <numerusform>%n deneme hakkınız kaldı.</numerusform>
             <numerusform>%n deneme hakkınız kaldı.</numerusform>
         </translation>
     </message>
