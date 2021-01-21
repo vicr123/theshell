@@ -16,7 +16,6 @@
         <source>%n jobs running</source>
         <translation>
             <numerusform>%n iş çalışıyor</numerusform>
-            <numerusform>%n iş çalışıyor</numerusform>
         </translation>
     </message>
 </context>
@@ -39,8 +38,7 @@
         <location filename="../notificationsWidget/notificationappgroup.cpp" line="125"/>
         <source>+%n notifications collapsed</source>
         <translation>
-            <numerusform>+% n bildirim daraltıldı</numerusform>
-            <numerusform>+% n bildirim daraltıldı</numerusform>
+            <numerusform>+%n bildirim daraltıldı</numerusform>
         </translation>
     </message>
 </context>
@@ -51,7 +49,6 @@
         <source>%n d</source>
         <translation>
             <numerusform>%n g</numerusform>
-            <numerusform>%n g</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -59,14 +56,12 @@
         <source>%n hr</source>
         <translation>
             <numerusform>%n sa</numerusform>
-            <numerusform>%n sa</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../notificationsWidget/notificationpanel.cpp" line="58"/>
         <source>%n min</source>
         <translation>
-            <numerusform>%n dak</numerusform>
             <numerusform>%n dak</numerusform>
         </translation>
     </message>
@@ -165,7 +160,6 @@
         <location filename="../notificationsWidget/notificationswidget.cpp" line="194"/>
         <source>%n notification(s)</source>
         <translation>
-            <numerusform>%n bildirim</numerusform>
             <numerusform>%n bildirim</numerusform>
         </translation>
     </message>
