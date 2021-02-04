@@ -87,12 +87,12 @@
     <message>
         <location filename="../background.ui" line="176"/>
         <source>Sorry, there was a problem displaying the background.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorry voor het ongemak, er is iets mis gegaan met de achtergrond weer te geven.</translation>
     </message>
     <message>
         <location filename="../background.ui" line="198"/>
         <source>Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Probeer het nog eens</translation>
     </message>
     <message>
         <location filename="../background.ui" line="379"/>
@@ -102,12 +102,12 @@
     <message>
         <location filename="../background.ui" line="427"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>AFBEELDING</translation>
     </message>
     <message>
         <location filename="../background.ui" line="434"/>
         <source>Select an image to display on your background and lock screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een foto om als vergendelings-scherm in te stellen</translation>
     </message>
     <message>
         <location filename="../background.ui" line="522"/>
