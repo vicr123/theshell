@@ -21,18 +21,19 @@
 #include "systrayicons.h"
 
 #define None 0L
+#define False 0
+#define True 1
 
 extern NativeEventFilter* NativeFilter;
 
-SysTrayIcons::SysTrayIcons(QWidget *parent) : QFrame(parent)
-{
+SysTrayIcons::SysTrayIcons(QWidget* parent) : QFrame(parent) {
     //Prepare a layout for the system tray
     QBoxLayout* layout = new QBoxLayout(QBoxLayout::LeftToRight);
     layout->setSpacing(6);
     this->setLayout(layout);
 
     //Connect the signal to dock a system tray
-    connect(NativeFilter, SIGNAL(SysTrayEvent(long,long,long,long)), this, SLOT(SysTrayEvent(long,long,long,long)));
+    connect(NativeFilter, SIGNAL(SysTrayEvent(long, long, long, long)), this, SLOT(SysTrayEvent(long, long, long, long)));
 
     //Get the correct manager selection
     unsigned long selection = 0;
@@ -104,11 +105,11 @@ void SysTrayIcons::SysTrayEvent(long opcode, long data2, long data3, long data4)
         widget->setFixedSize(16, 16);
         this->layout()->addWidget(widget);
 
-        connect(window, &QWindow::destroyed, [=]() {
+        connect(window, &QWindow::destroyed, [ = ]() {
             widget->deleteLater();
         });
-        connect(window, &QWindow::visibleChanged, [=](bool visible) {
-           widget->setVisible(visible);
+        connect(window, &QWindow::visibleChanged, [ = ](bool visible) {
+            widget->setVisible(visible);
         });
     }
 }
@@ -128,7 +129,7 @@ void SysTrayIcons::SniItemUnregistered(QString service) {
     }
 }
 
-SniIcon::SniIcon(QString service, QWidget *parent) : QLabel(parent) {
+SniIcon::SniIcon(QString service, QWidget* parent) : QLabel(parent) {
     this->service = service;
     QStringList pathParts = service.split("/");
     service = pathParts.first();
@@ -213,7 +214,7 @@ void SniIcon::ReloadIcon() {
     }
 }
 
-void SniIcon::mouseReleaseEvent(QMouseEvent *event) {
+void SniIcon::mouseReleaseEvent(QMouseEvent* event) {
     QPoint pos = this->mapToGlobal(event->pos());
     if (event->button() == Qt::LeftButton) {
         interface->call("Activate", pos.x(), pos.y());
@@ -224,7 +225,7 @@ void SniIcon::mouseReleaseEvent(QMouseEvent *event) {
     }
 }
 
-void SniIcon::wheelEvent(QWheelEvent *event) {
+void SniIcon::wheelEvent(QWheelEvent* event) {
     if (event->orientation() == Qt::Vertical) {
         interface->call("Scroll", event->delta(), "vertical");
     } else {

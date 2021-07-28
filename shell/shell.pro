@@ -15,7 +15,7 @@ unix {
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-DEFINES += TS_VERSION='\\"8.0.1\\"'
+DEFINES += TS_VERSION='\\"8.0.2\\"'
 
 unix {
     QT += thelib x11extras

@@ -24,17 +24,16 @@
 extern float getDPIScaling();
 extern void sendMessageToRootWindow(const char* message, Window window, long data0 = 0, long data1 = 0, long data2 = 0, long data3 = 0, long data4 = 0);
 
-EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
+EndSessionWait::EndSessionWait(shutdownType type, QWidget* parent) :
     QDialog(parent),
-    ui(new Ui::EndSessionWait)
-{
+    ui(new Ui::EndSessionWait) {
     ui->setupUi(this);
 
     ui->cancelButton->setFixedHeight(0);
     ui->killAllButton->setFixedHeight(0);
 
     tbManager = new TaskbarManager();
-    connect(tbManager, &TaskbarManager::deleteWindow, [=] {
+    connect(tbManager, &TaskbarManager::deleteWindow, [ = ] {
         if (tbManager->Windows().count() - 1 == 0) {
             tbTimer->stop();
             if (performEndSessionWhenAllAppsClosed) {
@@ -51,11 +50,11 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
     powerOffTimer->setStartValue(0);
     powerOffTimer->setEndValue(300);
     powerOffTimer->setDuration(30000);
-    connect(powerOffTimer, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(powerOffTimer, &QVariantAnimation::valueChanged, [ = ](QVariant value) {
         ui->idleProgressBar->setValue(value.toInt());
         ui->idleWarning->setText(tr("If you don't do anything, we'll power off for you in %1 seconds.").arg(QString::number(30 - (value.toInt() / 10))));
     });
-    connect(powerOffTimer, &QVariantAnimation::finished, [=]() {
+    connect(powerOffTimer, &QVariantAnimation::finished, [ = ]() {
         //Power off the device
         this->type = powerOff;
         ui->powerType->setText(tr("Power Off"));
@@ -64,7 +63,7 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
         QTimer* invokeTimer = new QTimer();
         invokeTimer->setInterval(0);
         invokeTimer->setSingleShot(true);
-        connect(invokeTimer, &QTimer::timeout, [=]() {
+        connect(invokeTimer, &QTimer::timeout, [ = ]() {
             invokeTimer->deleteLater();
             this->showFullScreen();
         });
@@ -104,8 +103,7 @@ EndSessionWait::EndSessionWait(shutdownType type, QWidget *parent) :
     this->type = type;
 }
 
-EndSessionWait::~EndSessionWait()
-{
+EndSessionWait::~EndSessionWait() {
     delete ui;
 }
 
@@ -117,7 +115,7 @@ void EndSessionWait::close() {
         anim->setDuration(250);
         anim->setEasingCurve(QEasingCurve::InCubic);
         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
-        connect(anim, &tPropertyAnimation::finished, [=] {
+        connect(anim, &tPropertyAnimation::finished, [ = ] {
             this->reject();
         });
         anim->start();
@@ -187,9 +185,9 @@ void EndSessionWait::showFullScreen() {
 
             {
                 //Animate the "End Session" dialog out
-                QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
+                QGraphicsOpacityEffect* fadeEffect = new QGraphicsOpacityEffect(this);
                 ui->askWhatToDo->setGraphicsEffect(fadeEffect);
-                QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
+                QPropertyAnimation* a = new QPropertyAnimation(fadeEffect, "opacity");
                 a->setDuration(250);
                 a->setStartValue(1);
                 a->setEndValue(0);
@@ -198,16 +196,16 @@ void EndSessionWait::showFullScreen() {
 
             {
                 //Animate the "Ending Session" dialog in
-                QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
+                QGraphicsOpacityEffect* fadeEffect = new QGraphicsOpacityEffect(this);
                 ui->poweringOff->setGraphicsEffect(fadeEffect);
-                QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
+                QPropertyAnimation* a = new QPropertyAnimation(fadeEffect, "opacity");
                 a->setDuration(250);
                 a->setStartValue(0);
                 a->setEndValue(1);
                 animGroup->addAnimation(a);
             }
 
-            connect(animGroup, &QSequentialAnimationGroup::currentAnimationChanged, [=](QAbstractAnimation* current) {
+            connect(animGroup, &QSequentialAnimationGroup::currentAnimationChanged, [ = ](QAbstractAnimation * current) {
                 if (animGroup->indexOfAnimation(current) == 1) {
                     ui->askWhatToDo->setVisible(false);
                     ui->poweringOff->setVisible(true);
@@ -240,11 +238,11 @@ void EndSessionWait::showFullScreen() {
             Atom WindowListType;
             int format;
             unsigned long items, bytes;
-            unsigned char *data;
+            unsigned char* data;
             XGetWindowProperty(d, RootWindow(d, 0), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
-                                            False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
+                False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
 
-            quint64 *windows = (quint64*) data;
+            quint64* windows = (quint64*) data;
             for (unsigned long i = 0; i < items; i++) {
                 TopWindows.append((Window) windows[i]);
 
@@ -256,15 +254,15 @@ void EndSessionWait::showFullScreen() {
 
                 int retval = XGetWindowAttributes(d, win, &attributes);
                 unsigned long items, bytes;
-                unsigned char *netWmName;
+                unsigned char* netWmName;
                 XTextProperty wmName;
                 int format;
                 Atom ReturnType;
                 retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_VISIBLE_NAME", False), 0, 1024, False,
-                                   XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &netWmName);
+                        XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &netWmName);
                 if (retval != 0 || netWmName == 0x0) {
                     retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_NAME", False), 0, 1024, False,
-                                       AnyPropertyType, &ReturnType, &format, &items, &bytes, &netWmName);
+                            AnyPropertyType, &ReturnType, &format, &items, &bytes, &netWmName);
                     if (retval != 0) {
                         retval = XGetWMName(d, win, &wmName);
                         if (retval == 1) {
@@ -280,19 +278,19 @@ void EndSessionWait::showFullScreen() {
 
                     QString title;
                     if (netWmName) {
-                        title = QString::fromLocal8Bit((char *) netWmName);
+                        title = QString::fromLocal8Bit((char*) netWmName);
                         XFree(netWmName);
                     } else if (wmName.value) {
-                        title = QString::fromLatin1((char *) wmName.value);
+                        title = QString::fromLatin1((char*) wmName.value);
                         //XFree(wmName);
                     }
 
-                    unsigned long *pidPointer;
+                    unsigned long* pidPointer;
                     unsigned long pitems, pbytes;
                     int pformat;
                     Atom pReturnType;
                     int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_PID", False), 0, 1024, False,
-                                                    XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
+                            XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
                     if (retval == 0) {
                         if (pidPointer != 0) {
                             unsigned long pid = *pidPointer;
@@ -329,14 +327,14 @@ void EndSessionWait::showFullScreen() {
                 tbTimer->start();
                 performEndSessionWhenAllAppsClosed = true;
 
-                QTimer::singleShot(5000, [=] {
-                    auto animateResize = [=](QWidget* widget) {
+                QTimer::singleShot(5000, [ = ] {
+                    auto animateResize = [ = ](QWidget * widget) {
                         tVariantAnimation* anim = new tVariantAnimation();
                         anim->setStartValue(widget->height());
                         anim->setEndValue(widget->sizeHint().height());
                         anim->setEasingCurve(QEasingCurve::OutCubic);
                         anim->setDuration(500);
-                        connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                        connect(anim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
                             widget->setFixedHeight(value.toInt());
                         });
                         connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -350,14 +348,14 @@ void EndSessionWait::showFullScreen() {
                 });
             }
         } else if (this->type == dummy) {
-            QTimer::singleShot(5000, [=] {
-                auto animateResize = [=](QWidget* widget) {
+            QTimer::singleShot(5000, [ = ] {
+                auto animateResize = [ = ](QWidget * widget) {
                     tVariantAnimation* anim = new tVariantAnimation();
                     anim->setStartValue(widget->height());
                     anim->setEndValue(widget->sizeHint().height());
                     anim->setEasingCurve(QEasingCurve::OutCubic);
                     anim->setDuration(500);
-                    connect(anim, &tVariantAnimation::valueChanged, [=](QVariant value) {
+                    connect(anim, &tVariantAnimation::valueChanged, [ = ](QVariant value) {
                         widget->setFixedHeight(value.toInt());
                     });
                     connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
@@ -373,8 +371,7 @@ void EndSessionWait::showFullScreen() {
     }
 }
 
-void EndSessionWait::on_killAllButton_clicked()
-{
+void EndSessionWait::on_killAllButton_clicked() {
     QProcess p;
     p.start("wmctrl -lp");
     p.waitForStarted();
@@ -419,7 +416,7 @@ void EndSessionWait::performEndSession() {
     QMediaPlayer* sound = new QMediaPlayer();
 
     connect(sound, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(EndSessionNow()));
-    connect(sound, &QMediaPlayer::stateChanged, [=]() {
+    connect(sound, &QMediaPlayer::stateChanged, [ = ]() {
         if (sound->state() == QMediaPlayer::StoppedState) {
             EndSessionNow();
         }
@@ -429,9 +426,9 @@ void EndSessionWait::performEndSession() {
     sound->play();
 
     QParallelAnimationGroup* animGroup = new QParallelAnimationGroup();
-    QGraphicsOpacityEffect *fadeEffect = new QGraphicsOpacityEffect(this);
+    QGraphicsOpacityEffect* fadeEffect = new QGraphicsOpacityEffect(this);
     ui->poweringOff->setGraphicsEffect(fadeEffect);
-    QPropertyAnimation *a = new QPropertyAnimation(fadeEffect, "opacity");
+    QPropertyAnimation* a = new QPropertyAnimation(fadeEffect, "opacity");
     a->setDuration(500);
     a->setStartValue(1);
     a->setEndValue(0);
@@ -445,7 +442,7 @@ void EndSessionWait::performEndSession() {
 
     animGroup->start();
 
-    connect(a, &QPropertyAnimation::finished, [=]() {
+    connect(a, &QPropertyAnimation::finished, [ = ]() {
         ui->poweringOff->setVisible(false);
     });
 }
@@ -455,58 +452,52 @@ void EndSessionWait::EndSessionNow() {
     QList<QVariant> arguments;
     arguments.append(true);
     switch (type) {
-    case powerOff:
-        //Power off the PC
-        message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "PowerOff");
-        message.setArguments(arguments);
-        QDBusConnection::systemBus().send(message);
+        case powerOff:
+            //Power off the PC
+            message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "PowerOff");
+            message.setArguments(arguments);
+            QDBusConnection::systemBus().send(message);
 
-        break;
-    case reboot:
-        //Reboot the PC
-        message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Reboot");
-        message.setArguments(arguments);
-        QDBusConnection::systemBus().send(message);
-        break;
-    case logout:
-        QApplication::exit(0);
+            break;
+        case reboot:
+            //Reboot the PC
+            message = QDBusMessage::createMethodCall("org.freedesktop.login1", "/org/freedesktop/login1", "org.freedesktop.login1.Manager", "Reboot");
+            message.setArguments(arguments);
+            QDBusConnection::systemBus().send(message);
+            break;
+        case logout:
+            QApplication::exit(0);
     }
 }
 
-void EndSessionWait::on_cancelButton_clicked()
-{
+void EndSessionWait::on_cancelButton_clicked() {
     performEndSessionWhenAllAppsClosed = false;
     this->close();
 }
 
-void EndSessionWait::on_CancelAsk_clicked()
-{
+void EndSessionWait::on_CancelAsk_clicked() {
     this->close();
 }
 
-void EndSessionWait::on_PowerOff_clicked()
-{
+void EndSessionWait::on_PowerOff_clicked() {
     this->type = powerOff;
     ui->powerType->setText(tr("Power Off"));
     this->showFullScreen();
 }
 
-void EndSessionWait::on_Reboot_clicked()
-{
+void EndSessionWait::on_Reboot_clicked() {
     this->type = reboot;
     ui->powerType->setText(tr("Reboot"));
     this->showFullScreen();
 }
 
-void EndSessionWait::on_LogOut_clicked()
-{
+void EndSessionWait::on_LogOut_clicked() {
     this->type = logout;
     ui->powerType->setText(tr("Log Out"));
     this->showFullScreen();
 }
 
-void EndSessionWait::on_Suspend_clicked()
-{
+void EndSessionWait::on_Suspend_clicked() {
     QList<QVariant> arguments;
     arguments.append(true);
 
@@ -516,8 +507,7 @@ void EndSessionWait::on_Suspend_clicked()
     this->close();
 }
 
-void EndSessionWait::on_terminateApp_clicked()
-{
+void EndSessionWait::on_terminateApp_clicked() {
     powerOffTimer->stop();
     powerOffTimer->setCurrentTime(0);
     QParallelAnimationGroup* group = new QParallelAnimationGroup();
@@ -527,7 +517,7 @@ void EndSessionWait::on_terminateApp_clicked()
     topAnim->setEndValue(0);
     topAnim->setEasingCurve(QEasingCurve::OutCubic);
     topAnim->setDuration(250);
-    connect(topAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(topAnim, &QVariantAnimation::valueChanged, [ = ](QVariant value) {
         ui->ExitFrameTop->setFixedHeight(value.toInt());
     });
 
@@ -536,7 +526,7 @@ void EndSessionWait::on_terminateApp_clicked()
     bottomAnim->setEndValue(0);
     bottomAnim->setEasingCurve(QEasingCurve::OutCubic);
     bottomAnim->setDuration(250);
-    connect(bottomAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(bottomAnim, &QVariantAnimation::valueChanged, [ = ](QVariant value) {
         ui->ExitFrameBottom->setFixedHeight(value.toInt());
     });
 
@@ -545,7 +535,7 @@ void EndSessionWait::on_terminateApp_clicked()
     midAnim->setEndValue(ui->terminateAppFrame->sizeHint().height());
     midAnim->setEasingCurve(QEasingCurve::OutCubic);
     midAnim->setDuration(250);
-    connect(midAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(midAnim, &QVariantAnimation::valueChanged, [ = ](QVariant value) {
         ui->terminateAppFrame->setFixedHeight(value.toInt());
     });
 
@@ -555,7 +545,7 @@ void EndSessionWait::on_terminateApp_clicked()
 
     group->start();
 
-    connect(group, &QParallelAnimationGroup::finished, [=]() {
+    connect(group, &QParallelAnimationGroup::finished, [ = ]() {
         ui->terminateAppFrame->setFixedHeight(ui->terminateAppFrame->sizeHint().height());
         ui->ExitFrameTop->setFixedHeight(0);
         ui->ExitFrameBottom->setFixedHeight(0);
@@ -574,11 +564,11 @@ void EndSessionWait::reloadAppList() {
     Atom WindowListType;
     int format;
     unsigned long items, bytes;
-    unsigned char *data;
+    unsigned char* data;
     XGetWindowProperty(d, RootWindow(d, 0), XInternAtom(d, "_NET_CLIENT_LIST", true), 0L, (~0L),
-                                    False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
+        False, AnyPropertyType, &WindowListType, &format, &items, &bytes, &data);
 
-    quint64 *windows = (quint64*) data;
+    quint64* windows = (quint64*) data;
     for (unsigned long i = 0; i < items; i++) {
         TopWindows.append((Window) windows[i]);
 
@@ -591,15 +581,15 @@ void EndSessionWait::reloadAppList() {
 
         int retval = XGetWindowAttributes(d, win, &attributes);
         unsigned long items, bytes;
-        unsigned char *netWmName;
+        unsigned char* netWmName;
         XTextProperty wmName;
         int format;
         Atom ReturnType;
         retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_VISIBLE_NAME", False), 0, 1024, False,
-                           XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &netWmName);
+                XInternAtom(d, "UTF8_STRING", False), &ReturnType, &format, &items, &bytes, &netWmName);
         if (retval != 0 || netWmName == 0x0) {
             retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_NAME", False), 0, 1024, False,
-                               AnyPropertyType, &ReturnType, &format, &items, &bytes, &netWmName);
+                    AnyPropertyType, &ReturnType, &format, &items, &bytes, &netWmName);
             if (retval != 0) {
                 retval = XGetWMName(d, win, &wmName);
                 if (retval == 1) {
@@ -615,19 +605,19 @@ void EndSessionWait::reloadAppList() {
 
             QString title;
             if (netWmName) {
-                title = QString::fromLocal8Bit((char *) netWmName);
+                title = QString::fromLocal8Bit((char*) netWmName);
                 XFree(netWmName);
             } else if (wmName.value) {
-                title = QString::fromLatin1((char *) wmName.value);
+                title = QString::fromLatin1((char*) wmName.value);
                 //XFree(wmName);
             }
 
-            unsigned long *pidPointer;
+            unsigned long* pidPointer;
             unsigned long pitems, pbytes;
             int pformat;
             Atom pReturnType;
             int retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_PID", False), 0, 1024, False,
-                                            XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
+                    XA_CARDINAL, &pReturnType, &pformat, &pitems, &pbytes, (unsigned char**) &pidPointer);
             if (retval == 0) {
                 if (pidPointer != 0) {
                     unsigned long pid = *pidPointer;
@@ -641,16 +631,16 @@ void EndSessionWait::reloadAppList() {
             {
                 bool noIcon = false;
                 unsigned long icItems, icBytes;
-                unsigned char *icon;
+                unsigned char* icon;
                 int icFormat;
                 Atom icReturnType;
 
-                unsigned char *ret;
+                unsigned char* ret;
                 int width, height;
 
 
                 retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 0, 1, False,
-                                   XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
+                        XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
                 if (ret == 0x0) {
                     noIcon = true;
                 } else {
@@ -659,7 +649,7 @@ void EndSessionWait::reloadAppList() {
                 }
 
                 retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 1, 1, False,
-                                   XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
+                        XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &ret);
 
                 if (ret == 0x0) {
                     noIcon = true;
@@ -670,7 +660,7 @@ void EndSessionWait::reloadAppList() {
 
                 if (!noIcon) {
                     retval = XGetWindowProperty(d, win, XInternAtom(d, "_NET_WM_ICON", False), 2, width * height * 4, False,
-                                       XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
+                            XA_CARDINAL, &icReturnType, &icFormat, &icItems, &icBytes, &icon);
 
                     QImage image(width, height, QImage::Format_ARGB32);
 
@@ -715,8 +705,7 @@ void EndSessionWait::reloadAppList() {
     }
 }
 
-void EndSessionWait::on_exitTerminate_clicked()
-{
+void EndSessionWait::on_exitTerminate_clicked() {
     powerOffTimer->start();
     QParallelAnimationGroup* group = new QParallelAnimationGroup();
 
@@ -726,7 +715,7 @@ void EndSessionWait::on_exitTerminate_clicked()
     topAnim->setEasingCurve(QEasingCurve::OutCubic);
     topAnim->setDuration(500);
     topAnim->setKeyValueAt(0.5, 0);
-    connect(topAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(topAnim, &QVariantAnimation::valueChanged, [ = ](QVariant value) {
         ui->ExitFrameTop->setFixedHeight(value.toInt());
     });
 
@@ -736,7 +725,7 @@ void EndSessionWait::on_exitTerminate_clicked()
     bottomAnim->setEasingCurve(QEasingCurve::OutCubic);
     bottomAnim->setDuration(500);
     bottomAnim->setKeyValueAt(0.5, 0);
-    connect(bottomAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(bottomAnim, &QVariantAnimation::valueChanged, [ = ](QVariant value) {
         ui->ExitFrameBottom->setFixedHeight(value.toInt());
     });
 
@@ -745,7 +734,7 @@ void EndSessionWait::on_exitTerminate_clicked()
     midAnim->setEndValue(0);
     midAnim->setEasingCurve(QEasingCurve::OutCubic);
     midAnim->setDuration(500);
-    connect(midAnim, &QVariantAnimation::valueChanged, [=](QVariant value) {
+    connect(midAnim, &QVariantAnimation::valueChanged, [ = ](QVariant value) {
         ui->terminateAppFrame->setFixedHeight(value.toInt());
     });
 
@@ -755,7 +744,7 @@ void EndSessionWait::on_exitTerminate_clicked()
 
     group->start();
 
-    connect(group, &QParallelAnimationGroup::finished, [=]() {
+    connect(group, &QParallelAnimationGroup::finished, [ = ]() {
         ui->terminateAppFrame->setFixedHeight(0);
         ui->ExitFrameTop->setFixedHeight(ui->ExitFrameTop->sizeHint().height());
         ui->ExitFrameBottom->setFixedHeight(ui->ExitFrameBottom->sizeHint().height());
@@ -763,24 +752,21 @@ void EndSessionWait::on_exitTerminate_clicked()
     });
 }
 
-void EndSessionWait::on_pushButton_5_clicked()
-{
+void EndSessionWait::on_pushButton_5_clicked() {
     //Send SIGTERM to app
     kill(ui->listWidget->selectedItems().first()->data(Qt::UserRole).value<unsigned long>(), SIGTERM);
     QThread::sleep(1);
     reloadAppList();
 }
 
-void EndSessionWait::on_pushButton_4_clicked()
-{
+void EndSessionWait::on_pushButton_4_clicked() {
     //Send SIGKILL to app
     kill(ui->listWidget->selectedItems().first()->data(Qt::UserRole).value<unsigned long>(), SIGKILL);
     QThread::sleep(1);
     reloadAppList();
 }
 
-void EndSessionWait::on_listWidget_currentRowChanged(int currentRow)
-{
+void EndSessionWait::on_listWidget_currentRowChanged(int currentRow) {
     if (currentRow == -1) {
         ui->pushButton_5->setEnabled(false);
         ui->pushButton_4->setEnabled(false);
@@ -790,8 +776,7 @@ void EndSessionWait::on_listWidget_currentRowChanged(int currentRow)
     }
 }
 
-void EndSessionWait::on_DummyExit_clicked()
-{
+void EndSessionWait::on_DummyExit_clicked() {
     //Fake Exit
     this->type = dummy;
     ui->powerType->setText(tr("Dummy"));
@@ -806,14 +791,14 @@ void EndSessionWait::reject() {
     anim->setDuration(250);
     anim->setStartValue(this->windowOpacity());
     anim->setEndValue(0.0);
-    connect(anim, &QPropertyAnimation::finished, [=]() {
+    connect(anim, &QPropertyAnimation::finished, [ = ]() {
         QDialog::reject();
         anim->deleteLater();
     });
     anim->start();
 }
 
-void EndSessionWait::paintEvent(QPaintEvent *event) {
+void EndSessionWait::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     if (this->type == slideOff) {
         int alpha;
@@ -830,7 +815,7 @@ void EndSessionWait::paintEvent(QPaintEvent *event) {
     }
 }
 
-void EndSessionWait::mousePressEvent(QMouseEvent *event) {
+void EndSessionWait::mousePressEvent(QMouseEvent* event) {
     Q_UNUSED(event)
 
     if (this->type == slideOff) {
@@ -838,7 +823,7 @@ void EndSessionWait::mousePressEvent(QMouseEvent *event) {
     }
 }
 
-bool EndSessionWait::eventFilter(QObject *obj, QEvent *eve) {
+bool EndSessionWait::eventFilter(QObject* obj, QEvent* eve) {
     if (obj == ui->slideOffFrame) {
         if (eve->type() == QEvent::MouseButtonPress) {
             QMouseEvent* event = (QMouseEvent*) eve;
@@ -860,7 +845,7 @@ bool EndSessionWait::eventFilter(QObject *obj, QEvent *eve) {
                 anim->setEasingCurve(QEasingCurve::InCubic);
                 connect(anim, SIGNAL(finished()), anim, SLOT(deleteLater()));
                 connect(anim, SIGNAL(finished()), this, SLOT(update()));
-                connect(anim, &tPropertyAnimation::finished, [=] {
+                connect(anim, &tPropertyAnimation::finished, [ = ] {
                     this->type = powerOff;
 
                     this->setAttribute(Qt::WA_TranslucentBackground, false);

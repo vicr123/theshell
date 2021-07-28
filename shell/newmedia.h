@@ -46,34 +46,35 @@
 #undef FocusOut
 #undef CursorShape
 #undef Unsorted
+#undef False
+#undef True
 
 namespace Ui {
-class NewMedia;
+    class NewMedia;
 }
 
-class NewMedia : public QDialog
-{
-    Q_OBJECT
+class NewMedia : public QDialog {
+        Q_OBJECT
 
-public:
-    explicit NewMedia(QString description, QWidget *parent = 0);
-    ~NewMedia();
+    public:
+        explicit NewMedia(QString description, QWidget* parent = 0);
+        ~NewMedia();
 
-    void show();
-    void close();
-    void reject();
+        void show();
+        void close();
+        void reject();
 
-    void setGeometry(int x, int y, int w, int h);
-    void setGeometry(QRect geometry);
-private slots:
-    void on_closeButton_clicked();
+        void setGeometry(int x, int y, int w, int h);
+        void setGeometry(QRect geometry);
+    private slots:
+        void on_closeButton_clicked();
 
-    void on_doNothingOptionToolButton_clicked();
+        void on_doNothingOptionToolButton_clicked();
 
-private:
-    Ui::NewMedia *ui;
+    private:
+        Ui::NewMedia* ui;
 
-    void paintEvent(QPaintEvent* event);
+        void paintEvent(QPaintEvent* event);
 };
 
 #endif // NEWMEDIA_H

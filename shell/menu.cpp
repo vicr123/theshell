@@ -21,6 +21,9 @@
 #include "menu.h"
 #include "ui_menu.h"
 
+#define False 0
+#define True 1
+
 extern void EndSession(EndSessionWait::shutdownType type);
 extern float getDPIScaling();
 extern MainWindow* MainWin;
@@ -29,10 +32,9 @@ extern TutorialWindow* TutorialWin;
 extern NativeEventFilter* NativeFilter;
 extern ScreenRecorder* screenRecorder;
 
-Menu::Menu(QWidget *parent) :
+Menu::Menu(QWidget* parent) :
     QDialog(parent),
-    ui(new Ui::Menu)
-{
+    ui(new Ui::Menu) {
     ui->setupUi(this);
 
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
@@ -125,15 +127,14 @@ Menu::Menu(QWidget *parent) :
     //this->bt = bt;
 }
 
-Menu::~Menu()
-{
+Menu::~Menu() {
     delete ui;
 }
 
 void Menu::show() {
     unsigned long desktop = 0xFFFFFFFF;
     XChangeProperty(QX11Info::display(), this->winId(), XInternAtom(QX11Info::display(), "_NET_WM_DESKTOP", False),
-                     XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
+        XA_CARDINAL, 32, PropModeReplace, (unsigned char*) &desktop, 1); //Set visible on all desktops
 
     QDialog::show();
     doCheckForClose = true;
@@ -163,7 +164,7 @@ void Menu::show() {
     TutorialWin->showScreen(TutorialWindow::GatewaySearch);
 }
 
-void Menu::changeEvent(QEvent *event) {
+void Menu::changeEvent(QEvent* event) {
     QDialog::changeEvent(event);
     if (event->type() == QEvent::ActivationChange) {
         if (!this->isActiveWindow()) {
@@ -187,7 +188,7 @@ void Menu::close() {
     animation->setDuration(500);
     animation->setEasingCurve(QEasingCurve::OutCubic);
     connect(animation, SIGNAL(finished()), animation, SLOT(deleteLater()));
-    connect(animation, &tPropertyAnimation::finished, [=]() {
+    connect(animation, &tPropertyAnimation::finished, [ = ]() {
         emit menuClosing();
         QDialog::hide();
     });
@@ -206,7 +207,7 @@ void Menu::checkForclose() {
     }
 }
 
-bool Menu::checkFocus(QLayout *layout) {
+bool Menu::checkFocus(QLayout* layout) {
     bool hasFocus = this->isActiveWindow();
     QLayoutItem* item;
     while ((item = layout->takeAt(0)) != NULL) {
@@ -223,8 +224,7 @@ bool Menu::checkFocus(QLayout *layout) {
     return hasFocus;
 }
 
-void Menu::on_pushButton_clicked()
-{
+void Menu::on_pushButton_clicked() {
     if (settings.value("ui/useFullScreenEndSession", false).toBool()) {
         EndSessionWait* endSession = new EndSessionWait(EndSessionWait::ask);
         endSession->showFullScreen();
@@ -249,8 +249,7 @@ void Menu::on_pushButton_clicked()
     }
 }
 
-void Menu::on_pushButton_2_clicked()
-{
+void Menu::on_pushButton_2_clicked() {
     /*tPropertyAnimation* anim = new tPropertyAnimation(ui->offFrame, "geometry");
     anim->setStartValue(QRect(10 * getDPIScaling(), 10 * getDPIScaling(), this->width() - 20 * getDPIScaling(), this->height() - 20 * getDPIScaling()));
     //anim->setEndValue(QRect(10, this->height(), this->width() - 20, this->height() - 20));
@@ -267,8 +266,7 @@ void Menu::on_pushButton_2_clicked()
     ui->stackedWidget->setCurrentIndex(0);
 }
 
-void Menu::on_commandLinkButton_clicked()
-{
+void Menu::on_commandLinkButton_clicked() {
     if (ui->endSessionWarnings->count() > 0) {
         pendingEndSessionType = EndSessionWait::powerOff;
         ui->endSessionAnywayButton->setText(tr("Power Off Anyway"));
@@ -279,8 +277,7 @@ void Menu::on_commandLinkButton_clicked()
     }
 }
 
-void Menu::on_commandLinkButton_2_clicked()
-{
+void Menu::on_commandLinkButton_2_clicked() {
     if (ui->endSessionWarnings->count() > 0) {
         pendingEndSessionType = EndSessionWait::reboot;
         ui->endSessionAnywayButton->setText(tr("Reboot Anyway"));
@@ -291,8 +288,7 @@ void Menu::on_commandLinkButton_2_clicked()
     }
 }
 
-void Menu::on_commandLinkButton_3_clicked()
-{
+void Menu::on_commandLinkButton_3_clicked() {
     if (ui->endSessionWarnings->count() > 0) {
         pendingEndSessionType = EndSessionWait::logout;
         ui->endSessionAnywayButton->setText(tr("Log Out Anyway"));
@@ -303,20 +299,19 @@ void Menu::on_commandLinkButton_3_clicked()
     }
 }
 
-void Menu::on_lineEdit_textEdited(const QString &arg1)
-{
+void Menu::on_lineEdit_textEdited(const QString& arg1) {
     ((AppsListModel*) ui->appsListView->model())->search(arg1);
     ui->appsListView->selectionModel()->select(ui->appsListView->model()->index(0, 0), QItemSelectionModel::ClearAndSelect);
 }
 
-bool Menu::eventFilter(QObject *object, QEvent *event) {
+bool Menu::eventFilter(QObject* object, QEvent* event) {
     if (event->type() == QEvent::KeyPress && ((QKeyEvent*) event)->key() == Qt::Key_Escape) {
         this->close();
         return true;
     }
 
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *e = (QKeyEvent*) event;
+        QKeyEvent* e = (QKeyEvent*) event;
 
         int currentRow;
         if (ui->appsListView->selectionModel()->selectedRows().count() == 0) {
@@ -334,8 +329,8 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
                 }
             }
         } else if ((QApplication::layoutDirection() == Qt::RightToLeft
-                   ? e->key() == Qt::Key_Left
-                   : e->key() == Qt::Key_Right) && ui->appsListView->model()->index(currentRow, 0).data(Qt::UserRole + 3).value<App>().actions().count() > 0) {
+                ? e->key() == Qt::Key_Left
+                : e->key() == Qt::Key_Right) && ui->appsListView->model()->index(currentRow, 0).data(Qt::UserRole + 3).value<App>().actions().count() > 0) {
             showActionMenuByIndex(ui->appsListView->model()->index(currentRow, 0));
             return true;
         } else if (e->key() == Qt::Key_Down) {
@@ -367,15 +362,15 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
             ui->appsListView->scrollTo(indexToSelect);
             return true;
         } else {
-           if (object != ui->lineEdit) {
-               ui->lineEdit->event(event);
-               return true;
-           }
+            if (object != ui->lineEdit) {
+                ui->lineEdit->event(event);
+                return true;
+            }
         }
         e->ignore();
         return false;
     } else if (event->type() == QEvent::MouseButtonRelease && object == ui->appsListView->viewport()) {
-        QMouseEvent *e = (QMouseEvent*) event;
+        QMouseEvent* e = (QMouseEvent*) event;
         QModelIndex index = ui->appsListView->indexAt(e->pos());
         if (!index.isValid()) {
             return false;
@@ -383,9 +378,9 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
 
         QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
         if (acts.count() > 0 &&
-                QApplication::layoutDirection() == Qt::RightToLeft
-                ?(e->pos().x() < 34 * getDPIScaling())
-                :(e->pos().x() > ui->appsListView->viewport()->width() - 34 * getDPIScaling())) {
+            QApplication::layoutDirection() == Qt::RightToLeft
+            ? (e->pos().x() < 34 * getDPIScaling())
+            : (e->pos().x() > ui->appsListView->viewport()->width() - 34 * getDPIScaling())) {
             showActionMenuByIndex(index);
         } else {
             launchAppByIndex(index);
@@ -397,8 +392,7 @@ bool Menu::eventFilter(QObject *object, QEvent *event) {
     }
 }
 
-void Menu::on_lineEdit_returnPressed()
-{
+void Menu::on_lineEdit_returnPressed() {
     /*if (ui->listWidget->count() > 0) {
         if (ui->listWidget->selectedItems().count() == 1) {
             on_listWidget_itemClicked(ui->listWidget->selectedItems().first());
@@ -417,19 +411,17 @@ void Menu::on_lineEdit_returnPressed()
     }
 }
 
-void Menu::on_pushButton_3_clicked()
-{
+void Menu::on_pushButton_3_clicked() {
     QProcess::startDetached("scallop");
     this->close();
 }
 
-void Menu::on_commandLinkButton_5_clicked()
-{
+void Menu::on_commandLinkButton_5_clicked() {
     EndSession(EndSessionWait::suspend);
     this->close();
 }
 
-void Menu::paintEvent(QPaintEvent *event) {
+void Menu::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     //painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(this->palette().color(QPalette::WindowText));
@@ -446,28 +438,25 @@ void Menu::paintEvent(QPaintEvent *event) {
 void Menu::setGeometry(int x, int y, int w, int h) { //Use wmctrl command because KWin has a problem with moving windows offscreen.
     QDialog::setGeometry(x, y, w, h);
     QProcess::execute("wmctrl -r " + this->windowTitle() + " -e 0," +
-                      QString::number(x) + "," + QString::number(y) + "," +
-                      QString::number(w) + "," + QString::number(h));
+        QString::number(x) + "," + QString::number(y) + "," +
+        QString::number(w) + "," + QString::number(h));
 }
 
 void Menu::setGeometry(QRect geometry) {
     this->setGeometry(geometry.x(), geometry.y(), geometry.width(), geometry.height());
 }
 
-void Menu::on_commandLinkButton_7_clicked()
-{
+void Menu::on_commandLinkButton_7_clicked() {
     EndSession(EndSessionWait::hibernate);
     this->close();
 }
 
-void Menu::on_commandLinkButton_8_clicked()
-{
+void Menu::on_commandLinkButton_8_clicked() {
     EndSession(EndSessionWait::screenOff);
     this->close();
 }
 
-void Menu::on_commandLinkButton_6_clicked()
-{
+void Menu::on_commandLinkButton_6_clicked() {
     this->close();
     DBusEvents->LockScreen();
 }
@@ -481,22 +470,21 @@ struct LoginSession {
 };
 Q_DECLARE_METATYPE(LoginSession)
 
-const QDBusArgument &operator<<(QDBusArgument &argument, const LoginSession &session) {
+const QDBusArgument& operator<<(QDBusArgument& argument, const LoginSession& session) {
     argument.beginStructure();
     argument << session.sessionId << session.userId << session.username << session.seat << session.path;
     argument.endStructure();
     return argument;
 }
 
-const QDBusArgument &operator>>(const QDBusArgument &argument, LoginSession &session) {
+const QDBusArgument& operator>>(const QDBusArgument& argument, LoginSession& session) {
     argument.beginStructure();
     argument >> session.sessionId >> session.userId >> session.username >> session.seat >> session.path;
     argument.endStructure();
     return argument;
 }
 
-void Menu::on_commandLinkButton_4_clicked()
-{
+void Menu::on_commandLinkButton_4_clicked() {
     //Load available users
     QDBusInterface i("org.freedesktop.login1", "/org/freedesktop/login1/session/self", "org.freedesktop.login1.Session", QDBusConnection::systemBus());
     QString thisId = i.property("Id").toString();
@@ -566,7 +554,7 @@ void Menu::on_commandLinkButton_4_clicked()
     }
 }
 
-void Menu::mousePressEvent(QMouseEvent *event) {
+void Menu::mousePressEvent(QMouseEvent* event) {
     if (QApplication::isRightToLeft()) {
         if (event->x() < 5) {
             resizing = true;
@@ -578,7 +566,7 @@ void Menu::mousePressEvent(QMouseEvent *event) {
     }
 }
 
-void Menu::mouseMoveEvent(QMouseEvent *event) {
+void Menu::mouseMoveEvent(QMouseEvent* event) {
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     if (resizing) {
         int width;
@@ -614,14 +602,13 @@ void Menu::mouseMoveEvent(QMouseEvent *event) {
     }
 }
 
-void Menu::mouseReleaseEvent(QMouseEvent *event) {
+void Menu::mouseReleaseEvent(QMouseEvent* event) {
     resizing = false;
     this->setCursor(QCursor(Qt::ArrowCursor));
     settings.setValue("gateway/width", this->width());
 }
 
-void Menu::on_exitButton_clicked()
-{
+void Menu::on_exitButton_clicked() {
     QApplication::exit(0);
 }
 
@@ -629,8 +616,7 @@ void Menu::reject() {
     this->close();
 }
 
-void Menu::on_fakeEndButton_clicked()
-{
+void Menu::on_fakeEndButton_clicked() {
     if (ui->endSessionWarnings->count() > 0) {
         pendingEndSessionType = EndSessionWait::dummy;
         ui->endSessionAnywayButton->setText("Perform Fake Exit Anyway");
@@ -641,20 +627,17 @@ void Menu::on_fakeEndButton_clicked()
     }
 }
 
-void Menu::on_helpButton_clicked()
-{
+void Menu::on_helpButton_clicked() {
     QProcess::startDetached("xdg-open https://vicr123.github.io/theshell/help");
     this->close();
 }
 
-void Menu::on_reportBugButton_clicked()
-{
+void Menu::on_reportBugButton_clicked() {
     QProcess::startDetached("xdg-open https://github.com/vicr123/theshell/issues");
     this->close();
 }
 
-void Menu::launchAppByIndex(const QModelIndex &index)
-{
+void Menu::launchAppByIndex(const QModelIndex& index) {
     if (((AppsListModel*) ui->appsListView->model())->launchApp(index)) {
         this->close();
     }
@@ -666,7 +649,7 @@ void Menu::showActionMenuByIndex(QModelIndex index) {
 
     QList<App> acts = index.data(Qt::UserRole + 3).value<App>().actions();
     for (App action : acts) {
-        menu->addAction(QIcon::fromTheme("arrow-right"), action.name(), [=] {
+        menu->addAction(QIcon::fromTheme("arrow-right"), action.name(), [ = ] {
             QString command = action.command();
             command.remove("env ");
             QProcess* process = new QProcess();
@@ -688,12 +671,11 @@ void Menu::showActionMenuByIndex(QModelIndex index) {
     QRect rect = ui->appsListView->visualRect(index);
 
     menu->exec(ui->appsListView->mapToGlobal(QApplication::layoutDirection() == Qt::RightToLeft
-                                             ? rect.topLeft()
-                                             : rect.topRight()));
+            ? rect.topLeft()
+            : rect.topRight()));
 }
 
-void Menu::on_appsListView_customContextMenuRequested(const QPoint &pos)
-{
+void Menu::on_appsListView_customContextMenuRequested(const QPoint& pos) {
     QModelIndex index = ui->appsListView->indexAt(pos);
     if (index.isValid()) {
         QString desktopEntry = index.data(Qt::UserRole + 2).toString();
@@ -702,7 +684,7 @@ void Menu::on_appsListView_customContextMenuRequested(const QPoint &pos)
             menu->addSection(index.data(Qt::DecorationRole).value<QIcon>(), tr("For \"%1\"").arg(index.data(Qt::DisplayRole).toString()));
 
             if (index.data(Qt::UserRole + 1).toBool()) {
-                menu->addAction(QIcon::fromTheme("bookmark-remove"), "Undock", [=] {
+                menu->addAction(QIcon::fromTheme("bookmark-remove"), "Undock", [ = ] {
                     settings.beginGroup("gateway");
                     QStringList oldEntries;
 
@@ -728,7 +710,7 @@ void Menu::on_appsListView_customContextMenuRequested(const QPoint &pos)
                     ((AppsListModel*) ui->appsListView->model())->loadData();
                 });
             } else {
-                menu->addAction(QIcon::fromTheme("bookmark-new"), "Dock", [=] {
+                menu->addAction(QIcon::fromTheme("bookmark-new"), "Dock", [ = ] {
                     settings.beginGroup("gateway");
                     QStringList oldEntries;
 
@@ -759,23 +741,19 @@ void Menu::on_appsListView_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void Menu::on_cancelEndSessionWarningButton_clicked()
-{
+void Menu::on_cancelEndSessionWarningButton_clicked() {
     ui->stackedWidget->setCurrentIndex(1);
 }
 
-void Menu::on_endSessionAnywayButton_clicked()
-{
+void Menu::on_endSessionAnywayButton_clicked() {
     EndSession(pendingEndSessionType);
 }
 
-void Menu::on_cancelSwitchUsersButton_clicked()
-{
+void Menu::on_cancelSwitchUsersButton_clicked() {
     ui->stackedWidget->setCurrentIndex(1);
 }
 
-void Menu::on_startNewSessionButton_clicked()
-{
+void Menu::on_startNewSessionButton_clicked() {
     this->close();
     DBusEvents->LockScreen();
 
@@ -783,8 +761,7 @@ void Menu::on_startNewSessionButton_clicked()
     QDBusConnection::systemBus().send(message);
 }
 
-void Menu::on_availableUsersList_itemActivated(QListWidgetItem *item)
-{
+void Menu::on_availableUsersList_itemActivated(QListWidgetItem* item) {
     this->close();
     DBusEvents->LockScreen();
 

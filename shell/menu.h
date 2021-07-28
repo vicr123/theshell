@@ -32,7 +32,6 @@
 #include <QCommandLinkButton>
 #include <QStyledItemDelegate>
 #include <systemd/sd-login.h>
-#include "endsessionwait.h"
 #include "mainwindow.h"
 #include "dbusevents.h"
 #include "tutorialwindow.h"
@@ -41,20 +40,20 @@
 #include "apps/appslistmodel.h"
 #include "networkmanager/availablenetworkslist.h"
 #include "screenrecorder.h"
+#include "endsessionwait.h"
 
 #undef KeyPress
 
 namespace Ui {
-class Menu;
+    class Menu;
 }
 
-class Menu : public QDialog
-{
-    Q_OBJECT
-    Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
+class Menu : public QDialog {
+        Q_OBJECT
+        Q_PROPERTY(QRect geometry READ geometry WRITE setGeometry)
 
     public:
-        explicit Menu(QWidget *parent = 0);
+        explicit Menu(QWidget* parent = 0);
         ~Menu();
         void setGeometry(int x, int y, int w, int h);
         void setGeometry(QRect geometry);
@@ -80,9 +79,9 @@ class Menu : public QDialog
 
         void on_commandLinkButton_3_clicked();
 
-        void on_lineEdit_textEdited(const QString &arg1);
+        void on_lineEdit_textEdited(const QString& arg1);
 
-        bool eventFilter(QObject *object, QEvent *event);
+        bool eventFilter(QObject* object, QEvent* event);
 
         void on_lineEdit_returnPressed();
 
@@ -106,11 +105,11 @@ class Menu : public QDialog
 
         void on_reportBugButton_clicked();
 
-        void launchAppByIndex(const QModelIndex &index);
+        void launchAppByIndex(const QModelIndex& index);
 
         void showActionMenuByIndex(QModelIndex index);
 
-        void on_appsListView_customContextMenuRequested(const QPoint &pos);
+        void on_appsListView_customContextMenuRequested(const QPoint& pos);
 
         void on_cancelEndSessionWarningButton_clicked();
 
@@ -120,12 +119,12 @@ class Menu : public QDialog
 
         void on_startNewSessionButton_clicked();
 
-        void on_availableUsersList_itemActivated(QListWidgetItem *item);
+        void on_availableUsersList_itemActivated(QListWidgetItem* item);
 
     private:
-        Ui::Menu *ui;
+        Ui::Menu* ui;
 
-        bool checkFocus(QLayout *layout);
+        bool checkFocus(QLayout* layout);
         QSettings settings;
 
         //QList<App> apps;
