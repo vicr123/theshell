@@ -1,3 +1,9 @@
+# ⚠️ It's the end of the road for theShell.
+Now that theDesk has been released, it's time to say goodbye to theShell. [View Blog Post](https://vicr123.com/blog/2023/07/17/sunsetting-theshell)
+
+If you're after a desktop that looks and works like theShell, please check out [theDesk](/theCheeseboard/thedesk)!
+
+---
 # theShell
 Desktop Environment written using the Qt toolkit
 
